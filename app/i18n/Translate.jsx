@@ -2,8 +2,9 @@ import { default as React } from 'react';
 import en from './en';
 import fr from './fr';
 import hu from './hu';
+import ptbr from './pt-br';
 
-const languages = { en, fr, hu };
+const languages = { en, fr, hu, ptbr };
 
 export default function translate(key) {
     return Component => {

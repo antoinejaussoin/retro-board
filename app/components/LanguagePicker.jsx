@@ -7,9 +7,10 @@ import translate from '../i18n/Translate';
 import fr from './images/fr.png';
 import en from './images/uk.png';
 import hu from './images/hu.png';
+import ptbr from './images/pt-br.png';
 
 const images = {
-    fr, en, hu
+    fr, en, hu, ptbr
 };
 
 class LanguagePicker extends Component {
