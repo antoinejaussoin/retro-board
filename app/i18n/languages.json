@@ -1,5 +1,6 @@
 [
     { "value": "en", "iso": "en", "name": "English", "englishName": "English" },
+    { "value": "es", "iso": "es", "name": "Español", "englishName": "Spanish" },
     { "value": "fr", "iso": "fr", "name": "Français", "englishName": "French" },
     { "value": "hu", "iso": "hu", "name": "Magyar", "englishName": "Hungarian" },
     { "value": "nl", "iso": "nl", "name": "Nederlands", "englishName": "Dutch" },
