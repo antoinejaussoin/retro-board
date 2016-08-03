@@ -57,7 +57,7 @@ export default {
     dialog: {
       title: 'Invitar personas a tu retrospectiva',
       text: 'Para invitar otras personas a tu retrospectiva, sencillamente enviales al siguiente URL.',
-      copyButton: 'Copiar la URl al Portapapeles'
+      copyButton: 'Copiar la URL al Portapapeles'
     }
   }
 };
