@@ -43,7 +43,7 @@ export default {
         }
     },
     Login: {
-        namePlaceholder: 'Quién eres exactamente? Inserta tu nombre aquí',
+        namePlaceholder: 'Quién eres exáctamente? Inserta tu nombre aquí',
         buttonLabel: 'Empezemos'
     },
     SummaryBoard: {
@@ -56,7 +56,7 @@ export default {
         inviteButton: 'Invitar',
         dialog: {
             title: 'Invitar personas a tu retrospectiva',
-            text: 'Para invitar otras personas a tu retrospectiva, sencillamente enviales' +
+            text: 'Para invitar otras personas a tu retrospectiva, sencillamente enviales ' +
                   'la siguiente URL.',
             copyButton: 'Copiar la URL al Portapapeles'
         }
