@@ -1,0 +1,8 @@
+{
+  "name": "retro-board-common",
+  "version": "2.0.0",
+  "main": "dist/src/index.js",
+  "scripts": {
+    "build": "rm -rf dist && ../node_modules/typescript/bin/tsc --build"
+  }
+}

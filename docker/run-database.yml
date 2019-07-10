@@ -1,0 +1,30 @@
+# This docker-compose file is meant for development, to run the database locally
+
+version: '3'
+services:
+  postgres:
+    image: postgres
+    hostname: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres # Must be the same as DB_USER below
+      POSTGRES_PASSWORD: postgres # Must be the same as DB_PASSWORD below
+      POSTGRES_DB: retroboard # Must be the same as DB_NAME below
+    volumes:
+      - postgres-data-dev:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4
+    depends_on:
+      - postgres
+    ports:
+      - '5433:80' # Change 5433 to whatever port you want to access pgAdmin from
+    environment:
+      PGADMIN_DEFAULT_EMAIL: local@retrospected.com # Can be anything
+      PGADMIN_DEFAULT_PASSWORD: admin
+    restart: unless-stopped
+
+volumes:
+  postgres-data-dev:

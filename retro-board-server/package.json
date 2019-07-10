@@ -1,0 +1,37 @@
+{
+  "name": "retro-board-server",
+  "version": "2.0.0",
+  "scripts": {
+    "build": "rm -rf dist && ../node_modules/typescript/bin/tsc --build",
+    "start": "nodemon --exec ts-node ./src/index.ts"
+  },
+  "dependencies": {
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^4.17.0",
+    "@types/lodash": "^4.14.136",
+    "@types/md5": "^2.1.33",
+    "@types/nedb": "^1.8.8",
+    "@types/node": "^12.6.1",
+    "@types/socket.io": "^2.1.2",
+    "@types/uuid": "^3.4.5",
+    "chalk": "^2.4.2",
+    "cross-env": "5.2.0",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "lodash": "^4.17.11",
+    "md5": "^2.2.1",
+    "moment": "^2.24.0",
+    "nedb": "^1.8.0",
+    "nodemon": "^1.19.1",
+    "pg": "^7.11.0",
+    "retro-board-common": "*",
+    "socket.io": "^2.2.0",
+    "ts-node": "^8.3.0",
+    "typeorm": "^0.2.18",
+    "uuid": "^3.3.2"
+  },
+  "nodemonConfig": {
+    "watch": "./src/",
+    "ext": "ts,tsx,json"
+  }
+}

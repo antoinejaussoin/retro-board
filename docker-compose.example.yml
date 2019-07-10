@@ -1,0 +1,61 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+    hostname: postgres
+    environment:
+      POSTGRES_USER: postgres # Must be the same as DB_USER below
+      POSTGRES_PASSWORD: postgres # Must be the same as DB_PASSWORD below
+      POSTGRES_DB: retroboard # Must be the same as DB_NAME below
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4
+    depends_on:
+      - postgres
+    ports:
+      - '8080:80' # Change 8080 to whatever port you want to access pgAdmin from
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@retrospected.com # Can be anything
+      PGADMIN_DEFAULT_PASSWORD: admin # Please change this!
+    restart: unless-stopped
+
+  backend:
+    image: antoinejaussoin/retrospected-server
+    build:
+      context: .
+      dockerfile: ./docker/Backend.Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      NODE_ENV: production
+      DB_TYPE: postgres
+      DB_NAME: retroboard # Must be the same as POSTGRES_DB above
+      DB_USER: postgres # Must be the same as POSTGRES_USER above
+      DB_PASSWORD: postgres # Must be the same as POSTGRES_PASSWORD above
+      DB_HOST: postgres # Must be the name of the Postgres container
+      DB_PORT: 5432 # Don't change this.
+      JWT_SECRET: somerandomstring # Change this to a random value
+      SESSION_SECRET: someotherrandomstring # Change this to a random value
+      PORT: 3201 # Don't change this (or change it in nginx.conf as well)
+    restart: unless-stopped
+
+  frontend:
+    image: antoinejaussoin/retrospected-client
+    build:
+      context: .
+      dockerfile: ./docker/Frontend.Dockerfile
+      # args:
+      #   GoogleAnalytics: UA-1231231-1
+    depends_on:
+      - backend
+    ports:
+      - '80:80' # Change the first 80 to whatever port you want to access Retrospected from
+    environment:
+      NODE_ENV: production
+    restart: unless-stopped
+
+volumes:
+  postgres-data:

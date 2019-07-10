@@ -2,93 +2,149 @@
 
 This is a Retrospective Idea board, powering [retrospected.com](http://www.retrospected.com).
 
-![Retrospected.com](/content/screenshot-v4.png?raw=true 'Retrospected.com')
+![Retrospected.com](/content/screenshot-v2.png?raw=true 'Retrospected.com')
 
-This project is both an actual product, and also a technology demo using the latest and greatest JavaScript libraries of the month.
+This project is both an actual product, and also a technology demo using the latest and greatest JavaScript/TypeScript libraries of the month.
 
 It features the following technologies:
 
 - [React 16](https://github.com/facebook/react)
-- [Redux](https://github.com/reactjs/redux)
+- [React Hooks](https://reactjs.org/docs/hooks-intro.html)
 - [React Router 4](https://github.com/ReactTraining/react-router)
+- [Mono Repo / Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces)
+- [TypeScript](https://www.typescriptlang.org/)
 - [Socket IO](http://socket.io)
 - [Webpack 4](https://github.com/webpack/webpack) (See older versions for Webpack 1, 2 and 3)
-- [Hot-reloading](https://webpack.github.io/docs/hot-module-replacement.html)
 - [Material UI design](https://www.google.com/design/spec/material-design/introduction.html)
-- [CSS Modules](https://github.com/css-modules/css-modules)
-- [redux-saga](https://github.com/yelouafi/redux-saga)
-- [reselect](https://github.com/reactjs/reselect)
+- [Styled Components](https://www.styled-components.com/)
 - [Multilingual](https://stackoverflow.com/questions/33413880/react-redux-and-multilingual-internationalization-apps-architecture) / Internationalization
-- [MongoDB](https://www.mongodb.org/) (optional), defaults to [NeDB](https://github.com/louischatriot/nedb) (in-process)
-- [ESLint](http://eslint.org/) for JS and JSX
+- [Postgres](https://www.postgresql.org/) (optional), defaults to [NeDB](https://github.com/louischatriot/nedb) (in-process)
 - [Jest](https://facebook.github.io/jest) for Unit Testing
-- [Yarn](https://yarnpkg.com/en/) to replace NPM
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro), for Integration Tests
+- [Yarn](https://yarnpkg.com/en/), replacing NPM
+- [Docker](https://docker.com), for easy deployment
 
-## How to run for production (or to try it out)
+Previous versions, up to v1.0.1 featured the following libraries:
+
+- ~~[Redux](https://github.com/reactjs/redux)~~
+- ~~[CSS Modules](https://github.com/css-modules/css-modules)~~
+- ~~[redux-saga](https://github.com/yelouafi/redux-saga)~~
+- ~~[reselect](https://github.com/reactjs/reselect)~~
+- ~~[ESLint](http://eslint.org/) for JS and JSX~~
+- ~~[Hot-reloading](https://webpack.github.io/docs/hot-module-replacement.html): Not working with Typescript (yet)~~
+
+## Prerequisites
+
+- `Yarn`: Please install [Yarn](https://yarnpkg.com/en/), as this mono-repo uses **Yarn Workspaces** which won't work with NPM.
+
+## How to try it out
 
 - Clone this repository
 - Switch to the `master` branch (the default is `develop` which might not be stable)
-- `yarn` to install the dependencies (or `npm i`) (Node 4+, NPM 3+)
-- `npm run build` to build everything (client and server)
-- `npm start` to run the server on port 8080
-- Open your browser on [http://localhost:8080](http://localhost:8080)
+- `yarn` to install the dependencies (_not_ `npm i`!)
+- `yarn start` to transpile the server, run the server on port 8080 and start the UI
+- Open your browser on [http://localhost:3000](http://localhost:3000)
 
 ## How to run for development
 
 - Clone this repository
-- `yarn` to install the dependencies (or `npm i`) (Node 4+, NPM 3+)
+- `yarn` to install the dependencies (_not_ `npm i`!)
 - Open another terminal (you need two of those)
-- `npm run start-server` on the first terminal to start the server bit
-- `npm run start-ui` on the second terminal, to run live webpack with hot-reload
-- Open your browser on [http://localhost:8081](http://localhost:8081)
+- `yarn start-server` on the first terminal to start the server bit
+- `yarn start-ui` on the second terminal, to run live webpack with hot-reload
+- Open your browser on [http://localhost:3000](http://localhost:3000)
+
+## How to run for Production using Docker
+
+### Prerequisites
+
+You need to have `docker` and `docker-compose` installed on your system.
+
+### Result
+
+This will install a production-ready version of Retrospected automatically, using Postgres. You don't need to have anything installed other than Docker. This will install and run:
+
+- Postgres
+- pgAdmin4 (Web ui for postgres)
+- The Retrospected Nodejs backend
+- The frontend, served by `nginx`.
+
+### Installation
+
+- Copy `docker-compose.yml.example` to `docker-compose.yml`
+- Edit the file to set some passwords etc. You can also set your Google Analytics ID to enable GA.
+- Run `docker-compose build`: this will build the backend and frontend images, based on your settings.
+- Run `docker-compose up -d`
+- Voilà!
+
+### Backups
+
+When using the Docker deployment, your database runs from a container. But if you still need to make some backup of your data, you can do the following:
+
+- Get the docker database image ID by doing: `docker ps`
+- Run `` docker exec -t <docker_image_id> pg_dumpall -c -U postgres > dump_`date +%d-%m-%Y"_"%H_%M\_%S`.sql ``
+- To restore your databases: `cat dump_1234.sql | docker exec -i <docker_image_id> psql -U postgres`
 
 ## How to run the tests
 
 - Clone this repository
-- `yarn` to install the dependencies (or `npm i`) (Node 4+, NPM 3+)
+- `yarn` to install the dependencies (_not_ `npm i`!)
 - `npm test` to run the tests
-- **or** `npm run test-watch` to run the tests every time you change a file
+- **or** `yarn test-watch` to run the tests every time you change a file
 
 ## How to use Google Analytics
 
 By default, Google Analytics is deactivated (it doesn't even get built into the bundle).
 
-To enable it, create a configuration file by copying `/config/configuration_template.json` to `/config/configuration.json`, and set it up by pasting your GA tracking ID, and setting the other setting to true, then rebuild.
+To enable it, you'll need to create a local `.env` file in `./retro-board-app/env.local` by copy-pasting the existing `.env` file in the same directory. To enable Google Analytics, simply add your GA Tracking ID like so: `REACT_APP_GA_ID=UA-&2345678-1`.
 
-Note: Google Analytics only works when using the production webpack config.
+Note: Google Analytics only works when using the production webpack config (i.e. when `NODE_ENV` is set to `production`).
 
-## How to use MongoDB
+## How to use Postgres (w/o Docker)
 
 By default, the database engine is NeDB, an in-process database with no external dependencies (i.e. no database to install on your system).
 
-If you want to use a more "production-ready" database such as MongoDB, create the configuration file as explained above in the Google Analytics section and set `DB_Use_Mongo` to `true`. You will of course need an instance of MongoDB running on your system for that to work.
+If you want to use a more "production-ready" database such as Postgres (without Docker), copy `.env.example` to `.env`, change `DB_TYPE` to `postgres` and fill the rest.
+
+## Migrating an old NeDB database from V1
+
+If you were running retrospected on your own, and were using NeDB, you can migrate the data to Postgres by following these instructions:
+
+- Copy (from your v1 folder), the file `/build/persist/db`
+- Paste it at the root of your v2 folder (same directory as this README)
+- Run `yarn migrate`
+
+### Migrating while using Docker
+
+- To copy the db file into the (running) container: `docker cp ~/db abcd1234:/usr/src/backend` where `abcd1234` is your container ID.
+- Then get a bash prompt on your container by doing `docker exec -it abcd1234 sh`, navigate to `/usr/src/backend` and run `yarn migrate`.
+
+If you had a MongoDB database, there are no migration path yet.
 
 ## How to debug
 
-### Debugging the server
-
-- Run `npm run start-server-debug`
-- Don't forget to start the client side as well `npm run start-ui`
-- A Chrome Dev tool will open, wait a bit until it finishes loading
-- It will break at the first line of code, so once it's there, click continue
-- Then wait a bit (could be 20-30 seconds) for the code to run and the server to work properly
-- From now on, you can set up a breakpoint anywhere in the Chrome Dev tools and it should work.
-- Happy debugging!
-
 ### Debugging the client
 
-- Run both client and server normally (`npm run start-server` and `npm run start-ui`)
+- Run both client and server normally (`yarn start-server` and `yarn start-ui`)
 - From the browser window where the website is open, open the Chrome Dev tools
 - Go on the **Sources** tab, and on the left, find your sources under `webpack://` and then `.`.
 - You can then put breakpoints in there and debugging
 
 ## Roadmap
 
-- Add more languages
-- GraphQL
-- Switch to a different component library (https://react.semantic-ui.com/introduction for instance)
+- Making Hot Reloading work with CRA + Typescript.
+- Making the app more flexible (name of each "columns", etc.)
 
 ## Versions history
+
+### Version 2.0.0
+
+- Complete rewrite
+- TypeScript
+- React Hooks
+- @testing-library/react
+- New component library (MaterialUI)
+- Docker-friendly
 
 ### Version 1.0.1
 
