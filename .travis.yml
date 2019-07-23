@@ -1,0 +1,43 @@
+language: node_js
+node_js:
+  - 12
+sudo: required
+services:
+  - docker
+install: true
+
+env:
+  - NODE_ENV=production
+
+stages:
+  - test
+  - name: deploy
+    if: branch = master && type != pull_request
+  - name: deploy-canary
+    if: branch = develop && type != pull_request
+
+before_install:
+  - PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
+
+jobs:
+  include:
+    - stage: test
+      script:
+        - yarn
+        - yarn ci-test
+    - stage: deploy
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker build -f ./docker/Backend.Dockerfile -t antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-backend:latest .
+        - docker build --build-arg GoogleAnalytics=UA-60052055-2 -f ./docker/Frontend.Dockerfile -t antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-frontend:latest .
+        - docker push antoinejaussoin/retro-board-backend:${PACKAGE_VERSION}
+        - docker push antoinejaussoin/retro-board-backend:latest
+        - docker push antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION}
+        - docker push antoinejaussoin/retro-board-frontend:latest
+    - stage: deploy-canary
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker build -f ./docker/Backend.Dockerfile -t antoinejaussoin/retro-board-backend:canary .
+        - docker build --build-arg GoogleAnalytics=UA-60052055-2 -f ./docker/Frontend.Dockerfile -t antoinejaussoin/retro-board-frontend:canary .
+        - docker push antoinejaussoin/retro-board-backend:canary
+        - docker push antoinejaussoin/retro-board-frontend:canary
