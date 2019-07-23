@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "test": "yarn build-common && cd retro-board-app && yarn test",
+    "ci-test": "CI=true yarn test",
     "clean": "del ./retro-board-*/yarn.lock && del ./yarn.lock && del ./retro-board-*/node_modules && del ./node_modules",
     "start-ui": "yarn build-common && cd retro-board-app && yarn start",
     "start-server": "cd retro-board-server && yarn start && cd ..",
