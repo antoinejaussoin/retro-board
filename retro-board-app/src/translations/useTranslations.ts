@@ -12,6 +12,7 @@ import zhtw from './zh-tw';
 import zhcn from './zh-cn';
 import ar from './ar';
 import ja from './ja';
+import de from './de';
 import { Translation } from './types';
 import { merge, cloneDeep } from 'lodash';
 
@@ -32,6 +33,7 @@ const languages: Translations = {
   zhcn,
   ar,
   ja,
+  de,
 };
 
 function useTranslation() {

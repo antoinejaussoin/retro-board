@@ -28,4 +28,5 @@ export default [
   { value: 'zhcn', iso: 'cn', name: '簡中', englishName: 'Simplified Chinese' },
   { value: 'ar', iso: 'ae', name: 'عربي', englishName: 'Arabic' },
   { value: 'ja', iso: 'jp', name: '日本語', englishName: 'Japanese' },
+  { value: 'de', iso: 'de', name: 'Deutsch', englishName: 'German' },
 ] as Language[];
