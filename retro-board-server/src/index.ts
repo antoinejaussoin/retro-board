@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import socketIo from 'socket.io';
+import socketIoRedisAdapter from 'socket.io-redis';
 import http from 'http';
 import { find } from 'lodash';
 import chalk from 'chalk';
@@ -46,6 +47,13 @@ app.get('/api/ping', (req, res) => {
 
 const io = socketIo(httpServer);
 const port = config.BACKEND_PORT || 8081;
+
+if (config.REDIS_ENABLED) {
+  io.adapter(
+    socketIoRedisAdapter({ host: config.REDIS_HOST, port: config.REDIS_PORT })
+  );
+  console.log(chalk`{red Redis} was properly activated`);
+}
 
 const s = (str: string) => chalk`{blue ${str.replace('retrospected/', '')}}`;
 

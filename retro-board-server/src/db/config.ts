@@ -20,8 +20,11 @@ const config: Configuration = {
   DB_PASSWORD: process.env.DB_PASSWORD!,
   DB_HOST: process.env.DB_HOST!,
   DB_PORT: parseInt(process.env.DB_PORT!),
+  REDIS_ENABLED: process.env.REDIS_ENABLED === 'true',
+  REDIS_HOST: process.env.REDIS_HOST!,
+  REDIS_PORT: parseInt(process.env.REDIS_PORT!),
   BACKEND_PORT: parseInt(process.env.BACKEND_PORT!),
-  SQL_LOG: process.env.SQL_LOG === 'true'
+  SQL_LOG: process.env.SQL_LOG === 'true',
 };
 
 export default config;

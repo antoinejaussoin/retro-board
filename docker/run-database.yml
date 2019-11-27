@@ -28,6 +28,14 @@ services:
       - pgadmin-data-dev:/var/lib/pgadmin
     restart: unless-stopped
 
+  redis:
+    image: redis
+    ports:
+      - '6379:6379'
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
 volumes:
   postgres-data-dev:
   pgadmin-data-dev:

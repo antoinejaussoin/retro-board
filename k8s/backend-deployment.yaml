@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      component: backend
+  template:
+    metadata:
+      labels:
+        component: backend
+    spec:
+      containers:
+        - name: backend
+          image: rg.fr-par.scw.cloud/retro/retrospected-backend:k8s-1
+          ports:
+            - containerPort: 3201
+          env:
+            - name: BACKEND_PORT
+              value: '3201'
+            - name: DB_HOST
+              value: postgres-cluster-ip-service
+            - name: REDIS_ENABLED
+              value: 'true'
+            - name: REDIS_PORT
+              value: '6379'
+            - name: REDIS_HOST
+              value: redis-cluster-ip-service
+            - name: DB_NAME
+              value: retroboard
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: retrospected-secrets
+                  key: DB_PASSWORD
+            - name: DB_PORT
+              value: '5432'
+            - name: DB_TYPE
+              value: postgres
+            - name: DB_USER
+              value: postgres
+            - name: NODE_ENV
+              value: production
+            - name: SQL_LOG
+              value: 'false'

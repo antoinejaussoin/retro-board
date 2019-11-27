@@ -25,4 +25,8 @@ RUN yarn build-ui
 
 FROM nginx:alpine
 COPY --from=Node /home/node/app/retro-board-app/build /usr/share/nginx/html
-COPY ./docker/nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./docker/nginx.conf.template /etc/nginx/conf.d/default.conf.template
+COPY ./docker/frontend-entrypoint.sh /
+RUN ["chmod", "+x", "/frontend-entrypoint.sh"]
+ENTRYPOINT ["/frontend-entrypoint.sh"]
+CMD ["nginx", "-g", "daemon off;"]

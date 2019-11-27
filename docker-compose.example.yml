@@ -66,6 +66,8 @@ services:
       - '80:80' # Change the first 80 to whatever port you want to access Retrospected from
     environment:
       NODE_ENV: production
+      BACKEND_HOST: backend # It should be the same as the name of the backend service
+      BACKEND_PORT: 3201 # It should be the same as the BACKEND_PORT in the backend service
     restart: unless-stopped
     logging:
       driver: 'json-file'

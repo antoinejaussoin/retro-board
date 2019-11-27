@@ -2,6 +2,22 @@
 
 This is a Retrospective Idea board, powering [retrospected.com](http://www.retrospected.com).
 
+&nbsp;
+
+<p align="center">
+  <img src="./content/logos/react.png" height="65">
+  &nbsp;
+  <img src="./content/logos/ts.png" height="65">
+  &nbsp;
+  <img src="./content/logos/docker.png" height="65">
+  &nbsp;
+  <img src="./content/logos/k8s.svg" height="65">
+  &nbsp;
+  <img src="./content/logos/socketio.png" height="65">
+</p>
+
+&nbsp;
+
 ![Retrospected.com](/content/screenshot-v2.png?raw=true 'Retrospected.com')
 
 This project is both an actual product, and also a technology demo using the latest and greatest JavaScript/TypeScript libraries of the month.
@@ -24,6 +40,7 @@ It features the following technologies:
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro), for Integration Tests
 - [Yarn](https://yarnpkg.com/en/), replacing NPM
 - [Docker](https://docker.com), for easy deployment
+- [Kubernetes](https://kubernetes.io/), to scale Retrospected for its 10M+ users (not)
 
 Previous versions, up to v1.0.1 featured the following libraries:
 
@@ -33,11 +50,11 @@ Previous versions, up to v1.0.1 featured the following libraries:
 - ~~[reselect](https://github.com/reactjs/reselect)~~
 - ~~[ESLint](http://eslint.org/) for JS and JSX~~
 
-## Prerequisites
+## Prerequisites 💿
 
 - `Yarn`: Please install [Yarn](https://yarnpkg.com/en/), as this mono-repo uses **Yarn Workspaces** which won't work with NPM.
 
-## How to try it out (Mac/Linux)
+## How to try it out (Mac / Linux) 🚀
 
 - Clone this repository
 - Switch to the `master` branch (the default is `develop` which might not be stable: `git checkout master`)
@@ -45,11 +62,11 @@ Previous versions, up to v1.0.1 featured the following libraries:
 - `yarn start` to transpile the server, run the server on port 8080 and start the UI
 - Open your browser on [http://localhost:3000](http://localhost:3000)
 
-## How to try it out (Windows)
+## How to try it out (Windows) 🚀
 
 Follow the steps in "How to run for development" below.
 
-## How to run for development
+## How to run for development 📝
 
 - Clone this repository
 - `yarn` to install the dependencies (_not_ `npm i`!)
@@ -58,7 +75,7 @@ Follow the steps in "How to run for development" below.
 - `yarn start-server` on the second terminal to start the backend
 - Open your browser on [http://localhost:3000](http://localhost:3000)
 
-## How to run for Production using Docker
+## How to run for Production using Docker 🐳
 
 ### Prerequisites
 
@@ -90,26 +107,30 @@ When using the Docker deployment, your database runs from a container. But if yo
 - Run `` docker exec -t <docker_image_id> pg_dumpall -c -U postgres > dump_`date +%d-%m-%Y"_"%H_%M\_%S`.sql ``
 - To restore your databases: `cat dump_1234.sql | docker exec -i <docker_image_id> psql -U postgres`
 
-## How to run the tests
+## How to run the tests ✅
 
 - Clone this repository
 - `yarn` to install the dependencies (_not_ `npm i`!)
 - `npm test` to run the tests
 - **or** `yarn test-watch` to run the tests every time you change a file
 
-## How to use Google Analytics
+## How to use Google Analytics 📈
 
 By default, Google Analytics is deactivated (it doesn't even get built into the bundle).
 
-To enable it, you'll need to create a local `.env` file in `./retro-board-app/env.local` by copy-pasting the existing `.env` file in the same directory. To enable Google Analytics, simply add your GA Tracking ID like so: `REACT_APP_GA_ID=UA-&2345678-1`.
+To enable it, you'll need to create a local `.env` file in `./retro-board-app/env.local` by copy-pasting the existing `.env` file in the same directory. To enable Google Analytics, simply add your GA Tracking ID like so: `REACT_APP_GA_ID=UA-12345678-1`.
 
 Note: Google Analytics only works when using the production webpack config (i.e. when `NODE_ENV` is set to `production`).
 
-## How to use Postgres (w/o Docker)
+## How to use Postgres (w/o Docker) 🗄
 
 By default, the database engine is NeDB, an in-process database with no external dependencies (i.e. no database to install on your system).
 
 If you want to use a more "production-ready" database such as Postgres (without Docker), copy `.env.example` to `.env`, change `DB_TYPE` to `postgres` and fill the rest.
+
+## Kubernetes ☸
+
+To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s` folder.
 
 ## How to debug
 
@@ -120,18 +141,25 @@ If you want to use a more "production-ready" database such as Postgres (without 
 - Go on the **Sources** tab, and on the left, find your sources under `webpack://` and then `.`.
 - You can then put breakpoints in there and debugging
 
-## Roadmap
+## Roadmap 🚗
 
 - Adding a real (but optional) login mechanism (Google/GitHub etc.)
 - Highlight posts where the user voted
 - Markdown summary of posts to copy to confluence or other tool
 - Migrating to latest react-router with hooks
 
-## Versions history
+## Versions History
+
+### Version NEXT
+
+- Kubernetes configs. Deploy Retrospected to the cloud!
+- Making the backend scalable by making SocketIO use Redis to communicate between instances. This is disabled by default
+  and is only useful for Kubernetes deployments.
+- The backend hostname is now configurable on the nginx config on the frontend.
 
 ### Version 2.1.4
 
-- German Translation (thanks [@PaulBrandt](https://github.com/PaulBrandt))
+- 🇩🇪 German Translation (thanks [@PaulBrandt](https://github.com/PaulBrandt))
 - Bugfix: First post was sometimes not saved on regular sessions
 
 ### Version 2.1.3
@@ -205,7 +233,7 @@ If you want to use a more "production-ready" database such as Postgres (without 
 
 ### Version 1.0.1
 
-- Japanese Translation (thanks [@sat0yu](https://github.com/sat0yu))
+- 🇯🇵 Japanese Translation (thanks [@sat0yu](https://github.com/sat0yu))
 - Simplified the ESLint configuration
 - Introducing Prettier (`yarn format`)
 - Upgrading to Babel 7
@@ -223,8 +251,8 @@ If you want to use a more "production-ready" database such as Postgres (without 
 - Webpack 3 (for Webpack 2, look at version 0.9.0)
 - Converting entire project to 2-space indentation
 - Upgrade other dependencies
-- Polish Translation (thanks [@olaf-cichocki](https://github.com/olaf-cichocki))
-- Arabic Translation (thanks [@Meshredded](https://github.com/Meshredded))
+- 🇵🇱 Polish Translation (thanks [@olaf-cichocki](https://github.com/olaf-cichocki))
+- 🇦🇪 Arabic Translation (thanks [@Meshredded](https://github.com/Meshredded))
 - Improved the loading screen
 
 ### Version 0.9.0
@@ -242,7 +270,7 @@ If you want to use a more "production-ready" database such as Postgres (without 
 ### Version 0.8.0
 
 - Using [redux-saga-testing](https://github.com/antoinejaussoin/redux-saga-testing) to test sagas
-- Chinese (Traditional and Simplified) Translation (Thanks [@aqutw](https://github.com/aqutw))
+- 🇨🇳 Chinese (Traditional and Simplified) Translation (Thanks [@aqutw](https://github.com/aqutw))
 - Using [Yarn](https://yarnpkg.com/en/)
 - Updating dependencies
 - Fixing some Spanish translation mistakes (Thanks @MrPolymath)
@@ -251,8 +279,8 @@ If you want to use a more "production-ready" database such as Postgres (without 
 ### Version 0.7.0
 
 - Good test coverage, using Jest
-- Russian Translation (Thanks [@vectart](https://github.com/vectart))
-- Spanish Translation (Thanks [@andresin87](https://github.com/andresin87))
+- 🇷🇺 Russian Translation (Thanks [@vectart](https://github.com/vectart))
+- 🇪🇸 Spanish Translation (Thanks [@andresin87](https://github.com/andresin87))
 - Replacing PNG flags by SVG/CSS versions
 - Using `react-hot-loader` 3.0.0 (beta2) for Hot reloading
 - Fixing a few mobile/responsive issues
@@ -303,7 +331,7 @@ If you want to use a more "production-ready" database such as Postgres (without 
 - Improving performance by using `shouldComponentUpdate` via a custom base [Component](app/Component.jsx)
 - Updated to the brand new React 15
 - Improving Windows support by allowing Windows users to use the same commands as \*nix users
-- Internationalisation: added Dutch to the list of supported languages (Thanks [@Sonaryr](https://github.com/Sonaryr))
+- 🇳🇱 Internationalisation: added Dutch to the list of supported languages (Thanks [@Sonaryr](https://github.com/Sonaryr))
 
 ### Version 0.3.0
 
@@ -312,7 +340,7 @@ If you want to use a more "production-ready" database such as Postgres (without 
 - Change to the Like / Unlike logic: like and unlikes counts are separated
 - Adding ES7 decorators, more readable than the previous curry-ed functions
 - Better support for Windows
-- Internationalisation: added Brazilian Portuguese to the list of supported languages (Thanks [@renancouto](https://github.com/renancouto))
+- 🇧🇷 Internationalisation: added Brazilian Portuguese to the list of supported languages (Thanks [@renancouto](https://github.com/renancouto))
 
 ### Version 0.2.0
 
@@ -322,7 +350,7 @@ If you want to use a more "production-ready" database such as Postgres (without 
 - Ability to logout, and to leave a session
 - Improve the reliability of the clients list (currently connected users)
 - Fix issues when the web fonts can't load (firewall blocking for example)
-- Internationalisation: support for English, French and Hungarian (Thanks [@iaretiga](https://github.com/iaretiga))
+- 🇬🇧 🇫🇷 🇭🇺 Internationalisation: support for English, French and Hungarian (Thanks [@iaretiga](https://github.com/iaretiga))
 
 ### Version 0.1.1
 

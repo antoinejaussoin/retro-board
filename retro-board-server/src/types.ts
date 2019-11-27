@@ -26,6 +26,9 @@ export interface Configuration {
   DB_PASSWORD: string;
   DB_HOST: string;
   DB_PORT: number;
+  REDIS_ENABLED: boolean;
+  REDIS_HOST: string;
+  REDIS_PORT: number;
   BACKEND_PORT: number;
   SQL_LOG: boolean;
 }

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-cluster-ip-service
+  labels:
+    service: frontend
+spec:
+  type: ClusterIP
+  selector:
+    component: frontend
+  ports:
+    - port: 80
+      targetPort: 80
+      name: frontend
