@@ -146,7 +146,6 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 - Adding a real (but optional) login mechanism (Google/GitHub etc.)
 - Highlight posts where the user voted
 - Markdown summary of posts to copy to confluence or other tool
-- Migrating to latest react-router with hooks
 
 ## Versions History
 
@@ -156,6 +155,7 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 - Making the backend scalable by making SocketIO use Redis to communicate between instances. This is disabled by default
   and is only useful for Kubernetes deployments.
 - The backend hostname is now configurable on the nginx config on the frontend.
+- Replaced all occurences of `withRouter` by `useHistory` and `useParams`
 
 ### Version 2.1.4
 

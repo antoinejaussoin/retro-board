@@ -1,6 +1,6 @@
-import React, { SFC, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { useHistory } from 'react-router';
 import md5 from 'md5';
 import usePreviousSessions from '../../hooks/usePreviousSessions';
 import List from '@material-ui/core/List';
@@ -12,9 +12,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 const getGravatar = (id: string) =>
   `https://www.gravatar.com/avatar/${md5(id)}?d=retro`;
 
-interface PreviousGamesProps extends RouteComponentProps {}
-
-const PreviousGames: SFC<PreviousGamesProps> = ({ history }) => {
+const PreviousGames = () => {
+  const history = useHistory();
   const { previousSessions } = usePreviousSessions();
   const redirectToGame = useCallback(
     (id: string) => {
@@ -47,4 +46,4 @@ const ClickableListItem = styled(ListItem)`
   cursor: pointer;
 `;
 
-export default withRouter(PreviousGames);
+export default PreviousGames;

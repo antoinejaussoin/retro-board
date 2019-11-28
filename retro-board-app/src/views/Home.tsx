@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import shortid from 'shortid';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {
   Fab,
   Card,
@@ -22,8 +22,6 @@ import { SessionOptions, ColumnDefinition } from 'retro-board-common';
 import { trackEvent } from './../track';
 import { createCustomGame } from '../api';
 
-interface HomeProps extends RouteComponentProps {}
-
 const useStyles = makeStyles({
   media: {
     objectFit: 'cover',
@@ -38,19 +36,20 @@ const useStyles = makeStyles({
   },
 });
 
-function Home(props: HomeProps) {
+function Home() {
+  const history = useHistory();
   const translations = useTranslations();
   const createSession = useCallback(
     async (options: SessionOptions, columns: ColumnDefinition[]) => {
       const id = await createCustomGame(options, columns);
       if (id) {
         trackEvent('custom-modal/create');
-        props.history.push(`/game/${id}`);
+        history.push(`/game/${id}`);
       } else {
         trackEvent('custom-modal/fail');
       }
     },
-    [props.history]
+    [history]
   );
   const classes = useStyles();
   const [modalOpen, setModalOpen] = useState(false);
@@ -64,8 +63,8 @@ function Home(props: HomeProps) {
   }, []);
   const createDefaultSession = useCallback(() => {
     trackEvent('home/create/default');
-    props.history.push('/game/' + shortid());
-  }, [props.history]);
+    history.push('/game/' + shortid());
+  }, [history]);
   return (
     <>
       <MainCard>
@@ -141,4 +140,4 @@ const LaunchButtons = styled.div`
   }
 `;
 
-export default withRouter(Home);
+export default Home;

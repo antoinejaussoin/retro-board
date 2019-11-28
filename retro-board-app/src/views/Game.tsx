@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import useTranslations from '../translations';
 import useGlobalState from '../state';
@@ -13,13 +13,9 @@ import { ColumnContent } from './game/types';
 interface Route {
   gameId: string;
 }
-interface GameProps extends RouteComponentProps<Route> {}
 
-function GamePage({
-  match: {
-    params: { gameId },
-  },
-}: GameProps) {
+function GamePage() {
+  const { gameId } = useParams<Route>();
   const translations = useTranslations();
   const { state } = useGlobalState();
   const { summaryMode, session } = state;
@@ -81,4 +77,4 @@ const LoadingContainer = styled.div`
   margin-top: 120px;
 `;
 
-export default withRouter(GamePage);
+export default GamePage;

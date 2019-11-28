@@ -1,10 +1,5 @@
 import React, { useEffect, useCallback, useState, useRef } from 'react';
-import {
-  withRouter,
-  RouteComponentProps,
-  Redirect,
-  Switch,
-} from 'react-router-dom';
+import { useHistory, Redirect, Switch, Route } from 'react-router-dom';
 import { trackPageView } from './track';
 import styled from 'styled-components';
 import {
@@ -17,7 +12,6 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { Route } from 'react-router-dom';
 import Home from './views/Home';
 import Game from './views/Game';
 import Panel from './views/Panel';
@@ -33,9 +27,8 @@ const Title = styled(Typography)`
   color: white;
 `;
 
-interface AppProps extends RouteComponentProps {}
-
-function App({ history }: AppProps) {
+function App() {
+  const history = useHistory();
   useLoginFromLocalStorage();
   const isCompatible = useIsCompatibleBrowser();
   const { state, togglePanel, logout } = useGlobalState();
@@ -112,4 +105,4 @@ const Page = styled.main`
   }
 `;
 
-export default withRouter(App);
+export default App;
