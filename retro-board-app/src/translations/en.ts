@@ -1,7 +1,7 @@
 import { Translation } from './types';
 export default {
   Header: {
-    subtitle: 'A good way of ranting in an Agile way',
+    subtitle: 'A good way of expressing oneself in an Agile way',
     logout: 'Logout',
     leave: 'Leave',
     summaryMode: 'Summary Mode',
@@ -68,12 +68,16 @@ export default {
     likedQuestion: 'Liked',
     lackedQuestion: 'Lacked',
     learnedQuestion: 'Learned',
-    longedForQuestion: 'Longer For',
+    longedForQuestion: 'Longed For',
     anchorQuestion: 'Anchor',
     boatQuestion: 'Boat',
     islandQuestion: 'Island',
     windQuestion: 'Wind',
     rockQuestion: 'Rock',
+  },
+  GameMenu: {
+    board: 'Board',
+    summary: 'Summary',
   },
   Template: {
     default: 'Default',
@@ -83,7 +87,7 @@ export default {
     sailboat: 'Sailboat',
   },
   Clients: {
-    header: 'Kindly joining us right now:',
+    header: 'Participants:',
   },
   Join: {
     welcome: 'Welcome to Retrospected',
@@ -104,12 +108,15 @@ export default {
     },
   },
   Login: {
-    namePlaceholder: 'Who are you exactly? Enter your name here',
+    namePlaceholder: 'Welcome! Please enter your name here to continue',
     buttonLabel: "Let's start",
     header: 'Login',
   },
   SummaryBoard: {
     noPosts: 'There are no posts to display',
+    copyAsMarkdown: 'Copy the summary as Markdown',
+    copyAsRichText: 'Copy the summary as Rich Text',
+    copySuccessful: 'You successfully copied your summary in your clipboard',
   },
   SessionName: {
     defaultSessionName: 'My Retrospective',

@@ -12,8 +12,6 @@ export const RECEIVE_VOTE = 'retrospected/game/post/vote/receive';
 export const DELETE_POST = 'retrospected/game/post/delete';
 export const UPDATE_POST = 'retrospected/game/post/update';
 export const RECEIVE_BOARD = 'retrospected/game/board/receive';
-export const TOGGLE_SUMMARY_MODE =
-  'retrospected/game/session/summary-mode/toggle';
 
 const createAction = (type: string, payload?: any) => ({
   type,
@@ -74,8 +72,4 @@ export const receiveVote = (dispatch: Dispatch) => (
 
 export const deletePost = (dispatch: Dispatch) => (post: Post) => {
   dispatch(createAction(DELETE_POST, post));
-};
-
-export const toggleSummaryMode = (dispatch: Dispatch) => () => {
-  dispatch(createAction(TOGGLE_SUMMARY_MODE));
 };

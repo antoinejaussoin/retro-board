@@ -3,7 +3,7 @@
 version: '3'
 services:
   postgres:
-    image: postgres
+    image: postgres:11.6
     hostname: postgres
     ports:
       - '5432:5432'
@@ -28,13 +28,14 @@ services:
       - pgadmin-data-dev:/var/lib/pgadmin
     restart: unless-stopped
 
-  redis:
-    image: redis
-    ports:
-      - '6379:6379'
-    depends_on:
-      - postgres
-    restart: unless-stopped
+  # This is only needed to test Redis on the backend
+  # redis:
+  #   image: redis
+  #   ports:
+  #     - '6379:6379'
+  #   depends_on:
+  #     - postgres
+  #   restart: unless-stopped
 
 volumes:
   postgres-data-dev:

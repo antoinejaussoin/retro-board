@@ -14,11 +14,13 @@ import {
   Avatar,
 } from '@material-ui/core';
 import { Feedback } from '@material-ui/icons';
-import { ColumnContent } from './types';
-import { Palette } from '../../Theme';
-import useTranslations from '../../translations';
+import { ColumnContent } from '../types';
+import { Palette } from '../../../Theme';
+import useTranslations from '../../../translations';
 import { Post } from 'retro-board-common';
-import { countVotes } from './utils';
+import { countVotes } from '../utils';
+import { Page } from '../../../components/Page';
+import SpeedDial from './SpeedDial';
 
 interface SummaryModeProps {
   columns: ColumnContent[];
@@ -33,7 +35,11 @@ const Section = ({ column }: SectionProps) => (
     <Grid item xs={12}>
       <Card>
         <CardHeader
-          title={column.label}
+          title={
+            <Typography variant="h6" style={{ fontWeight: 300 }}>
+              {column.label}
+            </Typography>
+          }
           style={{ backgroundColor: column.color }}
         />
         <CardContent>
@@ -113,7 +119,11 @@ const ActionsList = ({ posts }: PostsListProps) => {
       <Grid item xs={12}>
         <Card>
           <CardHeader
-            title={summaryTitle}
+            title={
+              <Typography variant="h6" style={{ fontWeight: 300 }}>
+                {summaryTitle}
+              </Typography>
+            }
             style={{
               backgroundColor: theme.palette.primary.main,
               color: theme.palette.primary.contrastText,
@@ -149,16 +159,25 @@ const SummaryMode: React.SFC<SummaryModeProps> = ({ columns }) => {
     }, []);
   }, [columns]);
   return (
-    <div>
+    <Page>
       <div>
         {columns.map(column => (
           <Section key={column.index} column={column} />
         ))}
         {posts.length ? <ActionsList posts={posts} /> : null}
       </div>
-    </div>
+      <SpeedDialContainer>
+        <SpeedDial />
+      </SpeedDialContainer>
+    </Page>
   );
 };
+
+const SpeedDialContainer = styled.div`
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+`;
 
 const PostContainer = styled.div``;
 

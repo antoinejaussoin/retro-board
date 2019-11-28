@@ -1,8 +1,8 @@
 import React from 'react';
 import uuid from 'uuid';
-import { render, getAllByRole } from '../../../testing';
+import { render, getAllByRole } from '../../../../testing';
 import SummaryMode from '../SummaryMode';
-import { ColumnContent } from '../types';
+import { ColumnContent } from '../../types';
 import { Post } from 'retro-board-common';
 
 const buildPost = (likes: number, dislikes: number): Post => {

@@ -67,6 +67,10 @@ export interface Translation {
     windQuestion?: string;
     rockQuestion?: string;
   };
+  GameMenu: {
+    board?: string;
+    summary?: string;
+  };
   Template: {
     default?: string;
     wellNotWell?: string;
@@ -102,6 +106,9 @@ export interface Translation {
   };
   SummaryBoard: {
     noPosts?: string;
+    copyAsMarkdown?: string;
+    copyAsRichText?: string;
+    copySuccessful?: string;
   };
   SessionName: {
     defaultSessionName?: string;

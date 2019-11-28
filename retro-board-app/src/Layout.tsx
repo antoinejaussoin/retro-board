@@ -59,7 +59,7 @@ function App() {
           <MainTitle variant="h6" color="inherit" onClick={goToHome}>
             Retrospected
           </MainTitle>
-          <Route exact path="/game/:gameId" render={() => <Invite />} />
+          <Route path="/game/:gameId" component={Invite} />
           <Button color="inherit" buttonRef={menuAnchor} onClick={openMenu}>
             {state.user ? state.user.name : '--'}
           </Button>
@@ -80,14 +80,12 @@ function App() {
           </Menu>
         </Toolbar>
       </AppBar>
-      <Page>
-        <Route path="/" exact component={Home} />
-        <Switch>
-          <Redirect from="/session/:gameId" to="/game/:gameId" />
-          <Route path="/game/:gameId" component={Game} />
-        </Switch>
-        {!state.user && <Login />}
-      </Page>
+      <Route path="/" exact component={Home} />
+      <Switch>
+        <Redirect from="/session/:gameId" to="/game/:gameId" />
+        <Route path="/game/:gameId" component={Game} />
+      </Switch>
+      {!state.user && <Login />}
       <Panel />
       <OutdatedBrowser show={!isCompatible} />
     </div>
@@ -96,13 +94,6 @@ function App() {
 
 const MainTitle = styled(Title)`
   cursor: pointer;
-`;
-
-const Page = styled.main`
-  margin: 50px;
-  @media screen and (max-width: 600px) {
-    margin: 10px;
-  }
 `;
 
 export default App;

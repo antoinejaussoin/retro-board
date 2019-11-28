@@ -68,6 +68,10 @@ export default {
     windQuestion: undefined,
     rockQuestion: undefined,
   },
+  GameMenu: {
+    board: undefined,
+    summary: undefined,
+  },
   Template: {
     default: undefined,
     wellNotWell: undefined,
@@ -103,6 +107,9 @@ export default {
   },
   SummaryBoard: {
     noPosts: '表示する項目がありません',
+    copyAsMarkdown: undefined,
+    copyAsRichText: undefined,
+    copySuccessful: undefined,
   },
   SessionName: {
     defaultSessionName: '新しいレトロスペクティブ',

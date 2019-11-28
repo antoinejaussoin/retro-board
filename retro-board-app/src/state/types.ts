@@ -15,7 +15,6 @@ export interface State {
   user: User | null;
   players: User[];
   session: Session | null;
-  summaryMode: boolean;
 }
 
 export interface ColumnSettings {

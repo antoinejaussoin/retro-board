@@ -3,7 +3,6 @@ import reducer from '../reducer';
 import { State } from '../types';
 import {
   TOGGLE_PANEL,
-  TOGGLE_SUMMARY_MODE,
   LOGIN,
   LOGOUT,
   SET_PLAYERS,
@@ -40,7 +39,6 @@ describe('Global state reducer', () => {
         columns: [],
         posts: [],
       },
-      summaryMode: false,
       user: { id: '2', name: 'Alice' },
     };
   });
@@ -51,15 +49,6 @@ describe('Global state reducer', () => {
     expect(state.panelOpen).toBe(false);
     state = reducer(state, { type: TOGGLE_PANEL });
     expect(state.panelOpen).toBe(true);
-  });
-
-  it('Should toggle the summary mode on TOGGLE_SUMMARY_MODE', () => {
-    state = reducer(state, { type: TOGGLE_SUMMARY_MODE });
-    expect(state.summaryMode).toBe(true);
-    state = reducer(state, { type: TOGGLE_SUMMARY_MODE });
-    expect(state.summaryMode).toBe(false);
-    state = reducer(state, { type: TOGGLE_SUMMARY_MODE });
-    expect(state.summaryMode).toBe(true);
   });
 
   it('Should update the username on login', () => {
@@ -165,7 +154,6 @@ describe('Global state reducer', () => {
   it('Should reset the session on RESET_SESSION', () => {
     state = {
       ...state,
-      summaryMode: true,
       session: {
         ...defaultOptions,
         name: 'foo',
@@ -178,6 +166,5 @@ describe('Global state reducer', () => {
       type: RESET_SESSION,
     });
     expect(state.session).toBe(null);
-    expect(state.summaryMode).toBe(false);
   });
 });

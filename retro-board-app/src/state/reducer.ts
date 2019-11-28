@@ -9,7 +9,6 @@ import {
   DELETE_POST,
   UPDATE_POST,
   RECEIVE_BOARD,
-  TOGGLE_SUMMARY_MODE,
   RENAME_SESSION,
   RESET_SESSION,
   RECEIVE_VOTE,
@@ -108,11 +107,8 @@ export default (state: State, action: Action): State => {
     case RESET_SESSION:
       return {
         ...state,
-        summaryMode: false,
         session: null,
       };
-    case TOGGLE_SUMMARY_MODE:
-      return { ...state, summaryMode: !state.summaryMode };
     default:
       return state;
   }
