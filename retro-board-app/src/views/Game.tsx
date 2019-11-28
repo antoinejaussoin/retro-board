@@ -1,26 +1,40 @@
-import React, { useMemo } from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import {
+  useParams,
+  Route,
+  useRouteMatch,
+  useLocation,
+  useHistory,
+} from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import useTranslations from '../translations';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import { Dashboard, List } from '@material-ui/icons';
 import useGlobalState from '../state';
-import { extrapolate } from '../state/columns';
+import useTranslations from '../translations';
 import useGame from './game/useGame';
 import GameMode from './game/GameMode';
-import SummaryMode from './game/SummaryMode';
-import { ColumnContent } from './game/types';
+import SummaryMode from './game/summary/SummaryMode';
+import useColumns from './game/useColumns';
 
-interface Route {
+interface RouteParams {
   gameId: string;
 }
 
 function GamePage() {
-  const { gameId } = useParams<Route>();
-  const translations = useTranslations();
+  const { GameMenu } = useTranslations();
+  const match = useRouteMatch();
+  const location = useLocation();
+  const history = useHistory();
+  const { gameId } = useParams<RouteParams>();
   const { state } = useGlobalState();
-  const { summaryMode, session } = state;
-  const posts = session ? session.posts : [];
-  const cols = session ? session.columns : [];
+  const handleChange = useCallback((_, v) => history.push(v), [history]);
+  const columns = useColumns();
+  const { session } = state;
+  const rootUrl = `${match.url}`;
+  const summaryUrl = `${match.url}/summary`;
 
   const {
     initialised,
@@ -31,22 +45,7 @@ function GamePage() {
     onRenameSession,
   } = useGame(gameId);
 
-  const columns: ColumnContent[] = useMemo(
-    () =>
-      cols
-        .map(col => extrapolate(col, translations))
-        .map(
-          (col, index) =>
-            ({
-              index,
-              posts: posts.filter(p => p.column === index),
-              ...col,
-            } as ColumnContent)
-        ),
-    [posts, cols, translations]
-  );
-
-  if (!session) {
+  if (!session || !initialised) {
     return (
       <LoadingContainer>
         <CircularProgress />
@@ -56,17 +55,38 @@ function GamePage() {
 
   return (
     <div>
-      {initialised && !summaryMode && (
-        <GameMode
-          columns={columns}
-          onEdit={onEditPost}
-          onAddPost={onAddPost}
-          onDeletePost={onDeletePost}
-          onLike={onLike}
-          onRenameSession={onRenameSession}
-        />
-      )}
-      {initialised && summaryMode && <SummaryMode columns={columns} />}
+      <AppBar position="static" color="default">
+        <Tabs
+          value={location.pathname}
+          onChange={handleChange}
+          variant="scrollable"
+          scrollButtons="on"
+          indicatorColor="primary"
+          textColor="primary"
+          aria-label="Game mode tabs"
+        >
+          <Tab label={GameMenu.board} icon={<Dashboard />} value={rootUrl} />
+          <Tab label={GameMenu.summary} icon={<List />} value={summaryUrl} />
+        </Tabs>
+      </AppBar>
+      <Route
+        path={`${match.url}`}
+        exact
+        render={() => (
+          <GameMode
+            columns={columns}
+            onEdit={onEditPost}
+            onAddPost={onAddPost}
+            onDeletePost={onDeletePost}
+            onLike={onLike}
+            onRenameSession={onRenameSession}
+          />
+        )}
+      />
+      <Route
+        path={`${match.url}/summary`}
+        render={() => <SummaryMode columns={columns} />}
+      />
     </div>
   );
 }

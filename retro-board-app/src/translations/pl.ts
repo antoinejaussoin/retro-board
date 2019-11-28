@@ -68,6 +68,10 @@ export default {
     windQuestion: undefined,
     rockQuestion: undefined,
   },
+  GameMenu: {
+    board: undefined,
+    summary: undefined,
+  },
   Template: {
     default: undefined,
     wellNotWell: undefined,
@@ -103,6 +107,9 @@ export default {
   },
   SummaryBoard: {
     noPosts: 'Nie ma wpisów do wyświetlenia',
+    copyAsMarkdown: undefined,
+    copyAsRichText: undefined,
+    copySuccessful: undefined,
   },
   SessionName: {
     defaultSessionName: 'Moja Retrospektywa',

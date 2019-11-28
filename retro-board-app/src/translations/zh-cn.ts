@@ -68,6 +68,10 @@ export default {
     windQuestion: undefined,
     rockQuestion: undefined,
   },
+  GameMenu: {
+    board: undefined,
+    summary: undefined,
+  },
   Template: {
     default: undefined,
     wellNotWell: undefined,
@@ -103,6 +107,9 @@ export default {
   },
   SummaryBoard: {
     noPosts: '目前无任何内容',
+    copyAsMarkdown: undefined,
+    copyAsRichText: undefined,
+    copySuccessful: undefined,
   },
   SessionName: {
     defaultSessionName: '我的回顾',

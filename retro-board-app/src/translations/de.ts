@@ -10,7 +10,8 @@ export default {
     header: 'Sprache auswählen',
   },
   Main: {
-    hint: 'Du kannst Andere zu dieser Session einladen indem Du ihnen die URL schickst',
+    hint:
+      'Du kannst Andere zu dieser Session einladen indem Du ihnen die URL schickst',
   },
   Post: {
     vote: 'Stimme',
@@ -24,16 +25,14 @@ export default {
       `Du hast ${count} ${type}s verbleibend.`,
     voteRemainingOne: (type: string) =>
       `Du hast nur noch einen ${type} verbleibend, verteile ihn gut!`,
-    voteRemainingNone: (type: string) =>
-      `Du hast keine ${type}s verbleibend.`,
+    voteRemainingNone: (type: string) => `Du hast keine ${type}s verbleibend.`,
   },
   Customize: {
     title: 'Personalisiere Dein Spiel',
     votingCategory: 'Abstimmung',
     votingCategorySub: 'Setze die Abstimmregeln',
     postCategory: 'Beitragseinstellungen',
-    postCategorySub:
-      'Stelle ein, wie Nutzer mit Beitragen interagieren können',
+    postCategorySub: 'Stelle ein, wie Nutzer mit Beitragen interagieren können',
     customTemplateCategory: 'Spaltenkonfiguration',
     customTemplateCategorySub:
       'Setze die Anzahl an Spalten und deren Eigenschaften',
@@ -43,15 +42,15 @@ export default {
     maxDownVotes: 'Max Down-Votes',
     maxDownVotesHelp: `Maximale Anzahl an 'down-votes', die ein Nutzer geben kann`,
     allowSelfVoting: 'Eigene Posts bewerten',
-    allowSelfVotingHelp: 'Soll es Nutzern möglich sein eigene Beiträge zu bewerten?',
+    allowSelfVotingHelp:
+      'Soll es Nutzern möglich sein eigene Beiträge zu bewerten?',
     allowMultipleVotes: 'Mehrfachabstimmung',
     allowMultipleVotesHelp:
       'Soll es Nutzern möglich sein mehrfach zu bewerten?',
     allowActions: 'Erlaube Maßnahmen',
     allowActionsHelp: `Bestimmt ob Maßnahmen hinzugefügt werden können`,
     allowAuthorVisible: 'Zeige Author',
-    allowAuthorVisibleHelp:
-      'Zeigt den Author eines Posts an.',
+    allowAuthorVisibleHelp: 'Zeigt den Author eines Posts an.',
     template: 'Vorlage',
     templateHelp: 'Nutze ein vordefiniertes Spaltenset',
     numberOfColumns: 'Anzahl an Spalten',
@@ -68,12 +67,16 @@ export default {
     likedQuestion: 'Liked',
     lackedQuestion: 'Lacked',
     learnedQuestion: 'Learned',
-    longedForQuestion: 'Longer For',
+    longedForQuestion: 'Longed For',
     anchorQuestion: 'Anker',
     boatQuestion: 'Boot',
     islandQuestion: 'Insel',
     windQuestion: 'Wind',
     rockQuestion: 'Fels',
+  },
+  GameMenu: {
+    board: undefined,
+    summary: undefined,
   },
   Template: {
     default: 'Default',
@@ -105,11 +108,14 @@ export default {
   },
   Login: {
     namePlaceholder: 'Wer genau bist Du? Gib hier Deinen Namen ein',
-    buttonLabel: "Auf gehts!",
+    buttonLabel: 'Auf gehts!',
     header: 'Anmelden',
   },
   SummaryBoard: {
     noPosts: 'Es gibt keine Beiträge',
+    copyAsMarkdown: undefined,
+    copyAsRichText: undefined,
+    copySuccessful: undefined,
   },
   SessionName: {
     defaultSessionName: 'Meine Retrospektive',

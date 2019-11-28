@@ -69,6 +69,10 @@ export default {
     windQuestion: undefined,
     rockQuestion: undefined,
   },
+  GameMenu: {
+    board: undefined,
+    summary: undefined,
+  },
   Template: {
     default: undefined,
     wellNotWell: undefined,
@@ -104,6 +108,9 @@ export default {
   },
   SummaryBoard: {
     noPosts: 'Er zijn geen punten om te tonen',
+    copyAsMarkdown: undefined,
+    copyAsRichText: undefined,
+    copySuccessful: undefined,
   },
   SessionName: {
     defaultSessionName: 'Mijn Retrospective',

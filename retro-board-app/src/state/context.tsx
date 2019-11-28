@@ -17,7 +17,6 @@ import {
   updatePost,
   receiveVote,
   receiveBoard,
-  toggleSummaryMode,
   renameSession,
   resetSession,
 } from './actions';
@@ -27,7 +26,6 @@ export const initialState: State = {
   panelOpen: false,
   user: null,
   players: [],
-  summaryMode: false,
   session: {
     ...defaultSession,
   },
@@ -64,7 +62,6 @@ export function useGlobalState() {
       updatePost: updatePost(dispatch),
       receiveVote: receiveVote(dispatch),
       receiveBoard: receiveBoard(dispatch),
-      toggleSummaryMode: toggleSummaryMode(dispatch),
       renameSession: renameSession(dispatch),
       resetSession: resetSession(dispatch),
     };

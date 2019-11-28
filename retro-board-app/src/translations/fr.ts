@@ -1,7 +1,7 @@
 import { Translation } from './types';
 export default {
   Header: {
-    subtitle: 'Un bon moyen de râler de façon Agile',
+    subtitle: "Un bon moyen de s'exprimer de façon Agile",
     logout: 'Déconnexion',
     leave: 'Sortir',
     summaryMode: 'Mode Résumé',
@@ -75,6 +75,10 @@ export default {
     windQuestion: 'Vent',
     rockQuestion: 'Rocher',
   },
+  GameMenu: {
+    board: 'Board', // Si qqn à une suggestion de traduction...
+    summary: 'Résumé',
+  },
   Template: {
     default: 'Par défaut',
     wellNotWell: 'Bien / Pas Bien',
@@ -83,7 +87,7 @@ export default {
     sailboat: 'Bateau',
   },
   Clients: {
-    header: 'Nos invités du moment:',
+    header: 'Participants:',
   },
   Join: {
     welcome: 'Bienvenue',
@@ -104,12 +108,15 @@ export default {
     },
   },
   Login: {
-    namePlaceholder: 'Qui êtes-vous au juste? Entrez votre nom ici',
+    namePlaceholder: 'Présentez-vous ! Entrez votre nom ici',
     buttonLabel: "C'est parti !",
     header: 'Se connecter',
   },
   SummaryBoard: {
     noPosts: 'Aucun post à afficher',
+    copyAsMarkdown: 'Copier le résumé au format Markdown',
+    copyAsRichText: 'Copier le résumé en texte enrichi',
+    copySuccessful: 'Vous avez copié le résumé avec succès',
   },
   SessionName: {
     defaultSessionName: 'Ma Retrospective',

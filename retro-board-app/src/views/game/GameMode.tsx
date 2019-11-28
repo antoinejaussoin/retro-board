@@ -8,6 +8,7 @@ import useRemainingVotes from './useRemainingVotes';
 import { getIcon } from '../../state/icons';
 import Column from './Column';
 import EditableLabel from '../../components/EditableLabel';
+import { Page } from '../../components/Page';
 import { ColumnContent } from './types';
 import RemainingVotes from './RemainingVotes';
 
@@ -47,43 +48,45 @@ function GameMode({
   }
 
   return (
-    <Box className={classes.container}>
-      <HeaderWrapper>
-        <div />
-        <Typography
-          variant="h5"
-          align="center"
-          gutterBottom
-          paragraph
-          className={classes.sessionName}
-        >
-          <EditableLabel
-            placeholder={translations.SessionName.defaultSessionName}
-            value={state.session.name || ''}
-            centered
-            onChange={onRenameSession}
-          />
-        </Typography>
-        <RemainingVotes up={remainingVotes.up} down={remainingVotes.down} />
-      </HeaderWrapper>
+    <Page>
+      <Box className={classes.container}>
+        <HeaderWrapper>
+          <div />
+          <Typography
+            variant="h5"
+            align="center"
+            gutterBottom
+            paragraph
+            className={classes.sessionName}
+          >
+            <EditableLabel
+              placeholder={translations.SessionName.defaultSessionName}
+              value={state.session.name || ''}
+              centered
+              onChange={onRenameSession}
+            />
+          </Typography>
+          <RemainingVotes up={remainingVotes.up} down={remainingVotes.down} />
+        </HeaderWrapper>
 
-      <Columns numberOfColumns={columns.length}>
-        {columns.map(column => (
-          <Column
-            key={column.index}
-            posts={column.posts}
-            question={column.label}
-            icon={getIcon(column.icon)}
-            color={column.color}
-            onAdd={content => onAddPost(column.index, content)}
-            onDelete={onDeletePost}
-            onLike={post => onLike(post, true)}
-            onDislike={post => onLike(post, false)}
-            onEdit={onEdit}
-          />
-        ))}
-      </Columns>
-    </Box>
+        <Columns numberOfColumns={columns.length}>
+          {columns.map(column => (
+            <Column
+              key={column.index}
+              posts={column.posts}
+              question={column.label}
+              icon={getIcon(column.icon)}
+              color={column.color}
+              onAdd={content => onAddPost(column.index, content)}
+              onDelete={onDeletePost}
+              onLike={post => onLike(post, true)}
+              onDislike={post => onLike(post, false)}
+              onEdit={onEdit}
+            />
+          ))}
+        </Columns>
+      </Box>
+    </Page>
   );
 }
 

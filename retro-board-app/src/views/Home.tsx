@@ -21,6 +21,8 @@ import logo from './home/logo.png';
 import { SessionOptions, ColumnDefinition } from 'retro-board-common';
 import { trackEvent } from './../track';
 import { createCustomGame } from '../api';
+import { Page } from '../components/Page';
+import usePreviousSessions from '../hooks/usePreviousSessions';
 
 const useStyles = makeStyles({
   media: {
@@ -39,6 +41,7 @@ const useStyles = makeStyles({
 function Home() {
   const history = useHistory();
   const translations = useTranslations();
+  const hasPreviousSessions = usePreviousSessions().previousSessions.length > 0;
   const createSession = useCallback(
     async (options: SessionOptions, columns: ColumnDefinition[]) => {
       const id = await createCustomGame(options, columns);
@@ -66,7 +69,7 @@ function Home() {
     history.push('/game/' + shortid());
   }, [history]);
   return (
-    <>
+    <Page>
       <MainCard>
         <CardMedia
           className={classes.media}
@@ -105,15 +108,17 @@ function Home() {
           />
         </CardActions>
       </MainCard>
-      <MainCard>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {translations.Join.previousTab.header}
-          </Typography>
-          <PreviousGames />
-        </CardContent>
-      </MainCard>
-    </>
+      {hasPreviousSessions && (
+        <MainCard>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              {translations.Join.previousTab.header}
+            </Typography>
+            <PreviousGames />
+          </CardContent>
+        </MainCard>
+      )}
+    </Page>
   );
 }
 

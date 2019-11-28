@@ -6,7 +6,6 @@ import { LanguageContext } from '../translations';
 import useGlobalState from '../state';
 import LanguagePicker from '../components/LanguagePicker';
 import PlayerList from './panel/PlayerList';
-import SummaryModeSwitch from './panel/SummaryModeSwitch';
 import ForkMe from './panel/github.png';
 
 function Panel() {
@@ -19,9 +18,6 @@ function Panel() {
         value={languageContext.language}
         onChange={languageContext.setLanguage}
       />
-      <Content>
-        <Route path="/game/:gameId" component={SummaryModeSwitch} />
-      </Content>
       <Content>
         <Route path="/game/:gameId" component={PlayerList} />
       </Content>
