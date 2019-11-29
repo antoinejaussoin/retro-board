@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pgadmin
+  name: rb-pgadmin
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: pgadmin
+      component: rb-pgadmin
   template:
     metadata:
       labels:
-        component: pgadmin
+        component: rb-pgadmin
     spec:
       volumes:
-        - name: pgadmin-storage
+        - name: rb-pgadmin-storage
           persistentVolumeClaim:
-            claimName: pgadmin-persistent-volume-claim
+            claimName: rb-pgadmin-persistent-volume-claim
       containers:
-        - name: pgadmin
+        - name: rb-pgadmin
           image: dpage/pgadmin4:latest
           ports:
             - containerPort: 80
           volumeMounts:
-            - name: pgadmin-storage
+            - name: rb-pgadmin-storage
               mountPath: /var/lib/pgadmin
           env:
             - name: PGADMIN_DEFAULT_EMAIL

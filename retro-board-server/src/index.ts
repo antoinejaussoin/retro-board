@@ -41,8 +41,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const httpServer = new http.Server(app);
 
-app.get('/api/ping', (req, res) => {
+app.get('/api/ping', (_, res) => {
   res.send('pong');
+});
+
+// Liveliness Probe
+app.get('/healthz', async (_, res) => {
+  res.status(200).send();
 });
 
 const io = socketIo(httpServer);

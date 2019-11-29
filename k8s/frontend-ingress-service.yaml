@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: ingress-service
+  name: rb-frontend-ingress-service
   annotations:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/affinity: "cookie"
@@ -12,18 +12,18 @@ metadata:
     nginx.ingress.kubernetes.io/session-proxy-send-timeout: "3600"
 spec:
   rules:
-    - host: retro.local # If you are working on localhost, you need to edit /etc/hosts and point your kubernetes IP to this
+    - host: rb.local # If you are working on localhost, you need to edit /etc/hosts and point your kubernetes IP to this
       http:
         paths:
           - path: /
             backend:
-              serviceName: frontend-cluster-ip-service
+              serviceName: rb-frontend-cluster-ip-service
               servicePort: 80
           - path: /api
             backend:
-              serviceName: backend-cluster-ip-service
+              serviceName: rb-backend-cluster-ip-service
               servicePort: 3201
           - path: /socket.io
             backend:
-              serviceName: backend-cluster-ip-service
+              serviceName: rb-backend-cluster-ip-service
               servicePort: 3201

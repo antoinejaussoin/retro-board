@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: rb-frontend-cluster-ip-service
+  name: rb-pgadmin-cluster-ip-service
   labels:
-    service: rb-frontend
+    service: rb-pgadmin
 spec:
   type: ClusterIP
   selector:
-    component: rb-frontend
+    component: rb-pgadmin
   ports:
     - port: 80
       targetPort: 80

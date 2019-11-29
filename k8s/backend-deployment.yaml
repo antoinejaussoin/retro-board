@@ -1,33 +1,48 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
+  name: rb-backend
 spec:
   replicas: 2
   selector:
     matchLabels:
-      component: backend
+      component: rb-backend
   template:
     metadata:
       labels:
-        component: backend
+        component: rb-backend
     spec:
       containers:
-        - name: backend
-          image: rg.fr-par.scw.cloud/retro/retrospected-backend:k8s-1
+        - name: rb-backend
+          image: rg.fr-par.scw.cloud/retro/retrospected-backend:k8s-2
           ports:
             - containerPort: 3201
+              name: backend-port
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: backend-port
+            initialDelaySeconds: 60
+            failureThreshold: 1
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: backend-port
+            initialDelaySeconds: 10
+            failureThreshold: 1
+            periodSeconds: 15
           env:
             - name: BACKEND_PORT
               value: '3201'
             - name: DB_HOST
-              value: postgres-cluster-ip-service
+              value: rb-postgres-cluster-ip-service
             - name: REDIS_ENABLED
               value: 'true'
             - name: REDIS_PORT
               value: '6379'
             - name: REDIS_HOST
-              value: redis-cluster-ip-service
+              value: rb-redis-cluster-ip-service
             - name: DB_NAME
               value: retroboard
             - name: DB_PASSWORD

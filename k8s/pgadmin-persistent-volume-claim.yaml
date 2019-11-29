@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pgadmin-persistent-volume-claim
+  name: rb-pgadmin-persistent-volume-claim
 spec:
   accessModes:
     - ReadWriteOnce

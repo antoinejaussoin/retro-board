@@ -1,14 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend-cluster-ip-service
+  name: rb-backend-cluster-ip-service
   labels:
-    service: backend
+    service: rb-backend
 spec:
   type: ClusterIP
   selector:
-    component: backend
+    component: rb-backend
   ports:
     - port: 3201
       targetPort: 3201
-      name: backend

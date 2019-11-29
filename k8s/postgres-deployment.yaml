@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgres
+  name: rb-postgres
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: postgres
+      component: rb-postgres
   template:
     metadata:
       labels:
-        component: postgres
+        component: rb-postgres
     spec:
       volumes:
-        - name: postgres-storage
+        - name: rb-postgres-storage
           persistentVolumeClaim:
-            claimName: postgres-persistent-volume-claim
+            claimName: rb-postgres-persistent-volume-claim
       containers:
-        - name: postgres
+        - name: rb-postgres
           image: postgres:11.5
           ports:
             - containerPort: 5432
           volumeMounts:
-            - name: postgres-storage
+            - name: rb-postgres-storage
               mountPath: /var/lib/postgresql/data
               subPath: postgres
           env:

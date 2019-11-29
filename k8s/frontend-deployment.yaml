@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
+  name: rb-frontend
 spec:
   replicas: 2
   selector:
     matchLabels:
-      component: frontend
+      component: rb-frontend
   template:
     metadata:
       labels:
-        component: frontend
+        component: rb-frontend
     spec:
       containers:
-        - name: frontend
-          image: rg.fr-par.scw.cloud/retro/retrospected-frontend:k8s-1
+        - name: rb-frontend
+          image: rg.fr-par.scw.cloud/retro/retrospected-frontend:k8s-2
           ports:
             - containerPort: 80
           env:
             - name: BACKEND_HOST
-              value: backend-cluster-ip-service
+              value: rb-backend-cluster-ip-service
             - name: BACKEND_PORT
               value: '3201'

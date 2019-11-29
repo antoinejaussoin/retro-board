@@ -1,14 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres-cluster-ip-service
+  name: rb-postgres-cluster-ip-service
   labels:
-    service: postgres
+    service: rb-postgres
 spec:
   type: ClusterIP
   selector:
-    component: postgres
+    component: rb-postgres
   ports:
     - port: 5432
       targetPort: 5432
-      name: postgres

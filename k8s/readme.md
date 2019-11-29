@@ -40,6 +40,8 @@ If you are working locally, you need to do this:
 - Get the minikube IP: `minikube ip`
 - Add an entry in `/etc/hosts` that points this IP to `retro.local` (or whatever DNS you set in ingress-service.yaml)
 
+You can also check that the Ingress service work by doing `kubectl get ingress`.
+
 ### Check the images
 
 In `frontend-deployment.yaml` and `backend-deployment.yaml`, you need to provide the images for Retrospected. The provided ones might be out of date, or unavailable, and you might need to build your own.
@@ -55,6 +57,12 @@ Deploy the cluster (if your current directory is the root of this repo):
 You can monitor your cluster and see how it's doing by running the Kubernetes Dashboard:
 
 `minikube dashboard`
+
+### (Optiona) Get the tunnel working
+
+If you are using minikube and LoadBalancer, please run `minikube tunnel` in another terminal. Otherwise, your LoadBalancer services won't give you an external IP you can hit.
+
+This does not apply if you are using the Ingress service instead.
 
 ## Using microk8s
 
