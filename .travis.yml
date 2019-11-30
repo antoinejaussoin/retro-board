@@ -14,7 +14,7 @@ stages:
   - name: deploy
     if: branch = master
   - name: deploy-canary
-    if: $TRAVIS_PULL_REQUEST == “false” && $TRAVIS_BRANCH == develop
+    if: env(TRAVIS_BRANCH) = develop AND env(TRAVIS_PULL_REQUEST) = false
 
 before_install:
   - PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
