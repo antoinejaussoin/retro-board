@@ -1,5 +1,9 @@
 # retro-board
 
+[![Build Status](https://travis-ci.org/antoinejaussoin/retro-board.svg?branch=develop)](https://travis-ci.org/antoinejaussoin/retro-board)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/antoinejaussoin/retro-board)
+![David](https://img.shields.io/david/antoinejaussoin/retro-board)
+
 This is a Retrospective Idea board, powering [retrospected.com](http://www.retrospected.com).
 
 &nbsp;
@@ -41,6 +45,7 @@ It features the following technologies:
 - [Yarn](https://yarnpkg.com/en/), replacing NPM
 - [Docker](https://docker.com), for easy deployment
 - [Kubernetes](https://kubernetes.io/), to scale Retrospected for its 10M+ users (not)
+- [Travis](http://travis-ci.org/), for Continuous Integration and Deployment (CI/CD)
 
 Previous versions, up to v1.0.1 featured the following libraries:
 
@@ -81,25 +86,20 @@ Follow the steps in "How to run for development" below.
 
 You must have `docker` and `docker-compose` installed on your system.
 
-### Result
+### Run 🚀
 
-This will install a production-ready version of Retrospected automatically, using Postgres. You don't need to have anything installed other than Docker. This will install and run:
+- Copy `docker-compose.yml.example` to `docker-compose.yml`
+- Run `docker-compose up -d`
+- Voilà!
+
+This will run a production-ready version of Retrospected automatically, using Postgres. You don't need to have anything installed other than Docker. This will install and run:
 
 - Postgres
 - pgAdmin4 (Web UI for postgres)
 - The Retrospected Nodejs backend
 - The frontend, served by `nginx`.
 
-### Installation
-
-- Copy `docker-compose.yml.example` to `docker-compose.yml`
-- Edit the file to set some passwords etc. You can also set your Google Analytics ID to enable Google Analytics tracking. You can also leave the file "as-is", it has sensible defaults.
-- Run `docker-compose build`: this will build the backend and frontend images, based on your settings.
-- Get yourself a coffee ☕️
-- Run `docker-compose up -d`
-- Voilà!
-
-### Backups
+### Backups 💾
 
 When using the Docker deployment, your database runs from a container. But if you still need to make some backup of your data, you can do the following:
 
@@ -156,6 +156,8 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
   and is only useful for Kubernetes deployments.
 - The backend hostname is now configurable on the nginx config on the frontend.
 - Replaced all occurences of `withRouter` by `useHistory` and `useParams`
+- Added CI/CD support with Travis
+- Auto-deployment of Docker images to Docker Hub
 
 ### Version 2.1.4
 

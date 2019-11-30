@@ -3,6 +3,8 @@ FROM node:12-alpine as Node
 ARG GoogleAnalytics
 ENV REACT_APP_GA_ID "$GoogleAnalytics"
 ENV NODE_ENV=production
+ENV BACKEND_HOST=backend
+ENV BACKEND_PORT=3201
 
 WORKDIR /home/node/app
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app

@@ -1,7 +1,7 @@
 version: '3'
 services:
   postgres:
-    image: postgres:11.5
+    image: postgres:11.6
     hostname: postgres
     environment:
       POSTGRES_USER: postgres # Must be the same as DB_USER below
@@ -33,9 +33,7 @@ services:
         max-size: '50m'
 
   backend:
-    build:
-      context: .
-      dockerfile: ./docker/Backend.Dockerfile
+    image: antoinejaussoin/retro-board-backend:latest
     depends_on:
       - postgres
     environment:
@@ -48,6 +46,9 @@ services:
       DB_PORT: 5432 # Don't change this.
       BACKEND_PORT: 3201 # Don't change this (or change it in nginx.conf as well)
       SQL_LOG: 'false' # Whether to log SQL queries in the console
+      REDIS_ENABLED: 'false' # Whether to enable Redis, only useful in the context of a Kubernetes cluster
+      REDIS_PORT: 6379 # Not used by default
+      REDIS_HOST: redis # Not used by default
     restart: unless-stopped
     logging:
       driver: 'json-file'
@@ -55,19 +56,15 @@ services:
         max-size: '50m'
 
   frontend:
-    build:
-      context: .
-      dockerfile: ./docker/Frontend.Dockerfile
-      # args:
-      #   GoogleAnalytics: UA-1231231-1
+    image: antoinejaussoin/retro-board-frontend:latest
     depends_on:
       - backend
     ports:
       - '80:80' # Change the first 80 to whatever port you want to access Retrospected from
     environment:
       NODE_ENV: production
-      BACKEND_HOST: backend # It should be the same as the name of the backend service
-      BACKEND_PORT: 3201 # It should be the same as the BACKEND_PORT in the backend service
+      BACKEND_HOST: backend # This should be the name of the backend service
+      BACKEND_PORT: 3201 # This should be the same as BACKEND_PORT on backend
     restart: unless-stopped
     logging:
       driver: 'json-file'

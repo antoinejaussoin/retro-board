@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: rb-frontend
-          image: rg.fr-par.scw.cloud/retro/retrospected-frontend:k8s-2
+          image: antoinejaussoin/retro-board-frontend:2.1.4
           ports:
             - containerPort: 80
           env:
