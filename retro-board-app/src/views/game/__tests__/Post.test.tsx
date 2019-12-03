@@ -48,7 +48,7 @@ describe('Post', () => {
       />
     );
     const display = getByLabelText(/post content/i);
-    expect(display.innerHTML).toBe('Foo');
+    expect(display.textContent).toBe('Foo');
   });
 
   it('Should let the user like and dislike the post but not delete if he didnt write the post', () => {

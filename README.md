@@ -159,6 +159,7 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 - Auto-deployment of Docker images to Docker Hub
 - Changing the UX related to Summary Mode
 - Adding the ability to copy the content of the session in the clipboard, both in Markdown format and Rich Text
+- Fixing an issue where multiline content was not displayed properly for anyone except the author
 
 ### Version 2.1.4
 
