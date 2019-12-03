@@ -95,7 +95,9 @@ const EditableLabel = ({
           <InvisibleEditIcon fontSize="inherit" />
         </EditMode>
       ) : readOnly ? (
-        <ViewMode aria-label={label}>{current || placeholder}</ViewMode>
+        <ViewMode aria-label={label}>
+          <span>{current || placeholder}</span>
+        </ViewMode>
       ) : (
         <ViewMode onClick={enableEditMode}>
           <span aria-label={label}>{current || placeholder}</span>
