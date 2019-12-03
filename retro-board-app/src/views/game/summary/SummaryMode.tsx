@@ -18,7 +18,7 @@ import { ColumnContent } from '../types';
 import { Palette } from '../../../Theme';
 import useTranslations from '../../../translations';
 import { Post } from 'retro-board-common';
-import { countVotes } from '../utils';
+import { countVotes, sortPostByVote } from '../utils';
 import { Page } from '../../../components/Page';
 import SpeedDial from './SpeedDial';
 
@@ -58,19 +58,9 @@ interface PostsListProps {
   posts: Post[];
 }
 
-function sortFunction(a: Post, b: Post): number {
-  const scoreA = countVotes(a, 'like') - countVotes(a, 'dislike');
-  const scoreB = countVotes(b, 'like') - countVotes(b, 'dislike');
-  if (scoreA === scoreB) {
-    return 0;
-  }
-
-  return scoreA < scoreB ? 1 : -1;
-}
-
 const PostsList = ({ posts }: PostsListProps) => {
   const sortedList = useMemo(() => {
-    return posts.sort(sortFunction);
+    return [...posts].sort(sortPostByVote);
   }, [posts]);
   return (
     <>

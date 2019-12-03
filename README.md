@@ -145,7 +145,6 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 
 - Adding a real (but optional) login mechanism (Google/GitHub etc.)
 - Highlight posts where the user voted
-- Markdown summary of posts to copy to confluence or other tool
 
 ## Versions History
 
@@ -158,6 +157,8 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 - Replaced all occurences of `withRouter` by `useHistory` and `useParams`
 - Added CI/CD support with Travis
 - Auto-deployment of Docker images to Docker Hub
+- Changing the UX related to Summary Mode
+- Adding the ability to copy the content of the session in the clipboard, both in Markdown format and Rich Text
 
 ### Version 2.1.4
 

@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
 import { flatten, sortedUniq, sortBy } from 'lodash';
-import moment from 'moment';
+import { format } from 'date-fns';
 import useGlobalState from '../../../state';
 import useColumns from '../useColumns';
 import useTranslations from '../../../translations';
 import { Post } from 'retro-board-common';
+import { sortPostByVote } from '../utils';
 
 export default function useMarkdown() {
   const { state } = useGlobalState();
@@ -39,7 +40,7 @@ export default function useMarkdown() {
 
 ### Session details:
 
-**Date**: ${moment().format('LLLL')}
+**Date**: ${format(new Date(), 'PPPPpppp')}
 
 **URL**: ${window.location.href.replace('/summary', '')}
 
@@ -57,7 +58,10 @@ export default function useMarkdown() {
   
 #### ${col.label}
 
-${col.posts.map(toPost).join('\n')}
+${[...col.posts]
+  .sort(sortPostByVote)
+  .map(toPost)
+  .join('\n')}
 `;
     });
 
