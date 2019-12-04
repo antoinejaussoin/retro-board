@@ -75,15 +75,29 @@ interface PostLineProps {
   post: Post;
 }
 
-const PostLine = ({ post }: PostLineProps) => (
-  <PostContainer role="listitem">
+const PostLine = ({ post }: PostLineProps) => {
+  const likes = useMemo(() => countVotes(post, 'like'), [post]);
+  const dislikes = useMemo(() => countVotes(post, 'dislike'), [post]);
+  return (
     <Typography>
-      <PositiveNumber>+{countVotes(post, 'like')}</PositiveNumber>&nbsp;
-      <NegativeNumber>-{countVotes(post, 'dislike')}</NegativeNumber>
-      &nbsp;<span aria-label="post content">{post.content}</span>
+      <PostContainer role="listitem">
+        <Score>
+          <PositiveNumber>+{likes}</PositiveNumber>&nbsp;
+          <NegativeNumber>-{dislikes}</NegativeNumber>
+        </Score>
+        <PostContent aria-label="post content">{post.content}</PostContent>
+      </PostContainer>
     </Typography>
-  </PostContainer>
-);
+  );
+};
+
+const PostContainer = styled.div`
+  display: flex;
+`;
+
+const Score = styled.div`
+  margin-right: 10px;
+`;
 
 const PositiveNumber = styled.span`
   color: ${Palette.positive};
@@ -91,6 +105,11 @@ const PositiveNumber = styled.span`
 
 const NegativeNumber = styled.span`
   color: ${Palette.negative};
+`;
+
+const PostContent = styled.span`
+  white-space: pre-wrap;
+  flex: 1;
 `;
 
 const ActionsList = ({ posts }: PostsListProps) => {
@@ -168,7 +187,5 @@ const SpeedDialContainer = styled.div`
   bottom: 20px;
   right: 20px;
 `;
-
-const PostContainer = styled.div``;
 
 export default SummaryMode;

@@ -73,9 +73,16 @@ ${[...col.posts]
 function toPost(post: Post): string {
   const positivesVotes = post.votes.filter(p => p.type === 'like').length;
   const negativeVotes = post.votes.filter(p => p.type === 'dislike').length;
-  let content = `- (+${positivesVotes}/-${negativeVotes}) ${post.content}`;
+  let content = toMultiline(
+    `- (+${positivesVotes}/-${negativeVotes}) ${post.content}`
+  );
+
   if (post.action) {
-    content += `\n  - Action: ${post.action}`;
+    content += `\n  - Action: ${toMultiline(post.action)}`;
   }
   return content;
+}
+
+function toMultiline(content: string) {
+  return content.replace(/(?:\r\n|\r|\n)/g, '  \n    ');
 }
