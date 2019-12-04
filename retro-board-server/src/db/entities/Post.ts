@@ -13,7 +13,7 @@ import Vote from './Vote';
 
 @Entity({ name: 'posts' })
 export default class Post {
-  @PrimaryColumn({ primary: true, generated: false })
+  @PrimaryColumn({ primary: true, generated: false, unique: true })
   public id: string;
   @ManyToOne(() => Session, { nullable: false })
   public session: Session;
@@ -25,11 +25,15 @@ export default class Post {
   public action: null | string;
   @ManyToOne(() => User, { eager: true, cascade: true, nullable: false })
   public user: User;
-  @OneToMany(() => Vote, vote => vote.post, {
-    cascade: true,
-    nullable: false,
-    eager: true,
-  })
+  @OneToMany(
+    () => Vote,
+    vote => vote.post,
+    {
+      cascade: true,
+      nullable: false,
+      eager: true,
+    }
+  )
   public votes: Vote[] | undefined;
   @CreateDateColumn({ type: 'timestamp with time zone' })
   public created: Date | undefined;

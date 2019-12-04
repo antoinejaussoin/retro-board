@@ -11,7 +11,7 @@ import Session from './Session';
 
 @Entity({ name: 'columns' })
 export default class ColumnDefinition {
-  @PrimaryColumn({ primary: true, generated: true, unique: true })
+  @PrimaryColumn({ primary: true, generated: false, unique: true })
   public id: string;
   @ManyToOne(() => Session, { nullable: false })
   public session: Session;

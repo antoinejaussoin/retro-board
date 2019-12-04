@@ -12,7 +12,7 @@ import Post from './Post';
 
 @Entity({ name: 'votes' })
 export default class Vote {
-  @PrimaryColumn({ primary: true, generated: true, unique: true })
+  @PrimaryColumn({ primary: true, generated: false, unique: true })
   public id: string;
   @ManyToOne(() => User, { eager: true, nullable: false })
   public user: User;
