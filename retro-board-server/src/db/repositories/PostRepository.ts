@@ -1,11 +1,7 @@
 import { EntityRepository, Repository, getCustomRepository } from 'typeorm';
-import { Session, Post, ColumnDefinition, Vote } from '../entities';
+import { Session, Post } from '../entities';
 import SessionRepository from './SessionRepository';
-import {
-  Post as JsonPost,
-  ColumnDefinition as JsonColumn,
-  defaultSession,
-} from 'retro-board-common';
+import { Post as JsonPost, defaultSession } from 'retro-board-common';
 
 @EntityRepository(Post)
 export default class PostRepository extends Repository<Post> {
@@ -27,21 +23,7 @@ export default class PostRepository extends Repository<Post> {
 
 function toPost(json: JsonPost, session: Session): Post {
   const post = new Post(json.id, session, json.column, json.content, json.user);
-  post.votes = json.votes.map(
-    jsonVote => new Vote(jsonVote.id, post, jsonVote.user, jsonVote.type)
-  );
+  post.votes = undefined;
   post.action = json.action;
   return post;
-}
-
-function toColumnDef(json: JsonColumn, session: Session): ColumnDefinition {
-  return new ColumnDefinition(
-    json.id,
-    session,
-    json.type,
-    json.index,
-    json.label,
-    json.color,
-    json.icon
-  );
 }
