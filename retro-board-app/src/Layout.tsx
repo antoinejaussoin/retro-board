@@ -17,6 +17,7 @@ import Game from './views/Game';
 import Panel from './views/Panel';
 import Login from './views/Login';
 import Invite from './views/layout/Invite';
+import Sandbox from './views/Sandbox';
 import useGlobalState from './state';
 import useLoginFromLocalStorage from './hooks/useLoginFromLocalStorage';
 import useIsCompatibleBrowser from './hooks/useIsCompatibleBrowser';
@@ -81,6 +82,7 @@ function App() {
         </Toolbar>
       </AppBar>
       <Route path="/" exact component={Home} />
+      <Route path="/sandbox" exact component={Sandbox} />
       <Switch>
         <Redirect from="/session/:gameId" to="/game/:gameId" />
         <Route path="/game/:gameId" component={Game} />
