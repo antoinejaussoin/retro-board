@@ -16,7 +16,12 @@ export default class Vote {
   public id: string;
   @ManyToOne(() => User, { eager: true, nullable: false })
   public user: User;
-  @ManyToOne(() => Post, { eager: false, nullable: false })
+  @ManyToOne(() => Post, {
+    eager: false,
+    nullable: false,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   public post: Post;
   @Column({ type: 'character varying' })
   public type: VoteType;
