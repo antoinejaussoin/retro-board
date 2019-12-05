@@ -147,6 +147,7 @@ db().then(store => {
     }
 
     sendClientList(sessionId, socket);
+    store.saveUser(user);
   };
 
   const receivePost = async (
