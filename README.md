@@ -148,9 +148,9 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 
 ## Versions History
 
-### Version NEXT
+### Version 2.2.0
 
-- Kubernetes configs. Deploy Retrospected to the cloud!
+- Kubernetes configs. Deploy Retrospected to the cloud! ☁️ 🚀 ☸️
 - Making the backend scalable by making SocketIO use Redis to communicate between instances. This is disabled by default
   and is only useful for Kubernetes deployments.
 - The backend hostname is now configurable on the nginx config on the frontend.
@@ -158,14 +158,16 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 - Added CI/CD support with Travis
 - Auto-deployment of Docker images to Docker Hub
 - Changing the UX related to Summary Mode
-- Adding the ability to copy the content of the session in the clipboard, both in Markdown format and Rich Text
+- Added the ability to copy the content of the session in the clipboard, both in Markdown format and Rich Text
+- Added Error Boundaries to improve the user experience if the app crashes
+- Added support for Sentry.io (error logging)
 - Fixed an issue where multiline content was not displayed properly for anyone except the author
 - Fixed an issue where a post couldn't be deleted if it had votes attached to it
 - Fixed an issue where new users who were not persisted yet couldn't vote
 
 ### Version 2.1.4
 
-- 🇩🇪 German Translation (thanks [@PaulBrandt](https://github.com/PaulBrandt))
+- 🇩🇪 German Translation (👏 Thanks [@PaulBrandt](https://github.com/PaulBrandt))
 - Bugfix: First post was sometimes not saved on regular sessions
 
 ### Version 2.1.3
@@ -185,8 +187,8 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 
 ### Version 2.1.1
 
-- MS Windows support/fixes (Thanks [@srraf](https://github.com/srraf)).
-- [PR-48](https://github.com/antoinejaussoin/retro-board/pull/48) - Fixed a word-wrapping issue when we have only one (long) post (Thanks [@manicmaniac](https://github.com/manicmaniac)).
+- MS Windows support/fixes (👏 Thanks [@srraf](https://github.com/srraf)).
+- [PR-48](https://github.com/antoinejaussoin/retro-board/pull/48) - Fixed a word-wrapping issue when we have only one (long) post (👏 Thanks [@manicmaniac](https://github.com/manicmaniac)).
 - Fixes a possible race-condition issue with "vote" syncing.
 
 ### Version 2.1.0
@@ -203,12 +205,12 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
   - Editable label improvements
 - Various Docker improvements
 - Upgraded dependencies
-- Special thanks to [@jesusabp](https://github.com/jesusabp), [@zalexki](https://github.com/zalexki) and [@jfritz](https://github.com/jfritz) for their inputs and ideas!
+- 👏 Special thanks to [@jesusabp](https://github.com/jesusabp), [@zalexki](https://github.com/zalexki) and [@jfritz](https://github.com/jfritz) for their inputs and ideas!
 
 ### Version 2.0.4
 
 - Upgraded dependencies
-- Allows multi-line posts and comments (use the shift key to add a new line) (Thanks [@andyk314](https://github.com/andyk314))
+- Allows multi-line posts and comments (use the shift key to add a new line) (👏 Thanks [@andyk314](https://github.com/andyk314))
 - Re-adding Hot Reload, which now works great with TypeScript and Create-React-App.
 
 ### Version 2.0.3
@@ -226,7 +228,7 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 
 - Adding support for Postgres migrations
 - Adding created/updated fields on Post and Session
-- Bugfix: Summary mode wasn't ordered by votes anymore. (thanks [@cindyccook](https://github.com/cindyccook))
+- Bugfix: Summary mode wasn't ordered by votes anymore. (👏 Thanks [@cindyccook](https://github.com/cindyccook))
 
 ### Version 2.0.0
 
@@ -239,7 +241,7 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 
 ### Version 1.0.1
 
-- 🇯🇵 Japanese Translation (thanks [@sat0yu](https://github.com/sat0yu))
+- 🇯🇵 Japanese Translation (👏 Thanks [@sat0yu](https://github.com/sat0yu))
 - Simplified the ESLint configuration
 - Introducing Prettier (`yarn format`)
 - Upgrading to Babel 7
@@ -257,8 +259,8 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 - Webpack 3 (for Webpack 2, look at version 0.9.0)
 - Converting entire project to 2-space indentation
 - Upgrade other dependencies
-- 🇵🇱 Polish Translation (thanks [@olaf-cichocki](https://github.com/olaf-cichocki))
-- 🇦🇪 Arabic Translation (thanks [@Meshredded](https://github.com/Meshredded))
+- 🇵🇱 Polish Translation (👏 Thanks [@olaf-cichocki](https://github.com/olaf-cichocki))
+- 🇦🇪 Arabic Translation (👏 Thanks [@Meshredded](https://github.com/Meshredded))
 - Improved the loading screen
 
 ### Version 0.9.0
@@ -276,17 +278,17 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 ### Version 0.8.0
 
 - Using [redux-saga-testing](https://github.com/antoinejaussoin/redux-saga-testing) to test sagas
-- 🇨🇳 Chinese (Traditional and Simplified) Translation (Thanks [@aqutw](https://github.com/aqutw))
+- 🇨🇳 Chinese (Traditional and Simplified) Translation (👏 Thanks [@aqutw](https://github.com/aqutw))
 - Using [Yarn](https://yarnpkg.com/en/)
 - Updating dependencies
-- Fixing some Spanish translation mistakes (Thanks @MrPolymath)
+- Fixing some Spanish translation mistakes (👏 Thanks @MrPolymath)
 - Fixed a bug where the Vote buttons would allow a user to vote multiple times (on the UI only)
 
 ### Version 0.7.0
 
 - Good test coverage, using Jest
-- 🇷🇺 Russian Translation (Thanks [@vectart](https://github.com/vectart))
-- 🇪🇸 Spanish Translation (Thanks [@andresin87](https://github.com/andresin87))
+- 🇷🇺 Russian Translation (👏 Thanks [@vectart](https://github.com/vectart))
+- 🇪🇸 Spanish Translation (👏 Thanks [@andresin87](https://github.com/andresin87))
 - Replacing PNG flags by SVG/CSS versions
 - Using `react-hot-loader` 3.0.0 (beta2) for Hot reloading
 - Fixing a few mobile/responsive issues
@@ -307,7 +309,7 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 ### Version 0.5.2
 
 - Fixed a bug on the anti-spam when if using a proxy (nginx for instance), the wrong ip was used
-- Fixed a bug where the linting would fail if the default configuration was used (thanks @veselignome)
+- Fixed a bug where the linting would fail if the default configuration was used (👏 Thanks @veselignome)
 
 ### Version 0.5.1
 
@@ -316,8 +318,8 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 
 ### Version 0.5.0
 
-- Adding the possibility to join a previously joined session quickly (Thanks [@Sonaryr](https://github.com/Sonaryr))
-- Performance improvement on title edit (Also thanks to @Sonaryr)
+- Adding the possibility to join a previously joined session quickly (👏 Thanks [@Sonaryr](https://github.com/Sonaryr))
+- Performance improvement on title edit (Also thanks to @Sonaryr 👏)
 - New Logo!
 - Added Favicons
 
@@ -337,7 +339,7 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 - Improving performance by using `shouldComponentUpdate` via a custom base [Component](app/Component.jsx)
 - Updated to the brand new React 15
 - Improving Windows support by allowing Windows users to use the same commands as \*nix users
-- 🇳🇱 Internationalisation: added Dutch to the list of supported languages (Thanks [@Sonaryr](https://github.com/Sonaryr))
+- 🇳🇱 Internationalisation: added Dutch to the list of supported languages (👏 Thanks [@Sonaryr](https://github.com/Sonaryr))
 
 ### Version 0.3.0
 
@@ -346,7 +348,7 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 - Change to the Like / Unlike logic: like and unlikes counts are separated
 - Adding ES7 decorators, more readable than the previous curry-ed functions
 - Better support for Windows
-- 🇧🇷 Internationalisation: added Brazilian Portuguese to the list of supported languages (Thanks [@renancouto](https://github.com/renancouto))
+- 🇧🇷 Internationalisation: added Brazilian Portuguese to the list of supported languages (👏 Thanks [@renancouto](https://github.com/renancouto))
 
 ### Version 0.2.0
 
@@ -356,7 +358,7 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 - Ability to logout, and to leave a session
 - Improve the reliability of the clients list (currently connected users)
 - Fix issues when the web fonts can't load (firewall blocking for example)
-- 🇬🇧 🇫🇷 🇭🇺 Internationalisation: support for English, French and Hungarian (Thanks [@iaretiga](https://github.com/iaretiga))
+- 🇬🇧 🇫🇷 🇭🇺 Internationalisation: support for English, French and Hungarian (👏 Thanks [@iaretiga](https://github.com/iaretiga))
 
 ### Version 0.1.1
 
@@ -385,7 +387,7 @@ You can actually change the session ID in the URL with anything you like: for ex
 
 Try not to take a too common name though, to avoid anyone else finding your session by chance.
 
-## Thanks
+## Thanks 👏
 
 Many thanks to the following contributors who helped translating the app:
 
