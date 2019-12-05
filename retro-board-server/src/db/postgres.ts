@@ -5,6 +5,7 @@ import {
   PostRepository,
   ColumnRepository,
   VoteRepository,
+  UserRepository,
 } from './repositories';
 import {
   Session as JsonSession,
@@ -16,6 +17,7 @@ import {
 } from 'retro-board-common';
 import { Store } from '../types';
 import getOrmConfig from './orm-config';
+import { User } from './entities';
 
 export async function getDb() {
   const connection = await createConnection(getOrmConfig());
@@ -102,18 +104,26 @@ const deletePost = (postRepository: PostRepository) => async (
   await postRepository.delete({ id: postId });
 };
 
+const saveUser = (userRepository: UserRepository) => async (
+  user: User
+): Promise<void> => {
+  await userRepository.saveFromJson(user);
+};
+
 export default async function db(): Promise<Store> {
   const connection = await getDb();
   const sessionRepository = connection.getCustomRepository(SessionRepository);
   const postRepository = connection.getCustomRepository(PostRepository);
   const columnRepository = connection.getCustomRepository(ColumnRepository);
   const voteRepository = connection.getCustomRepository(VoteRepository);
+  const userRepository = connection.getCustomRepository(UserRepository);
   return {
     get: get(sessionRepository, postRepository, columnRepository),
     saveSession: saveSession(sessionRepository),
     savePost: savePost(postRepository),
     saveVote: saveVote(voteRepository),
     deletePost: deletePost(postRepository),
+    saveUser: saveUser(userRepository),
     create: create(sessionRepository),
   };
 }

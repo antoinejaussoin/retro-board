@@ -7,6 +7,7 @@ import {
   SessionOptions,
   defaultSession,
   Vote,
+  User,
 } from 'retro-board-common';
 import { findIndex } from 'lodash';
 import { Store } from '../types';
@@ -170,6 +171,17 @@ const deletePost = (store: Datastore) => (
     });
   });
 
+const saveUser = (store: Datastore) => (user: User): Promise<void> =>
+  new Promise((resolve, reject) => {
+    store.update({ id: user.id }, user, { upsert: true }, err => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
+  });
+
 export default function db() {
   const store = new Datastore({ filename: dbFile, autoload: true });
   return Promise.resolve<Store>({
@@ -178,6 +190,7 @@ export default function db() {
     savePost: savePost(store),
     saveVote: saveVote(store),
     deletePost: deletePost(store),
+    saveUser: saveUser(store),
     create: create(store),
   });
 }
