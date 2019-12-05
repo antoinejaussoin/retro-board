@@ -52,7 +52,7 @@ const Login = () => {
           onClick={loginHandler}
           color="primary"
           autoFocus
-          disabled={!username.length}
+          disabled={!username.trim().length}
         >
           {translations.Login.buttonLabel}
         </Button>
