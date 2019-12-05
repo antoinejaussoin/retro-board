@@ -8,6 +8,7 @@ import { LanguageContext } from './translations';
 import theme from './Theme';
 import { Provider as StateContext } from './state';
 import Layout from './Layout';
+import ErrorBoundary from './ErrorBoundary';
 
 setConfig({
   reloadHooks: false,
@@ -27,7 +28,9 @@ function App() {
         <LanguageContext.Provider value={{ language, setLanguage }}>
           <StateContext>
             <GlobalStyles />
-            <Layout />
+            <ErrorBoundary>
+              <Layout />
+            </ErrorBoundary>
           </StateContext>
         </LanguageContext.Provider>
       </BrowserRouter>
