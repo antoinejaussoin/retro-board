@@ -79,7 +79,7 @@ const PostLine = ({ post }: PostLineProps) => {
   const likes = useMemo(() => countVotes(post, 'like'), [post]);
   const dislikes = useMemo(() => countVotes(post, 'dislike'), [post]);
   return (
-    <Typography>
+    <Typography component="div">
       <PostContainer role="listitem">
         <Score>
           <PositiveNumber>+{likes}</PositiveNumber>&nbsp;
