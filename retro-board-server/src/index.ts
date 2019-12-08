@@ -19,9 +19,14 @@ import config from './db/config';
 import uuid from 'uuid';
 import * as Sentry from '@sentry/node';
 
-Sentry.init({
-  dsn: 'https://3e0bdeef93da418eb9d2e0f3a18bd59c@sentry.io/1847592',
-});
+const useSentry = !!config.SENTRY_URL && config.SENTRY_URL !== 'NO_SENTRY';
+
+if (useSentry) {
+  Sentry.init({
+    dsn: config.SENTRY_URL,
+  });
+  console.log(chalk`{yellow 🐜  Using {red Sentry} for error reporting}`);
+}
 
 const {
   RECEIVE_POST,
@@ -42,7 +47,9 @@ const {
 } = Actions;
 
 const app = express();
-app.use(Sentry.Handlers.requestHandler());
+if (useSentry) {
+  app.use(Sentry.Handlers.requestHandler());
+}
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const httpServer = new http.Server(app);
@@ -313,8 +320,9 @@ db().then(store => {
       }
     });
   });
-
-  app.use(Sentry.Handlers.errorHandler());
+  if (useSentry) {
+    app.use(Sentry.Handlers.errorHandler());
+  }
 });
 
 httpServer.listen(port);

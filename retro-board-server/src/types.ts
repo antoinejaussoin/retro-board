@@ -33,4 +33,5 @@ export interface Configuration {
   REDIS_PORT: number;
   BACKEND_PORT: number;
   SQL_LOG: boolean;
+  SENTRY_URL: string;
 }

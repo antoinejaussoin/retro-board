@@ -25,6 +25,7 @@ const config: Configuration = {
   REDIS_PORT: parseInt(process.env.REDIS_PORT!),
   BACKEND_PORT: parseInt(process.env.BACKEND_PORT!),
   SQL_LOG: process.env.SQL_LOG === 'true',
+  SENTRY_URL: process.env.SENTRY_URL!,
 };
 
 export default config;

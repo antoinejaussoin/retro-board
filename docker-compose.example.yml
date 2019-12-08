@@ -49,6 +49,7 @@ services:
       REDIS_ENABLED: 'false' # Whether to enable Redis, only useful in the context of a Kubernetes cluster
       REDIS_PORT: 6379 # Not used by default
       REDIS_HOST: redis # Not used by default
+      SENTRY_URL: '' # Optional, Sentry URL (https://1234567890abcdef12345@sentry.io/1234567)
     restart: unless-stopped
     logging:
       driver: 'json-file'
@@ -62,9 +63,10 @@ services:
     ports:
       - '80:80' # Change the first 80 to whatever port you want to access Retrospected from
     environment:
-      NODE_ENV: production
       BACKEND_HOST: backend # This should be the name of the backend service
       BACKEND_PORT: 3201 # This should be the same as BACKEND_PORT on backend
+      GA_ID: '' # Optional, Google Analytics ID (UA-1234456-7)
+      SENTRY_URL: '' # Optional, Sentry URL (https://1234567890abcdef12345@sentry.io/1234567)
     restart: unless-stopped
     logging:
       driver: 'json-file'

@@ -50,6 +50,7 @@ services:
       DB_PORT: 5432 # Don't change this.
       BACKEND_PORT: 3201 # Don't change this (or change it in nginx.conf as well)
       SQL_LOG: 'false' # Whether to log SQL queries in the console
+      SENTRY_URL: '' # Optional, Sentry URL (https://1234567890abcdef12345@sentry.io/1234567)
     restart: unless-stopped
     logging:
       driver: 'json-file'
@@ -70,6 +71,8 @@ services:
       NODE_ENV: production
       BACKEND_HOST: backend
       BACKEND_PORT: 3201
+      GA_ID: '' # Optional, Google Analytics ID (UA-1234456-7)
+      SENTRY_URL: '' # Optional, Sentry URL (https://1234567890abcdef12345@sentry.io/1234567)
     restart: unless-stopped
     logging:
       driver: 'json-file'

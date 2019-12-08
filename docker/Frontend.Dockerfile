@@ -1,7 +1,5 @@
 FROM node:12-alpine as Node
 
-ARG GoogleAnalytics
-ENV REACT_APP_GA_ID "$GoogleAnalytics"
 ENV NODE_ENV=production
 
 WORKDIR /home/node/app
