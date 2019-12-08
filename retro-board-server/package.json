@@ -11,6 +11,7 @@
     "revert": "ts-node ../node_modules/typeorm/cli.js migration:revert"
   },
   "dependencies": {
+    "@sentry/node": "^5.10.1",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.2",
     "@types/lodash": "^4.14.149",

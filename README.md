@@ -141,12 +141,17 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 - Go on the **Sources** tab, and on the left, find your sources under `webpack://` and then `.`.
 - You can then put breakpoints in there and debugging
 
-## Roadmap 🚗
+## Roadmap and ideas 🚗 💡
 
 - Adding a real (but optional) login mechanism (Google/GitHub etc.)
 - Highlight posts where the user voted
+- Add an error message for users who have cookies disabled
 
 ## Versions History
+
+### Version NEXT
+
+- Adding Sentry support for the backend
 
 ### Version 2.2.0
 
@@ -163,7 +168,7 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 - Added support for Sentry.io (error logging)
 - Fixed an issue where multiline content was not displayed properly for anyone except the author
 - Fixed an issue where a post couldn't be deleted if it had votes attached to it
-- Fixed an issue where new users who were not persisted yet couldn't vote
+- [Issue 56](https://github.com/antoinejaussoin/retro-board/issues/56) - Fixed an issue where new users who were not persisted yet couldn't vote (👏 Thanks [@dkistner](https://github.com/dkistner))
 
 ### Version 2.1.4
 
