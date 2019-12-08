@@ -114,14 +114,6 @@ When using the Docker deployment, your database runs from a container. But if yo
 - `npm test` to run the tests
 - **or** `yarn test-watch` to run the tests every time you change a file
 
-## How to use Google Analytics 📈
-
-By default, Google Analytics is deactivated (it doesn't even get built into the bundle).
-
-To enable it, you'll need to create a local `.env` file in `./retro-board-app/env.local` by copy-pasting the existing `.env` file in the same directory. To enable Google Analytics, simply add your GA Tracking ID like so: `REACT_APP_GA_ID=UA-12345678-1`.
-
-Note: Google Analytics only works when using the production webpack config (i.e. when `NODE_ENV` is set to `production`).
-
 ## How to use Postgres (w/o Docker) 🗄
 
 By default, the database engine is NeDB, an in-process database with no external dependencies (i.e. no database to install on your system).
@@ -152,6 +144,7 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 ### Version NEXT
 
 - Adding Sentry support for the backend
+- Making Google Analytics and Sentry configurable at run-time (as in Docker run-time)
 
 ### Version 2.2.0
 

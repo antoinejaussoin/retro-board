@@ -2,14 +2,11 @@ import 'core-js/stable';
 import 'react-hot-loader';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as Sentry from '@sentry/browser';
 import App from './App';
-import { initialiseAnalytics } from './track';
+import { initialiseAnalytics, initialiseSentry } from './track';
 import * as serviceWorker from './serviceWorker';
 
-Sentry.init({
-  dsn: 'https://3191cb1f4ae444ab94614d5e1aa5157d@sentry.io/1846621',
-});
+initialiseSentry();
 initialiseAnalytics();
 ReactDOM.render(<App />, document.getElementById('content'));
 

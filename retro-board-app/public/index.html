@@ -14,6 +14,13 @@
   <meta name="description" content="Real-time Agile Retrospective Board for development teams" />
   <meta http-equiv="cleartype" content="on">
 
+  <script>
+    window.__env__ = {
+      GOOGLE_ANALYTICS_ID: 'NO_GA',
+      SENTRY_URL: 'NO_SENTRY',
+    }
+  </script>
+
   <% if (process.env.NODE_ENV === 'development') { %>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=Map%2CSet%2CWeakMap%2CObject.setPrototypeOf"></script>
   <% } %>

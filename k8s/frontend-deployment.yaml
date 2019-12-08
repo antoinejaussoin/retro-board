@@ -22,3 +22,7 @@ spec:
               value: rb-backend-cluster-ip-service
             - name: BACKEND_PORT
               value: '3201'
+            - name: GA_ID
+              value: ''
+            - name: SENTRY_URL
+              value: ''
