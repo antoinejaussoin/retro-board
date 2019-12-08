@@ -11,8 +11,7 @@ import Message from '../../../components/Message';
 import useTranslations from '../../../translations';
 
 const CopySpeedDial = () => {
-  const isSupported =
-    !!navigator && !!navigator.clipboard && !!navigator.clipboard.writeText;
+  const isSupported = !!window.getSelection;
   const { SummaryBoard } = useTranslations();
   const [open, setOpen] = useState(false);
   const handleOpen = useCallback(() => setOpen(true), []);
@@ -23,32 +22,21 @@ const CopySpeedDial = () => {
   }, []);
   const mdElement = useRef<HTMLDivElement>(null);
   const md = useMarkdown();
+
   const handleCopyToMarkdown = useCallback(async () => {
-    await navigator.clipboard.writeText(md);
+    const p = document.createElement('pre');
+    p.innerText = md;
+    copyToClipboard(p);
     setOpen(false);
     setMessage(SummaryBoard.copySuccessful!);
   }, [md, SummaryBoard.copySuccessful]);
-  const handleCopyRichText = useCallback(async () => {
-    if (window.getSelection) {
-      const container = document.createElement('div');
-      container.style.height = '0px';
-      container.setAttribute('contenteditable', 'true');
-      container.appendChild(mdElement.current!);
-      document.body.appendChild(container);
-      const selection = window.getSelection();
-      const range = document.createRange();
-      range.selectNodeContents(container);
-      if (selection) {
-        selection.removeAllRanges();
-        selection.addRange(range);
-        document.execCommand('copy');
-        selection.removeAllRanges();
-      }
-      document.body.removeChild(container);
-      setMessage(SummaryBoard.copySuccessful!);
-    }
+
+  const handleCopyRichText = useCallback(() => {
+    copyToClipboard(mdElement.current!);
     setOpen(false);
+    setMessage(SummaryBoard.copySuccessful!);
   }, [SummaryBoard.copySuccessful]);
+
   return isSupported ? (
     <>
       <SpeedDial
@@ -85,6 +73,24 @@ const CopySpeedDial = () => {
     </>
   ) : null;
 };
+
+function copyToClipboard(content: HTMLElement) {
+  const container = document.createElement('div');
+  container.style.height = '0px';
+  container.setAttribute('contenteditable', 'true');
+  container.appendChild(content);
+  document.body.appendChild(container);
+  const selection = window.getSelection();
+  const range = document.createRange();
+  range.selectNodeContents(container);
+  if (selection) {
+    selection.removeAllRanges();
+    selection.addRange(range);
+    document.execCommand('copy');
+    selection.removeAllRanges();
+  }
+  document.body.removeChild(container);
+}
 
 const MdContainer = styled.div`
   display: none;
