@@ -1,7 +1,7 @@
 language: node_js
 node_js:
   - 12
-sudo: required
+os: linux
 services:
   - docker
 install: true

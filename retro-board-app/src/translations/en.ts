@@ -74,6 +74,8 @@ export default {
     islandQuestion: 'Island',
     windQuestion: 'Wind',
     rockQuestion: 'Rock',
+    disconnected: 'You have been disconnected from the current session.',
+    reconnect: 'Reconnect',
   },
   GameMenu: {
     board: 'Board',

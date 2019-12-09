@@ -74,6 +74,8 @@ export default {
     islandQuestion: 'Île',
     windQuestion: 'Vent',
     rockQuestion: 'Rocher',
+    disconnected: 'Vous avez été déconnecté de la session.',
+    reconnect: 'Se reconnecter',
   },
   GameMenu: {
     board: 'Board', // Si qqn à une suggestion de traduction...

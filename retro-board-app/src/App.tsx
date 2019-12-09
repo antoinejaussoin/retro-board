@@ -1,4 +1,5 @@
 import { hot } from 'react-hot-loader/root';
+import { TrackingEvent } from 'retro-board-common';
 import { setConfig } from 'react-hot-loader';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
@@ -10,6 +11,7 @@ import { Provider as StateContext } from './state';
 import Layout from './Layout';
 import ErrorBoundary from './ErrorBoundary';
 import { getItem } from './utils/localStorage';
+import { trackEvent } from './track';
 
 setConfig({
   reloadHooks: false,
@@ -20,6 +22,7 @@ function App() {
   useEffect(() => {
     const language = getItem('language');
     if (language) {
+      trackEvent(`language/change/${language}` as TrackingEvent);
       setLanguage(language);
     }
   }, []);
