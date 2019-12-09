@@ -146,6 +146,7 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 - Adding Sentry support for the backend
 - Making Google Analytics and Sentry configurable at run-time (as in Docker run-time)
 - Adding Copy to clipboard compatibility for more browsers
+- Preventing the app from crashing when cookies are disabled on Firefox
 
 ### Version 2.2.0
 

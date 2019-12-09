@@ -1,5 +1,6 @@
 import { Dispatch } from './types';
 import { Post, Vote } from 'retro-board-common';
+import { setItem, removeItem } from '../utils/localStorage';
 
 export const TOGGLE_PANEL = 'retrospected/panel/toggle';
 export const LOGIN = 'retrospected/user/login';
@@ -23,8 +24,8 @@ export const togglePanel = (dispatch: Dispatch) => () => {
 };
 
 export const login = (dispatch: Dispatch) => (username: string, id: string) => {
-  localStorage.setItem('user_name', username);
-  localStorage.setItem('user_id', id);
+  setItem('user_name', username);
+  setItem('user_id', id);
   dispatch(
     createAction(LOGIN, {
       id,
@@ -34,8 +35,8 @@ export const login = (dispatch: Dispatch) => (username: string, id: string) => {
 };
 
 export const logout = (dispatch: Dispatch) => () => {
-  localStorage.removeItem('user_name');
-  localStorage.removeItem('user_id');
+  removeItem('user_name');
+  removeItem('user_id');
   dispatch(createAction(LOGOUT));
 };
 

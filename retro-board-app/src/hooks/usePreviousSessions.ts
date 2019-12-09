@@ -1,6 +1,7 @@
 import useGlobalState from '../state';
 import { findIndex } from 'lodash';
 import { User } from 'retro-board-common';
+import { getItem, setItem } from '../utils/localStorage';
 
 interface SessionStore {
   [username: string]: Session[];
@@ -22,7 +23,7 @@ function getPreviousSessions(username: string | null): Session[] {
 }
 
 function getStore(): SessionStore {
-  const item = localStorage.getItem('sessions');
+  const item = getItem('sessions');
   if (item) {
     const store = JSON.parse(item) as SessionStore;
     return store || {};
@@ -50,7 +51,7 @@ function addToPreviousSessions(id: string, name: string, username: User) {
     ...store,
     [username.id]: sessions.slice(0, 20),
   };
-  localStorage.setItem('sessions', JSON.stringify(newStore));
+  setItem('sessions', JSON.stringify(newStore));
 }
 
 export default () => {
