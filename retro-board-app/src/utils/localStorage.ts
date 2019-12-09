@@ -8,7 +8,7 @@ const logError = once(() => {
 
 export function getItem(key: string): string | null {
   try {
-    return localStorage.get(key);
+    return localStorage.getItem(key);
   } catch (error) {
     logError();
     return null;
