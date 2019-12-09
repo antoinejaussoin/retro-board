@@ -9,6 +9,7 @@ import theme from './Theme';
 import { Provider as StateContext } from './state';
 import Layout from './Layout';
 import ErrorBoundary from './ErrorBoundary';
+import { getItem } from './utils/localStorage';
 
 setConfig({
   reloadHooks: false,
@@ -17,7 +18,7 @@ setConfig({
 function App() {
   const [language, setLanguage] = useState('en');
   useEffect(() => {
-    const language = localStorage.getItem('language');
+    const language = getItem('language');
     if (language) {
       setLanguage(language);
     }
