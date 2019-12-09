@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState, useCallback } from 'react';
 import { Actions, Post, User, Vote, VoteType } from 'retro-board-common';
 import { v4 } from 'uuid';
 import { find } from 'lodash';
-import { trackAction } from './../../track';
+import { trackAction, trackEvent } from './../../track';
 import io from 'socket.io-client';
 import useGlobalState from '../../state';
 import usePreviousSessions from '../../hooks/usePreviousSessions';
@@ -29,6 +29,7 @@ function sendFactory(
 
 const useGame = (sessionId: string) => {
   const [initialised, setInitialised] = useState(false);
+  const [disconnected, setDisconnected] = useState(false);
   const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null);
   const { addToPreviousSessions } = usePreviousSessions();
   const {
@@ -54,10 +55,23 @@ const useGame = (sessionId: string) => {
     [socket, user, sessionId]
   );
 
+  const reconnect = useCallback(() => setDisconnected(false), []);
+
+  // This will run on unmount
+  useEffect(() => {
+    return () => {
+      if (debug) {
+        console.log('Reset session');
+      }
+      trackEvent('game/session/reset');
+      resetSession();
+    };
+  }, [resetSession]);
+
   // This effect will run everytime the gameId, the user, or the socket changes.
   // It will close and restart the socket every time.
   useEffect(() => {
-    if (!user) {
+    if (!user || disconnected) {
       return;
     }
     if (debug) {
@@ -74,6 +88,8 @@ const useGame = (sessionId: string) => {
       if (debug) {
         console.warn('Server disconnected');
       }
+      trackEvent('game/session/disconnect');
+      setDisconnected(true);
     });
 
     newSocket.on('connect', () => {
@@ -142,7 +158,6 @@ const useGame = (sessionId: string) => {
         console.log('Attempting disconnection');
       }
       if (newSocket) {
-        resetSession();
         newSocket.disconnect();
       }
     };
@@ -157,6 +172,7 @@ const useGame = (sessionId: string) => {
     deletePost,
     updatePost,
     renameSession,
+    disconnected,
   ]);
 
   // This drives the addition of the game to the list
@@ -257,11 +273,13 @@ const useGame = (sessionId: string) => {
 
   return {
     initialised,
+    disconnected,
     onAddPost,
     onEditPost,
     onDeletePost,
     onLike,
     onRenameSession,
+    reconnect,
   };
 };
 

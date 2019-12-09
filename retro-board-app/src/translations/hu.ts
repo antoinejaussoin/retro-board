@@ -67,6 +67,8 @@ export default {
     islandQuestion: undefined,
     windQuestion: undefined,
     rockQuestion: undefined,
+    disconnected: undefined,
+    reconnect: undefined,
   },
   GameMenu: {
     board: undefined,

@@ -7,11 +7,15 @@ import {
   useLocation,
   useHistory,
 } from 'react-router-dom';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import { Dashboard, List } from '@material-ui/icons';
+import {
+  CircularProgress,
+  AppBar,
+  Tabs,
+  Tab,
+  Button,
+  Typography,
+} from '@material-ui/core';
+import { Dashboard, List, CloudOff } from '@material-ui/icons';
 import useGlobalState from '../state';
 import useTranslations from '../translations';
 import useGame from './game/useGame';
@@ -24,7 +28,7 @@ interface RouteParams {
 }
 
 function GamePage() {
-  const { GameMenu } = useTranslations();
+  const { GameMenu, PostBoard } = useTranslations();
   const match = useRouteMatch();
   const location = useLocation();
   const history = useHistory();
@@ -38,14 +42,16 @@ function GamePage() {
 
   const {
     initialised,
+    disconnected,
     onAddPost,
     onDeletePost,
     onEditPost,
     onLike,
     onRenameSession,
+    reconnect,
   } = useGame(gameId);
 
-  if (!session || !initialised) {
+  if (!disconnected && (!session || !initialised)) {
     return (
       <LoadingContainer>
         <CircularProgress />
@@ -55,6 +61,19 @@ function GamePage() {
 
   return (
     <div>
+      {disconnected ? (
+        <DisconnectedContainer>
+          <Typography variant="h5" gutterBottom style={{ fontWeight: 300 }}>
+            <CloudOff
+              style={{ position: 'relative', top: 3, marginRight: 10 }}
+            />
+            &nbsp;{PostBoard.disconnected}
+          </Typography>
+          <Button color="secondary" variant="contained" onClick={reconnect}>
+            {PostBoard.reconnect}
+          </Button>
+        </DisconnectedContainer>
+      ) : null}
       <AppBar position="static" color="default">
         <Tabs
           value={location.pathname}
@@ -93,8 +112,23 @@ function GamePage() {
 
 const LoadingContainer = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   margin-top: 120px;
+`;
+
+const DisconnectedContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 999;
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
 `;
 
 export default GamePage;

@@ -66,6 +66,8 @@ export interface Translation {
     islandQuestion?: string;
     windQuestion?: string;
     rockQuestion?: string;
+    disconnected?: string;
+    reconnect?: string;
   };
   GameMenu: {
     board?: string;

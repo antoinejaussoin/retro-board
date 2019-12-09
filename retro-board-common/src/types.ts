@@ -52,7 +52,10 @@ export type TrackingEvent =
   | 'custom-modal/fail'
   | 'custom-modal/template/select'
   | 'custom-modal/column/change'
-  | 'home/create/default';
+  | 'home/create/default'
+  | 'game/session/reset'
+  | 'game/session/disconnect'
+  | 'language/change/';
 
 export type ColumnDefinitionType =
   | 'custom'

@@ -73,6 +73,8 @@ export default {
     islandQuestion: 'Insel',
     windQuestion: 'Wind',
     rockQuestion: 'Fels',
+    disconnected: undefined,
+    reconnect: undefined,
   },
   GameMenu: {
     board: undefined,
