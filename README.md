@@ -401,9 +401,9 @@ Many thanks to the following contributors who helped translating the app:
 - Polish: [@olaf-cichocki](https://github.com/olaf-cichocki)
 - Arabic: [@Meshredded](https://github.com/Meshredded)
 - Japanese: [@sat0yu](https://github.com/sat0yu)
+- German: [@PaulBrandt](https://github.com/PaulBrandt)
 
 If you are a native speaker of another language, please don't hesitate to make a pull request to add a translation.
-I'm especially looking for a German translation.
 
 Special thanks to [@andresin87](https://github.com/andresin87) for pointing the `flag-icon-css` package to me, it replaces the PNG flags in a neater way.
 

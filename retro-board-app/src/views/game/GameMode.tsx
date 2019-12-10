@@ -109,18 +109,24 @@ const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   > *:first-child {
     width: 90px;
   }
+
   > *:nth-child(2) {
     flex: 1;
     margin: 0 20px;
   }
+
   > *:last-child {
     width: 90px;
   }
+
   @media (max-width: 500px) {
+    margin-top: 40px;
     flex-direction: column;
+
     > *:last-child {
       margin: 20px 0;
     }

@@ -54,7 +54,7 @@ function GamePage() {
 
   return (
     <div>
-      {disconnected || true ? (
+      {disconnected ? (
         <DisconnectedContainer>
           <DisconnectedTitle>
             <CloudOff
