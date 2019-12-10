@@ -7,14 +7,7 @@ import {
   useLocation,
   useHistory,
 } from 'react-router-dom';
-import {
-  CircularProgress,
-  AppBar,
-  Tabs,
-  Tab,
-  Button,
-  Typography,
-} from '@material-ui/core';
+import { CircularProgress, AppBar, Tabs, Tab, Button } from '@material-ui/core';
 import { Dashboard, List, CloudOff } from '@material-ui/icons';
 import useGlobalState from '../state';
 import useTranslations from '../translations';
@@ -61,14 +54,14 @@ function GamePage() {
 
   return (
     <div>
-      {disconnected ? (
+      {disconnected || true ? (
         <DisconnectedContainer>
-          <Typography variant="h5" gutterBottom style={{ fontWeight: 300 }}>
+          <DisconnectedTitle>
             <CloudOff
               style={{ position: 'relative', top: 3, marginRight: 10 }}
             />
             &nbsp;{PostBoard.disconnected}
-          </Typography>
+          </DisconnectedTitle>
           <Button color="secondary" variant="contained" onClick={reconnect}>
             {PostBoard.reconnect}
           </Button>
@@ -125,10 +118,17 @@ const DisconnectedContainer = styled.div`
   justify-content: center;
   position: fixed;
   height: 100%;
+  height: calc(100% - 56px);
   width: 100%;
   z-index: 999;
-  background-color: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(3px);
+`;
+
+const DisconnectedTitle = styled.h2`
+  font-weight: 300;
+  text-align: center;
+  margin: 0 20px 20px;
 `;
 
 export default GamePage;
