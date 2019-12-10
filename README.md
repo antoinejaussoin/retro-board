@@ -137,11 +137,10 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 
 - Adding a real (but optional) login mechanism (Google/GitHub etc.)
 - Highlight posts where the user voted
-- Add an error message for users who have cookies disabled
 
 ## Versions History
 
-### Version NEXT
+### Version 2.2.1
 
 - Adding Sentry support for the backend
 - Making Google Analytics and Sentry configurable at run-time (as in Docker run-time)
