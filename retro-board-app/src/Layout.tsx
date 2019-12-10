@@ -52,7 +52,7 @@ function App() {
   }, [history]);
   return (
     <div>
-      <AppBar position="static">
+      <AppBar position="sticky">
         <Toolbar>
           <IconButton color="inherit" aria-label="Menu" onClick={togglePanel}>
             <MenuIcon />
