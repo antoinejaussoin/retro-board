@@ -140,6 +140,12 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 
 ## Versions History
 
+### Version 2.2.2
+
+- Allowing a user to disable voting (by setting the max number of votes to 0) (👏 Thanks [@imranismail](https://github.com/imranismail))
+- Fixing an issue with Docker and Yarn's installation
+- Upgrading dependencies
+
 ### Version 2.2.1
 
 - Adding Sentry support for the backend
@@ -406,7 +412,7 @@ If you are a native speaker of another language, please don't hesitate to make a
 
 Special thanks to [@andresin87](https://github.com/andresin87) for pointing the `flag-icon-css` package to me, it replaces the PNG flags in a neater way.
 
-Another special thanks to Browserstack, as they allow me to test this project is other browsers.
+Another special thanks to Browserstack, as they allow me to test this project in other browsers.
 
 <a href="https://www.browserstack.com/"><img src="./content/browserstack.png" width="300" height="65"></a>
 
