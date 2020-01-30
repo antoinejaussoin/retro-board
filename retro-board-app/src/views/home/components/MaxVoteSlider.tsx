@@ -10,6 +10,7 @@ interface MaxVoteSliderProps {
 const UNLIMITED = 6; // Arbitrary value, translated to null anyway
 
 const marks: Mark[] = [
+  { value: 0, label: '0' },
   { value: 1, label: '1' },
   { value: 2, label: '2' },
   { value: 3, label: '3' },
@@ -30,7 +31,7 @@ const MaxVoteSlider = ({ value, onChange }: MaxVoteSliderProps) => {
         value={value === null ? UNLIMITED : (value as number)}
         onChange={handleChange}
         marks={marks}
-        min={1}
+        min={0}
         max={UNLIMITED}
       />
     </Container>
