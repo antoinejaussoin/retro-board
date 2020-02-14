@@ -34,4 +34,5 @@ export default [
   },
   { value: 'ru', iso: 'ru', name: 'Русский', englishName: 'Russian' },
   { value: 'es', iso: 'es', name: 'Español', englishName: 'Spanish' },
+  { value: 'it', iso: 'it', name: 'Italiano', englishName: 'Italian' },
 ] as Language[];
