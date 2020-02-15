@@ -139,9 +139,10 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 
 ## Versions History
 
-### Version Next
+### Version 2.2.3
 
 - 🇮🇹 Italian Translation (👏 Thanks [@mventuri](https://github.com/mventuri))
+- Re-enabling source maps for Sentry
 - Upgrading dependencies
 
 ### Version 2.2.2
