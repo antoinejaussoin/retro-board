@@ -55,7 +55,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "NODE_ENV=production && react-app-rewired build && rimraf ./build/**/*.map",
+    "build": "NODE_ENV=production && react-app-rewired build",
     "test": "react-app-rewired test"
   },
   "eslintConfig": {

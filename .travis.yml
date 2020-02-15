@@ -14,7 +14,7 @@ stages:
   - name: deploy
     if: branch = master && type != pull_request
   - name: deploy-canary
-    if: branch = develop && type != pull_request
+    if: (branch = develop && type != pull_request) || branch = feature/source-maps-sentry
 
 before_install:
   - PACKAGE_VERSION=$(node -p -e "require('./package.json').version")

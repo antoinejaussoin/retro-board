@@ -17,6 +17,9 @@
     "noEmit": false,
     "declaration": true,
     "composite": true,
+    "sourceMap": true,
+    "inlineSources": true,
+    "sourceRoot": "/",
     "lib": ["es2015", "es2017", "dom"],
     "baseUrl": ".",
     "types": []
