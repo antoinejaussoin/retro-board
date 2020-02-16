@@ -3,7 +3,7 @@ export default {
   Header: {
     subtitle: 'Отличный способ выговориться прилично',
     leave: 'Выйти',
-    logout: 'Удалить аккаунт',
+    logout: 'Выйти с учётной записи',
     summaryMode: 'Показать итоги',
   },
   LanguagePicker: {
@@ -71,8 +71,8 @@ export default {
     reconnect: undefined,
   },
   GameMenu: {
-    board: undefined,
-    summary: undefined,
+    board: 'Записи',
+    summary: 'Cводка',
   },
   Template: {
     default: undefined,
@@ -90,7 +90,7 @@ export default {
       header: 'Новая ретроспектива',
       text: 'Нажмите, чтобы начать:',
       button: 'Создать новую ретроспективу',
-      customizeButton: undefined,
+      customizeButton: 'Настроить',
     },
     optionsTab: {
       header: 'Дополнительно',
@@ -105,13 +105,13 @@ export default {
   Login: {
     namePlaceholder: 'Как вас зовут? Введите имя',
     buttonLabel: 'Начать',
-    header: 'Login',
+    header: 'Логин',
   },
   SummaryBoard: {
     noPosts: 'Здесь пока пусто',
-    copyAsMarkdown: undefined,
-    copyAsRichText: undefined,
-    copySuccessful: undefined,
+    copyAsMarkdown: 'Скопировать как Markdown',
+    copyAsRichText: 'Скопировать как RTF',
+    copySuccessful:'Копирование завершено',
   },
   SessionName: {
     defaultSessionName: 'Наша ретроспектива',
