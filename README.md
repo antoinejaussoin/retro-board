@@ -143,6 +143,7 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 
 - 🇷🇺 Russian Translation improvements (👏 Thanks [@regmagik](https://github.com/regmagik))
 - Fixing logout button translation
+- Adding fetch polyfill for IE
 
 ### Version 2.2.3
 
