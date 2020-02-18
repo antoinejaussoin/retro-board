@@ -22,6 +22,7 @@ import useGlobalState from './state';
 import useLoginFromLocalStorage from './hooks/useLoginFromLocalStorage';
 import useIsCompatibleBrowser from './hooks/useIsCompatibleBrowser';
 import OutdatedBrowser from './components/OutdatedBrowser';
+import useTranslations from './translations';
 
 const Title = styled(Typography)`
   flex-grow: 1;
@@ -29,6 +30,7 @@ const Title = styled(Typography)`
 `;
 
 function App() {
+  const translations = useTranslations();
   const history = useHistory();
   useLoginFromLocalStorage();
   const isCompatible = useIsCompatibleBrowser();
@@ -77,7 +79,9 @@ function App() {
             open={open}
             onClose={closeMenu}
           >
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            <MenuItem onClick={handleLogout}>
+              {translations.Header.logout}
+            </MenuItem>
           </Menu>
         </Toolbar>
       </AppBar>

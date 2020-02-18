@@ -28,7 +28,7 @@ export default {
       `You don't have any ${type} remaining.`,
   },
   Customize: {
-    title: 'Customise your Game',
+    title: 'Customise your Session',
     votingCategory: 'Voting',
     votingCategorySub: 'Set the rules about likes and dislikes',
     postCategory: 'Post settings',
@@ -37,7 +37,7 @@ export default {
     customTemplateCategory: 'Column Template',
     customTemplateCategorySub:
       'Set the number of columns and their characteristics',
-    startButton: 'Start the Meeting!',
+    startButton: 'Start the session',
     maxUpVotes: 'Max Up-Votes',
     maxUpVotesHelp: `Maximum number of 'likes' votes a user is allowed to cast`,
     maxDownVotes: 'Max Down-Votes',
