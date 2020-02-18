@@ -139,6 +139,11 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 
 ## Versions History
 
+### Version Next
+
+- 🇷🇺 Russian Translation improvements (👏 Thanks [@regmagik](https://github.com/regmagik))
+- Fixing logout button translation
+
 ### Version 2.2.3
 
 - 🇮🇹 Italian Translation (👏 Thanks [@mventuri](https://github.com/mventuri))
@@ -405,7 +410,7 @@ Many thanks to the following contributors who helped translating the app:
 - Hungarian: [@iaretiga](https://github.com/iaretiga)
 - Portuguese (Brazilian): [@renancouto](https://github.com/renancouto)
 - Dutch: [@Sonaryr](https://github.com/Sonaryr)
-- Russian: [@vectart](https://github.com/vectart)
+- Russian: [@vectart](https://github.com/vectart), [@regmagik](https://github.com/regmagik)
 - Spanish: [@andresin87](https://github.com/andresin87)
 - Chinese: [@aqutw](https://github.com/aqutw)
 - Polish: [@olaf-cichocki](https://github.com/olaf-cichocki)
