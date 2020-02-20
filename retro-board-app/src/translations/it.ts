@@ -52,7 +52,7 @@ export default {
     allowActions: 'Permettere Azioni',
     allowActionsHelp: `Se consentire il campo "Azione" (follow-up) su ciascun post`,
     allowAuthorVisible: 'Mostra Autore',
-    allowAuthorVisibleHelp: "Mostra l'autore del post nel post stesso.",
+    allowAuthorVisibleHelp: "Mostra l'autore del post nel post stesso",
     template: 'Template',
     templateHelp: 'Usa un set di colonne predefinito',
     numberOfColumns: 'Numbero di colonne',
@@ -90,7 +90,7 @@ export default {
     sailboat: 'Barca a Vela',
   },
   Clients: {
-    header: 'Parteciopanti:',
+    header: 'Partecipanti:',
   },
   Join: {
     welcome: 'Benvenuto su Retrospected',
