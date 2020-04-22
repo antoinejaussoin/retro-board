@@ -1,0 +1,14 @@
+{
+  "name": "retro-board-maintenance",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve . -l"
+  },
+  "author": "Antoine Jaussoin",
+  "license": "ISC",
+  "dependencies": {
+    "serve": "^11.3.0"
+  }
+}
