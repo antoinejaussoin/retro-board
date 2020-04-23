@@ -18,17 +18,6 @@ RUN yarn install
 COPY ./retro-board-server ./retro-board-server
 COPY ./retro-board-common ./retro-board-common
 
-# Arguments (these are default but can be overridden)
-ENV DB_TYPE=postgres
-ENV DB_NAME=retroboard
-ENV DB_USER=postgres
-ENV DB_PASSWORD=postgres
-ENV DB_HOST=localhost
-ENV DB_PORT=5432
-ENV BACKEND_PORT=3005
-ENV NODE_ENV=production
-ENV SQL_LOG=false
-
 RUN yarn build-server
 
 EXPOSE ${BACKEND_PORT}

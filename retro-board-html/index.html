@@ -1,766 +1,555 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
 
-    <!-- SEO Meta description -->
-    <meta
-      name="description"
-      content="Real-time Agile Retrospective Board for development teams"
-    />
-    <meta name="author" content="Antoine Jaussoin" />
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <!-- OG Meta Tags to improve the way the post looks when you share the page on LinkedIn, Facebook, Google+ -->
-    <meta property="og:site_name" content="Retrospected" />
-    <!-- website name -->
-    <meta property="og:site" content="https://www.retrospected.com" />
-    <!-- website link -->
-    <meta property="og:title" content="Retrospected.com" />
-    <!-- title shown in the actual shared post -->
-    <meta
-      property="og:description"
-      content="Real-time Agile Retrospective Board for development teams"
-    />
-    <!-- description shown in the actual shared post -->
-    <meta property="og:url" content="https://www.retrospected.com" />
-    <!-- where do you want your post to link to -->
-    <meta property="og:type" content="app" />
+  <meta name="description" content="Real-time Agile Retrospective Board for development teams" />
+  <meta name="author" content="Antoine Jaussoin" />
 
-    <!--title-->
-    <title>Retrospected</title>
+  <meta property="og:site_name" content="Retrospected" />
+  <meta property="og:site" content="https://www.retrospected.com" />
+  <meta property="og:title" content="Retrospected.com" />
+  <meta property="og:description" content="Real-time Agile Retrospective Board for development teams" />
+  <meta property="og:url" content="https://www.retrospected.com" />
+  <meta property="og:type" content="app" />
 
-    <!--google fonts-->
-    <link
-      href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700%7COpen+Sans&display=swap"
-      rel="stylesheet"
-    />
+  <title>Retrospected</title>
 
-    <!--Bootstrap css-->
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <!--Themify icon css-->
-    <link rel="stylesheet" href="css/themify-icons.css" />
-    <!--Owl carousel css-->
-    <link rel="stylesheet" href="css/owl.carousel.min.css" />
-    <link rel="stylesheet" href="css/owl.theme.default.min.css" />
-    <!--custom css-->
-    <link rel="stylesheet" href="css/style.css" />
-    <!--responsive css-->
-    <link rel="stylesheet" href="css/responsive.css" />
-  </head>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700%7COpen+Sans&display=swap"
+    rel="stylesheet" />
 
-  <body>
-    <!--body content wrap start-->
-    <div class="main">
-      <!--hero section start-->
-      <section class="hero-section hero-section-2 ptb-100">
-        <div class="container">
-          <div class="row align-items-center justify-content-between">
-            <div class="col-md-6 col-lg-6">
-              <div class="hero-content-left ptb-100 text-white">
-                <h1 class="text-white">
-                  Real-time <span>Retrospectives</span> done right. <br />For
-                  free. <br />
-                  Start in seconds.
-                </h1>
-                <p class="lead">
-                  Because Post-It notes are not going to cut it.<br />
-                </p>
-              </div>
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/themify-icons.css" />
+  <link rel="stylesheet" href="css/owl.carousel.min.css" />
+  <link rel="stylesheet" href="css/owl.theme.default.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+
+<body>
+  <div class="main">
+    <section class="hero-section hero-section-2 ptb-100">
+      <div class="container">
+        <div class="row align-items-center justify-content-between">
+          <div class="col-md-6 col-lg-6">
+            <div class="hero-content-left ptb-100 text-white">
+              <h1 class="text-white">
+                Real-time <span>Retrospectives</span> done right. <br />For
+                free. <br />
+                Start in seconds.
+              </h1>
+              <p class="lead">
+                Because Post-It notes are not going to cut it.<br />
+              </p>
             </div>
-            <div class="col-md-6 col-lg-5">
-              <div class="">
-                <img
-                  class="img-fluid"
-                  src="screens/mockup-1-02.png"
-                  alt="animation image"
-                />
-              </div>
+          </div>
+          <div class="col-md-6 col-lg-5">
+            <div class="">
+              <img class="img-fluid" src="screens/mockup-1-02.png" alt="animation image" />
             </div>
           </div>
         </div>
-      </section>
-      <!--hero section end-->
+      </div>
+    </section>
 
-      <!--promo section start-->
-      <section class="promo-section ptb-100">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-lg-7 col-md-8">
-              <div class="section-heading text-center mb-5">
-                <h2>
-                  Why Retrospected?
-                  <br />
-                  <span>Why not use a whiteboard?</span>
-                </h2>
-                <p class="lead">Because it's fun 🎉, but beyond that:</p>
-              </div>
-            </div>
-          </div>
-          <div class="row equal">
-            <div class="col-md-4 col-lg-4">
-              <div
-                class="single-promo single-promo-hover single-promo-1 rounded text-center white-bg p-5 h-100"
-              >
-                <div class="circle-icon mb-5">
-                  <span class="ti-cloud text-white"></span>
-                </div>
-                <h5>It's Online</h5>
-                <p>
-                  If you have a distributed team, or people working from home,
-                  you must have realised by now that a whiteboard is not ideal.
-                </p>
-              </div>
-            </div>
-            <div class="col-md-4 col-lg-4">
-              <div
-                class="single-promo single-promo-hover single-promo-1 rounded text-center white-bg p-5 h-100"
-              >
-                <div class="circle-icon mb-5">
-                  <span class="ti-world text-white"></span>
-                </div>
-                <h5>It's Green</h5>
-                <p>
-                  Think of all the trees you are going to save by <b>not</b>
-                  using Post-Its! Or all those whiteboard markers that you don't
-                  have to buy!
-                </p>
-              </div>
-            </div>
-            <div class="col-md-4 col-lg-4">
-              <div
-                class="single-promo single-promo-hover single-promo-1 rounded text-center white-bg p-5 h-100"
-              >
-                <div class="circle-icon mb-5">
-                  <span class="ti-server text-white"></span>
-                </div>
-                <h5>It's Permanent</h5>
-                <p>
-                  You can go back to your previous retrospectives, any time,
-                  anywhere. Try doing that with the whiteboard. Or Post-Its.
-                </p>
-              </div>
+    <section class="promo-section ptb-100">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-7 col-md-8">
+            <div class="section-heading text-center mb-5">
+              <h2>
+                Why Retrospected?
+                <br />
+                <span>Why not use a whiteboard?</span>
+              </h2>
+              <p class="lead">Because it's fun 🎉, but beyond that:</p>
             </div>
           </div>
         </div>
-      </section>
-      <!--promo section end-->
-
-      <!--about us section start-->
-      <section id="about" class="about-us ptb-100 gray-light-bg">
-        <div class="container">
-          <div class="row align-items-center justify-content-between">
-            <div class="col-md-7">
-              <div class="about-content-left section-heading">
-                <h2>
-                  It works across devices <br />
-                  <span>so you can participate from anywhere.</span>
-                </h2>
-
-                <div class="single-feature mb-4">
-                  <div class="icon-box-wrap d-flex align-items-center mb-2">
-                    <div class="mr-3 icon-box">
-                      <img
-                        src="screens/browsers.png"
-                        alt="icon image"
-                        class="img-fluid"
-                      />
-                    </div>
-                    <p class="mb-0">Compatible with all modern browsers.</p>
-                  </div>
-                </div>
-                <div class="single-feature mb-4">
-                  <div class="icon-box-wrap mb-2">
-                    <div class="mr-3 icon-box">
-                      <img
-                        src="screens/ie-logo.png"
-                        alt="icon image"
-                        class="img-fluid"
-                      />
-                    </div>
-                    <p class="mb-0">
-                      No, Internet Explorer 6 is not a modern browser.
-                    </p>
-                  </div>
-                  <p></p>
-                </div>
-                <div class="single-feature mb-4">
-                  <div class="icon-box-wrap mb-2">
-                    <div class="mr-3 icon-box">
-                      <img
-                        src="screens/ipad.png"
-                        alt="icon image"
-                        class="img-fluid"
-                      />
-                    </div>
-                    <p class="mb-0">
-                      Entirely responsive, you can participate vith your iPhone
-                      or your iPad!
-                    </p>
-                  </div>
-                  <p></p>
-                </div>
-                <div class="single-feature mb-4">
-                  <div class="icon-box-wrap mb-2">
-                    <div class="mr-3 icon-box">
-                      <img
-                        src="screens/rocket.png"
-                        alt="icon image"
-                        class="img-fluid"
-                      />
-                    </div>
-                    <p class="mb-0">
-                      The app feels native, because you deserve it.
-                    </p>
-                  </div>
-                  <p></p>
-                </div>
+        <div class="row equal">
+          <div class="col-md-4 col-lg-4">
+            <div class="single-promo single-promo-hover single-promo-1 rounded text-center white-bg p-5 h-100">
+              <div class="circle-icon mb-5">
+                <span class="ti-cloud text-white"></span>
               </div>
+              <h5>It's Online</h5>
+              <p>
+                If you have a distributed team, or people working from home,
+                you must have realised by now that a whiteboard is not ideal.
+              </p>
             </div>
-            <div class="col-md-5">
-              <div class="about-content-right">
-                <img
-                  src="screens/mockup-2-02.png"
-                  alt="about us"
-                  class="img-fluid"
-                />
+          </div>
+          <div class="col-md-4 col-lg-4">
+            <div class="single-promo single-promo-hover single-promo-1 rounded text-center white-bg p-5 h-100">
+              <div class="circle-icon mb-5">
+                <span class="ti-world text-white"></span>
               </div>
+              <h5>It's Green</h5>
+              <p>
+                Think of all the trees you are going to save by <b>not</b>
+                using Post-Its! Or all those whiteboard markers that you don't
+                have to buy!
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+            <div class="single-promo single-promo-hover single-promo-1 rounded text-center white-bg p-5 h-100">
+              <div class="circle-icon mb-5">
+                <span class="ti-server text-white"></span>
+              </div>
+              <h5>It's Permanent</h5>
+              <p>
+                You can go back to your previous retrospectives, any time,
+                anywhere. Try doing that with the whiteboard. Or Post-Its.
+              </p>
             </div>
           </div>
         </div>
-      </section>
-      <!--about us section end-->
+      </div>
+    </section>
 
-      <!--features section start-->
-      <section id="features" class="feature-section ptb-100">
-        <div class="container">
-          <div class="row align-items-center justify-content-between">
-            <div class="col-md-4">
-              <div class="download-img">
-                <img
-                  src="screens/screen-3-01.png"
-                  alt="download"
-                  class="img-fluid"
-                />
-              </div>
-            </div>
-            <div class="col-md-7">
-              <div class="feature-contents section-heading">
-                <h2>
-                  Easy but powerfull with the <br />
-                  <span>best features</span>
-                </h2>
-                <p>
-                  Retrospected's objective is for you to not lose time setting
-                  up a retrospective. That's why we made everything easy, from
-                  not having to register to anonymous sessions.
-                </p>
+    <section id="about" class="about-us ptb-100 gray-light-bg">
+      <div class="container">
+        <div class="row align-items-center justify-content-between">
+          <div class="col-md-7">
+            <div class="about-content-left section-heading">
+              <h2>
+                It works across devices <br />
+                <span>so you can participate from anywhere.</span>
+              </h2>
 
-                <div class="feature-content-wrap">
-                  <ul class="nav nav-tabs feature-tab" data-tabs="tabs">
-                    <li class="nav-item">
-                      <a
-                        class="nav-link active h6"
-                        href="#tab6-1"
-                        data-toggle="tab"
-                      >
-                        <span class="ti-check-box"></span>
-                        Main Features
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link h6" href="#tab6-2" data-toggle="tab">
-                        <span class="ti-wand"></span>
-                        Easy
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link h6" href="#tab6-3" data-toggle="tab">
-                        <span class="ti-crown"></span>
-                        Powerful
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link h6" href="#tab6-4" data-toggle="tab">
-                        <span class="ti-lock"></span>
-                        Secure
-                      </a>
-                    </li>
-                  </ul>
-                  <div class="tab-content feature-tab-content">
-                    <div class="tab-pane active" id="tab6-1">
-                      <ul class="list-unstyled">
-                        <li class="py-2">
-                          <div class="d-flex align-items-center">
-                            <div>
-                              <div
-                                class="badge badge-circle badge-primary mr-3"
-                              >
-                                <span class="ti-check"></span>
-                              </div>
-                            </div>
-                            <div>
-                              <p class="mb-0">Real-time Retrospectives</p>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="py-2">
-                          <div class="d-flex align-items-center">
-                            <div>
-                              <div
-                                class="badge badge-circle badge-primary mr-3"
-                              >
-                                <span class="ti-check"></span>
-                              </div>
-                            </div>
-                            <div>
-                              <p class="mb-0">User voting</p>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="py-2">
-                          <div class="d-flex align-items-center">
-                            <div>
-                              <div
-                                class="badge badge-circle badge-primary mr-3"
-                              >
-                                <span class="ti-check"></span>
-                              </div>
-                            </div>
-                            <div>
-                              <p class="mb-0">Posts grouping</p>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="py-2">
-                          <div class="d-flex align-items-center">
-                            <div>
-                              <div
-                                class="badge badge-circle badge-primary mr-3"
-                              >
-                                <span class="ti-check"></span>
-                              </div>
-                            </div>
-                            <div>
-                              <p class="mb-0">
-                                Full customisation (columns, votes etc.)
-                              </p>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="py-2">
-                          <div class="d-flex align-items-center">
-                            <div>
-                              <div
-                                class="badge badge-circle badge-primary mr-3"
-                              >
-                                <span class="ti-check"></span>
-                              </div>
-                            </div>
-                            <div>
-                              <p class="mb-0">
-                                Make your retro funnier with Giphy!
-                              </p>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="tab-pane" id="tab6-2">
-                      <div class="single-feature">
-                        <div class="d-flex align-items-center mb-2">
-                          <span
-                            class="ti-rocket rounded mr-3 icon icon-color-1"
-                          ></span>
-                          <h5 class="mb-0">Insanely quick setup</h5>
-                        </div>
-                        <p>
-                          The last thing you want to do when starting an online
-                          Retrospective is spending 20 minutes setting it up.
-                          That's why you and every participant can connect and
-                          participate to any session by just logging in using
-                          your regular GitHub/Google/Twitter account. No need to
-                          register, dive right in!
-                        </p>
-                      </div>
-                      <div class="single-feature mb-4">
-                        <div class="d-flex align-items-center mb-2">
-                          <span
-                            class="ti-user rounded mr-3 icon icon-color-2"
-                          ></span>
-                          <h5 class="mb-0">Anonymous Login</h5>
-                        </div>
-                        <p>
-                          You can also log in anonymously, just by entering a
-                          name, and start retrospecting even faster.
-                        </p>
-                      </div>
-                    </div>
-                    <div class="tab-pane" id="tab6-3">
-                      <div class="single-feature">
-                        <div class="d-flex align-items-center mb-2">
-                          <span
-                            class="ti-move rounded mr-3 icon icon-color-1"
-                          ></span>
-                          <h5 class="mb-0">Re-order and Group</h5>
-                        </div>
-                        <p>
-                          You can easily re-order your posts by drag-and-drop,
-                          and group them together using Groups.
-                        </p>
-                      </div>
-                      <div class="single-feature mb-4">
-                        <div class="d-flex align-items-center mb-2">
-                          <span
-                            class="ti-list rounded mr-3 icon icon-color-2"
-                          ></span>
-                          <h5 class="mb-0">Summary</h5>
-                        </div>
-                        <p>
-                          When your board is full, head directly to the
-                          "Summary" tab to enjoy a summarised view or the
-                          content, ordered by people's vote. You can even export
-                          this to Markdown or Rich Text!
-                        </p>
-                      </div>
-                    </div>
-                    <div class="tab-pane" id="tab6-4">
-                      <div class="single-feature">
-                        <div class="d-flex align-items-center mb-2">
-                          <span
-                            class="ti-key rounded mr-3 icon icon-color-1"
-                          ></span>
-                          <h5 class="mb-0">No credentials stored</h5>
-                        </div>
-                        <p>
-                          Retrospected does not store any credentials. When you
-                          log-in with your Google account (or GitHub, or
-                          Twitter...), we delegate the authentication to them
-                          and only store your username and picture. No password.
-                        </p>
-                      </div>
-                      <div class="single-feature mb-4">
-                        <div class="d-flex align-items-center mb-2">
-                          <span
-                            class="ti-link rounded mr-3 icon icon-color-2"
-                          ></span>
-                          <h5 class="mb-0">Private Sessions (Coming Soon!)</h5>
-                        </div>
-                        <p>
-                          For our corporate users, we are soon going to provide
-                          a way of securing a session and preventing
-                          unauthorized users from accessing them. Stay tuned!
-                        </p>
-                      </div>
-                    </div>
+              <div class="single-feature mb-4">
+                <div class="icon-box-wrap d-flex align-items-center mb-2">
+                  <div class="mr-3 icon-box">
+                    <img src="screens/browsers.png" alt="icon image" class="img-fluid" />
                   </div>
+                  <p class="mb-0">Compatible with all modern browsers.</p>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!--features section end-->
-
-      <!--our blog section start-->
-      <section id="blog" class="our-blog-section gray-light-bg ptb-100">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-8">
-              <div class="section-heading mb-5">
-                <h2>Our Latest Features</h2>
-                <p>
-                  Retrospected is a evolving constantly, and here are the new
-                  features we made for you since our last update:
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4">
-              <div class="single-blog-card card border-0 shadow-sm">
-                <span
-                  class="category position-absolute badge badge-pill badge-primary"
-                  >Security</span
-                >
-                <img
-                  src="screens/new-feature-03.png"
-                  class="card-img-top position-relative"
-                  alt="blog"
-                />
-                <div class="card-body">
-                  <div class="post-meta mb-2">
-                    <ul class="list-inline meta-list">
-                      <li class="list-inline-item">Apr 4, 2020</li>
-                    </ul>
+              <div class="single-feature mb-4">
+                <div class="icon-box-wrap mb-2">
+                  <div class="mr-3 icon-box">
+                    <img src="screens/ie-logo.png" alt="icon image" class="img-fluid" />
                   </div>
-                  <h3 class="h5 card-title"><a href="#">Authentication</a></h3>
-                  <p class="card-text">
-                    You can now log in using your favourite social media
-                    account. Currently supported are GitHub, Google and Twitter.
+                  <p class="mb-0">
+                    No, Internet Explorer 6 is not a modern browser.
                   </p>
                 </div>
+                <p></p>
               </div>
-            </div>
-            <div class="col-md-4">
-              <div class="single-blog-card card border-0 shadow-sm">
-                <span
-                  class="category position-absolute badge badge-pill badge-danger"
-                  >Power Feature</span
-                >
-                <img
-                  src="screens/new-feature-02.png"
-                  class="card-img-top position-relative"
-                  alt="blog"
-                />
-                <div class="card-body">
-                  <div class="post-meta mb-2">
-                    <ul class="list-inline meta-list">
-                      <li class="list-inline-item">Apr 4, 2020</li>
-                    </ul>
+              <div class="single-feature mb-4">
+                <div class="icon-box-wrap mb-2">
+                  <div class="mr-3 icon-box">
+                    <img src="screens/ipad.png" alt="icon image" class="img-fluid" />
                   </div>
-                  <h3 class="h5 card-title">
-                    <a href="#">Post re-ordering</a>
-                  </h3>
-                  <p class="card-text">
-                    Re-order and group posts quickly using drag-and-drop. It
-                    works on mobile as well and allows you to group items that
-                    are related together.
+                  <p class="mb-0">
+                    Entirely responsive, you can participate vith your iPhone
+                    or your iPad!
                   </p>
                 </div>
+                <p></p>
               </div>
-            </div>
-            <div class="col-md-4">
-              <div class="single-blog-card card border-0 shadow-sm">
-                <span
-                  class="category position-absolute badge badge-pill badge-info"
-                  >Fun</span
-                >
-                <img
-                  src="screens/new-feature-01.png"
-                  class="card-img-top"
-                  alt="blog"
-                />
-                <div class="card-body">
-                  <div class="post-meta mb-2">
-                    <ul class="list-inline meta-list">
-                      <li class="list-inline-item">Apr 4, 2020</li>
-                    </ul>
+              <div class="single-feature mb-4">
+                <div class="icon-box-wrap mb-2">
+                  <div class="mr-3 icon-box">
+                    <img src="screens/rocket.png" alt="icon image" class="img-fluid" />
                   </div>
-                  <h3 class="h5 card-title">
-                    <a href="#">Giphy integration</a>
-                  </h3>
-                  <p class="card-text">
-                    Why not make your retrospective a little more fun by adding
-                    Giphy images to your posts!
+                  <p class="mb-0">
+                    The app feels native, because you deserve it.
                   </p>
                 </div>
+                <p></p>
               </div>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="about-content-right">
+              <img src="screens/mockup-2-02.png" alt="about us" class="img-fluid" />
             </div>
           </div>
         </div>
-      </section>
-      <!--our blog section end-->
+      </div>
+    </section>
 
-      <!--client section start-->
-      <section class="client-section ptb-100">
-        <div class="container">
-          <!--clients logo start-->
-          <div class="row justify-content-center">
-            <div class="col-md-8">
-              <div class="section-heading text-center mb-5">
-                <h2>Trusted by companies</h2>
-                <p class="lead">
-                  Retrospected is being used all over the world by the most
-                  Agile companies
-                </p>
-              </div>
+    <section id="features" class="feature-section ptb-100">
+      <div class="container">
+        <div class="row align-items-center justify-content-between">
+          <div class="col-md-4">
+            <div class="download-img">
+              <img src="screens/screen-3-01.png" alt="download" class="img-fluid" />
             </div>
           </div>
-          <div class="row align-items-center">
-            <div class="col-md-12">
-              <div
-                class="owl-carousel owl-theme clients-carousel dot-indicator"
-              >
-                <div class="item single-client">
-                  <img
-                    src="screens/logos/deloitte.png"
-                    alt="deloitte"
-                    class="client-img"
-                  />
-                </div>
-                <div class="item single-client">
-                  <img
-                    src="screens/logos/delta.png"
-                    alt="delta"
-                    class="client-img"
-                  />
-                </div>
-                <div class="item single-client">
-                  <img
-                    src="screens/logos/expedia.png"
-                    alt="expedia"
-                    class="client-img"
-                  />
-                </div>
-                <div class="item single-client">
-                  <img
-                    src="screens/logos/ibm.png"
-                    alt="ibm"
-                    class="client-img"
-                  />
-                </div>
-                <div class="item single-client">
-                  <img
-                    src="screens/logos/natwest.png"
-                    alt="natwest"
-                    class="client-img"
-                  />
-                </div>
-                <div class="item single-client">
-                  <img
-                    src="screens/logos/novartis.png"
-                    alt="novartis"
-                    class="client-img"
-                  />
-                </div>
-                <div class="item single-client">
-                  <img
-                    src="screens/logos/pwc.png"
-                    alt="pwc"
-                    class="client-img"
-                  />
-                </div>
-                <div class="item single-client">
-                  <img
-                    src="screens/logos/siemens.png"
-                    alt="siemens"
-                    class="client-img"
-                  />
-                </div>
-                <div class="item single-client">
-                  <img
-                    src="screens/logos/target.png"
-                    alt="target"
-                    class="client-img"
-                  />
-                </div>
-                <div class="item single-client">
-                  <img
-                    src="screens/logos/vodafone.png"
-                    alt="vodafone"
-                    class="client-img"
-                  />
-                </div>
-                <div class="item single-client">
-                  <img
-                    src="screens/logos/adidas.png"
-                    alt="adidas"
-                    class="client-img"
-                  />
-                </div>
-                <div class="item single-client">
-                  <img
-                    src="screens/logos/amazon.png"
-                    alt="amazon"
-                    class="client-img"
-                  />
-                </div>
-                <div class="item single-client">
-                  <img
-                    src="screens/logos/barclays.png"
-                    alt="barclays"
-                    class="client-img"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--clients logo end-->
-        </div>
-      </section>
-      <!--client section start-->
-    </div>
-    <!--body content wrap end-->
+          <div class="col-md-7">
+            <div class="feature-contents section-heading">
+              <h2>
+                Easy but powerfull with the <br />
+                <span>best features</span>
+              </h2>
+              <p>
+                Retrospected's objective is for you to not lose time setting
+                up a retrospective. That's why we made everything easy, from
+                not having to register to anonymous sessions.
+              </p>
 
-    <!--shape image start-->
-    <div class="shape-img subscribe-wrap">
-      <img
-        src="img/footer-top-shape.png"
-        alt="footer shape"
-        class="img-fluid"
-      />
-    </div>
-    <!--shape image end-->
-
-    <!--footer section start-->
-    <footer class="footer-section">
-      <!--footer top start-->
-      <div
-        class="footer-top pt-150 pb-5 background-img-2"
-        style="
-          background: url('screens/bottom.png') no-repeat center top / cover;
-        "
-      >
-        <div class="container">
-          <div class="row justify-content-between">
-            <div class="col-lg-3 mb-3 mb-lg-0">
-              <div class="footer-nav-wrap text-black">
-                <p>
-                  This is a free and open-source app. For support, file a GitHub
-                  ticket
-                  <a
-                    href="https://github.com/antoinejaussoin/retro-board"
-                    target="_blank"
-                    title="GitHub"
-                    >here!</a
-                  >
-                </p>
-
-                <div class="social-list-wrap">
-                  <ul class="social-list list-inline list-unstyled">
-                    <li class="list-inline-item">
-                      <a
-                        href="https://twitter.com/RetrospectedApp"
-                        target="_blank"
-                        title="Twitter"
-                        ><span class="ti-twitter"></span
-                      ></a>
-                    </li>
-                  </ul>
+              <div class="feature-content-wrap">
+                <ul class="nav nav-tabs feature-tab" data-tabs="tabs">
+                  <li class="nav-item">
+                    <a class="nav-link active h6" href="#tab6-1" data-toggle="tab">
+                      <span class="ti-check-box"></span>
+                      Main Features
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link h6" href="#tab6-2" data-toggle="tab">
+                      <span class="ti-wand"></span>
+                      Easy
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link h6" href="#tab6-3" data-toggle="tab">
+                      <span class="ti-crown"></span>
+                      Powerful
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link h6" href="#tab6-4" data-toggle="tab">
+                      <span class="ti-lock"></span>
+                      Secure
+                    </a>
+                  </li>
+                </ul>
+                <div class="tab-content feature-tab-content">
+                  <div class="tab-pane active" id="tab6-1">
+                    <ul class="list-unstyled">
+                      <li class="py-2">
+                        <div class="d-flex align-items-center">
+                          <div>
+                            <div class="badge badge-circle badge-primary mr-3">
+                              <span class="ti-check"></span>
+                            </div>
+                          </div>
+                          <div>
+                            <p class="mb-0">Real-time Retrospectives</p>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="py-2">
+                        <div class="d-flex align-items-center">
+                          <div>
+                            <div class="badge badge-circle badge-primary mr-3">
+                              <span class="ti-check"></span>
+                            </div>
+                          </div>
+                          <div>
+                            <p class="mb-0">User voting</p>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="py-2">
+                        <div class="d-flex align-items-center">
+                          <div>
+                            <div class="badge badge-circle badge-primary mr-3">
+                              <span class="ti-check"></span>
+                            </div>
+                          </div>
+                          <div>
+                            <p class="mb-0">Posts grouping</p>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="py-2">
+                        <div class="d-flex align-items-center">
+                          <div>
+                            <div class="badge badge-circle badge-primary mr-3">
+                              <span class="ti-check"></span>
+                            </div>
+                          </div>
+                          <div>
+                            <p class="mb-0">
+                              Full customisation (columns, votes etc.)
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="py-2">
+                        <div class="d-flex align-items-center">
+                          <div>
+                            <div class="badge badge-circle badge-primary mr-3">
+                              <span class="ti-check"></span>
+                            </div>
+                          </div>
+                          <div>
+                            <p class="mb-0">
+                              Make your retro funnier with Giphy!
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="tab-pane" id="tab6-2">
+                    <div class="single-feature">
+                      <div class="d-flex align-items-center mb-2">
+                        <span class="ti-rocket rounded mr-3 icon icon-color-1"></span>
+                        <h5 class="mb-0">Insanely quick setup</h5>
+                      </div>
+                      <p>
+                        The last thing you want to do when starting an online
+                        Retrospective is spending 20 minutes setting it up.
+                        That's why you and every participant can connect and
+                        participate to any session by just logging in using
+                        your regular GitHub/Google/Twitter account. No need to
+                        register, dive right in!
+                      </p>
+                    </div>
+                    <div class="single-feature mb-4">
+                      <div class="d-flex align-items-center mb-2">
+                        <span class="ti-user rounded mr-3 icon icon-color-2"></span>
+                        <h5 class="mb-0">Anonymous Login</h5>
+                      </div>
+                      <p>
+                        You can also log in anonymously, just by entering a
+                        name, and start retrospecting even faster.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="tab-pane" id="tab6-3">
+                    <div class="single-feature">
+                      <div class="d-flex align-items-center mb-2">
+                        <span class="ti-move rounded mr-3 icon icon-color-1"></span>
+                        <h5 class="mb-0">Re-order and Group</h5>
+                      </div>
+                      <p>
+                        You can easily re-order your posts by drag-and-drop,
+                        and group them together using Groups.
+                      </p>
+                    </div>
+                    <div class="single-feature mb-4">
+                      <div class="d-flex align-items-center mb-2">
+                        <span class="ti-list rounded mr-3 icon icon-color-2"></span>
+                        <h5 class="mb-0">Summary</h5>
+                      </div>
+                      <p>
+                        When your board is full, head directly to the
+                        "Summary" tab to enjoy a summarised view or the
+                        content, ordered by people's vote. You can even export
+                        this to Markdown or Rich Text!
+                      </p>
+                    </div>
+                  </div>
+                  <div class="tab-pane" id="tab6-4">
+                    <div class="single-feature">
+                      <div class="d-flex align-items-center mb-2">
+                        <span class="ti-key rounded mr-3 icon icon-color-1"></span>
+                        <h5 class="mb-0">No credentials stored</h5>
+                      </div>
+                      <p>
+                        Retrospected does not store any credentials. When you
+                        log-in with your Google account (or GitHub, or
+                        Twitter...), we delegate the authentication to them
+                        and only store your username and picture. No password.
+                      </p>
+                    </div>
+                    <div class="single-feature mb-4">
+                      <div class="d-flex align-items-center mb-2">
+                        <span class="ti-link rounded mr-3 icon icon-color-2"></span>
+                        <h5 class="mb-0">Private Sessions (Coming Soon!)</h5>
+                      </div>
+                      <p>
+                        For our corporate users, we are soon going to provide
+                        a way of securing a session and preventing
+                        unauthorized users from accessing them. Stay tuned!
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <!--footer top end-->
-    </footer>
-    <!--footer section end-->
+    </section>
 
-    <!--jQuery-->
-    <script src="js/jquery-3.4.1.min.js"></script>
-    <!--Popper js-->
-    <script src="js/popper.min.js"></script>
-    <!--Bootstrap js-->
-    <script src="js/bootstrap.min.js"></script>
-    <!--Magnific popup js-->
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <!--jquery easing js-->
-    <script src="js/jquery.easing.min.js"></script>
-    <!--jquery ytplayer js-->
-    <script src="js/jquery.mb.YTPlayer.min.js"></script>
-    <!--wow js-->
-    <script src="js/wow.min.js"></script>
-    <!--owl carousel js-->
-    <script src="js/owl.carousel.min.js"></script>
-    <!--countdown js-->
-    <script src="js/jquery.countdown.min.js"></script>
-    <!--custom js-->
-    <script src="js/scripts.js"></script>
-  </body>
+    <section id="blog" class="our-blog-section gray-light-bg ptb-100">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="section-heading mb-5">
+              <h2>Our Latest Features</h2>
+              <p>
+                Retrospected is a evolving constantly, and here are the new
+                features we made for you since our last update:
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="single-blog-card card border-0 shadow-sm">
+              <span class="category position-absolute badge badge-pill badge-primary">Security</span>
+              <img src="screens/new-feature-03.png" class="card-img-top position-relative" alt="blog" />
+              <div class="card-body">
+                <div class="post-meta mb-2">
+                  <ul class="list-inline meta-list">
+                    <li class="list-inline-item">Apr 4, 2020</li>
+                  </ul>
+                </div>
+                <h3 class="h5 card-title"><a href="#">Authentication</a></h3>
+                <p class="card-text">
+                  You can now log in using your favourite social media
+                  account. Currently supported are GitHub, Google and Twitter.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="single-blog-card card border-0 shadow-sm">
+              <span class="category position-absolute badge badge-pill badge-danger">Power Feature</span>
+              <img src="screens/new-feature-02.png" class="card-img-top position-relative" alt="blog" />
+              <div class="card-body">
+                <div class="post-meta mb-2">
+                  <ul class="list-inline meta-list">
+                    <li class="list-inline-item">Apr 4, 2020</li>
+                  </ul>
+                </div>
+                <h3 class="h5 card-title">
+                  <a href="#">Post re-ordering</a>
+                </h3>
+                <p class="card-text">
+                  Re-order and group posts quickly using drag-and-drop. It
+                  works on mobile as well and allows you to group items that
+                  are related together.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="single-blog-card card border-0 shadow-sm">
+              <span class="category position-absolute badge badge-pill badge-info">Fun</span>
+              <img src="screens/new-feature-01.png" class="card-img-top" alt="blog" />
+              <div class="card-body">
+                <div class="post-meta mb-2">
+                  <ul class="list-inline meta-list">
+                    <li class="list-inline-item">Apr 4, 2020</li>
+                  </ul>
+                </div>
+                <h3 class="h5 card-title">
+                  <a href="#">Giphy integration</a>
+                </h3>
+                <p class="card-text">
+                  Why not make your retrospective a little more fun by adding
+                  Giphy images to your posts!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="client-section ptb-100">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="section-heading text-center mb-5">
+              <h2>Trusted by companies</h2>
+              <p class="lead">
+                Retrospected is being used all over the world by the most
+                Agile companies
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <div class="owl-carousel owl-theme clients-carousel dot-indicator">
+              <div class="item single-client">
+                <img src="screens/logos/deloitte.png" alt="deloitte" class="client-img" />
+              </div>
+              <div class="item single-client">
+                <img src="screens/logos/delta.png" alt="delta" class="client-img" />
+              </div>
+              <div class="item single-client">
+                <img src="screens/logos/expedia.png" alt="expedia" class="client-img" />
+              </div>
+              <div class="item single-client">
+                <img src="screens/logos/ibm.png" alt="ibm" class="client-img" />
+              </div>
+              <div class="item single-client">
+                <img src="screens/logos/natwest.png" alt="natwest" class="client-img" />
+              </div>
+              <div class="item single-client">
+                <img src="screens/logos/novartis.png" alt="novartis" class="client-img" />
+              </div>
+              <div class="item single-client">
+                <img src="screens/logos/pwc.png" alt="pwc" class="client-img" />
+              </div>
+              <div class="item single-client">
+                <img src="screens/logos/siemens.png" alt="siemens" class="client-img" />
+              </div>
+              <div class="item single-client">
+                <img src="screens/logos/target.png" alt="target" class="client-img" />
+              </div>
+              <div class="item single-client">
+                <img src="screens/logos/vodafone.png" alt="vodafone" class="client-img" />
+              </div>
+              <div class="item single-client">
+                <img src="screens/logos/adidas.png" alt="adidas" class="client-img" />
+              </div>
+              <div class="item single-client">
+                <img src="screens/logos/amazon.png" alt="amazon" class="client-img" />
+              </div>
+              <div class="item single-client">
+                <img src="screens/logos/barclays.png" alt="barclays" class="client-img" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="shape-img subscribe-wrap">
+    <img src="img/footer-top-shape.png" alt="footer shape" class="img-fluid" />
+  </div>
+
+  <footer class="footer-section">
+    <div class="footer-top pt-150 pb-5 background-img-2" style="
+          background: url('screens/bottom.png') no-repeat center top / cover;
+        ">
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col-lg-3 mb-3 mb-lg-0">
+            <div class="footer-nav-wrap text-black">
+              <p>
+                This is a free and open-source app. For support, file a GitHub
+                ticket
+                <a href="https://github.com/antoinejaussoin/retro-board" target="_blank" title="GitHub">here!</a>
+              </p>
+
+              <div class="social-list-wrap">
+                <ul class="social-list list-inline list-unstyled">
+                  <li class="list-inline-item">
+                    <a href="https://twitter.com/RetrospectedApp" target="_blank" title="Twitter"><span
+                        class="ti-twitter"></span></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/scripts.js"></script>
+</body>
+
 </html>
