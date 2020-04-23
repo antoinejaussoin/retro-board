@@ -67,6 +67,7 @@ You must have `docker` and `docker-compose` installed on your system.
 - Clone this repository
 - Then run `docker-compose -f ./docker-compose.example.yml up -d`.
 - Open your browser on [http://localhost](http://localhost)
+- _(then please wait a few minutes the first time for the database to initialise)_
 
 ## How to run for development 📝
 
@@ -94,7 +95,7 @@ You must have `docker` and `docker-compose` installed on your system.
 ### Run 🚀
 
 - Copy `docker-compose.example.yml` to `docker-compose.yml`
-- _Optional_: edit `docker-compose.yml` to change credentials and secrets
+- Edit `docker-compose.yml` to change credentials and secrets
 - Run `docker-compose up -d`
 - Voilà!
 
@@ -103,8 +104,8 @@ This will run a production-ready version of Retrospected automatically, using Po
 - Postgres
 - pgAdmin4 (Web UI for postgres)
 - Redis
-- The Retrospected NodeJS backend
-- The frontend, served by `nginx`.
+- The Retrospected NodeJS Backend
+- The Retrospected React Frontend, served by `nginx`.
 
 ## How to run for Production using Kubernetes ☸
 
