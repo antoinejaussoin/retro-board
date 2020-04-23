@@ -60,25 +60,25 @@ Previous versions, up to v1.0.1 featured the following libraries:
 - ~~[reselect](https://github.com/reactjs/reselect)~~
 - ~~[ESLint](http://eslint.org/) for JS and JSX~~
 
-## Prerequisites 💿
+## How to try it out 🚀
 
-- `Yarn`: Please install [Yarn](https://yarnpkg.com/en/), as this mono-repo uses **Yarn Workspaces** which won't work with NPM.
-
-## How to try it out (Mac / Linux) 🚀
+You must have `docker` and `docker-compose` installed on your system.
 
 - Clone this repository
-- Switch to the `master` branch (the default is `develop` which might not be stable: `git checkout master`)
-- `yarn` to install the dependencies (_not_ `npm i`!)
-- `yarn start` to transpile the server, run the server on port 8080 and start the UI
-- Open your browser on [http://localhost:3000](http://localhost:3000)
-
-## How to try it out (Windows) 🚀
-
-Follow the steps in "How to run for development" below.
+- Then run `docker-compose -f ./docker-compose.example.yml up -d`.
+- Open your browser on [http://localhost](http://localhost)
 
 ## How to run for development 📝
 
+### Prerequisites 💿
+
+- You must have `docker` and `docker-compose` installed on your system.
+- `Yarn`: Please install [Yarn](https://yarnpkg.com/en/), as this mono-repo uses **Yarn Workspaces** which won't work with NPM.
+
+### Run 🚀
+
 - Clone this repository
+- Run Postgres, Redis, PGAdmin locally (in the `./dev` directory, `docker-compose up -d`)
 - `yarn` to install the dependencies (_not_ `npm i`!)
 - Open another terminal (you need two of those, and the order is important)
 - `yarn start-ui` on the first terminal to run live Webpack with hot-reload
@@ -87,9 +87,9 @@ Follow the steps in "How to run for development" below.
 
 ## How to run for Production using Docker 🐳
 
-### Prerequisites
+### Prerequisites 💿
 
-You must have `docker` and `docker-compose` installed on your system.
+- You must have `docker` and `docker-compose` installed on your system.
 
 ### Run 🚀
 
@@ -106,6 +106,10 @@ This will run a production-ready version of Retrospected automatically, using Po
 - The Retrospected NodeJS backend
 - The frontend, served by `nginx`.
 
+## How to run for Production using Kubernetes ☸
+
+Please read the [readme](/k8s/readme.md) file in the `k8s` folder.
+
 ### Backups 💾
 
 When using the Docker deployment, your database runs from a container. But if you still need to make some backup of your data, you can do the following:
@@ -120,10 +124,6 @@ When using the Docker deployment, your database runs from a container. But if yo
 - `yarn` to install the dependencies (_not_ `npm i`!)
 - `npm test` to run the tests
 - **or** `yarn test-watch` to run the tests every time you change a file
-
-## Kubernetes ☸
-
-To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s` folder.
 
 ## How to debug
 
