@@ -39,7 +39,7 @@ It features the following technologies:
 - [Styled Components](https://www.styled-components.com/)
 - [Multilingual](https://stackoverflow.com/questions/33413880/react-redux-and-multilingual-internationalization-apps-architecture) / Internationalization
 - [Postgres](https://www.postgresql.org/) (optional), defaults to [NeDB](https://github.com/louischatriot/nedb) (in-process)
-- [Passport](http://www.passportjs.org/) for authentication, seamless authentication with:
+- [Passport](http://www.passportjs.org/) for seamless authentication with:
   - Google
   - Twitter
   - GitHub
@@ -110,7 +110,7 @@ This will run a production-ready version of Retrospected automatically, using Po
 
 Please read the [readme](/k8s/readme.md) file in the `k8s` folder.
 
-### Backups 💾
+## Backups 💾
 
 When using the Docker deployment, your database runs from a container. But if you still need to make some backup of your data, you can do the following:
 
@@ -144,12 +144,16 @@ When using the Docker deployment, your database runs from a container. But if yo
 ### Version 3.0.0
 
 - Brand new landing page, and much improved look and feel 🎉
-- Authentication using your favourite social media account (GitHub, Google or Twitter, more coming)
+- Authentication using your favourite social media account:
+  - GitHub
+  - Google
+  - Twitter
+  - ...more coming!
 - Ability to re-order posts by drag-and-drop 🚀
 - Ability to group posts together
-- Save your session settings as a default template
+- Save your custom session settings as a default template
 - Giphy support 😃
-- Improved (logged in) dashboard, and list of past sessions
+- Improved homepage dashboard 📈
 
 ### Version 2.2.4
 
