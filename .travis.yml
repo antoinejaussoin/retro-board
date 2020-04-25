@@ -30,7 +30,7 @@ jobs:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker build -f ./retro-board-server/Dockerfile -t antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-backend:latest .
         - docker build -f ./retro-board-app/Dockerfile -t antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-frontend:latest .
-        - docker build -f ./retro-board-maintenance/Dockerfile -t antoinejaussoin/retro-board-maintenance:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-maintenance:latest .
+        - docker build -f ./retro-board-maintenance/Dockerfile -t antoinejaussoin/retro-board-maintenance:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-maintenance:latest ./retro-board-maintenance
         - docker push antoinejaussoin/retro-board-backend:${PACKAGE_VERSION}
         - docker push antoinejaussoin/retro-board-backend:latest
         - docker push antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION}
@@ -42,7 +42,7 @@ jobs:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker build -f ./retro-board-server/Dockerfile -t antoinejaussoin/retro-board-backend:canary .
         - docker build -f ./retro-board-app/Dockerfile -t antoinejaussoin/retro-board-frontend:canary .
-        - docker build -f ./retro-board-maintenance/Dockerfile -t antoinejaussoin/retro-board-maintenance:canary .
+        - docker build -f ./retro-board-maintenance/Dockerfile -t antoinejaussoin/retro-board-maintenance:canary ./retro-board-maintenance
         - docker push antoinejaussoin/retro-board-backend:canary
         - docker push antoinejaussoin/retro-board-frontend:canary
         - docker push antoinejaussoin/retro-board-maintenance:canary
