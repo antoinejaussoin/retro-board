@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getGiphyUrl } from '../api';
-import useHasChanged from './useHasChanged';
+import useOriginal from './useOriginal';
 import { trackEvent } from '../track';
 
 /**
@@ -15,9 +15,8 @@ export default function useGiphy(
   giphyId: string | null
 ): [string | null, boolean, () => void] {
   const [url, setUrl] = useState<string | null>(null);
-  const hasGiphyChanged = useHasChanged(giphyId);
-  const isNewGiphy = hasGiphyChanged && !!giphyId;
-  const [showImage, setShowImage] = useState(isNewGiphy);
+  const original = useOriginal(giphyId);
+  const [showImage, setShowImage] = useState(false);
 
   const toggleShowImage = useCallback(() => {
     setShowImage((prev) => !prev);
@@ -25,10 +24,10 @@ export default function useGiphy(
   }, []);
 
   useEffect(() => {
-    if (isNewGiphy) {
+    if (giphyId !== original) {
       setShowImage(true);
     }
-  }, [isNewGiphy]);
+  }, [giphyId, original]);
 
   useEffect(() => {
     async function load() {
