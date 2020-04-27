@@ -8,7 +8,6 @@ import Home from './views/Home';
 import Game from './views/Game';
 import Panel from './views/Panel';
 import Invite from './views/layout/Invite';
-import LandingPage from './views/landing/LandingPage';
 import LoginButton from './auth/LoginButton';
 import useGlobalState from './state';
 import useIsCompatibleBrowser from './hooks/useIsCompatibleBrowser';
@@ -54,7 +53,9 @@ function App() {
           )}
         </Toolbar>
       </AppBar>
-      <Route path="/" exact component={user ? Home : LandingPage} />
+      <Route path="/" exact>
+        {user ? <Home /> : null}
+      </Route>
       <Switch>
         <Redirect from="/session/:gameId" to="/game/:gameId" />
         <Route path="/game/:gameId" component={Game} />
