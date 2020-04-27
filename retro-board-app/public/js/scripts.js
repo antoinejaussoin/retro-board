@@ -23,7 +23,7 @@ jQuery(function ($) {
 
     'use strict';
     // 1. fixed navbar
-    $(window).on( 'scroll', function () {
+    $(window).on('scroll', function () {
         // checks if window is scrolled more than 500px, adds/removes solid class
         if ($(this).scrollTop() > 60) {
             $('.navbar').addClass('affix');
@@ -34,18 +34,18 @@ jQuery(function ($) {
 
 
     // 2. page scrolling feature - requires jQuery Easing plugin
-    $(function() {
-        $(document).on('click', 'a.page-scroll', function(event) {
+    $(function () {
+        $(document).on('click', 'a.page-scroll', function (event) {
             var $anchor = $(this);
             $('html, body').stop().animate({
-                scrollTop: $($anchor.attr('href')).offset().top-60
+                scrollTop: $($anchor.attr('href')).offset().top - 60
             }, 900, 'easeInOutExpo');
             event.preventDefault();
         });
     });
 
     // 3. closes the responsive menu on menu item click
-    $(".navbar-nav li a").on("click", function(event) {
+    $(".navbar-nav li a").on("click", function (event) {
         if (!$(this).parent().hasClass('dropdown'))
             $(".navbar-collapse").collapse('hide');
     });
@@ -62,15 +62,15 @@ jQuery(function ($) {
 
     // 5. client testimonial slider
     $('.client-testimonial').owlCarousel({
-        loop:false,
-        margin:30,
-        items:1,
+        loop: false,
+        margin: 30,
+        items: 1,
         nav: true,
-        dots:false,
-        responsiveClass:true,
-        autoplay:false,
-        autoplayHoverPause:true,
-        lazyLoad:true,
+        dots: false,
+        responsiveClass: true,
+        autoplay: false,
+        autoplayHoverPause: true,
+        lazyLoad: true,
     })
 
     // 6. Screenshots slider
@@ -105,16 +105,16 @@ jQuery(function ($) {
     var isFirstTime = true;
     var interval = null;
     var countSelector = $('.single-counter > span, .single-card > h3');
-    if(countSelector.length) {
+    if (countSelector.length) {
         var startingTop = countSelector.offset().top - window.innerHeight;
-        if(startingTop > 0) {
-            $(window).on( 'scroll', function() {
+        if (startingTop > 0) {
+            $(window).on('scroll', function () {
                 if (isFirstTime && $(window).scrollTop() > startingTop) {
                     startCounting();
                     isFirstTime = false;
                 }
             });
-        } else{
+        } else {
             startCounting();
         }
     }
@@ -126,22 +126,17 @@ jQuery(function ($) {
      */
     function incrementValue(value) {
         var incVal = 0;
-        if(Math.ceil(value / 2) <= 5){ // upto 10
+        if (Math.ceil(value / 2) <= 5) { // upto 10
             incVal = 1;
-        }
-        else if(Math.ceil(value / 10) <= 10) { // up to 100
+        } else if (Math.ceil(value / 10) <= 10) { // up to 100
             incVal = 10;
-        }
-        else if(Math.ceil(value / 100) <= 10) { // up to 1000
+        } else if (Math.ceil(value / 100) <= 10) { // up to 1000
             incVal = 25;
-        }
-        else if(Math.ceil(value / 100) <= 100) { // up to 10000
+        } else if (Math.ceil(value / 100) <= 100) { // up to 10000
             incVal = 50;
-        }
-        else if(Math.ceil(value / 1000) <= 100) { // up to 100000
+        } else if (Math.ceil(value / 1000) <= 100) { // up to 100000
             incVal = 150;
-        }
-        else {
+        } else {
             incVal = 500;
         }
         return incVal;
@@ -157,9 +152,9 @@ jQuery(function ($) {
     function count(counters, start, value, id) {
         var localStart = start;
         var inc = incrementValue(value);
-        interval = setInterval(function() {
+        interval = setInterval(function () {
             if (localStart < value) {
-                localStart = localStart+inc;
+                localStart = localStart + inc;
                 counters[id].innerHTML = localStart;
             }
         }, 40);
@@ -186,84 +181,84 @@ jQuery(function ($) {
 
     // 8. client-testimonial one item carousel
     $('.client-testimonial-1').owlCarousel({
-        loop:true,
-        margin:30,
+        loop: true,
+        margin: 30,
         nav: false,
-        responsiveClass:true,
-        autoplay:true,
-        autoplayHoverPause:true,
-        lazyLoad:true,
-        items:1,
+        responsiveClass: true,
+        autoplay: true,
+        autoplayHoverPause: true,
+        lazyLoad: true,
+        items: 1,
     })
 
     // 9. our clients logo carousel
     $('.clients-carousel').owlCarousel({
         autoplay: true,
         loop: true,
-        margin:15,
-        dots:true,
-        slideTransition:'linear',
-        autoplayTimeout:4500,
-        autoplayHoverPause:true,
-        autoplaySpeed:4500,
-        responsive:{
-            0:{
-                items:2
+        margin: 15,
+        dots: true,
+        slideTransition: 'linear',
+        autoplayTimeout: 4500,
+        autoplayHoverPause: true,
+        autoplaySpeed: 4500,
+        responsive: {
+            0: {
+                items: 2
             },
             500: {
-                items:3
+                items: 3
             },
-            600:{
-                items:4
+            600: {
+                items: 4
             },
-            800:{
-                items:5
+            800: {
+                items: 5
             },
-            1200:{
-                items:6
+            1200: {
+                items: 6
             }
 
         }
     })
 
-    // 10. our clients logo carousel
-    $(document).ready(function(){
-        $(".player").YTPlayer();
-    });
+    // // 10. our clients logo carousel
+    // $(document).ready(function(){
+    //     $(".player").YTPlayer();
+    // });
 
 
-    // 11. wow js
-    function wowAnimation(){
-        new WOW({
-            offset: 100,
-            mobile: true
-        }).init()
-    }
-    wowAnimation()
+    // // 11. wow js
+    // function wowAnimation(){
+    //     new WOW({
+    //         offset: 100,
+    //         mobile: true
+    //     }).init()
+    // }
+    // wowAnimation()
 
 
-  //countdown one
+    //countdown one
 
-  $('#clock').countdown('2022/01/30', function(event) {
-    $(this).html(event.strftime('' +
-      '<div class="row">' +
-      '<div class="col">' +
-      '<h2 class="mb-1">%-D</h2>' +
-      '<h5>Day%!d</h5>' +
-      '</div>' +
-      '<div class="col">' +
-      '<h2 class="mb-1">%H</h2>' +
-      '<h5>Hours</h5>' +
-      '</div>' +
-      '<div class="col">' +
-      '<h2 class="mb-1">%M</h2>' +
-      '<h5>Minutes</h5>' +
-      '</div>' +
-      '<div class="col">' +
-      '<h2 class="mb-1">%S</h2>' +
-      '<h5>Seconds</h5>' +
-      '</div>' +
-      '</div>'));
-  });
+    // $('#clock').countdown('2022/01/30', function (event) {
+    //     $(this).html(event.strftime('' +
+    //         '<div class="row">' +
+    //         '<div class="col">' +
+    //         '<h2 class="mb-1">%-D</h2>' +
+    //         '<h5>Day%!d</h5>' +
+    //         '</div>' +
+    //         '<div class="col">' +
+    //         '<h2 class="mb-1">%H</h2>' +
+    //         '<h5>Hours</h5>' +
+    //         '</div>' +
+    //         '<div class="col">' +
+    //         '<h2 class="mb-1">%M</h2>' +
+    //         '<h5>Minutes</h5>' +
+    //         '</div>' +
+    //         '<div class="col">' +
+    //         '<h2 class="mb-1">%S</h2>' +
+    //         '<h5>Seconds</h5>' +
+    //         '</div>' +
+    //         '</div>'));
+    // });
 
 }); // JQuery end
