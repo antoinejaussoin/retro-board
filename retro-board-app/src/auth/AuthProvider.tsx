@@ -20,27 +20,43 @@ const AuthProvider: React.FC = ({ children }) => {
   useEffect(() => {
     if (user) {
       console.log('We are logged in');
-      // Array.prototype.forEach.call(
-      //   document.querySelectorAll('link[rel=stylesheet].marketing'),
-      //   function (element) {
-      //     try {
-      //       element.parentNode.removeChild(element);
-      //     } catch (err) {}
-      //   }
-      // );
-      // Array.prototype.forEach.call(
-      //   document.querySelectorAll('script.marketing'),
-      //   function (element) {
-      //     try {
-      //       element.parentNode.removeChild(element);
-      //     } catch (err) {}
-      //   }
-      // );
+      Array.prototype.forEach.call(
+        document.querySelectorAll('.marketing-content'),
+        function (element) {
+          try {
+            //element.parentNode.removeChild(element);
+            //element.disabled = true;
+            element.style.display = 'none';
+          } catch (err) {}
+        }
+      );
       Array.prototype.forEach.call(
         document.querySelectorAll('.marketing'),
         function (element) {
           try {
-            element.parentNode.removeChild(element);
+            //element.parentNode.removeChild(element);
+            element.disabled = true;
+          } catch (err) {}
+        }
+      );
+    } else if (!user) {
+      console.log('We are not logged in');
+      Array.prototype.forEach.call(
+        document.querySelectorAll('.marketing'),
+        function (element) {
+          try {
+            //element.parentNode.removeChild(element);
+            element.disabled = false;
+          } catch (err) {}
+        }
+      );
+      Array.prototype.forEach.call(
+        document.querySelectorAll('.marketing-content'),
+        function (element) {
+          try {
+            //element.parentNode.removeChild(element);
+            //element.disabled = true;
+            element.style.display = 'block';
           } catch (err) {}
         }
       );
