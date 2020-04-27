@@ -2,12 +2,17 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
+  <title>Retrospected - A fun way to retrospect</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
+  <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1" media="(device-height: 568px)">
+  <meta name="apple-mobile-web-app-title" content="Retrospected">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="HandheldFriendly" content="true">
   <meta name="description" content="Real-time Agile Retrospective Board for development teams" />
-  <meta name="author" content="Antoine Jaussoin" />
+  <meta http-equiv="cleartype" content="on">
 
   <meta property="og:site_name" content="Retrospected" />
   <meta property="og:site" content="https://www.retrospected.com" />
@@ -15,8 +20,6 @@
   <meta property="og:description" content="Real-time Agile Retrospective Board for development teams" />
   <meta property="og:url" content="https://www.retrospected.com" />
   <meta property="og:type" content="app" />
-
-  <title>Retrospected</title>
 
   <script>
     window.__env__ = {
@@ -26,57 +29,77 @@
       AUTH_GOOGLE_ENABLED: 'NO_AUTH_GOOGLE_ENABLED',
       AUTH_TWITTER_ENABLED: 'NO_AUTH_TWITTER_ENABLED',
       AUTH_GITHUB_ENABLED: 'NO_AUTH_GITHUB_ENABLED',
-    }
+    };
   </script>
 
   <% if (process.env.NODE_ENV === 'development') { %>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=Map%2CSet%2CWeakMap%2CObject.setPrototypeOf"></script>
   <% } %>
 
-  <link rel="apple-touch-icon" sizes="57x57" href="%PUBLIC_URL%/apple-touch-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="%PUBLIC_URL%/apple-touch-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="%PUBLIC_URL%/apple-touch-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="%PUBLIC_URL%/apple-touch-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="%PUBLIC_URL%/apple-touch-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="%PUBLIC_URL%/apple-touch-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="%PUBLIC_URL%/apple-touch-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="%PUBLIC_URL%/apple-touch-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/apple-touch-icon-180x180.png">
-  <link rel="icon" type="image/png" href="%PUBLIC_URL%/favicon-32x32.png" sizes="32x32">
-  <link rel="icon" type="image/png" href="%PUBLIC_URL%/android-chrome-192x192.png" sizes="192x192">
-  <link rel="icon" type="image/png" href="%PUBLIC_URL%/favicon-96x96.png" sizes="96x96">
-  <link rel="icon" type="image/png" href="%PUBLIC_URL%/favicon-16x16.png" sizes="16x16">
+  <link rel="apple-touch-icon" sizes="57x57" href="%PUBLIC_URL%/apple-touch-icon-57x57.png" />
+  <link rel="apple-touch-icon" sizes="60x60" href="%PUBLIC_URL%/apple-touch-icon-60x60.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="%PUBLIC_URL%/apple-touch-icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="76x76" href="%PUBLIC_URL%/apple-touch-icon-76x76.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="%PUBLIC_URL%/apple-touch-icon-114x114.png" />
+  <link rel="apple-touch-icon" sizes="120x120" href="%PUBLIC_URL%/apple-touch-icon-120x120.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="%PUBLIC_URL%/apple-touch-icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="%PUBLIC_URL%/apple-touch-icon-152x152.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/apple-touch-icon-180x180.png" />
+  <link rel="icon" type="image/png" href="%PUBLIC_URL%/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="%PUBLIC_URL%/android-chrome-192x192.png" sizes="192x192" />
+  <link rel="icon" type="image/png" href="%PUBLIC_URL%/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/png" href="%PUBLIC_URL%/favicon-16x16.png" sizes="16x16" />
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-  <link rel="mask-icon" href="%PUBLIC_URL%/safari-pinned-tab.svg" color="#5bbad5">
-  <meta name="msapplication-TileColor" content="#da532c">
-  <meta name="msapplication-TileImage" content="%PUBLIC_URL%/mstile-144x144.png">
-  <meta name="theme-color" content="#ffffff">
-  <meta name="version" content="%REACT_APP_VERSION%">
-  <meta name="env" content="%NODE_ENV%">
+  <link rel="mask-icon" href="%PUBLIC_URL%/safari-pinned-tab.svg" color="#5bbad5" />
+  <meta name="msapplication-TileColor" content="#da532c" />
+  <meta name="msapplication-TileImage" content="%PUBLIC_URL%/mstile-144x144.png" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="version" content="%REACT_APP_VERSION%" />
+  <meta name="env" content="%NODE_ENV%" />
 
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet" />
 
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700%7COpen+Sans&display=swap"
     rel="stylesheet" class="marketing" />
-  <link rel="stylesheet" href="css/bootstrap.min.css" class="marketing" />
-  <link rel="stylesheet" href="css/themify-icons.css" class="marketing" />
-  <link rel="stylesheet" href="css/owl.carousel.min.css" class="marketing" />
-  <link rel="stylesheet" href="css/owl.theme.default.min.css" class="marketing" />
-  <link rel="stylesheet" href="css/style.css" class="marketing" />
-  <link rel="stylesheet" href="css/responsive.css" class="marketing" />
-
+  <link rel="stylesheet" href="%PUBLIC_URL%/css/bootstrap.min.css" class="marketing" />
+  <link rel="stylesheet" href="%PUBLIC_URL%/css/themify-icons.css" class="marketing" />
+  <link rel="stylesheet" href="%PUBLIC_URL%/css/owl.carousel.min.css" class="marketing" />
+  <link rel="stylesheet" href="%PUBLIC_URL%/css/owl.theme.default.min.css" class="marketing" />
+  <link rel="stylesheet" href="%PUBLIC_URL%/css/style.css" class="marketing" />
+  <link rel="stylesheet" href="%PUBLIC_URL%/css/responsive.css" class="marketing" />
 </head>
 
 <body ontouchstart="">
   <!-- Version: %REACT_APP_VERSION% - %NODE_ENV% -->
 
-  <div id="content"></div>
+  <div id="content">
+    <div style="
+          background-color: #673ab7;
+          height: 64px;
+          display: flex;
+          align-items: center;
+          color: white;
+          box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+            0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+            0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+          font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+        ">
+      <h6 style="
+            font-size: 20px;
+            margin-left: 72px;
+            font-weight: bold;
+            flex: 1;
+          ">
+        Retrospected
+      </h6>
+      <div style="font-weight: 100; margin-right: 32px;">
+        Initialising...
+      </div>
+    </div>
+  </div>
 
   <div class="main marketing-content">
-
-
     <section class="hero-section hero-section-2 ptb-100">
       <div class="container">
         <div class="row align-items-center justify-content-between">
@@ -94,7 +117,7 @@
           </div>
           <div class="col-md-6 col-lg-5">
             <div class="">
-              <img class="img-fluid" src="screens/mockup-1-02.png" alt="animation image" />
+              <img class="img-fluid" src="%PUBLIC_URL%/screens/mockup-1-02.png" alt="animation image" />
             </div>
           </div>
         </div>
@@ -170,7 +193,7 @@
               <div class="single-feature mb-4">
                 <div class="icon-box-wrap d-flex align-items-center mb-2">
                   <div class="mr-3 icon-box">
-                    <img src="screens/browsers.png" alt="icon image" class="img-fluid" />
+                    <img src="%PUBLIC_URL%/screens/browsers.png" alt="icon image" class="img-fluid" />
                   </div>
                   <p class="mb-0">Compatible with all modern browsers.</p>
                 </div>
@@ -178,7 +201,7 @@
               <div class="single-feature mb-4">
                 <div class="icon-box-wrap mb-2">
                   <div class="mr-3 icon-box">
-                    <img src="screens/ie-logo.png" alt="icon image" class="img-fluid" />
+                    <img src="%PUBLIC_URL%/screens/ie-logo.png" alt="icon image" class="img-fluid" />
                   </div>
                   <p class="mb-0">
                     No, Internet Explorer 6 is not a modern browser.
@@ -189,7 +212,7 @@
               <div class="single-feature mb-4">
                 <div class="icon-box-wrap mb-2">
                   <div class="mr-3 icon-box">
-                    <img src="screens/ipad.png" alt="icon image" class="img-fluid" />
+                    <img src="%PUBLIC_URL%/screens/ipad.png" alt="icon image" class="img-fluid" />
                   </div>
                   <p class="mb-0">
                     Entirely responsive, you can participate vith your iPhone
@@ -201,7 +224,7 @@
               <div class="single-feature mb-4">
                 <div class="icon-box-wrap mb-2">
                   <div class="mr-3 icon-box">
-                    <img src="screens/rocket.png" alt="icon image" class="img-fluid" />
+                    <img src="%PUBLIC_URL%/screens/rocket.png" alt="icon image" class="img-fluid" />
                   </div>
                   <p class="mb-0">
                     The app feels native, because you deserve it.
@@ -213,7 +236,7 @@
           </div>
           <div class="col-md-5">
             <div class="about-content-right">
-              <img src="screens/mockup-2-02.png" alt="about us" class="img-fluid" />
+              <img src="%PUBLIC_URL%/screens/mockup-2-02.png" alt="about us" class="img-fluid" />
             </div>
           </div>
         </div>
@@ -225,7 +248,7 @@
         <div class="row align-items-center justify-content-between">
           <div class="col-md-4">
             <div class="download-img">
-              <img src="screens/screen-3-01.png" alt="download" class="img-fluid" />
+              <img src="%PUBLIC_URL%/screens/screen-3-01.png" alt="download" class="img-fluid" />
             </div>
           </div>
           <div class="col-md-7">
@@ -436,7 +459,7 @@
           <div class="col-md-4">
             <div class="single-blog-card card border-0 shadow-sm">
               <span class="category position-absolute badge badge-pill badge-primary">Security</span>
-              <img src="screens/new-feature-03.png" class="card-img-top position-relative" alt="blog" />
+              <img src="%PUBLIC_URL%/screens/new-feature-03.png" class="card-img-top position-relative" alt="blog" />
               <div class="card-body">
                 <div class="post-meta mb-2">
                   <ul class="list-inline meta-list">
@@ -454,7 +477,7 @@
           <div class="col-md-4">
             <div class="single-blog-card card border-0 shadow-sm">
               <span class="category position-absolute badge badge-pill badge-danger">Power Feature</span>
-              <img src="screens/new-feature-02.png" class="card-img-top position-relative" alt="blog" />
+              <img src="%PUBLIC_URL%/screens/new-feature-02.png" class="card-img-top position-relative" alt="blog" />
               <div class="card-body">
                 <div class="post-meta mb-2">
                   <ul class="list-inline meta-list">
@@ -475,7 +498,7 @@
           <div class="col-md-4">
             <div class="single-blog-card card border-0 shadow-sm">
               <span class="category position-absolute badge badge-pill badge-info">Fun</span>
-              <img src="screens/new-feature-01.png" class="card-img-top" alt="blog" />
+              <img src="%PUBLIC_URL%/screens/new-feature-01.png" class="card-img-top" alt="blog" />
               <div class="card-body">
                 <div class="post-meta mb-2">
                   <ul class="list-inline meta-list">
@@ -513,43 +536,43 @@
           <div class="col-md-12">
             <div class="owl-carousel owl-theme clients-carousel dot-indicator">
               <div class="item single-client">
-                <img src="screens/logos/deloitte.png" alt="deloitte" class="client-img" />
+                <img src="%PUBLIC_URL%/screens/logos/deloitte.png" alt="deloitte" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="screens/logos/delta.png" alt="delta" class="client-img" />
+                <img src="%PUBLIC_URL%/screens/logos/delta.png" alt="delta" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="screens/logos/expedia.png" alt="expedia" class="client-img" />
+                <img src="%PUBLIC_URL%/screens/logos/expedia.png" alt="expedia" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="screens/logos/ibm.png" alt="ibm" class="client-img" />
+                <img src="%PUBLIC_URL%/screens/logos/ibm.png" alt="ibm" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="screens/logos/natwest.png" alt="natwest" class="client-img" />
+                <img src="%PUBLIC_URL%/screens/logos/natwest.png" alt="natwest" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="screens/logos/novartis.png" alt="novartis" class="client-img" />
+                <img src="%PUBLIC_URL%/screens/logos/novartis.png" alt="novartis" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="screens/logos/pwc.png" alt="pwc" class="client-img" />
+                <img src="%PUBLIC_URL%/screens/logos/pwc.png" alt="pwc" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="screens/logos/siemens.png" alt="siemens" class="client-img" />
+                <img src="%PUBLIC_URL%/screens/logos/siemens.png" alt="siemens" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="screens/logos/target.png" alt="target" class="client-img" />
+                <img src="%PUBLIC_URL%/screens/logos/target.png" alt="target" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="screens/logos/vodafone.png" alt="vodafone" class="client-img" />
+                <img src="%PUBLIC_URL%/screens/logos/vodafone.png" alt="vodafone" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="screens/logos/adidas.png" alt="adidas" class="client-img" />
+                <img src="%PUBLIC_URL%/screens/logos/adidas.png" alt="adidas" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="screens/logos/amazon.png" alt="amazon" class="client-img" />
+                <img src="%PUBLIC_URL%/screens/logos/amazon.png" alt="amazon" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="screens/logos/barclays.png" alt="barclays" class="client-img" />
+                <img src="%PUBLIC_URL%/screens/logos/barclays.png" alt="barclays" class="client-img" />
               </div>
             </div>
           </div>
@@ -559,12 +582,12 @@
   </div>
 
   <div class="shape-img subscribe-wrap marketing-content">
-    <img src="img/footer-top-shape.png" alt="footer shape" class="img-fluid" />
+    <img src="%PUBLIC_URL%/img/footer-top-shape.png" alt="footer shape" class="img-fluid" />
   </div>
 
   <footer class="footer-section marketing-content">
     <div class="footer-top pt-150 pb-5 background-img-2" style="
-          background: url('screens/bottom.png') no-repeat center top / cover;
+          background: url('%PUBLIC_URL%/screens/bottom.png') no-repeat center top / cover;
         ">
       <div class="container">
         <div class="row justify-content-between">
@@ -590,11 +613,11 @@
       </div>
     </div>
   </footer>
-  <script src="js/jquery-3.4.1.min.js" class="marketing"></script>
-  <script src="js/bootstrap.min.js" class="marketing"></script>
-  <script src="js/jquery.magnific-popup.min.js" class="marketing"></script>
-  <script src="js/owl.carousel.min.js" class="marketing"></script>
-  <script src="js/scripts.js" class="marketing"></script>
+  <script src="%PUBLIC_URL%/js/jquery-3.4.1.min.js" class="marketing"></script>
+  <script src="%PUBLIC_URL%/js/bootstrap.min.js" class="marketing"></script>
+  <script src="%PUBLIC_URL%/js/jquery.magnific-popup.min.js" class="marketing"></script>
+  <script src="%PUBLIC_URL%/js/owl.carousel.min.js" class="marketing"></script>
+  <script src="%PUBLIC_URL%/js/scripts.js" class="marketing"></script>
 </body>
 
 </html>

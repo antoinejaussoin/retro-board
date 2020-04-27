@@ -15,7 +15,6 @@ import useIsCompatibleBrowser from './hooks/useIsCompatibleBrowser';
 import OutdatedBrowser from './components/OutdatedBrowser';
 import useIsInitialised from './auth/useIsInitialised';
 import useUser from './auth/useUser';
-import Initialising from './Initialising';
 
 const Title = styled(Typography)`
   flex-grow: 1;
@@ -37,9 +36,6 @@ function App() {
       unregister();
     };
   }, [history]);
-  if (!isInitialised) {
-    // return <Initialising />;
-  }
   return (
     <div>
       <AppBar position="sticky">
@@ -51,7 +47,11 @@ function App() {
             Retrospected
           </MainTitle>
           <Route path="/game/:gameId" component={Invite} />
-          {isInitialised ? <LoginButton /> : null}
+          {isInitialised ? (
+            <LoginButton />
+          ) : (
+            <Initialising>Authenticating...</Initialising>
+          )}
         </Toolbar>
       </AppBar>
       <Route path="/" exact component={user ? Home : LandingPage} />
@@ -68,5 +68,7 @@ function App() {
 const MainTitle = styled(Title)`
   cursor: pointer;
 `;
+
+const Initialising = styled.div``;
 
 export default App;
