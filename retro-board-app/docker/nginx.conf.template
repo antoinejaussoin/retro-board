@@ -29,9 +29,9 @@ server {
     access_log off;
   }
 
-  location /homepage {
-    alias /usr/share/nginx/html/homepage/;
-    expires 1d;
+  location /marketing {
+    alias /usr/share/nginx/html/marketing/;
+    expires 1w;
     add_header Cache-Control "public";
     access_log off;
   }

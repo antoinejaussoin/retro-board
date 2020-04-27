@@ -30,7 +30,6 @@ ENV BACKEND_HOST=backend
 ENV BACKEND_PORT=3201
 
 COPY --from=Node /home/node/app/retro-board-app/build /usr/share/nginx/html
-COPY ./retro-board-html /usr/share/nginx/html/homepage
 COPY ./retro-board-app/docker/nginx.conf.template /etc/nginx/conf.d/default.conf.template
 COPY ./retro-board-app/docker/frontend-entrypoint.sh /
 
