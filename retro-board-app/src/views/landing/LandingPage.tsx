@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const isDev = process.env.NODE_ENV !== 'production';
 
 const LandingPage = () => {
+  return null;
   return (
     <Container>
       {isDev ? (

@@ -9,7 +9,25 @@ import * as serviceWorker from './serviceWorker';
 
 initialiseSentry();
 initialiseAnalytics();
-ReactDOM.render(<App />, document.getElementById('content'));
+ReactDOM.render(<App />, document.getElementById('content'), () => {
+  console.log('React loaded');
+  Array.prototype.forEach.call(
+    document.querySelectorAll('link[rel=stylesheet].marketing'),
+    function (element) {
+      try {
+        element.parentNode.removeChild(element);
+      } catch (err) {}
+    }
+  );
+  Array.prototype.forEach.call(
+    document.querySelectorAll('script.marketing'),
+    function (element) {
+      try {
+        element.parentNode.removeChild(element);
+      } catch (err) {}
+    }
+  );
+});
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

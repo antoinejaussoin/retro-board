@@ -30,7 +30,7 @@ function App() {
   const user = useUser();
   const goToHome = useCallback(() => history.push('/'), [history]);
   useEffect(() => {
-    const unregister = history.listen(location => {
+    const unregister = history.listen((location) => {
       trackPageView(location.pathname);
     });
     return () => {
@@ -38,7 +38,7 @@ function App() {
     };
   }, [history]);
   if (!isInitialised) {
-    return <Initialising />;
+    // return <Initialising />;
   }
   return (
     <div>
@@ -51,7 +51,7 @@ function App() {
             Retrospected
           </MainTitle>
           <Route path="/game/:gameId" component={Invite} />
-          <LoginButton />
+          {isInitialised ? <LoginButton /> : null}
         </Toolbar>
       </AppBar>
       <Route path="/" exact component={user ? Home : LandingPage} />
