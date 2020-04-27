@@ -19,10 +19,8 @@ const AuthProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     if (!user && location.pathname === '/') {
-      console.log('We are not logged in and on home page');
       showMarketing();
     } else {
-      console.log('We are logged in or not on home page');
       hideMarketing();
     }
   }, [initialised, user, location.pathname]);
