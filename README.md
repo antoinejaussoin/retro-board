@@ -142,6 +142,11 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
+### Version 3.0.1
+
+- Improvements on the landing page experience
+- SEO
+
 ### Version 3.0.0
 
 - Brand new landing page, and much improved look and feel 🎉

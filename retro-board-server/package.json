@@ -1,6 +1,6 @@
 {
   "name": "retro-board-server",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "license": "GNU GPLv3",
   "private": true,
   "scripts": {
