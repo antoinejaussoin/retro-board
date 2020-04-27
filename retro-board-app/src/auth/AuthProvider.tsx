@@ -17,6 +17,36 @@ const AuthProvider: React.FC = ({ children }) => {
     getUser();
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      console.log('We are logged in');
+      // Array.prototype.forEach.call(
+      //   document.querySelectorAll('link[rel=stylesheet].marketing'),
+      //   function (element) {
+      //     try {
+      //       element.parentNode.removeChild(element);
+      //     } catch (err) {}
+      //   }
+      // );
+      // Array.prototype.forEach.call(
+      //   document.querySelectorAll('script.marketing'),
+      //   function (element) {
+      //     try {
+      //       element.parentNode.removeChild(element);
+      //     } catch (err) {}
+      //   }
+      // );
+      Array.prototype.forEach.call(
+        document.querySelectorAll('.marketing'),
+        function (element) {
+          try {
+            element.parentNode.removeChild(element);
+          } catch (err) {}
+        }
+      );
+    }
+  }, [initialised, user]);
+
   return (
     <Context.Provider value={{ setUser, user, initialised }}>
       {children}
