@@ -145,7 +145,7 @@ export async function getGiphyUrl(giphyId: string): Promise<string | null> {
   );
   if (response.ok) {
     const { data } = await response.json();
-    return data.images.downsized_medium.url;
+    return data && data.images ? data.images.downsized_medium.url : null;
   }
   return null;
 }
