@@ -19,6 +19,7 @@ export default class VoteRepository extends Repository<Vote> {
       });
     } catch (error) {
       console.error('Error while saving a vote', error);
+      throw error;
     }
   }
 }

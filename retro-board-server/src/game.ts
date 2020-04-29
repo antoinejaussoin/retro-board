@@ -13,6 +13,7 @@ import socketIo from 'socket.io';
 import { find } from 'lodash';
 import { v4 } from 'uuid';
 import { Store } from './types';
+import { setScope, reportQueryError } from './sentry';
 
 const {
   RECEIVE_POST,
@@ -89,16 +90,14 @@ export default (store: Store, io: SocketIO.Server) => {
     socket.emit(action, data);
   };
 
-  const persistSession = (userId: string | null, session: Session) => {
+  const persistSession = async (userId: string | null, session: Session) => {
     if (!userId) {
       return;
     }
-    store
-      .saveSession(userId, session)
-      .catch((err: string) => console.error(err));
+    await store.saveSession(userId, session);
   };
 
-  const persistPost = (
+  const persistPost = async (
     userId: string | null,
     sessionId: string,
     post: Post
@@ -106,12 +105,10 @@ export default (store: Store, io: SocketIO.Server) => {
     if (!userId) {
       return;
     }
-    store
-      .savePost(userId, sessionId, post)
-      .catch((err: string) => console.error(err));
+    await store.savePost(userId, sessionId, post);
   };
 
-  const persistPostGroup = (
+  const persistPostGroup = async (
     userId: string | null,
     sessionId: string,
     group: PostGroup
@@ -119,12 +116,10 @@ export default (store: Store, io: SocketIO.Server) => {
     if (!userId) {
       return;
     }
-    store
-      .savePostGroup(userId, sessionId, group)
-      .catch((err: string) => console.error(err));
+    await store.savePostGroup(userId, sessionId, group);
   };
 
-  const persistVote = (
+  const persistVote = async (
     userId: string | null,
     sessionId: string,
     postId: string,
@@ -133,10 +128,10 @@ export default (store: Store, io: SocketIO.Server) => {
     if (!userId) {
       return;
     }
-    store.saveVote(userId, sessionId, postId, vote);
+    await store.saveVote(userId, sessionId, postId, vote);
   };
 
-  const deletePost = (
+  const deletePost = async (
     userId: string | null,
     sessionId: string,
     postId: string
@@ -144,12 +139,10 @@ export default (store: Store, io: SocketIO.Server) => {
     if (!userId) {
       return;
     }
-    store
-      .deletePost(userId, sessionId, postId)
-      .catch((err: string) => console.error(err));
+    await store.deletePost(userId, sessionId, postId);
   };
 
-  const deletePostGroup = (
+  const deletePostGroup = async (
     userId: string | null,
     sessionId: string,
     groupId: string
@@ -157,9 +150,7 @@ export default (store: Store, io: SocketIO.Server) => {
     if (!userId) {
       return;
     }
-    store
-      .deletePostGroup(userId, sessionId, groupId)
-      .catch((err: string) => console.error(err));
+    await store.deletePostGroup(userId, sessionId, groupId);
   };
 
   const sendClientList = (sessionId: string, socket: ExtendedSocket) => {
@@ -206,7 +197,7 @@ export default (store: Store, io: SocketIO.Server) => {
     if (!userId) {
       return;
     }
-    persistPost(userId, session.id, post);
+    await persistPost(userId, session.id, post);
     sendToAll(socket, session.id, RECEIVE_POST, post);
   };
 
@@ -219,7 +210,7 @@ export default (store: Store, io: SocketIO.Server) => {
     if (!userId) {
       return;
     }
-    persistPostGroup(userId, session.id, group);
+    await persistPostGroup(userId, session.id, group);
     sendToAll(socket, session.id, RECEIVE_POST_GROUP, group);
   };
 
@@ -251,7 +242,7 @@ export default (store: Store, io: SocketIO.Server) => {
       return;
     }
     session.name = data.name;
-    persistSession(userId, session);
+    await persistSession(userId, session);
     sendToAll(socket, session.id, RECEIVE_SESSION_NAME, data.name);
   };
 
@@ -276,7 +267,7 @@ export default (store: Store, io: SocketIO.Server) => {
       return;
     }
     session.posts = session.posts.filter((p) => p.id !== data.id);
-    deletePost(userId, session.id, data.id);
+    await deletePost(userId, session.id, data.id);
     sendToAll(socket, session.id, RECEIVE_DELETE_POST, data);
   };
 
@@ -290,7 +281,7 @@ export default (store: Store, io: SocketIO.Server) => {
       return;
     }
     session.groups = session.groups.filter((g) => g.id !== data.id);
-    deletePostGroup(userId, session.id, data.id);
+    await deletePostGroup(userId, session.id, data.id);
     sendToAll(socket, session.id, RECEIVE_DELETE_POST_GROUP, data);
   };
 
@@ -317,7 +308,7 @@ export default (store: Store, io: SocketIO.Server) => {
           user: user,
           type: data.type,
         };
-        persistVote(userId, session.id, post.id, vote);
+        await persistVote(userId, session.id, post.id, vote);
         sendToAll(socket, session.id, RECEIVE_LIKE, { postId: post.id, vote });
       }
     }
@@ -340,7 +331,7 @@ export default (store: Store, io: SocketIO.Server) => {
       post.column = data.post.column;
       post.group = data.post.group;
       post.rank = data.post.rank;
-      persistPost(userId, session.id, post);
+      await persistPost(userId, session.id, post);
       sendToAll(socket, session.id, RECEIVE_EDIT_POST, data);
     }
   };
@@ -359,7 +350,7 @@ export default (store: Store, io: SocketIO.Server) => {
       group.column = data.column;
       group.label = data.label;
       group.rank = data.rank;
-      persistPostGroup(userId, session.id, group);
+      await persistPostGroup(userId, session.id, group);
       sendToAll(socket, session.id, RECEIVE_EDIT_POST_GROUP, data);
     }
   };
@@ -404,19 +395,26 @@ export default (store: Store, io: SocketIO.Server) => {
 
     actions.forEach((action) => {
       socket.on(action.type, async (data) => {
-        console.log(
-          chalk`${d()}{red  <-- } ${s(action.type)} {grey ${JSON.stringify(
-            data
-          )}}`
-        );
-        const sid =
-          action.type === LEAVE_SESSION ? socket.sessionId : data.sessionId;
-        if (sid) {
-          const session = await store.getSession(userId, sid);
-          if (session) {
-            action.handler(userId, session, data.payload, socket);
+        setScope(async (scope) => {
+          console.log(
+            chalk`${d()}{red  <-- } ${s(action.type)} {grey ${JSON.stringify(
+              data
+            )}}`
+          );
+          const sid =
+            action.type === LEAVE_SESSION ? socket.sessionId : data.sessionId;
+          if (sid) {
+            const session = await store.getSession(userId, sid);
+            if (session) {
+              try {
+                await action.handler(userId, session, data.payload, socket);
+              } catch (err) {
+                reportQueryError(scope, err);
+                throw err;
+              }
+            }
           }
-        }
+        });
       });
     });
 

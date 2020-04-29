@@ -8,28 +8,24 @@ import http from 'http';
 import chalk from 'chalk';
 import db from './db';
 import config from './db/config';
-import * as Sentry from '@sentry/node';
 import passport from 'passport';
 import passportInit from './auth/passport';
 import authRouter from './auth/router';
 import session from 'express-session';
 import game from './game';
 import { getUser } from './utils';
+import {
+  initSentry,
+  setupSentryErrorHandler,
+  setupSentryRequestHandler,
+  setScope,
+  reportQueryError,
+} from './sentry';
 
-const useSentry = !!config.SENTRY_URL && config.SENTRY_URL !== 'NO_SENTRY';
-
-if (useSentry) {
-  Sentry.init({
-    dsn: config.SENTRY_URL,
-  });
-  console.log(chalk`{yellow 🐜  Using {red Sentry} for error reporting}`);
-}
+initSentry();
 
 const app = express();
-if (useSentry) {
-  app.use(Sentry.Handlers.requestHandler());
-}
-
+setupSentryRequestHandler(app);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -103,31 +99,47 @@ db().then((store) => {
   // Create session
   app.post('/api/create', async (req, res) => {
     const user = await getUser(store, req);
-    if (user) {
-      const session = await store.create(user);
-      res.status(200).send(session);
-    } else {
-      res
-        .status(401)
-        .send('You must be logged in in order to create a session');
-    }
+    setScope(async (scope) => {
+      if (user) {
+        try {
+          const session = await store.create(user);
+          res.status(200).send(session);
+        } catch (err) {
+          reportQueryError(scope, err);
+          res.status(500).send();
+          throw err;
+        }
+      } else {
+        res
+          .status(401)
+          .send('You must be logged in in order to create a session');
+      }
+    });
   });
 
   app.post('/api/create-custom', async (req, res) => {
     const user = await getUser(store, req);
-    if (user) {
-      const session = await store.createCustom(
-        req.body.options,
-        req.body.columns,
-        req.body.setDefault,
-        user
-      );
-      res.status(200).send(session);
-    } else {
-      res
-        .status(401)
-        .send('You must be logged in in order to create a session');
-    }
+    setScope(async (scope) => {
+      if (user) {
+        try {
+          const session = await store.createCustom(
+            req.body.options,
+            req.body.columns,
+            req.body.setDefault,
+            user
+          );
+          res.status(200).send(session);
+        } catch (err) {
+          reportQueryError(scope, err);
+          res.status(500).send();
+          throw err;
+        }
+      } else {
+        res
+          .status(401)
+          .send('You must be logged in in order to create a session');
+      }
+    });
   });
 
   app.post('/api/logout', async (req, res, next) => {
@@ -183,9 +195,7 @@ db().then((store) => {
     }
   });
 
-  if (useSentry) {
-    app.use(Sentry.Handlers.errorHandler());
-  }
+  setupSentryErrorHandler(app);
 });
 
 httpServer.listen(port);
