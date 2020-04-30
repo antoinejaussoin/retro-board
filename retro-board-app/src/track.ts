@@ -13,6 +13,7 @@ export const initialiseSentry = () => {
   if (config.hasSentry) {
     Sentry.init({
       dsn: config.SentryUrl,
+      release: `frontend@${config.version}`,
     });
   }
 };

@@ -5,6 +5,7 @@ interface HtmlConfig {
   AUTH_GOOGLE_ENABLED: string;
   AUTH_TWITTER_ENABLED: string;
   AUTH_GITHUB_ENABLED: string;
+  VERSION: string;
 }
 
 interface Config {
@@ -17,6 +18,7 @@ interface Config {
   GoogleAuthEnabled: boolean;
   TwitterAuthEnabled: boolean;
   GitHubAuthEnabled: boolean;
+  version: string;
 }
 
 declare global {
@@ -70,6 +72,7 @@ function getConfig(): Config {
     GoogleAuthEnabled: isGoogleAuthEnabled,
     GitHubAuthEnabled: isGitHubAuthEnabled,
     TwitterAuthEnabled: isTwitterAuthEnabled,
+    version: window.__env__['VERSION'],
   };
 }
 

@@ -25,7 +25,7 @@
     "types": [],
     "typeRoots": ["./node_modules/@types", "./src/typings"]
   },
-  "include": ["src"],
+  "include": ["src", "./package.json"],
 
   "references": [{
     "path": "../retro-board-common"
