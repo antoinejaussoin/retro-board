@@ -25,25 +25,25 @@ services:
       options:
         max-size: '50m'
 
-  pgadmin:
-    image: dpage/pgadmin4:4.15
-    depends_on:
-      - postgres
-    ports:
-      - '8080:80' # Change 8080 to whatever port you want to access pgAdmin from
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@retrospected.com # Can be anything
-      PGADMIN_DEFAULT_PASSWORD: admin # Please change this!
-    volumes:
-      - pgadmin:/var/lib/pgadmin
-    restart: unless-stopped
-    logging:
-      driver: 'json-file'
-      options:
-        max-size: '50m'
+  # pgadmin:
+  #   image: dpage/pgadmin4:4.15
+  #   depends_on:
+  #     - postgres
+  #   ports:
+  #     - '8080:80' # Change 8080 to whatever port you want to access pgAdmin from
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: admin@retrospected.com # Can be anything
+  #     PGADMIN_DEFAULT_PASSWORD: admin # Please change this!
+  #   volumes:
+  #     - pgadmin:/var/lib/pgadmin
+  #   restart: unless-stopped
+  #   logging:
+  #     driver: 'json-file'
+  #     options:
+  #       max-size: '50m'
 
   backend:
-    image: antoinejaussoin/retro-board-backend:latest
+    image: antoinejaussoin/retro-board-backend:multi
     depends_on:
       - redis
     environment:
@@ -75,7 +75,7 @@ services:
         max-size: '50m'
 
   frontend:
-    image: antoinejaussoin/retro-board-frontend:latest
+    image: antoinejaussoin/retro-board-frontend:multi
     depends_on:
       - backend
     ports:
