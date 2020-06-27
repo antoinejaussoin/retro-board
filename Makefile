@@ -1,4 +1,5 @@
 BUILDX_VER=v0.4.1
+TARGET_ARCHS=linux/amd64
 
 
 # install:
@@ -20,11 +21,14 @@ prepare:
 	docker buildx create --name xbuilder --use
 	docker buildx inspect --bootstrap
 
+maintenance:
+	docker buildx build --platform ${TARGET_ARCHS} -f ./retro-board-maintenance/Dockerfile -t antoinejaussoin/retro-board-maintenance:${PACKAGE_VERSION} --push .
+
 backend:
-	docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -f ./retro-board-server/Dockerfile -t antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} --push .
+	docker buildx build --platform ${TARGET_ARCHS} -f ./retro-board-server/Dockerfile -t antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} --push .
 
 frontend:
-	docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7 -f ./retro-board-app/Dockerfile -t antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} --push .
+	docker buildx build --platform ${TARGET_ARCHS} -f ./retro-board-app/Dockerfile -t antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} --push .
 
 # https://github.com/docker/buildx/issues/156
 # https://tech.smartling.com/building-multi-architecture-docker-images-on-arm-64-c3e6f8d78e1c

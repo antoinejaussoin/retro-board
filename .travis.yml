@@ -44,29 +44,43 @@ jobs:
     - state: deploy-multiarch
       script:
         - export PACKAGE_VERSION=mumu
+        - export TARGET_ARCHS=linux/amd64,linux/386,linux/arm64,linux/arm/v8,linux/arm/v7,linux/arm/v6
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker version
         - make prepare
+        - make maintenance
         - make frontend
         - make backend
     - stage: deploy
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker build -f ./retro-board-server/Dockerfile -t antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-backend:latest .
-        - docker build -f ./retro-board-app/Dockerfile -t antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-frontend:latest .
-        - docker build -f ./retro-board-maintenance/Dockerfile -t antoinejaussoin/retro-board-maintenance:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-maintenance:latest ./retro-board-maintenance
-        - docker push antoinejaussoin/retro-board-backend:${PACKAGE_VERSION}
-        - docker push antoinejaussoin/retro-board-backend:latest
-        - docker push antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION}
-        - docker push antoinejaussoin/retro-board-frontend:latest
-        - docker push antoinejaussoin/retro-board-maintenance:${PACKAGE_VERSION}
-        - docker push antoinejaussoin/retro-board-maintenance:latest
+        - export TARGET_ARCHS=linux/amd64,linux/386,linux/arm64,linux/arm/v8,linux/arm/v7,linux/arm/v6
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - make prepare
+        - make maintenance
+        - make frontend
+        - make backend
+        # - docker build -f ./retro-board-server/Dockerfile -t antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-backend:latest .
+        # - docker build -f ./retro-board-app/Dockerfile -t antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-frontend:latest .
+        # - docker build -f ./retro-board-maintenance/Dockerfile -t antoinejaussoin/retro-board-maintenance:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-maintenance:latest ./retro-board-maintenance
+        # - docker push antoinejaussoin/retro-board-backend:${PACKAGE_VERSION}
+        # - docker push antoinejaussoin/retro-board-backend:latest
+        # - docker push antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION}
+        # - docker push antoinejaussoin/retro-board-frontend:latest
+        # - docker push antoinejaussoin/retro-board-maintenance:${PACKAGE_VERSION}
+        # - docker push antoinejaussoin/retro-board-maintenance:latest
     - stage: deploy-canary
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker build -f ./retro-board-server/Dockerfile -t antoinejaussoin/retro-board-backend:canary .
-        - docker build -f ./retro-board-app/Dockerfile -t antoinejaussoin/retro-board-frontend:canary .
-        - docker build -f ./retro-board-maintenance/Dockerfile -t antoinejaussoin/retro-board-maintenance:canary ./retro-board-maintenance
-        - docker push antoinejaussoin/retro-board-backend:canary
-        - docker push antoinejaussoin/retro-board-frontend:canary
-        - docker push antoinejaussoin/retro-board-maintenance:canary
+        - export TARGET_ARCHS=linux/amd64
+        - export PACKAGE_VERSION=canary
+        - make prepare
+        - make maintenance
+        - make frontend
+        - make backend
+        # - docker build -f ./retro-board-server/Dockerfile -t antoinejaussoin/retro-board-backend:canary .
+        # - docker build -f ./retro-board-app/Dockerfile -t antoinejaussoin/retro-board-frontend:canary .
+        # - docker build -f ./retro-board-maintenance/Dockerfile -t antoinejaussoin/retro-board-maintenance:canary ./retro-board-maintenance
+        # - docker push antoinejaussoin/retro-board-backend:canary
+        # - docker push antoinejaussoin/retro-board-frontend:canary
+        # - docker push antoinejaussoin/retro-board-maintenance:canary
