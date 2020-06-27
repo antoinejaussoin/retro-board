@@ -25,8 +25,8 @@ services:
       options:
         max-size: '50m'
 
-  pgadmin: # Comment this whole section if running on ARM
-    image: dpage/pgadmin4:4.15
+  pgadmin:
+    image: dpage/pgadmin4:4.15 # use biarms/pgadmin4 on ARM
     depends_on:
       - postgres
     ports:
