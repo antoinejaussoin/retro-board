@@ -1,4 +1,3 @@
-TARGET_ARCHS=linux/arm/v7
 BUILDX-VERSION=v0.4.1
 
 # For linux only
