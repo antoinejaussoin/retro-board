@@ -2,12 +2,13 @@ language: node_js
 node_js:
   - 12
 os: linux
+dist: bionic
 services:
   - docker
 install: true
 
 env:
-  - NODE_ENV=production
+  - NODE_ENV=production DOCKER_CLI_EXPERIMENTAL=enabled
 
 stages:
   - test
@@ -18,6 +19,11 @@ stages:
 
 before_install:
   - PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
+  - curl -fsSL https://get.docker.com | sh
+  - echo '{"experimental":"enabled"}' | sudo tee /etc/docker/daemon.json
+  - mkdir -p $HOME/.docker
+  - echo '{"experimental":"enabled"}' | sudo tee $HOME/.docker/config.json
+  - sudo service docker start
 
 jobs:
   include:
@@ -27,22 +33,21 @@ jobs:
         - yarn ci-test
     - stage: deploy
       script:
+        - export TARGET_ARCHS=linux/amd64,linux/386,linux/arm64,linux/arm/v8,linux/arm/v7,linux/arm/v6
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker build -f ./retro-board-server/Dockerfile -t antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-backend:latest .
-        - docker build -f ./retro-board-app/Dockerfile -t antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-frontend:latest .
-        - docker build -f ./retro-board-maintenance/Dockerfile -t antoinejaussoin/retro-board-maintenance:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-maintenance:latest ./retro-board-maintenance
-        - docker push antoinejaussoin/retro-board-backend:${PACKAGE_VERSION}
+        - make prepare
+        - make maintenance
+        - make frontend
+        - make backend
         - docker push antoinejaussoin/retro-board-backend:latest
-        - docker push antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION}
         - docker push antoinejaussoin/retro-board-frontend:latest
-        - docker push antoinejaussoin/retro-board-maintenance:${PACKAGE_VERSION}
         - docker push antoinejaussoin/retro-board-maintenance:latest
     - stage: deploy-canary
       script:
+        - export TARGET_ARCHS=linux/amd64,linux/386,linux/arm64,linux/arm/v8,linux/arm/v7,linux/arm/v6
+        - export PACKAGE_VERSION=canary
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker build -f ./retro-board-server/Dockerfile -t antoinejaussoin/retro-board-backend:canary .
-        - docker build -f ./retro-board-app/Dockerfile -t antoinejaussoin/retro-board-frontend:canary .
-        - docker build -f ./retro-board-maintenance/Dockerfile -t antoinejaussoin/retro-board-maintenance:canary ./retro-board-maintenance
-        - docker push antoinejaussoin/retro-board-backend:canary
-        - docker push antoinejaussoin/retro-board-frontend:canary
-        - docker push antoinejaussoin/retro-board-maintenance:canary
+        - make prepare
+        - make maintenance
+        - make frontend
+        - make backend

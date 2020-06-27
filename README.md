@@ -51,6 +51,7 @@ It features the following technologies:
 - [Docker](https://docker.com), for easy deployment
 - [Kubernetes](https://kubernetes.io/), to scale Retrospected for its 10M+ users (not)
 - [Travis](http://travis-ci.org/), for Continuous Integration and Deployment (CI/CD)
+- [Multi-Architecture](https://github.com/docker/buildx/), for automatic compatibility with ARM-based servers
 
 Previous versions, up to v1.0.1 featured the following libraries:
 
@@ -96,6 +97,7 @@ You must have `docker` and `docker-compose` installed on your system.
 
 - Copy `docker-compose.example.yml` to `docker-compose.yml`
 - Edit `docker-compose.yml` to change credentials and secrets
+- _Optional: for ARM-based systems, remove the PGAdmin section_
 - Run `docker-compose up -d`
 - Voilà!
 
@@ -141,6 +143,11 @@ When using the Docker deployment, your database runs from a container. But if yo
 - Bluring posts for a set amount of time so people can't see other people's messages
 
 ## Versions History
+
+### Version 3.1.0
+
+- Multi-architecture support! Hello Rasperry Pi 🍇 🎉! And Apple Silicon 🍎
+- Docker images are automatically compatible with ARM (arm64, v6, v7, v8)
 
 ### Version 3.0.3
 

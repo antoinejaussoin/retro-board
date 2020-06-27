@@ -25,7 +25,7 @@ services:
       options:
         max-size: '50m'
 
-  pgadmin:
+  pgadmin: # Comment this whole section if running on ARM
     image: dpage/pgadmin4:4.15
     depends_on:
       - postgres

@@ -1,7 +1,7 @@
 # This must be run with the Docker context set to the root folder of the repository
 # (the one with the yarn.lock file)
 
-FROM node:12-alpine as Node
+FROM --platform=amd64 node:12-alpine as Node
 
 ENV NODE_ENV=production
 
@@ -17,9 +17,12 @@ RUN chown -R node:node /home/node/app
 
 USER node
 
-RUN yarn install
+RUN yarn --network-timeout 1000000 install
 
-COPY --chown=node:node ./retro-board-app ./retro-board-app
+COPY --chown=node:node ./retro-board-app/src ./retro-board-app/src
+COPY --chown=node:node ./retro-board-app/public ./retro-board-app/public
+COPY --chown=node:node ./retro-board-app/config-overrides.js ./retro-board-app/config-overrides.js
+COPY --chown=node:node ./retro-board-app/tsconfig.json ./retro-board-app/tsconfig.json
 COPY --chown=node:node ./retro-board-common ./retro-board-common
 
 RUN yarn build-ui
