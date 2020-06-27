@@ -11,7 +11,8 @@ env:
   - NODE_ENV=production DOCKER_CLI_EXPERIMENTAL=enabled
 
 stages:
-  - test
+  - name: test
+    if: branch != feature/multi-arch
   - name: deploy
     if: branch = master && type != pull_request
   - name: deploy-canary
