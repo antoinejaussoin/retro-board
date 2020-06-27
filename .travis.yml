@@ -11,14 +11,11 @@ env:
   - NODE_ENV=production DOCKER_CLI_EXPERIMENTAL=enabled
 
 stages:
-  - name: test
-    if: branch != feature/multi-arch
+  - test
   - name: deploy
     if: branch = master && type != pull_request
   - name: deploy-canary
     if: branch = develop && type != pull_request
-  - name: deploy-multiarch
-    if: branch = feature/multi-arch && type != pull_request
 
 before_install:
   - PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
@@ -27,13 +24,6 @@ before_install:
   - mkdir -p $HOME/.docker
   - echo '{"experimental":"enabled"}' | sudo tee $HOME/.docker/config.json
   - sudo service docker start
-  # - sudo rm -rf /var/lib/apt/lists/*
-  # - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  # - lsb_release -cs
-  # - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) edge"
-  # - sudo apt-get update
-  # - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
-  # - docker run --rm --privileged multiarch/qemu-user-static:register --reset
 
 jobs:
   include:
@@ -41,46 +31,23 @@ jobs:
       script:
         - yarn
         - yarn ci-test
-    - state: deploy-multiarch
-      script:
-        - export PACKAGE_VERSION=mumu
-        - export TARGET_ARCHS=linux/amd64,linux/386,linux/arm64,linux/arm/v8,linux/arm/v7,linux/arm/v6
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker version
-        - make prepare
-        - make maintenance
-        - make frontend
-        - make backend
     - stage: deploy
       script:
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - export TARGET_ARCHS=linux/amd64,linux/386,linux/arm64,linux/arm/v8,linux/arm/v7,linux/arm/v6
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - make prepare
         - make maintenance
         - make frontend
         - make backend
-        # - docker build -f ./retro-board-server/Dockerfile -t antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-backend:latest .
-        # - docker build -f ./retro-board-app/Dockerfile -t antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-frontend:latest .
-        # - docker build -f ./retro-board-maintenance/Dockerfile -t antoinejaussoin/retro-board-maintenance:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-maintenance:latest ./retro-board-maintenance
-        # - docker push antoinejaussoin/retro-board-backend:${PACKAGE_VERSION}
-        # - docker push antoinejaussoin/retro-board-backend:latest
-        # - docker push antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION}
-        # - docker push antoinejaussoin/retro-board-frontend:latest
-        # - docker push antoinejaussoin/retro-board-maintenance:${PACKAGE_VERSION}
-        # - docker push antoinejaussoin/retro-board-maintenance:latest
+        - docker push antoinejaussoin/retro-board-backend:latest
+        - docker push antoinejaussoin/retro-board-frontend:latest
+        - docker push antoinejaussoin/retro-board-maintenance:latest
     - stage: deploy-canary
       script:
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - export TARGET_ARCHS=linux/amd64
+        - export TARGET_ARCHS=linux/amd64,linux/386,linux/arm64,linux/arm/v8,linux/arm/v7,linux/arm/v6
         - export PACKAGE_VERSION=canary
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - make prepare
         - make maintenance
         - make frontend
         - make backend
-        # - docker build -f ./retro-board-server/Dockerfile -t antoinejaussoin/retro-board-backend:canary .
-        # - docker build -f ./retro-board-app/Dockerfile -t antoinejaussoin/retro-board-frontend:canary .
-        # - docker build -f ./retro-board-maintenance/Dockerfile -t antoinejaussoin/retro-board-maintenance:canary ./retro-board-maintenance
-        # - docker push antoinejaussoin/retro-board-backend:canary
-        # - docker push antoinejaussoin/retro-board-frontend:canary
-        # - docker push antoinejaussoin/retro-board-maintenance:canary
