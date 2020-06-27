@@ -51,7 +51,7 @@ It features the following technologies:
 - [Docker](https://docker.com), for easy deployment
 - [Kubernetes](https://kubernetes.io/), to scale Retrospected for its 10M+ users (not)
 - [Travis](http://travis-ci.org/), for Continuous Integration and Deployment (CI/CD)
-- [Multi-Architecure](https://github.com/docker/buildx/), for automatic compatibility with ARM-based servers
+- [Multi-Architecture](https://github.com/docker/buildx/), for automatic compatibility with ARM-based servers
 
 Previous versions, up to v1.0.1 featured the following libraries:
 
