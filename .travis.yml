@@ -11,15 +11,12 @@ env:
   - NODE_ENV=production DOCKER_CLI_EXPERIMENTAL=enabled
 
 stages:
-  - name: test
-    if: branch != multiarch
+  - test
   - name: deploy
     if: branch = master && type != pull_request
   - name: deploy-canary
     if: branch = develop && type != pull_request
-  - name: deploy-multi
-    if: branch = multiarch && type != pull_request
-
+  
 before_install:
   - PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
   - curl -fsSL https://get.docker.com | sh
@@ -54,12 +51,4 @@ jobs:
         - make maintenance
         - make frontend
         - make backend
-    - stage: deploy-multi
-      script:
-        - export TARGET_ARCHS=linux/amd64,linux/386,linux/arm64,linux/arm/v7,linux/arm/v6
-        - export PACKAGE_VERSION=multi
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - make prepare
-        - make maintenance
-        - make frontend
-        - make backend
+    
