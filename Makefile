@@ -21,8 +21,3 @@ backend:
 
 frontend:
 	docker buildx build --platform ${TARGET_ARCHS} -f ./retro-board-app/Dockerfile -t antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} --push .
-
-test:
-	echo ${TARGET_ARCHS}
-	echo ${BUILDX_VERSION}
-	echo ${PACKAGE_VERSION}
