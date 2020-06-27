@@ -16,7 +16,7 @@ stages:
     if: branch = master && type != pull_request
   - name: deploy-canary
     if: branch = develop && type != pull_request
-
+  
 before_install:
   - PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
   - curl -fsSL https://get.docker.com | sh
@@ -33,7 +33,7 @@ jobs:
         - yarn ci-test
     - stage: deploy
       script:
-        - export TARGET_ARCHS=linux/amd64,linux/386,linux/arm64,linux/arm/v8,linux/arm/v7,linux/arm/v6
+        - export TARGET_ARCHS=linux/amd64,linux/386,linux/arm64,linux/arm/v7,linux/arm/v6
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - make prepare
         - make maintenance
@@ -44,10 +44,11 @@ jobs:
         - docker push antoinejaussoin/retro-board-maintenance:latest
     - stage: deploy-canary
       script:
-        - export TARGET_ARCHS=linux/amd64,linux/386,linux/arm64,linux/arm/v8,linux/arm/v7,linux/arm/v6
+        - export TARGET_ARCHS=linux/amd64,linux/arm/v7
         - export PACKAGE_VERSION=canary
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - make prepare
         - make maintenance
         - make frontend
         - make backend
+    
