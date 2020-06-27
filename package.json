@@ -1,6 +1,6 @@
 {
   "name": "retro-board",
-  "version": "3.0.3",
+  "version": "3.1.0",
   "description": "An agile retrospective board - Powering www.retrospected.com",
   "private": true,
   "workspaces": [
