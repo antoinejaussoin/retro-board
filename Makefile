@@ -1,12 +1,15 @@
-backend-multiarch:
-	docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -f ./retro-board-server/Dockerfile -t antoinejaussoin/retro-board-backend:multi --push .
+# install:
+# 	mkdir -vp ~/.docker/cli-plugins/ ~/dockercache
+# 	curl --silent -L "https://github.com/docker/buildx/releases/download/${BUILDX_VER}/buildx-${BUILDX_VER}.linux-amd64" > ~/.docker/cli-plugins/docker-buildx
+# 	chmod a+x ~/.docker/cli-plugins/docker-buildx
 
-frontend-multiarch:
-	docker buildx build -t antoinejaussoin/retro-board-frontend:m1 -f ./retro-board-app/Dockerfile.build . --load
-	# docker push antoinejaussoin/retro-board-frontend:tmp
-	docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -f ./retro-board-app/Dockerfile.serve -t antoinejaussoin/retro-board-frontend:multi --push .
+prepare:
+	docker buildx create --use
 
-frontend2:
-	docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -f ./retro-board-app/Dockerfile -t antoinejaussoin/retro-board-frontend:multi --push .
+backend:
+	docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -f ./retro-board-server/Dockerfile -t antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} --push .
+
+frontend:
+	docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7,linux/arm/v8 -f ./retro-board-app/Dockerfile -t antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} --push .
 
 # https://github.com/docker/buildx/issues/156

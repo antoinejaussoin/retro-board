@@ -2,12 +2,13 @@ language: node_js
 node_js:
   - 12
 os: linux
+dist: bionic
 services:
   - docker
 install: true
 
 env:
-  - NODE_ENV=production
+  - NODE_ENV=production DOCKER_CLI_EXPERIMENTAL=enabled
 
 stages:
   - test
@@ -15,9 +16,18 @@ stages:
     if: branch = master && type != pull_request
   - name: deploy-canary
     if: branch = develop && type != pull_request
+  - name: deploy-multiarch
+    if: branch = feature/multi-arch && type != pull_request
 
 before_install:
   - PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
+  - sudo rm -rf /var/lib/apt/lists/*
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - lsb_release -cs
+  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) edge"
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+  - docker run --rm --privileged multiarch/qemu-user-static:register --reset
 
 jobs:
   include:
@@ -25,6 +35,13 @@ jobs:
       script:
         - yarn
         - yarn ci-test
+    - state: deploy-multiarch
+      script:
+        - export PACKAGE_VERSION=mumu
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - make prepare
+        - make frontend
+        - make backend
     - stage: deploy
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
