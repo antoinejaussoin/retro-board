@@ -11,12 +11,13 @@ install:
 	curl --silent -L "https://github.com/docker/buildx/releases/download/${BUILDX_VER}/buildx-${BUILDX_VER}.linux-amd64" > ~/.docker/cli-plugins/docker-buildx
 	chmod a+x ~/.docker/cli-plugins/docker-buildx
 
+# docker buildx create --name mbuilder
+# docker buildx use mbuilder
+# docker buildx inspect --bootstrap
+
 prepare:
-	# docker buildx create --name mbuilder
-	# docker buildx use mbuilder
-	# docker buildx inspect --bootstrap
 	docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-  docker buildx create --name xbuilder --use
+	docker buildx create --name xbuilder --use
 	docker buildx inspect --bootstrap
 
 backend:
