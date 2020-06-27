@@ -1,4 +1,11 @@
-TARGET_ARCHS=linux/amd64
+TARGET_ARCHS=linux/arm/v7
+BUILDX-VERSION=v0.4.1
+
+# For linux only
+install-buildx:
+	mkdir -vp ~/.docker/cli-plugins/ ~/dockercache
+	curl --silent -L "https://github.com/docker/buildx/releases/download/${BUILDX-VERSION}/buildx-${BUILDX-VERSION}.linux-amd64" > ~/.docker/cli-plugins/docker-buildx
+	chmod a+x ~/.docker/cli-plugins/docker-buildx
 
 prepare:
 	docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
