@@ -3,28 +3,26 @@ node_js:
   - 12
 os: linux
 dist: bionic
-services:
-  - docker
+# services:
+#   - docker
 install: true
 
 env:
   - NODE_ENV=production DOCKER_CLI_EXPERIMENTAL=enabled
 
 stages:
-  - test
+  - name: test
+    if: branch != multiarch2
   - name: deploy
     if: branch = master && type != pull_request
   - name: deploy-canary
     if: branch = develop && type != pull_request
+  - name: multiarch
+    if: branch = multiarch2 && type != pull_request
   
 before_install:
   - PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
-  - curl -fsSL https://get.docker.com | sh
-  - echo '{"experimental":"enabled"}' | sudo tee /etc/docker/daemon.json
-  - mkdir -p $HOME/.docker
-  - echo '{"experimental":"enabled"}' | sudo tee $HOME/.docker/config.json
-  - sudo service docker start
-
+  
 jobs:
   include:
     - stage: test
@@ -35,6 +33,7 @@ jobs:
       script:
         - export TARGET_ARCHS=linux/amd64,linux/386,linux/arm64,linux/arm/v7,linux/arm/v6
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - make install
         - make prepare
         - make maintenance
         - make frontend
@@ -47,7 +46,18 @@ jobs:
         - export TARGET_ARCHS=linux/amd64,linux/arm/v7
         - export PACKAGE_VERSION=canary
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - make install
         - make prepare
+        - make maintenance
+        - make frontend
+        - make backend
+    - stage: multiarch
+      script:
+        - export TARGET_ARCHS=linux/amd64,linux/arm/v7
+        - export PACKAGE_VERSION=multi
+        - make install
+        - make prepare
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - make maintenance
         - make frontend
         - make backend
