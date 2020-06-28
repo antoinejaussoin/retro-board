@@ -32,25 +32,20 @@ jobs:
     - stage: deploy
       script:
         - export TARGET_ARCHS=linux/amd64,linux/386,linux/arm64,linux/arm/v7,linux/arm/v6
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - make install
-        - make prepare
-        - make maintenance
-        - make frontend
-        - make backend
-        - docker push antoinejaussoin/retro-board-backend:latest
-        - docker push antoinejaussoin/retro-board-frontend:latest
-        - docker push antoinejaussoin/retro-board-maintenance:latest
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker buildx build --cache-from=antoinejaussoin/retro-board-maintenance:canary --pull --platform ${TARGET_ARCHS} -f ./retro-board-maintenance/Dockerfile -t antoinejaussoin/retro-board-maintenance:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-maintenance:latest --push ./retro-board-maintenance
+        - docker buildx build --cache-from=antoinejaussoin/retro-board-frontend:canary --pull --platform ${TARGET_ARCHS} -f ./retro-board-app/Dockerfile -t antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-frontend:latest --push .
+        - docker buildx build --cache-from=antoinejaussoin/retro-board-backend:canary --pull --platform ${TARGET_ARCHS} -f ./retro-board-server/Dockerfile -t antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-backend:latest --push .
     - stage: deploy-canary
       script:
         - export TARGET_ARCHS=linux/amd64,linux/arm/v7
         - export PACKAGE_VERSION=canary
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - make install
-        - make prepare
-        - make maintenance
-        - make frontend
-        - make backend
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker buildx build --cache-from=antoinejaussoin/retro-board-maintenance:${PACKAGE_VERSION} --pull --platform ${TARGET_ARCHS} -f ./retro-board-maintenance/Dockerfile -t antoinejaussoin/retro-board-maintenance:${PACKAGE_VERSION} --push ./retro-board-maintenance
+        - docker buildx build --cache-from=antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} --pull --platform ${TARGET_ARCHS} -f ./retro-board-app/Dockerfile -t antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} --push .
+        - docker buildx build --cache-from=antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} --pull --platform ${TARGET_ARCHS} -f ./retro-board-server/Dockerfile -t antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} --push .
     - stage: multiarch
       script:
         - export TARGET_ARCHS=linux/amd64,linux/arm/v7
