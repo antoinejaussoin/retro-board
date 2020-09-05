@@ -13,7 +13,7 @@ export default {
     hint: 'Je kan anderen uitnodigen voor deze sessie door de URL te kopiëren en te plakken',
   },
   Home: {
-    welcome: (userName: string) => `Welkom, ${userName}`,,
+    welcome: (userName: string) => `Welkom, ${userName}`,
   },
   PreviousGame: {
     createdBy: 'Aangemaakt door',
