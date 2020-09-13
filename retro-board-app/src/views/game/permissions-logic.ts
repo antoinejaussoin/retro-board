@@ -8,6 +8,9 @@ export interface UserPermissions {
   canEdit: boolean;
   canDelete: boolean;
   canShowAuthor: boolean;
+  canUseGiphy: boolean;
+  canReorder: boolean;
+  canCreateGroup: boolean;
 }
 
 export function permissionLogic(
@@ -23,6 +26,9 @@ export function permissionLogic(
       canEdit: false,
       canShowAuthor: false,
       canUpVote: false,
+      canUseGiphy: false,
+      canReorder: false,
+      canCreateGroup: false,
     };
   }
   const {
@@ -31,28 +37,36 @@ export function permissionLogic(
     allowActions,
     allowSelfVoting,
     allowMultipleVotes,
-  } = session;
+    allowAuthorVisible,
+    allowGiphy,
+    allowGrouping,
+    allowReordering,
+  } = session.options;
 
-  const canCreateAction = allowActions;
+  const isLoggedIn = !!user;
+  const canCreateAction = isLoggedIn && allowActions;
   const userId = user ? user.id : -1;
   const isAuthor = user ? user.id === post.user.id : false;
-  const canPotentiallyVote = allowSelfVoting ? true : !isAuthor;
+  const canPotentiallyVote = isLoggedIn && allowSelfVoting ? true : !isAuthor;
   const hasVotedOrAuthor =
     (!allowMultipleVotes &&
-      some(post.votes, u => u.user.id === userId && u.type === 'like')) ||
+      some(post.votes, (u) => u.user.id === userId && u.type === 'like')) ||
     (!allowMultipleVotes &&
-      some(post.votes, u => u.user.id === userId && u.type === 'dislike')) ||
+      some(post.votes, (u) => u.user.id === userId && u.type === 'dislike')) ||
     !canPotentiallyVote;
   const upVotes = numberOfVotes('like', userId, session);
   const downVotes = numberOfVotes('dislike', userId, session);
   const hasMaxedUpVotes = maxUpVotes === null ? false : upVotes >= maxUpVotes;
   const hasMaxedDownVotes =
     maxDownVotes === null ? false : downVotes >= maxDownVotes;
-  const canUpVote = !hasVotedOrAuthor && !hasMaxedUpVotes;
-  const canDownVote = !hasVotedOrAuthor && !hasMaxedDownVotes;
-  const canEdit = isAuthor;
-  const canDelete = isAuthor;
-  const canShowAuthor = session.allowAuthorVisible;
+  const canUpVote = isLoggedIn && !hasVotedOrAuthor && !hasMaxedUpVotes;
+  const canDownVote = isLoggedIn && !hasVotedOrAuthor && !hasMaxedDownVotes;
+  const canEdit = isLoggedIn && isAuthor;
+  const canDelete = isLoggedIn && isAuthor;
+  const canShowAuthor = allowAuthorVisible;
+  const canUseGiphy = isLoggedIn && allowGiphy;
+  const canReorder = isLoggedIn && allowReordering;
+  const canCreateGroup = isLoggedIn && allowGrouping;
 
   return {
     canCreateAction,
@@ -61,6 +75,9 @@ export function permissionLogic(
     canEdit,
     canDelete,
     canShowAuthor,
+    canUseGiphy,
+    canCreateGroup,
+    canReorder,
   };
 }
 
@@ -72,7 +89,7 @@ export function numberOfVotes(
   return session.posts.reduce<number>((prev, cur) => {
     return (
       prev +
-      cur.votes.filter(v => v.user.id === userId && v.type === type).length
+      cur.votes.filter((v) => v.user.id === userId && v.type === type).length
     );
   }, 0);
 }

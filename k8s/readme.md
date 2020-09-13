@@ -17,7 +17,11 @@ Once you have a minikube cluster up and running, set the secrets:
 kubectl create secret generic retrospected-secrets \
 --from-literal=DB_PASSWORD=pass \
 --from-literal=PGADMIN_USER=admin \
---from-literal=PGADMIN_PASSWORD=admin
+--from-literal=PGADMIN_PASSWORD=admin \
+--from-literal=SESSION_SECRET=secret \
+--from-literal=TWITTER_SECRET= \
+--from-literal=GOOGLE_SECRET= \
+--from-literal=GITHUB_SECRET=
 ```
 
 You can (and you should) of course change these values to more secure passwords.

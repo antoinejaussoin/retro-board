@@ -12,10 +12,31 @@ export default {
   Main: {
     hint: 'URLを共有すれば新たな参加者を本セッションに招待できます',
   },
+  Home: {
+    welcome: undefined,
+  },
+  PreviousGame: {
+    createdBy: undefined,
+    posts: undefined,
+    participants: undefined,
+    votes: undefined,
+    actions: undefined,
+  },
+  Column: {
+    createGroupTooltip: undefined,
+  },
+  Group: {
+    emptyGroupTitle: '',
+    emptyGroupContent: '',
+  },
   Post: {
+    openExtra: undefined,
+    closeExtra: undefined,
     vote: '投票',
     votes: '表決',
     deleteButton: '削除',
+    setActionButton: undefined,
+    setGiphyButton: undefined,
     noContent: '(項目が空です)',
     by: undefined,
     upVote: undefined,
@@ -23,6 +44,7 @@ export default {
     voteRemainingMultiple: undefined,
     voteRemainingOne: undefined,
     voteRemainingNone: undefined,
+    toggleGiphyButton: undefined,
   },
   Customize: {
     title: undefined,
@@ -45,10 +67,17 @@ export default {
     allowActionsHelp: undefined,
     allowAuthorVisible: undefined,
     allowAuthorVisibleHelp: undefined,
+    allowGiphy: undefined,
+    allowGiphyHelp: undefined,
+    allowGrouping: undefined,
+    allowGroupingHelp: undefined,
+    allowReordering: undefined,
+    allowReorderingHelp: undefined,
     template: undefined,
     templateHelp: undefined,
     numberOfColumns: undefined,
     numberOfColumnsHelp: undefined,
+    makeDefaultTemplate: undefined,
   },
   PostBoard: {
     customQuestion: undefined,
@@ -69,6 +98,7 @@ export default {
     rockQuestion: undefined,
     disconnected: undefined,
     reconnect: undefined,
+    notLoggedIn: undefined,
   },
   GameMenu: {
     board: undefined,
@@ -106,6 +136,12 @@ export default {
     namePlaceholder: '名前を入力',
     buttonLabel: 'スタート',
     header: 'Login',
+    socialMediaAuthHeader: undefined,
+    socialMediaAuthDescription: undefined,
+    anonymousAuthHeader: undefined,
+    anonymousAuthDescription: undefined,
+    authenticatingWith: undefined,
+    or: undefined,
   },
   SummaryBoard: {
     noPosts: '表示する項目がありません',

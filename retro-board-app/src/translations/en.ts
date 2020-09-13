@@ -12,10 +12,31 @@ export default {
   Main: {
     hint: 'You can invite others to this session by copy-pasting the URL',
   },
+  Home: {
+    welcome: (userName: string) => `Welcome, ${userName}`,
+  },
+  PreviousGame: {
+    createdBy: 'Created by',
+    posts: 'posts',
+    participants: 'participants',
+    votes: 'votes',
+    actions: 'actions',
+  },
+  Column: {
+    createGroupTooltip: 'Create a group to group posts together',
+  },
+  Group: {
+    emptyGroupTitle: 'This is an empty group',
+    emptyGroupContent: 'Move a post here to fill this group',
+  },
   Post: {
+    openExtra: 'Additional features',
+    closeExtra: 'Close',
     vote: 'vote',
     votes: 'votes',
     deleteButton: 'Delete',
+    setActionButton: 'Set Action',
+    setGiphyButton: 'Choose a Giphy image',
     noContent: '(This post has no content)',
     by: 'by',
     upVote: 'up-vote',
@@ -26,9 +47,10 @@ export default {
       `You only have one ${type} remaining, make it count!`,
     voteRemainingNone: (type: string) =>
       `You don't have any ${type} remaining.`,
+    toggleGiphyButton: 'Toggle Giphy image',
   },
   Customize: {
-    title: 'Customise your Game',
+    title: 'Customise your Session',
     votingCategory: 'Voting',
     votingCategorySub: 'Set the rules about likes and dislikes',
     postCategory: 'Post settings',
@@ -37,7 +59,7 @@ export default {
     customTemplateCategory: 'Column Template',
     customTemplateCategorySub:
       'Set the number of columns and their characteristics',
-    startButton: 'Launch the game!',
+    startButton: 'Start the session',
     maxUpVotes: 'Max Up-Votes',
     maxUpVotesHelp: `Maximum number of 'likes' votes a user is allowed to cast`,
     maxDownVotes: 'Max Down-Votes',
@@ -52,10 +74,17 @@ export default {
     allowAuthorVisible: 'Show Author',
     allowAuthorVisibleHelp:
       'Display the author of the post, on the post itself.',
+    allowGiphy: 'Allow Giphy',
+    allowGiphyHelp: 'Allow users to set a Giphy image against a post',
+    allowGrouping: 'Allow Grouping',
+    allowGroupingHelp: 'Allow the creation of groups to group posts together',
+    allowReordering: 'Allow Re-ordering',
+    allowReorderingHelp: 'Allow re-ordering posts by drag-and-drop',
     template: 'Template',
     templateHelp: 'Use a pre-defined set of columns',
     numberOfColumns: 'Number of columns',
     numberOfColumnsHelp: 'Set the number of columns',
+    makeDefaultTemplate: 'Make this my default template',
   },
   PostBoard: {
     customQuestion: 'Custom Column',
@@ -76,6 +105,8 @@ export default {
     rockQuestion: 'Rock',
     disconnected: 'You have been disconnected from the current session.',
     reconnect: 'Reconnect',
+    notLoggedIn:
+      'You are not logged in. You can view this session as a spectator, but must login to participate.',
   },
   GameMenu: {
     board: 'Board',
@@ -110,9 +141,17 @@ export default {
     },
   },
   Login: {
-    namePlaceholder: 'Welcome! Please enter your name here to continue',
+    namePlaceholder: 'Please enter a name or nickname here to continue',
     buttonLabel: "Let's start",
     header: 'Login',
+    socialMediaAuthHeader: 'Social Media Authentication',
+    socialMediaAuthDescription:
+      'This will use your account to authenticate you, and will allow you to retrieve all your sessions. No password is stored.',
+    anonymousAuthHeader: 'Anonymous Login',
+    anonymousAuthDescription:
+      "This will create an anonymous account, but won't allow you to retrieve past sessions.",
+    authenticatingWith: 'Authenticating with',
+    or: 'or',
   },
   SummaryBoard: {
     noPosts: 'There are no posts to display',

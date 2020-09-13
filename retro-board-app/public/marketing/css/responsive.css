@@ -1,0 +1,112 @@
+/*Extra small devices (portrait phones, less than 576px)*/
+@media (min-width: 320px) and (max-width: 575px){
+    html{
+        font-size: 14px;
+    }
+
+    h1{
+        font-size: 2.25rem;
+    }
+    h2{
+        font-size: 1.7441em;
+    }
+    .hero-content-left h1{
+        font-size: 2.25rem;
+        line-height: initial;
+    }
+    .mt--120{
+        margin-top: -50px;
+    }
+    .pt-150{
+      padding-top: 50px;
+    }
+
+    /*navbar*/
+    .main-menu ul li{
+        padding: 15px 0 0;
+    }
+
+    /*promo*/
+    div[class*='col-']:not(:last-of-type){
+        margin-bottom: 20px !important;
+    }
+    .row> div[class*='col-']:last-of-type{
+        margin-bottom: 0;
+    }
+    .about-content-right{
+        margin-top: 20px;
+    }
+
+    /*counter*/
+    .counter{
+        margin-top: 25px;
+    }
+    .single-card{
+        padding: 10px 15px;
+        margin-bottom: 25px;
+        margin-left: 16px;
+    }
+    .single-card:nth-child(2n){
+        top: 0;
+    }
+
+    /*client*/
+    .client-section-wrap.d-flex{
+        display: inherit !important;
+    }
+
+    /*subscribe form*/
+    .subscribe-form{
+        width: 100%;
+    }
+
+    .download-btn a.btn{
+        margin: 7px 0;
+    }
+
+}
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) and (max-width: 767px) {
+
+    .mt--120{
+        margin-top: -50px;
+    }
+    .pt-150{
+        padding-top: 60px;
+    }
+
+    /*promo*/
+    div[class*='col-']:not(:last-of-type){
+        margin-bottom: 20px !important;
+    }
+    .row> div[class*='col-']:last-of-type{
+        margin-bottom: 0;
+    }
+    .about-content-right{
+        margin-top: 20px;
+    }
+
+    /*subscribe form*/
+    .subscribe-form{
+        width: 100%;
+    }
+
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) and (max-width: 991px) {
+    .mt--120{
+        margin-top: -50px;
+    }
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) and (max-width: 1199px) {
+
+}
+
+/*Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+
+}

@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/antoinejaussoin/retro-board.svg?branch=develop)](https://travis-ci.org/antoinejaussoin/retro-board)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/antoinejaussoin/retro-board)
-![David](https://img.shields.io/david/antoinejaussoin/retro-board)
 
 This is a Retrospective Idea board, powering [retrospected.com](http://www.retrospected.com).
 
@@ -22,7 +21,7 @@ This is a Retrospective Idea board, powering [retrospected.com](http://www.retro
 
 &nbsp;
 
-![Retrospected.com](/content/screenshot-v2.png?raw=true 'Retrospected.com')
+![Retrospected.com](/content/screenshot-v3.png?raw=true 'Retrospected.com')
 
 This project is both an actual product, and also a technology demo using the latest and greatest JavaScript/TypeScript libraries of the month.
 
@@ -40,12 +39,19 @@ It features the following technologies:
 - [Styled Components](https://www.styled-components.com/)
 - [Multilingual](https://stackoverflow.com/questions/33413880/react-redux-and-multilingual-internationalization-apps-architecture) / Internationalization
 - [Postgres](https://www.postgresql.org/) (optional), defaults to [NeDB](https://github.com/louischatriot/nedb) (in-process)
+- [Passport](http://www.passportjs.org/) for seamless authentication with:
+  - Google
+  - Twitter
+  - GitHub
+- [Giphy](https://giphy.com/) because adding a bit of fun to your retro can't hurt!
+- [React Beautiful DND](https://github.com/atlassian/react-beautiful-dnd) to allow re-ordering and grouping by drag-and-drop
 - [Jest](https://facebook.github.io/jest) for Unit Testing
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro), for Integration Tests
 - [Yarn](https://yarnpkg.com/en/), replacing NPM
 - [Docker](https://docker.com), for easy deployment
 - [Kubernetes](https://kubernetes.io/), to scale Retrospected for its 10M+ users (not)
 - [Travis](http://travis-ci.org/), for Continuous Integration and Deployment (CI/CD)
+- [Multi-Architecture](https://github.com/docker/buildx/), for automatic compatibility with ARM-based servers
 
 Previous versions, up to v1.0.1 featured the following libraries:
 
@@ -55,25 +61,26 @@ Previous versions, up to v1.0.1 featured the following libraries:
 - ~~[reselect](https://github.com/reactjs/reselect)~~
 - ~~[ESLint](http://eslint.org/) for JS and JSX~~
 
-## Prerequisites 💿
+## How to try it out 🚀
 
-- `Yarn`: Please install [Yarn](https://yarnpkg.com/en/), as this mono-repo uses **Yarn Workspaces** which won't work with NPM.
-
-## How to try it out (Mac / Linux) 🚀
+You must have `docker` and `docker-compose` installed on your system.
 
 - Clone this repository
-- Switch to the `master` branch (the default is `develop` which might not be stable: `git checkout master`)
-- `yarn` to install the dependencies (_not_ `npm i`!)
-- `yarn start` to transpile the server, run the server on port 8080 and start the UI
-- Open your browser on [http://localhost:3000](http://localhost:3000)
-
-## How to try it out (Windows) 🚀
-
-Follow the steps in "How to run for development" below.
+- Then run `docker-compose -f ./docker-compose.example.yml up -d`.
+- Open your browser on [http://localhost](http://localhost)
+- _(then please wait a few minutes the first time for the database to initialise)_
 
 ## How to run for development 📝
 
+### Prerequisites 💿
+
+- You must have `docker` and `docker-compose` installed on your system.
+- `Yarn`: Please install [Yarn](https://yarnpkg.com/en/), as this mono-repo uses **Yarn Workspaces** which won't work with NPM.
+
+### Run 🚀
+
 - Clone this repository
+- Run Postgres, Redis, PGAdmin locally (in the `./dev` directory, `docker-compose up -d`)
 - `yarn` to install the dependencies (_not_ `npm i`!)
 - Open another terminal (you need two of those, and the order is important)
 - `yarn start-ui` on the first terminal to run live Webpack with hot-reload
@@ -82,30 +89,37 @@ Follow the steps in "How to run for development" below.
 
 ## How to run for Production using Docker 🐳
 
-### Prerequisites
+### Prerequisites 💿
 
-You must have `docker` and `docker-compose` installed on your system.
+- You must have `docker` and `docker-compose` installed on your system.
 
 ### Run 🚀
 
-- Copy `docker-compose.yml.example` to `docker-compose.yml`
+- Copy `docker-compose.example.yml` to `docker-compose.yml`
+- Edit `docker-compose.yml` to change credentials and secrets
+- _Optional: for ARM-based systems, remove the PGAdmin section_
 - Run `docker-compose up -d`
 - Voilà!
 
-This will run a production-ready version of Retrospected automatically, using Postgres. You don't need to have anything installed other than Docker. This will install and run:
+This will run a production-ready version of Retrospected automatically, using Postgres and Redis. You don't need to have anything installed other than Docker. This will install and run:
 
 - Postgres
 - pgAdmin4 (Web UI for postgres)
-- The Retrospected Nodejs backend
-- The frontend, served by `nginx`.
+- Redis
+- The Retrospected NodeJS Backend
+- The Retrospected React Frontend, served by `nginx`.
 
-### Backups 💾
+## How to run for Production using Kubernetes ☸
+
+Please read the [readme](/k8s/readme.md) file in the `k8s` folder.
+
+## Backups 💾
 
 When using the Docker deployment, your database runs from a container. But if you still need to make some backup of your data, you can do the following:
 
-- Get the docker database image ID by doing: `docker ps`
-- Run `` docker exec -t <docker_image_id> pg_dumpall -c -U postgres > dump_`date +%d-%m-%Y"_"%H_%M\_%S`.sql ``
-- To restore your databases: `cat dump_1234.sql | docker exec -i <docker_image_id> psql -U postgres`
+- Get the docker database container ID by doing: `docker ps`
+- Run `` docker exec -t <docker_container_id> pg_dumpall -c -U postgres > dump_`date +%d-%m-%Y"_"%H_%M\_%S`.sql ``
+- To restore your databases: `cat dump_1234.sql | docker exec -i <docker_container_id> psql -U postgres`
 
 ## How to run the tests ✅
 
@@ -113,16 +127,6 @@ When using the Docker deployment, your database runs from a container. But if yo
 - `yarn` to install the dependencies (_not_ `npm i`!)
 - `npm test` to run the tests
 - **or** `yarn test-watch` to run the tests every time you change a file
-
-## How to use Postgres (w/o Docker) 🗄
-
-By default, the database engine is NeDB, an in-process database with no external dependencies (i.e. no database to install on your system).
-
-If you want to use a more "production-ready" database such as Postgres (without Docker), copy `.env.example` to `.env`, change `DB_TYPE` to `postgres` and fill the rest.
-
-## Kubernetes ☸
-
-To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s` folder.
 
 ## How to debug
 
@@ -135,10 +139,62 @@ To know more about Kubernetes, see the [readme](/k8s/readme.md) file in the `k8s
 
 ## Roadmap and ideas 🚗 💡
 
-- Adding a real (but optional) login mechanism (Google/GitHub etc.)
 - Highlight posts where the user voted
+- Bluring posts for a set amount of time so people can't see other people's messages
 
 ## Versions History
+
+### Version 3.1.1
+
+- 🇳🇱 Improved Dutch translation (👏 Thanks [@jghaanstra](https://github.com/jghaanstra))
+- Dependencies update
+
+### Version 3.1.0
+
+- Multi-architecture support! Hello Rasperry Pi 🍇 🎉! And Apple Silicon 🍎
+- Docker images are automatically compatible with ARM (arm64, v6, v7, v8)
+
+### Version 3.0.3
+
+- Bug fix: [Issue 121](https://github.com/antoinejaussoin/retro-board/issues/121), [Issue 123](https://github.com/antoinejaussoin/retro-board/issues/123)
+- Dependencies update
+
+### Version 3.0.2
+
+- Adding privacy policy, terms and conditions, GDPR support
+- Fix various bugs reported by Sentry
+
+### Version 3.0.1
+
+- Improvements on the landing page experience
+- SEO
+
+### Version 3.0.0
+
+- Brand new landing page, and much improved look and feel 🎉
+- Authentication using your favourite social media account:
+  - GitHub
+  - Google
+  - Twitter
+  - ...more coming!
+- Ability to re-order posts by drag-and-drop 🚀
+- Ability to group posts together
+- Save your custom session settings as a default template
+- Giphy support 😃
+- Improved homepage dashboard 📈
+
+### Version 2.2.4
+
+- 🇷🇺 Russian Translation improvements (👏 Thanks [@regmagik](https://github.com/regmagik))
+- Fixing logout button translation
+- Adding fetch polyfill for IE
+- Upgrading dependencies
+
+### Version 2.2.3
+
+- 🇮🇹 Italian Translation (👏 Thanks [@mventuri](https://github.com/mventuri))
+- Re-enabling source maps for Sentry
+- Upgrading dependencies
 
 ### Version 2.2.2
 
@@ -400,13 +456,14 @@ Many thanks to the following contributors who helped translating the app:
 - Hungarian: [@iaretiga](https://github.com/iaretiga)
 - Portuguese (Brazilian): [@renancouto](https://github.com/renancouto)
 - Dutch: [@Sonaryr](https://github.com/Sonaryr)
-- Russian: [@vectart](https://github.com/vectart)
+- Russian: [@vectart](https://github.com/vectart), [@regmagik](https://github.com/regmagik)
 - Spanish: [@andresin87](https://github.com/andresin87)
 - Chinese: [@aqutw](https://github.com/aqutw)
 - Polish: [@olaf-cichocki](https://github.com/olaf-cichocki)
 - Arabic: [@Meshredded](https://github.com/Meshredded)
 - Japanese: [@sat0yu](https://github.com/sat0yu)
 - German: [@PaulBrandt](https://github.com/PaulBrandt)
+- Italian: [@mventuri](https://github.com/mventuri)
 
 If you are a native speaker of another language, please don't hesitate to make a pull request to add a translation.
 

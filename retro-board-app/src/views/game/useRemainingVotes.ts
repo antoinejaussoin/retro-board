@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import useGlobalState from '../../state';
 import { numberOfVotes } from './permissions-logic';
+import useUser from '../../auth/useUser';
 
 interface RemainingVotes {
   up: number | null;
@@ -9,8 +10,9 @@ interface RemainingVotes {
 
 export default function useRemainingVotes(): RemainingVotes {
   const {
-    state: { session, user },
+    state: { session },
   } = useGlobalState();
+  const user = useUser();
 
   const result = useMemo(() => {
     if (!session || !user) {
@@ -21,12 +23,12 @@ export default function useRemainingVotes(): RemainingVotes {
 
     return {
       up:
-        session.maxUpVotes !== null
-          ? Math.max(session.maxUpVotes - upVotes, 0)
+        session.options.maxUpVotes !== null
+          ? Math.max(session.options.maxUpVotes - upVotes, 0)
           : null,
       down:
-        session.maxDownVotes !== null
-          ? Math.max(session.maxDownVotes - downVotes, 0)
+        session.options.maxDownVotes !== null
+          ? Math.max(session.options.maxDownVotes - downVotes, 0)
           : null,
     };
   }, [session, user]);

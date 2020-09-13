@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import styled from 'styled-components';
+import { colors } from '@material-ui/core';
 import { Edit } from '@material-ui/icons';
 import TextareaAutosize from 'react-autosize-textarea';
 
@@ -102,7 +103,7 @@ const EditableLabel = ({
         <ViewMode onClick={enableEditMode}>
           <span aria-label={label}>{current || placeholder}</span>
           &nbsp;
-          <EditIcon fontSize="inherit" />
+          <EditIcon fontSize="inherit" style={{ fontSize: '0.8em' }} />
         </ViewMode>
       )}
     </LabelContainer>
@@ -118,6 +119,12 @@ const ViewMode = styled.span`
   > span {
     white-space: pre-wrap;
     line-height: 1.5;
+  }
+
+  &:hover {
+    > svg {
+      color: ${colors.purple[500]};
+    }
   }
 `;
 
@@ -138,16 +145,16 @@ const EditMode = styled.span<CenteredProp>`
     border: none;
     outline: none;
     font-size: inherit;
-    text-align: ${props => (props.centered ? 'center' : 'inherit')};
+    text-align: ${(props) => (props.centered ? 'center' : 'inherit')};
     padding: 0;
     line-height: 1.5;
   }
 `;
 
 const EditIcon = styled(Edit)`
-  font-size: 0.01em;
   position: relative;
   top: 2px;
+  color: ${colors.grey[500]};
 `;
 
 const InvisibleEditIcon = styled(EditIcon)`

@@ -38,16 +38,21 @@ const languages: Translations = {
   it,
 };
 
+export function useLanguage(): [string, (language: string) => void] {
+  const { language, setLanguage } = useContext(LanguageContext);
+  return [language, setLanguage];
+}
+
 function useTranslation() {
-  const language = useContext(LanguageContext);
+  const [language] = useLanguage();
 
   const result = useMemo(() => {
-    const translations = languages[language.language];
+    const translations = languages[language];
     const english = languages['en'];
-    return language.language === 'en'
+    return language === 'en'
       ? translations
       : merge(cloneDeep(english), translations);
-  }, [language.language]);
+  }, [language]);
 
   return result;
 }

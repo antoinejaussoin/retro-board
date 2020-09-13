@@ -1,27 +1,24 @@
-import React, { useEffect, useCallback, useState, useRef } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useHistory, Redirect, Switch, Route } from 'react-router-dom';
 import { trackPageView } from './track';
 import styled from 'styled-components';
-import {
-  Button,
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-} from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import Home from './views/Home';
 import Game from './views/Game';
 import Panel from './views/Panel';
-import Login from './views/Login';
+import PrivacyPolicyPage from './views/policies/Privacy';
 import Invite from './views/layout/Invite';
-import Sandbox from './views/Sandbox';
+import LoginButton from './auth/LoginButton';
 import useGlobalState from './state';
-import useLoginFromLocalStorage from './hooks/useLoginFromLocalStorage';
 import useIsCompatibleBrowser from './hooks/useIsCompatibleBrowser';
 import OutdatedBrowser from './components/OutdatedBrowser';
+import useIsInitialised from './auth/useIsInitialised';
+import useUser from './auth/useUser';
+import TermsAndConditionsPage from './views/policies/Terms';
+import CookiesPolicyPage from './views/policies/Cookies';
+import AcceptableUsePolicyPage from './views/policies/AcceptableUse';
+import DisclaimerPage from './views/policies/Disclaimer';
 
 const Title = styled(Typography)`
   flex-grow: 1;
@@ -30,20 +27,13 @@ const Title = styled(Typography)`
 
 function App() {
   const history = useHistory();
-  useLoginFromLocalStorage();
   const isCompatible = useIsCompatibleBrowser();
-  const { state, togglePanel, logout } = useGlobalState();
-  const [open, setOpen] = useState(false);
+  const { togglePanel } = useGlobalState();
+  const isInitialised = useIsInitialised();
+  const user = useUser();
   const goToHome = useCallback(() => history.push('/'), [history]);
-  const closeMenu = useCallback(() => setOpen(false), []);
-  const openMenu = useCallback(() => setOpen(true), []);
-  const menuAnchor = useRef(null);
-  const handleLogout = useCallback(() => {
-    closeMenu();
-    logout();
-  }, [logout, closeMenu]);
   useEffect(() => {
-    const unregister = history.listen(location => {
+    const unregister = history.listen((location) => {
       trackPageView(location.pathname);
     });
     return () => {
@@ -61,33 +51,25 @@ function App() {
             Retrospected
           </MainTitle>
           <Route path="/game/:gameId" component={Invite} />
-          <Button color="inherit" buttonRef={menuAnchor} onClick={openMenu}>
-            {state.user ? state.user.name : '--'}
-          </Button>
-          <Menu
-            anchorEl={menuAnchor.current}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={open}
-            onClose={closeMenu}
-          >
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
-          </Menu>
+          {isInitialised ? (
+            <LoginButton />
+          ) : (
+            <Initialising>Authenticating...</Initialising>
+          )}
         </Toolbar>
       </AppBar>
-      <Route path="/" exact component={Home} />
-      <Route path="/sandbox" exact component={Sandbox} />
+      <Route path="/" exact>
+        {user ? <Home /> : null}
+      </Route>
       <Switch>
         <Redirect from="/session/:gameId" to="/game/:gameId" />
         <Route path="/game/:gameId" component={Game} />
+        <Route path="/privacy" component={PrivacyPolicyPage} />
+        <Route path="/terms" component={TermsAndConditionsPage} />
+        <Route path="/cookies" component={CookiesPolicyPage} />
+        <Route path="/acceptable-use" component={AcceptableUsePolicyPage} />
+        <Route path="/disclaimer" component={DisclaimerPage} />
       </Switch>
-      {!state.user && <Login />}
       <Panel />
       <OutdatedBrowser show={!isCompatible} />
     </div>
@@ -97,5 +79,7 @@ function App() {
 const MainTitle = styled(Title)`
   cursor: pointer;
 `;
+
+const Initialising = styled.div``;
 
 export default App;

@@ -6,10 +6,13 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  Index,
 } from 'typeorm';
+import { LexoRank } from 'lexorank';
 import Session from './Session';
 import User from './User';
 import Vote from './Vote';
+import PostGroup from './PostGroup';
 
 @Entity({ name: 'posts' })
 export default class Post {
@@ -17,12 +20,25 @@ export default class Post {
   public id: string;
   @ManyToOne(() => Session, { nullable: false })
   public session: Session;
+  @ManyToOne(() => PostGroup, {
+    nullable: true,
+    eager: true,
+    cascade: true,
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+  })
+  public group: PostGroup | null;
   @Column({ default: 0 })
   public column: number;
+  @Index()
+  @Column({ default: LexoRank.middle().toString() })
+  public rank: string;
   @Column()
   public content: string;
   @Column({ nullable: true, type: 'character varying' })
   public action: null | string;
+  @Column({ nullable: true, type: 'character varying' })
+  public giphy: null | string;
   @ManyToOne(() => User, { eager: true, cascade: true, nullable: false })
   public user: User;
   @OneToMany(
@@ -52,5 +68,8 @@ export default class Post {
     this.content = content;
     this.user = user;
     this.action = null;
+    this.giphy = null;
+    this.group = null;
+    this.rank = LexoRank.middle().toString();
   }
 }

@@ -13,10 +13,31 @@ export default {
     hint:
       'Du kannst Andere zu dieser Session einladen indem Du ihnen die URL schickst',
   },
+  Home: {
+    welcome: undefined,
+  },
+  PreviousGame: {
+    createdBy: undefined,
+    posts: undefined,
+    participants: undefined,
+    votes: undefined,
+    actions: undefined,
+  },
+  Column: {
+    createGroupTooltip: undefined,
+  },
+  Group: {
+    emptyGroupTitle: '',
+    emptyGroupContent: '',
+  },
   Post: {
+    openExtra: undefined,
+    closeExtra: undefined,
     vote: 'Stimme',
     votes: 'Stimmen',
     deleteButton: 'Löschen',
+    setActionButton: undefined,
+    setGiphyButton: undefined,
     noContent: '(Dieser Post hat keinen Inhalt)',
     by: 'von',
     upVote: 'up-vote',
@@ -26,6 +47,7 @@ export default {
     voteRemainingOne: (type: string) =>
       `Du hast nur noch einen ${type} verbleibend, verteile ihn gut!`,
     voteRemainingNone: (type: string) => `Du hast keine ${type}s verbleibend.`,
+    toggleGiphyButton: undefined,
   },
   Customize: {
     title: 'Personalisiere Dein Spiel',
@@ -51,10 +73,17 @@ export default {
     allowActionsHelp: `Bestimmt ob Maßnahmen hinzugefügt werden können`,
     allowAuthorVisible: 'Zeige Author',
     allowAuthorVisibleHelp: 'Zeigt den Author eines Posts an.',
+    allowGiphy: undefined,
+    allowGiphyHelp: undefined,
+    allowGrouping: undefined,
+    allowGroupingHelp: undefined,
+    allowReordering: undefined,
+    allowReorderingHelp: undefined,
     template: 'Vorlage',
     templateHelp: 'Nutze ein vordefiniertes Spaltenset',
     numberOfColumns: 'Anzahl an Spalten',
     numberOfColumnsHelp: 'Setze die Anzahl an Spalten',
+    makeDefaultTemplate: undefined,
   },
   PostBoard: {
     customQuestion: 'Eigene Spalte',
@@ -75,6 +104,7 @@ export default {
     rockQuestion: 'Fels',
     disconnected: undefined,
     reconnect: undefined,
+    notLoggedIn: undefined,
   },
   GameMenu: {
     board: undefined,
@@ -112,6 +142,12 @@ export default {
     namePlaceholder: 'Wer genau bist Du? Gib hier Deinen Namen ein',
     buttonLabel: 'Auf gehts!',
     header: 'Anmelden',
+    socialMediaAuthHeader: undefined,
+    socialMediaAuthDescription: undefined,
+    anonymousAuthHeader: undefined,
+    anonymousAuthDescription: undefined,
+    authenticatingWith: undefined,
+    or: undefined,
   },
   SummaryBoard: {
     noPosts: 'Es gibt keine Beiträge',

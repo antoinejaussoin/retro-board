@@ -15,6 +15,7 @@ import useGame from './game/useGame';
 import GameMode from './game/GameMode';
 import SummaryMode from './game/summary/SummaryMode';
 import useColumns from './game/useColumns';
+import NoContent from '../components/NoContent';
 
 interface RouteParams {
   gameId: string;
@@ -37,8 +38,13 @@ function GamePage() {
     initialised,
     disconnected,
     onAddPost,
+    onMovePost,
+    onCombinePost,
+    onAddGroup,
     onDeletePost,
     onEditPost,
+    onDeletePostGroup,
+    onEditPostGroup,
     onLike,
     onRenameSession,
     reconnect,
@@ -49,6 +55,15 @@ function GamePage() {
       <LoadingContainer>
         <CircularProgress />
       </LoadingContainer>
+    );
+  }
+
+  if (!session) {
+    return (
+      <NoContent
+        title="This session does not exist."
+        subtitle="Please make sure the URL is correct."
+      />
     );
   }
 
@@ -87,10 +102,16 @@ function GamePage() {
         render={() => (
           <GameMode
             columns={columns}
+            options={session.options}
             onEdit={onEditPost}
             onAddPost={onAddPost}
+            onMovePost={onMovePost}
+            onCombinePost={onCombinePost}
+            onAddGroup={onAddGroup}
             onDeletePost={onDeletePost}
             onLike={onLike}
+            onDeleteGroup={onDeletePostGroup}
+            onEditGroup={onEditPostGroup}
             onRenameSession={onRenameSession}
           />
         )}

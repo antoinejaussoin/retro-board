@@ -2,59 +2,70 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import socketIo from 'socket.io';
 import socketIoRedisAdapter from 'socket.io-redis';
+import redis from 'redis';
+import connectRedis from 'connect-redis';
 import http from 'http';
-import { find } from 'lodash';
 import chalk from 'chalk';
-import moment from 'moment';
 import db from './db';
-import {
-  Actions,
-  Session,
-  Post,
-  User,
-  Vote,
-  VoteType,
-} from 'retro-board-common';
 import config from './db/config';
-import uuid from 'uuid';
-import * as Sentry from '@sentry/node';
+import passport from 'passport';
+import passportInit from './auth/passport';
+import authRouter from './auth/router';
+import session from 'express-session';
+import game from './game';
+import { getUser } from './utils';
+import {
+  initSentry,
+  setupSentryErrorHandler,
+  setupSentryRequestHandler,
+  setScope,
+  reportQueryError,
+} from './sentry';
 
-const useSentry = !!config.SENTRY_URL && config.SENTRY_URL !== 'NO_SENTRY';
-
-if (useSentry) {
-  Sentry.init({
-    dsn: config.SENTRY_URL,
-  });
-  console.log(chalk`{yellow 🐜  Using {red Sentry} for error reporting}`);
-}
-
-const {
-  RECEIVE_POST,
-  RECEIVE_BOARD,
-  RECEIVE_DELETE_POST,
-  RECEIVE_LIKE,
-  RECEIVE_EDIT_POST,
-  ADD_POST_SUCCESS,
-  DELETE_POST,
-  LIKE_SUCCESS,
-  EDIT_POST,
-  RECEIVE_CLIENT_LIST,
-  RECEIVE_SESSION_NAME,
-  JOIN_SESSION,
-  RENAME_SESSION,
-  LEAVE_SESSION,
-  LOGIN_SUCCESS,
-} = Actions;
+initSentry();
 
 const app = express();
-if (useSentry) {
-  app.use(Sentry.Handlers.requestHandler());
-}
-app.use(bodyParser.urlencoded({ extended: false }));
+setupSentryRequestHandler(app);
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// saveUninitialized: true allows us to attach the socket id to the session
+// before we have athenticated the user
+let sessionMiddleware: express.RequestHandler;
+
+if (config.REDIS_ENABLED) {
+  const RedisStore = connectRedis(session);
+  const redisClient = redis.createClient({
+    host: config.REDIS_HOST,
+    port: config.REDIS_PORT,
+  });
+  sessionMiddleware = session({
+    secret: process.env.SESSION_SECRET!,
+    resave: true,
+    saveUninitialized: true,
+    store: new RedisStore({ client: redisClient as any }),
+    cookie: {
+      secure: false,
+    },
+  });
+} else {
+  sessionMiddleware = session({
+    secret: process.env.SESSION_SECRET!,
+    resave: true,
+    saveUninitialized: true,
+    cookie: {
+      secure: false,
+    },
+  });
+}
+
+app.use(sessionMiddleware);
+app.use(passport.initialize());
+app.use(passport.session());
+
 const httpServer = new http.Server(app);
 
-app.get('/api/ping', (_, res) => {
+app.get('/api/ping', (req, res) => {
   res.send('pong');
 });
 
@@ -63,7 +74,15 @@ app.get('/healthz', async (_, res) => {
   res.status(200).send();
 });
 
+app.use('/api/auth', authRouter);
+
 const io = socketIo(httpServer);
+
+io.use(function (socket, next) {
+  sessionMiddleware(socket.request, {} as any, next);
+});
+
+app.set('io', io);
 const port = config.BACKEND_PORT || 8081;
 
 if (config.REDIS_ENABLED) {
@@ -73,256 +92,110 @@ if (config.REDIS_ENABLED) {
   console.log(chalk`{red Redis} was properly activated`);
 }
 
-const s = (str: string) => chalk`{blue ${str.replace('retrospected/', '')}}`;
-
-interface ExtendedSocket extends socketIo.Socket {
-  sessionId: string;
-}
-
-interface Users {
-  [socketId: string]: User | null;
-}
-
-interface UserData {
-  user: User;
-}
-
-interface NameData extends UserData {
-  name: string;
-}
-
-interface PostUpdate extends UserData {
-  post: Post;
-}
-
-interface LikeUpdate extends PostUpdate {
-  type: VoteType;
-}
-
-db().then(store => {
-  const users: Users = {};
-  const d = () => chalk`{yellow [${moment().format('HH:mm:ss')}]} `;
-
-  const getRoom = (sessionId: string) => `board-${sessionId}`;
-
-  const sendToAll = (
-    socket: ExtendedSocket,
-    sessionId: string,
-    action: string,
-    data: any
-  ) => {
-    console.log(
-      chalk`${d()}{green  ==> } ${s(action)} {grey ${JSON.stringify(data)}}`
-    );
-    socket.broadcast.to(getRoom(sessionId)).emit(action, data);
-  };
-
-  const sendToSelf = (socket: ExtendedSocket, action: string, data: any) => {
-    console.log(
-      chalk`${d()}{green  --> } ${s(action)} {grey ${JSON.stringify(data)}}`
-    );
-    socket.emit(action, data);
-  };
-
-  const persistSession = (session: Session) =>
-    store.saveSession(session).catch((err: string) => console.error(err));
-
-  const persistPost = (sessionId: string, post: Post) =>
-    store.savePost(sessionId, post).catch((err: string) => console.error(err));
-
-  const persistVote = (sessionId: string, postId: string, vote: Vote) =>
-    store.saveVote(sessionId, postId, vote);
-
-  const deletePost = (sessionId: string, postId: string) =>
-    store
-      .deletePost(sessionId, postId)
-      .catch((err: string) => console.error(err));
-
-  const sendClientList = (sessionId: string, socket: ExtendedSocket) => {
-    const room = io.nsps['/'].adapter.rooms[getRoom(sessionId)];
-    if (room) {
-      const clients = Object.keys(room.sockets);
-      const names = clients.map((id, i) => users[id] || `(Anonymous #${i})`);
-
-      sendToSelf(socket, RECEIVE_CLIENT_LIST, names);
-      sendToAll(socket, sessionId, RECEIVE_CLIENT_LIST, names);
-    }
-  };
-
-  const recordUser = (
-    sessionId: string,
-    user: User,
-    socket: ExtendedSocket
-  ) => {
-    const socketId = socket.id;
-    if (!users[socketId] || users[socketId]!.id !== user.id) {
-      users[socketId] = user || null;
-    }
-
-    sendClientList(sessionId, socket);
-    store.saveUser(user);
-  };
-
-  const receivePost = async (
-    session: Session,
-    post: Post,
-    socket: ExtendedSocket
-  ) => {
-    persistPost(session.id, post);
-    sendToAll(socket, session.id, RECEIVE_POST, post);
-  };
-
-  const joinSession = async (
-    session: Session,
-    data: UserData,
-    socket: ExtendedSocket
-  ) => {
-    socket.join(getRoom(session.id), () => {
-      socket.sessionId = session.id;
-      sendToSelf(socket, RECEIVE_BOARD, session);
-      recordUser(session.id, data.user, socket);
-    });
-  };
+db().then((store) => {
+  passportInit(store);
+  game(store, io);
 
   // Create session
-  app.post('/api/create/:id', async (req, res) => {
-    console.log('Create: ', req.body, req.params.id);
-    await store.create(req.params.id, req.body.options, req.body.columns);
-    res.status(200).send();
-  });
-
-  const renameSession = async (
-    session: Session,
-    data: NameData,
-    socket: ExtendedSocket
-  ) => {
-    session.name = data.name;
-    persistSession(session);
-    sendToAll(socket, session.id, RECEIVE_SESSION_NAME, data.name);
-  };
-
-  const leave = async (session: Session, _: void, socket: ExtendedSocket) => {
-    socket.leave(getRoom(session.id), () => {
-      sendClientList(session.id, socket);
-    });
-  };
-
-  const login = async (
-    session: Session,
-    data: UserData,
-    socket: ExtendedSocket
-  ) => {
-    recordUser(session.id, data.user, socket);
-  };
-
-  const onDeletePost = async (
-    session: Session,
-    data: Post,
-    socket: ExtendedSocket
-  ) => {
-    session.posts = session.posts.filter(p => p.id !== data.id);
-    deletePost(session.id, data.id);
-    sendToAll(socket, session.id, RECEIVE_DELETE_POST, data);
-  };
-
-  const like = async (
-    session: Session,
-    data: LikeUpdate,
-    socket: ExtendedSocket
-  ) => {
-    const post = find(session.posts, p => p.id === data.post.id);
-    if (post) {
-      const existingVote: Vote | undefined = find(
-        post.votes,
-        v => v.user.id === data.user.id && v.type === data.type
-      );
-
-      if (session.allowMultipleVotes || !existingVote) {
-        const vote: Vote = {
-          id: uuid.v4(),
-          user: data.user,
-          type: data.type,
-        };
-        persistVote(session.id, post.id, vote);
-        sendToAll(socket, session.id, RECEIVE_LIKE, { postId: post.id, vote });
-      }
-    }
-  };
-
-  const edit = async (
-    session: Session,
-    data: PostUpdate,
-    socket: ExtendedSocket
-  ) => {
-    const post = find(session.posts, p => p.id === data.post.id);
-    if (post) {
-      post.content = data.post.content;
-      post.action = data.post.action;
-      persistPost(session.id, post);
-      sendToAll(socket, session.id, RECEIVE_EDIT_POST, data);
-    }
-  };
-
-  io.on('connection', (socket: ExtendedSocket) => {
-    const ip =
-      socket.handshake.headers['x-forwarded-for'] || socket.handshake.address;
-    console.log(
-      d() +
-        chalk`{blue Connection: {red New user connected} {grey ${socket.id} ${ip}}}`
-    );
-
-    interface Action {
-      type: string;
-      handler: (
-        session: Session,
-        data: any,
-        socket: ExtendedSocket
-      ) => Promise<void>;
-    }
-
-    const actions: Action[] = [
-      { type: ADD_POST_SUCCESS, handler: receivePost },
-      { type: JOIN_SESSION, handler: joinSession },
-      { type: RENAME_SESSION, handler: renameSession },
-      { type: DELETE_POST, handler: onDeletePost },
-      { type: LIKE_SUCCESS, handler: like },
-      { type: EDIT_POST, handler: edit },
-      { type: LOGIN_SUCCESS, handler: login },
-      { type: LEAVE_SESSION, handler: leave },
-    ];
-
-    actions.forEach(action => {
-      socket.on(action.type, data => {
-        console.log(
-          chalk`${d()}{red  <-- } ${s(action.type)} {grey ${JSON.stringify(
-            data
-          )}}`
-        );
-        const sid =
-          action.type === LEAVE_SESSION ? socket.sessionId : data.sessionId;
-        if (sid) {
-          store.get(sid).then((session: Session) => {
-            action.handler(session, data.payload, socket);
-          });
+  app.post('/api/create', async (req, res) => {
+    const user = await getUser(store, req);
+    setScope(async (scope) => {
+      if (user) {
+        try {
+          const session = await store.create(user);
+          res.status(200).send(session);
+        } catch (err) {
+          reportQueryError(scope, err);
+          res.status(500).send();
+          throw err;
         }
-      });
-    });
-
-    socket.on('disconnect', () => {
-      if (socket.sessionId) {
-        console.log(
-          chalk`${d()}{blue Disconnection: }{red User left} {grey ${
-            socket.id
-          } ${ip}}`
-        );
-
-        sendClientList(socket.sessionId, socket);
+      } else {
+        res
+          .status(401)
+          .send('You must be logged in in order to create a session');
       }
     });
   });
-  if (useSentry) {
-    app.use(Sentry.Handlers.errorHandler());
-  }
+
+  app.post('/api/create-custom', async (req, res) => {
+    const user = await getUser(store, req);
+    setScope(async (scope) => {
+      if (user) {
+        try {
+          const session = await store.createCustom(
+            req.body.options,
+            req.body.columns,
+            req.body.setDefault,
+            user
+          );
+          res.status(200).send(session);
+        } catch (err) {
+          reportQueryError(scope, err);
+          res.status(500).send();
+          throw err;
+        }
+      } else {
+        res
+          .status(401)
+          .send('You must be logged in in order to create a session');
+      }
+    });
+  });
+
+  app.post('/api/logout', async (req, res, next) => {
+    req.logout();
+    req.session?.destroy((err) => {
+      if (err) {
+        return next(err);
+      }
+      return res.send({ authenticated: req.isAuthenticated() });
+    });
+  });
+
+  app.get('/api/me', async (req, res) => {
+    const user = await getUser(store, req);
+    if (user) {
+      res.status(200).send(user);
+    } else {
+      res.status(401).send('Not logged in');
+    }
+  });
+
+  app.get('/api/previous', async (req, res) => {
+    const user = await getUser(store, req);
+    if (user && user.accountType !== 'anonymous') {
+      const sessions = await store.previousSessions(user.id);
+      res.status(200).send(sessions);
+    } else {
+      res.status(200).send([]);
+    }
+  });
+
+  app.post('/api/me/language', async (req, res) => {
+    if (req.user) {
+      const updatedUser = await store.updateUser(req.user, {
+        language: req.body.language,
+      });
+      res.status(200).send(updatedUser);
+    } else {
+      res.status(401).send();
+    }
+  });
+
+  app.get('/api/me/default-template', async (req, res) => {
+    if (req.user) {
+      const defaultTemplate = await store.getDefaultTemplate(req.user);
+      if (defaultTemplate) {
+        res.status(200).send(defaultTemplate);
+      } else {
+        res.status(404);
+      }
+    } else {
+      res.status(401).send();
+    }
+  });
+
+  setupSentryErrorHandler(app);
 });
 
 httpServer.listen(port);

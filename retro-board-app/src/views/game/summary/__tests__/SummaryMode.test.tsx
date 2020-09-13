@@ -1,5 +1,5 @@
 import React from 'react';
-import uuid from 'uuid';
+import { v4 } from 'uuid';
 import { render, getAllByRole } from '../../../../testing';
 import SummaryMode from '../SummaryMode';
 import { ColumnContent } from '../../types';
@@ -8,25 +8,35 @@ import { Post } from 'retro-board-common';
 const buildPost = (likes: number, dislikes: number): Post => {
   const post: Post = {
     content: `${likes}/${dislikes}`,
-    id: uuid.v4(),
+    id: v4(),
     column: 0,
-    user: { id: uuid.v4(), name: 'bar' },
+    user: {
+      id: v4(),
+      name: 'bar',
+      username: '',
+      accountType: 'anonymous',
+      language: 'en',
+      photo: '',
+    },
     votes: [],
     action: '',
+    giphy: null,
+    group: null,
+    rank: '',
   };
 
   post.votes = [
     ...new Array(likes).fill({
-      id: uuid.v4(),
+      id: v4(),
       type: 'like',
       count: 1,
-      user: { id: uuid.v4(), name: 'bar' },
+      user: { id: v4(), name: 'bar' },
     }),
     ...new Array(dislikes).fill({
-      id: uuid.v4(),
+      id: v4(),
       type: 'dislike',
       count: 1,
-      user: { id: uuid.v4(), name: 'bar' },
+      user: { id: v4(), name: 'bar' },
     }),
   ];
 
@@ -47,6 +57,7 @@ const data: ColumnContent[] = [
       buildPost(0, 0),
       buildPost(2, 0),
     ],
+    groups: [],
   },
   {
     label: 'Second column',
@@ -55,6 +66,7 @@ const data: ColumnContent[] = [
     icon: 'disatisfied',
     type: 'notWell',
     posts: [],
+    groups: [],
   },
 ];
 

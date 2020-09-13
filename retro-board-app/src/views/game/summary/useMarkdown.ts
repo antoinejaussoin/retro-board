@@ -3,14 +3,16 @@ import { flatten, sortedUniq, sortBy } from 'lodash';
 import { format } from 'date-fns';
 import useGlobalState from '../../../state';
 import useColumns from '../useColumns';
-import useTranslations from '../../../translations';
-import { Post } from 'retro-board-common';
-import { sortPostByVote } from '../utils';
+import useTranslations, { useLanguage } from '../../../translations';
+import { calculateSummary } from './calculate-summary';
+import { ColumnStatsItem, ActionItem } from './types';
 
 export default function useMarkdown() {
   const { state } = useGlobalState();
   const columns = useColumns();
+  const language = useLanguage();
   const translations = useTranslations();
+  const stats = calculateSummary(columns);
 
   const result = useMemo(() => {
     if (!state.session) {
@@ -22,9 +24,9 @@ export default function useMarkdown() {
     const participants = sortedUniq(
       sortBy(
         flatten(
-          session.posts.map(p => [
+          session.posts.map((p) => [
             p.user.name,
-            ...p.votes.map(v => v.user.name),
+            ...p.votes.map((v) => v.user.name),
           ])
         )
       )
@@ -40,7 +42,7 @@ export default function useMarkdown() {
 
 ### Session details:
 
-**Date**: ${format(new Date(), 'PPPPpppp')}
+**Date**: ${format(new Date(), 'PPPPpppp', { locale: language.dateLocale })}
 
 **URL**: ${window.location.href.replace('/summary', '')}
 
@@ -50,37 +52,46 @@ export default function useMarkdown() {
 
 **Votes**: ${numberOfVotes}
 
+### Actions
+
+${stats.actions.map(toAction).join('\n')}
+
 ### Posts
 `;
 
-    columns.forEach(col => {
+    stats.columns.forEach((col) => {
       md += `
   
-#### ${col.label}
+#### ${col.column.label}
 
-${[...col.posts]
-  .sort(sortPostByVote)
-  .map(toPost)
-  .join('\n')}
+${[...col.items].map((i) => toItem(i, 0)).join('\n')}
 `;
     });
 
     return md;
-  }, [columns, state, translations.SessionName.defaultSessionName]);
+  }, [
+    state,
+    translations.SessionName.defaultSessionName,
+    language.dateLocale,
+    stats,
+  ]);
   return result;
 }
 
-function toPost(post: Post): string {
-  const positivesVotes = post.votes.filter(p => p.type === 'like').length;
-  const negativeVotes = post.votes.filter(p => p.type === 'dislike').length;
-  let content = toMultiline(
-    `- (+${positivesVotes}/-${negativeVotes}) ${post.content}`
-  );
+function toItem(item: ColumnStatsItem, depth: number) {
+  const highlight = item.type === 'group' ? '**' : '';
+  let content = `${'\t'.repeat(depth)}- (+${item.likes}/-${
+    item.dislikes
+  }) ${highlight}${item.content}${highlight}`;
+  item.children.forEach((child) => {
+    content += '\n' + toItem(child, depth + 1);
+  });
 
-  if (post.action) {
-    content += `\n  - Action: ${toMultiline(post.action)}`;
-  }
-  return content;
+  return toMultiline(content);
+}
+
+function toAction(action: ActionItem): string {
+  return `- ${action.action}`;
 }
 
 function toMultiline(content: string) {

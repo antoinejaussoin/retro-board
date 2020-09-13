@@ -1,66 +1,27 @@
-import useGlobalState from '../state';
-import { findIndex } from 'lodash';
-import { User } from 'retro-board-common';
-import { getItem, setItem } from '../utils/localStorage';
+import { SessionMetadata } from 'retro-board-common';
+import useUser from '../auth/useUser';
+import { fetchPreviousSessions } from '../api';
+import { useState, useEffect } from 'react';
 
-interface SessionStore {
-  [username: string]: Session[];
-}
+let CACHE: SessionMetadata[] = [];
 
-interface Session {
-  id: string;
-  lastJoin: number;
-  name?: string;
-}
+export default (): SessionMetadata[] => {
+  const [sessions, setSessions] = useState<SessionMetadata[]>(CACHE);
+  const user = useUser();
 
-function getPreviousSessions(username: string | null): Session[] {
-  if (!username) {
-    return [];
-  }
+  useEffect(() => {
+    async function load() {
+      if (user && user.accountType !== 'anonymous') {
+        const previousSessions = await fetchPreviousSessions();
+        setSessions(previousSessions);
+        CACHE = previousSessions;
+      } else {
+        setSessions([]);
+        CACHE = [];
+      }
+    }
+    load();
+  }, [user]);
 
-  const store = getStore();
-  return store[username] || [];
-}
-
-function getStore(): SessionStore {
-  const item = getItem('sessions');
-  if (item) {
-    const store = JSON.parse(item) as SessionStore;
-    return store || {};
-  }
-
-  return {};
-}
-
-function addToPreviousSessions(id: string, name: string, username: User) {
-  const store = getStore();
-  const sessions = store[username.id] || [];
-  const currentIndex = findIndex(sessions, session => session.id === id);
-  const newSession: Session = {
-    id,
-    name,
-    lastJoin: new Date().valueOf(),
-  };
-  if (currentIndex === -1) {
-    sessions.unshift(newSession);
-  } else {
-    sessions.splice(currentIndex, 1);
-    sessions.unshift(newSession);
-  }
-  const newStore = {
-    ...store,
-    [username.id]: sessions.slice(0, 20),
-  };
-  setItem('sessions', JSON.stringify(newStore));
-}
-
-export default () => {
-  const { state } = useGlobalState();
-
-  if (state.user) {
-    const previousSessions = getPreviousSessions(state.user.id);
-    return { previousSessions, addToPreviousSessions };
-  }
-
-  return { previousSessions: [], addToPreviousSessions };
+  return sessions;
 };

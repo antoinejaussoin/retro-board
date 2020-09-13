@@ -1,49 +1,42 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router';
-import md5 from 'md5';
-import usePreviousSessions from '../../hooks/usePreviousSessions';
-import List from '@material-ui/core/List';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import PreviousGameItem from './PreviousGameItem';
+import { SessionMetadata } from 'retro-board-common';
+import { trackEvent } from '../../track';
 
-const getGravatar = (id: string) =>
-  `https://www.gravatar.com/avatar/${md5(id)}?d=retro`;
+interface PreviousGamesProps {
+  games: SessionMetadata[];
+}
 
-const PreviousGames = () => {
+const PreviousGames = ({ games }: PreviousGamesProps) => {
   const history = useHistory();
-  const { previousSessions } = usePreviousSessions();
   const redirectToGame = useCallback(
-    (id: string) => {
-      history.push(`/game/${id}`);
+    (session: SessionMetadata) => {
+      trackEvent('home/load-previous');
+      history.push(`/game/${session.id}`);
     },
     [history]
   );
   return (
-    <List component="section">
-      {previousSessions.slice(0, 10).map(session => (
-        <ClickableListItem
-          button
+    <Container>
+      {games.map((session) => (
+        <PreviousGameItem
           key={session.id}
-          onClick={() => redirectToGame(session.id)}
-        >
-          <ListItemAvatar>
-            <Avatar
-              alt={session.name || 'My Retrospective'}
-              src={getGravatar(session.id)}
-            />
-          </ListItemAvatar>
-          <ListItemText primary={session.name || 'My Retrospective'} />
-        </ClickableListItem>
+          session={session}
+          onClick={redirectToGame}
+        />
       ))}
-    </List>
+    </Container>
   );
 };
 
-const ClickableListItem = styled(ListItem)`
-  cursor: pointer;
+const Container = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  > * {
+    margin: 20px;
+  }
 `;
 
 export default PreviousGames;

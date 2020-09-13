@@ -1,28 +1,26 @@
 import { useEffect, useMemo, useState, useCallback } from 'react';
-import { Actions, Post, User, Vote, VoteType } from 'retro-board-common';
+import { Actions, Post, PostGroup, Vote, VoteType } from 'retro-board-common';
 import { v4 } from 'uuid';
 import { find } from 'lodash';
 import { trackAction, trackEvent } from './../../track';
 import io from 'socket.io-client';
 import useGlobalState from '../../state';
-import usePreviousSessions from '../../hooks/usePreviousSessions';
+import useUser from '../../auth/useUser';
+import { getMiddle, getNext } from './lexorank';
 
 const debug = process.env.NODE_ENV === 'development';
 
-function sendFactory(
-  socket: SocketIOClient.Socket,
-  user: User,
-  sessionId: string
-) {
-  return function(action: string, payload?: any) {
-    if (socket && user) {
-      socket.emit(action, {
+function sendFactory(socket: SocketIOClient.Socket, sessionId: string) {
+  return function (action: string, payload?: any) {
+    if (socket) {
+      const messagePayload = {
         sessionId: sessionId,
-        payload: {
-          user,
-          ...payload,
-        },
-      });
+        payload,
+      };
+      if (debug) {
+        console.info('Sending message to socket', action, messagePayload);
+      }
+      socket.emit(action, messagePayload);
     }
   };
 }
@@ -31,29 +29,34 @@ const useGame = (sessionId: string) => {
   const [initialised, setInitialised] = useState(false);
   const [disconnected, setDisconnected] = useState(false);
   const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null);
-  const { addToPreviousSessions } = usePreviousSessions();
   const {
     state,
     receivePost,
+    receivePostGroup,
     receiveBoard,
     setPlayers,
     deletePost,
     updatePost,
+    deletePostGroup,
+    updatePostGroup,
     receiveVote,
     renameSession,
     resetSession,
   } = useGlobalState();
 
-  const { user, session } = state;
-
-  const name = session ? session.name : '';
-  const allowMultipleVotes = session ? session.allowMultipleVotes : false;
+  const { session } = state;
+  const user = useUser();
+  const userId = user?.id;
+  const [prevUserId, setPrevUserId] = useState(userId);
+  const allowMultipleVotes = session
+    ? session.options.allowMultipleVotes
+    : false;
 
   // Send function, built with current socket, user and sessionId
-  const send = useMemo(
-    () => (socket && user ? sendFactory(socket, user, sessionId) : null),
-    [socket, user, sessionId]
-  );
+  const send = useMemo(() => (socket ? sendFactory(socket, sessionId) : null), [
+    socket,
+    sessionId,
+  ]);
 
   const reconnect = useCallback(() => setDisconnected(false), []);
 
@@ -68,10 +71,21 @@ const useGame = (sessionId: string) => {
     };
   }, [resetSession]);
 
+  // Handles re-connection if the user changes (login/logout)
+  useEffect(() => {
+    if (userId !== prevUserId) {
+      if (debug) {
+        console.log('User changed, set disconnected to false');
+      }
+      setDisconnected(false);
+      setPrevUserId(userId);
+    }
+  }, [userId, prevUserId]);
+
   // This effect will run everytime the gameId, the user, or the socket changes.
   // It will close and restart the socket every time.
   useEffect(() => {
-    if (!user || disconnected) {
+    if (disconnected) {
       return;
     }
     if (debug) {
@@ -81,7 +95,7 @@ const useGame = (sessionId: string) => {
     resetSession();
     setSocket(newSocket);
 
-    const send = sendFactory(newSocket, user, sessionId);
+    const send = sendFactory(newSocket, sessionId);
 
     // Socket events listeners
     newSocket.on('disconnect', () => {
@@ -97,7 +111,6 @@ const useGame = (sessionId: string) => {
         console.log('Connected to the socket');
       }
       setInitialised(true);
-      send(Actions.LOGIN_SUCCESS);
       send(Actions.JOIN_SESSION);
       trackAction(Actions.JOIN_SESSION);
     });
@@ -107,6 +120,13 @@ const useGame = (sessionId: string) => {
         console.log('Receive new post: ', post);
       }
       receivePost(post);
+    });
+
+    newSocket.on(Actions.RECEIVE_POST_GROUP, (group: PostGroup) => {
+      if (debug) {
+        console.log('Receive new post group: ', group);
+      }
+      receivePostGroup(group);
     });
 
     newSocket.on(Actions.RECEIVE_BOARD, (posts: Post[]) => {
@@ -130,6 +150,13 @@ const useGame = (sessionId: string) => {
       deletePost(post);
     });
 
+    newSocket.on(Actions.RECEIVE_DELETE_POST_GROUP, (group: PostGroup) => {
+      if (debug) {
+        console.log('Delete post group: ', group);
+      }
+      deletePostGroup(group);
+    });
+
     newSocket.on(
       Actions.RECEIVE_LIKE,
       ({ postId, vote }: { postId: string; vote: Vote }) => {
@@ -147,6 +174,13 @@ const useGame = (sessionId: string) => {
       updatePost(post.post);
     });
 
+    newSocket.on(Actions.RECEIVE_EDIT_POST_GROUP, (group: PostGroup) => {
+      if (debug) {
+        console.log('Receive edit group: ', group);
+      }
+      updatePostGroup(group);
+    });
+
     newSocket.on(Actions.RECEIVE_SESSION_NAME, (name: string) => {
       if (debug) {
         console.log('Receive session name: ', name);
@@ -162,7 +196,7 @@ const useGame = (sessionId: string) => {
       }
     };
   }, [
-    user,
+    userId,
     sessionId,
     resetSession,
     receivePost,
@@ -171,32 +205,29 @@ const useGame = (sessionId: string) => {
     setPlayers,
     deletePost,
     updatePost,
+
+    receivePostGroup,
+    deletePostGroup,
+    updatePostGroup,
+
     renameSession,
     disconnected,
   ]);
 
-  // This drives the addition of the game to the list
-  // of previous sessions on the homepage (stored in local storage).
-  useEffect(() => {
-    if (user) {
-      if (debug) {
-        console.log('Add to previous sessions');
-      }
-      addToPreviousSessions(sessionId, name || '', user);
-    }
-  }, [user, sessionId, name, addToPreviousSessions]);
-
   // Callbacks
   const onAddPost = useCallback(
-    (columnIndex: number, content: string) => {
+    (columnIndex: number, content: string, rank: string) => {
       if (send) {
         const post: Post = {
           content,
           action: null,
+          giphy: null,
           votes: [],
           id: v4(),
           column: columnIndex,
           user: user!,
+          group: null,
+          rank,
         };
 
         receivePost(post);
@@ -205,6 +236,26 @@ const useGame = (sessionId: string) => {
       }
     },
     [receivePost, send, user]
+  );
+
+  const onAddGroup = useCallback(
+    (columnIndex: number, rank: string) => {
+      if (send) {
+        const group: PostGroup = {
+          id: v4(),
+          label: 'My Group',
+          column: columnIndex,
+          user: user!,
+          posts: [],
+          rank,
+        };
+
+        receivePostGroup(group);
+        send(Actions.ADD_POST_GROUP_SUCCESS, group);
+        trackAction(Actions.ADD_POST_GROUP_SUCCESS);
+      }
+    },
+    [receivePostGroup, send, user]
   );
 
   const onEditPost = useCallback(
@@ -218,6 +269,86 @@ const useGame = (sessionId: string) => {
     [updatePost, send]
   );
 
+  const onEditPostGroup = useCallback(
+    (group: PostGroup) => {
+      if (send) {
+        updatePostGroup(group);
+        send(Actions.EDIT_POST_GROUP, group);
+        trackAction(Actions.EDIT_POST_GROUP);
+      }
+    },
+    [updatePostGroup, send]
+  );
+
+  const onMovePost = useCallback(
+    (
+      post: Post,
+      destinationGroup: PostGroup | null,
+      destinationColumn: number,
+      newRank: string
+    ) => {
+      if (send) {
+        const updatedPost: Post = {
+          ...post,
+          column: destinationColumn,
+          group: destinationGroup,
+          rank: newRank,
+        };
+        updatePost(updatedPost);
+        send(Actions.EDIT_POST, {
+          post: updatedPost,
+        });
+        trackAction(Actions.MOVE_POST);
+      }
+    },
+    [updatePost, send]
+  );
+
+  const onCombinePost = useCallback(
+    (post1: Post, post2: Post) => {
+      if (send) {
+        const destinationColumn = post2.column;
+        const group: PostGroup = {
+          id: v4(),
+          label: 'My Group',
+          column: post2.column,
+          user: user!,
+          posts: [],
+          rank: getMiddle(),
+        };
+
+        receivePostGroup(group);
+        send(Actions.ADD_POST_GROUP_SUCCESS, group);
+        trackAction(Actions.ADD_POST_GROUP_SUCCESS);
+
+        const updatedPost1: Post = {
+          ...post1,
+          column: destinationColumn,
+          group: group,
+          rank: getMiddle(),
+        };
+        updatePost(updatedPost1);
+        send(Actions.EDIT_POST, {
+          post: updatedPost1,
+        });
+
+        const updatedPost2: Post = {
+          ...post2,
+          column: destinationColumn,
+          group: group,
+          rank: getNext(getMiddle()),
+        };
+        updatePost(updatedPost2);
+        send(Actions.EDIT_POST, {
+          post: updatedPost2,
+        });
+
+        trackAction(Actions.MOVE_POST);
+      }
+    },
+    [updatePost, user, receivePostGroup, send]
+  );
+
   const onDeletePost = useCallback(
     (post: Post) => {
       if (send) {
@@ -229,13 +360,24 @@ const useGame = (sessionId: string) => {
     [deletePost, send]
   );
 
+  const onDeletePostGroup = useCallback(
+    (group: PostGroup) => {
+      if (send) {
+        deletePostGroup(group);
+        send(Actions.DELETE_POST_GROUP, group);
+        trackAction(Actions.DELETE_POST_GROUP);
+      }
+    },
+    [deletePostGroup, send]
+  );
+
   const onLike = useCallback(
     (post: Post, like: boolean) => {
       if (send) {
         const type: VoteType = like ? 'like' : 'dislike';
         const existingVote = find(
           post.votes,
-          v => v.type === type && v.user.id === user!.id
+          (v) => v.type === type && v.user.id === user!.id
         );
         if (existingVote && !allowMultipleVotes) {
           return;
@@ -275,8 +417,13 @@ const useGame = (sessionId: string) => {
     initialised,
     disconnected,
     onAddPost,
+    onAddGroup,
     onEditPost,
+    onEditPostGroup,
+    onMovePost,
+    onCombinePost,
     onDeletePost,
+    onDeletePostGroup,
     onLike,
     onRenameSession,
     reconnect,

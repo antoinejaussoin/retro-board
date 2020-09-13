@@ -13,10 +13,31 @@ export default {
     hint:
       'Puoi invitare altre persone a questa sessione copiando ed incollando la URL',
   },
+  Home: {
+    welcome: (userName: string) => `Benvenuto/a, ${userName}`,
+  },
+  PreviousGame: {
+    createdBy: 'Creato da',
+    posts: 'post',
+    participants: 'partecipanti',
+    votes: 'voti',
+    actions: 'azioni',
+  },
+  Column: {
+    createGroupTooltip: 'Crea un gruppo per raggruppare i post',
+  },
+  Group: {
+    emptyGroupTitle: 'Questo gruppo è vuoto',
+    emptyGroupContent: 'Sposta qui un post per popolare il gruppo',
+  },
   Post: {
+    openExtra: 'Features aggiuntive',
+    closeExtra: 'Chiudi',
     vote: 'voto',
     votes: 'voti',
     deleteButton: 'Cancella',
+    setActionButton: 'Imposta azione',
+    setGiphyButton: 'Scegli una immagine Giphy',
     noContent: '(Questo post non ha contenuto)',
     by: 'da',
     upVote: 'mi piace',
@@ -26,6 +47,7 @@ export default {
     voteRemainingOne: (type: string) =>
       `Hai solo un ${type} restante, usalo bene!`,
     voteRemainingNone: (type: string) => `Non hai nessun ${type} restante.`,
+    toggleGiphyButton: 'Toggle immagine Giphy',
   },
   Customize: {
     title: 'Personalizza il tuo gioco!',
@@ -52,11 +74,19 @@ export default {
     allowActions: 'Permettere Azioni',
     allowActionsHelp: `Se consentire il campo "Azione" (follow-up) su ciascun post`,
     allowAuthorVisible: 'Mostra Autore',
-    allowAuthorVisibleHelp: "Mostra l'autore del post nel post stesso",
+    allowAuthorVisibleHelp: "Mostra l'autore del post nel post stesso.",
+    allowGiphy: 'Consenti Giphy',
+    allowGiphyHelp: 'Permetti la creazione di gruppi per raggruppare post',
+    allowGrouping: 'Consenti il raggruppamento',
+    allowGroupingHelp: 'Permetti la creazione di gruppi per raggruppare post',
+    allowReordering: 'Consenti il riordinamento',
+    allowReorderingHelp:
+      'Permetti il riordinamento dei post con il trascinamento',
     template: 'Template',
     templateHelp: 'Usa un set di colonne predefinito',
     numberOfColumns: 'Numbero di colonne',
     numberOfColumnsHelp: 'Imposta il numero di colonne',
+    makeDefaultTemplate: 'Rendi questo template quello di default',
   },
   PostBoard: {
     customQuestion: 'Colonna personalizzata',
@@ -77,6 +107,8 @@ export default {
     rockQuestion: 'Roccia',
     disconnected: 'Ti sei disconnesso/a dalla sessione corrente.',
     reconnect: 'Riconnesso',
+    notLoggedIn:
+      'Non sei autenticato. Puoi assistere a questa sessione come spettatore ma non puoi partecipare',
   },
   GameMenu: {
     board: 'Board',
@@ -115,6 +147,14 @@ export default {
       'Benvenuto! Per favore inserisci il tuo nome per continuare',
     buttonLabel: 'Iniziamo',
     header: 'Login',
+    socialMediaAuthHeader: 'Autenticazione con i Social Media',
+    socialMediaAuthDescription:
+      'Questo utilizzerà il tuo account per autenticarti e ti permetterà di recuperare tutte le tue sessioni. Nessuna password viene memorizzata.',
+    anonymousAuthHeader: 'Login anonimo',
+    anonymousAuthDescription:
+      'Questo creerà un account anonimo, ma non ti permetterà di recuperare le sessioni precedenti.',
+    authenticatingWith: 'Accedi con',
+    or: 'oppure',
   },
   SummaryBoard: {
     noPosts: 'Non ci sono post da mostrare',

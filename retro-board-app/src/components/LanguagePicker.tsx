@@ -1,21 +1,19 @@
-import React, { SFC, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { Select, MenuItem } from '@material-ui/core';
 import { languages } from '../translations';
 import 'flag-icon-css/css/flag-icon.min.css';
-import { setItem } from '../utils/localStorage';
 
 interface LanguagePickerProps {
   value: string;
   onChange: (value: string) => void;
 }
 
-const LanguagePicker: SFC<LanguagePickerProps> = ({ value, onChange }) => {
+const LanguagePicker = ({ value, onChange }: LanguagePickerProps) => {
   const handleSelect = useCallback(
     (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
       const language = event.target.value as string;
       onChange(language);
-      setItem('language', language);
     },
     [onChange]
   );

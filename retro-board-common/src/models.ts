@@ -7,10 +7,12 @@ export const defaultOptions: SessionOptions = {
   allowAuthorVisible: false,
   maxDownVotes: null,
   maxUpVotes: null,
+  allowGiphy: true,
+  allowGrouping: true,
+  allowReordering: true,
 };
 
-export const defaultSession: Session = {
-  ...defaultOptions,
+export const defaultSession: Omit<Session, 'createdBy'> = {
   id: '',
   columns: [
     { id: '', index: 0, label: '', type: 'well', color: '', icon: null },
@@ -19,4 +21,6 @@ export const defaultSession: Session = {
   ],
   name: null,
   posts: [],
+  groups: [],
+  options: { ...defaultOptions },
 };

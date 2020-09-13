@@ -1,6 +1,6 @@
 {
   "name": "retro-board-common",
-  "version": "2.2.2",
+  "version": "3.1.1",
   "license": "GNU GPLv3",
   "private": true,
   "main": "dist/src/index.js",
@@ -8,6 +8,6 @@
     "build": "rimraf dist && tsc --build"
   },
   "dependencies": {
-    "rimraf": "^3.0.0"
+    "rimraf": "^3.0.2"
   }
 }

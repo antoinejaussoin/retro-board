@@ -9,26 +9,23 @@ import { State, Action } from './types';
 import reducer from './reducer';
 import {
   togglePanel,
-  login,
-  logout,
   setPlayers,
   receivePost,
+  receivePostGroup,
   deletePost,
   updatePost,
+  deletePostGroup,
+  updatePostGroup,
   receiveVote,
   receiveBoard,
   renameSession,
   resetSession,
 } from './actions';
-import { defaultSession } from 'retro-board-common';
 
 export const initialState: State = {
   panelOpen: false,
-  user: null,
   players: [],
-  session: {
-    ...defaultSession,
-  },
+  session: null,
 };
 
 const Context = createContext({
@@ -54,12 +51,13 @@ export function useGlobalState() {
   const actions = useMemo(() => {
     return {
       togglePanel: togglePanel(dispatch),
-      login: login(dispatch),
-      logout: logout(dispatch),
       setPlayers: setPlayers(dispatch),
       receivePost: receivePost(dispatch),
+      receivePostGroup: receivePostGroup(dispatch),
       deletePost: deletePost(dispatch),
       updatePost: updatePost(dispatch),
+      deletePostGroup: deletePostGroup(dispatch),
+      updatePostGroup: updatePostGroup(dispatch),
       receiveVote: receiveVote(dispatch),
       receiveBoard: receiveBoard(dispatch),
       renameSession: renameSession(dispatch),

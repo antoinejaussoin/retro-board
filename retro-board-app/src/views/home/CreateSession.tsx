@@ -18,11 +18,17 @@ import { ColumnSettings, Template } from '../../state/types';
 import { getTemplate } from '../../state/templates';
 import useTranslations from '../../translations';
 import { trackEvent } from './../../track';
+import { FormControlLabel, Checkbox } from '@material-ui/core';
+import useToggle from '../../hooks/useToggle';
 
 interface CreateSessionModalProps {
   open: boolean;
   onClose: () => void;
-  onLaunch: (options: SessionOptions, columns: ColumnDefinition[]) => void;
+  onLaunch: (
+    options: SessionOptions,
+    columns: ColumnDefinition[],
+    makeDefault: boolean
+  ) => void;
 }
 
 const CreateSessionModal = ({
@@ -33,19 +39,23 @@ const CreateSessionModal = ({
   const translations = useTranslations();
   const { Customize, Generic } = translations;
   const fullScreen = useMediaQuery('(max-width:600px)');
+  const [isDefaultTemplate, toggleIsDefaultTemplate] = useToggle(false);
   const [maxUpVotes, setMaxUpVotes] = useState<number | null>(null);
   const [maxDownVotes, setMaxDownVotes] = useState<number | null>(null);
   const [allowActions, setAllowActions] = useState<boolean>(true);
   const [allowSelfVoting, setAllowSelfVoting] = useState<boolean>(false);
   const [allowMultipleVotes, setAllowMultipleVotes] = useState<boolean>(false);
   const [allowAuthorVisible, setAllowAuthorVisible] = useState<boolean>(false);
+  const [allowGiphy, setAllowGiphy] = useState<boolean>(true);
+  const [allowGrouping, setAllowGrouping] = useState<boolean>(true);
+  const [allowReordering, setAllowReordering] = useState<boolean>(true);
   const [numberOfColumns, setNumberOfColumns] = useState<number>(3);
   const [defaultDefinitions, setDefaultDefinitions] = useState(
     buildDefaults('default', translations)
   );
   const [definitions, setDefinitions] = useState<ColumnSettings[]>(
     buildDefaults('default', translations).map(
-      d =>
+      (d) =>
         ({ type: d.type, color: '', icon: null, label: '' } as ColumnSettings)
     )
   );
@@ -54,7 +64,7 @@ const CreateSessionModal = ({
   }, [translations]);
   const handleColumnChange = useCallback(
     (value: ColumnSettings, index: number) => {
-      setDefinitions(cols => Object.assign([], cols, { [index]: value }));
+      setDefinitions((cols) => Object.assign([], cols, { [index]: value }));
       trackEvent('custom-modal/column/change');
     },
     []
@@ -70,16 +80,23 @@ const CreateSessionModal = ({
   );
   const handleLaunch = useCallback(() => {
     trackEvent('custom-modal/create');
+    if (isDefaultTemplate) {
+      trackEvent('custom-modal/template/set-defaut');
+    }
     onLaunch(
       {
         allowActions,
         allowMultipleVotes,
         allowSelfVoting,
         allowAuthorVisible,
+        allowGiphy,
+        allowGrouping,
+        allowReordering,
         maxDownVotes,
         maxUpVotes,
       },
-      merge(definitions, defaultDefinitions, numberOfColumns)
+      merge(definitions, defaultDefinitions, numberOfColumns),
+      isDefaultTemplate
     );
   }, [
     onLaunch,
@@ -87,11 +104,15 @@ const CreateSessionModal = ({
     allowMultipleVotes,
     allowSelfVoting,
     allowAuthorVisible,
+    allowGiphy,
+    allowGrouping,
+    allowReordering,
     maxDownVotes,
     maxUpVotes,
     definitions,
     defaultDefinitions,
     numberOfColumns,
+    isDefaultTemplate,
   ]);
 
   return (
@@ -131,7 +152,7 @@ const CreateSessionModal = ({
                 key={index}
                 value={def}
                 defaults={defaultDefinitions[index]}
-                onChange={value => handleColumnChange(value, index)}
+                onChange={(value) => handleColumnChange(value, index)}
               />
             ))}
           </>
@@ -190,9 +211,39 @@ const CreateSessionModal = ({
               onChange={setAllowAuthorVisible}
             />
           </OptionItem>
+          <OptionItem
+            label={Customize.allowReordering!}
+            help={Customize.allowReorderingHelp!}
+          >
+            <BooleanOption
+              value={allowReordering}
+              onChange={setAllowReordering}
+            />
+          </OptionItem>
+          <OptionItem
+            label={Customize.allowGrouping!}
+            help={Customize.allowGroupingHelp!}
+          >
+            <BooleanOption value={allowGrouping} onChange={setAllowGrouping} />
+          </OptionItem>
+          <OptionItem
+            label={Customize.allowGiphy!}
+            help={Customize.allowGiphyHelp!}
+          >
+            <BooleanOption value={allowGiphy} onChange={setAllowGiphy} />
+          </OptionItem>
         </SettingCategory>
       </DialogContent>
       <DialogActions>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={isDefaultTemplate}
+              onChange={toggleIsDefaultTemplate}
+            />
+          }
+          label={Customize.makeDefaultTemplate}
+        />
         <Button onClick={onClose} color="default" variant="text">
           {Generic.cancel}
         </Button>

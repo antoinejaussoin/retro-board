@@ -12,7 +12,6 @@ export interface Action {
 
 export interface State {
   panelOpen: boolean;
-  user: User | null;
   players: User[];
   session: Session | null;
 }

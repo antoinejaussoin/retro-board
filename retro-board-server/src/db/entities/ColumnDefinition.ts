@@ -8,13 +8,11 @@ import {
 } from 'typeorm';
 import { IconName } from 'retro-board-common';
 import Session from './Session';
+import SessionTemplate from './SessionTemplate';
 
-@Entity({ name: 'columns' })
-export default class ColumnDefinition {
+class ColumnDefinitionBase {
   @PrimaryColumn({ primary: true, generated: false, unique: true })
   public id: string;
-  @ManyToOne(() => Session, { nullable: false })
-  public session: Session;
   @Column()
   public type: string;
   @Column()
@@ -32,7 +30,6 @@ export default class ColumnDefinition {
 
   constructor(
     id: string,
-    session: Session,
     type: string,
     index: number,
     label: string,
@@ -41,10 +38,45 @@ export default class ColumnDefinition {
   ) {
     this.id = id;
     this.type = type;
-    this.session = session;
     this.index = index;
     this.label = label;
     this.color = color;
     this.icon = icon || null;
+  }
+}
+
+@Entity({ name: 'columns' })
+export class ColumnDefinition extends ColumnDefinitionBase {
+  @ManyToOne(() => Session, { nullable: false })
+  public session: Session;
+  constructor(
+    id: string,
+    session: Session,
+    type: string,
+    index: number,
+    label: string,
+    color: string,
+    icon?: IconName | null
+  ) {
+    super(id, type, index, label, color, icon);
+    this.session = session;
+  }
+}
+
+@Entity({ name: 'templates-columns' })
+export class TemplateColumnDefinition extends ColumnDefinitionBase {
+  @ManyToOne(() => SessionTemplate, { nullable: false })
+  public template: SessionTemplate;
+  constructor(
+    id: string,
+    template: SessionTemplate,
+    type: string,
+    index: number,
+    label: string,
+    color: string,
+    icon?: IconName | null
+  ) {
+    super(id, type, index, label, color, icon);
+    this.template = template;
   }
 }

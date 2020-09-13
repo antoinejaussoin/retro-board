@@ -3,8 +3,6 @@ import reducer from '../reducer';
 import { State } from '../types';
 import {
   TOGGLE_PANEL,
-  LOGIN,
-  LOGOUT,
   SET_PLAYERS,
   DELETE_POST,
   RECEIVE_BOARD,
@@ -39,7 +37,6 @@ describe('Global state reducer', () => {
         columns: [],
         posts: [],
       },
-      user: { id: '2', name: 'Alice' },
     };
   });
   it('Should toggle the panel on TOGGLE_PANEL', () => {
@@ -49,18 +46,6 @@ describe('Global state reducer', () => {
     expect(state.panelOpen).toBe(false);
     state = reducer(state, { type: TOGGLE_PANEL });
     expect(state.panelOpen).toBe(true);
-  });
-
-  it('Should update the username on login', () => {
-    state = reducer(state, { type: LOGIN, payload: 'Bob' });
-    expect(state.user).toBe('Bob');
-  });
-
-  it('Should clear the username on logout', () => {
-    state = reducer(state, { type: LOGIN, payload: 'Bob' });
-    expect(state.user).toBe('Bob');
-    state = reducer(state, { type: LOGOUT });
-    expect(state.user).toBe(null);
   });
 
   it('Should set the players on SET_PLAYERS', () => {

@@ -2,12 +2,11 @@ language: node_js
 node_js:
   - 12
 os: linux
-services:
-  - docker
+dist: bionic
 install: true
 
 env:
-  - NODE_ENV=production
+  - NODE_ENV=production DOCKER_CLI_EXPERIMENTAL=enabled TARGET_ARCHS=linux/amd64,linux/386,linux/arm64,linux/arm/v7,linux/arm/v6
 
 stages:
   - test
@@ -18,7 +17,7 @@ stages:
 
 before_install:
   - PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
-
+  
 jobs:
   include:
     - stage: test
@@ -27,17 +26,17 @@ jobs:
         - yarn ci-test
     - stage: deploy
       script:
+        - make install
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker build -f ./docker/Backend.Dockerfile -t antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-backend:latest .
-        - docker build -f ./docker/Frontend.Dockerfile -t antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-frontend:latest .
-        - docker push antoinejaussoin/retro-board-backend:${PACKAGE_VERSION}
-        - docker push antoinejaussoin/retro-board-backend:latest
-        - docker push antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION}
-        - docker push antoinejaussoin/retro-board-frontend:latest
+        - docker buildx build --cache-from=antoinejaussoin/retro-board-maintenance:canary --pull --platform ${TARGET_ARCHS} -f ./retro-board-maintenance/Dockerfile -t antoinejaussoin/retro-board-maintenance:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-maintenance:latest --push ./retro-board-maintenance
+        - docker buildx build --cache-from=antoinejaussoin/retro-board-frontend:canary --pull --platform ${TARGET_ARCHS} -f ./retro-board-app/Dockerfile -t antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-frontend:latest --push .
+        - docker buildx build --cache-from=antoinejaussoin/retro-board-backend:canary --pull --platform ${TARGET_ARCHS} -f ./retro-board-server/Dockerfile -t antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} -t antoinejaussoin/retro-board-backend:latest --push .
     - stage: deploy-canary
       script:
+        - export PACKAGE_VERSION=canary
+        - make install
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker build -f ./docker/Backend.Dockerfile -t antoinejaussoin/retro-board-backend:canary .
-        - docker build -f ./docker/Frontend.Dockerfile -t antoinejaussoin/retro-board-frontend:canary .
-        - docker push antoinejaussoin/retro-board-backend:canary
-        - docker push antoinejaussoin/retro-board-frontend:canary
+        - docker buildx build --cache-from=antoinejaussoin/retro-board-maintenance:${PACKAGE_VERSION} --pull --platform ${TARGET_ARCHS} -f ./retro-board-maintenance/Dockerfile -t antoinejaussoin/retro-board-maintenance:${PACKAGE_VERSION} --push ./retro-board-maintenance
+        - docker buildx build --cache-from=antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} --pull --platform ${TARGET_ARCHS} -f ./retro-board-app/Dockerfile -t antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} --push .
+        - docker buildx build --cache-from=antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} --pull --platform ${TARGET_ARCHS} -f ./retro-board-server/Dockerfile -t antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} --push .
+    

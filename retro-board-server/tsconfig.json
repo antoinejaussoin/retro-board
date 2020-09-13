@@ -17,11 +17,16 @@
     "noEmit": false,
     "declaration": true,
     "composite": true,
+    "sourceMap": true,
+    "inlineSources": true,
+    "sourceRoot": "/",
     "lib": ["es2015", "es2017", "dom"],
     "baseUrl": ".",
-    "types": []
+    "types": [],
+    "typeRoots": ["./node_modules/@types", "./src/typings"]
   },
-  "include": ["src"],
+  "include": ["src", "./package.json"],
+
   "references": [{
     "path": "../retro-board-common"
   }]

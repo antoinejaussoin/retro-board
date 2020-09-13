@@ -1,17 +1,17 @@
 import { Dispatch } from './types';
-import { Post, Vote } from 'retro-board-common';
-import { setItem, removeItem } from '../utils/localStorage';
+import { Post, Vote, PostGroup } from 'retro-board-common';
 
 export const TOGGLE_PANEL = 'retrospected/panel/toggle';
-export const LOGIN = 'retrospected/user/login';
-export const LOGOUT = 'retrospected/user/logout';
 export const SET_PLAYERS = 'retrospected/game/players/set';
 export const RENAME_SESSION = 'retrospected/game/session/rename';
 export const RESET_SESSION = 'retrospected/game/session/reset';
 export const RECEIVE_POST = 'retrospected/game/post/receive';
+export const RECEIVE_POST_GROUP = 'retrospected/game/group/receive';
 export const RECEIVE_VOTE = 'retrospected/game/post/vote/receive';
 export const DELETE_POST = 'retrospected/game/post/delete';
 export const UPDATE_POST = 'retrospected/game/post/update';
+export const DELETE_POST_GROUP = 'retrospected/game/group/delete';
+export const UPDATE_POST_GROUP = 'retrospected/game/group/update';
 export const RECEIVE_BOARD = 'retrospected/game/board/receive';
 
 const createAction = (type: string, payload?: any) => ({
@@ -21,23 +21,6 @@ const createAction = (type: string, payload?: any) => ({
 
 export const togglePanel = (dispatch: Dispatch) => () => {
   dispatch(createAction(TOGGLE_PANEL));
-};
-
-export const login = (dispatch: Dispatch) => (username: string, id: string) => {
-  setItem('user_name', username);
-  setItem('user_id', id);
-  dispatch(
-    createAction(LOGIN, {
-      id,
-      name: username,
-    })
-  );
-};
-
-export const logout = (dispatch: Dispatch) => () => {
-  removeItem('user_name');
-  removeItem('user_id');
-  dispatch(createAction(LOGOUT));
 };
 
 export const renameSession = (dispatch: Dispatch) => (name: string) => {
@@ -56,12 +39,20 @@ export const receivePost = (dispatch: Dispatch) => (post: Post) => {
   dispatch(createAction(RECEIVE_POST, post));
 };
 
+export const receivePostGroup = (dispatch: Dispatch) => (group: PostGroup) => {
+  dispatch(createAction(RECEIVE_POST_GROUP, group));
+};
+
 export const receiveBoard = (dispatch: Dispatch) => (posts: Post[]) => {
   dispatch(createAction(RECEIVE_BOARD, posts));
 };
 
 export const updatePost = (dispatch: Dispatch) => (post: Post) => {
   dispatch(createAction(UPDATE_POST, post));
+};
+
+export const updatePostGroup = (dispatch: Dispatch) => (group: PostGroup) => {
+  dispatch(createAction(UPDATE_POST_GROUP, group));
 };
 
 export const receiveVote = (dispatch: Dispatch) => (
@@ -73,4 +64,8 @@ export const receiveVote = (dispatch: Dispatch) => (
 
 export const deletePost = (dispatch: Dispatch) => (post: Post) => {
   dispatch(createAction(DELETE_POST, post));
+};
+
+export const deletePostGroup = (dispatch: Dispatch) => (group: PostGroup) => {
+  dispatch(createAction(DELETE_POST_GROUP, group));
 };

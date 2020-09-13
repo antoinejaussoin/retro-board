@@ -1,28 +1,17 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
-import shortid from 'shortid';
 import { useHistory } from 'react-router-dom';
-import {
-  Fab,
-  Card,
-  CardMedia,
-  Typography,
-  CardContent,
-  CardActions,
-  makeStyles,
-  colors,
-  Button,
-} from '@material-ui/core';
+import { Fab, makeStyles, colors, Button } from '@material-ui/core';
 import { ThumbUpAlt, Settings } from '@material-ui/icons';
 import useTranslations from '../translations';
 import PreviousGames from './home/PreviousGames';
 import CreateSessionModal from './home/CreateSession';
-import logo from './home/logo.png';
 import { SessionOptions, ColumnDefinition } from 'retro-board-common';
 import { trackEvent } from './../track';
-import { createCustomGame } from '../api';
+import { createGame, createCustomGame } from '../api';
 import { Page } from '../components/Page';
 import usePreviousSessions from '../hooks/usePreviousSessions';
+import useUser from '../auth/useUser';
 
 const useStyles = makeStyles({
   media: {
@@ -40,14 +29,21 @@ const useStyles = makeStyles({
 
 function Home() {
   const history = useHistory();
+  const user = useUser();
+  const isLoggedIn = !!user;
   const translations = useTranslations();
-  const hasPreviousSessions = usePreviousSessions().previousSessions.length > 0;
+  const previousSessions = usePreviousSessions();
+  const hasPreviousSessions = previousSessions.length > 0;
   const createSession = useCallback(
-    async (options: SessionOptions, columns: ColumnDefinition[]) => {
-      const id = await createCustomGame(options, columns);
-      if (id) {
+    async (
+      options: SessionOptions,
+      columns: ColumnDefinition[],
+      defaultTemplate: boolean
+    ) => {
+      const session = await createCustomGame(defaultTemplate, options, columns);
+      if (session) {
         trackEvent('custom-modal/create');
-        history.push(`/game/${id}`);
+        history.push(`/game/${session.id}`);
       } else {
         trackEvent('custom-modal/fail');
       }
@@ -64,72 +60,68 @@ function Home() {
     setModalOpen(true);
     trackEvent('custom-modal/open');
   }, []);
-  const createDefaultSession = useCallback(() => {
+  const createDefaultSession = useCallback(async () => {
+    const session = await createGame();
     trackEvent('home/create/default');
-    history.push('/game/' + shortid());
+    history.push('/game/' + session.id);
   }, [history]);
+
   return (
     <Page>
-      <MainCard>
-        <CardMedia
-          className={classes.media}
-          image={logo}
-          component="img"
-          title="Retrospected"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {translations.Join.welcome}
-          </Typography>
-          <Typography component="p">
-            {translations.Join.standardTab.text}
-          </Typography>
-        </CardContent>
-        <CardActions className={classes.actions}>
-          <LaunchButtons>
-            <Fab
-              variant="extended"
-              onClick={createDefaultSession}
-              size="large"
-              color="secondary"
-            >
-              <ThumbUpAlt className={classes.buttonIcon} />
-              {translations.Join.standardTab.button}
-            </Fab>
-            <Button onClick={onOpenModal} color="primary">
-              <Settings className={classes.buttonIcon} />
-              {translations.Join.standardTab.customizeButton}
-            </Button>
-          </LaunchButtons>
-          <CreateSessionModal
-            open={modalOpen}
-            onClose={onCloseModal}
-            onLaunch={createSession}
-          />
-        </CardActions>
-      </MainCard>
-      {hasPreviousSessions && (
-        <MainCard>
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              {translations.Join.previousTab.header}
-            </Typography>
-            <PreviousGames />
-          </CardContent>
-        </MainCard>
-      )}
+      <MainHeader>{translations.Home.welcome!(user?.name || '')}</MainHeader>
+
+      <LaunchButtons>
+        <Fab
+          variant="extended"
+          onClick={createDefaultSession}
+          size="large"
+          color="secondary"
+          disabled={!isLoggedIn}
+        >
+          <ThumbUpAlt className={classes.buttonIcon} />
+          {translations.Join.standardTab.button}
+        </Fab>
+        <Button onClick={onOpenModal} color="primary" disabled={!isLoggedIn}>
+          <Settings className={classes.buttonIcon} />
+          {translations.Join.standardTab.customizeButton}
+        </Button>
+      </LaunchButtons>
+
+      <CreateSessionModal
+        open={modalOpen}
+        onClose={onCloseModal}
+        onLaunch={createSession}
+      />
+
+      {hasPreviousSessions ? (
+        <>
+          <SubHeader>{translations.Join.previousTab.header}</SubHeader>
+          <PreviousGames games={previousSessions} />
+        </>
+      ) : null}
     </Page>
   );
 }
 
-const MainCard = styled(Card)`
-  max-width: 800px;
-  margin: auto;
-  margin-bottom: 20px;
+const MainHeader = styled.h1`
+  font-weight: 100;
+  font-size: 4em;
+  @media screen and (max-width: 500px) {
+    font-size: 2em;
+  }
+`;
+
+const SubHeader = styled.h2`
+  font-weight: 100;
+  font-size: 3em;
+  @media screen and (max-width: 500px) {
+    font-size: 1.5em;
+  }
 `;
 
 const LaunchButtons = styled.div`
   display: flex;
+  margin: 30px 30px 60px;
   > button {
     margin: 0 10px;
   }

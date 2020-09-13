@@ -3,7 +3,7 @@ export default {
   Header: {
     subtitle: 'Отличный способ выговориться прилично',
     leave: 'Выйти',
-    logout: 'Удалить аккаунт',
+    logout: 'Выйти с учётной записи',
     summaryMode: 'Показать итоги',
   },
   LanguagePicker: {
@@ -12,10 +12,31 @@ export default {
   Main: {
     hint: 'Просто отправьте ссылку, чтобы пригласить на эту рестроспективу',
   },
+  Home: {
+    welcome: undefined,
+  },
+  PreviousGame: {
+    createdBy: undefined,
+    posts: undefined,
+    participants: undefined,
+    votes: undefined,
+    actions: undefined,
+  },
+  Column: {
+    createGroupTooltip: undefined,
+  },
+  Group: {
+    emptyGroupTitle: '',
+    emptyGroupContent: '',
+  },
   Post: {
+    openExtra: undefined,
+    closeExtra: undefined,
     vote: 'голос',
     votes: 'голоса',
     deleteButton: 'Удалить',
+    setActionButton: undefined,
+    setGiphyButton: undefined,
     noContent: '(пусто)',
     by: undefined,
     upVote: undefined,
@@ -23,6 +44,7 @@ export default {
     voteRemainingMultiple: undefined,
     voteRemainingOne: undefined,
     voteRemainingNone: undefined,
+    toggleGiphyButton: undefined,
   },
   Customize: {
     title: undefined,
@@ -45,10 +67,17 @@ export default {
     allowActionsHelp: undefined,
     allowAuthorVisible: undefined,
     allowAuthorVisibleHelp: undefined,
+    allowGiphy: undefined,
+    allowGiphyHelp: undefined,
+    allowGrouping: undefined,
+    allowGroupingHelp: undefined,
+    allowReordering: undefined,
+    allowReorderingHelp: undefined,
     template: undefined,
     templateHelp: undefined,
     numberOfColumns: undefined,
     numberOfColumnsHelp: undefined,
+    makeDefaultTemplate: undefined,
   },
   PostBoard: {
     customQuestion: undefined,
@@ -69,10 +98,11 @@ export default {
     rockQuestion: undefined,
     disconnected: undefined,
     reconnect: undefined,
+    notLoggedIn: undefined,
   },
   GameMenu: {
-    board: undefined,
-    summary: undefined,
+    board: 'Записи',
+    summary: 'Cводка',
   },
   Template: {
     default: undefined,
@@ -90,7 +120,7 @@ export default {
       header: 'Новая ретроспектива',
       text: 'Нажмите, чтобы начать:',
       button: 'Создать новую ретроспективу',
-      customizeButton: undefined,
+      customizeButton: 'Настроить',
     },
     optionsTab: {
       header: 'Дополнительно',
@@ -105,13 +135,19 @@ export default {
   Login: {
     namePlaceholder: 'Как вас зовут? Введите имя',
     buttonLabel: 'Начать',
-    header: 'Login',
+    header: 'Логин',
+    socialMediaAuthHeader: undefined,
+    socialMediaAuthDescription: undefined,
+    anonymousAuthHeader: undefined,
+    anonymousAuthDescription: undefined,
+    authenticatingWith: undefined,
+    or: undefined,
   },
   SummaryBoard: {
     noPosts: 'Здесь пока пусто',
-    copyAsMarkdown: undefined,
-    copyAsRichText: undefined,
-    copySuccessful: undefined,
+    copyAsMarkdown: 'Скопировать как Markdown',
+    copyAsRichText: 'Скопировать как RTF',
+    copySuccessful: 'Копирование завершено',
   },
   SessionName: {
     defaultSessionName: 'Наша ретроспектива',

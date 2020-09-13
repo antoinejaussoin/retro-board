@@ -16,6 +16,11 @@ const GlobalStyle = createGlobalStyle`
   #content {
     background-color: white;
   }
+
+  button:focus,
+  select:focus {
+    outline: none;
+  }
 `;
 
 export default GlobalStyle;

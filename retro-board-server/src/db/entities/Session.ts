@@ -6,10 +6,14 @@ import {
   Index,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
 import Post from './Post';
-import ColumnDefinition from './ColumnDefinition';
-import { SessionOptions, defaultOptions } from 'retro-board-common';
+import { ColumnDefinition } from './ColumnDefinition';
+import { SessionOptions as JsonSessionOptions } from 'retro-board-common';
+import User from './User';
+import SessionOptions from './SessionOptions';
+import PostGroup from './PostGroup';
 
 @Entity({ name: 'sessions' })
 export default class Session {
@@ -18,30 +22,40 @@ export default class Session {
   @Column({ nullable: true, type: 'character varying' })
   @Index()
   public name: string | null;
-  @OneToMany(() => Post, post => post.session, {
-    cascade: true,
-    nullable: false,
-    eager: false,
-  })
+  @ManyToOne(() => User, { eager: true, cascade: true, nullable: false })
+  public createdBy: User;
+  @OneToMany(
+    () => Post,
+    post => post.session,
+    {
+      cascade: true,
+      nullable: false,
+      eager: false,
+    }
+  )
   public posts: Post[] | undefined;
-  @OneToMany(() => ColumnDefinition, colDef => colDef.session, {
-    cascade: true,
-    nullable: false,
-    eager: false,
-  })
+  @OneToMany(
+    () => PostGroup,
+    group => group.session,
+    {
+      cascade: true,
+      nullable: false,
+      eager: false,
+    }
+  )
+  public groups: PostGroup[] | undefined;
+  @OneToMany(
+    () => ColumnDefinition,
+    colDef => colDef.session,
+    {
+      cascade: true,
+      nullable: false,
+      eager: false,
+    }
+  )
   public columns: ColumnDefinition[] | undefined;
-  @Column({ nullable: true, type: 'numeric' })
-  public maxUpVotes: number | null;
-  @Column({ nullable: true, type: 'numeric' })
-  public maxDownVotes: number | null;
-  @Column({ default: true })
-  public allowActions: boolean;
-  @Column({ default: false })
-  public allowSelfVoting: boolean;
-  @Column({ default: false })
-  public allowMultipleVotes: boolean;
-  @Column({ default: false })
-  public allowAuthorVisible: boolean;
+  @Column(() => SessionOptions)
+  public options: SessionOptions;
   @CreateDateColumn({ type: 'timestamp with time zone' })
   public created: Date | undefined;
   @UpdateDateColumn({ type: 'timestamp with time zone' })
@@ -50,23 +64,12 @@ export default class Session {
   constructor(
     id: string,
     name: string | null,
-    options: Partial<SessionOptions>
+    createdBy: User,
+    options: Partial<JsonSessionOptions>
   ) {
     this.id = id;
     this.name = name;
-    const optionsWithDefault = getDefaultOptions(options);
-    this.maxUpVotes = optionsWithDefault.maxUpVotes;
-    this.maxDownVotes = optionsWithDefault.maxDownVotes;
-    this.allowAuthorVisible = optionsWithDefault.allowAuthorVisible;
-    this.allowActions = optionsWithDefault.allowActions;
-    this.allowSelfVoting = optionsWithDefault.allowSelfVoting;
-    this.allowMultipleVotes = optionsWithDefault.allowMultipleVotes;
+    this.createdBy = createdBy;
+    this.options = new SessionOptions(options);
   }
-}
-
-function getDefaultOptions(options: Partial<SessionOptions>): SessionOptions {
-  return {
-    ...defaultOptions,
-    ...options,
-  };
 }

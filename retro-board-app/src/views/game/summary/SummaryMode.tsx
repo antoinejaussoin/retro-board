@@ -12,80 +12,117 @@ import {
   ListItemText,
   ListItemIcon,
   Avatar,
+  colors,
 } from '@material-ui/core';
 import { Feedback } from '@material-ui/icons';
 import { ColumnContent } from '../types';
 import { Palette } from '../../../Theme';
 import useTranslations from '../../../translations';
-import { Post } from 'retro-board-common';
-import { countVotes, sortPostByVote } from '../utils';
 import { Page } from '../../../components/Page';
 import SpeedDial from './SpeedDial';
+import { calculateSummary } from './calculate-summary';
+import { ColumnStats, ColumnStatsItem, ActionItem } from './types';
+import useTranslation from '../../../translations';
 
 interface SummaryModeProps {
   columns: ColumnContent[];
 }
 
 interface SectionProps {
-  column: ColumnContent;
+  stats: ColumnStats;
 }
 
-const Section = ({ column }: SectionProps) => (
-  <Grid container spacing={4} component="section" role="list">
-    <Grid item xs={12}>
-      <Card>
-        <CardHeader
-          title={
-            <Typography variant="h6" style={{ fontWeight: 300 }}>
-              {column.label}
-            </Typography>
-          }
-          style={{ backgroundColor: column.color }}
-        />
-        <CardContent>
-          {column.posts.length ? (
-            <PostsList posts={column.posts} />
-          ) : (
-            <Typography variant="body1">No posts in this category.</Typography>
-          )}
-        </CardContent>
-      </Card>
+const Section = ({ stats }: SectionProps) => {
+  const { SummaryBoard: translations } = useTranslation();
+  return (
+    <Grid container spacing={4} component="section" role="list">
+      <Grid item xs={12}>
+        <Card>
+          <CardHeader
+            title={
+              <Typography variant="h6" style={{ fontWeight: 300 }}>
+                {stats.column.label}
+              </Typography>
+            }
+            style={{ backgroundColor: stats.column.color }}
+          />
+          <CardContent>
+            {stats.items.length ? (
+              <PostsList items={stats.items} />
+            ) : (
+              <Typography variant="body1">{translations.noPosts}</Typography>
+            )}
+          </CardContent>
+        </Card>
+      </Grid>
     </Grid>
-  </Grid>
-);
+  );
+};
+
+interface GroupSummaryProps {
+  group: ColumnStatsItem;
+}
+
+const GroupSummary = ({ group }: GroupSummaryProps) => {
+  return (
+    <GroupContainer>
+      <GroupTitle>
+        <Score>
+          <PositiveNumber>+{group.likes}</PositiveNumber>&nbsp;
+          <NegativeNumber>-{group.dislikes}</NegativeNumber>
+        </Score>
+        {group.content}
+      </GroupTitle>
+      <PostsList items={group.children} />
+    </GroupContainer>
+  );
+};
+
+const GroupContainer = styled.div`
+  border-left: 1px dashed ${colors.grey[500]};
+  margin-left: -10px;
+  padding-left: 10px;
+  > :nth-child(2) {
+    margin-left: 15px;
+  }
+`;
+const GroupTitle = styled.div`
+  display: flex;
+  font-weight: bold;
+  opacity: 0.4;
+`;
 
 interface PostsListProps {
-  posts: Post[];
+  items: ColumnStatsItem[];
 }
 
-const PostsList = ({ posts }: PostsListProps) => {
-  const sortedList = useMemo(() => {
-    return [...posts].sort(sortPostByVote);
-  }, [posts]);
+const PostsList = ({ items }: PostsListProps) => {
   return (
-    <>
-      {sortedList.map(post => (
-        <PostLine post={post} key={post.id} />
-      ))}
-    </>
+    <div>
+      {items.map((item) =>
+        item.type === 'post' ? (
+          <PostLine item={item} key={item.id} />
+        ) : (
+          <GroupSummary group={item} key={item.id} />
+        )
+      )}
+    </div>
   );
 };
 
 interface PostLineProps {
-  post: Post;
+  item: ColumnStatsItem;
 }
 
-const PostLine = ({ post }: PostLineProps) => {
-  const likes = useMemo(() => countVotes(post, 'like'), [post]);
-  const dislikes = useMemo(() => countVotes(post, 'dislike'), [post]);
+const PostLine = ({ item }: PostLineProps) => {
   return (
     <Typography component="div">
       <PostContainer role="listitem">
         <Score>
-          <PositiveNumber>+{likes}</PositiveNumber>&nbsp;
-          <NegativeNumber>-{dislikes}</NegativeNumber>
+          <PositiveNumber>+{item.likes}</PositiveNumber>&nbsp;
+          <NegativeNumber>-{item.dislikes}</NegativeNumber>
         </Score>
-        <PostContent aria-label="post content">{post.content}</PostContent>
+        <PostContent aria-label="post content">{item.content}</PostContent>
       </PostContainer>
     </Typography>
   );
@@ -112,7 +149,11 @@ const PostContent = styled.span`
   flex: 1;
 `;
 
-const ActionsList = ({ posts }: PostsListProps) => {
+interface ActionsListProps {
+  actions: ActionItem[];
+}
+
+const ActionsList = ({ actions }: ActionsListProps) => {
   const theme = useTheme();
   const {
     Actions: { summaryTitle },
@@ -140,16 +181,16 @@ const ActionsList = ({ posts }: PostsListProps) => {
           />
           <CardContent>
             <List>
-              {posts.map(post => (
-                <ListItem key={post.id}>
+              {actions.map((action) => (
+                <ListItem key={action.postId}>
                   <ListItemIcon>
                     <Avatar>
                       <Feedback />
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={post.action}
-                    secondary={post.content}
+                    primary={action.action}
+                    secondary={action.postContent}
                   />
                 </ListItem>
               ))}
@@ -162,18 +203,16 @@ const ActionsList = ({ posts }: PostsListProps) => {
 };
 
 const SummaryMode: React.SFC<SummaryModeProps> = ({ columns }) => {
-  const posts = useMemo(() => {
-    return columns.reduce<Post[]>((prev, current) => {
-      return [...prev, ...current.posts.filter(post => !!post.action)];
-    }, []);
+  const stats = useMemo(() => {
+    return calculateSummary(columns);
   }, [columns]);
   return (
     <Page>
       <div>
-        {columns.map(column => (
-          <Section key={column.index} column={column} />
+        {stats.columns.map((stat) => (
+          <Section key={stat.column.index} stats={stat} />
         ))}
-        {posts.length ? <ActionsList posts={posts} /> : null}
+        {stats.actions.length ? <ActionsList actions={stats.actions} /> : null}
       </div>
       <SpeedDialContainer>
         <SpeedDial />

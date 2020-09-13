@@ -1,9 +1,8 @@
 import React, { useState, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import SpeedDial from '@material-ui/lab/SpeedDial';
-import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
-import { AssignmentReturned } from '@material-ui/icons';
+import { AssignmentReturned, SaveAlt } from '@material-ui/icons';
 import { SvgIcon } from '@material-ui/core';
 import useMarkdown from './useMarkdown';
 import ReactMarkdown from 'react-markdown';
@@ -43,7 +42,7 @@ const CopySpeedDial = () => {
         ariaLabel="Copy to Clipboard menu"
         color="secondary"
         FabProps={{ color: 'secondary' }}
-        icon={<SpeedDialIcon />}
+        icon={<SaveAlt />}
         onClose={handleClose}
         onOpen={handleOpen}
         open={open}

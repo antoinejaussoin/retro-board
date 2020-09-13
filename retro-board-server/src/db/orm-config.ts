@@ -1,6 +1,15 @@
 import config from './config';
 import { ConnectionOptions } from 'typeorm';
-import { Post, Session, User, ColumnDefinition, Vote } from './entities';
+import {
+  Post,
+  PostGroup,
+  Session,
+  User,
+  ColumnDefinition,
+  Vote,
+  SessionTemplate,
+  TemplateColumnDefinition,
+} from './entities';
 
 const migrationsDirectory = 'src/db/migrations';
 
@@ -12,7 +21,16 @@ export default function(): ConnectionOptions {
     username: config.DB_USER,
     password: config.DB_PASSWORD,
     database: config.DB_NAME,
-    entities: [Post, Session, User, ColumnDefinition, Vote],
+    entities: [
+      Post,
+      PostGroup,
+      Session,
+      User,
+      ColumnDefinition,
+      Vote,
+      SessionTemplate,
+      TemplateColumnDefinition,
+    ],
     synchronize: false,
     logging: config.SQL_LOG ? 'all' : undefined,
     migrations: [`${migrationsDirectory}/*.ts`],

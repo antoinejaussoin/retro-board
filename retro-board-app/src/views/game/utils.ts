@@ -1,8 +1,12 @@
-import { Post, VoteType } from 'retro-board-common';
-import { groupBy, toPairs } from 'lodash';
+import { Post, VoteType, PostGroup } from 'retro-board-common';
+import { groupBy, toPairs, sum } from 'lodash';
 
-export function countVotes(post: Post, type: VoteType) {
+export function countVotes(post: Post, type: VoteType): number {
   return post.votes.filter(v => v.type === type).length;
+}
+
+export function countVotesForGroup(group: PostGroup, type: VoteType): number {
+  return sum(group.posts.map(p => countVotes(p, type)));
 }
 
 export interface VoteEnumeration {

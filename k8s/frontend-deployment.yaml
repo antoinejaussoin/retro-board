@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: rb-frontend
-          image: antoinejaussoin/retro-board-frontend:2.1.4
+          image: antoinejaussoin/retro-board-frontend:3.0.0
           ports:
             - containerPort: 80
           env:
@@ -26,3 +26,11 @@ spec:
               value: ''
             - name: SENTRY_URL
               value: ''
+            - name: GIPHY_API_KEY
+              value: ''
+            - name: AUTH_GOOGLE_ENABLED
+              value: 'false'
+            - name: AUTH_TWITTER_ENABLED
+              value: 'false'
+            - name: AUTH_GITHUB_ENABLED
+              value: 'false'

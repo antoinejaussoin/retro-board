@@ -1,12 +1,24 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { Route } from 'react-router-dom';
-import { Drawer } from '@material-ui/core';
+import { Route, Link as RouterLink } from 'react-router-dom';
+import { Drawer, Link, Typography } from '@material-ui/core';
 import { LanguageContext } from '../translations';
 import useGlobalState from '../state';
 import LanguagePicker from '../components/LanguagePicker';
 import PlayerList from './panel/PlayerList';
-import ForkMe from './panel/github.png';
+
+interface Policy {
+  name: string;
+  url: string;
+}
+
+const policies: Policy[] = [
+  { name: 'Privacy policy', url: '/privacy' },
+  { name: 'Terms & Conditions', url: '/terms' },
+  { name: 'Disclaimer', url: '/disclaimer' },
+  { name: 'Cookies Policy', url: '/cookies' },
+  { name: 'Acceptable Use Policy', url: '/acceptable-use' },
+];
 
 function Panel() {
   const languageContext = useContext(LanguageContext);
@@ -14,21 +26,34 @@ function Panel() {
 
   return (
     <Drawer open={state.panelOpen} onClose={togglePanel}>
-      <LanguagePicker
-        value={languageContext.language}
-        onChange={languageContext.setLanguage}
-      />
-      <Content>
-        <Route path="/game/:gameId" component={PlayerList} />
-      </Content>
-
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://github.com/antoinejaussoin/retro-board"
-      >
-        <ForkMeImage src={ForkMe} />
-      </a>
+      <DrawerContent>
+        <Top>
+          <LanguagePicker
+            value={languageContext.language}
+            onChange={languageContext.setLanguage}
+          />
+          <Content>
+            <Route path="/game/:gameId" component={PlayerList} />
+          </Content>
+        </Top>
+        <Bottom>
+          <Typography>
+            <Policies>
+              <Typography variant="h6">Legal Stuff</Typography>
+              {policies.map((policy) => (
+                <Link
+                  component={RouterLink}
+                  to={policy.url}
+                  color="inherit"
+                  key={policy.name}
+                >
+                  {policy.name}
+                </Link>
+              ))}
+            </Policies>
+          </Typography>
+        </Bottom>
+      </DrawerContent>
     </Drawer>
   );
 }
@@ -41,13 +66,29 @@ const Content = styled.div`
   }
 `;
 
-const ForkMeImage = styled.img`
-  object-fit: contain;
-  width: 50px;
-  margin: 10px;
-  position: fixed;
-  bottom: 0;
-  left: 0;
+const Policies = styled.div`
+  border-top: 1px solid grey;
+  display: flex;
+  flex-direction: column;
+  margin: -10px;
+  padding: 20px 30px 30px 30px;
+
+  a {
+    font-size: 0.9em;
+    color: grey;
+  }
 `;
+
+const DrawerContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+`;
+
+const Top = styled.div`
+  flex: 1;
+`;
+const Bottom = styled.div``;
 
 export default Panel;

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: rb-backend
-          image: antoinejaussoin/retro-board-backend:2.1.4
+          image: antoinejaussoin/retro-board-backend:3.0.0
           ports:
             - containerPort: 3201
               name: backend-port
@@ -60,3 +60,33 @@ spec:
               value: production
             - name: SQL_LOG
               value: 'false'
+            - name: SENTRY_URL
+              value: 'https://1234567890abcdef12345@sentry.io/1234567'
+            - name: SESSION_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: retrospected-secrets
+                  key: SESSION_SECRET
+            - name: TWITTER_KEY
+              value: ''
+            - name: TWITTER_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: retrospected-secrets
+                  key: TWITTER_SECRET
+            - name: GOOGLE_KEY
+              value: ''
+            - name: GOOGLE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: retrospected-secrets
+                  key: GOOGLE_SECRET
+            - name: GITHUB_KEY
+              value: ''
+            - name: GITHUB_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: retrospected-secrets
+                  key: GITHUB_SECRET
+            - name: BASE_URL
+              value: 'https://www.retrospected.com'
