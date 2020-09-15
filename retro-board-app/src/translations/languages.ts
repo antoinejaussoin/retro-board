@@ -109,11 +109,6 @@ export default [
     name: 'Português Brasileiro',
     englishName: 'Portuguese (Brazilian)',
   },
-<<<<<<< HEAD
-  { value: 'ru', iso: 'ru', name: 'Русский', englishName: 'Russian' },
-  { value: 'es', iso: 'es', name: 'Español', englishName: 'Spanish' },
-  { value: 'it', iso: 'it', name: 'Italiano', englishName: 'Italian' },
-=======
   {
     value: 'ru',
     dateLocale: ru,
@@ -128,5 +123,4 @@ export default [
     name: 'Español',
     englishName: 'Spanish',
   },
->>>>>>> 1157a4303b59a92efe39dddd4b591e87e2ec33b0
 ] as Language[];
