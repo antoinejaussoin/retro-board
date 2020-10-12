@@ -350,7 +350,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 ### Version 0.8.0
 
 - Using [redux-saga-testing](https://github.com/antoinejaussoin/redux-saga-testing) to test sagas
-- 🇨🇳 Chinese (Traditional and Simplified) Translation (👏 Thanks [@aqutw](https://github.com/aqutw))
+- 🇹🇼🇨🇳 Chinese (Traditional and Simplified) Translation (👏 Thanks [@aqutw](https://github.com/aqutw))
 - Using [Yarn](https://yarnpkg.com/en/)
 - Updating dependencies
 - Fixing some Spanish translation mistakes (👏 Thanks @MrPolymath)
