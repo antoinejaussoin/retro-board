@@ -34,6 +34,7 @@ router.get('/twitter/callback', twitterAuth, endOAuthHandler);
 router.get('/google/callback', googleAuth, endOAuthHandler);
 router.get('/github/callback', githubAuth, endOAuthHandler);
 router.post('/anonymous/login', anonAuth, endAnonHandler);
+router.post('/login', anonAuth, endAnonHandler);
 
 // This custom middleware allows us to attach the socket id to the session
 // With that socket id we can send back the right user info to the right

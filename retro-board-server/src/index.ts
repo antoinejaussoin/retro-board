@@ -212,7 +212,7 @@ db().then((store) => {
     }
   });
 
-  app.get('/api/register', async (req, res) => {
+  app.post('/api/register', async (req, res) => {
     if (req.user) {
       res.status(500).send('You are already logged in');
       return;

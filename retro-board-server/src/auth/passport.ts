@@ -69,10 +69,10 @@ export default (store: Store) => {
         done: (error: any, user?: any, options?: IVerifyOptions) => void
       ) => {
         if (password && password.length > 0) {
-          const user = loginUser(store, username, password);
+          const user = await loginUser(store, username, password);
           done(!user ? 'User cant log in' : null, user);
         } else {
-          const user = loginAnonymous(store, username);
+          const user = await loginAnonymous(store, username);
           done(null, user);
         }
       }

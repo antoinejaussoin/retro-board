@@ -12,7 +12,15 @@ export default async function registerUser(store: Store, details: RegisterPayloa
   }
   const salt = await genSalt();
   const hashedPassword = await hash(details.password, salt);
-  const newUser = new UserEntity(v4(), details.name, hashedPassword);
+  const newUser: User = {
+    accountType: 'password',
+    id: v4(),
+    name: details.name,
+    photo: null,
+    language: 'en',
+    username: details.username,
+    password: hashedPassword,
+  };
   const persistedUser = await store.getOrSaveUser(newUser);
   return persistedUser;
 }

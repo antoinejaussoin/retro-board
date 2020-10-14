@@ -1,0 +1,18 @@
+POST http://localhost:8081/api/register HTTP/1.1
+content-type: application/json
+
+{
+    "name": "John Doe",
+    "username": "jojo@dodo.com",
+    "password": "the cat is in the hat"
+}
+
+####
+
+POST http://localhost:8081/api/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "username": "jojo@dodo.com",
+    "password": "the cat is in the hat"
+}
