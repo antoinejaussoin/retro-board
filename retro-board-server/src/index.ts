@@ -21,6 +21,8 @@ import {
   setScope,
   reportQueryError,
 } from './sentry';
+import { RegisterPayload } from 'retro-board-common';
+import registerUser from './auth/register/register-user';
 
 initSentry();
 
@@ -210,8 +212,23 @@ db().then((store) => {
     }
   });
 
+  app.get('/api/register', async (req, res) => {
+    if (req.user) {
+      res.status(500).send('You are already logged in');
+      return;
+    }
+    const registerPayload = req.body as RegisterPayload;
+    const user = await registerUser(store, registerPayload);
+    if (!user) {
+      res.status(500).send();
+    } else {
+      res.status(200).send(user);
+    }
+  });
+
   setupSentryErrorHandler(app);
 });
+
 
 httpServer.listen(port);
 const env = process.env.NODE_ENV || 'dev';

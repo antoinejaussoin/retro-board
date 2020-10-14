@@ -8,6 +8,8 @@ import { Store } from '../types';
 import { v4 } from 'uuid';
 import { User, AccountType } from 'retro-board-common';
 import chalk from 'chalk';
+import loginAnonymous from './logins/anonymous-user';
+import loginUser from './logins/password-user';
 
 export default (store: Store) => {
   // Allowing passport to serialize and deserialize users into sessions
@@ -36,6 +38,7 @@ export default (store: Store) => {
       username:
         profile.username ||
         (profile.emails.length ? profile.emails[0].value : null),
+      password: null,
     };
     const dbUser = await store.getOrSaveUser(user);
     cb(null, dbUser);
@@ -62,25 +65,16 @@ export default (store: Store) => {
       { passwordField: 'password', usernameField: 'username' },
       async (
         username: string,
-        _password: string,
+        password: string,
         done: (error: any, user?: any, options?: IVerifyOptions) => void
       ) => {
-        const actualUsername = username.split('^')[0];
-        const existingUser = await store.getUserByUsername(username);
-        if (existingUser) {
-          done(null, existingUser);
-          return;
+        if (password && password.length > 0) {
+          const user = loginUser(store, username, password);
+          done(!user ? 'User cant log in' : null, user);
+        } else {
+          const user = loginAnonymous(store, username);
+          done(null, user);
         }
-        const user: User = {
-          accountType: 'anonymous',
-          id: v4(),
-          name: actualUsername,
-          photo: null,
-          username: username,
-          language: 'en',
-        };
-        const dbUser = await store.getOrSaveUser(user);
-        done(null, dbUser);
       }
     )
   );

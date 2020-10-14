@@ -79,11 +79,12 @@ export interface User extends Entity {
   name: string;
   accountType: AccountType;
   username: string | null;
+  password: string | null;
   photo: string | null;
   language: string;
 }
 
-export type AccountType = 'anonymous' | 'google' | 'twitter' | 'github';
+export type AccountType = 'anonymous' | 'google' | 'twitter' | 'github' | 'password';
 
 export interface Vote extends Entity {
   user: User;
