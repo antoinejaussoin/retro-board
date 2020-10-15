@@ -122,7 +122,7 @@ export async function anonymousLogin(username: string): Promise<User | null> {
   return null;
 }
 
-export async function accountLogin(name: string, username: string, password: string): Promise<User | null> {
+export async function accountLogin(email: string, password: string): Promise<User | null> {
   const response = await fetch(`/api/auth/login`, {
     method: 'POST',
     mode: 'cors',
@@ -133,7 +133,7 @@ export async function accountLogin(name: string, username: string, password: str
     },
     redirect: 'follow',
     referrer: 'no-referrer',
-    body: JSON.stringify({ username, password, name }),
+    body: JSON.stringify({ username: email, password }),
   });
   if (response.ok) {
     return await response.json();
