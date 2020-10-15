@@ -11,6 +11,7 @@ export async function sendVerificationEmail(email: string, name: string, verific
     dynamicTemplateData: {
       name,
       code: verificationCode,
+      domain: config.BASE_URL,
       email: encodeURIComponent(email),
     }
   }

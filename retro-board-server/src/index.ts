@@ -243,10 +243,17 @@ db().then((store) => {
       const updatedUser = await store.updateUser(user.id, {
         emailVerification: null,
       });
-      res.status(200).send(updatedUser);
-      return;
+      req.logIn(user.id, (err) => {
+        if (err) {
+          console.log('Cannot login Error: ', err);
+          res.status(500).send('Cannot login');
+        } else {
+          res.status(200).send(updatedUser);
+        }
+      });
+    } else {
+      res.status(403).send('Code not valid');
     }
-    res.status(403).send('Code not valid');
   });
 
   setupSentryErrorHandler(app);

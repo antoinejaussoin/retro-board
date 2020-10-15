@@ -13,8 +13,8 @@ import loginUser from './logins/password-user';
 
 export default (store: Store) => {
   // Allowing passport to serialize and deserialize users into sessions
-  passport.serializeUser((user: User, cb) => {
-    cb(null, user.id);
+  passport.serializeUser((user: string, cb) => {
+    cb(null, user);
   });
   passport.deserializeUser(async (userId: string, cb) => {
     cb(null, userId);
@@ -42,7 +42,7 @@ export default (store: Store) => {
       emailVerification: null,
     };
     const dbUser = await store.getOrSaveUser(user);
-    cb(null, dbUser);
+    cb(null, dbUser.id);
   };
 
   // Adding each OAuth provider's strategy to passport

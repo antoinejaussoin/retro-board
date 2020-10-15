@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 import { verifyEmail } from '../api';
 import { Alert } from '@material-ui/lab';
-
-interface ValidateParams {
-  email: string;
-  code: string;
-}
+import { useContext } from 'react';
+import UserContext from '../auth/Context';
 
 function ValidatePage() {
+  const { setUser } = useContext(UserContext);
+  const history = useHistory();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const email = params.get('email');
@@ -24,13 +23,19 @@ function ValidatePage() {
         const result = await verifyEmail(email, code);
         setLoading(false);
         setSuccess(!!result);
+        if (result) {
+          setTimeout(() => {
+            setUser(result);
+            history.push('/');
+          }, 2000);
+        }
       } else {
         setLoading(false);
         setSuccess(false);
       }
     }
     verify();
-  }, [email, code]);
+  }, [email, code, history, setUser]);
 
   return (
     <div style={{ margin: 50 }}>
