@@ -122,6 +122,25 @@ export async function anonymousLogin(username: string): Promise<User | null> {
   return null;
 }
 
+export async function accountLogin(name: string, username: string, password: string): Promise<User | null> {
+  const response = await fetch(`/api/auth/login`, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    redirect: 'follow',
+    referrer: 'no-referrer',
+    body: JSON.stringify({ username, password, name }),
+  });
+  if (response.ok) {
+    return await response.json();
+  }
+  return null;
+}
+
 function getAnonymousUsername(username: string): string {
   const key = `anonymous-username-${username}`;
   const storedUsername = localStorage.getItem(key);

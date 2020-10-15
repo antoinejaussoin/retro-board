@@ -6,6 +6,7 @@ import { User } from 'retro-board-common';
 import Wrapper from './Wrapper';
 import Input from '../../components/Input';
 import { Person, Email, VpnKey } from '@material-ui/icons';
+import { accountLogin, updateLanguage } from '../../api';
 
 interface AccountAuthProps {
   onClose: () => void;
@@ -14,10 +15,23 @@ interface AccountAuthProps {
 
 const AccountAuth = ({ onClose, onUser }: AccountAuthProps) => {
   const { Login: loginTranslations } = useTranslations();
+  const language = useLanguage();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const handleAccountogin = useCallback(() => {}, []);
+  const handleAccountogin = useCallback(() => {
+    async function login() {
+      if (name.length && email.length && password.length) {
+        await accountLogin(name, email, password);
+        const updatedUser = await updateLanguage(language.value);
+        onUser(updatedUser);
+        if (onClose) {
+          onClose();
+        }
+      }
+    }
+    login();
+  }, [email, name, password, language.value, onClose, onUser]);
 
   return (
     <Wrapper
