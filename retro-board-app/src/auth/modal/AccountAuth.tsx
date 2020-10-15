@@ -1,14 +1,9 @@
 import React, { useCallback } from 'react';
-import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardActions,
-} from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import useTranslations, { useLanguage } from '../../translations';
 import { User } from 'retro-board-common';
+import Wrapper from './Wrapper';
 
 interface AccountAuthProps {
   onClose: () => void;
@@ -21,23 +16,21 @@ const AccountAuth = ({ onClose, onUser }: AccountAuthProps) => {
   const handleAccountogin = useCallback(() => {}, []);
 
   return (
-    <Card>
-      <CardHeader title={'account'} />
-      <CardContent>
-        <Alert severity="info">Todo</Alert>
-
-        <CardActions style={{ justifyContent: 'flex-end' }}>
-          <Button
-            onClick={handleAccountogin}
-            color="primary"
-            autoFocus
-            disabled={false}
-          >
-            {loginTranslations.buttonLabel}
-          </Button>
-        </CardActions>
-      </CardContent>
-    </Card>
+    <Wrapper
+      header="Account"
+      actions={
+        <Button
+          onClick={handleAccountogin}
+          color="primary"
+          autoFocus
+          disabled={false}
+        >
+          {loginTranslations.buttonLabel}
+        </Button>
+      }
+    >
+      <Alert severity="info">Todo</Alert>
+    </Wrapper>
   );
 };
 

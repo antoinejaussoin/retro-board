@@ -1,16 +1,10 @@
 import React, { useCallback, useState } from 'react';
-import {
-  Button,
-  Input,
-  Card,
-  CardContent,
-  CardHeader,
-  CardActions,
-} from '@material-ui/core';
+import { Button, Input } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import useTranslations, { useLanguage } from '../../translations';
 import { anonymousLogin, updateLanguage } from '../../api';
 import { User } from 'retro-board-common';
+import Wrapper from './Wrapper';
 
 interface AnonAuthProps {
   onClose: () => void;
@@ -42,32 +36,31 @@ const AnonAuth = ({ onClose, onUser }: AnonAuthProps) => {
   );
 
   return (
-    <Card>
-      <CardHeader title={loginTranslations.anonymousAuthHeader} />
-      <CardContent>
-        <Alert severity="info">
-          {loginTranslations.anonymousAuthDescription}
-        </Alert>
-        <Input
-          value={username}
-          onChange={handleUsernameChange}
-          title={loginTranslations.buttonLabel}
-          placeholder={loginTranslations.namePlaceholder}
-          fullWidth
-          style={{ marginTop: 20 }}
-        />
-        <CardActions style={{ justifyContent: 'flex-end' }}>
-          <Button
-            onClick={handleAnonLogin}
-            color="primary"
-            autoFocus
-            disabled={!username.trim().length}
-          >
-            {loginTranslations.buttonLabel}
-          </Button>
-        </CardActions>
-      </CardContent>
-    </Card>
+    <Wrapper
+      header={loginTranslations.anonymousAuthHeader}
+      actions={
+        <Button
+          onClick={handleAnonLogin}
+          color="primary"
+          autoFocus
+          disabled={!username.trim().length}
+        >
+          {loginTranslations.buttonLabel}
+        </Button>
+      }
+    >
+      <Alert severity="info">
+        {loginTranslations.anonymousAuthDescription}
+      </Alert>
+      <Input
+        value={username}
+        onChange={handleUsernameChange}
+        title={loginTranslations.buttonLabel}
+        placeholder={loginTranslations.namePlaceholder}
+        fullWidth
+        style={{ marginTop: 20 }}
+      />
+    </Wrapper>
   );
 };
 

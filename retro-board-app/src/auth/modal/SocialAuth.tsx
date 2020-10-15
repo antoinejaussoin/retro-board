@@ -1,5 +1,4 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
-import { Card, CardHeader, CardContent } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import {
   GithubLoginButton,
@@ -12,6 +11,7 @@ import useTranslations, { useLanguage } from '../../translations';
 import config from '../../utils/getConfig';
 import { updateLanguage } from '../../api';
 import { User } from 'retro-board-common';
+import Wrapper from './Wrapper';
 
 const API_URL = '/api/auth';
 
@@ -54,7 +54,6 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
     setSocket(s);
     s.on('auth', async (_user: User) => {
       const updatedUser = await updateLanguage(language.value);
-      // setUser(updatedUser);
       onUser(updatedUser);
       if (windowRef.current) {
         windowRef.current.close();
@@ -72,25 +71,22 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
   }, [onClose, onUser, language]);
 
   return (
-    <Card>
-      <CardHeader title={loginTranslations.socialMediaAuthHeader} />
-      <CardContent>
-        <Alert severity="info">
-          {loginTranslations.socialMediaAuthDescription}
-        </Alert>
-        <AccountsButtons>
-          {config.GitHubAuthEnabled && (
-            <GithubLoginButton onClick={handleGitHub} text={'GitHub'} />
-          )}
-          {config.GoogleAuthEnabled && (
-            <GoogleLoginButton onClick={handleGoogle} text={'Google'} />
-          )}
-          {config.TwitterAuthEnabled && (
-            <TwitterLoginButton onClick={handleTwitter} text={'Twitter'} />
-          )}
-        </AccountsButtons>
-      </CardContent>
-    </Card>
+    <Wrapper header={loginTranslations.socialMediaAuthHeader}>
+      <Alert severity="info">
+        {loginTranslations.socialMediaAuthDescription}
+      </Alert>
+      <AccountsButtons>
+        {config.GitHubAuthEnabled && (
+          <GithubLoginButton onClick={handleGitHub} text={'GitHub'} />
+        )}
+        {config.GoogleAuthEnabled && (
+          <GoogleLoginButton onClick={handleGoogle} text={'Google'} />
+        )}
+        {config.TwitterAuthEnabled && (
+          <TwitterLoginButton onClick={handleTwitter} text={'Twitter'} />
+        )}
+      </AccountsButtons>
+    </Wrapper>
   );
 }
 
