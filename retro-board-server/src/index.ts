@@ -23,6 +23,7 @@ import {
 } from './sentry';
 import { RegisterPayload } from 'retro-board-common';
 import registerUser from './auth/register/register-user';
+import { send } from './email/emailSender';
 
 initSentry();
 
@@ -218,10 +219,15 @@ db().then((store) => {
       return;
     }
     const registerPayload = req.body as RegisterPayload;
+    if (await store.getUserByUsername(registerPayload.username) !== null) {
+      res.send(403).send("User already exists");
+      return;
+    }
     const user = await registerUser(store, registerPayload);
     if (!user) {
       res.status(500).send();
     } else {
+      await send(registerPayload.username, 'Email verification', 'Hey');
       res.status(200).send(user);
     }
   });

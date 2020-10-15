@@ -67,6 +67,8 @@ services:
       GOOGLE_SECRET:
       GITHUB_KEY:
       GITHUB_SECRET:
+      SENDGRID_API_KEY: # Used for Sendgrid email reminders
+      SENDGRID_SENDER: # Email to be used as the sender for emails
       BASE_URL: http://localhost:80 # This must be the URL of the frontend app once deployed
     restart: unless-stopped
     logging:

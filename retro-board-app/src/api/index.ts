@@ -141,6 +141,42 @@ export async function accountLogin(email: string, password: string): Promise<Use
   return null;
 }
 
+interface RegisterResponse {
+  user: User | null;
+  error: 'already-exists' | 'other' | null;
+}
+
+export async function register(name: string, email: string, password: string): Promise<RegisterResponse> {
+  const response = await fetch(`/api/register`, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    redirect: 'follow',
+    referrer: 'no-referrer',
+    body: JSON.stringify({ username: email, password, name }),
+  });
+  if (response.ok) {
+    const user = await response.json();
+    return {
+      user,
+      error: null,
+    }
+  } else if (response.status === 403) {
+    return {
+      user: null,
+      error: 'already-exists',
+    }
+  }
+  return {
+    user: null,
+    error: 'other',
+  };
+}
+
 function getAnonymousUsername(username: string): string {
   const key = `anonymous-username-${username}`;
   const storedUsername = localStorage.getItem(key);

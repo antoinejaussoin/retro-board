@@ -11,6 +11,7 @@
     "revert": "ts-node ../node_modules/typeorm/cli.js migration:revert"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.3.0",
     "@sentry/node": "^5.25.0",
     "@types/bcrypt": "^3.0.0",
     "@types/connect-redis": "0.0.14",
