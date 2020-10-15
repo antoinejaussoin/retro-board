@@ -41,7 +41,7 @@ const Login = ({ onClose }: LoginModalProps) => {
   return (
     <Dialog
       fullScreen={fullScreen}
-      maxWidth="md"
+      maxWidth="sm"
       fullWidth
       open
       onClose={handleClose}

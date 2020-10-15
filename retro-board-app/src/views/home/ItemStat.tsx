@@ -33,7 +33,7 @@ const Value = styled.div`
   font-size: 4em;
 `;
 const Label = styled.div`
-  font-weight: 100px;
+  font-weight: 100;
   font-size: 1em;
 `;
 
