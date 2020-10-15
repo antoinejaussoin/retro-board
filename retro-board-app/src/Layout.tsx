@@ -20,6 +20,7 @@ import CookiesPolicyPage from './views/policies/Cookies';
 import AcceptableUsePolicyPage from './views/policies/AcceptableUse';
 import DisclaimerPage from './views/policies/Disclaimer';
 import { HomeOutlined } from '@material-ui/icons';
+import ValidatePage from './views/Validate';
 
 const Title = styled(Typography)`
   flex-grow: 1;
@@ -70,6 +71,7 @@ function App() {
       <Switch>
         <Redirect from="/session/:gameId" to="/game/:gameId" />
         <Route path="/game/:gameId" component={Game} />
+        <Route path="/validate" component={ValidatePage} />
         <Route path="/privacy" component={PrivacyPolicyPage} />
         <Route path="/terms" component={TermsAndConditionsPage} />
         <Route path="/cookies" component={CookiesPolicyPage} />

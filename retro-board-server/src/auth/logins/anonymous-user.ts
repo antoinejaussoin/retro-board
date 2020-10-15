@@ -17,6 +17,7 @@ export default async function loginAnonymous(store: Store, username: string): Pr
     username: username,
     password: null,
     language: 'en',
+    emailVerification: null,
   };
   const dbUser = await store.getOrSaveUser(user);
   return dbUser;

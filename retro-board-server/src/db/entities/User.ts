@@ -25,6 +25,8 @@ export default class User {
   @Column({ nullable: true, type: 'character varying' })
   public password: string | null;
   @Column({ nullable: true, type: 'character varying' })
+  public emailVerification: string | null;
+  @Column({ nullable: true, type: 'character varying' })
   public photo: string | null;
   @Column({ nullable: false, type: 'character varying', default: 'en' })
   public language: string;
@@ -42,5 +44,6 @@ export default class User {
     this.accountType = 'anonymous';
     this.username = null;
     this.photo = null;
+    this.emailVerification = null;
   }
 }

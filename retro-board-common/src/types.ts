@@ -80,6 +80,7 @@ export interface User extends Entity {
   accountType: AccountType;
   username: string | null;
   password: string | null;
+  emailVerification: string | null;
   photo: string | null;
   language: string;
 }

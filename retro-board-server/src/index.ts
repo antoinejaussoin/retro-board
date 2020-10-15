@@ -21,9 +21,9 @@ import {
   setScope,
   reportQueryError,
 } from './sentry';
-import { RegisterPayload } from 'retro-board-common';
+import { RegisterPayload, ValidateEmailPayload } from 'retro-board-common';
 import registerUser from './auth/register/register-user';
-import { send } from './email/emailSender';
+import { sendVerificationEmail } from './email/emailSender';
 
 initSentry();
 
@@ -220,16 +220,33 @@ db().then((store) => {
     }
     const registerPayload = req.body as RegisterPayload;
     if (await store.getUserByUsername(registerPayload.username) !== null) {
-      res.send(403).send("User already exists");
+      res.status(403).send("User already exists");
       return;
     }
     const user = await registerUser(store, registerPayload);
     if (!user) {
       res.status(500).send();
     } else {
-      await send(registerPayload.username, 'Email verification', 'Hey');
+      await sendVerificationEmail(registerPayload.username, registerPayload.name, user.emailVerification!);
       res.status(200).send(user);
     }
+  });
+
+  app.post('/api/validate', async (req, res) => {
+    const validatePayload = req.body as ValidateEmailPayload;
+    const user = await store.getUserByUsername(validatePayload.email);
+    if (!user) {
+      res.status(404).send("Email not found");
+      return;
+    }
+    if (user?.emailVerification === validatePayload.code) {
+      const updatedUser = await store.updateUser(user.id, {
+        emailVerification: null,
+      });
+      res.status(200).send(updatedUser);
+      return;
+    }
+    res.status(403).send('Code not valid');
   });
 
   setupSentryErrorHandler(app);

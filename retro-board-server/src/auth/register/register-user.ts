@@ -20,6 +20,7 @@ export default async function registerUser(store: Store, details: RegisterPayloa
     language: 'en',
     username: details.username,
     password: hashedPassword,
+    emailVerification: v4(),
   };
   const persistedUser = await store.getOrSaveUser(newUser);
   return persistedUser;

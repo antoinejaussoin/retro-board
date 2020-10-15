@@ -177,6 +177,26 @@ export async function register(name: string, email: string, password: string): P
   };
 }
 
+export async function verifyEmail(email: string, code: string): Promise<User | null> {
+  const response = await fetch(`/api/validate`, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    redirect: 'follow',
+    referrer: 'no-referrer',
+    body: JSON.stringify({ email, code }),
+  });
+  if (response.ok) {
+    const user = await response.json();
+    return user;
+  }
+  return null;
+}
+
 function getAnonymousUsername(username: string): string {
   const key = `anonymous-username-${username}`;
   const storedUsername = localStorage.getItem(key);

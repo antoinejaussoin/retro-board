@@ -39,6 +39,7 @@ export default (store: Store) => {
         profile.username ||
         (profile.emails.length ? profile.emails[0].value : null),
       password: null,
+      emailVerification: null,
     };
     const dbUser = await store.getOrSaveUser(user);
     cb(null, dbUser);

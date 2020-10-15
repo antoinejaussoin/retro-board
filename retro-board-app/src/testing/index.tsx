@@ -26,6 +26,7 @@ const testingInitialState: State = {
       photo: null,
       username: 'johndoe',
       password: null,
+      emailVerification: null,
       language: 'en',
     },
     options: {
@@ -51,6 +52,7 @@ const AllTheProviders: React.SFC = ({ children }) => {
     photo: null,
     username: 'johndoe',
     password: null,
+    emailVerification: null,
     language: 'en',
   });
   useEffect(() => {
@@ -61,6 +63,7 @@ const AllTheProviders: React.SFC = ({ children }) => {
       photo: null,
       username: 'johndoe',
       password: null,
+      emailVerification: null,
       language: 'en',
     });
   }, []);
