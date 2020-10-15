@@ -2,13 +2,10 @@ import React, { Suspense, useCallback, useState, useMemo } from 'react';
 import { Button } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import useTranslations, { useLanguage } from '../../../translations';
-import { User } from 'retro-board-common';
 import Wrapper from './../Wrapper';
 import Input from '../../../components/Input';
-import Link from '../../../components/Link';
 import { Person, Email, VpnKey } from '@material-ui/icons';
 import { accountLogin, updateLanguage, register } from '../../../api';
-import styled from 'styled-components';
 import { validate } from 'isemail';
 
 const PasswordStrength = React.lazy(
@@ -17,12 +14,7 @@ const PasswordStrength = React.lazy(
 
 const scoreWords = ['weak', 'weak', 'not quite', 'good', 'strong'];
 
-interface RegisterProps {
-  onClose: () => void;
-  onUser: (user: User | null) => void;
-}
-
-const Register = ({ onClose, onUser }: RegisterProps) => {
+const Register = () => {
   const { Login: loginTranslations } = useTranslations();
   const language = useLanguage();
   const [registerName, setRegisterName] = useState('');

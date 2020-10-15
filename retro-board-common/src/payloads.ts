@@ -8,3 +8,7 @@ export interface ValidateEmailPayload {
   email: string;
   code: string;
 }
+
+export interface ResetPasswordPayload {
+  email: string;
+}

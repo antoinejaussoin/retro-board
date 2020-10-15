@@ -2,22 +2,30 @@ import React, { useState } from 'react';
 import { User } from 'retro-board-common';
 import Login from './account/Login';
 import Register from './account/Register';
+import LostPassword from './account/LostPassword';
 
 interface AccountAuthProps {
   onClose: () => void;
   onUser: (user: User | null) => void;
 }
 
+type Mode = 'login' | 'register' | 'reset';
+
 const AccountAuth = ({ onClose, onUser }: AccountAuthProps) => {
-  const [loginMode, setLoginMode] = useState(true);
-  return loginMode ? (
-    <Login
-      onUser={onUser}
-      onClose={onClose}
-      onAskRegistration={() => setLoginMode(false)}
-    />
-  ) : (
-    <Register onUser={onUser} onClose={onClose} />
+  const [mode, setMode] = useState<Mode>('login');
+  return (
+    <>
+      {mode === 'login' ? (
+        <Login
+          onUser={onUser}
+          onClose={onClose}
+          onAskRegistration={() => setMode('register')}
+          onAskPasswordReset={() => setMode('reset')}
+        />
+      ) : null}
+      {mode === 'register' ? <Register /> : null}
+      {mode === 'reset' ? <LostPassword /> : null}
+    </>
   );
 };
 export default AccountAuth;

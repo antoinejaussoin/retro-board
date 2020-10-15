@@ -197,6 +197,25 @@ export async function verifyEmail(email: string, code: string): Promise<User | n
   return null;
 }
 
+export async function resetPassword(email: string): Promise<boolean> {
+  const response = await fetch(`/api/reset`, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    redirect: 'follow',
+    referrer: 'no-referrer',
+    body: JSON.stringify({ email }),
+  });
+  if (response.ok) {
+    return true;
+  }
+  return false;
+}
+
 function getAnonymousUsername(username: string): string {
   const key = `anonymous-username-${username}`;
   const storedUsername = localStorage.getItem(key);

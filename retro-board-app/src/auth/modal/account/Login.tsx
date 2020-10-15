@@ -14,9 +14,15 @@ interface LoginProps {
   onClose: () => void;
   onUser: (user: User | null) => void;
   onAskRegistration: () => void;
+  onAskPasswordReset: () => void;
 }
 
-const Login = ({ onClose, onUser, onAskRegistration }: LoginProps) => {
+const Login = ({
+  onClose,
+  onUser,
+  onAskRegistration,
+  onAskPasswordReset,
+}: LoginProps) => {
   const { Login: loginTranslations } = useTranslations();
   const language = useLanguage();
   const [loginEmail, setLoginEmail] = useState('');
@@ -50,12 +56,12 @@ const Login = ({ onClose, onUser, onAskRegistration }: LoginProps) => {
       }
     >
       <Alert severity="info">Todo</Alert>
-
       <Input
         value={loginEmail}
         onChangeValue={setLoginEmail}
         title="email"
         placeholder="email"
+        type="email"
         fullWidth
         style={{ marginTop: 20 }}
         leftIcon={<Email />}
@@ -71,7 +77,9 @@ const Login = ({ onClose, onUser, onAskRegistration }: LoginProps) => {
         leftIcon={<VpnKey />}
       />
       <div style={{ marginTop: 20 }} />
-      <Link onClick={onAskRegistration}>No account? register here</Link>
+      <Link onClick={onAskRegistration}>No account? register here.</Link>
+      or perhaps you{' '}
+      <Link onClick={onAskPasswordReset}>forgot your password?</Link>
     </Wrapper>
   );
 };

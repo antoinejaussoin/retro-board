@@ -21,9 +21,10 @@ import {
   setScope,
   reportQueryError,
 } from './sentry';
-import { RegisterPayload, ValidateEmailPayload } from 'retro-board-common';
+import { RegisterPayload, ValidateEmailPayload, ResetPasswordPayload } from 'retro-board-common';
 import registerUser from './auth/register/register-user';
-import { sendVerificationEmail } from './email/emailSender';
+import { sendVerificationEmail, sendResetPassword } from './email/emailSender';
+import { v4 } from 'uuid';
 
 initSentry();
 
@@ -254,6 +255,21 @@ db().then((store) => {
     } else {
       res.status(403).send('Code not valid');
     }
+  });
+
+  app.post('/api/reset', async (req, res) => {
+    const resetPayload = req.body as ResetPasswordPayload;
+    const user = await store.getUserByUsername(resetPayload.email);
+    if (!user) {
+      res.status(404).send("Email not found");
+      return;
+    }
+    const code = v4();
+    await store.updateUser(user.id, {
+      emailVerification: code,
+    });
+    await sendResetPassword(resetPayload.email, user.name, code);
+    res.status(200).send();
   });
 
   setupSentryErrorHandler(app);
