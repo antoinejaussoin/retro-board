@@ -155,7 +155,7 @@ export default {
     or: 'or',
   },
   SocialMediaLogin: {
-    header: 'Social Media Authentication',
+    header: 'Social Media',
     info: 'This will use your account to authenticate you, and will allow you to retrieve all your sessions. No password is stored.',
   },
   AuthCommon: {
@@ -167,14 +167,14 @@ export default {
   AccountLogin: {
     header: 'Account',
     loginButton: 'Login',
-    info: 'TODO',
+    info: 'Login with your email and password.',
     registerLink: 'Not registered? Click here',
     forgotPasswordLink: 'Forgot your password?',
     errorEmailPasswordIncorrect: 'Your credentials are incorrect.',
   },
   Register: {
     header: 'Register',
-    info: 'TODO',
+    info: 'Get yourself a Retrospected account!',
     registerButton: 'Register',
     errorAlreadyRegistered: 'This email is already registered',
     errorGeneral: 'An error occurred while trying to create your account.',
@@ -191,7 +191,7 @@ export default {
     doneMessage: 'Done! Have a look in your emails, you should get a link to reset your password.',
     header: 'Password Reset',
     resetButton: 'Reset Password',
-    info: 'TODO',
+    info: `Forgot your password? Not a problem. Enter your email below and you'll get a reset email prompto.`,
     // Reset Page
     success: `Your password has been updated. I'm going to log you in in a sec!`,
     error: 'There was an error updating your password.',

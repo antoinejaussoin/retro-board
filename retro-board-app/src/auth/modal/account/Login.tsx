@@ -8,6 +8,7 @@ import Input from '../../../components/Input';
 import Link from '../../../components/Link';
 import { Email, VpnKey } from '@material-ui/icons';
 import { accountLogin, updateLanguage } from '../../../api';
+import styled from 'styled-components';
 
 interface LoginProps {
   onClose: () => void;
@@ -96,13 +97,29 @@ const Login = ({
         leftIcon={<VpnKey />}
       />
       <div style={{ marginTop: 20 }} />
-      <Link onClick={onAskRegistration}>{translations.registerLink}</Link>
-      &nbsp;|&nbsp;
-      <Link onClick={onAskPasswordReset}>
-        {translations.forgotPasswordLink}
-      </Link>
+      <Links>
+        <Link onClick={onAskRegistration}>{translations.registerLink}</Link>
+        <Link onClick={onAskPasswordReset}>
+          {translations.forgotPasswordLink}
+        </Link>
+      </Links>
     </Wrapper>
   );
 };
+
+const Links = styled.div`
+  display: flex;
+  > :first-child {
+    margin-right: 20px;
+  }
+
+  @media (max-width: 400px) {
+    flex-direction: column;
+    > :first-child {
+      margin-right: 0px;
+      margin-bottom: 5px;
+    }
+  }
+`;
 
 export default Login;

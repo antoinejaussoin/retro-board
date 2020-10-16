@@ -78,6 +78,7 @@ function ResetPasswordPage() {
             <PasswordStrength
               onChangeScore={setScore}
               password={password}
+              shortScoreWord={authTranslations.passwordScoreWords![0]}
               scoreWords={authTranslations.passwordScoreWords}
             />
           </Suspense>
