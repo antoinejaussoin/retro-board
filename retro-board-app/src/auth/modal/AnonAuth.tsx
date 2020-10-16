@@ -12,7 +12,7 @@ interface AnonAuthProps {
 }
 
 const AnonAuth = ({ onClose, onUser }: AnonAuthProps) => {
-  const { Login: loginTranslations } = useTranslations();
+  const { AnonymousLogin: loginTranslations } = useTranslations();
   const language = useLanguage();
 
   const [username, setUsername] = useState('');

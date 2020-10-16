@@ -134,7 +134,7 @@ export interface Translation {
       rejoinButton?: string;
     };
   };
-  Login: {
+  AnonymousLogin: {
     namePlaceholder?: string;
     buttonLabel?: string;
     header?: string;
@@ -144,6 +144,40 @@ export interface Translation {
     anonymousAuthDescription?: string;
     authenticatingWith?: string;
     or?: string;
+    // New stuff
+    
+  };
+  AuthCommon: {
+    emailField?: string;
+    passwordField?: string;
+    nameField?: string;
+    passwordScoreWords?: string[]; // ['weak', 'weak', 'not quite', 'good', 'strong']
+  };
+  AccountLogin: {
+    header?: string;
+    loginButton?: string;
+    info?: string;
+    registerLink?: string;
+    forgotPasswordLink?: string;
+    errorEmailPasswordIncorrect?: string;
+  };
+  Register: {
+    header?: string;
+    info?: string;
+    registerButton?: string;
+    errorAlreadyRegistered?: string; // This email is already registered
+    errorGeneral?: string; // An error occurred while trying to create your account.
+    messageSuccess?: string; // Thank you! You should receive an email shortly to validate your account.
+    errorInvalidEmail?: string; // 'Please enter a valid email'
+  };
+  ValidateAccount: {
+
+  };
+  ResetPassword: {
+    doneMessage?: string; //  Done! Have a look in your emails, you should get a link to reset your password.
+    header?: string;
+    resetButton?: string; // Reset Password
+    info?: string;
   };
   SummaryBoard: {
     noPosts?: string;

@@ -145,7 +145,7 @@ export default {
       rejoinButton: 'Opnieuw deelnemen',
     },
   },
-  Login: {
+  AnonymousLogin: {
     namePlaceholder: 'Laat weten wie je bent met je naam',
     buttonLabel: 'Laten we beginnen',
     header: 'Login',

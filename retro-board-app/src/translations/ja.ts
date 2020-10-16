@@ -136,7 +136,7 @@ editButton: undefined,
       rejoinButton: '再開',
     },
   },
-  Login: {
+  AnonymousLogin: {
     namePlaceholder: '名前を入力',
     buttonLabel: 'スタート',
     header: 'Login',

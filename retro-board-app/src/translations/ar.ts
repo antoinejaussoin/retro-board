@@ -135,7 +135,7 @@ export default {
       rejoinButton: 'الإنضمام',
     },
   },
-  Login: {
+  AnonymousLogin: {
     namePlaceholder: 'من أنت بالضبط؟ أدخل اسمك هنا',
     buttonLabel: 'لنبدأ',
     header: 'تسجيل الدخول',

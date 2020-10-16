@@ -136,7 +136,7 @@ editButton: undefined,
       rejoinButton: 'Reunirse',
     },
   },
-  Login: {
+  AnonymousLogin: {
     namePlaceholder: 'Quién eres exáctamente? Inserta tu nombre aquí',
     buttonLabel: 'Empezemos',
     header: 'Login',

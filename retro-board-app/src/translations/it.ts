@@ -145,7 +145,7 @@ export default {
       rejoinButton: 'Riunisciti',
     },
   },
-  Login: {
+  AnonymousLogin: {
     namePlaceholder:
       'Benvenuto! Per favore inserisci il tuo nome per continuare',
     buttonLabel: 'Iniziamo',

@@ -136,7 +136,7 @@ editButton: undefined,
       rejoinButton: 'Войти',
     },
   },
-  Login: {
+  AnonymousLogin: {
     namePlaceholder: 'Как вас зовут? Введите имя',
     buttonLabel: 'Начать',
     header: 'Логин',

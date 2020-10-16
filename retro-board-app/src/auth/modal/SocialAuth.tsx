@@ -23,7 +23,7 @@ interface SocialAuthProps {
 function SocialAuth({ onClose, onUser }: SocialAuthProps) {
   const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null);
   const windowRef = useRef<Window | null>(null);
-  const { Login: loginTranslations } = useTranslations();
+  const { AnonymousLogin: loginTranslations } = useTranslations();
   const language = useLanguage();
   const handleOAuth = useCallback(
     (provider: string) => {

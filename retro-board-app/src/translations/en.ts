@@ -144,7 +144,7 @@ export default {
       rejoinButton: 'Rejoin',
     },
   },
-  Login: {
+  AnonymousLogin: {
     namePlaceholder: 'Please enter a name or nickname here to continue',
     buttonLabel: "Let's start",
     header: 'Login',
@@ -156,6 +156,8 @@ export default {
       "This will create an anonymous account. Some features won't be available.",
     authenticatingWith: 'Authenticating with',
     or: 'or',
+    // New stuff
+    errorEmailPasswordIncorrect: 'Your email or password are incorrect.',
   },
   SummaryBoard: {
     noPosts: 'There are no posts to display',

@@ -62,7 +62,7 @@ const LoginButton = () => {
         color="secondary"
         startIcon={<AccountIcon />}
       >
-        {translations.Login.header}
+        {translations.AnonymousLogin.header}
       </Button>
       {modalOpened && <LoginModal onClose={handleModalClose} />}
     </>

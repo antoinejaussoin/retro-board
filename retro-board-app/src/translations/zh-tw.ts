@@ -136,7 +136,7 @@ editButton: undefined,
       rejoinButton: '再次加入',
     },
   },
-  Login: {
+  AnonymousLogin: {
     namePlaceholder: '您是誰? 在此輸入您的名稱',
     buttonLabel: '開始!',
     header: 'Login',

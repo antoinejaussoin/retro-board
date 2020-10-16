@@ -146,7 +146,7 @@ export default {
       rejoinButton: 'Rejoindre',
     },
   },
-  Login: {
+  AnonymousLogin: {
     namePlaceholder: 'Présentez-vous ! Entrez votre nom ici',
     buttonLabel: "C'est parti !",
     header: 'Se connecter',

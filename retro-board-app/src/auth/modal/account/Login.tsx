@@ -22,7 +22,10 @@ const Login = ({
   onAskRegistration,
   onAskPasswordReset,
 }: LoginProps) => {
-  const { Login: loginTranslations } = useTranslations();
+  const {
+    AccountLogin: translations,
+    AuthCommon: authTranslations,
+  } = useTranslations();
   const language = useLanguage();
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
@@ -38,16 +41,23 @@ const Login = ({
             onClose();
           }
         } else {
-          setError('Your email or password are incorrect.');
+          setError(translations.errorEmailPasswordIncorrect!);
         }
       }
     }
     login();
-  }, [loginEmail, loginPassword, language.value, onClose, onUser]);
+  }, [
+    loginEmail,
+    loginPassword,
+    language.value,
+    translations,
+    onClose,
+    onUser,
+  ]);
 
   return (
     <Wrapper
-      header="Login"
+      header={translations.header}
       actions={
         <Button
           onClick={handleAccountogin}
@@ -55,11 +65,11 @@ const Login = ({
           autoFocus
           disabled={!loginEmail || !loginPassword}
         >
-          {loginTranslations.buttonLabel}
+          {translations.loginButton}
         </Button>
       }
     >
-      <Alert severity="info">Todo</Alert>
+      <Alert severity="info">{translations.info}</Alert>
       {!!error ? (
         <Alert severity="error" style={{ marginTop: 10 }}>
           {error}
@@ -68,8 +78,8 @@ const Login = ({
       <Input
         value={loginEmail}
         onChangeValue={setLoginEmail}
-        title="email"
-        placeholder="email"
+        title={authTranslations.emailField}
+        placeholder={authTranslations.emailField}
         type="email"
         fullWidth
         style={{ marginTop: 20 }}
@@ -78,17 +88,19 @@ const Login = ({
       <Input
         value={loginPassword}
         onChangeValue={setLoginPassword}
-        title="Password"
-        placeholder="Password"
+        title={authTranslations.passwordField}
+        placeholder={authTranslations.passwordField}
         type="password"
         fullWidth
         style={{ marginTop: 20 }}
         leftIcon={<VpnKey />}
       />
       <div style={{ marginTop: 20 }} />
-      No account?&nbsp;
-      <Link onClick={onAskRegistration}>register here</Link>,&nbsp; or perhaps
-      you <Link onClick={onAskPasswordReset}>forgot your password?</Link>
+      <Link onClick={onAskRegistration}>{translations.registerLink}</Link>
+      &nbsp;|&nbsp;
+      <Link onClick={onAskPasswordReset}>
+        {translations.forgotPasswordLink}
+      </Link>
     </Wrapper>
   );
 };

@@ -141,7 +141,7 @@ export default {
       rejoinButton: 'Erneut beitreten',
     },
   },
-  Login: {
+  AnonymousLogin: {
     namePlaceholder: 'Wer genau bist Du? Gib hier Deinen Namen ein',
     buttonLabel: 'Auf gehts!',
     header: 'Anmelden',

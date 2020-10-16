@@ -8,7 +8,10 @@ import { Email } from '@material-ui/icons';
 import { resetPassword } from '../../../api';
 
 const LostPassword = () => {
-  const { Login: loginTranslations } = useTranslations();
+  const {
+    ResetPassword: translations,
+    AuthCommon: authTranslations,
+  } = useTranslations();
   const [email, setEmail] = useState('');
   const [done, setDone] = useState(false);
   const handleForgotPassword = useCallback(() => {
@@ -20,13 +23,10 @@ const LostPassword = () => {
   }, [email]);
 
   return done ? (
-    <Alert severity="success">
-      Done! Have a look in your emails, you should get a link to reset your
-      password.
-    </Alert>
+    <Alert severity="success">{translations.doneMessage}</Alert>
   ) : (
     <Wrapper
-      header="Forgot password"
+      header={translations.header}
       actions={
         <Button
           onClick={handleForgotPassword}
@@ -34,17 +34,17 @@ const LostPassword = () => {
           autoFocus
           disabled={!email.length}
         >
-          Reset Password
+          {translations.resetButton}
         </Button>
       }
     >
-      <Alert severity="info">Todo forgot password</Alert>
+      <Alert severity="info">{translations.info}</Alert>
 
       <Input
         value={email}
         onChangeValue={setEmail}
-        title="email"
-        placeholder="email"
+        title={authTranslations.emailField}
+        placeholder={authTranslations.emailField}
         type="email"
         fullWidth
         style={{ marginTop: 20 }}

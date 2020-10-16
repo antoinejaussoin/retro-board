@@ -136,7 +136,7 @@ editButton: undefined,
       rejoinButton: 'Rejoin',
     },
   },
-  Login: {
+  AnonymousLogin: {
     namePlaceholder: 'Hogy is hívnak? Kérlek írd ide a nevedet',
     buttonLabel: 'Kezdjük',
     header: 'Login',

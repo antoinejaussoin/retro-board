@@ -5,17 +5,18 @@ import useTranslations, { useLanguage } from '../../../translations';
 import Wrapper from './../Wrapper';
 import Input from '../../../components/Input';
 import { Person, Email, VpnKey } from '@material-ui/icons';
-import { accountLogin, updateLanguage, register } from '../../../api';
+import { updateLanguage, register } from '../../../api';
 import { validate } from 'isemail';
 
 const PasswordStrength = React.lazy(
   () => import('react-password-strength-bar')
 );
 
-const scoreWords = ['weak', 'weak', 'not quite', 'good', 'strong'];
-
 const Register = () => {
-  const { Login: loginTranslations } = useTranslations();
+  const {
+    Register: translations,
+    AuthCommon: authTranslations,
+  } = useTranslations();
   const language = useLanguage();
   const [registerName, setRegisterName] = useState('');
   const [registerEmail, setRegisterEmail] = useState('');
@@ -39,23 +40,27 @@ const Register = () => {
     if (response.error) {
       switch (response.error) {
         case 'already-exists':
-          setGeneralError('This email is already registered');
+          setGeneralError(translations.errorAlreadyRegistered!);
           return;
         default:
-          setGeneralError(
-            'An error occurred while trying to create your account.'
-          );
+          setGeneralError(translations.errorGeneral!);
           return;
       }
     } else {
       await updateLanguage(language.value);
       setIsSuccessful(true);
     }
-  }, [registerName, registerEmail, registerPassword, language.value]);
+  }, [
+    registerName,
+    registerEmail,
+    registerPassword,
+    language.value,
+    translations,
+  ]);
 
   return (
     <Wrapper
-      header="Register"
+      header={translations.header}
       actions={
         !isSuccessful ? (
           <Button
@@ -64,19 +69,16 @@ const Register = () => {
             autoFocus
             disabled={!validEmail || passwordScore < 3 || !validName}
           >
-            Register
+            {translations.registerButton}
           </Button>
         ) : undefined
       }
     >
       {isSuccessful ? (
-        <Alert severity="success">
-          Thank you! You should receive an email shortly to validate your
-          account.
-        </Alert>
+        <Alert severity="success">{translations.messageSuccess}</Alert>
       ) : (
         <>
-          <Alert severity="info">Todo</Alert>
+          <Alert severity="info">{translations.info}</Alert>
 
           {!!generalError ? (
             <Alert severity="error" style={{ marginTop: 10 }}>
@@ -87,8 +89,8 @@ const Register = () => {
           <Input
             value={registerName}
             onChangeValue={setRegisterName}
-            title={loginTranslations.buttonLabel}
-            placeholder={loginTranslations.namePlaceholder}
+            title={authTranslations.nameField}
+            placeholder={authTranslations.nameField}
             fullWidth
             style={{ marginTop: 20 }}
             leftIcon={<Person />}
@@ -97,8 +99,8 @@ const Register = () => {
           <Input
             value={registerEmail}
             onChangeValue={setRegisterEmail}
-            title="email"
-            placeholder="email"
+            title={authTranslations.emailField}
+            placeholder={authTranslations.emailField}
             fullWidth
             style={{ marginTop: 20 }}
             leftIcon={<Email />}
@@ -106,15 +108,15 @@ const Register = () => {
             error={!validEmail && registerEmail.length > 0}
             helperText={
               !validEmail && registerEmail.length > 0
-                ? 'Please enter a valid email'
+                ? translations.errorInvalidEmail
                 : undefined
             }
           />
           <Input
             value={registerPassword}
             onChangeValue={setRegisterPassword}
-            title="Password"
-            placeholder="Password"
+            title={authTranslations.passwordField}
+            placeholder={authTranslations.passwordField}
             type="password"
             fullWidth
             style={{ marginTop: 20 }}
@@ -125,7 +127,7 @@ const Register = () => {
             <PasswordStrength
               onChangeScore={setPasswordScore}
               password={registerPassword}
-              scoreWords={scoreWords}
+              scoreWords={authTranslations.passwordScoreWords}
             />
           </Suspense>
         </>

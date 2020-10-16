@@ -23,7 +23,7 @@ const Login = ({ onClose }: LoginModalProps) => {
     !config.GoogleAuthEnabled &&
     !config.TwitterAuthEnabled &&
     !config.GitHubAuthEnabled;
-  const { Login: loginTranslations } = useTranslations();
+  const { AnonymousLogin: loginTranslations } = useTranslations();
   const fullScreen = useMediaQuery('(max-width:600px)');
   const { setUser } = useContext(UserContext);
   const [currentTab, setCurrentTab] = useState(
