@@ -148,16 +148,55 @@ export default {
     namePlaceholder: 'Please enter a name or nickname here to continue',
     buttonLabel: "Let's start",
     header: 'Login',
-    socialMediaAuthHeader: 'Social Media Authentication',
-    socialMediaAuthDescription:
-      'This will use your account to authenticate you, and will allow you to retrieve all your sessions. No password is stored.',
     anonymousAuthHeader: 'Anonymous Login',
     anonymousAuthDescription:
       "This will create an anonymous account. Some features won't be available.",
     authenticatingWith: 'Authenticating with',
     or: 'or',
-    // New stuff
-    errorEmailPasswordIncorrect: 'Your email or password are incorrect.',
+  },
+  SocialMediaLogin: {
+    header: 'Social Media Authentication',
+    info: 'This will use your account to authenticate you, and will allow you to retrieve all your sessions. No password is stored.',
+  },
+  AuthCommon: {
+    emailField: 'E-mail',
+    passwordField: 'Password',
+    nameField: 'Your name (for display purposes)',
+    passwordScoreWords: ['weak', 'weak', 'not quite', 'good', 'strong'],
+  },
+  AccountLogin: {
+    header: 'Account',
+    loginButton: 'Login',
+    info: 'TODO',
+    registerLink: 'Not registered? Click here',
+    forgotPasswordLink: 'Forgot your password?',
+    errorEmailPasswordIncorrect: 'Your credentials are incorrect.',
+  },
+  Register: {
+    header: 'Register',
+    info: 'TODO',
+    registerButton: 'Register',
+    errorAlreadyRegistered: 'This email is already registered',
+    errorGeneral: 'An error occurred while trying to create your account.',
+    messageSuccess: 'Thank you! You should receive an email shortly to validate your account.',
+    errorInvalidEmail: 'Please enter a valid email',
+  },
+  ValidateAccount: {
+    success: `Your email has been correctly validated. I'm going to log you in in a sec!`,
+    error: 'There was an error validating your email.',
+    loading: 'We are validating your email. Please wait.',
+  },
+  ResetPassword: {
+    // Reset Modal
+    doneMessage: 'Done! Have a look in your emails, you should get a link to reset your password.',
+    header: 'Password Reset',
+    resetButton: 'Reset Password',
+    info: 'TODO',
+    // Reset Page
+    success: `Your password has been updated. I'm going to log you in in a sec!`,
+    error: 'There was an error updating your password.',
+    loading: 'We are updating your password. Please wait.',
+    resetInfo: 'Please provide a new password',
   },
   SummaryBoard: {
     noPosts: 'There are no posts to display',

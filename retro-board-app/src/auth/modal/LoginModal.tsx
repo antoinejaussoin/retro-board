@@ -23,7 +23,7 @@ const Login = ({ onClose }: LoginModalProps) => {
     !config.GoogleAuthEnabled &&
     !config.TwitterAuthEnabled &&
     !config.GitHubAuthEnabled;
-  const { AnonymousLogin: loginTranslations } = useTranslations();
+  const translations = useTranslations();
   const fullScreen = useMediaQuery('(max-width:600px)');
   const { setUser } = useContext(UserContext);
   const [currentTab, setCurrentTab] = useState(
@@ -45,7 +45,6 @@ const Login = ({ onClose }: LoginModalProps) => {
       fullWidth
       open
       onClose={handleClose}
-      aria-labelledby="responsive-dialog-title"
     >
       <AppBar position="static" color="default">
         <Tabs
@@ -55,16 +54,16 @@ const Login = ({ onClose }: LoginModalProps) => {
           textColor="primary"
           variant="scrollable"
           scrollButtons="auto"
-          aria-label="scrollable auto tabs example"
+          aria-label="Login types"
         >
           {!hasNoSocialMediaAuth ? (
-            <Tab
-              label={loginTranslations.socialMediaAuthHeader}
-              value="social"
-            />
+            <Tab label={translations.SocialMediaLogin.header} value="social" />
           ) : null}
-          <Tab label={'account'} value="account" />
-          <Tab label={loginTranslations.anonymousAuthHeader} value="anon" />
+          <Tab label={translations.AccountLogin.header} value="account" />
+          <Tab
+            label={translations.AnonymousLogin.anonymousAuthHeader}
+            value="anon"
+          />
         </Tabs>
       </AppBar>
       <DialogContent>

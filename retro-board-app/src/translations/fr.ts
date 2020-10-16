@@ -150,14 +150,55 @@ export default {
     namePlaceholder: 'Présentez-vous ! Entrez votre nom ici',
     buttonLabel: "C'est parti !",
     header: 'Se connecter',
-    socialMediaAuthHeader: 'Identification Tierce',
-    socialMediaAuthDescription:
-      'Vous allez utiliser un de vos compte existant pour vous identifier. Vous pourrez visualiser vos précédentes sessions. Aucun mot de passe ne sera stocké.',
     anonymousAuthHeader: 'Identification Anonyme',
     anonymousAuthDescription:
       'Ceci va créer un compte anonyme, certaines fonctionalitées ne seront pas disponibles.',
     authenticatingWith: 'Identification avec',
     or: 'ou',
+  },
+  SocialMediaLogin: {
+    header: 'Réseaux Sociaux',
+    info: 'Vous allez utiliser un de vos compte existant pour vous identifier. Vous pourrez visualiser vos précédentes sessions. Aucun mot de passe ne sera stocké.',
+  },
+  AuthCommon: {
+    emailField: 'Adresse e-mail',
+    passwordField: 'Mot de passe',
+    nameField: 'Votre nom (ou pseudo)',
+    passwordScoreWords: ['faible', 'faible', 'encore un éffort', 'pas mal', 'très bien!'],
+  },
+  AccountLogin: {
+    header: 'Classique',
+    loginButton: 'Se connecter',
+    info: 'TODO',
+    registerLink: 'Pas de compte ? Cliquez ici',
+    forgotPasswordLink: 'Mot de passe oublié ?',
+    errorEmailPasswordIncorrect: 'Les identifiants communiqués sont incorrects.',
+  },
+  Register: {
+    header: `S'enregistrer`,
+    info: 'TODO',
+    registerButton: 'Créer un compte',
+    errorAlreadyRegistered: 'Désolé, cet email est déjà enregistré',
+    errorGeneral: 'Une error est survenue lors de la création de votre compte.',
+    messageSuccess: 'Merci ! Vous devriez reçevoir un email pour valider votre compte.',
+    errorInvalidEmail: `Merci d'entrer un email valide`,
+  },
+  ValidateAccount: {
+    success: `Votre email a été validé. Ne bougez pas, je vous connecte dans quelques secondes.`,
+    error: 'Une erreur est survenue lors de la validation de votre adresse e-mail.',
+    loading: 'Nous validons votre e-mail... Merci de votre patience.',
+  },
+  ResetPassword: {
+    // Reset Modal
+    doneMessage: `C'est fait ! Jetez un oeuil dans votre boîte email, vous devriez reçevoir un email pour mettre à jour votre mot de passe.`,
+    header: 'Changer de mot de passe',
+    resetButton: 'Mettre à jour',
+    info: 'TODO',
+    // Reset Page
+    success: `Votre mot de passe a été mis à jour. Je vais vous connecter dans quelques secondes.`,
+    error: 'Une erreur est survenue lors de la mise à jour de votre mot de passe.',
+    loading: 'Nous mettons votre mot de passe à jour. Merci de patienter.',
+    resetInfo: 'Merci de choisir un nouveau mot de passe:',
   },
   SummaryBoard: {
     noPosts: 'Aucun post à afficher',

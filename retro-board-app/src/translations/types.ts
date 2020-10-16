@@ -138,14 +138,14 @@ export interface Translation {
     namePlaceholder?: string;
     buttonLabel?: string;
     header?: string;
-    socialMediaAuthHeader?: string;
-    socialMediaAuthDescription?: string;
     anonymousAuthHeader?: string;
     anonymousAuthDescription?: string;
     authenticatingWith?: string;
     or?: string;
-    // New stuff
-    
+  };
+  SocialMediaLogin: {
+    header?: string; // socialMediaAuthHeader
+    info?: string; // anonymousAuthHeader
   };
   AuthCommon: {
     emailField?: string;
@@ -171,13 +171,21 @@ export interface Translation {
     errorInvalidEmail?: string; // 'Please enter a valid email'
   };
   ValidateAccount: {
-
+    success?: string; // Your email has been correctly validated. I'm going to log you in in a sec!
+    error?: string; // There was an error validating your email.
+    loading?: string; // We are validating your email. Please wait.
   };
   ResetPassword: {
+    // Reset Modal
     doneMessage?: string; //  Done! Have a look in your emails, you should get a link to reset your password.
     header?: string;
     resetButton?: string; // Reset Password
     info?: string;
+    // Reset Page
+    success?: string; // Your password has been updated. I'm going to log you in in a sec!
+    error?: string; // There was an error updating your password.
+    loading?: string; // We are updating your password. Please wait.
+    resetInfo?: string; // Please provide a new password
   };
   SummaryBoard: {
     noPosts?: string;

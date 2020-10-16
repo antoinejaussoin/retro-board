@@ -149,14 +149,55 @@ export default {
     namePlaceholder: 'Laat weten wie je bent met je naam',
     buttonLabel: 'Laten we beginnen',
     header: 'Login',
-    socialMediaAuthHeader: 'Social Media authenticatie',
-    socialMediaAuthDescription:
-      'Dit gebruikt je social media account en slaat de sessies op onder je account. Er is geen wachtwoord nodig.',
     anonymousAuthHeader: 'Aanmelden zonder account',
     anonymousAuthDescription:
       'Hiermee maak je aan anonieme account aan. Hiermee kan geen sessies opslaan en terughalen.',
     authenticatingWith: 'Authenticeer met',
     or: 'of',
+  },
+  SocialMediaLogin: {
+    header: 'Social Media authenticatie',
+    info: 'Dit gebruikt je social media account en slaat de sessies op onder je account. Er is geen wachtwoord nodig.',
+  },
+  AuthCommon: {
+    emailField: undefined,
+    passwordField: undefined,
+    nameField: undefined,
+    passwordScoreWords: undefined,
+  },
+  AccountLogin: {
+    header: undefined,
+    loginButton: undefined,
+    info: undefined,
+    registerLink: undefined,
+    forgotPasswordLink: undefined,
+    errorEmailPasswordIncorrect: undefined,
+  },
+  Register: {
+    header: undefined,
+    info: undefined,
+    registerButton: undefined,
+    errorAlreadyRegistered: undefined,
+    errorGeneral: undefined,
+    messageSuccess: undefined,
+    errorInvalidEmail: undefined,
+  },
+  ValidateAccount: {
+    success: undefined,
+    error: undefined,
+    loading: undefined,
+  },
+  ResetPassword: {
+    // Reset Modal
+    doneMessage: undefined,
+    header: undefined,
+    resetButton: undefined,
+    info: undefined,
+    // Reset Page
+    success: undefined,
+    error: undefined,
+    loading: undefined,
+    resetInfo: undefined,
   },
   SummaryBoard: {
     noPosts: 'Er zijn geen retropunten om te tonen',

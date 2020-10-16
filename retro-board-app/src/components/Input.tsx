@@ -1,10 +1,7 @@
 import React, { useCallback } from 'react';
 import {
-  // Input as BaseInput,
-  // InputProps as BaseInputProps,
   InputAdornment,
   TextField,
-  TextFieldProps,
   StandardTextFieldProps,
 } from '@material-ui/core';
 

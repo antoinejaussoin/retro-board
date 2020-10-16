@@ -23,7 +23,7 @@ interface SocialAuthProps {
 function SocialAuth({ onClose, onUser }: SocialAuthProps) {
   const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null);
   const windowRef = useRef<Window | null>(null);
-  const { AnonymousLogin: loginTranslations } = useTranslations();
+  const { SocialMediaLogin: translations } = useTranslations();
   const language = useLanguage();
   const handleOAuth = useCallback(
     (provider: string) => {
@@ -71,10 +71,8 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
   }, [onClose, onUser, language]);
 
   return (
-    <Wrapper header={loginTranslations.socialMediaAuthHeader}>
-      <Alert severity="info">
-        {loginTranslations.socialMediaAuthDescription}
-      </Alert>
+    <Wrapper header={translations.header}>
+      <Alert severity="info">{translations.info}</Alert>
       <AccountsButtons>
         {config.GitHubAuthEnabled && (
           <GithubLoginButton onClick={handleGitHub} text={'GitHub'} />

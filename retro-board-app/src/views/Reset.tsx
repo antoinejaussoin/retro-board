@@ -7,17 +7,20 @@ import UserContext from '../auth/Context';
 import Input from '../components/Input';
 import { VpnKey } from '@material-ui/icons';
 import { Button } from '@material-ui/core';
+import useTranslations from '../translations';
 
 const PasswordStrength = React.lazy(
   () => import('react-password-strength-bar')
 );
 
-const scoreWords = ['weak', 'weak', 'not quite', 'good', 'strong'];
-
 function ResetPasswordPage() {
   const { setUser } = useContext(UserContext);
   const history = useHistory();
   const location = useLocation();
+  const {
+    ResetPassword: translations,
+    AuthCommon: authTranslations,
+  } = useTranslations();
   const params = new URLSearchParams(location.search);
   const email = params.get('email');
   const code = params.get('code');
@@ -49,28 +52,22 @@ function ResetPasswordPage() {
   return (
     <div style={{ margin: 50 }}>
       {success === true && !loading ? (
-        <Alert severity="success">
-          Your password has been updated. I'm going to log you in in a sec!
-        </Alert>
+        <Alert severity="success">{translations.success}</Alert>
       ) : null}
       {success === false && !loading ? (
-        <Alert severity="error">
-          There was an error updating your password.
-        </Alert>
+        <Alert severity="error">{translations.error}</Alert>
       ) : null}
       {success === null && loading ? (
-        <Alert severity="info">
-          We are updating your password. Please wait.
-        </Alert>
+        <Alert severity="info">{translations.loading}</Alert>
       ) : null}
       {success === null && !loading ? (
         <>
-          <Alert severity="info">Please provide a new password</Alert>
+          <Alert severity="info">{translations.resetInfo}</Alert>
           <Input
             value={password}
             onChangeValue={setPassword}
-            title="Password"
-            placeholder="Password"
+            title={authTranslations.passwordField}
+            placeholder={authTranslations.passwordField}
             type="password"
             fullWidth
             style={{ marginTop: 20 }}
@@ -81,11 +78,11 @@ function ResetPasswordPage() {
             <PasswordStrength
               onChangeScore={setScore}
               password={password}
-              scoreWords={scoreWords}
+              scoreWords={authTranslations.passwordScoreWords}
             />
           </Suspense>
           <Button onClick={handleChangePassword} disabled={!validPassword}>
-            Update Password
+            {translations.resetButton}
           </Button>
         </>
       ) : null}

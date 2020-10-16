@@ -150,14 +150,55 @@ export default {
       'Benvenuto! Per favore inserisci il tuo nome per continuare',
     buttonLabel: 'Iniziamo',
     header: 'Login',
-    socialMediaAuthHeader: 'Autenticazione con i Social Media',
-    socialMediaAuthDescription:
-      'Questo utilizzerà il tuo account per autenticarti e ti permetterà di recuperare tutte le tue sessioni. Nessuna password viene memorizzata.',
     anonymousAuthHeader: 'Login anonimo',
     anonymousAuthDescription:
       'Questo creerà un account anonimo, ma non ti permetterà di recuperare le sessioni precedenti.',
     authenticatingWith: 'Accedi con',
     or: 'oppure',
+  },
+  SocialMediaLogin: {
+    header: 'Autenticazione con i Social Media',
+    info: 'Questo utilizzerà il tuo account per autenticarti e ti permetterà di recuperare tutte le tue sessioni. Nessuna password viene memorizzata.',
+  },
+  AuthCommon: {
+    emailField: undefined,
+    passwordField: undefined,
+    nameField: undefined,
+    passwordScoreWords: undefined,
+  },
+  AccountLogin: {
+    header: undefined,
+    loginButton: undefined,
+    info: undefined,
+    registerLink: undefined,
+    forgotPasswordLink: undefined,
+    errorEmailPasswordIncorrect: undefined,
+  },
+  Register: {
+    header: undefined,
+    info: undefined,
+    registerButton: undefined,
+    errorAlreadyRegistered: undefined,
+    errorGeneral: undefined,
+    messageSuccess: undefined,
+    errorInvalidEmail: undefined,
+  },
+  ValidateAccount: {
+    success: undefined,
+    error: undefined,
+    loading: undefined,
+  },
+  ResetPassword: {
+    // Reset Modal
+    doneMessage: undefined,
+    header: undefined,
+    resetButton: undefined,
+    info: undefined,
+    // Reset Page
+    success: undefined,
+    error: undefined,
+    loading: undefined,
+    resetInfo: undefined,
   },
   SummaryBoard: {
     noPosts: 'Non ci sono post da mostrare',
