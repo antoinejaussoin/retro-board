@@ -21,7 +21,7 @@ import {
   setScope,
   reportQueryError,
 } from './sentry';
-import { RegisterPayload, ValidateEmailPayload, ResetPasswordPayload } from 'retro-board-common';
+import { RegisterPayload, ValidateEmailPayload, ResetPasswordPayload, ResetChangePasswordPayload } from 'retro-board-common';
 import registerUser from './auth/register/register-user';
 import { sendVerificationEmail, sendResetPassword } from './email/emailSender';
 import { v4 } from 'uuid';
@@ -240,7 +240,7 @@ db().then((store) => {
       res.status(404).send("Email not found");
       return;
     }
-    if (user?.emailVerification === validatePayload.code) {
+    if (user.emailVerification && user.emailVerification === validatePayload.code) {
       const updatedUser = await store.updateUser(user.id, {
         emailVerification: null,
       });
@@ -270,6 +270,31 @@ db().then((store) => {
     });
     await sendResetPassword(resetPayload.email, user.name, code);
     res.status(200).send();
+  });
+
+  app.post('/api/reset-password', async (req, res) => {
+    const validatePayload = req.body as ResetChangePasswordPayload;
+    const user = await store.getUserByUsername(validatePayload.email);
+    if (!user) {
+      res.status(404).send("Email not found");
+      return;
+    }
+    if (user.emailVerification && user.emailVerification === validatePayload.code) {
+      const updatedUser = await store.updateUser(user.id, {
+        emailVerification: null,
+        password: validatePayload.password,
+      });
+      req.logIn(user.id, (err) => {
+        if (err) {
+          console.log('Cannot login Error: ', err);
+          res.status(500).send('Cannot login');
+        } else {
+          res.status(200).send(updatedUser);
+        }
+      });
+    } else {
+      res.status(403).send('Code not valid');
+    }
   });
 
   setupSentryErrorHandler(app);

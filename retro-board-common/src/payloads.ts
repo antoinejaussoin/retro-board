@@ -12,3 +12,9 @@ export interface ValidateEmailPayload {
 export interface ResetPasswordPayload {
   email: string;
 }
+
+export interface ResetChangePasswordPayload {
+  email: string;
+  password: string;
+  code: string;
+}

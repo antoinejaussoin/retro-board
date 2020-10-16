@@ -5,6 +5,10 @@ import {
   Session,
   SessionTemplate,
   SessionMetadata,
+  RegisterPayload,
+  ValidateEmailPayload,
+  ResetPasswordPayload,
+  ResetChangePasswordPayload,
 } from 'retro-board-common';
 import config from '../utils/getConfig';
 import { v4 } from 'uuid';
@@ -147,6 +151,7 @@ interface RegisterResponse {
 }
 
 export async function register(name: string, email: string, password: string): Promise<RegisterResponse> {
+  const payload: RegisterPayload = { username: email, password, name };
   const response = await fetch(`/api/register`, {
     method: 'POST',
     mode: 'cors',
@@ -157,7 +162,7 @@ export async function register(name: string, email: string, password: string): P
     },
     redirect: 'follow',
     referrer: 'no-referrer',
-    body: JSON.stringify({ username: email, password, name }),
+    body: JSON.stringify(payload),
   });
   if (response.ok) {
     const user = await response.json();
@@ -178,6 +183,7 @@ export async function register(name: string, email: string, password: string): P
 }
 
 export async function verifyEmail(email: string, code: string): Promise<User | null> {
+  const payload: ValidateEmailPayload = { email, code };
   const response = await fetch(`/api/validate`, {
     method: 'POST',
     mode: 'cors',
@@ -188,7 +194,7 @@ export async function verifyEmail(email: string, code: string): Promise<User | n
     },
     redirect: 'follow',
     referrer: 'no-referrer',
-    body: JSON.stringify({ email, code }),
+    body: JSON.stringify(payload),
   });
   if (response.ok) {
     const user = await response.json();
@@ -198,6 +204,7 @@ export async function verifyEmail(email: string, code: string): Promise<User | n
 }
 
 export async function resetPassword(email: string): Promise<boolean> {
+  const payload: ResetPasswordPayload = { email };
   const response = await fetch(`/api/reset`, {
     method: 'POST',
     mode: 'cors',
@@ -208,12 +215,33 @@ export async function resetPassword(email: string): Promise<boolean> {
     },
     redirect: 'follow',
     referrer: 'no-referrer',
-    body: JSON.stringify({ email }),
+    body: JSON.stringify(payload),
   });
   if (response.ok) {
     return true;
   }
   return false;
+}
+
+export async function resetChangePassword(email: string, password: string, code: string): Promise<User | null> {
+  const payload: ResetChangePasswordPayload = { email, password, code};
+  const response = await fetch(`/api/reset-password`, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    redirect: 'follow',
+    referrer: 'no-referrer',
+    body: JSON.stringify(payload),
+  });
+  if (response.ok) {
+    const user: User = await response.json();
+    return user;
+  }
+  return null;
 }
 
 function getAnonymousUsername(username: string): string {
