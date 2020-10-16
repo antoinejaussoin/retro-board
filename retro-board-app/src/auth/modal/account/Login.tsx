@@ -8,7 +8,6 @@ import Input from '../../../components/Input';
 import Link from '../../../components/Link';
 import { Email, VpnKey } from '@material-ui/icons';
 import { accountLogin, updateLanguage } from '../../../api';
-import styled from 'styled-components';
 
 interface LoginProps {
   onClose: () => void;
@@ -27,14 +26,19 @@ const Login = ({
   const language = useLanguage();
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
+  const [error, setError] = useState('');
   const handleAccountogin = useCallback(() => {
     async function login() {
       if (loginEmail.length && loginPassword.length) {
         await accountLogin(loginEmail, loginPassword);
         const updatedUser = await updateLanguage(language.value);
         onUser(updatedUser);
-        if (onClose) {
-          onClose();
+        if (updatedUser) {
+          if (onClose) {
+            onClose();
+          }
+        } else {
+          setError('Your email or password are incorrect.');
         }
       }
     }
@@ -49,13 +53,18 @@ const Login = ({
           onClick={handleAccountogin}
           color="primary"
           autoFocus
-          disabled={false}
+          disabled={!loginEmail || !loginPassword}
         >
           {loginTranslations.buttonLabel}
         </Button>
       }
     >
       <Alert severity="info">Todo</Alert>
+      {!!error ? (
+        <Alert severity="error" style={{ marginTop: 10 }}>
+          {error}
+        </Alert>
+      ) : null}
       <Input
         value={loginEmail}
         onChangeValue={setLoginEmail}
@@ -77,9 +86,9 @@ const Login = ({
         leftIcon={<VpnKey />}
       />
       <div style={{ marginTop: 20 }} />
-      <Link onClick={onAskRegistration}>No account? register here.</Link>
-      or perhaps you{' '}
-      <Link onClick={onAskPasswordReset}>forgot your password?</Link>
+      No account?&nbsp;
+      <Link onClick={onAskRegistration}>register here</Link>,&nbsp; or perhaps
+      you <Link onClick={onAskPasswordReset}>forgot your password?</Link>
     </Wrapper>
   );
 };

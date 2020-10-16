@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link as BaseLink, LinkTypeMap } from '@material-ui/core';
+import { Link as BaseLink, LinkTypeMap, colors } from '@material-ui/core';
 import styled from 'styled-components';
 import { DefaultComponentProps } from '@material-ui/core/OverridableComponent';
 
@@ -15,6 +15,9 @@ function Link({ ...props }: LinkProps) {
 
 const Container = styled.span`
   cursor: pointer;
+  a {
+    color: ${colors.deepPurple[500]} !important;
+  }
 `;
 
 export default Link;
