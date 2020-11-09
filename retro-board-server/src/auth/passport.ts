@@ -29,7 +29,7 @@ export default (store: Store) => {
   ) => {
     if (profile.displayName == null) {
         profile.displayName = profile.username ||
-            (profile.emails.length ? profile.emails[0].value : null);
+            (profile.emails.length ? profile.emails[0].value : '');
     }
     const user: User = {
       accountType: type,
