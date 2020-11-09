@@ -27,7 +27,7 @@ export default (store: Store) => {
     profile: any,
     cb: Function
   ) => {
-    if (profile.displayName.length == 0) {
+    if (profile.displayName == null) {
         profile.displayName = profile.username ||
             (profile.emails.length ? profile.emails[0].value : null);
     }
