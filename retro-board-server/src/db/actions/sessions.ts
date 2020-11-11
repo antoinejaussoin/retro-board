@@ -300,9 +300,15 @@ export async function updateName(
   }
 }
 
-export async function storeVisitor(connection: Connection, sessionId: string, user: UserEntity) {
+export async function getSessionWithVisitors(connection: Connection, sessionId: string): Promise<SessionEntity | null> {
   const sessionRepository = connection.getCustomRepository(SessionRepository);
   const session = await sessionRepository.findOne(sessionId, { relations: ['visitors'] });
+  return session || null;
+}
+
+export async function storeVisitor(connection: Connection, sessionId: string, user: UserEntity) {
+  const sessionRepository = connection.getCustomRepository(SessionRepository);
+  const session = await getSessionWithVisitors(connection, sessionId);
   if (session && session.visitors && !session.visitors.map(v => v.id).includes(user.id)) {
     session.visitors.push(user);
     await sessionRepository.save(session);

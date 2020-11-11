@@ -16,7 +16,7 @@ import { find } from 'lodash';
 import { v4 } from 'uuid';
 import { setScope, reportQueryError } from './sentry';
 import SessionOptionsEntity from './db/entities/SessionOptions';
-import { UserEntity } from './db/entities';
+import { SessionEntity, UserEntity } from './db/entities';
 import { hasField } from './security/payload-checker';
 import {
   getSession,
@@ -25,6 +25,7 @@ import {
   updateColumns,
   updateName,
   storeVisitor,
+  getSessionWithVisitors,
 } from './db/actions/sessions';
 import { getUser } from './db/actions/users';
 import {
@@ -212,11 +213,11 @@ export default (connection: Connection, io: SocketIO.Server) => {
     await deletePostGroup(connection, userId, sessionId, groupId);
   };
 
-  const sendClientList = (sessionId: string, socket: ExtendedSocket) => {
-    const room = io.nsps['/'].adapter.rooms[getRoom(sessionId)];
+  const sendClientList = (session: SessionEntity, socket: ExtendedSocket) => {
+    const room = io.nsps['/'].adapter.rooms[getRoom(session.id)];
     if (room) {
       const clients = Object.keys(room.sockets);
-      const participants: Participant[] = clients.map((id, i) =>
+      const onlineParticipants: Participant[] = clients.map((id, i) =>
         !!users[id]
           ? users[id]!.toJson()
           : {
@@ -226,14 +227,19 @@ export default (connection: Connection, io: SocketIO.Server) => {
               pro: null,
             }
       ).map(user => ({...user, online: true }));
+      const onlineParticipantsIds = onlineParticipants.map(p => p.id);
 
-      sendToSelf(socket, RECEIVE_CLIENT_LIST, participants);
-      sendToAll(socket, sessionId, RECEIVE_CLIENT_LIST, participants);
+      const offlineParticipants: Participant[] = session.visitors!
+        .filter(op => !onlineParticipantsIds.includes(op.id))
+        .map(op => ({ ...op.toJson(), online: false }));
+
+      sendToSelf(socket, RECEIVE_CLIENT_LIST, [...onlineParticipants, ...offlineParticipants]);
+      sendToAll(socket, session.id, RECEIVE_CLIENT_LIST, [...onlineParticipants, ...offlineParticipants]);
     }
   };
 
   const recordUser = (
-    sessionId: string,
+    session: SessionEntity,
     user: UserEntity,
     socket: ExtendedSocket
   ) => {
@@ -242,7 +248,7 @@ export default (connection: Connection, io: SocketIO.Server) => {
       users[socketId] = user || null;
     }
 
-    sendClientList(sessionId, socket);
+    sendClientList(session, socket);
   };
 
   const onAddPost = async (
@@ -282,8 +288,9 @@ export default (connection: Connection, io: SocketIO.Server) => {
       sendToSelf(socket, RECEIVE_BOARD, session);
       if (userId) {
         const user = await getUser(connection, userId);
-        if (user) {
-          recordUser(session.id, user, socket);
+        const sessionEntity = await getSessionWithVisitors(connection, session.id);
+        if (user && sessionEntity) {
+          recordUser(sessionEntity, user, socket);
           await storeVisitor(connection, session.id, user);
         }
       }
@@ -310,8 +317,11 @@ export default (connection: Connection, io: SocketIO.Server) => {
     _data: void,
     socket: ExtendedSocket
   ) => {
-    socket.leave(getRoom(session.id), () => {
-      sendClientList(session.id, socket);
+    socket.leave(getRoom(session.id), async () => {
+      const sessionEntity = await getSessionWithVisitors(connection, session.id);
+      if (sessionEntity) {
+        sendClientList(sessionEntity, socket);
+      }
     });
   };
 
@@ -516,15 +526,17 @@ export default (connection: Connection, io: SocketIO.Server) => {
       });
     });
 
-    socket.on('disconnect', () => {
+    socket.on('disconnect', async () => {
       if (socket.sessionId) {
         console.log(
           chalk`${d()}{blue Disconnection: }{red User left} {grey ${
             socket.id
           } ${ip}}`
         );
-
-        sendClientList(socket.sessionId, socket);
+        const sessionEntity = await getSessionWithVisitors(connection, socket.sessionId);
+        if (sessionEntity) {
+          sendClientList(sessionEntity, socket);
+        } 
       }
     });
   });
