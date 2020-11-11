@@ -7,6 +7,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import PostEntity from './Post';
 import { ColumnDefinitionEntity } from './ColumnDefinition';
@@ -49,6 +51,9 @@ export default class SessionEntity {
   public options: SessionOptionsEntity;
   @Column({ nullable: true, type: 'character varying' })
   public encrypted: string | null;
+  @ManyToMany(() => UserEntity)
+  @JoinTable({ name: 'visitors' })
+  visitors: UserEntity[] | undefined;
   @CreateDateColumn({ type: 'timestamp with time zone' })
   public created: Date | undefined;
   @UpdateDateColumn({ type: 'timestamp with time zone' })
