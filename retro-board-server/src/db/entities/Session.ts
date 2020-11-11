@@ -54,6 +54,8 @@ export default class SessionEntity {
   @ManyToMany(() => UserEntity, user => user.sessions)
   @JoinTable({ name: 'visitors' })
   visitors: UserEntity[] | undefined;
+  @Column({ default: false })
+  public locked: boolean;
   @CreateDateColumn({ type: 'timestamp with time zone' })
   public created: Date | undefined;
   @UpdateDateColumn({ type: 'timestamp with time zone' })
@@ -85,5 +87,6 @@ export default class SessionEntity {
     this.createdBy = createdBy;
     this.options = new SessionOptionsEntity(options);
     this.encrypted = null;
+    this.locked = false;
   }
 }
