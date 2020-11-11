@@ -22,7 +22,7 @@ function PlayerList() {
         {state.players.map((player, index) => (
           <ListItem key={index}>
             <ListItemAvatar>
-              <Avatar user={player} />
+              <Avatar user={player} online={player.online} />
             </ListItemAvatar>
             <ListItemText primary={player.name} />
           </ListItem>

@@ -231,6 +231,7 @@ export async function previousSessions(
   userId: string
 ): Promise<SessionMetadata[]> {
   const userRepository = connection.getCustomRepository(UserRepository);
+  // TODO !!! ORDER BY DATE
   const loadedUser = await userRepository.findOne(userId, { relations: ['sessions', 'sessions.posts', 'sessions.visitors']});
   if (loadedUser && loadedUser.sessions) {
     return loadedUser.sessions.map(

@@ -97,6 +97,10 @@ export interface User extends Entity {
   photo: string | null;
 }
 
+export interface Participant extends User {
+  online: boolean;
+}
+
 export interface FullUser extends User {
   username: string | null;
   accountType: AccountType;

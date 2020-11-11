@@ -7,6 +7,7 @@ import {
   VoteType,
   SessionOptions,
   ColumnDefinition,
+  Participant,
 } from 'retro-board-common';
 import { v4 } from 'uuid';
 import { find } from 'lodash';
@@ -160,11 +161,11 @@ const useGame = (sessionId: string) => {
       editColumns(columns);
     });
 
-    newSocket.on(Actions.RECEIVE_CLIENT_LIST, (clients: string[]) => {
+    newSocket.on(Actions.RECEIVE_CLIENT_LIST, (participants: Participant[]) => {
       if (debug) {
-        console.log('Receive players list: ', clients);
+        console.log('Receive participants list: ', participants);
       }
-      setPlayers(clients);
+      setPlayers(participants);
     });
 
     newSocket.on(Actions.RECEIVE_DELETE_POST, (post: Post) => {

@@ -4,6 +4,7 @@ import {
   Post,
   PostGroup,
   User,
+  Participant,
   Vote,
   VoteType,
   ColumnDefinition,
@@ -215,7 +216,7 @@ export default (connection: Connection, io: SocketIO.Server) => {
     const room = io.nsps['/'].adapter.rooms[getRoom(sessionId)];
     if (room) {
       const clients = Object.keys(room.sockets);
-      const names: User[] = clients.map((id, i) =>
+      const participants: Participant[] = clients.map((id, i) =>
         !!users[id]
           ? users[id]!.toJson()
           : {
@@ -224,10 +225,10 @@ export default (connection: Connection, io: SocketIO.Server) => {
               photo: null,
               pro: null,
             }
-      );
+      ).map(user => ({...user, online: true }));
 
-      sendToSelf(socket, RECEIVE_CLIENT_LIST, names);
-      sendToAll(socket, sessionId, RECEIVE_CLIENT_LIST, names);
+      sendToSelf(socket, RECEIVE_CLIENT_LIST, participants);
+      sendToAll(socket, sessionId, RECEIVE_CLIENT_LIST, participants);
     }
   };
 
