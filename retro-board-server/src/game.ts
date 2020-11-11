@@ -23,6 +23,7 @@ import {
   updateOptions,
   updateColumns,
   updateName,
+  storeVisitor,
 } from './db/actions/sessions';
 import { getUser } from './db/actions/users';
 import {
@@ -282,6 +283,7 @@ export default (connection: Connection, io: SocketIO.Server) => {
         const user = await getUser(connection, userId);
         if (user) {
           recordUser(session.id, user, socket);
+          await storeVisitor(connection, session.id, user);
         }
       }
     });

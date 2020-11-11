@@ -17,7 +17,6 @@ import {
 } from 'retro-board-common';
 import shortId from 'shortid';
 import { v4 } from 'uuid';
-import { uniqBy, flattenDeep } from 'lodash';
 import { Connection } from 'typeorm';
 import {
   UserRepository,
@@ -296,6 +295,15 @@ export async function updateName(
   const session = await sessionRepository.findOne(sessionId);
   if (session) {
     session.name = name;
+    await sessionRepository.save(session);
+  }
+}
+
+export async function storeVisitor(connection: Connection, sessionId: string, user: UserEntity) {
+  const sessionRepository = connection.getCustomRepository(SessionRepository);
+  const session = await sessionRepository.findOne(sessionId, { relations: ['visitors'] });
+  if (session && session.visitors && !session.visitors.map(v => v.id).includes(user.id)) {
+    session.visitors.push(user);
     await sessionRepository.save(session);
   }
 }
