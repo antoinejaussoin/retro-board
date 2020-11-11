@@ -51,7 +51,7 @@ export default class SessionEntity {
   public options: SessionOptionsEntity;
   @Column({ nullable: true, type: 'character varying' })
   public encrypted: string | null;
-  @ManyToMany(() => UserEntity)
+  @ManyToMany(() => UserEntity, user => user.sessions)
   @JoinTable({ name: 'visitors' })
   visitors: UserEntity[] | undefined;
   @CreateDateColumn({ type: 'timestamp with time zone' })

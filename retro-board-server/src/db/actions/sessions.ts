@@ -13,6 +13,7 @@ import {
   SessionOptions,
   SessionMetadata,
   VoteType,
+  User,
 } from 'retro-board-common';
 import shortId from 'shortid';
 import { v4 } from 'uuid';
@@ -193,6 +194,9 @@ export async function deleteSessions(
     );
     return false;
   }
+  await sessionRepository.query(`delete from visitors where "sessionsId" = $1;`, [
+    sessionId,
+  ]);
   await sessionRepository.query(`delete from posts where "sessionId" = $1;`, [
     sessionId,
   ]);
@@ -215,73 +219,42 @@ function numberOfVotes(type: VoteType, session: SessionEntity) {
   }, 0);
 }
 
-function numberOfActions(session: SessionEntity) {
-  return session.posts!.filter((p) => p.action !== null).length;
+function numberOfActions(posts: PostEntity[]) {
+  return posts.filter((p) => p.action !== null).length;
 }
 
-function getParticipants(session: SessionEntity) {
-  return uniqBy(
-    [
-      session.createdBy.toJson(),
-      ...session.posts!.map((p) => p.user.toJson()),
-      ...flattenDeep(
-        session.posts!.map((p) => p.votes!.map((v) => v.user.toJson()))
-      ),
-    ].filter(Boolean),
-    (u) => u.id
-  );
+function getParticipants(visitors: UserEntity[]): User[] {
+  return visitors.map(u => u.toJson());
 }
 
 export async function previousSessions(
   connection: Connection,
   userId: string
 ): Promise<SessionMetadata[]> {
-  const sessionRepository = connection.getCustomRepository(SessionRepository);
-  const ids: number[] = await sessionRepository.query(
-    `
-  (
-		select distinct id from sessions where "createdById" = $1
-	)
-	union
-	(
-		select distinct sessions.id from sessions 
-		left join posts on sessions.id = posts."sessionId"
-		where posts."userId" = $1
-	)
-	union
-	(
-		select distinct sessions.id from sessions 
-		left join posts on sessions.id = posts."sessionId"
-		left join votes on posts.id = votes."userId"
-		where votes."userId" = $1
-	)
-  `,
-    [userId]
-  );
+  const userRepository = connection.getCustomRepository(UserRepository);
+  const loadedUser = await userRepository.findOne(userId, { relations: ['sessions', 'sessions.posts', 'sessions.visitors']});
+  if (loadedUser && loadedUser.sessions) {
+    return loadedUser.sessions.map(
+      (session) =>
+        ({
+          created: session.created,
+          createdBy: session.createdBy.toJson(),
+          encrypted: session.encrypted,
+          id: session.id,
+          name: session.name,
+          numberOfNegativeVotes: numberOfVotes('dislike', session),
+          numberOfPositiveVotes: numberOfVotes('like', session),
+          numberOfPosts: session.posts?.length,
+          numberOfActions: numberOfActions(session.posts!),
+          participants: getParticipants(session.visitors!),
+          canBeDeleted:
+            userId === session.createdBy.id &&
+            session.createdBy.accountType !== 'anonymous',
+        } as SessionMetadata)
+    );
+  }
 
-  const sessions = await sessionRepository.findByIds(ids, {
-    relations: ['posts', 'posts.votes'],
-    order: { created: 'DESC' },
-  });
-
-  return sessions.map(
-    (session) =>
-      ({
-        created: session.created,
-        createdBy: session.createdBy.toJson(),
-        encrypted: session.encrypted,
-        id: session.id,
-        name: session.name,
-        numberOfNegativeVotes: numberOfVotes('dislike', session),
-        numberOfPositiveVotes: numberOfVotes('like', session),
-        numberOfPosts: session.posts?.length,
-        numberOfActions: numberOfActions(session),
-        participants: getParticipants(session),
-        canBeDeleted:
-          userId === session.createdBy.id &&
-          session.createdBy.accountType !== 'anonymous',
-      } as SessionMetadata)
-  );
+  return [];
 }
 
 export async function getDefaultTemplate(

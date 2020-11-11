@@ -6,9 +6,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  ManyToMany,
 } from 'typeorm';
 import { AccountType, User, Currency } from 'retro-board-common';
-import { SessionTemplateEntity } from '.';
+import { SessionEntity, SessionTemplateEntity } from '.';
 
 export const ALL_FIELDS: Array<keyof UserEntity> = [
   'id',
@@ -53,6 +54,8 @@ export default class UserEntity {
   public language: string;
   @ManyToOne(() => SessionTemplateEntity, { nullable: true, eager: false })
   public defaultTemplate: SessionTemplateEntity | null | undefined;
+  @ManyToMany(() => SessionEntity, session => session.visitors)
+  public sessions: SessionEntity[] | undefined;
   @CreateDateColumn({ type: 'timestamp with time zone', select: false })
   public created: Date | undefined;
   @UpdateDateColumn({ type: 'timestamp with time zone', select: false })

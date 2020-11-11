@@ -24,7 +24,7 @@ export class Visitors1605115660660 implements MigrationInterface {
             (
                 select distinct sessions.id, votes."userId" from sessions 
                 left join posts on sessions.id = posts."sessionId"
-                left join votes on posts.id = votes."userId"
+                left join votes on posts.id = votes."postId"
 
             )
         ) s where "usersId" is not null
