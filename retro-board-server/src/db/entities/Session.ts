@@ -51,7 +51,7 @@ export default class SessionEntity {
   public options: SessionOptionsEntity;
   @Column({ nullable: true, type: 'character varying' })
   public encrypted: string | null;
-  @ManyToMany(() => UserEntity, user => user.sessions)
+  @ManyToMany(() => UserEntity, user => user.sessions, { eager: false })
   @JoinTable({ name: 'visitors' })
   visitors: UserEntity[] | undefined;
   @Column({ default: false })
@@ -73,6 +73,7 @@ export default class SessionEntity {
       options: this.options.toJson(),
       posts: this.posts === undefined ? [] : this.posts.map((p) => p.toJson()),
       encrypted: this.encrypted,
+      locked: this.locked,
     };
   }
 

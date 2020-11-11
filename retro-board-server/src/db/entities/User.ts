@@ -54,7 +54,7 @@ export default class UserEntity {
   public language: string;
   @ManyToOne(() => SessionTemplateEntity, { nullable: true, eager: false })
   public defaultTemplate: SessionTemplateEntity | null | undefined;
-  @ManyToMany(() => SessionEntity, session => session.visitors)
+  @ManyToMany(() => SessionEntity, session => session.visitors, { eager: false })
   public sessions: SessionEntity[] | undefined;
   @CreateDateColumn({ type: 'timestamp with time zone', select: false })
   public created: Date | undefined;

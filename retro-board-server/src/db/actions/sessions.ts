@@ -26,6 +26,7 @@ import {
   PostGroupRepository,
   ColumnRepository,
 } from '../repositories';
+import { orderBy } from 'lodash';
 
 export async function createSession(
   connection: Connection,
@@ -231,10 +232,11 @@ export async function previousSessions(
   userId: string
 ): Promise<SessionMetadata[]> {
   const userRepository = connection.getCustomRepository(UserRepository);
-  // TODO !!! ORDER BY DATE
-  const loadedUser = await userRepository.findOne(userId, { relations: ['sessions', 'sessions.posts', 'sessions.visitors']});
+  const loadedUser = await userRepository.findOne(userId, {
+    relations: ['sessions', 'sessions.posts', 'sessions.visitors'],
+  });
   if (loadedUser && loadedUser.sessions) {
-    return loadedUser.sessions.map(
+    return orderBy(loadedUser.sessions, s => s.updated, 'desc').map(
       (session) =>
         ({
           created: session.created,

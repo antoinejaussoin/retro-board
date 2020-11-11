@@ -5,6 +5,7 @@ export interface Session extends PostContainer, Entity {
   columns: ColumnDefinition[];
   options: SessionOptions;
   encrypted: string | null;
+  locked: boolean;
   createdBy: User;
 }
 

@@ -25,4 +25,5 @@ export const defaultSession: Omit<Session, 'createdBy'> = {
   groups: [],
   options: { ...defaultOptions },
   encrypted: null,
+  locked: false,
 };
