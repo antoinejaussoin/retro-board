@@ -20,6 +20,7 @@ const testingInitialState: State = {
     groups: [],
     columns: [],
     encrypted: null,
+    locked: false,
     createdBy: {
       id: 'John Doe',
       name: 'John Doe',

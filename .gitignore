@@ -44,6 +44,6 @@ stats
 .idea/
 dist/
 configuration.json
-docker-compose.yml
+/docker-compose.yml
 .env
 /db

@@ -1,0 +1,51 @@
+version: '3'
+services:
+  redis:
+    image: redis:latest
+    ports:
+      - '6379:6379' 
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+
+  postgres:
+    image: postgres:11.6
+    hostname: postgres
+    ports:
+      - '5432:5432' 
+    environment:
+      POSTGRES_USER: postgres # Must be the same as DB_USER below
+      POSTGRES_PASSWORD: postgres # Must be the same as DB_PASSWORD below
+      POSTGRES_DB: retroboard # Must be the same as DB_NAME below
+    volumes:
+      - database:/var/lib/postgresql/data
+    restart: unless-stopped
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+
+  pgadmin:
+    image: dpage/pgadmin4:4.15 # use biarms/pgadmin4 on ARM
+    depends_on:
+      - postgres
+    ports:
+      - '5433:80' # Change 8080 to whatever port you want to access pgAdmin from
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    restart: unless-stopped
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+
+volumes:
+  database:
+  pgadmin:
