@@ -213,6 +213,14 @@ const useGame = (sessionId: string) => {
       }
       renameSession(name);
     });
+
+    newSocket.on(Actions.RECEIVE_LOCK_SESSION, (locked: boolean) => {
+      if (debug) {
+        console.log('Receive lock session: ', locked);
+      }
+      lockSession(locked);
+    });
+
     return () => {
       if (debug) {
         console.log('Attempting disconnection');
