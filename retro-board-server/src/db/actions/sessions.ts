@@ -316,3 +316,12 @@ export async function storeVisitor(connection: Connection, sessionId: string, us
     await sessionRepository.save(session);
   }
 }
+
+export async function toggleSessionLock(connection: Connection, sessionId: string, lock: boolean) {
+  const sessionRepository = connection.getCustomRepository(SessionRepository);
+  const session = await sessionRepository.findOne(sessionId);
+  if (session) {
+    session.locked = lock;
+    await sessionRepository.save(session);
+  }
+}

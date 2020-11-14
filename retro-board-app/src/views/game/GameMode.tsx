@@ -39,6 +39,7 @@ import EncryptionModal from './EncryptionModal';
 import useShouldDisplayEncryptionWarning from './useShouldDisplayEncryptionWarning';
 import TransitionAlert from '../../components/TransitionAlert';
 import { useEncryptionKey } from '../../crypto/useEncryptionKey';
+import LockSession from './LockSession';
 
 interface GameModeProps {
   columns: ColumnContent[];
@@ -60,6 +61,7 @@ interface GameModeProps {
   onDeleteGroup: (group: PostGroup) => void;
   onEditOptions: (options: SessionOptions) => void;
   onEditColumns: (columns: ColumnDefinition[]) => void;
+  onLockSession: (locked: boolean) => void;
 }
 
 const useStyles = makeStyles({
@@ -98,6 +100,7 @@ function GameMode({
   onDeleteGroup,
   onEditOptions,
   onEditColumns,
+  onLockSession,
   columns,
   options,
 }: GameModeProps) {
@@ -182,7 +185,7 @@ function GameMode({
 
       <Box className={classes.container}>
         <HeaderWrapper>
-          <ExtraOptions>
+          <LeftOptions>
             {canReveal ? <RevealButton onClick={handleReveal} /> : null}
             {canModifyOptions ? (
               <ModifyOptions
@@ -190,7 +193,7 @@ function GameMode({
                 onEditColumns={onEditColumns}
               />
             ) : null}
-          </ExtraOptions>
+          </LeftOptions>
           <Typography
             variant="h5"
             align="center"
@@ -206,8 +209,13 @@ function GameMode({
               readOnly={!isLoggedIn || !canDecrypt}
             />
           </Typography>
-          <RemainingVotes up={remainingVotes.up} down={remainingVotes.down} />
+          <RightOptions>
+            <LockSession onLock={onLockSession} />
+          </RightOptions>
         </HeaderWrapper>
+        <SubHeader>
+          <RemainingVotes up={remainingVotes.up} down={remainingVotes.down} />
+        </SubHeader>
         {shouldDisplayEncryptionWarning ? (
           <TransitionAlert
             severity="warning"
@@ -300,9 +308,29 @@ const HeaderWrapper = styled.div`
   }
 `;
 
-const ExtraOptions = styled.div`
+const SubHeader = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const LeftOptions = styled.div`
   display: flex;
   justify-content: flex-start;
+
+  > * {
+    margin-right: 10px;
+  }
+
+  @media (max-width: 500px) {
+    margin-bottom: 20px;
+    margin-top: -15px;
+    order: 6;
+  }
+`;
+
+const RightOptions = styled.div`
+  display: flex;
+  justify-content: flex-end;
 
   > * {
     margin-right: 10px;

@@ -12,6 +12,7 @@ export default {
   LEAVE_SESSION: 'retrospected/session/leave',
   EDIT_OPTIONS: 'retrospected/session/options/edit',
   EDIT_COLUMNS: 'retrospected/session/columns/edit',
+  LOCK_SESSION: 'retrospected/session/lock',
 
   RECEIVE_POST: 'retrospected/posts/receive/add',
   RECEIVE_DELETE_POST: 'retrospected/posts/receive/delete',
@@ -26,5 +27,6 @@ export default {
   RECEIVE_COLUMNS: 'retrospected/session/columns/receive',
   RECEIVE_CLIENT_LIST: 'retrospected/session/receive/client-list',
   RECEIVE_SESSION_NAME: 'retrospected/session/receive/rename',
+  RECEIVE_LOCK_SESSION: 'retrospected/session/receive/lock'
 
 };

@@ -53,6 +53,7 @@ const useGame = (sessionId: string) => {
     resetSession,
     editOptions,
     editColumns,
+    lockSession
   } = useGlobalState();
 
   const { session } = state;
@@ -460,6 +461,17 @@ const useGame = (sessionId: string) => {
     [send, editColumns]
   );
 
+  const onLockSession = useCallback(
+    (locked: boolean) => {
+      if (send) {
+        lockSession(locked);
+        send(Actions.LOCK_SESSION, locked);
+        trackAction(Actions.LOCK_SESSION);
+      }
+    },
+    [send, editColumns]
+  );
+
   return {
     initialised,
     disconnected,
@@ -475,6 +487,7 @@ const useGame = (sessionId: string) => {
     onRenameSession,
     onEditOptions,
     onEditColumns,
+    onLockSession,
     reconnect,
   };
 };

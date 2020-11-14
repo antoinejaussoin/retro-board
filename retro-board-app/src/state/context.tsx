@@ -22,6 +22,7 @@ import {
   resetSession,
   editOptions,
   editColumns,
+  lockSession,
 } from './actions';
 
 export const initialState: State = {
@@ -66,6 +67,7 @@ export function useGlobalState() {
       resetSession: resetSession(dispatch),
       editOptions: editOptions(dispatch),
       editColumns: editColumns(dispatch),
+      lockSession: lockSession(dispatch),
     };
   }, [dispatch]);
   const globalState = useMemo(() => {

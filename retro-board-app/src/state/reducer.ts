@@ -15,6 +15,7 @@ import {
   RECEIVE_VOTE,
   EDIT_OPTIONS,
   EDIT_COLUMNS,
+  LOCK_SESSION,
 } from './actions';
 
 export default function reducer(state: State, action: Action): State {
@@ -190,6 +191,17 @@ export default function reducer(state: State, action: Action): State {
         session: {
           ...state.session,
           columns: action.payload,
+        },
+      };
+    case LOCK_SESSION:
+      if (!state.session) {
+        return state;
+      }
+      return {
+        ...state,
+        session: {
+          ...state.session,
+          locked: action.payload,
         },
       };
     default:

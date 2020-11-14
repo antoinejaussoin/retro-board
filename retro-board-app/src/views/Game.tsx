@@ -56,6 +56,7 @@ function GamePage() {
     onRenameSession,
     onEditOptions,
     onEditColumns,
+    onLockSession,
     reconnect,
   } = useGame(gameId);
 
@@ -142,6 +143,7 @@ function GamePage() {
             onRenameSession={onRenameSession}
             onEditOptions={onEditOptions}
             onEditColumns={onEditColumns}
+            onLockSession={onLockSession}
           />
         )}
       />

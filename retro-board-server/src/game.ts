@@ -26,6 +26,7 @@ import {
   updateName,
   storeVisitor,
   getSessionWithVisitors,
+  toggleSessionLock,
 } from './db/actions/sessions';
 import { getUser } from './db/actions/users';
 import {
@@ -62,6 +63,8 @@ const {
   RECEIVE_OPTIONS,
   EDIT_COLUMNS,
   RECEIVE_COLUMNS,
+  LOCK_SESSION,
+  RECEIVE_LOCK_SESSION,
 } = Actions;
 
 interface ExtendedSocket extends socketIo.Socket {
@@ -461,6 +464,27 @@ export default (connection: Connection, io: SocketIO.Server) => {
     sendToAll(socket, session.id, RECEIVE_COLUMNS, data);
   };
 
+  const onLockSession = async (
+    userId: string | null,
+    session: Session,
+    locked: boolean,
+    socket: ExtendedSocket
+  ) => {
+    if (!userId) {
+      return;
+    }
+
+    // Prevent non author from locking/unlocking sessions
+    if (userId !== session.createdBy.id) {
+      return;
+    }
+
+    await toggleSessionLock(connection, session.id, locked);
+
+    sendToAll(socket, session.id, RECEIVE_LOCK_SESSION, locked);
+
+  }
+
   io.on('connection', async (socket: ExtendedSocket) => {
     const ip =
       socket.handshake.headers['x-forwarded-for'] || socket.handshake.address;
@@ -499,6 +523,7 @@ export default (connection: Connection, io: SocketIO.Server) => {
       { type: LEAVE_SESSION, handler: onLeaveSession },
       { type: EDIT_OPTIONS, handler: onEditOptions },
       { type: EDIT_COLUMNS, handler: onEditColumns },
+      { type: LOCK_SESSION, handler: onLockSession },
     ];
 
     actions.forEach((action) => {

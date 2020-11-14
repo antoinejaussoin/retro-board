@@ -15,6 +15,7 @@ export const UPDATE_POST_GROUP = 'retrospected/game/group/update';
 export const RECEIVE_BOARD = 'retrospected/game/board/receive';
 export const EDIT_OPTIONS = 'retrospected/game/options/edit';
 export const EDIT_COLUMNS = 'retrospected/game/columns/edit';
+export const LOCK_SESSION = 'retrospected/game/lock';
 
 const createAction = (type: string, payload?: any) => ({
   type,
@@ -83,3 +84,10 @@ export const editColumns = (dispatch: Dispatch) => (
 ) => {
   dispatch(createAction(EDIT_COLUMNS, columns));
 };
+
+export const lockSession = (dispatch: Dispatch) => (
+  locked: boolean,
+) => {
+  dispatch(createAction(LOCK_SESSION, locked));
+};
+
