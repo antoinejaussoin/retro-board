@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { SessionOptions, ColumnDefinition } from 'retro-board-common';
-import { Typography, makeStyles, Box } from '@material-ui/core';
+import { Typography, makeStyles } from '@material-ui/core';
 import useTranslations from '../../../../translations';
 import useGlobalState from '../../../../state';
 import useRemainingVotes from './useRemainingVotes';
@@ -89,22 +89,20 @@ function BoardHeader({
         </Alert>
       ) : null}
 
-      <Box className={classes.container}>
-        <HeaderWrapper>
-          <LeftOptions>
-            {canReveal ? <RevealButton onClick={handleReveal} /> : null}
-            {canModifyOptions ? (
-              <ModifyOptions
-                onEditOptions={onEditOptions}
-                onEditColumns={onEditColumns}
-              />
-            ) : null}
-          </LeftOptions>
+      <Header className={classes.container}>
+        <LeftOptions>
+          {canReveal ? <RevealButton onClick={handleReveal} /> : null}
+          {canModifyOptions ? (
+            <ModifyOptions
+              onEditOptions={onEditOptions}
+              onEditColumns={onEditColumns}
+            />
+          ) : null}
+        </LeftOptions>
+        <Title>
           <Typography
             variant="h5"
             align="center"
-            gutterBottom
-            paragraph
             className={classes.sessionName}
           >
             <EditableLabel
@@ -115,90 +113,98 @@ function BoardHeader({
               readOnly={!isLoggedIn || !canDecrypt}
             />
           </Typography>
-          <RightOptions>
-            {canModifyOptions ? <LockSession onLock={onLockSession} /> : null}
-          </RightOptions>
-        </HeaderWrapper>
-        <SubHeader>
+        </Title>
+        <RightOptions>
+          {canModifyOptions ? <LockSession onLock={onLockSession} /> : null}
+        </RightOptions>
+        <VoteCounts>
           <RemainingVotes up={remainingVotes.up} down={remainingVotes.down} />
-        </SubHeader>
-        {shouldDisplayEncryptionWarning ? (
-          <TransitionAlert
-            severity="warning"
-            title={translations.Encryption.newEncryptedSessionWarningTitle}
-          >
-            {translations.Encryption.newEncryptedSessionWarningContent!(
-              key || '(unknown)'
-            )}
-          </TransitionAlert>
-        ) : null}
-      </Box>
+        </VoteCounts>
+      </Header>
+      {shouldDisplayEncryptionWarning ? (
+        <TransitionAlert
+          severity="warning"
+          title={translations.Encryption.newEncryptedSessionWarningTitle}
+        >
+          {translations.Encryption.newEncryptedSessionWarningContent!(
+            key || '(unknown)'
+          )}
+        </TransitionAlert>
+      ) : null}
     </>
   );
 }
 
-const HeaderWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
+const Header = styled.div`
+  display: grid;
+  justify-items: center;
   align-items: center;
-  margin-bottom: 20px;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    'left title right'
+    '. votes .';
+  column-gap: 10px;
+  row-gap: 15px;
 
-  > *:first-child {
-    flex: 1;
-  }
-
-  > *:nth-child(2) {
-    flex: 3;
-    margin: 0 20px;
-  }
-
-  > *:last-child {
-    flex: 1;
+  @media (max-width: 1100px) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      'left right'
+      'title title'
+      'votes votes';
   }
 
   @media (max-width: 500px) {
-    margin-top: 40px;
-    flex-direction: column;
-    margin-bottom: 0px;
-
-    > *:last-child {
-      margin: 20px 0;
-    }
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+    grid-template-areas:
+      'title'
+      'left'
+      'right'
+      'votes';
   }
 `;
 
-const SubHeader = styled.div`
+const Title = styled.div`
+  grid-area: title;
+  display: flex;
+  align-items: center;
+  justify-self: stretch;
+  > * {
+    width: 100%;
+  }
+`;
+
+const VoteCounts = styled.div`
+  grid-area: votes;
   display: flex;
   justify-content: center;
+  margin-top: 10px;
 `;
 
 const LeftOptions = styled.div`
+  grid-area: left;
   display: flex;
-  justify-content: flex-start;
+  justify-self: start;
 
   > * {
     margin-right: 10px;
   }
 
   @media (max-width: 500px) {
-    margin-bottom: 20px;
-    margin-top: -15px;
-    order: 6;
+    justify-self: center;
   }
 `;
 
 const RightOptions = styled.div`
+  grid-area: right;
   display: flex;
-  justify-content: flex-end;
-
-  > * {
-    margin-right: 10px;
-  }
+  justify-self: end;
 
   @media (max-width: 500px) {
-    margin-bottom: 20px;
-    margin-top: -15px;
-    order: 6;
+    justify-self: center;
   }
 `;
 
