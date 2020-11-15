@@ -66,6 +66,7 @@ const {
   RECEIVE_COLUMNS,
   LOCK_SESSION,
   RECEIVE_LOCK_SESSION,
+  RECEIVE_UNAUTHORIZED,
 } = Actions;
 
 interface ExtendedSocket extends socketIo.Socket {
@@ -316,6 +317,7 @@ export default (connection: Connection, io: SocketIO.Server) => {
             sendToSelf(socket, RECEIVE_BOARD, session);
           } else {
             log(chalk`{red User not allowed, session locked}`);
+            sendToSelf(socket, RECEIVE_UNAUTHORIZED, null);
             socket.disconnect();
           }
         }

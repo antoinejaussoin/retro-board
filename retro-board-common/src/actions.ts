@@ -27,6 +27,6 @@ export default {
   RECEIVE_COLUMNS: 'retrospected/session/columns/receive',
   RECEIVE_CLIENT_LIST: 'retrospected/session/receive/client-list',
   RECEIVE_SESSION_NAME: 'retrospected/session/receive/rename',
-  RECEIVE_LOCK_SESSION: 'retrospected/session/receive/lock'
-
+  RECEIVE_LOCK_SESSION: 'retrospected/session/receive/lock',
+  RECEIVE_UNAUTHORIZED: 'retrospected/session/receive/unauthorized',
 };

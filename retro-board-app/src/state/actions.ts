@@ -1,5 +1,12 @@
 import { Dispatch } from './types';
-import { Post, Vote, PostGroup, SessionOptions, ColumnDefinition, Participant } from 'retro-board-common';
+import {
+  Post,
+  Vote,
+  PostGroup,
+  SessionOptions,
+  ColumnDefinition,
+  Participant,
+} from 'retro-board-common';
 
 export const TOGGLE_PANEL = 'retrospected/panel/toggle';
 export const SET_PLAYERS = 'retrospected/game/players/set';
@@ -16,6 +23,7 @@ export const RECEIVE_BOARD = 'retrospected/game/board/receive';
 export const EDIT_OPTIONS = 'retrospected/game/options/edit';
 export const EDIT_COLUMNS = 'retrospected/game/columns/edit';
 export const LOCK_SESSION = 'retrospected/game/lock';
+export const UNAUTHORIZED = 'retrospected/game/unauthorized';
 
 const createAction = (type: string, payload?: any) => ({
   type,
@@ -85,9 +93,10 @@ export const editColumns = (dispatch: Dispatch) => (
   dispatch(createAction(EDIT_COLUMNS, columns));
 };
 
-export const lockSession = (dispatch: Dispatch) => (
-  locked: boolean,
-) => {
+export const lockSession = (dispatch: Dispatch) => (locked: boolean) => {
   dispatch(createAction(LOCK_SESSION, locked));
 };
 
+export const unauthorized = (dispatch: Dispatch) => () => {
+  dispatch(createAction(UNAUTHORIZED));
+};

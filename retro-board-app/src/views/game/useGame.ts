@@ -53,7 +53,8 @@ const useGame = (sessionId: string) => {
     resetSession,
     editOptions,
     editColumns,
-    lockSession
+    lockSession,
+    unauthorized,
   } = useGlobalState();
 
   const { session } = state;
@@ -219,6 +220,13 @@ const useGame = (sessionId: string) => {
         console.log('Receive lock session: ', locked);
       }
       lockSession(locked);
+    });
+
+    newSocket.on(Actions.RECEIVE_UNAUTHORIZED, () => {
+      if (debug) {
+        console.log('Receive unauthorized');
+      }
+      unauthorized();
     });
 
     return () => {

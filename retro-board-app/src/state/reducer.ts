@@ -16,10 +16,13 @@ import {
   EDIT_OPTIONS,
   EDIT_COLUMNS,
   LOCK_SESSION,
+  UNAUTHORIZED,
 } from './actions';
 
 export default function reducer(state: State, action: Action): State {
   switch (action.type) {
+    case UNAUTHORIZED:
+      return { ...state, unauthorized: true };
     case TOGGLE_PANEL:
       return { ...state, panelOpen: !state.panelOpen };
     case SET_PLAYERS:
