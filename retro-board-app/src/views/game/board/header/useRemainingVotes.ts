@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
-import useGlobalState from '../../../state';
-import { numberOfVotes } from './permissions-logic';
-import useUser from '../../../auth/useUser';
+import useGlobalState from '../../../../state';
+import { numberOfVotes } from '../permissions-logic';
+import useUser from '../../../../auth/useUser';
 
 interface RemainingVotes {
   up: number | null;
