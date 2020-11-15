@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { CardActions, darken } from '@material-ui/core';
 import { MoreHoriz, Close } from '@material-ui/icons';
-import useOpenClose from '../../../hooks/useOpenClose';
+import useOpenClose from '../../../../hooks/useOpenClose';
 import ActionButton from './ActionButton';
 import ReactCardFlip from 'react-card-flip';
-import useTranslations from '../../../translations';
-import { trackEvent } from '../../../track';
+import useTranslations from '../../../../translations';
+import { trackEvent } from '../../../../track';
 
 interface ActionsBarProps {
   extraActions: React.ReactNode;

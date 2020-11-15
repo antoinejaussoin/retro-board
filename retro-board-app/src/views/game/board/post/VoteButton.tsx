@@ -1,5 +1,5 @@
 import React from 'react';
-import { VoteEnumeration } from '../utils';
+import { VoteEnumeration } from '../../utils';
 import ActionButton from './ActionButton';
 
 interface VoteButtonProps {

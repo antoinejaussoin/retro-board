@@ -1,5 +1,5 @@
-import useGlobalState from '../../state';
-import useUser from '../../auth/useUser';
+import useGlobalState from '../../../state';
+import useUser from '../../../auth/useUser';
 
 export default function useCanReveal(): boolean {
   const { state } = useGlobalState();

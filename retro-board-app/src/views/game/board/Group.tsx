@@ -8,10 +8,10 @@ import {
 } from 'react-beautiful-dnd';
 import { colors, IconButton } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
-import EditableLabel from '../../components/EditableLabel';
+import EditableLabel from '../../../components/EditableLabel';
 import { Alert, AlertTitle } from '@material-ui/lab';
-import useTranslations from '../../translations';
-import useCrypto from '../../crypto/useCrypto';
+import useTranslations from '../../../translations';
+import useCrypto from '../../../crypto/useCrypto';
 
 interface GroupProps {
   group: PostGroup;

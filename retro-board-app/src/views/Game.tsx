@@ -13,9 +13,9 @@ import { Dashboard, List, CloudOff } from '@material-ui/icons';
 import useGlobalState from '../state';
 import useTranslations from '../translations';
 import useGame from './game/useGame';
-import GameMode from './game/GameMode';
+import GameMode from './game/board/GameMode';
 import SummaryMode from './game/summary/SummaryMode';
-import useColumns from './game/useColumns';
+import useColumns from './game/board/useColumns';
 import NoContent from '../components/NoContent';
 import useCrypto from '../crypto/useCrypto';
 

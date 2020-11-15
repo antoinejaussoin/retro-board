@@ -10,8 +10,8 @@ import {
 import { Lock, LockOpen } from '@material-ui/icons';
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
-import CustomAvatar from '../../components/Avatar';
-import useGlobalState from '../../state';
+import CustomAvatar from '../../../components/Avatar';
+import useGlobalState from '../../../state';
 import { useSnackbar } from 'notistack';
 
 interface LockSessionProps {

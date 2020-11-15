@@ -1,7 +1,7 @@
-import { ColumnContent } from './types';
+import { ColumnContent } from '../types';
 import { Post, PostGroup } from 'retro-board-common';
 import { flattenDeep } from 'lodash';
-import { getMiddle, getPrevious, getNext, getBetween } from './lexorank';
+import { getMiddle, getPrevious, getNext, getBetween } from '../lexorank';
 
 interface MovingEntities {
   post: Post;
@@ -61,7 +61,7 @@ export function getMovingEntities(
     const targetGroup = findGroup(columns, id);
     const targetColumn = findColumIndexForGroup(columns, id);
     if (targetGroup) {
-      const postsWithoutSource = targetGroup.posts.filter(p => p !== post);
+      const postsWithoutSource = targetGroup.posts.filter((p) => p !== post);
       return {
         post,
         previous:
@@ -79,7 +79,7 @@ export function getMovingEntities(
   if (post && type === 'column') {
     const targetColumn = +id;
     const column = columns[targetColumn];
-    const postsWithoutSource = column.posts.filter(p => p !== post);
+    const postsWithoutSource = column.posts.filter((p) => p !== post);
     return {
       post,
       previous:
@@ -98,21 +98,21 @@ export function getMovingEntities(
 
 function findPost(columns: ColumnContent[], postId: string): Post | undefined {
   const allPosts = flattenDeep([
-    ...columns.map(col => col.posts),
-    ...columns.map(col => col.groups.map(group => group.posts)),
+    ...columns.map((col) => col.posts),
+    ...columns.map((col) => col.groups.map((group) => group.posts)),
   ]);
-  return allPosts.find(post => post.id === postId);
+  return allPosts.find((post) => post.id === postId);
 }
 
 function findGroup(
   columns: ColumnContent[],
   groupId: string
 ): PostGroup | undefined {
-  return flattenDeep(columns.map(col => col.groups)).find(
-    group => group.id === groupId
+  return flattenDeep(columns.map((col) => col.groups)).find(
+    (group) => group.id === groupId
   );
 }
 
 function findColumIndexForGroup(columns: ColumnContent[], groupId: string) {
-  return columns.findIndex(col => col.groups.find(g => g.id === groupId));
+  return columns.findIndex((col) => col.groups.find((g) => g.id === groupId));
 }

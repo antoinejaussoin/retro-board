@@ -1,13 +1,13 @@
 import React, { useState, useCallback } from 'react';
-import useGlobalState from '../../state';
+import useGlobalState from '../../../state';
 import { Button } from '@material-ui/core';
-import SessionEditor from '../session-editor/SessionEditor';
-import { ColumnSettings } from '../../state/types';
+import SessionEditor from '../../session-editor/SessionEditor';
+import { ColumnSettings } from '../../../state/types';
 import { SessionOptions, ColumnDefinition } from 'retro-board-common';
-import { toColumnDefinitions } from '../../state/columns';
-import { trackEvent } from '../../track';
+import { toColumnDefinitions } from '../../../state/columns';
+import { trackEvent } from '../../../track';
 import { Settings } from '@material-ui/icons';
-import useTranslations from '../../translations';
+import useTranslations from '../../../translations';
 
 interface ModifyOptionsProps {
   onEditOptions: (options: SessionOptions) => void;

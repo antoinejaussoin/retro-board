@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Palette } from '../../Theme';
+import { Palette } from '../../../Theme';
 import Badge from '@material-ui/core/Badge';
 import Tooltip from '@material-ui/core/Tooltip';
 import { ThumbUpOutlined, ThumbDownOutlined } from '@material-ui/icons';
-import useTranslations, { Translation } from '../../translations';
+import useTranslations, { Translation } from '../../../translations';
 
 interface RemainingVotesProps {
   up: number | null;

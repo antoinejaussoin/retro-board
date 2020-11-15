@@ -10,17 +10,17 @@ import {
 import { CreateNewFolder } from '@material-ui/icons';
 import PostItem from './post/Post';
 import { Post, PostGroup, SessionOptions } from 'retro-board-common';
-import useUser from '../../auth/useUser';
-import useTranslations from '../../translations';
+import useUser from '../../../auth/useUser';
+import useTranslations from '../../../translations';
 import Group from './Group';
 import {
   Droppable,
   DroppableProvided,
   DroppableStateSnapshot,
 } from 'react-beautiful-dnd';
-import { ColumnContent } from './types';
-import useCrypto from '../../crypto/useCrypto';
-import useCanDecrypt from '../../crypto/useCanDecrypt';
+import { ColumnContent } from '../types';
+import useCrypto from '../../../crypto/useCrypto';
+import useCanDecrypt from '../../../crypto/useCanDecrypt';
 
 interface ColumnProps {
   column: ColumnContent;

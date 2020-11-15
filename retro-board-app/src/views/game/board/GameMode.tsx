@@ -12,33 +12,33 @@ import {
   DropResult,
   ResponderProvided,
 } from 'react-beautiful-dnd';
-import useTranslations from '../../translations';
-import useGlobalState from '../../state';
+import useTranslations from '../../../translations';
+import useGlobalState from '../../../state';
 import useRemainingVotes from './useRemainingVotes';
 import useCanReveal from './useCanReveal';
-import { getIcon } from '../../state/icons';
+import { getIcon } from '../../../state/icons';
 import Column from './Column';
-import EditableLabel from '../../components/EditableLabel';
-import { Page } from '../../components/Page';
-import { ColumnContent } from './types';
+import EditableLabel from '../../../components/EditableLabel';
+import { Page } from '../../../components/Page';
+import { ColumnContent } from '../types';
 import RemainingVotes from './RemainingVotes';
-import useUser from '../../auth/useUser';
+import useUser from '../../../auth/useUser';
 import { Alert } from '@material-ui/lab';
 import {
   getMovingEntities,
   getCombiningEntities,
   calculateRank,
 } from './moving-logic';
-import { getNext, getMiddle } from './lexorank';
+import { getNext, getMiddle } from '../lexorank';
 import RevealButton from './RevealButton';
 import ModifyOptions from './ModifyOptions';
 import useCanModifyOptions from './useCanModifyOptions';
-import useCrypto from '../../crypto/useCrypto';
-import useCanDecrypt from '../../crypto/useCanDecrypt';
+import useCrypto from '../../../crypto/useCrypto';
+import useCanDecrypt from '../../../crypto/useCanDecrypt';
 import EncryptionModal from './EncryptionModal';
 import useShouldDisplayEncryptionWarning from './useShouldDisplayEncryptionWarning';
-import TransitionAlert from '../../components/TransitionAlert';
-import { useEncryptionKey } from '../../crypto/useEncryptionKey';
+import TransitionAlert from '../../../components/TransitionAlert';
+import { useEncryptionKey } from '../../../crypto/useEncryptionKey';
 import LockSession from './LockSession';
 
 interface GameModeProps {

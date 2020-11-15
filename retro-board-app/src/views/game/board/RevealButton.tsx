@@ -8,7 +8,7 @@ import {
   DialogActions,
 } from '@material-ui/core';
 import { Visibility } from '@material-ui/icons';
-import useTranslation from '../../translations/useTranslations';
+import useTranslation from '../../../translations/useTranslations';
 
 interface RevealButtonProps {
   onClick: () => void;

@@ -11,26 +11,21 @@ import {
 import { v4 } from 'uuid';
 
 const userBase: User = {
-  language: 'en',
   photo: null,
-  accountType: 'anonymous',
   id: '0',
   name: 'name',
-  username: 'username',
 };
 
 const currentUser: User = {
   ...userBase,
   id: '1',
   name: 'Current',
-  username: 'current',
 };
 
 const anotherUser: User = {
   ...userBase,
   id: '2',
   name: 'Another User',
-  username: 'another-user',
 };
 
 function buildVotes(type: VoteType, users: User[], post: Post): Vote[] {
@@ -74,6 +69,8 @@ const session = (options: SessionOptions, ...posts: Post[]): Session => ({
     ...options,
   },
   groups: [],
+  encrypted: null,
+  locked: false,
 });
 
 describe('Permission Logic', () => {

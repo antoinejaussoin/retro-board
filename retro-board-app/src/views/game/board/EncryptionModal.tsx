@@ -5,13 +5,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import styled from 'styled-components';
-import { CHECK_PREFIX, decrypt } from '../../crypto/crypto';
-import useGlobalState from '../../state';
+import { CHECK_PREFIX, decrypt } from '../../../crypto/crypto';
+import useGlobalState from '../../../state';
 import { Alert } from '@material-ui/lab';
-import { useEncryptionKey } from '../../crypto/useEncryptionKey';
+import { useEncryptionKey } from '../../../crypto/useEncryptionKey';
 import { useHistory, useLocation } from 'react-router-dom';
 import { colors } from '@material-ui/core';
-import useTranslation from '../../translations/useTranslations';
+import useTranslation from '../../../translations/useTranslations';
 
 function EncryptionModal() {
   const [password, setPassword] = useState('');

@@ -1,4 +1,4 @@
-import useGlobalState from '../../state';
+import useGlobalState from '../../../state';
 
 export default function useShouldDisplayEncryptionWarning() {
   const { state } = useGlobalState();

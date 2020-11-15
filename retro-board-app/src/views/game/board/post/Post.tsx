@@ -21,23 +21,23 @@ import {
   InsertPhotoTwoTone,
 } from '@material-ui/icons';
 import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
-import useTranslations from '../../../translations';
-import EditableLabel from '../../../components/EditableLabel';
-import { Palette } from '../../../Theme';
+import useTranslations from '../../../../translations';
+import EditableLabel from '../../../../components/EditableLabel';
+import { Palette } from '../../../../Theme';
 import { Post } from 'retro-board-common';
 import { useUserPermissions } from '../useUserPermissions';
-import { countVotes, enumerateVotes } from '../utils';
+import { countVotes, enumerateVotes } from '../../utils';
 import GiphySearchBox from 'react-giphy-searchbox';
-import useGiphy from '../../../hooks/useGiphy';
-import config from '../../../utils/getConfig';
-import useToggle from '../../../hooks/useToggle';
+import useGiphy from '../../../../hooks/useGiphy';
+import config from '../../../../utils/getConfig';
+import useToggle from '../../../../hooks/useToggle';
 import VoteButton from './VoteButton';
 import ActionButton from './ActionButton';
 import ActionsBar from './ActionsBar';
-import { trackEvent } from '../../../track';
-import useCrypto from '../../../crypto/useCrypto';
+import { trackEvent } from '../../../../track';
+import useCrypto from '../../../../crypto/useCrypto';
 import { getLorem } from './lorem';
-import useCanDecrypt from '../../../crypto/useCanDecrypt';
+import useCanDecrypt from '../../../../crypto/useCanDecrypt';
 
 interface PostItemProps {
   index: number;
