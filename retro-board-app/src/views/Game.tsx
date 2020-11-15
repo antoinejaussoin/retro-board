@@ -34,11 +34,10 @@ function GamePage() {
   const handleChange = useCallback((_, v) => history.push(v), [history]);
   const columns = useColumns();
   const { decrypt } = useCrypto();
-  const { session } = state;
+  const { session, unauthorized } = state;
   const rootUrl = `${match.url}${hash}`;
   const summaryUrl = `${match.url}/summary${hash}`;
 
-  console.log('pathname: ', pathname);
   const path = pathname + hash;
 
   const {
@@ -65,6 +64,15 @@ function GamePage() {
       <LoadingContainer>
         <CircularProgress />
       </LoadingContainer>
+    );
+  }
+
+  if (unauthorized) {
+    return (
+      <NoContent
+        title="This session is locked."
+        subtitle="Please ask its moderator to unlock it so you can join. Then, refresh this page."
+      />
     );
   }
 
