@@ -27,6 +27,7 @@ import {
   storeVisitor,
   getSessionWithVisitors,
   toggleSessionLock,
+  isAllowed,
 } from './db/actions/sessions';
 import { getUser } from './db/actions/users';
 import {
@@ -220,24 +221,32 @@ export default (connection: Connection, io: SocketIO.Server) => {
     const room = io.nsps['/'].adapter.rooms[getRoom(session.id)];
     if (room) {
       const clients = Object.keys(room.sockets);
-      const onlineParticipants: Participant[] = clients.map((id, i) =>
-        !!users[id]
-          ? users[id]!.toJson()
-          : {
-              id: socket.id,
-              name: `(Spectator #${i})`,
-              photo: null,
-              pro: null,
-            }
-      ).map(user => ({...user, online: true }));
-      const onlineParticipantsIds = onlineParticipants.map(p => p.id);
+      const onlineParticipants: Participant[] = clients
+        .map((id, i) =>
+          !!users[id]
+            ? users[id]!.toJson()
+            : {
+                id: socket.id,
+                name: `(Spectator #${i})`,
+                photo: null,
+                pro: null,
+              }
+        )
+        .map((user) => ({ ...user, online: true }));
+      const onlineParticipantsIds = onlineParticipants.map((p) => p.id);
 
-      const offlineParticipants: Participant[] = session.visitors!
-        .filter(op => !onlineParticipantsIds.includes(op.id))
-        .map(op => ({ ...op.toJson(), online: false }));
+      const offlineParticipants: Participant[] = session
+        .visitors!.filter((op) => !onlineParticipantsIds.includes(op.id))
+        .map((op) => ({ ...op.toJson(), online: false }));
 
-      sendToSelf(socket, RECEIVE_CLIENT_LIST, [...onlineParticipants, ...offlineParticipants]);
-      sendToAll(socket, session.id, RECEIVE_CLIENT_LIST, [...onlineParticipants, ...offlineParticipants]);
+      sendToSelf(socket, RECEIVE_CLIENT_LIST, [
+        ...onlineParticipants,
+        ...offlineParticipants,
+      ]);
+      sendToAll(socket, session.id, RECEIVE_CLIENT_LIST, [
+        ...onlineParticipants,
+        ...offlineParticipants,
+      ]);
     }
   };
 
@@ -280,6 +289,10 @@ export default (connection: Connection, io: SocketIO.Server) => {
     sendToAll(socket, session.id, RECEIVE_POST_GROUP, group);
   };
 
+  const log = (msg: string) => {
+    console.log(d() + msg);
+  };
+
   const onJoinSession = async (
     userId: string | null,
     session: Session,
@@ -288,13 +301,23 @@ export default (connection: Connection, io: SocketIO.Server) => {
   ) => {
     socket.join(getRoom(session.id), async () => {
       socket.sessionId = session.id;
-      sendToSelf(socket, RECEIVE_BOARD, session);
       if (userId) {
         const user = await getUser(connection, userId);
-        const sessionEntity = await getSessionWithVisitors(connection, session.id);
+        const sessionEntity = await getSessionWithVisitors(
+          connection,
+          session.id
+        );
+
         if (user && sessionEntity) {
-          recordUser(sessionEntity, user, socket);
-          await storeVisitor(connection, session.id, user);
+          const userAllowed = isAllowed(sessionEntity, user);
+          if (userAllowed) {
+            recordUser(sessionEntity, user, socket);
+            await storeVisitor(connection, session.id, user);
+            sendToSelf(socket, RECEIVE_BOARD, session);
+          } else {
+            log(chalk`{red User not allowed, session locked}`);
+            socket.disconnect();
+          }
         }
       }
     });
@@ -321,7 +344,10 @@ export default (connection: Connection, io: SocketIO.Server) => {
     socket: ExtendedSocket
   ) => {
     socket.leave(getRoom(session.id), async () => {
-      const sessionEntity = await getSessionWithVisitors(connection, session.id);
+      const sessionEntity = await getSessionWithVisitors(
+        connection,
+        session.id
+      );
       if (sessionEntity) {
         sendClientList(sessionEntity, socket);
       }
@@ -482,8 +508,7 @@ export default (connection: Connection, io: SocketIO.Server) => {
     await toggleSessionLock(connection, session.id, locked);
 
     sendToAll(socket, session.id, RECEIVE_LOCK_SESSION, locked);
-
-  }
+  };
 
   io.on('connection', async (socket: ExtendedSocket) => {
     const ip =
@@ -537,7 +562,7 @@ export default (connection: Connection, io: SocketIO.Server) => {
           const sid =
             action.type === LEAVE_SESSION ? socket.sessionId : data.sessionId;
           if (sid) {
-            const session = await getSession(connection, sid);
+            const session = await getSession(connection, sid); // Todo check if that's not a performance issue
             if (session) {
               try {
                 await action.handler(userId, session, data.payload, socket);
@@ -558,10 +583,13 @@ export default (connection: Connection, io: SocketIO.Server) => {
             socket.id
           } ${ip}}`
         );
-        const sessionEntity = await getSessionWithVisitors(connection, socket.sessionId);
+        const sessionEntity = await getSessionWithVisitors(
+          connection,
+          socket.sessionId
+        );
         if (sessionEntity) {
           sendClientList(sessionEntity, socket);
-        } 
+        }
       }
     });
   });

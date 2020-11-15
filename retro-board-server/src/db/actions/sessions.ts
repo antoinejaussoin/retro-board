@@ -194,9 +194,10 @@ export async function deleteSessions(
     );
     return false;
   }
-  await sessionRepository.query(`delete from visitors where "sessionsId" = $1;`, [
-    sessionId,
-  ]);
+  await sessionRepository.query(
+    `delete from visitors where "sessionsId" = $1;`,
+    [sessionId]
+  );
   await sessionRepository.query(`delete from posts where "sessionId" = $1;`, [
     sessionId,
   ]);
@@ -224,7 +225,7 @@ function numberOfActions(posts: PostEntity[]) {
 }
 
 function getParticipants(visitors: UserEntity[]): User[] {
-  return visitors.map(u => u.toJson());
+  return visitors.map((u) => u.toJson());
 }
 
 export async function previousSessions(
@@ -236,7 +237,7 @@ export async function previousSessions(
     relations: ['sessions', 'sessions.posts', 'sessions.visitors'],
   });
   if (loadedUser && loadedUser.sessions) {
-    return orderBy(loadedUser.sessions, s => s.updated, 'desc').map(
+    return orderBy(loadedUser.sessions, (s) => s.updated, 'desc').map(
       (session) =>
         ({
           created: session.created,
@@ -302,26 +303,53 @@ export async function updateName(
   }
 }
 
-export async function getSessionWithVisitors(connection: Connection, sessionId: string): Promise<SessionEntity | null> {
+export async function getSessionWithVisitors(
+  connection: Connection,
+  sessionId: string
+): Promise<SessionEntity | null> {
   const sessionRepository = connection.getCustomRepository(SessionRepository);
-  const session = await sessionRepository.findOne(sessionId, { relations: ['visitors'] });
+  const session = await sessionRepository.findOne(sessionId, {
+    relations: ['visitors'],
+  });
   return session || null;
 }
 
-export async function storeVisitor(connection: Connection, sessionId: string, user: UserEntity) {
+export async function storeVisitor(
+  connection: Connection,
+  sessionId: string,
+  user: UserEntity
+) {
   const sessionRepository = connection.getCustomRepository(SessionRepository);
   const session = await getSessionWithVisitors(connection, sessionId);
-  if (session && session.visitors && !session.visitors.map(v => v.id).includes(user.id)) {
+  if (
+    session &&
+    session.visitors &&
+    !session.visitors.map((v) => v.id).includes(user.id)
+  ) {
     session.visitors.push(user);
     await sessionRepository.save(session);
   }
 }
 
-export async function toggleSessionLock(connection: Connection, sessionId: string, lock: boolean) {
+export async function toggleSessionLock(
+  connection: Connection,
+  sessionId: string,
+  lock: boolean
+) {
   const sessionRepository = connection.getCustomRepository(SessionRepository);
   const session = await sessionRepository.findOne(sessionId);
   if (session) {
     session.locked = lock;
     await sessionRepository.save(session);
   }
+}
+
+export function isAllowed(session: SessionEntity, user: UserEntity) {
+  if (!session.locked) {
+    return true;
+  }
+  if (session.visitors) {
+    return session.visitors.map((v) => v.id).includes(user.id);
+  }
+  return false;
 }
