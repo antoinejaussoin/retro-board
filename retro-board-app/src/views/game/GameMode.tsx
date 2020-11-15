@@ -210,7 +210,7 @@ function GameMode({
             />
           </Typography>
           <RightOptions>
-            <LockSession onLock={onLockSession} />
+            {canModifyOptions ? <LockSession onLock={onLockSession} /> : null}
           </RightOptions>
         </HeaderWrapper>
         <SubHeader>
