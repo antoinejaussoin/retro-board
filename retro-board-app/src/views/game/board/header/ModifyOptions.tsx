@@ -51,7 +51,7 @@ function ModifyOptions({ onEditOptions, onEditColumns }: ModifyOptionsProps) {
   return (
     <>
       <Button
-        variant="contained"
+        variant="text"
         color="primary"
         startIcon={<Settings />}
         onClick={() => setOpen(true)}

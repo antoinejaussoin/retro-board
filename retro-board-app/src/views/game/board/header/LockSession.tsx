@@ -58,7 +58,7 @@ function LockSession({ onLock }: LockSessionProps) {
   return (
     <>
       <Button
-        variant="contained"
+        variant="text"
         color="primary"
         startIcon={session.locked ? <LockOpen /> : <Lock />}
         onClick={handleOpenDialog}
