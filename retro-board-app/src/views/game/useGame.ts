@@ -253,6 +253,8 @@ const useGame = (sessionId: string) => {
     deletePostGroup,
     updatePostGroup,
     renameSession,
+    lockSession,
+    unauthorized,
     disconnected,
   ]);
 
@@ -485,7 +487,7 @@ const useGame = (sessionId: string) => {
         trackAction(Actions.LOCK_SESSION);
       }
     },
-    [send, editColumns]
+    [send, lockSession]
   );
 
   return {

@@ -16,13 +16,13 @@ interface RevealButtonProps {
 
 function RevealButton({ onClick }: RevealButtonProps) {
   const { RevealCards } = useTranslation();
+  const [revealDialogOpen, setRevealDialogOpen] = useState(false);
   const handleOpenDialog = useCallback(() => {
     setRevealDialogOpen(true);
   }, []);
   const handleCloseDialog = useCallback(() => {
     setRevealDialogOpen(false);
   }, []);
-  const [revealDialogOpen, setRevealDialogOpen] = useState(false);
   return (
     <>
       <Button

@@ -12,6 +12,7 @@ import ErrorBoundary from './ErrorBoundary';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import config from './utils/getConfig';
+import { SnackbarProvider } from 'notistack';
 
 const stripePromise = loadStripe(config.StripeKey);
 
@@ -26,20 +27,28 @@ function App() {
         />
         <meta property="og:url" content="https://www.retrospected.com" />
       </Helmet>
-      <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <AuthProvider>
-            <LanguageProvider>
-              <StateContext>
-                <GlobalStyles />
-                <ErrorBoundary>
-                  <Layout />
-                </ErrorBoundary>
-              </StateContext>
-            </LanguageProvider>
-          </AuthProvider>
-        </BrowserRouter>
-      </ThemeProvider>
+      <SnackbarProvider
+        maxSnack={3}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+      >
+        <ThemeProvider theme={theme}>
+          <BrowserRouter>
+            <AuthProvider>
+              <LanguageProvider>
+                <StateContext>
+                  <GlobalStyles />
+                  <ErrorBoundary>
+                    <Layout />
+                  </ErrorBoundary>
+                </StateContext>
+              </LanguageProvider>
+            </AuthProvider>
+          </BrowserRouter>
+        </ThemeProvider>
+      </SnackbarProvider>
     </Elements>
   );
 }
