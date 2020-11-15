@@ -13,7 +13,7 @@ import { Dashboard, List, CloudOff } from '@material-ui/icons';
 import useGlobalState from '../state';
 import useTranslations from '../translations';
 import useGame from './game/useGame';
-import GameMode from './game/board/GameMode';
+import Board from './game/board/Board';
 import SummaryMode from './game/summary/SummaryMode';
 import useColumns from './game/useColumns';
 import NoContent from '../components/NoContent';
@@ -136,7 +136,7 @@ function GamePage() {
         path={`${match.url}`}
         exact
         render={() => (
-          <GameMode
+          <Board
             columns={columns}
             options={session.options}
             onEdit={onEditPost}
