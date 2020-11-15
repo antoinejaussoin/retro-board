@@ -295,4 +295,14 @@ export interface Translation {
     passwordModalTitle?: string;
     passwordModelIncorrect?: string;
   };
+  Locking: {
+    lockSuccessNotification?: string;
+    unlockSuccessNotification?: string;
+    lockButton?: string;
+    unlockButton?: string;
+    lockDescription?: string;
+    cancelButton?: string;
+    sessionLockedTitle?: string;
+    sessionLockedDescription?: string;
+  };
 }

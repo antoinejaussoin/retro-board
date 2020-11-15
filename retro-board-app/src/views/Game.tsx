@@ -70,8 +70,8 @@ function GamePage() {
   if (unauthorized) {
     return (
       <NoContent
-        title="This session is locked."
-        subtitle="Please ask its moderator to unlock it so you can join. Then, refresh this page."
+        title={translations.Locking.sessionLockedTitle!}
+        subtitle={translations.Locking.sessionLockedDescription!}
       />
     );
   }

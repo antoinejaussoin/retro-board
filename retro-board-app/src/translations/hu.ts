@@ -299,4 +299,14 @@ export default {
     passwordModalTitle: undefined,
     passwordModelIncorrect: undefined,
   },
+  Locking: {
+    lockSuccessNotification: undefined,
+    unlockSuccessNotification: undefined,
+    lockButton: undefined,
+    unlockButton: undefined,
+    lockDescription: undefined,
+    cancelButton: undefined,
+    sessionLockedTitle: undefined,
+    sessionLockedDescription: undefined,
+  },
 } as Translation;

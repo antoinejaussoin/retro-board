@@ -13,6 +13,7 @@ import styled from 'styled-components';
 import CustomAvatar from '../../../../components/Avatar';
 import useGlobalState from '../../../../state';
 import { useSnackbar } from 'notistack';
+import useTranslations from '../../../../translations';
 
 interface LockSessionProps {
   onLock(locked: boolean): void;
@@ -22,6 +23,7 @@ function LockSession({ onLock }: LockSessionProps) {
   const { state } = useGlobalState();
   const [open, setOpen] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
+  const { Locking: translations } = useTranslations();
 
   const session = state.session;
   const players = state.players;
@@ -31,13 +33,13 @@ function LockSession({ onLock }: LockSessionProps) {
       onLock(!session.locked);
       enqueueSnackbar(
         session.locked
-          ? 'Your session has been successfuly unlocked. Anyone can join.'
-          : 'Your session has been successfuly locked. No new participants can join.',
+          ? translations.unlockSuccessNotification
+          : translations.lockSuccessNotification,
         { variant: 'success' }
       );
     }
     setOpen(false);
-  }, [session, onLock, enqueueSnackbar]);
+  }, [session, onLock, enqueueSnackbar, translations]);
 
   const handleOpenDialog = useCallback(() => {
     if (session && !session.locked) {
@@ -63,7 +65,7 @@ function LockSession({ onLock }: LockSessionProps) {
         startIcon={session.locked ? <LockOpen /> : <Lock />}
         onClick={handleOpenDialog}
       >
-        {session.locked ? 'Unlock' : 'Lock'} Session
+        {session.locked ? translations.unlockButton : translations.lockButton}
       </Button>
       <Dialog
         onClose={handleCloseDialog}
@@ -72,13 +74,10 @@ function LockSession({ onLock }: LockSessionProps) {
       >
         <DialogTitle id="lock-session-dialog">
           <Lock style={{ position: 'relative', top: 3 }} />
-          &nbsp;Lock Session
+          &nbsp;{translations.lockButton}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            You are about to lock the session. Only the current participants
-            (listed below) will be allowed access to this session once locked.
-          </DialogContentText>
+          <DialogContentText>{translations.lockDescription}</DialogContentText>
         </DialogContent>
         <DialogContent>
           <Users>
@@ -93,9 +92,11 @@ function LockSession({ onLock }: LockSessionProps) {
           </Users>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog}>Cancel</Button>
+          <Button onClick={handleCloseDialog}>
+            {translations.cancelButton}
+          </Button>
           <Button variant="contained" color="primary" onClick={handleLock}>
-            Lock
+            {translations.lockButton}
           </Button>
         </DialogActions>
       </Dialog>

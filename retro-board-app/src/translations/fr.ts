@@ -329,4 +329,16 @@ export default {
     passwordModalTitle: `Session chiffrée - Saisie du mot de passe`,
     passwordModelIncorrect: `Le mot de passe (ou clef de chiffrement) est incorrect.`,
   },
+  Locking: {
+    lockSuccessNotification:
+      'La session a été correctement vérouillée. Aucun nouveau participant ne pourra y accéder.',
+    unlockSuccessNotification: 'La session a été correctement dévérouillée.',
+    lockButton: 'Vérouiller',
+    unlockButton: 'Dévérouiller',
+    lockDescription: `Vous êtes sur le point de vérouiller la session. Seuls les utilisateurs ayant déjà accédé à cette session (dont la liste s'affiche ci-dessous) pourront accéder à cette session une fois vérouillée.`,
+    cancelButton: 'Annuler',
+    sessionLockedTitle: 'Cette session est vérouillée.',
+    sessionLockedDescription:
+      'Demandez à votre modérateur de la dévérouiller pour que vous puissiez la rejoindre. Ensuite, rafraichissez la page.',
+  },
 } as Translation;
