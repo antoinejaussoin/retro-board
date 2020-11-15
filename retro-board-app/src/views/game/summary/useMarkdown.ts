@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { flatten, sortedUniq, sortBy } from 'lodash';
 import { format } from 'date-fns';
 import useGlobalState from '../../../state';
-import useColumns from '../board/useColumns';
+import useColumns from '../useColumns';
 import useTranslations, { useLanguage } from '../../../translations';
 import { calculateSummary } from './calculate-summary';
 import { ColumnStatsItem, ActionItem } from './types';

@@ -15,7 +15,7 @@ import useTranslations from '../translations';
 import useGame from './game/useGame';
 import GameMode from './game/board/GameMode';
 import SummaryMode from './game/summary/SummaryMode';
-import useColumns from './game/board/useColumns';
+import useColumns from './game/useColumns';
 import NoContent from '../components/NoContent';
 import useCrypto from '../crypto/useCrypto';
 
