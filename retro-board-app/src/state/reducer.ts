@@ -22,7 +22,11 @@ import {
 export default function reducer(state: State, action: Action): State {
   switch (action.type) {
     case UNAUTHORIZED:
-      return { ...state, unauthorized: true };
+      return {
+        ...state,
+        unauthorized: true,
+        unauthorized_reason: action.payload,
+      };
     case TOGGLE_PANEL:
       return { ...state, panelOpen: !state.panelOpen };
     case SET_PLAYERS:

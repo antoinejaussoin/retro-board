@@ -84,6 +84,8 @@ export type Plan = 'team' | 'company';
 
 export type Currency = 'gbp' | 'eur' | 'usd';
 
+export type AccessErrorType = 'non_pro' | 'locked';
+
 export interface Product {
   name: string;
   plan: Plan;

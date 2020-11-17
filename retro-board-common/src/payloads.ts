@@ -1,4 +1,4 @@
-import { Plan, Currency, StripeLocales } from './types';
+import { Plan, Currency, StripeLocales, AccessErrorType } from './types';
 
 export interface RegisterPayload {
   name: string;
@@ -35,4 +35,8 @@ export interface CreateSubscriptionPayload {
 
 export interface CreateSessionPayload {
   encryptedCheck?: string;
+}
+
+export interface UnauthorizedAccessPayload {
+  type?: AccessErrorType;
 }

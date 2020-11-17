@@ -8,6 +8,7 @@ import {
   Vote,
   VoteType,
   ColumnDefinition,
+  UnauthorizedAccessPayload,
 } from 'retro-board-common';
 import chalk from 'chalk';
 import moment from 'moment';
@@ -16,7 +17,7 @@ import { find } from 'lodash';
 import { v4 } from 'uuid';
 import { setScope, reportQueryError } from './sentry';
 import SessionOptionsEntity from './db/entities/SessionOptions';
-import { SessionEntity, UserEntity } from './db/entities';
+import { SessionEntity, UserEntity, UserView } from './db/entities';
 import { hasField } from './security/payload-checker';
 import {
   getSession,
@@ -29,7 +30,7 @@ import {
   toggleSessionLock,
   isAllowed,
 } from './db/actions/sessions';
-import { getUser } from './db/actions/users';
+import { getUser, getUserView } from './db/actions/users';
 import {
   savePost,
   savePostGroup,
@@ -75,7 +76,7 @@ interface ExtendedSocket extends socketIo.Socket {
 }
 
 interface Users {
-  [socketId: string]: UserEntity | null;
+  [socketId: string]: UserView | null;
 }
 
 interface UserData {
@@ -253,7 +254,7 @@ export default (connection: Connection, io: SocketIO.Server) => {
 
   const recordUser = (
     session: SessionEntity,
-    user: UserEntity,
+    user: UserView,
     socket: ExtendedSocket
   ) => {
     const socketId = socket.id;
@@ -303,7 +304,7 @@ export default (connection: Connection, io: SocketIO.Server) => {
     socket.join(getRoom(session.id), async () => {
       socket.sessionId = session.id;
       if (userId) {
-        const user = await getUser(connection, userId);
+        const user = await getUserView(connection, userId);
         const sessionEntity = await getSessionWithVisitors(
           connection,
           session.id
@@ -311,13 +312,19 @@ export default (connection: Connection, io: SocketIO.Server) => {
 
         if (user && sessionEntity) {
           const userAllowed = isAllowed(sessionEntity, user);
-          if (userAllowed) {
+          if (userAllowed.allowed) {
             recordUser(sessionEntity, user, socket);
-            await storeVisitor(connection, session.id, user);
+            const userEntity = await getUser(connection, userId);
+            if (userEntity) {
+              await storeVisitor(connection, session.id, userEntity);
+            }
             sendToSelf(socket, RECEIVE_BOARD, session);
           } else {
             log(chalk`{red User not allowed, session locked}`);
-            sendToSelf(socket, RECEIVE_UNAUTHORIZED, null);
+            const payload: UnauthorizedAccessPayload = {
+              type: userAllowed.reason,
+            };
+            sendToSelf(socket, RECEIVE_UNAUTHORIZED, payload);
             socket.disconnect();
           }
         }

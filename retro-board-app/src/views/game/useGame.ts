@@ -8,6 +8,7 @@ import {
   SessionOptions,
   ColumnDefinition,
   Participant,
+  UnauthorizedAccessPayload,
 } from 'retro-board-common';
 import { v4 } from 'uuid';
 import { find } from 'lodash';
@@ -222,12 +223,15 @@ const useGame = (sessionId: string) => {
       lockSession(locked);
     });
 
-    newSocket.on(Actions.RECEIVE_UNAUTHORIZED, () => {
-      if (debug) {
-        console.log('Receive unauthorized');
+    newSocket.on(
+      Actions.RECEIVE_UNAUTHORIZED,
+      (payload: UnauthorizedAccessPayload) => {
+        if (debug) {
+          console.log('Receive unauthorized');
+        }
+        unauthorized(payload.type);
       }
-      unauthorized();
-    });
+    );
 
     return () => {
       if (debug) {

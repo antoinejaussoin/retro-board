@@ -1,9 +1,9 @@
 import {
   Session,
-  User,
   IconName,
   ColumnDefinitionType,
   Participant,
+  AccessErrorType,
 } from 'retro-board-common';
 
 export interface Action {
@@ -16,6 +16,7 @@ export interface State {
   players: Participant[];
   session: Session | null;
   unauthorized: boolean;
+  unauthorized_reason?: AccessErrorType;
 }
 
 export interface ColumnSettings {

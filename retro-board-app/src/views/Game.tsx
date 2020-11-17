@@ -18,6 +18,7 @@ import SummaryMode from './game/summary/SummaryMode';
 import useColumns from './game/useColumns';
 import NoContent from '../components/NoContent';
 import useCrypto from '../crypto/useCrypto';
+import Unauthorized from './game/Unauthorized';
 
 interface RouteParams {
   gameId: string;
@@ -34,7 +35,7 @@ function GamePage() {
   const handleChange = useCallback((_, v) => history.push(v), [history]);
   const columns = useColumns();
   const { decrypt } = useCrypto();
-  const { session, unauthorized } = state;
+  const { session, unauthorized, unauthorized_reason } = state;
   const rootUrl = `${match.url}${hash}`;
   const summaryUrl = `${match.url}/summary${hash}`;
 
@@ -68,12 +69,7 @@ function GamePage() {
   }
 
   if (unauthorized) {
-    return (
-      <NoContent
-        title={translations.Locking.sessionLockedTitle!}
-        subtitle={translations.Locking.sessionLockedDescription!}
-      />
-    );
+    return <Unauthorized reason={unauthorized_reason} />;
   }
 
   if (!session) {

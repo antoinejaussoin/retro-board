@@ -6,6 +6,7 @@ import {
   SessionOptions,
   ColumnDefinition,
   Participant,
+  AccessErrorType,
 } from 'retro-board-common';
 
 export const TOGGLE_PANEL = 'retrospected/panel/toggle';
@@ -97,6 +98,8 @@ export const lockSession = (dispatch: Dispatch) => (locked: boolean) => {
   dispatch(createAction(LOCK_SESSION, locked));
 };
 
-export const unauthorized = (dispatch: Dispatch) => () => {
-  dispatch(createAction(UNAUTHORIZED));
+export const unauthorized = (dispatch: Dispatch) => (
+  type?: AccessErrorType
+) => {
+  dispatch(createAction(UNAUTHORIZED, type));
 };

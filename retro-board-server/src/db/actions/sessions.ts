@@ -14,6 +14,8 @@ import {
   SessionMetadata,
   VoteType,
   User,
+  AccessErrorType,
+  FullUser,
 } from 'retro-board-common';
 import shortId from 'shortid';
 import { v4 } from 'uuid';
@@ -344,12 +346,25 @@ export async function toggleSessionLock(
   }
 }
 
-export function isAllowed(session: SessionEntity, user: UserEntity) {
-  if (!session.locked) {
-    return true;
+interface AllowedResponse {
+  allowed: boolean;
+  reason?: AccessErrorType;
+}
+
+export function isAllowed(
+  session: SessionEntity,
+  user: FullUser
+): AllowedResponse {
+  if ((session.locked || session.encrypted) && !user.pro) {
+    return { allowed: false, reason: 'non_pro' };
   }
-  if (session.visitors) {
-    return session.visitors.map((v) => v.id).includes(user.id);
+  if (session.locked && session.visitors && user.pro) {
+    if (session.visitors.map((v) => v.id).includes(user.id)) {
+      return { allowed: true };
+    } else {
+      return { allowed: false, reason: 'locked' };
+    }
   }
-  return false;
+
+  return { allowed: true };
 }
