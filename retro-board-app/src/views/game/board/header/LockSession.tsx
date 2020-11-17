@@ -14,6 +14,7 @@ import CustomAvatar from '../../../../components/Avatar';
 import useGlobalState from '../../../../state';
 import { useSnackbar } from 'notistack';
 import useTranslations from '../../../../translations';
+import ProButton from '../../../../components/ProButton';
 
 interface LockSessionProps {
   onLock(locked: boolean): void;
@@ -59,14 +60,16 @@ function LockSession({ onLock }: LockSessionProps) {
 
   return (
     <>
-      <Button
-        variant="text"
-        color="primary"
-        startIcon={session.locked ? <LockOpen /> : <Lock />}
-        onClick={handleOpenDialog}
-      >
-        {session.locked ? translations.unlockButton : translations.lockButton}
-      </Button>
+      <ProButton>
+        <Button
+          variant="text"
+          color="primary"
+          startIcon={session.locked ? <LockOpen /> : <Lock />}
+          onClick={handleOpenDialog}
+        >
+          {session.locked ? translations.unlockButton : translations.lockButton}
+        </Button>
+      </ProButton>
       <Dialog
         onClose={handleCloseDialog}
         aria-labelledby="lock-session-dialog"
