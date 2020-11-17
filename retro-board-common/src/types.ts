@@ -108,7 +108,7 @@ export interface FullUser extends User {
   language: string;
   email: string | null;
   stripeId: string | null;
-  pro: ProStatus | null;
+  pro: boolean;
   subscriptionsId: string | null;
   currency: Currency | null;
   plan: Plan | null;

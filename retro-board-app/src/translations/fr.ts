@@ -160,7 +160,7 @@ export default {
   SocialMediaLogin: {
     header: 'Réseaux Sociaux',
     info:
-      'Vous allez utiliser un de vos compte existant pour vous identifier. Vous pourrez visualiser vos précédentes sessions. Aucun mot de passe ne sera stocké.',
+      'Vous allez utiliser un de vos comptes existant pour vous identifier. Vous pourrez visualiser vos précédentes sessions. Aucun mot de passe ne sera stocké.',
   },
   AuthCommon: {
     emailField: 'Adresse e-mail',

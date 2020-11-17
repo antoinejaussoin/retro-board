@@ -58,7 +58,7 @@ export default class UserView {
   @ViewColumn()
   public currency: Currency | null;
   @ViewColumn()
-  public pro: ProStatus | null;
+  public pro: boolean;
 
   constructor(id: string, name: string) {
     this.id = id;
@@ -69,7 +69,7 @@ export default class UserView {
     this.photo = null;
     this.stripeId = null;
     this.subscriptionsId = null;
-    this.pro = null;
+    this.pro = false;
     this.email = null;
     this.currency = null;
     this.ownPlan = null;
