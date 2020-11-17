@@ -338,5 +338,8 @@ export default {
     sessionLockedTitle: 'This session is locked.',
     sessionLockedDescription:
       'Please ask its moderator to unlock it so you can join. Then, refresh this page.',
+    sessionNonProTitle: 'This session is only accessible to Pro users',
+    sessionNonProDescription:
+      'This session uses features only available to Pro users. Please ask the moderator or subscription holder to give you a Pro account.',
   },
 } as Translation;

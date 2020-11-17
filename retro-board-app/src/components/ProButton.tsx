@@ -40,7 +40,7 @@ function ProButton({ children }: ProButtonProps) {
   return (
     <Container>
       <ProPill onClick={open}>
-        <Star htmlColor={colors.yellow[500]} fontSize="small" />
+        {/* <Star htmlColor={colors.yellow[500]} fontSize="small" /> */}
         <span>Pro</span>
         <InfoOutlined htmlColor={colors.pink[300]} fontSize="small" />
       </ProPill>

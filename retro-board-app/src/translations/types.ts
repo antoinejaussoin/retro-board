@@ -304,5 +304,7 @@ export interface Translation {
     cancelButton?: string;
     sessionLockedTitle?: string;
     sessionLockedDescription?: string;
+    sessionNonProTitle?: string;
+    sessionNonProDescription?: string;
   };
 }

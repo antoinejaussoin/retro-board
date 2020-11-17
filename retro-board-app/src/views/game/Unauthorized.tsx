@@ -27,14 +27,15 @@ function useGetErrors(reason?: AccessErrorType): Errors {
       };
     case 'non_pro':
       return {
-        title: 'non pro',
-        subtitle: 'explain why you cant accses',
+        title: translations.Locking.sessionNonProTitle!,
+        subtitle: translations.Locking.sessionNonProDescription!,
       };
   }
 
   return {
-    title: 'Not sure',
-    subtitle: 'not sure either',
+    title: 'Unknown Error',
+    subtitle:
+      'This session is unavailable to you, because of an unknown error.',
   };
 }
 

@@ -313,5 +313,7 @@ export default {
     cancelButton: undefined,
     sessionLockedTitle: undefined,
     sessionLockedDescription: undefined,
+    sessionNonProTitle: undefined,
+    sessionNonProDescription: undefined,
   },
 } as Translation;

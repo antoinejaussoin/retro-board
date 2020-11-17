@@ -340,5 +340,7 @@ export default {
     sessionLockedTitle: 'Cette session est vérouillée.',
     sessionLockedDescription:
       'Demandez à votre modérateur de la dévérouiller pour que vous puissiez la rejoindre. Ensuite, rafraichissez la page.',
+    sessionNonProTitle: `Cette session n'est accessible qu'aux utilisateurs Pro.`,
+    sessionNonProDescription: `Cette session n'est ouverte qu'aux détenteurs d'un compte Retrospected Pro. Vous pouvez demander au modérateur ou au gérant de l'abonnement Pro de vous donner un accès.`,
   },
 } as Translation;
