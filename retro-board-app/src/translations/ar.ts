@@ -280,9 +280,9 @@ export default {
   },
   Products: {
     team: undefined,
-    company: undefined,
-    users: undefined,
     unlimited: undefined,
+    users: undefined,
+    unlimited_seats: undefined,
     month: undefined,
   },
   Encryption: {

@@ -2,7 +2,7 @@ import { InternalProduct } from './types';
 import { Plan } from 'retro-board-common';
 
 export const teamPlan: InternalProduct = {
-  name: 'Team',
+  name: 'Pro Team',
   plan: 'team',
   productId: 'prod_IGlKc0QrEh2tiv',
   priceId: 'price_1HgDnuCpRjtjIslJCUMeS8pF',
@@ -13,8 +13,8 @@ export const teamPlan: InternalProduct = {
 };
 
 export const companyPlan: InternalProduct = {
-  name: 'Company',
-  plan: 'company',
+  name: 'Pro Unlimited',
+  plan: 'unlimited',
   productId: 'prod_IHBsQDjbPWHuJp',
   priceId: 'price_1HgdUcCpRjtjIslJuYOnNBXY',
   seats: null,

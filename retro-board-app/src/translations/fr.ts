@@ -311,10 +311,10 @@ export default {
     },
   },
   Products: {
-    team: `Parfait pour une équipe, vous pouvez sélectioner jusqu'à 20 collègues qui recevront un compte Pro.`,
-    company: `Si vous avez besoin de plus, l'abonnement "Company" vous donnera un nombre de compte Pro illimité`,
+    team: `Parfait pour une équipe, vous pouvez sélectioner jusqu'à 20 collègues qui recevront un compte Retrospected Pro.`,
+    unlimited: `Si vous avez besoin de plus, l'abonnement "Pro Unlimited" vous donnera un nombre de compte Pro illimité`,
     users: (users: number) => `${users} utilisateurs`,
-    unlimited: 'Illimité',
+    unlimited_seats: 'Illimité',
     month: 'mois',
   },
   Encryption: {

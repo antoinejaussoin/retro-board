@@ -4,7 +4,7 @@ import { createCheckoutSession } from './api';
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import Step from './components/Step';
-import { Button } from '@material-ui/core';
+import { Button, colors } from '@material-ui/core';
 import { Currency, Product, FullUser } from 'retro-board-common';
 import CurrencyPicker from './components/CurrencyPicker';
 import ProductPicker from './components/ProductPicker';
@@ -75,6 +75,7 @@ function SubscriberPage() {
 
   return (
     <Container>
+      <Header>Retrospected Pro</Header>
       {user && user.pro && !user.subscriptionsId ? (
         <Alert severity="info">{translations.alertAlreadyPro}</Alert>
       ) : null}
@@ -147,5 +148,21 @@ function SubscriberPage() {
 }
 
 const Container = styled.div``;
+const Header = styled.div`
+  border: 1px solid ${colors.grey[200]};
+  border-radius: 10px;
+  margin: 10px;
+  padding: 20px;
+  display: flex;
+  background-color: ${colors.deepPurple[50]};
+  color: ${colors.deepPurple[700]};
+  font-size: 3rem;
+  font-weight: 100;
+  justify-content: center;
+
+  @media screen and (max-width: 450px) {
+    padding: 5px;
+  }
+`;
 
 export default SubscriberPage;

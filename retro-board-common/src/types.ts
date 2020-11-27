@@ -80,7 +80,7 @@ export interface PostGroup extends PostContainer, Rankable, Entity {
 
 export type ProStatus = 'valid' | 'payment_issue' | 'pending';
 
-export type Plan = 'team' | 'company';
+export type Plan = 'team' | 'unlimited';
 
 export type Currency = 'gbp' | 'eur' | 'usd';
 

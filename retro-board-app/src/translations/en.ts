@@ -306,10 +306,10 @@ export default {
   Products: {
     team:
       'Perfect for smaller teams, you can select up to 20 colleagues who will be upgraded to a Pro account.',
-    company:
+    unlimited:
       'If you are a bigger company, you will enjoy an unlimited number of Pro accounts',
     users: (users: number) => `${users} users`,
-    unlimited: 'Unlimited',
+    unlimited_seats: 'Unlimited',
     month: 'month',
   },
   Encryption: {

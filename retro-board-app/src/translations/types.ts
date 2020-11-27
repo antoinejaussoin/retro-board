@@ -279,9 +279,9 @@ export interface Translation {
   };
   Products: {
     team?: string;
-    company?: string;
-    users?: (users: number) => string;
     unlimited?: string;
+    users?: (users: number) => string;
+    unlimited_seats?: string;
     month?: string;
   };
   Encryption: {

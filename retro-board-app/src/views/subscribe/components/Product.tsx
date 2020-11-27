@@ -31,7 +31,7 @@ function ProductDisplay({
         <Seats>
           {product.seats
             ? translations.users!(product.seats)
-            : translations.unlimited}
+            : translations.unlimited_seats}
         </Seats>
         <Total>
           {(product[currency] / 100).toFixed(2)} {currency.toUpperCase()}
