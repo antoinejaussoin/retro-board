@@ -25,6 +25,10 @@ interface BoardHeaderProps {
   onRenameSession: (name: string) => void;
   onEditOptions: (options: SessionOptions) => void;
   onEditColumns: (columns: ColumnDefinition[]) => void;
+  onSaveTemplate: (
+    options: SessionOptions,
+    columns: ColumnDefinition[]
+  ) => void;
   onLockSession: (locked: boolean) => void;
 }
 
@@ -40,6 +44,7 @@ const useStyles = makeStyles({
 function BoardHeader({
   onEditOptions,
   onEditColumns,
+  onSaveTemplate,
   onLockSession,
   onRenameSession,
 }: BoardHeaderProps) {
@@ -96,6 +101,7 @@ function BoardHeader({
             <ModifyOptions
               onEditOptions={onEditOptions}
               onEditColumns={onEditColumns}
+              onSaveTemplate={onSaveTemplate}
             />
           ) : null}
         </LeftOptions>

@@ -12,9 +12,17 @@ import useTranslations from '../../../../translations';
 interface ModifyOptionsProps {
   onEditOptions: (options: SessionOptions) => void;
   onEditColumns: (columns: ColumnDefinition[]) => void;
+  onSaveTemplate: (
+    options: SessionOptions,
+    columns: ColumnDefinition[]
+  ) => void;
 }
 
-function ModifyOptions({ onEditOptions, onEditColumns }: ModifyOptionsProps) {
+function ModifyOptions({
+  onEditOptions,
+  onEditColumns,
+  onSaveTemplate,
+}: ModifyOptionsProps) {
   const { Join } = useTranslations();
   const [open, setOpen] = useState(false);
   const { state } = useGlobalState();
@@ -23,7 +31,7 @@ function ModifyOptions({ onEditOptions, onEditColumns }: ModifyOptionsProps) {
     (
       updatedOptions: SessionOptions,
       updatedColumns: ColumnSettings[],
-      _: boolean
+      saveAsTemplate: boolean
     ) => {
       setOpen(false);
       if (!state.session) {
@@ -38,8 +46,13 @@ function ModifyOptions({ onEditOptions, onEditColumns }: ModifyOptionsProps) {
         onEditColumns(toColumnDefinitions(updatedColumns));
         trackEvent('game/session/edit-columns');
       }
+      if (saveAsTemplate) {
+        console.log('save as template');
+        onSaveTemplate(updatedOptions, toColumnDefinitions(updatedColumns));
+        trackEvent('custom-modal/template/set-defaut');
+      }
     },
-    [onEditOptions, onEditColumns, state.session]
+    [onEditOptions, onEditColumns, onSaveTemplate, state.session]
   );
 
   if (!state.session) {

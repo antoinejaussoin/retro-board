@@ -29,6 +29,7 @@ import {
   getSessionWithVisitors,
   toggleSessionLock,
   isAllowed,
+  saveTemplate,
 } from './db/actions/sessions';
 import { getUser, getUserView } from './db/actions/users';
 import {
@@ -65,6 +66,7 @@ const {
   RECEIVE_OPTIONS,
   EDIT_COLUMNS,
   RECEIVE_COLUMNS,
+  SAVE_TEMPLATE,
   LOCK_SESSION,
   RECEIVE_LOCK_SESSION,
   RECEIVE_UNAUTHORIZED,
@@ -126,41 +128,6 @@ export default (connection: Connection, io: SocketIO.Server) => {
       console.error('The following object has a password property: ', data);
     }
     socket.emit(action, data);
-  };
-
-  const persistSession = async (userId: string | null, session: Session) => {
-    if (!userId) {
-      return;
-    }
-    await saveSession(connection, userId, session);
-  };
-
-  const modifyOptions = async (
-    userId: string | null,
-    session: Session,
-    options: SessionOptionsEntity
-  ) => {
-    if (!userId || !session) {
-      return;
-    }
-    if (userId !== session.createdBy.id) {
-      return;
-    }
-    await updateOptions(connection, session, options);
-  };
-
-  const modifyColumns = async (
-    userId: string | null,
-    session: Session,
-    columns: ColumnDefinition[]
-  ) => {
-    if (!userId || !session) {
-      return;
-    }
-    if (userId !== session.createdBy.id) {
-      return;
-    }
-    await updateColumns(connection, session, columns);
   };
 
   const persistPost = async (
@@ -467,7 +434,7 @@ export default (connection: Connection, io: SocketIO.Server) => {
     data: SessionOptionsEntity,
     socket: ExtendedSocket
   ) => {
-    if (!userId) {
+    if (!userId || !session) {
       return;
     }
     // Prevent non author from modifying options
@@ -475,7 +442,7 @@ export default (connection: Connection, io: SocketIO.Server) => {
       return;
     }
 
-    await modifyOptions(userId, session, data);
+    await updateOptions(connection, session, data);
 
     sendToAll(socket, session.id, RECEIVE_OPTIONS, data);
   };
@@ -486,7 +453,7 @@ export default (connection: Connection, io: SocketIO.Server) => {
     data: ColumnDefinition[],
     socket: ExtendedSocket
   ) => {
-    if (!userId) {
+    if (!userId || !session) {
       return;
     }
     // Prevent non author from modifying columns
@@ -494,9 +461,26 @@ export default (connection: Connection, io: SocketIO.Server) => {
       return;
     }
 
-    await modifyColumns(userId, session, data);
+    await updateColumns(connection, session, data);
 
     sendToAll(socket, session.id, RECEIVE_COLUMNS, data);
+  };
+
+  const onSaveTemplate = async (
+    userId: string | null,
+    session: Session,
+    data: { columns: ColumnDefinition[]; options: SessionOptionsEntity },
+    _: ExtendedSocket
+  ) => {
+    if (!userId || !session) {
+      return;
+    }
+    // Prevent non author from saving as template
+    if (userId !== session.createdBy.id) {
+      return;
+    }
+
+    await saveTemplate(connection, userId, session, data.columns, data.options);
   };
 
   const onLockSession = async (
@@ -557,6 +541,7 @@ export default (connection: Connection, io: SocketIO.Server) => {
       { type: LEAVE_SESSION, handler: onLeaveSession },
       { type: EDIT_OPTIONS, handler: onEditOptions },
       { type: EDIT_COLUMNS, handler: onEditColumns },
+      { type: SAVE_TEMPLATE, handler: onSaveTemplate },
       { type: LOCK_SESSION, handler: onLockSession },
     ];
 

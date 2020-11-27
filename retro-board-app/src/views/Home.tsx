@@ -1,23 +1,13 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { Fab, makeStyles, colors, Button } from '@material-ui/core';
-import { ThumbUpAlt, Settings, Lock } from '@material-ui/icons';
+import { Fab, makeStyles, colors } from '@material-ui/core';
+import { ThumbUpAlt } from '@material-ui/icons';
 import useTranslations from '../translations';
 import PreviousGames from './home/PreviousGames';
-import CreateSessionModal from './home/CreateSession';
-import {
-  SessionOptions,
-  ColumnDefinition,
-  SessionMetadata,
-} from 'retro-board-common';
+import { SessionMetadata } from 'retro-board-common';
 import { trackEvent } from './../track';
-import {
-  createGame,
-  createEncryptedGame,
-  createCustomGame,
-  deleteSession,
-} from '../api';
+import { createGame, createEncryptedGame, deleteSession } from '../api';
 import { Page } from '../components/Page';
 import usePreviousSessions from '../hooks/usePreviousSessions';
 import useUser from '../auth/useUser';
@@ -47,34 +37,8 @@ function Home() {
   const translations = useTranslations();
   const [previousSessions, refreshPreviousSessions] = usePreviousSessions();
   const hasPreviousSessions = previousSessions.length > 0;
-  const createSession = useCallback(
-    async (
-      options: SessionOptions,
-      columns: ColumnDefinition[],
-      defaultTemplate: boolean
-    ) => {
-      const session = await createCustomGame(defaultTemplate, options, columns);
-      if (session) {
-        trackEvent('custom-modal/create');
-        history.push(`/game/${session.id}`);
-      } else {
-        trackEvent('custom-modal/fail');
-      }
-    },
-    [history]
-  );
+
   const classes = useStyles();
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const onCloseModal = useCallback(() => {
-    setModalOpen(false);
-    trackEvent('custom-modal/close');
-  }, []);
-
-  const onOpenModal = useCallback(() => {
-    setModalOpen(true);
-    trackEvent('custom-modal/open');
-  }, []);
 
   const createDefaultSession = useCallback(async () => {
     const session = await createGame();
@@ -124,17 +88,7 @@ function Home() {
             {translations.Encryption.createEncryptedSession}
           </Fab>
         </ProButton>
-        {/* <Button onClick={onOpenModal} color="primary" disabled={!isLoggedIn}>
-          <Settings className={classes.buttonIcon} />
-          {translations.Join.standardTab.customizeButton}
-        </Button> */}
       </LaunchButtons>
-
-      {/* <CreateSessionModal
-        open={modalOpen}
-        onClose={onCloseModal}
-        onLaunch={createSession}
-      /> */}
 
       {hasPreviousSessions ? (
         <>

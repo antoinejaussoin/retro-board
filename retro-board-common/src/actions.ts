@@ -12,6 +12,7 @@ export default {
   LEAVE_SESSION: 'retrospected/session/leave',
   EDIT_OPTIONS: 'retrospected/session/options/edit',
   EDIT_COLUMNS: 'retrospected/session/columns/edit',
+  SAVE_TEMPLATE: 'retrospected/session/template/save',
   LOCK_SESSION: 'retrospected/session/lock',
 
   RECEIVE_POST: 'retrospected/posts/receive/add',

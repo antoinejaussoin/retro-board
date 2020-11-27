@@ -292,6 +292,30 @@ export async function updateColumns(
   return await columnRepository.updateColumns(session, columns);
 }
 
+export async function saveTemplate(
+  connection: Connection,
+  userId: string,
+  session: Session,
+  columns: ColumnDefinition[],
+  options: SessionOptions
+) {
+  const userRepository = connection.getCustomRepository(UserRepository);
+  const templateRepository = connection.getCustomRepository(
+    SessionTemplateRepository
+  );
+  try {
+    const defaultTemplate = await templateRepository.saveFromJson(
+      'Default Template',
+      columns,
+      options,
+      userId
+    );
+    await userRepository.persistTemplate(userId, defaultTemplate.id);
+  } catch (err) {
+    throw err;
+  }
+}
+
 export async function updateName(
   connection: Connection,
   sessionId: string,

@@ -483,6 +483,16 @@ const useGame = (sessionId: string) => {
     [send, editColumns]
   );
 
+  const onSaveTemplate = useCallback(
+    (options: SessionOptions, columns: ColumnDefinition[]) => {
+      if (send) {
+        send(Actions.SAVE_TEMPLATE, { options, columns });
+        trackAction(Actions.SAVE_TEMPLATE);
+      }
+    },
+    [send]
+  );
+
   const onLockSession = useCallback(
     (locked: boolean) => {
       if (send) {
@@ -509,6 +519,7 @@ const useGame = (sessionId: string) => {
     onRenameSession,
     onEditOptions,
     onEditColumns,
+    onSaveTemplate,
     onLockSession,
     reconnect,
   };

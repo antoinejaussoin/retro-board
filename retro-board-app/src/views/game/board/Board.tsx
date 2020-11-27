@@ -44,6 +44,10 @@ interface GameModeProps {
   onDeleteGroup: (group: PostGroup) => void;
   onEditOptions: (options: SessionOptions) => void;
   onEditColumns: (columns: ColumnDefinition[]) => void;
+  onSaveTemplate: (
+    options: SessionOptions,
+    columns: ColumnDefinition[]
+  ) => void;
   onLockSession: (locked: boolean) => void;
 }
 
@@ -74,6 +78,7 @@ function GameMode({
   onDeleteGroup,
   onEditOptions,
   onEditColumns,
+  onSaveTemplate,
   onLockSession,
   columns,
   options,
@@ -122,6 +127,7 @@ function GameMode({
       <BoardHeader
         onEditColumns={onEditColumns}
         onEditOptions={onEditOptions}
+        onSaveTemplate={onSaveTemplate}
         onLockSession={onLockSession}
         onRenameSession={onRenameSession}
       />

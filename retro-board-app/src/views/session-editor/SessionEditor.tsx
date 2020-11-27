@@ -113,17 +113,15 @@ function SessionEditor({
         ) : null}
       </DialogContent>
       <DialogActions>
-        {!edit ? (
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={isDefaultTemplate}
-                onChange={toggleIsDefaultTemplate}
-              />
-            }
-            label={Customize.makeDefaultTemplate}
-          />
-        ) : null}
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={isDefaultTemplate}
+              onChange={toggleIsDefaultTemplate}
+            />
+          }
+          label={Customize.makeDefaultTemplate}
+        />
         <Button onClick={onClose} color="default" variant="text">
           {Generic.cancel}
         </Button>
