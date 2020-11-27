@@ -7,12 +7,14 @@ import {
   DialogContentText,
   DialogTitle,
 } from '@material-ui/core';
-import { InfoOutlined, Star } from '@material-ui/icons';
+import { InfoOutlined, Lock } from '@material-ui/icons';
 import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import useUser from '../auth/useUser';
-import useModal from '../hooks/useModal';
+import useUser from '../../auth/useUser';
+import useModal from '../../hooks/useModal';
+import EncryptionIcon from '../../icons/EncryptionIcon';
+import Feature from './Feature';
 
 interface ComponentProp {
   disabled?: boolean;
@@ -63,15 +65,25 @@ function ProButton({ children }: ProButtonProps) {
           </DialogContentText>
         </DialogContent>
         <DialogContent>
-          <ul>
-            <li>Encrypted Sessions</li>
-            <li>Session Locking</li>
-          </ul>
+          <Features>
+            <Feature
+              icon={<EncryptionIcon style={{ fill: colors.red[700] }} />}
+              color={colors.red[700]}
+              title="Encrypted Sessions"
+              description="Your data is encrypted in your browser, making any decryption impossible on the Retrospected server."
+            />
+            <Feature
+              icon={<Lock />}
+              color={colors.green[700]}
+              title="Session Locking"
+              description="Make sure only authorised people can access your session."
+            />
+          </Features>
         </DialogContent>
         <DialogActions>
           <Button onClick={close}>Cancel</Button>
           <Button variant="contained" color="primary" onClick={goToSubscribe}>
-            Find out more
+            Subscribe
           </Button>
         </DialogActions>
       </Dialog>
@@ -109,6 +121,12 @@ const Header = styled.div`
   padding: 50px 100px;
   font-size: 3em;
   font-weight: 100;
+`;
+
+const Features = styled.div`
+  > * {
+    margin-bottom: 10px;
+  }
 `;
 
 export default ProButton;

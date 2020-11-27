@@ -24,6 +24,7 @@ import useUser from '../auth/useUser';
 import shortid from 'shortid';
 import { storeEncryptionKeyLocally } from '../crypto/crypto';
 import ProButton from '../components/ProButton';
+import EncryptionIcon from '../icons/EncryptionIcon';
 
 const useStyles = makeStyles({
   media: {
@@ -119,7 +120,7 @@ function Home() {
             color="secondary"
             disabled={!isLoggedIn}
           >
-            <Lock className={classes.buttonIcon} />
+            <EncryptionIcon className={classes.buttonIcon} />
             {translations.Encryption.createEncryptedSession}
           </Fab>
         </ProButton>

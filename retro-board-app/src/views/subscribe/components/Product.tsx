@@ -58,7 +58,7 @@ const Header = styled.div`
 const Description = styled.div`
   padding: 20px;
   border-bottom: 1px solid ${colors.deepPurple[500]};
-  background-color: ${colors.deepPurple.A100};
+  background-color: ${colors.deepPurple[100]};
   flex: 1;
 `;
 
