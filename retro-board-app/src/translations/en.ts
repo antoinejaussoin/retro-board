@@ -303,6 +303,26 @@ export default {
       checkout: 'Checkout',
     },
   },
+  SubscribeModal: {
+    title: 'Pro Subscription',
+    header: 'Retrospected Pro',
+    description: `Protect your company's data by subscribing to Retrospected Pro.
+For as low as $9.99, get the following Pro features and more:`,
+    features: {
+      encryptedSession: {
+        title: 'Encrypted Sessions',
+        description:
+          'Your data is encrypted in your browser, making any decryption impossible on the Retrospected server.',
+      },
+      sessionLocking: {
+        title: 'Session Locking',
+        description:
+          'Make sure only authorised people can access your session.',
+      },
+    },
+    subscribeButton: 'Subscribe',
+    cancelButton: 'Cancel',
+  },
   Products: {
     team:
       'Perfect for smaller teams, you can select up to 20 colleagues who will be upgraded to a Pro account.',

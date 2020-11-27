@@ -310,6 +310,25 @@ export default {
       checkout: 'Payer',
     },
   },
+  SubscribeModal: {
+    title: 'Abonnement Pro',
+    header: 'Retrospected Pro',
+    description: `Protéger les données de votre entreprise en vous abonnant à Retrospected Pro. Pour seulement 9.90 €, béneficiez des fonctionalités suivantes:`,
+    features: {
+      encryptedSession: {
+        title: 'Session Cryptées',
+        description:
+          'Vos données sont cryptées localement, sur votre navigateur, les rendant impossible à déchiffrer sur le serveur.',
+      },
+      sessionLocking: {
+        title: 'Session restreintes',
+        description:
+          'Assurez-vous que seules les personnes choisies puissent accéder à votre session.',
+      },
+    },
+    subscribeButton: `S'abonner`,
+    cancelButton: `Annuler`,
+  },
   Products: {
     team: `Parfait pour une équipe, vous pouvez sélectioner jusqu'à 20 collègues qui recevront un compte Retrospected Pro.`,
     unlimited: `Si vous avez besoin de plus, l'abonnement "Pro Unlimited" vous donnera un nombre de compte Pro illimité`,

@@ -277,6 +277,23 @@ export interface Translation {
       checkout?: string;
     };
   };
+  SubscribeModal: {
+    title?: string;
+    header?: string;
+    description?: string;
+    features: {
+      encryptedSession: {
+        title?: string;
+        description?: string;
+      };
+      sessionLocking: {
+        title?: string;
+        description?: string;
+      };
+    };
+    subscribeButton?: string;
+    cancelButton?: string;
+  };
   Products: {
     team?: string;
     unlimited?: string;

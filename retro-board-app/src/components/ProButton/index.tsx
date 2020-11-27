@@ -14,6 +14,7 @@ import styled from 'styled-components';
 import useUser from '../../auth/useUser';
 import useModal from '../../hooks/useModal';
 import EncryptionIcon from '../../icons/EncryptionIcon';
+import useTranslation from '../../translations/useTranslations';
 import Feature from './Feature';
 
 interface ComponentProp {
@@ -30,6 +31,7 @@ function ProButton({ children }: ProButtonProps) {
   const [opened, open, close] = useModal();
   const clone = React.cloneElement(children, { disabled: !isPro });
   const history = useHistory();
+  const { SubscribeModal: translations } = useTranslation();
 
   const goToSubscribe = useCallback(() => {
     history.push('/subscribe');
@@ -49,41 +51,37 @@ function ProButton({ children }: ProButtonProps) {
       {clone}
       <Dialog
         onClose={close}
-        maxWidth="xl"
+        maxWidth="sm"
         aria-labelledby="lock-session-dialog"
         open={opened}
       >
-        <DialogTitle id="lock-session-dialog">Pro Subscription</DialogTitle>
+        <DialogTitle id="lock-session-dialog">{translations.title}</DialogTitle>
         <DialogContent style={{ padding: 0, margin: 0 }}>
-          <Header>Subscribe to Pro</Header>
+          <Header>{translations.header}</Header>
         </DialogContent>
         <DialogContent>
-          <DialogContentText>
-            Protect your company's data by subscribing to Retrospected Pro.
-            <br />
-            For as low as $9.99, get the following Pro features and more:
-          </DialogContentText>
+          <DialogContentText>{translations.description}</DialogContentText>
         </DialogContent>
         <DialogContent>
           <Features>
             <Feature
               icon={<EncryptionIcon style={{ fill: colors.red[700] }} />}
               color={colors.red[700]}
-              title="Encrypted Sessions"
-              description="Your data is encrypted in your browser, making any decryption impossible on the Retrospected server."
+              title={translations.features.encryptedSession.title!}
+              description={translations.features.encryptedSession.description!}
             />
             <Feature
               icon={<Lock />}
               color={colors.green[700]}
-              title="Session Locking"
-              description="Make sure only authorised people can access your session."
+              title={translations.features.sessionLocking.title!}
+              description={translations.features.sessionLocking.description!}
             />
           </Features>
         </DialogContent>
         <DialogActions>
-          <Button onClick={close}>Cancel</Button>
+          <Button onClick={close}>{translations.cancelButton}</Button>
           <Button variant="contained" color="primary" onClick={goToSubscribe}>
-            Subscribe
+            {translations.subscribeButton}
           </Button>
         </DialogActions>
       </Dialog>
