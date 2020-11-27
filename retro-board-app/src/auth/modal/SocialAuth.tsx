@@ -4,7 +4,6 @@ import {
   GithubLoginButton,
   GoogleLoginButton,
   TwitterLoginButton,
-  AmazonLoginButton,
 } from 'react-social-login-buttons';
 import styled from 'styled-components';
 import io from 'socket.io-client';
@@ -13,6 +12,7 @@ import config from '../../utils/getConfig';
 import { updateLanguage } from '../../api';
 import { FullUser } from 'retro-board-common';
 import Wrapper from './Wrapper';
+import SlackLoginButton from './social/SlackLoginButton';
 
 const API_URL = '/api/auth';
 
@@ -86,7 +86,7 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
           <TwitterLoginButton onClick={handleTwitter} text="Twitter" />
         )}
         {config.SlackAuthEnabled && (
-          <AmazonLoginButton onClick={handleSlack} text="Slack" />
+          <SlackLoginButton onClick={handleSlack} text="Slack" />
         )}
       </AccountsButtons>
     </Wrapper>

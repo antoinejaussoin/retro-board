@@ -27,7 +27,6 @@ import { getOrSaveUser } from '../db/actions/users';
 import { Connection } from 'typeorm';
 
 export default (connection: Connection) => {
-  // Allowing passport to serialize and deserialize users into sessions
   passport.serializeUser((user: string, cb) => {
     cb(null, user);
   });
@@ -35,9 +34,6 @@ export default (connection: Connection) => {
     cb(null, userId);
   });
 
-  // The callback that is invoked when an OAuth provider sends back user
-  // information. Normally, you would save the user to the database
-  // in this callback and it would be customized for each provider
   function callback(type: AccountType) {
     return async (
       _accessToken: string,
