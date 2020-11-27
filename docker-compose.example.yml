@@ -48,6 +48,7 @@ services:
       - redis
     environment:
       NODE_ENV: production
+      BASE_URL: http://localhost:80 # This must be the URL of the frontend app once deployed
       DB_TYPE: postgres
       DB_NAME: retroboard # Must be the same as POSTGRES_DB above
       DB_USER: postgres # Must be the same as POSTGRES_USER above
@@ -71,7 +72,10 @@ services:
       SENDGRID_SENDER: # Email to be used as the sender for emails
       STRIPE_SECRET: # Stripe payment account secret
       STRIPE_WEBHOOK_SECRET: # Stripe webhook secret
-      BASE_URL: http://localhost:80 # This must be the URL of the frontend app once deployed
+      STRIPE_TEAM_PRODUCT: # Stripe product information
+      STRIPE_TEAM_PRICE: # Stripe product information
+      STRIPE_UNLIMITED_PRODUCT: # Stripe product information
+      STRIPE_UNLIMITED_PRICE: # Stripe product information
     restart: unless-stopped
     logging:
       driver: 'json-file'
