@@ -124,17 +124,17 @@ function Home() {
             {translations.Encryption.createEncryptedSession}
           </Fab>
         </ProButton>
-        <Button onClick={onOpenModal} color="primary" disabled={!isLoggedIn}>
+        {/* <Button onClick={onOpenModal} color="primary" disabled={!isLoggedIn}>
           <Settings className={classes.buttonIcon} />
           {translations.Join.standardTab.customizeButton}
-        </Button>
+        </Button> */}
       </LaunchButtons>
 
-      <CreateSessionModal
+      {/* <CreateSessionModal
         open={modalOpen}
         onClose={onCloseModal}
         onLaunch={createSession}
-      />
+      /> */}
 
       {hasPreviousSessions ? (
         <>
