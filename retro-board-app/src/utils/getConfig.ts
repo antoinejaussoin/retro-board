@@ -6,6 +6,7 @@ interface HtmlConfig {
   AUTH_GOOGLE_ENABLED: string;
   AUTH_TWITTER_ENABLED: string;
   AUTH_GITHUB_ENABLED: string;
+  AUTH_SLACK_ENABLED: string;
   DEFAULT_LANGUAGE: string;
   VERSION: string;
 }
@@ -21,6 +22,7 @@ interface Config {
   GoogleAuthEnabled: boolean;
   TwitterAuthEnabled: boolean;
   GitHubAuthEnabled: boolean;
+  SlackAuthEnabled: boolean;
   defaultLanguage: string;
   version: string;
 }
@@ -42,7 +44,8 @@ function getKey(
     | 'DEFAULT_LANGUAGE'
     | 'AUTH_GOOGLE_ENABLED'
     | 'AUTH_TWITTER_ENABLED'
-    | 'AUTH_GITHUB_ENABLED',
+    | 'AUTH_GITHUB_ENABLED'
+    | 'AUTH_SLACK_ENABLED',
   noValue: string,
   defaultValue?: string
 ): string {
@@ -74,6 +77,9 @@ function getConfig(): Config {
   const isGitHubAuthEnabled =
     getKey('AUTH_GITHUB_ENABLED', 'NO_AUTH_GITHUB_ENABLED').toLowerCase() ===
     'true';
+  const isSlackAuthEnabled =
+    getKey('AUTH_SLACK_ENABLED', 'NO_AUTH_SLACK_ENABLED').toLowerCase() ===
+    'true';
 
   return {
     hasGA: !!googleAnalyticsId,
@@ -86,6 +92,7 @@ function getConfig(): Config {
     GoogleAuthEnabled: isGoogleAuthEnabled,
     GitHubAuthEnabled: isGitHubAuthEnabled,
     TwitterAuthEnabled: isTwitterAuthEnabled,
+    SlackAuthEnabled: isSlackAuthEnabled,
     defaultLanguage: defaultLanguage,
     version: window.__env__['VERSION'],
   };

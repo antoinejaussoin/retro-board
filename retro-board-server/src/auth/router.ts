@@ -11,12 +11,13 @@ const googleAuth = passport.authenticate('google', {
 });
 const facebookAuth = passport.authenticate('facebook');
 const githubAuth = passport.authenticate('github');
+const slackAuth = passport.authenticate('slack');
 const anonAuth = passport.authenticate('local');
 
 export const endOAuthHandler = (req: Request2, res: Response) => {
   const io = req.app.get('io');
   io.in(req.session!.socketId).emit('auth', req.user);
-  req.logIn(req.user!, (err) => {
+  req.logIn(req.user!, () => {
     res.end();
   });
 };
@@ -30,6 +31,7 @@ export const endAnonHandler = (req: Request, res: Response) => {
 router.get('/twitter/callback', twitterAuth, endOAuthHandler);
 router.get('/google/callback', googleAuth, endOAuthHandler);
 router.get('/github/callback', githubAuth, endOAuthHandler);
+router.get('/slack/callback', slackAuth, endOAuthHandler);
 router.post('/anonymous/login', anonAuth, endAnonHandler);
 router.post('/login', anonAuth, endAnonHandler);
 
@@ -49,5 +51,6 @@ router.get('/twitter', twitterAuth);
 router.get('/google', googleAuth);
 router.get('/facebook', facebookAuth);
 router.get('/github', githubAuth);
+router.get('/slack', slackAuth);
 
 export default router;

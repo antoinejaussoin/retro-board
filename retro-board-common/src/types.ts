@@ -123,6 +123,7 @@ export type AccountType =
   | 'google'
   | 'twitter'
   | 'github'
+  | 'slack'
   | 'password';
 
 export interface Vote extends Entity {

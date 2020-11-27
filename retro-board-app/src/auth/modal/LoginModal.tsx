@@ -22,7 +22,8 @@ const Login = ({ onClose }: LoginModalProps) => {
   const hasNoSocialMediaAuth =
     !config.GoogleAuthEnabled &&
     !config.TwitterAuthEnabled &&
-    !config.GitHubAuthEnabled;
+    !config.GitHubAuthEnabled &&
+    !config.SlackAuthEnabled;
   const translations = useTranslations();
   const fullScreen = useMediaQuery('(max-width:600px)');
   const { setUser } = useContext(UserContext);

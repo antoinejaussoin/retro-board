@@ -34,5 +34,7 @@ spec:
               value: 'false'
             - name: AUTH_GITHUB_ENABLED
               value: 'false'
+            - name: AUTH_SLACK_ENABLED
+              value: 'false'
             - name: DEFAULT_LANGUAGE
               value: 'en'

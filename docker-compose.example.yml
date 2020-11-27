@@ -98,6 +98,7 @@ services:
       AUTH_GOOGLE_ENABLED: 'false' # Set to true if you set GOOGLE_KEY and GOOGLE_SECRET above
       AUTH_TWITTER_ENABLED: 'false'
       AUTH_GITHUB_ENABLED: 'false'
+      AUTH_SLACK_ENABLED: 'false'
       DEFAULT_LANGUAGE: 'en' # Set the default language for new users
       STRIPE_KEY: # Stripe publishable key (for frontend)
     restart: unless-stopped

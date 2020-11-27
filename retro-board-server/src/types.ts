@@ -18,6 +18,8 @@ export interface Configuration {
   GOOGLE_SECRET: string;
   GITHUB_KEY: string;
   GITHUB_SECRET: string;
+  SLACK_KEY: string;
+  SLACK_SECRET: string;
   SENDGRID_API_KEY: string;
   SENDGRID_SENDER: string;
   STRIPE_SECRET: string;

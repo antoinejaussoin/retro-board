@@ -1,6 +1,6 @@
 export interface BaseProfile {
   id: string;
-  provider: 'google' | 'github' | 'twitter';
+  provider: 'google' | 'github' | 'twitter' | 'Slack';
 }
 
 interface GoogleProfileEmail {
@@ -79,6 +79,22 @@ export interface GitHubProfile extends BaseProfile {
     created_at: string;
     updated_at: string;
   };
+}
+
+export interface SlackProfile extends BaseProfile {
+  user: {
+    name: string;
+    id: string;
+    email: string;
+    image_24: string;
+    image_32: string;
+    image_48: string;
+    image_72: string;
+    image_192: string;
+    image_512: string;
+  };
+  team: { id: string };
+  displayName: string;
 }
 
 export interface TwitterProfile extends BaseProfile {

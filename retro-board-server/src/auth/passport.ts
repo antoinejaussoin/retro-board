@@ -3,7 +3,13 @@ import { Strategy as LocalStrategy, IVerifyOptions } from 'passport-local';
 import { Strategy as TwitterStrategy } from 'passport-twitter';
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
 import { Strategy as GithubStrategy } from 'passport-github';
-import { TWITTER_CONFIG, GOOGLE_CONFIG, GITHUB_CONFIG } from './config';
+import { Strategy as SlackStrategy } from 'passport-slack';
+import {
+  TWITTER_CONFIG,
+  GOOGLE_CONFIG,
+  GITHUB_CONFIG,
+  SLACK_CONFIG,
+} from './config';
 import { v4 } from 'uuid';
 import { AccountType } from 'retro-board-common';
 import chalk from 'chalk';
@@ -15,6 +21,7 @@ import {
   TwitterProfile,
   GoogleProfile,
   GitHubProfile,
+  SlackProfile,
 } from './types';
 import { getOrSaveUser } from '../db/actions/users';
 import { Connection } from 'typeorm';
@@ -49,6 +56,9 @@ export default (connection: Connection) => {
           break;
         case 'twitter':
           user = buildFromTwitterProfile(profile as TwitterProfile);
+          break;
+        case 'slack':
+          user = buildFromSlackProfile(profile as SlackProfile);
           break;
         default:
           throw new Error('Unknown provider: ' + type);
@@ -98,6 +108,17 @@ export default (connection: Connection) => {
     return user;
   }
 
+  function buildFromSlackProfile(profile: SlackProfile): UserEntity {
+    const user: UserEntity = new UserEntity(v4(), profile.displayName);
+    const email = profile.user.email;
+    user.accountType = 'slack';
+    user.language = 'en';
+    user.photo = profile.user.image_192;
+    user.username = email;
+    user.email = email;
+    return user;
+  }
+
   // Adding each OAuth provider's strategy to passport
   if (TWITTER_CONFIG) {
     passport.use(new TwitterStrategy(TWITTER_CONFIG, callback('twitter')));
@@ -112,6 +133,11 @@ export default (connection: Connection) => {
   if (GITHUB_CONFIG) {
     passport.use(new GithubStrategy(GITHUB_CONFIG, callback('github')));
     console.log(chalk`{blue 🔑  {red GitHub} authentication activated}`);
+  }
+
+  if (SLACK_CONFIG) {
+    passport.use(new SlackStrategy(SLACK_CONFIG, callback('slack')));
+    console.log(chalk`{blue 🔑  {red Slack} authentication activated}`);
   }
 
   passport.use(
