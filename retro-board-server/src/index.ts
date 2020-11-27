@@ -45,6 +45,16 @@ import {
   getDefaultTemplate,
 } from './db/actions/sessions';
 import { updateUser, getUserByUsername, getUserView } from './db/actions/users';
+import isLicenced from './security/is-licenced';
+
+if (!isLicenced()) {
+  console.log(chalk`{red ----------------------------------------------- }`);
+  console.log(
+    chalk`⚠️ {red This software is not licenced. Please contact
+support@retrospected.com to obtain a licence.} ⚠️`
+  );
+  console.log(chalk`{red ----------------------------------------------- }`);
+}
 
 initSentry();
 
@@ -82,7 +92,7 @@ if (config.REDIS_ENABLED) {
   });
 } else {
   sessionMiddleware = session({
-    secret: `${process.env.SESSION_SECRET!}-1`, // Increment to force re-auth
+    secret: `${process.env.SESSION_SECRET!}-2`, // Increment to force re-auth
     resave: true,
     saveUninitialized: true,
     cookie: {
@@ -339,6 +349,10 @@ db().then((connection) => {
     });
     await sendResetPassword(resetPayload.email, user.name, code);
     res.status(200).send();
+  });
+
+  app.get('/api/licenced', async (_, res) => {
+    res.status(200).send(isLicenced());
   });
 
   app.post('/api/reset-password', async (req, res) => {
