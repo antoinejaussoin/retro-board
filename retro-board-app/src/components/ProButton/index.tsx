@@ -65,7 +65,7 @@ function ProButton({ children }: ProButtonProps) {
         <DialogContent>
           <Features>
             <Feature
-              icon={<EncryptionIcon style={{ fill: colors.red[700] }} />}
+              icon={<EncryptionIcon />}
               color={colors.red[700]}
               title={translations.features.encryptedSession.title!}
               description={translations.features.encryptedSession.description!}
