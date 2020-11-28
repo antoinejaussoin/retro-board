@@ -160,7 +160,7 @@ export default {
   SocialMediaLogin: {
     header: 'OAuth',
     info:
-      'Un service tiers de votre choix va vous permettre de vous authentifier. Vous pourrez visualiser vos précédentes sessions. Aucun mot de passe ne sera stocké.',
+      'Un service tiers de votre choix va vous permettre de vous authentifier. Aucun mot de passe ne sera stocké.',
   },
   AuthCommon: {
     emailField: 'Adresse e-mail',

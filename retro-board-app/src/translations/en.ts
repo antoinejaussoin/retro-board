@@ -158,7 +158,7 @@ export default {
   SocialMediaLogin: {
     header: 'OAuth',
     info:
-      'This will use a third party provider of your choosing to authenticate you, and will allow you to retrieve all your sessions. No password is stored.',
+      'This will use a third party provider of your choosing to authenticate you. No password is stored.',
   },
   AuthCommon: {
     emailField: 'E-mail',
