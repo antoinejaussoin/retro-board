@@ -79,14 +79,14 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
         {config.GitHubAuthEnabled && (
           <GithubLoginButton onClick={handleGitHub} text="GitHub" />
         )}
+        {config.SlackAuthEnabled && (
+          <SlackLoginButton onClick={handleSlack} text="Slack" />
+        )}
         {config.GoogleAuthEnabled && (
           <GoogleLoginButton onClick={handleGoogle} text="Google" />
         )}
         {config.TwitterAuthEnabled && (
           <TwitterLoginButton onClick={handleTwitter} text="Twitter" />
-        )}
-        {config.SlackAuthEnabled && (
-          <SlackLoginButton onClick={handleSlack} text="Slack" />
         )}
       </AccountsButtons>
     </Wrapper>

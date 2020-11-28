@@ -148,8 +148,8 @@ export default {
     },
   },
   AnonymousLogin: {
-    namePlaceholder: 'Présentez-vous ! Entrez votre nom ici',
-    buttonLabel: "C'est parti !",
+    namePlaceholder: 'Votre nom, ou pseudonyme',
+    buttonLabel: 'Se connecter',
     header: 'Se connecter',
     anonymousAuthHeader: 'Identification Anonyme',
     anonymousAuthDescription:
@@ -158,9 +158,9 @@ export default {
     or: 'ou',
   },
   SocialMediaLogin: {
-    header: 'Réseaux Sociaux',
+    header: 'OAuth',
     info:
-      'Vous allez utiliser un de vos comptes existant pour vous identifier. Vous pourrez visualiser vos précédentes sessions. Aucun mot de passe ne sera stocké.',
+      'Un service tiers de votre choix va vous permettre de vous authentifier. Vous pourrez visualiser vos précédentes sessions. Aucun mot de passe ne sera stocké.',
   },
   AuthCommon: {
     emailField: 'Adresse e-mail',
@@ -175,7 +175,7 @@ export default {
     ],
   },
   AccountLogin: {
-    header: 'Classique',
+    header: 'Mot de Passe',
     loginButton: 'Se connecter',
     info: 'Connectez-vous avec votre email et votre mot de passe.',
     registerLink: 'Pas de compte ? Cliquez ici',

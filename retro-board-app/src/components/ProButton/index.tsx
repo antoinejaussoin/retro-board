@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  useMediaQuery,
 } from '@material-ui/core';
 import { InfoOutlined, Lock } from '@material-ui/icons';
 import React, { useCallback } from 'react';
@@ -32,6 +33,7 @@ function ProButton({ children }: ProButtonProps) {
   const clone = React.cloneElement(children, { disabled: !isPro });
   const history = useHistory();
   const { SubscribeModal: translations } = useTranslation();
+  const fullScreen = useMediaQuery('(max-width:600px)');
 
   const goToSubscribe = useCallback(() => {
     history.push('/subscribe');
@@ -44,7 +46,6 @@ function ProButton({ children }: ProButtonProps) {
   return (
     <Container>
       <ProPill onClick={open}>
-        {/* <Star htmlColor={colors.yellow[500]} fontSize="small" /> */}
         <span>Pro</span>
         <InfoOutlined htmlColor={colors.pink[300]} fontSize="small" />
       </ProPill>
@@ -53,6 +54,7 @@ function ProButton({ children }: ProButtonProps) {
         onClose={close}
         maxWidth="sm"
         aria-labelledby="lock-session-dialog"
+        fullScreen={fullScreen}
         open={opened}
       >
         <DialogTitle id="lock-session-dialog">{translations.title}</DialogTitle>
@@ -116,9 +118,16 @@ const Header = styled.div`
   background-color: ${colors.deepPurple[300]};
   color: white;
   min-width: 60hw;
-  padding: 50px 100px;
+  padding: 50px 20px;
   font-size: 3em;
   font-weight: 100;
+  display: flex;
+  justify-content: center;
+
+  @media screen and (max-width: 600px) {
+    font-size: 1.5rem;
+    padding: 10px;
+  }
 `;
 
 const Features = styled.div`

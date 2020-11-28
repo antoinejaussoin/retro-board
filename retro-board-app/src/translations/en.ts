@@ -147,7 +147,7 @@ export default {
   },
   AnonymousLogin: {
     namePlaceholder: 'Please enter a name or nickname here to continue',
-    buttonLabel: "Let's start",
+    buttonLabel: 'Login',
     header: 'Login',
     anonymousAuthHeader: 'Anonymous Login',
     anonymousAuthDescription:
@@ -156,9 +156,9 @@ export default {
     or: 'or',
   },
   SocialMediaLogin: {
-    header: 'Social Media',
+    header: 'OAuth',
     info:
-      'This will use your account to authenticate you, and will allow you to retrieve all your sessions. No password is stored.',
+      'This will use a third party provider of your choosing to authenticate you, and will allow you to retrieve all your sessions. No password is stored.',
   },
   AuthCommon: {
     emailField: 'E-mail',
@@ -167,7 +167,7 @@ export default {
     passwordScoreWords: ['weak', 'weak', 'not quite', 'good', 'strong'],
   },
   AccountLogin: {
-    header: 'Account',
+    header: 'Password',
     loginButton: 'Login',
     info: 'Login with your email and password.',
     registerLink: 'Not registered? Click here',

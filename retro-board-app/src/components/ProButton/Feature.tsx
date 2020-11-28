@@ -28,7 +28,7 @@ const Icon = styled.div<{ color: string }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 20px;
   > svg {
     color: ${(props) => props.color};
   }
@@ -36,7 +36,7 @@ const Icon = styled.div<{ color: string }>`
 const Main = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 5px;
+  padding: 15px 5px;
 `;
 const Title = styled.div`
   font-weight: 100;
