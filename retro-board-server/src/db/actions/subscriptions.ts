@@ -1,5 +1,5 @@
 import { SubscriptionRepository, UserRepository } from '../repositories';
-import { Plan, Currency } from 'retro-board-common/src';
+import { Plan, Currency } from '@retrospected/common';
 import { SubscriptionEntity } from '../entities';
 import { Connection } from 'typeorm';
 

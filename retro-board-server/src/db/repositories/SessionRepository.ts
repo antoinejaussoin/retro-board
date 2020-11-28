@@ -1,10 +1,7 @@
 import { EntityRepository, Repository, getCustomRepository } from 'typeorm';
 import { SessionEntity } from '../entities';
 import ColumnRepository from './ColumnRepository';
-import {
-  Session as JsonSession,
-  SessionOptions,
-} from 'retro-board-common/src/types';
+import { Session as JsonSession, SessionOptions } from '@retrospected/common';
 
 @EntityRepository(SessionEntity)
 export default class SessionRepository extends Repository<SessionEntity> {

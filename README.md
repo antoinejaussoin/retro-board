@@ -152,7 +152,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 - Replacing Travis by GitHub Actions for CI and Deployment 🚀
 - New Freemium model
 - CRA 4.0
-- Adding dynamic HTML title for better browser experience ([#167](https://github.com/antoinejaussoin/ retro-board/issues/167)). 👏 Thanks [@sam-pires](https://github.com/sam-pires)!
+- Adding dynamic HTML title for better browser experience ([#167](https://github.com/antoinejaussoin/retro-board/issues/167)). 👏 Thanks [@sam-pires](https://github.com/sam-pires)!
 
 ### Version 3.2.3
 

@@ -4,7 +4,7 @@ import {
   SessionTemplate as JsonSessionTemplate,
   ColumnDefinition as JsonColumnDefinition,
   SessionOptions as JsonSessionOptions,
-} from 'retro-board-common/src/types';
+} from '@retrospected/common';
 import { v4 } from 'uuid';
 import { TemplateColumnRepository } from '.';
 

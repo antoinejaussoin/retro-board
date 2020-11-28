@@ -7,7 +7,7 @@ import {
   ManyToOne,
 } from 'typeorm';
 import UserEntity from './User';
-import { Plan } from 'retro-board-common/src';
+import { Plan } from '@retrospected/common';
 
 @Entity({ name: 'subscriptions' })
 export default class SubscriptionEntity {

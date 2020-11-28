@@ -76,7 +76,7 @@ app.use(express.urlencoded({ extended: true }));
 let sessionMiddleware: express.RequestHandler;
 
 if (config.REDIS_ENABLED) {
-  const RedisStore = connectRedis(session);
+  const RedisStore = connectRedis((session as unknown) as any);
   const redisClient = redis.createClient({
     host: config.REDIS_HOST,
     port: config.REDIS_PORT,
@@ -85,7 +85,7 @@ if (config.REDIS_ENABLED) {
     secret: `${process.env.SESSION_SECRET!}-1`, // Increment to force re-auth
     resave: true,
     saveUninitialized: true,
-    store: new RedisStore({ client: redisClient as any }),
+    store: (new RedisStore({ client: redisClient as any }) as unknown) as any,
     cookie: {
       secure: false,
     },

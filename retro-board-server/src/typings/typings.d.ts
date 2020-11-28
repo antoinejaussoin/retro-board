@@ -3,6 +3,7 @@ declare namespace Express {
 
   interface Request {
     buf: Buffer;
+    session: Session;
   }
 
   interface Session {

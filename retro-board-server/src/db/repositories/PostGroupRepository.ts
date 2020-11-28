@@ -1,6 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { PostGroupEntity } from '../entities';
-import { PostGroup as JsonPostGroup } from 'retro-board-common/src/types';
+import { PostGroup as JsonPostGroup } from '@retrospected/common';
 
 @EntityRepository(PostGroupEntity)
 export default class PostGroupRepository extends Repository<PostGroupEntity> {
