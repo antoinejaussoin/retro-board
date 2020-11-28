@@ -64,7 +64,7 @@ function ModifyOptions({
   return (
     <>
       <Button
-        variant="text"
+        variant="outlined"
         color="primary"
         startIcon={<Settings />}
         onClick={() => setOpen(true)}

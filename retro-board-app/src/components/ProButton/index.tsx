@@ -93,13 +93,17 @@ function ProButton({ children }: ProButtonProps) {
 
 const Container = styled.div`
   position: relative;
+  display: flex;
+  > * {
+    flex: 1;
+  }
 `;
 
 const ProPill = styled.div`
   display: flex;
   align-items: center;
   position: absolute;
-  top: -14px;
+  top: -10px;
   right: -5px;
   background-color: ${colors.deepPurple[300]};
   padding: 2px 5px;

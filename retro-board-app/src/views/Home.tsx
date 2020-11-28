@@ -83,7 +83,6 @@ function Home() {
             size="large"
             color="secondary"
             disabled={!isLoggedIn}
-            style={{ width: '100%' }}
           >
             <EncryptionIcon className={classes.buttonIcon} />
             {translations.Encryption.createEncryptedSession}
