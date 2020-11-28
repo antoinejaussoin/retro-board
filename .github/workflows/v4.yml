@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [v4]
+    branches: [v4, v40/ironing]
   pull_request:
     branches: []
 
