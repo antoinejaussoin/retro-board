@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [v4, v40/ironing]
+    branches: [v4]
   pull_request:
     branches: []
 
@@ -66,5 +66,5 @@ jobs:
           file: retro-board-maintenance/Dockerfile
           context: retro-board-maintenance
           tags: antoinejaussoin/retro-board-maintenance:v4
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          platforms: linux/amd64,linux/arm64
           push: true
