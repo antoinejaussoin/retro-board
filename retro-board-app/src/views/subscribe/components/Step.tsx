@@ -42,9 +42,9 @@ const Index = styled.div`
   margin-right: 20px;
   color: ${colors.grey[500]};
 
-  @media screen and (max-width: 450px) {
+  @media screen and (max-width: 600px) {
+    font-size: 1.5em;
     margin-right: 5px;
-    font-size: 2em;
     align-self: flex-start;
   }
 `;
@@ -59,6 +59,10 @@ const Title = styled.div`
   font-size: 2em;
   font-weight: 100;
   padding-bottom: 10px;
+
+  @media screen and (max-width: 600px) {
+    font-size: 1.5em;
+  }
 `;
 
 const Description = styled.div``;

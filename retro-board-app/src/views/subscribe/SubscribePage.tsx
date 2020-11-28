@@ -160,6 +160,10 @@ const Header = styled.div`
   font-weight: 100;
   justify-content: center;
 
+  @media screen and (max-width: 600px) {
+    font-size: 1.5em;
+  }
+
   @media screen and (max-width: 450px) {
     padding: 5px;
   }

@@ -83,6 +83,7 @@ function Home() {
             size="large"
             color="secondary"
             disabled={!isLoggedIn}
+            style={{ width: '100%' }}
           >
             <EncryptionIcon className={classes.buttonIcon} />
             {translations.Encryption.createEncryptedSession}
@@ -128,10 +129,11 @@ const LaunchButtons = styled.div`
 
   @media (max-width: 500px) {
     flex-direction: column;
+    justify-content: flex-start;
     > button {
       margin: 0;
     }
-    > button:last-child {
+    > *:last-child {
       margin-top: 20px;
     }
   }

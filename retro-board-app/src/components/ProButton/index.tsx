@@ -128,6 +128,10 @@ const Header = styled.div`
     font-size: 1.5rem;
     padding: 10px;
   }
+
+  @media screen and (max-width: 400px) {
+    display: none;
+  }
 `;
 
 const Features = styled.div`
