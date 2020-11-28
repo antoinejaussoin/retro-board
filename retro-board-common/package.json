@@ -1,6 +1,6 @@
 {
   "name": "retro-board-common",
-  "version": "3.2.3",
+  "version": "4.0.0-beta1",
   "license": "GNU GPLv3",
   "private": true,
   "main": "dist/src/index.js",
