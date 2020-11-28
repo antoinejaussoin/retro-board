@@ -10,6 +10,10 @@ import {
 } from 'retro-board-common';
 import { v4 } from 'uuid';
 
+describe('Fake test for CI', () => {
+  expect(true).toBeFalsy();
+});
+
 const userBase: User = {
   photo: null,
   id: '0',
