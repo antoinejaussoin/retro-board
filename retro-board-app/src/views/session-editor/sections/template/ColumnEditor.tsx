@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import EditableLabel from '../../../../components/EditableLabel';
 import { ColumnSettings } from '../../../../state/types';
-import { IconName } from 'retro-board-common';
+import { IconName } from '@retrospected/common';
 import { TwitterPicker, ColorResult } from 'react-color';
 import IconPicker from './IconPicker';
 import { IconButton, colors, useMediaQuery } from '@material-ui/core';

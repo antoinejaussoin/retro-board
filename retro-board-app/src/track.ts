@@ -1,5 +1,5 @@
 import ReactGA from 'react-ga';
-import { TrackingEvent } from 'retro-board-common';
+import { TrackingEvent } from '@retrospected/common';
 import * as Sentry from '@sentry/browser';
 import config from './utils/getConfig';
 

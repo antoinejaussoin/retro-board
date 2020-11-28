@@ -13,7 +13,7 @@ import {
   DialogContentText,
   DialogContent,
 } from '@material-ui/core';
-import { SessionMetadata } from 'retro-board-common';
+import { SessionMetadata } from '@retrospected/common';
 import { AvatarGroup } from '@material-ui/lab';
 import CustomAvatar from '../../../components/Avatar';
 import ItemStat from '../ItemStat';

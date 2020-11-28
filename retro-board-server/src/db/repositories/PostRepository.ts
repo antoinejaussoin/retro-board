@@ -1,7 +1,7 @@
 import { EntityRepository, Repository, getCustomRepository } from 'typeorm';
 import { SessionEntity, PostEntity } from '../entities';
 import SessionRepository from './SessionRepository';
-import { Post as JsonPost, defaultSession } from 'retro-board-common';
+import { Post as JsonPost, defaultSession } from '@retrospected/common';
 
 @EntityRepository(PostEntity)
 export default class PostRepository extends Repository<PostEntity> {

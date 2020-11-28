@@ -11,7 +11,7 @@ import {
   SLACK_CONFIG,
 } from './config';
 import { v4 } from 'uuid';
-import { AccountType } from 'retro-board-common';
+import { AccountType } from '@retrospected/common';
 import chalk from 'chalk';
 import loginAnonymous from './logins/anonymous-user';
 import loginUser from './logins/password-user';

@@ -10,7 +10,7 @@ import io from 'socket.io-client';
 import useTranslations, { useLanguage } from '../../translations';
 import config from '../../utils/getConfig';
 import { updateLanguage } from '../../api';
-import { FullUser } from 'retro-board-common';
+import { FullUser } from '@retrospected/common';
 import Wrapper from './Wrapper';
 import SlackLoginButton from './social/SlackLoginButton';
 

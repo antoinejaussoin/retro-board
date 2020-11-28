@@ -3,7 +3,7 @@ import { Button, Input } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import useTranslations, { useLanguage } from '../../translations';
 import { anonymousLogin, updateLanguage } from '../../api';
-import { FullUser } from 'retro-board-common';
+import { FullUser } from '@retrospected/common';
 import Wrapper from './Wrapper';
 
 interface AnonAuthProps {

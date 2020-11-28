@@ -11,7 +11,7 @@ import {
   RESET_SESSION,
   UPDATE_POST,
 } from '../actions';
-import { Post, defaultOptions } from 'retro-board-common';
+import { Post, defaultOptions } from '@retrospected/common';
 
 function post(id: string): Post {
   return {

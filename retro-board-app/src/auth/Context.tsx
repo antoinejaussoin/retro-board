@@ -1,5 +1,5 @@
 import React from 'react';
-import { FullUser } from 'retro-board-common';
+import { FullUser } from '@retrospected/common';
 
 interface UserContextProps {
   user: FullUser | null;

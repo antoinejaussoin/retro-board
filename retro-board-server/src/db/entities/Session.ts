@@ -15,7 +15,7 @@ import { ColumnDefinitionEntity } from './ColumnDefinition';
 import {
   SessionOptions as JsonSessionOptions,
   Session,
-} from 'retro-board-common';
+} from '@retrospected/common';
 import UserEntity from './User';
 import SessionOptionsEntity from './SessionOptions';
 import PostGroupEntity from './PostGroup';
@@ -51,7 +51,7 @@ export default class SessionEntity {
   public options: SessionOptionsEntity;
   @Column({ nullable: true, type: 'character varying' })
   public encrypted: string | null;
-  @ManyToMany(() => UserEntity, user => user.sessions, { eager: false })
+  @ManyToMany(() => UserEntity, (user) => user.sessions, { eager: false })
   @JoinTable({ name: 'visitors' })
   visitors: UserEntity[] | undefined;
   @Column({ default: false })

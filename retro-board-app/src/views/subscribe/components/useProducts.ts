@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Product } from 'retro-board-common';
+import { Product } from '@retrospected/common';
 import { getProducts } from '../../../api';
 
 export default function useProducts(): Product[] {

@@ -1,4 +1,4 @@
-import { RegisterPayload } from 'retro-board-common';
+import { RegisterPayload } from '@retrospected/common';
 import { v4 } from 'uuid';
 import { hashPassword } from '../../utils';
 import UserEntity from '../../db/entities/User';

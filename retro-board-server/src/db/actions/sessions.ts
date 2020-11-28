@@ -16,7 +16,7 @@ import {
   User,
   AccessErrorType,
   FullUser,
-} from 'retro-board-common';
+} from '@retrospected/common';
 import shortId from 'shortid';
 import { v4 } from 'uuid';
 import { Connection } from 'typeorm';

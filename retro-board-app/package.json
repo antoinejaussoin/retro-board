@@ -1,5 +1,5 @@
 {
-  "name": "retro-board-app",
+  "name": "@retrospected/frontend",
   "version": "4.0.0",
   "license": "GNU GPLv3",
   "private": true,
@@ -57,7 +57,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
     "react-social-login-buttons": "^3.1.0",
-    "retro-board-common": "*",
+    "@retrospected/common": "*",
     "rimraf": "^3.0.2",
     "shortid": "^2.2.16",
     "socket.io-client": "^2.3.1",

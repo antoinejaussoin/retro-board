@@ -12,7 +12,7 @@ import { TemplateColumnDefinitionEntity } from './ColumnDefinition';
 import {
   SessionOptions as JsonSessionOptions,
   SessionTemplate,
-} from 'retro-board-common';
+} from '@retrospected/common';
 import UserEntity from './User';
 import SessionOptionsEntity from './SessionOptions';
 

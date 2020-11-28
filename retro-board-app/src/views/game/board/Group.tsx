@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { PostGroup } from 'retro-board-common';
+import { PostGroup } from '@retrospected/common';
 import styled from 'styled-components';
 import {
   Droppable,

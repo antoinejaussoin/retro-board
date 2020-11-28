@@ -4,7 +4,7 @@ import {
   ColumnDefinitionType,
   Participant,
   AccessErrorType,
-} from 'retro-board-common';
+} from '@retrospected/common';
 
 export interface Action {
   type: string;

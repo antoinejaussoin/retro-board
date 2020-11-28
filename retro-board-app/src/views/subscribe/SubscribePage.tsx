@@ -5,7 +5,7 @@ import { useCallback } from 'react';
 import styled from 'styled-components';
 import Step from './components/Step';
 import { Button, colors } from '@material-ui/core';
-import { Currency, Product, FullUser } from 'retro-board-common';
+import { Currency, Product, FullUser } from '@retrospected/common';
 import CurrencyPicker from './components/CurrencyPicker';
 import ProductPicker from './components/ProductPicker';
 import Input from '../../components/Input';

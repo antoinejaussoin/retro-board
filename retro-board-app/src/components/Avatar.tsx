@@ -1,5 +1,5 @@
 import React from 'react';
-import { User } from 'retro-board-common';
+import { User } from '@retrospected/common';
 import { Avatar, AvatarTypeMap, Badge, Theme } from '@material-ui/core';
 import md5 from 'md5';
 import { DefaultComponentProps } from '@material-ui/core/OverridableComponent';
@@ -38,7 +38,7 @@ const StyledBadge = withStyles((theme: Theme) =>
         opacity: 0,
       },
     },
-  }),
+  })
 )(Badge);
 
 const getGravatar = (user: User | null) => {
@@ -52,12 +52,14 @@ const getGravatar = (user: User | null) => {
 const CustomAvatar = ({ user, online, ...props }: AvatarProps) => {
   const displayName = user ? user.name : 'Not logged in';
 
-  const avatar = <Avatar
-  {...props}
-  alt={displayName}
-  src={getGravatar(user)}
-  title={displayName}
-/>;
+  const avatar = (
+    <Avatar
+      {...props}
+      alt={displayName}
+      src={getGravatar(user)}
+      title={displayName}
+    />
+  );
 
   if (online) {
     return (
@@ -71,7 +73,7 @@ const CustomAvatar = ({ user, online, ...props }: AvatarProps) => {
       >
         {avatar}
       </StyledBadge>
-    )
+    );
   }
   return avatar;
 };

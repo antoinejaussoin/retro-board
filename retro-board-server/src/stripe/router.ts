@@ -3,7 +3,7 @@ import {
   CreateSubscriptionPayload,
   Product,
   StripeLocales,
-} from 'retro-board-common';
+} from '@retrospected/common';
 import config from '../db/config';
 import Stripe from 'stripe';
 import { UserEntity } from '../db/entities';
@@ -99,9 +99,7 @@ function stripeRouter(connection: Connection): Router {
         break;
       case 'customer.subscription.deleted':
         console.log('Deleted Sub', event);
-        const cancelEvent = (event as unknown) as StripeEvent<
-          SubscriptionDeletedPayload
-        >;
+        const cancelEvent = (event as unknown) as StripeEvent<SubscriptionDeletedPayload>;
         if (event.request != null) {
           console.log('Manual cancellation');
           // handle a subscription cancelled by your request
@@ -114,9 +112,7 @@ function stripeRouter(connection: Connection): Router {
         cancelSubscription(connection, cancelEvent.data.object.id);
         break;
       case 'checkout.session.completed':
-        const subEvent = (event as unknown) as StripeEvent<
-          CheckoutCompletedPayload
-        >;
+        const subEvent = (event as unknown) as StripeEvent<CheckoutCompletedPayload>;
 
         if (subEvent.data.object.payment_status === 'paid') {
           await activateSubscription(

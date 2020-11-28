@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { SessionOptions } from 'retro-board-common';
+import { SessionOptions } from '@retrospected/common';
 import SettingCategory from '../SettingCategory';
 import OptionItem from '../OptionItem';
 import useTranslations from '../../../../translations';

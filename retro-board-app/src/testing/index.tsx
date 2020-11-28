@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { render, RenderOptions, RenderResult } from '@testing-library/react';
 import { Provider, initialState } from '../state/context';
-import { FullUser } from 'retro-board-common';
+import { FullUser } from '@retrospected/common';
 import {
   DragDropContext,
   Droppable,

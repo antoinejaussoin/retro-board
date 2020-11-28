@@ -1,4 +1,4 @@
-import { Post, PostGroup } from 'retro-board-common';
+import { Post, PostGroup } from '@retrospected/common';
 import { sortBy, flattenDeep } from 'lodash';
 import { ColumnContent } from '../types';
 import { ColumnStats, ColumnStatsItem, Stats, ActionItem } from './types';
@@ -14,7 +14,7 @@ export function calculateSummary(columns: ColumnContent[]): Stats {
 function calculateColumn(column: ColumnContent): ColumnStats {
   const posts: ColumnStatsItem[] = column.posts.map(postToItem);
   const groups: ColumnStatsItem[] = column.groups
-    .filter(g => !!g.posts.length)
+    .filter((g) => !!g.posts.length)
     .map(groupToItem);
   return { items: sortBy([...posts, ...groups], sortingFunction), column };
 }
@@ -42,7 +42,7 @@ function groupToItem(group: PostGroup): ColumnStatsItem {
 }
 
 function buildActions(columns: ColumnContent[]): ActionItem[] {
-  return getAllPosts(columns).map(p => ({
+  return getAllPosts(columns).map((p) => ({
     action: p.action!,
     postContent: p.content,
     postId: p.id,
@@ -51,9 +51,9 @@ function buildActions(columns: ColumnContent[]): ActionItem[] {
 
 function getAllPosts(columns: ColumnContent[]): Post[] {
   return [
-    ...flattenDeep(columns.map(c => c.posts.filter(p => !!p.action))),
+    ...flattenDeep(columns.map((c) => c.posts.filter((p) => !!p.action))),
     ...flattenDeep(
-      columns.map(c => c.groups.map(g => g.posts.filter(p => !!p.action)))
+      columns.map((c) => c.groups.map((g) => g.posts.filter((p) => !!p.action)))
     ),
   ];
 }

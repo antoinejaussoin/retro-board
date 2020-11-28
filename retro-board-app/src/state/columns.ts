@@ -2,14 +2,13 @@ import {
   ColumnDefinition,
   IconName,
   ColumnDefinitionType,
-} from 'retro-board-common';
+} from '@retrospected/common';
 import { Translation } from '../translations';
 import { v4 } from 'uuid';
 import { keyBy } from 'lodash';
 import { ColumnSettings, Template } from './types';
 import { getTemplate } from './templates';
 import { isEqual } from 'lodash';
-
 
 export function buildDefaults(
   template: Template,
@@ -20,7 +19,7 @@ export function buildDefaults(
 }
 
 export function toColumnDefinitions(
-  colDef: ColumnSettings[],
+  colDef: ColumnSettings[]
 ): ColumnDefinition[] {
   return colDef.map(
     (def, index) =>
@@ -49,9 +48,13 @@ export function extrapolate(
   };
 }
 
-export function hasChanged(before: ColumnSettings[], after: ColumnSettings[], translations: Translation) {
-  const extrapolatedBefore = before.map(c => extrapolate(c, translations));
-  const extrapolatedAfter = after.map(c => extrapolate(c, translations));
+export function hasChanged(
+  before: ColumnSettings[],
+  after: ColumnSettings[],
+  translations: Translation
+) {
+  const extrapolatedBefore = before.map((c) => extrapolate(c, translations));
+  const extrapolatedAfter = after.map((c) => extrapolate(c, translations));
   return !isEqual(extrapolatedBefore, extrapolatedAfter);
 }
 
@@ -158,7 +161,7 @@ export const getTemplateColumnByType = (translations: Translation) => (
         type: 'rock',
       },
     ] as ColumnSettings[],
-    x => x.type
+    (x) => x.type
   );
   return dic[type];
 };

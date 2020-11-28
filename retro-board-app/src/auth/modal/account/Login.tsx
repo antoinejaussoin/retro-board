@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { Button, CircularProgress } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import useTranslations from '../../../translations';
-import { FullUser } from 'retro-board-common';
+import { FullUser } from '@retrospected/common';
 import Wrapper from './../Wrapper';
 import Input from '../../../components/Input';
 import Link from '../../../components/Link';

@@ -7,7 +7,7 @@ import {
   ColumnDefinition,
   Participant,
   AccessErrorType,
-} from 'retro-board-common';
+} from '@retrospected/common';
 
 export const TOGGLE_PANEL = 'retrospected/panel/toggle';
 export const SET_PLAYERS = 'retrospected/game/players/set';

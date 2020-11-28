@@ -3,13 +3,11 @@ import { ColumnDefinitionEntity } from '../entities';
 import {
   ColumnDefinition as JsonColumnDefinition,
   Session as JsonSession,
-} from 'retro-board-common';
+} from '@retrospected/common';
 import { v4 } from 'uuid';
 
 @EntityRepository(ColumnDefinitionEntity)
-export default class ColumnDefinitionRepository extends Repository<
-  ColumnDefinitionEntity
-> {
+export default class ColumnDefinitionRepository extends Repository<ColumnDefinitionEntity> {
   async saveFromJson(
     colDef: JsonColumnDefinition,
     sessionId: string

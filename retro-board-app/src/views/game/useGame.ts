@@ -9,7 +9,7 @@ import {
   ColumnDefinition,
   Participant,
   UnauthorizedAccessPayload,
-} from 'retro-board-common';
+} from '@retrospected/common';
 import { v4 } from 'uuid';
 import { find } from 'lodash';
 import { trackAction, trackEvent } from './../../track';

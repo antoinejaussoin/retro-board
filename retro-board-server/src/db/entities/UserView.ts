@@ -5,7 +5,7 @@ import {
   ProStatus,
   Currency,
   Plan,
-} from 'retro-board-common';
+} from '@retrospected/common';
 
 @ViewEntity({
   expression: `

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { colors, Paper } from '@material-ui/core';
 import { useCallback } from 'react';
-import { Product, Currency } from 'retro-board-common';
+import { Product, Currency } from '@retrospected/common';
 import useTranslations from '../../../translations';
 
 interface ProductDisplayProps {

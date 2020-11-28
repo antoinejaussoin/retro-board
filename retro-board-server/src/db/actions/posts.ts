@@ -1,4 +1,4 @@
-import { Post, PostGroup, Vote } from 'retro-board-common';
+import { Post, PostGroup, Vote } from '@retrospected/common';
 import { Connection } from 'typeorm';
 import {
   PostRepository,

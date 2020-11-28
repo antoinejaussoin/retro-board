@@ -1,5 +1,5 @@
 import useGlobalState from '../../../state';
-import { Post } from 'retro-board-common';
+import { Post } from '@retrospected/common';
 import { permissionLogic, UserPermissions } from './permissions-logic';
 import useUser from '../../../auth/useUser';
 

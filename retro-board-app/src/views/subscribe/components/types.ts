@@ -1,4 +1,4 @@
-import { Currency } from 'retro-board-common';
+import { Currency } from '@retrospected/common';
 
 export interface CurrencyMetadata {
   value: Currency;

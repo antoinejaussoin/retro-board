@@ -19,7 +19,7 @@ import {
   Gesture,
   FitnessCenter,
 } from '@material-ui/icons';
-import { IconName } from 'retro-board-common';
+import { IconName } from '@retrospected/common';
 
 export function getIcon(name: IconName | null): React.ComponentType | null {
   switch (name) {

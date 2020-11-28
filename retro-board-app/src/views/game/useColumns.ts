@@ -4,7 +4,7 @@ import useTranslations from '../../translations';
 import useGlobalState from '../../state';
 import { ColumnContent } from './types';
 import { extrapolate } from '../../state/columns';
-import { ColumnDefinition, Post, PostGroup } from 'retro-board-common';
+import { ColumnDefinition, Post, PostGroup } from '@retrospected/common';
 
 const emptyPosts: Post[] = [];
 const emptyGroups: PostGroup[] = [];

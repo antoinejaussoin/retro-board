@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router';
 import PreviousGameItem from './game-item/PreviousGameItem';
-import { SessionMetadata } from 'retro-board-common';
+import { SessionMetadata } from '@retrospected/common';
 import { trackEvent } from '../../track';
 
 interface PreviousGamesProps {

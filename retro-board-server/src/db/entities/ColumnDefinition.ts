@@ -10,7 +10,7 @@ import {
   IconName,
   ColumnDefinition,
   ColumnDefinitionType,
-} from 'retro-board-common';
+} from '@retrospected/common';
 import SessionEntity from './Session';
 import SessionTemplateEntity from './SessionTemplate';
 

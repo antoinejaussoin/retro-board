@@ -4,7 +4,9 @@
   "description": "An agile retrospective board - Powering www.retrospected.com",
   "private": true,
   "workspaces": [
-    "retro-board-*"
+    "retro-board-app",
+    "retro-board-server",
+    "retro-board-common"
   ],
   "scripts": {
     "test": "yarn build-common && cd retro-board-app && yarn test",

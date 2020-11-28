@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 import { CreateNewFolder } from '@material-ui/icons';
 import PostItem from './post/Post';
-import { Post, PostGroup, SessionOptions } from 'retro-board-common';
+import { Post, PostGroup, SessionOptions } from '@retrospected/common';
 import useUser from '../../../auth/useUser';
 import useTranslations from '../../../translations';
 import Group from './Group';

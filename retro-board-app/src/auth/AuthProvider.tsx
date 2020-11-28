@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Context from './Context';
-import { FullUser } from 'retro-board-common';
+import { FullUser } from '@retrospected/common';
 import { me } from '../api';
 import { useLocation } from 'react-router-dom';
 

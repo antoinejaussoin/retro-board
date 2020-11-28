@@ -9,7 +9,7 @@ import {
   VoteType,
   ColumnDefinition,
   UnauthorizedAccessPayload,
-} from 'retro-board-common';
+} from '@retrospected/common';
 import chalk from 'chalk';
 import moment from 'moment';
 import socketIo from 'socket.io';

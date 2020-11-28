@@ -1,6 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { UserEntity } from '../entities';
-import { User as JsonUser } from 'retro-board-common';
+import { User as JsonUser } from '@retrospected/common';
 
 @EntityRepository(UserEntity)
 export default class UserRepository extends Repository<UserEntity> {

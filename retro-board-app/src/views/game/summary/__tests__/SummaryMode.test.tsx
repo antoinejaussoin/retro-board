@@ -3,7 +3,7 @@ import { v4 } from 'uuid';
 import { render, getAllByRole } from '../../../../testing';
 import SummaryMode from '../SummaryMode';
 import { ColumnContent } from '../../types';
-import { Post } from 'retro-board-common';
+import { Post } from '@retrospected/common';
 import { Route, MemoryRouter } from 'react-router-dom';
 
 const renderWithRouter = (children: React.ReactNode) =>

@@ -3,7 +3,7 @@ import {
   Plan,
   Currency,
   StripeLocales,
-} from 'retro-board-common';
+} from '@retrospected/common';
 
 const requestConfig: Partial<RequestInit> = {
   mode: 'cors',

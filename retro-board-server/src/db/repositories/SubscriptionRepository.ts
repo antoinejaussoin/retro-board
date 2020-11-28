@@ -1,11 +1,9 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { UserEntity, SubscriptionEntity } from '../entities';
-import { User as JsonUser, Plan } from 'retro-board-common';
+import { User as JsonUser, Plan } from '@retrospected/common';
 
 @EntityRepository(SubscriptionEntity)
-export default class SubscriptionRepository extends Repository<
-  SubscriptionEntity
-> {
+export default class SubscriptionRepository extends Repository<SubscriptionEntity> {
   async activate(
     stripeSubscriptionId: string,
     owner: UserEntity,

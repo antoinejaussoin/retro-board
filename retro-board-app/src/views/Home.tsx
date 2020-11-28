@@ -5,7 +5,7 @@ import { Fab, makeStyles, colors } from '@material-ui/core';
 import { ThumbUpAlt } from '@material-ui/icons';
 import useTranslations from '../translations';
 import PreviousGames from './home/PreviousGames';
-import { SessionMetadata } from 'retro-board-common';
+import { SessionMetadata } from '@retrospected/common';
 import { trackEvent } from './../track';
 import { createGame, createEncryptedGame, deleteSession } from '../api';
 import { Page } from '../components/Page';

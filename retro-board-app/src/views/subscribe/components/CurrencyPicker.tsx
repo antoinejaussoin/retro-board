@@ -1,6 +1,6 @@
 import React from 'react';
 import { noop } from 'lodash';
-import { Currency } from 'retro-board-common';
+import { Currency } from '@retrospected/common';
 import 'flag-icon-css/css/flag-icon.min.css';
 import { currencies } from './types';
 import styled from 'styled-components';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AccessErrorType } from 'retro-board-common';
+import { AccessErrorType } from '@retrospected/common';
 import NoContent from '../../components/NoContent';
 import useTranslations from '../../translations';
 

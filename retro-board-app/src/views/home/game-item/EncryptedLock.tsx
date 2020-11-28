@@ -1,7 +1,7 @@
 import { colors, Tooltip } from '@material-ui/core';
 import { Lock, LockOpen } from '@material-ui/icons';
 import React from 'react';
-import { SessionMetadata } from 'retro-board-common';
+import { SessionMetadata } from '@retrospected/common';
 import { CHECK_PREFIX, decrypt } from '../../../crypto/crypto';
 import { useEncryptionKey } from '../../../crypto/useEncryptionKey';
 import useTranslation from '../../../translations/useTranslations';

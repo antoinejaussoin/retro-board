@@ -13,7 +13,7 @@ import SessionEntity from './Session';
 import UserEntity from './User';
 import VoteEntity from './Vote';
 import PostGroupEntity from './PostGroup';
-import { Post } from 'retro-board-common';
+import { Post } from '@retrospected/common';
 
 @Entity({ name: 'posts' })
 export default class PostEntity {

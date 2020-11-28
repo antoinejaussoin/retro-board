@@ -1,6 +1,6 @@
 import { getMovingEntities, calculateRank } from '../moving-logic';
 import { ColumnContent } from '../../types';
-import { Post, User, PostGroup } from 'retro-board-common';
+import { Post, User, PostGroup } from '@retrospected/common';
 import { getMiddle, getNext, getPrevious } from '../../lexorank';
 
 function p(

@@ -1,5 +1,5 @@
 import { InternalProduct } from './types';
-import { Plan } from 'retro-board-common';
+import { Plan } from '@retrospected/common';
 
 export const teamPlan: InternalProduct = {
   name: 'Pro Team',

@@ -1,5 +1,5 @@
 import { ColumnContent } from '../types';
-import { Post, PostGroup } from 'retro-board-common';
+import { Post, PostGroup } from '@retrospected/common';
 import { flattenDeep } from 'lodash';
 import { getMiddle, getPrevious, getNext, getBetween } from '../lexorank';
 

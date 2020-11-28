@@ -31,7 +31,7 @@ import {
   ResetPasswordPayload,
   ResetChangePasswordPayload,
   CreateSessionPayload,
-} from 'retro-board-common';
+} from '@retrospected/common';
 import registerUser from './auth/register/register-user';
 import { sendVerificationEmail, sendResetPassword } from './email/emailSender';
 import { v4 } from 'uuid';

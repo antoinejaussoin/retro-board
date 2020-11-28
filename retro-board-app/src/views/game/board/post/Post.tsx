@@ -24,7 +24,7 @@ import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
 import useTranslations from '../../../../translations';
 import EditableLabel from '../../../../components/EditableLabel';
 import { Palette } from '../../../../Theme';
-import { Post } from 'retro-board-common';
+import { Post } from '@retrospected/common';
 import { useUserPermissions } from '../useUserPermissions';
 import { countVotes, enumerateVotes } from '../../utils';
 import GiphySearchBox from 'react-giphy-searchbox';

@@ -1,4 +1,4 @@
-import { Plan, Currency } from 'retro-board-common';
+import { Plan, Currency } from '@retrospected/common';
 
 export interface Order {
   plan: Plan;

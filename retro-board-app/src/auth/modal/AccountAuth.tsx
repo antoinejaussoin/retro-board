@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FullUser } from 'retro-board-common';
+import { FullUser } from '@retrospected/common';
 import Login from './account/Login';
 import Register from './account/Register';
 import LostPassword from './account/LostPassword';

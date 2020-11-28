@@ -6,7 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { VoteType, Vote } from 'retro-board-common';
+import { VoteType, Vote } from '@retrospected/common';
 import UserEntity from './User';
 import PostEntity from './Post';
 

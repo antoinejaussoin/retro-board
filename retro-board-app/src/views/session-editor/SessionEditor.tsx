@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { SessionOptions } from 'retro-board-common';
+import { SessionOptions } from '@retrospected/common';
 import {
   Dialog,
   DialogContent,

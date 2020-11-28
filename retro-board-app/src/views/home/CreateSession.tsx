@@ -3,7 +3,7 @@ import {
   SessionOptions,
   ColumnDefinition,
   defaultOptions,
-} from 'retro-board-common';
+} from '@retrospected/common';
 import { buildDefaults, toColumnDefinitions } from '../../state/columns';
 import { ColumnSettings } from '../../state/types';
 import useTranslations from '../../translations';

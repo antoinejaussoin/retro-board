@@ -5,7 +5,7 @@ import {
   PostGroup,
   SessionOptions,
   ColumnDefinition,
-} from 'retro-board-common';
+} from '@retrospected/common';
 import {
   DragDropContext,
   DropResult,

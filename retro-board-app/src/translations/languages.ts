@@ -15,7 +15,7 @@ import {
   es,
 } from 'date-fns/locale';
 import { Locale } from 'date-fns';
-import { StripeLocales } from 'retro-board-common';
+import { StripeLocales } from '@retrospected/common';
 
 export interface Language {
   value: string;

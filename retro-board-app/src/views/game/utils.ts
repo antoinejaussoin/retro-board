@@ -1,12 +1,12 @@
-import { Post, VoteType, PostGroup } from 'retro-board-common';
+import { Post, VoteType, PostGroup } from '@retrospected/common';
 import { groupBy, toPairs, sum } from 'lodash';
 
 export function countVotes(post: Post, type: VoteType): number {
-  return post.votes.filter(v => v.type === type).length;
+  return post.votes.filter((v) => v.type === type).length;
 }
 
 export function countVotesForGroup(group: PostGroup, type: VoteType): number {
-  return sum(group.posts.map(p => countVotes(p, type)));
+  return sum(group.posts.map((p) => countVotes(p, type)));
 }
 
 export interface VoteEnumeration {
@@ -17,10 +17,10 @@ export interface VoteEnumeration {
 export function enumerateVotes(post: Post, type: VoteType): VoteEnumeration[] {
   return toPairs(
     groupBy(
-      post.votes.filter(v => v.type === type),
-      v => v.user.name
+      post.votes.filter((v) => v.type === type),
+      (v) => v.user.name
     )
-  ).map(pair => ({
+  ).map((pair) => ({
     name: pair[0],
     count: pair[1].length,
   }));

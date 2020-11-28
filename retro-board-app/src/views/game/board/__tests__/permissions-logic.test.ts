@@ -7,7 +7,7 @@ import {
   Vote,
   VoteType,
   defaultOptions,
-} from 'retro-board-common';
+} from '@retrospected/common';
 import { v4 } from 'uuid';
 
 const userBase: User = {
