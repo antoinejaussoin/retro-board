@@ -33,6 +33,10 @@ const Title = styled.header`
   font-weight: 100;
   margin-bottom: 20px;
   display: block;
+
+  @media screen and (max-width: 600px) {
+    font-size: 1.3em;
+  }
 `;
 
 const Content = styled.div``;

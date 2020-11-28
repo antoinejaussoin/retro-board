@@ -106,11 +106,19 @@ const Title = styled.div`
   font-weight: bold;
   font-size: 1.3em;
   width: 200px;
+
+  @media screen and (max-width: 600px) {
+    font-size: 1em;
+  }
 `;
 
 const Value = styled.div`
   font-weight: 100;
   font-size: 1.3em;
+
+  @media screen and (max-width: 600px) {
+    font-size: 1em;
+  }
 `;
 
 export default AccountPage;
