@@ -377,17 +377,20 @@ interface AllowedResponse {
 
 export function isAllowed(
   session: SessionEntity,
-  user: FullUser
+  user: FullUser | null
 ): AllowedResponse {
-  if ((session.locked || session.encrypted) && !user.pro) {
+  if ((session.locked || session.encrypted) && user && !user.pro) {
     return { allowed: false, reason: 'non_pro' };
   }
-  if (session.locked && session.visitors && user.pro) {
+  if (session.locked && session.visitors && user && user.pro) {
     if (session.visitors.map((v) => v.id).includes(user.id)) {
       return { allowed: true };
     } else {
       return { allowed: false, reason: 'locked' };
     }
+  }
+  if (session.locked && !user) {
+    return { allowed: false, reason: 'locked' };
   }
 
   return { allowed: true };

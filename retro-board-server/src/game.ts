@@ -270,30 +270,30 @@ export default (connection: Connection, io: SocketIO.Server) => {
   ) => {
     socket.join(getRoom(session.id), async () => {
       socket.sessionId = session.id;
-      if (userId) {
-        const user = await getUserView(connection, userId);
-        const sessionEntity = await getSessionWithVisitors(
-          connection,
-          session.id
-        );
+      const user = userId ? await getUserView(connection, userId) : null;
+      const sessionEntity = await getSessionWithVisitors(
+        connection,
+        session.id
+      );
 
-        if (user && sessionEntity) {
-          const userAllowed = isAllowed(sessionEntity, user);
-          if (userAllowed.allowed) {
+      if (sessionEntity) {
+        const userAllowed = isAllowed(sessionEntity, user);
+        if (userAllowed.allowed) {
+          if (user) {
             recordUser(sessionEntity, user, socket);
-            const userEntity = await getUser(connection, userId);
+            const userEntity = await getUser(connection, user.id);
             if (userEntity) {
               await storeVisitor(connection, session.id, userEntity);
             }
-            sendToSelf(socket, RECEIVE_BOARD, session);
-          } else {
-            log(chalk`{red User not allowed, session locked}`);
-            const payload: UnauthorizedAccessPayload = {
-              type: userAllowed.reason,
-            };
-            sendToSelf(socket, RECEIVE_UNAUTHORIZED, payload);
-            socket.disconnect();
           }
+          sendToSelf(socket, RECEIVE_BOARD, session);
+        } else {
+          log(chalk`{red User not allowed, session locked}`);
+          const payload: UnauthorizedAccessPayload = {
+            type: userAllowed.reason,
+          };
+          sendToSelf(socket, RECEIVE_UNAUTHORIZED, payload);
+          socket.disconnect();
         }
       }
     });
