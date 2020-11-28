@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Route, Link as RouterLink } from 'react-router-dom';
-import { Drawer, Link, Typography } from '@material-ui/core';
+import { colors, Drawer, Link, Typography } from '@material-ui/core';
 import { LanguageContext } from '../translations';
 import useGlobalState from '../state';
 import LanguagePicker from '../components/LanguagePicker';
 import PlayerList from './panel/PlayerList';
+import config from '../utils/getConfig';
 
 interface Policy {
   name: string;
@@ -51,6 +52,12 @@ function Panel() {
                 </Link>
               ))}
             </Policies>
+          </Typography>
+          <Typography
+            component="div"
+            style={{ color: colors.grey[700], textAlign: 'center' }}
+          >
+            <Content>Version {config.version}</Content>
           </Typography>
         </Bottom>
       </DrawerContent>
