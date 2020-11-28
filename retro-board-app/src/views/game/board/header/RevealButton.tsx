@@ -26,7 +26,7 @@ function RevealButton({ onClick }: RevealButtonProps) {
   return (
     <>
       <Button
-        variant="text"
+        variant="outlined"
         color="secondary"
         startIcon={<Visibility />}
         onClick={handleOpenDialog}

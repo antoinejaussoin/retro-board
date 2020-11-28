@@ -103,13 +103,21 @@ const ProPill = styled.div`
   display: flex;
   align-items: center;
   position: absolute;
-  top: -10px;
+  top: -14px;
   right: -5px;
-  background-color: ${colors.deepPurple[300]};
+  background-color: white;
   padding: 2px 5px;
   border-radius: 3px;
-  color: white;
+  color: ${colors.deepPurple[300]};
+  border: 1px solid ${colors.deepPurple[300]};
+  border-radius: 3px;
+  z-index: 1;
   font-size: 12px;
+
+  :hover {
+    background-color: ${colors.deepPurple[300]};
+    color: white;
+  }
 
   span {
     padding: 0 5px;

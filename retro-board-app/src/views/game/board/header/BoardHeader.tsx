@@ -165,6 +165,7 @@ const Header = styled.div`
   @media (max-width: 500px) {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto auto;
+    row-gap: 20px;
     grid-template-areas:
       'title'
       'left'
