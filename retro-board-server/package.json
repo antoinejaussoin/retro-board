@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "build": "rimraf dist && tsc --build",
-    "start": "nodemon --exec ts-node --files ./src/index.ts",
+    "start": "nodemon --exec 'yarn fix & ts-node' --files ./src/index.ts",
     "create-migration": "ts-node ../node_modules/typeorm/cli.js migration:generate -n ",
     "migrate": "ts-node ./src/init.ts && ts-node ../node_modules/typeorm/cli.js migration:run",
     "revert": "ts-node ../node_modules/typeorm/cli.js migration:revert",
