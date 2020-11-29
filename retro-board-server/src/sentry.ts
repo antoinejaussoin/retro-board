@@ -47,7 +47,7 @@ type QueryFailedErrorType = {
 };
 
 export function reportQueryError(
-  scope: Sentry.Scope,
+  scope: Sentry.Scope | null,
   err: QueryFailedErrorType
 ) {
   if (err instanceof QueryFailedError && scope) {

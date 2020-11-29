@@ -69,6 +69,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "NODE_ENV=production && react-scripts build",
+    "lint": "eslint 'src/**/*.{ts,tsx}'",
     "test": "react-scripts test"
   },
   "eslintConfig": {
