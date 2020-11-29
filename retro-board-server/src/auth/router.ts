@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import passport from 'passport';
 
-interface Request2 extends Request {}
+type Request2 = Request;
 
 const router = express.Router();
 // Setting up the passport middleware for each of the OAuth providers

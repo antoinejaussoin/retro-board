@@ -192,7 +192,7 @@ export default (connection: Connection, io: SocketIO.Server) => {
       const clients = Object.keys(room.sockets);
       const onlineParticipants: Participant[] = clients
         .map((id, i) =>
-          !!users[id]
+          users[id]
             ? users[id]!.toJson()
             : {
                 id: socket.id,

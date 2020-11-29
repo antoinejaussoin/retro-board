@@ -112,7 +112,7 @@ export interface TwitterProfile extends BaseProfile {
     location: string;
     description: string;
     url: string | null;
-    entities: { description: [Object] };
+    entities: { description: [unknown] };
     protected: boolean;
     followers_count: number;
     friends_count: number;
@@ -125,7 +125,7 @@ export interface TwitterProfile extends BaseProfile {
     verified: boolean;
     statuses_count: number;
     lang: null | string;
-    status: any;
+    status: unknown;
     contributors_enabled: boolean;
     is_translator: boolean;
     is_translation_enabled: boolean;

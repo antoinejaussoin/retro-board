@@ -19,6 +19,7 @@
     ],
     "rules": {
         "no-case-declarations":"off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
         "semi": [
             "error",
             "always"

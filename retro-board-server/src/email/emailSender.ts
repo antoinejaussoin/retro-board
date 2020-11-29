@@ -3,7 +3,11 @@ import config from '../db/config';
 
 sendGrid.setApiKey(config.SENDGRID_API_KEY);
 
-export async function sendVerificationEmail(email: string, name: string, code: string) {
+export async function sendVerificationEmail(
+  email: string,
+  name: string,
+  code: string
+) {
   const msg: MailDataRequired = {
     to: email,
     from: config.SENDGRID_SENDER,
@@ -13,16 +17,20 @@ export async function sendVerificationEmail(email: string, name: string, code: s
       code,
       domain: config.BASE_URL,
       email: encodeURIComponent(email),
-    }
-  }
+    },
+  };
   try {
     const [response] = await sendGrid.send(msg);
-  } catch (e){
+  } catch (e) {
     console.error('Send grid error: ', e);
   }
 }
 
-export async function sendResetPassword(email: string,name: string,  code: string) {
+export async function sendResetPassword(
+  email: string,
+  name: string,
+  code: string
+) {
   const msg: MailDataRequired = {
     to: email,
     from: config.SENDGRID_SENDER,
@@ -32,11 +40,11 @@ export async function sendResetPassword(email: string,name: string,  code: strin
       code,
       domain: config.BASE_URL,
       email: encodeURIComponent(email),
-    }
-  }
+    },
+  };
   try {
     const [response] = await sendGrid.send(msg);
-  } catch (e){
+  } catch (e) {
     console.error('Send grid error: ', e, e.response.body);
   }
 }

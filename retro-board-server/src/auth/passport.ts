@@ -34,14 +34,14 @@ export default (connection: Connection) => {
     cb(null, userId);
   });
 
-  function callback(type: AccountType) {
+  function callback<TProfile, TCallback>(type: AccountType) {
     return async (
       _accessToken: string,
       _refreshToken: string,
-      anyProfile: any,
-      cb: Function
+      anyProfile: TProfile,
+      cb: TCallback
     ) => {
-      const profile = anyProfile as BaseProfile;
+      const profile = (anyProfile as unknown) as BaseProfile;
       let user: UserEntity;
       switch (type) {
         case 'google':
@@ -61,7 +61,11 @@ export default (connection: Connection) => {
       }
 
       const dbUser = await getOrSaveUser(connection, user);
-      cb(null, dbUser.id);
+      const callback = (cb as unknown) as (
+        error: string | null,
+        user: string
+      ) => void;
+      callback(null, dbUser.id);
     };
   }
 
@@ -142,7 +146,11 @@ export default (connection: Connection) => {
       async (
         username: string,
         password: string,
-        done: (error: any, user?: any, options?: IVerifyOptions) => void
+        done: (
+          error: string | null,
+          user?: string,
+          options?: IVerifyOptions
+        ) => void
       ) => {
         if (password && password !== '<<<<<NONE>>>>>') {
           const user = await loginUser(connection, username, password);
