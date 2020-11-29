@@ -9,7 +9,7 @@
     "create-migration": "ts-node ../node_modules/typeorm/cli.js migration:generate -n ",
     "migrate": "ts-node ./src/init.ts && ts-node ../node_modules/typeorm/cli.js migration:run",
     "revert": "ts-node ../node_modules/typeorm/cli.js migration:revert",
-    "lint": "eslint 'src/**/*.{ts,tsx}'"
+    "lint": "eslint 'src/**/*.{ts,tsx}' --quiet --fix"
   },
   "dependencies": {
     "@retrospected/common": "*",
