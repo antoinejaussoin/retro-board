@@ -51,7 +51,7 @@ function stripeRouter(connection: Connection): Router {
         stripeId: customer.id,
       });
       return customer.id;
-    } else if (!!user.stripeId) {
+    } else if (user.stripeId) {
       return user.stripeId;
     } else {
       throw Error('Unspecified error');
@@ -71,14 +71,14 @@ function stripeRouter(connection: Connection): Router {
       );
     } catch (err) {
       console.log(err);
-      console.log(`⚠️  Webhook signature verification failed.`);
+      console.log('⚠️  Webhook signature verification failed.');
       console.log(
-        `⚠️  Check the env file and enter the correct webhook secret.`
+        '⚠️  Check the env file and enter the correct webhook secret.'
       );
       return res.sendStatus(400);
     }
     // Extract the object from the event.
-    const dataObject = event.data.object;
+    // const dataObject = event.data.object;
     // console.log('Data object', dataObject);
 
     // Handle the event
@@ -170,6 +170,7 @@ function stripeRouter(connection: Connection): Router {
   });
 
   router.get('/products', (_, res) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const products: Product[] = plans.map(({ priceId, productId, ...p }) => p);
     res.status(200).send(products);
   });
@@ -177,7 +178,7 @@ function stripeRouter(connection: Connection): Router {
   router.get('/portal', async (req, res) => {
     const user = await getUserFromRequest(connection, req);
     if (user && user.stripeId) {
-      var session = await stripe.billingPortal.sessions.create({
+      const session = await stripe.billingPortal.sessions.create({
         customer: user.stripeId,
         return_url: `${config.BASE_URL}/account`,
       });
