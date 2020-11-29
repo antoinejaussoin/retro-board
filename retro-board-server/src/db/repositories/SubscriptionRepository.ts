@@ -1,6 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { UserEntity, SubscriptionEntity } from '../entities';
-import { User as JsonUser, Plan } from '@retrospected/common';
+import { Plan } from '@retrospected/common';
 
 @EntityRepository(SubscriptionEntity)
 export default class SubscriptionRepository extends Repository<SubscriptionEntity> {

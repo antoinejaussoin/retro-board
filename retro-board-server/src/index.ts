@@ -35,8 +35,6 @@ import {
 import registerUser from './auth/register/register-user';
 import { sendVerificationEmail, sendResetPassword } from './email/emailSender';
 import { v4 } from 'uuid';
-import mung from 'express-mung';
-import { hasField } from './security/payload-checker';
 import {
   createSession,
   createCustom,
@@ -64,7 +62,7 @@ app.use(
   express.json({
     // This is a trick to get the raw buffer on the request, for Stripe
     verify: (req, _, buf) => {
-      const request: any = req;
+      const request = req as express.Request;
       request.buf = buf;
     },
   })
@@ -76,6 +74,7 @@ app.use(express.urlencoded({ extended: true }));
 let sessionMiddleware: express.RequestHandler;
 
 if (config.REDIS_ENABLED) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const RedisStore = connectRedis((session as unknown) as any);
   const redisClient = redis.createClient({
     host: config.REDIS_HOST,
@@ -85,6 +84,7 @@ if (config.REDIS_ENABLED) {
     secret: `${process.env.SESSION_SECRET!}-1`, // Increment to force re-auth
     resave: true,
     saveUninitialized: true,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     store: (new RedisStore({ client: redisClient as any }) as unknown) as any,
     cookie: {
       secure: false,
@@ -132,6 +132,7 @@ app.use('/api/auth', authRouter);
 const io = socketIo(httpServer);
 
 io.use(function (socket, next) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   sessionMiddleware(socket.request, {} as any, next);
 });
 

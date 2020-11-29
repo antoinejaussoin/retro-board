@@ -17,11 +17,10 @@ import { find } from 'lodash';
 import { v4 } from 'uuid';
 import { setScope, reportQueryError } from './sentry';
 import SessionOptionsEntity from './db/entities/SessionOptions';
-import { SessionEntity, UserEntity, UserView } from './db/entities';
+import { SessionEntity, UserView } from './db/entities';
 import { hasField } from './security/payload-checker';
 import {
   getSession,
-  saveSession,
   updateOptions,
   updateColumns,
   updateName,
@@ -105,12 +104,12 @@ export default (connection: Connection, io: SocketIO.Server) => {
 
   const getRoom = (sessionId: string) => `board-${sessionId}`;
 
-  const sendToAll = (
+  function sendToAll<T>(
     socket: ExtendedSocket,
     sessionId: string,
     action: string,
-    data: any
-  ) => {
+    data: T
+  ) {
     console.log(
       chalk`${d()}{green  ==> } ${s(action)} {grey ${JSON.stringify(data)}}`
     );
@@ -118,9 +117,9 @@ export default (connection: Connection, io: SocketIO.Server) => {
       console.error('The following object has a password property: ', data);
     }
     socket.broadcast.to(getRoom(sessionId)).emit(action, data);
-  };
+  }
 
-  const sendToSelf = (socket: ExtendedSocket, action: string, data: any) => {
+  function sendToSelf<T>(socket: ExtendedSocket, action: string, data: T) {
     console.log(
       chalk`${d()}{green  --> } ${s(action)} {grey ${JSON.stringify(data)}}`
     );
@@ -128,7 +127,7 @@ export default (connection: Connection, io: SocketIO.Server) => {
       console.error('The following object has a password property: ', data);
     }
     socket.emit(action, data);
-  };
+  }
 
   const persistPost = async (
     userId: string | null,
@@ -521,6 +520,7 @@ export default (connection: Connection, io: SocketIO.Server) => {
       handler: (
         userId: string | null,
         session: Session,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         data: any,
         socket: ExtendedSocket
       ) => Promise<void>;

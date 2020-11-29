@@ -4,6 +4,7 @@ import fs from 'fs';
 
 async function buildOrmConfig() {
   const config = getOrmConfig();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (config as any).entities = [
     `${path.resolve(__dirname, 'db', 'entities')}/*.ts`,
   ];

@@ -1,11 +1,5 @@
 import { ViewEntity, ViewColumn } from 'typeorm';
-import {
-  AccountType,
-  FullUser,
-  ProStatus,
-  Currency,
-  Plan,
-} from '@retrospected/common';
+import { AccountType, FullUser, Currency, Plan } from '@retrospected/common';
 
 @ViewEntity({
   expression: `

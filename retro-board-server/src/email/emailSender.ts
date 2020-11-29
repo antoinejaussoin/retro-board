@@ -20,7 +20,7 @@ export async function sendVerificationEmail(
     },
   };
   try {
-    const [response] = await sendGrid.send(msg);
+    await sendGrid.send(msg);
   } catch (e) {
     console.error('Send grid error: ', e);
   }
@@ -43,7 +43,7 @@ export async function sendResetPassword(
     },
   };
   try {
-    const [response] = await sendGrid.send(msg);
+    await sendGrid.send(msg);
   } catch (e) {
     console.error('Send grid error: ', e, e.response.body);
   }

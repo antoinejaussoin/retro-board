@@ -2,12 +2,12 @@ import config from './db/config';
 import * as Sentry from '@sentry/node';
 import chalk from 'chalk';
 import { Express } from 'express';
-import { QueryFailedError } from 'typeorm';
 import { version } from '../package.json';
+import { QueryFailedError } from 'typeorm';
 
 const useSentry = !!config.SENTRY_URL && config.SENTRY_URL !== 'NO_SENTRY';
 
-type ConfigureScopeFn = (scope: any) => void;
+type ConfigureScopeFn = (scope: Sentry.Scope | null) => void;
 
 export function initSentry() {
   if (useSentry) {
@@ -41,9 +41,17 @@ export function setScope(fn: ConfigureScopeFn) {
   }
 }
 
-export function reportQueryError(scope: any, err: Error) {
+type QueryFailedErrorType = {
+  query: string;
+  parameters: string[];
+};
+
+export function reportQueryError(
+  scope: Sentry.Scope,
+  err: QueryFailedErrorType
+) {
   if (err instanceof QueryFailedError && scope) {
-    const queryError: any = err;
+    const queryError = err;
     scope.setExtra('Query', queryError.query);
     scope.setExtra('Parameters', queryError.parameters);
 

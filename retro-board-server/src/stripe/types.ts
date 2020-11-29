@@ -22,7 +22,7 @@ export interface StripeEvent<T> {
 export interface CheckoutCompletedPayload {
   id: string;
   object: string;
-  allow_promotion_codes: any | null;
+  allow_promotion_codes: unknown | null;
   amount_subtotal: number;
   amount_total: number;
   cancel_url: string;
