@@ -21,7 +21,6 @@ RUN yarn --network-timeout 1000000 install
 
 COPY --chown=node:node ./retro-board-app/src ./retro-board-app/src
 COPY --chown=node:node ./retro-board-app/public ./retro-board-app/public
-# COPY --chown=node:node ./retro-board-app/public/index.marketing.html ./retro-board-app/public/index.html
 COPY --chown=node:node ./retro-board-app/config-overrides.js ./retro-board-app/config-overrides.js
 COPY --chown=node:node ./retro-board-app/tsconfig.json ./retro-board-app/tsconfig.json
 COPY --chown=node:node ./retro-board-app/.env ./retro-board-app/.env
