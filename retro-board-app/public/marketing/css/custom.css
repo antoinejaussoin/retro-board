@@ -6,3 +6,7 @@
 ul.pricing-feature-list em {
   font-weight: bold;
 }
+
+p.lead em {
+  font-weight: bold;
+}
