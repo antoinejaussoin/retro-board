@@ -2,3 +2,7 @@
   font-weight: 300;
   font-size: 1em;
 }
+
+ul.pricing-feature-list em {
+  font-weight: bold;
+}
