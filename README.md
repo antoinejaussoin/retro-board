@@ -157,7 +157,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 - Upgrade to React 17
 - Upgrade to Create-React-App 4
 - Upgrade to Socket.IO 3.0
-- A big thanks to [@wooddar](https://github.com/wooddar) for beta-testing!
+- 👏 A big thanks to [@wooddar](https://github.com/wooddar) for beta-testing and his great feedback!
 
 ### Version 3.2.3
 
