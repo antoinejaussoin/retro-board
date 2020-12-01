@@ -153,7 +153,10 @@ When using the Docker deployment, your database runs from a container. But if yo
 - New Freemium model
 - Adding dynamic HTML title for better browser experience ([#167](https://github.com/antoinejaussoin/retro-board/issues/167)). 👏 Thanks [@sam-pires](https://github.com/sam-pires)!
 - Automatic Backend code linting, and CI linting
-- Update to Create-React-App 4
+- Upgrade to TypeScript 4
+- Upgrade to React 17
+- Upgrade to Create-React-App 4
+- Upgrade to Socket.IO 3.0
 
 ### Version 3.2.3
 
