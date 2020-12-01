@@ -8,7 +8,7 @@ import {
   DialogTitle,
   useMediaQuery,
 } from '@material-ui/core';
-import { InfoOutlined, Lock, Star } from '@material-ui/icons';
+import { Lock } from '@material-ui/icons';
 import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
