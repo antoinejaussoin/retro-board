@@ -8,7 +8,7 @@ import {
   DialogTitle,
   useMediaQuery,
 } from '@material-ui/core';
-import { InfoOutlined, Lock } from '@material-ui/icons';
+import { InfoOutlined, Lock, Star } from '@material-ui/icons';
 import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -16,6 +16,7 @@ import useUser from '../../auth/useUser';
 import useModal from '../../hooks/useModal';
 import EncryptionIcon from '../../icons/EncryptionIcon';
 import useTranslation from '../../translations/useTranslations';
+import Arrow from './Arrow';
 import Feature from './Feature';
 
 interface ComponentProp {
@@ -46,8 +47,8 @@ function ProButton({ children }: ProButtonProps) {
   return (
     <Container>
       <ProPill onClick={open}>
-        <span>Pro</span>
-        <InfoOutlined htmlColor={colors.pink[300]} fontSize="small" />
+        <span>Pro feature</span>
+        <Arrow />
       </ProPill>
       {clone}
       <Dialog
@@ -100,27 +101,36 @@ const Container = styled.div`
 `;
 
 const ProPill = styled.div`
+  font-family: 'Reenie Beanie', cursive;
+
   display: flex;
   align-items: center;
   position: absolute;
-  top: -14px;
-  right: -5px;
-  background-color: white;
-  padding: 2px 5px;
+  top: -27px;
+  right: 20px;
+  padding: 2px 10px;
   border-radius: 3px;
   color: ${colors.deepPurple[300]};
-  border: 1px solid ${colors.deepPurple[300]};
-  border-radius: 3px;
   z-index: 1;
-  font-size: 12px;
+  font-size: 25px;
+  white-space: nowrap;
 
   :hover {
-    background-color: ${colors.deepPurple[300]};
-    color: white;
+    // background-color: ${colors.deepPurple[200]};
+    color: ${colors.deepPurple[700]};
+    svg {
+      color: ${colors.deepPurple[700]};
+    }
+  }
+
+  svg {
+    fill: ${colors.deepPurple[300]};
+    position: relative;
+    top: 10px;
+    left: 10px;
   }
 
   span {
-    padding: 0 5px;
   }
 
   cursor: pointer;
