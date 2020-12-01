@@ -110,21 +110,20 @@ const ProPill = styled.div`
   right: 20px;
   padding: 2px 10px;
   border-radius: 3px;
-  color: ${colors.deepPurple[300]};
+  color: ${colors.pink[300]};
   z-index: 1;
   font-size: 25px;
   white-space: nowrap;
 
   :hover {
-    // background-color: ${colors.deepPurple[200]};
-    color: ${colors.deepPurple[700]};
+    color: ${colors.pink[700]};
     svg {
-      color: ${colors.deepPurple[700]};
+      color: ${colors.pink[700]};
     }
   }
 
   svg {
-    fill: ${colors.deepPurple[300]};
+    fill: ${colors.pink[300]};
     position: relative;
     top: 10px;
     left: 10px;
