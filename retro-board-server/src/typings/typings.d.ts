@@ -11,6 +11,7 @@ declare namespace Express {
     passport: {
       user: User;
     };
+    destroy: (err: unknown) => void | Response<unknown, number>;
   }
 }
 

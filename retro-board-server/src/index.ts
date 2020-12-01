@@ -77,8 +77,7 @@ const httpServer = new http.Server(app);
 const io = new socketIo.Server(httpServer);
 
 if (config.REDIS_ENABLED) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const RedisStore = connectRedis((session as unknown) as any);
+  const RedisStore = connectRedis(session);
   const redisClient = redis.createClient({
     host: config.REDIS_HOST,
     port: config.REDIS_PORT,
@@ -88,8 +87,7 @@ if (config.REDIS_ENABLED) {
     secret: `${process.env.SESSION_SECRET!}-1`, // Increment to force re-auth
     resave: true,
     saveUninitialized: true,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    store: (new RedisStore({ client: redisClient as any }) as unknown) as any,
+    store: new RedisStore({ client: redisClient }),
     cookie: {
       secure: false,
     },
@@ -202,7 +200,7 @@ db().then((connection) => {
 
   app.post('/api/logout', async (req, res, next) => {
     req.logout();
-    req.session?.destroy((err) => {
+    req.session?.destroy((err: string) => {
       if (err) {
         return next(err);
       }
