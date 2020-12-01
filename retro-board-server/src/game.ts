@@ -12,7 +12,7 @@ import {
 } from '@retrospected/common';
 import chalk from 'chalk';
 import moment from 'moment';
-import socketIo from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import { find } from 'lodash';
 import { v4 } from 'uuid';
 import { setScope, reportQueryError } from './sentry';
@@ -71,7 +71,7 @@ const {
   RECEIVE_UNAUTHORIZED,
 } = Actions;
 
-interface ExtendedSocket extends socketIo.Socket {
+interface ExtendedSocket extends Socket {
   sessionId: string;
   userId: string | null;
 }
@@ -98,7 +98,7 @@ interface LikeUpdate extends PostUpdate {
 
 const s = (str: string) => chalk`{blue ${str.replace('retrospected/', '')}}`;
 
-export default (connection: Connection, io: SocketIO.Server) => {
+export default (connection: Connection, io: Server) => {
   const users: Users = {};
   const d = () => chalk`{yellow [${moment().format('HH:mm:ss')}]} `;
 
@@ -185,10 +185,15 @@ export default (connection: Connection, io: SocketIO.Server) => {
     await deletePostGroup(connection, userId, sessionId, groupId);
   };
 
-  const sendClientList = (session: SessionEntity, socket: ExtendedSocket) => {
-    const room = io.nsps['/'].adapter.rooms[getRoom(session.id)];
-    if (room) {
-      const clients = Object.keys(room.sockets);
+  const sendClientList = async (
+    session: SessionEntity,
+    socket: ExtendedSocket
+  ): Promise<void> => {
+    const sockets = await io
+      .of('/')
+      .adapter.sockets(new Set(getRoom(session.id)));
+    if (sockets) {
+      const clients = Array.from(sockets.values());
       const onlineParticipants: Participant[] = clients
         .map((id, i) =>
           users[id]
@@ -267,35 +272,31 @@ export default (connection: Connection, io: SocketIO.Server) => {
     _: UserData,
     socket: ExtendedSocket
   ) => {
-    socket.join(getRoom(session.id), async () => {
-      socket.sessionId = session.id;
-      const user = userId ? await getUserView(connection, userId) : null;
-      const sessionEntity = await getSessionWithVisitors(
-        connection,
-        session.id
-      );
+    await socket.join(getRoom(session.id));
+    socket.sessionId = session.id;
+    const user = userId ? await getUserView(connection, userId) : null;
+    const sessionEntity = await getSessionWithVisitors(connection, session.id);
 
-      if (sessionEntity) {
-        const userAllowed = isAllowed(sessionEntity, user);
-        if (userAllowed.allowed) {
-          if (user) {
-            recordUser(sessionEntity, user, socket);
-            const userEntity = await getUser(connection, user.id);
-            if (userEntity) {
-              await storeVisitor(connection, session.id, userEntity);
-            }
+    if (sessionEntity) {
+      const userAllowed = isAllowed(sessionEntity, user);
+      if (userAllowed.allowed) {
+        if (user) {
+          recordUser(sessionEntity, user, socket);
+          const userEntity = await getUser(connection, user.id);
+          if (userEntity) {
+            await storeVisitor(connection, session.id, userEntity);
           }
-          sendToSelf(socket, RECEIVE_BOARD, session);
-        } else {
-          log(chalk`{red User not allowed, session locked}`);
-          const payload: UnauthorizedAccessPayload = {
-            type: userAllowed.reason,
-          };
-          sendToSelf(socket, RECEIVE_UNAUTHORIZED, payload);
-          socket.disconnect();
         }
+        sendToSelf(socket, RECEIVE_BOARD, session);
+      } else {
+        log(chalk`{red User not allowed, session locked}`);
+        const payload: UnauthorizedAccessPayload = {
+          type: userAllowed.reason,
+        };
+        sendToSelf(socket, RECEIVE_UNAUTHORIZED, payload);
+        socket.disconnect();
       }
-    });
+    }
   };
 
   const onRenameSession = async (
@@ -318,15 +319,11 @@ export default (connection: Connection, io: SocketIO.Server) => {
     _data: void,
     socket: ExtendedSocket
   ) => {
-    socket.leave(getRoom(session.id), async () => {
-      const sessionEntity = await getSessionWithVisitors(
-        connection,
-        session.id
-      );
-      if (sessionEntity) {
-        sendClientList(sessionEntity, socket);
-      }
-    });
+    await socket.leave(getRoom(session.id));
+    const sessionEntity = await getSessionWithVisitors(connection, session.id);
+    if (sessionEntity) {
+      sendClientList(sessionEntity, socket);
+    }
   };
 
   const onDeletePost = async (
@@ -504,9 +501,10 @@ export default (connection: Connection, io: SocketIO.Server) => {
 
   io.on('connection', async (socket: ExtendedSocket) => {
     const ip =
-      socket.handshake.headers['x-forwarded-for'] || socket.handshake.address;
+      (socket.handshake as any).headers['x-forwarded-for'] ||
+      socket.handshake.address;
     // Todo: this is a bit hacky
-    const userId: string = socket.request.session?.passport?.user;
+    const userId: string = (socket.request as any).session?.passport?.user;
     socket.userId = userId;
     console.log(
       d() +

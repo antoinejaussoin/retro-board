@@ -60,7 +60,7 @@
     "@retrospected/common": "*",
     "rimraf": "^3.0.2",
     "shortid": "^2.2.16",
-    "socket.io-client": "^2.3.1",
+    "socket.io-client": "^3.0.3",
     "styled-components": "5.2.1",
     "typescript": "4.1.2",
     "uuid": "^8.3.1",

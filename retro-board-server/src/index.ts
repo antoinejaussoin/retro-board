@@ -1,6 +1,6 @@
 import express from 'express';
-import socketIo from 'socket.io';
-import socketIoRedisAdapter from 'socket.io-redis';
+import * as socketIo from 'socket.io';
+import { createAdapter } from 'socket.io-redis';
 import redis from 'redis';
 import connectRedis from 'connect-redis';
 import http from 'http';
@@ -73,6 +73,9 @@ app.use(express.urlencoded({ extended: true }));
 // before we have athenticated the user
 let sessionMiddleware: express.RequestHandler;
 
+const httpServer = new http.Server(app);
+const io = new socketIo.Server(httpServer);
+
 if (config.REDIS_ENABLED) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const RedisStore = connectRedis((session as unknown) as any);
@@ -80,6 +83,7 @@ if (config.REDIS_ENABLED) {
     host: config.REDIS_HOST,
     port: config.REDIS_PORT,
   });
+  const subClient = redisClient.duplicate();
   sessionMiddleware = session({
     secret: `${process.env.SESSION_SECRET!}-1`, // Increment to force re-auth
     resave: true,
@@ -90,6 +94,8 @@ if (config.REDIS_ENABLED) {
       secure: false,
     },
   });
+  io.adapter(createAdapter({ pubClient: redisClient, subClient }));
+  console.log(chalk`{red Redis} was properly activated`);
 } else {
   sessionMiddleware = session({
     secret: `${process.env.SESSION_SECRET!}-2`, // Increment to force re-auth
@@ -104,8 +110,6 @@ if (config.REDIS_ENABLED) {
 app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
-
-const httpServer = new http.Server(app);
 
 // app.use(
 //   mung.json((body, req, res) => {
@@ -129,22 +133,14 @@ app.get('/healthz', async (_, res) => {
 
 app.use('/api/auth', authRouter);
 
-const io = socketIo(httpServer);
-
+// TODO: fix that?
 io.use(function (socket, next) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  sessionMiddleware(socket.request, {} as any, next);
+  sessionMiddleware(socket.request as any, {} as any, next as any);
 });
 
 app.set('io', io);
 const port = config.BACKEND_PORT || 8081;
-
-if (config.REDIS_ENABLED) {
-  io.adapter(
-    socketIoRedisAdapter({ host: config.REDIS_HOST, port: config.REDIS_PORT })
-  );
-  console.log(chalk`{red Redis} was properly activated`);
-}
 
 db().then((connection) => {
   passportInit(connection);
