@@ -501,9 +501,10 @@ export default (connection: Connection, io: Server) => {
 
   io.on('connection', async (socket: ExtendedSocket) => {
     const ip =
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (socket.handshake as any).headers['x-forwarded-for'] ||
       socket.handshake.address;
-    // Todo: this is a bit hacky
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const userId: string = (socket.request as any).session?.passport?.user;
     socket.userId = userId;
     console.log(

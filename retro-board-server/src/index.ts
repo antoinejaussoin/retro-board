@@ -133,7 +133,6 @@ app.get('/healthz', async (_, res) => {
 
 app.use('/api/auth', authRouter);
 
-// TODO: fix that?
 io.use(function (socket, next) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   sessionMiddleware(socket.request as any, {} as any, next as any);
