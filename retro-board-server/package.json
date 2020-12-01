@@ -31,7 +31,7 @@
     "@types/passport-google-oauth": "^1.0.41",
     "@types/passport-local": "^1.0.33",
     "@types/passport-twitter": "^1.0.36",
-    "@types/redis": "2.8.27",
+    "@types/redis": "2.8.28",
     "@types/shortid": "^0.0.29",
     "@types/socket.io": "2.1.11",
     "@types/socket.io-redis": "1.0.26",
@@ -82,8 +82,8 @@
     "ext": "ts,tsx,json"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.8.2",
-    "@typescript-eslint/parser": "^4.8.2",
+    "@typescript-eslint/eslint-plugin": "^4.9.0",
+    "@typescript-eslint/parser": "^4.9.0",
     "eslint": "^7.14.0"
   }
 }
