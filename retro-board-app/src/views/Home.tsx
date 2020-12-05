@@ -133,7 +133,7 @@ const LaunchButtons = styled.div`
       margin: 0;
     }
     > *:last-child {
-      margin-top: 20px;
+      margin-top: 40px;
     }
   }
 `;

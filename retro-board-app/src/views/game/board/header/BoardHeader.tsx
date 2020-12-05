@@ -212,6 +212,7 @@ const RightOptions = styled.div`
 
   @media (max-width: 500px) {
     justify-self: center;
+    margin-top: 10px;
   }
 `;
 

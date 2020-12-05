@@ -5,6 +5,7 @@ export const Page = styled.main`
   @media screen and (max-width: 600px) {
     margin: 10px;
     margin-bottom: 80px;
+    margin-top: 30px;
   }
   margin-bottom: 80px;
 `;
