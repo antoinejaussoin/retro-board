@@ -27,6 +27,7 @@ import BoardHeader from './header/BoardHeader';
 interface GameModeProps {
   columns: ColumnContent[];
   options: SessionOptions;
+  search: string;
   onRenameSession: (name: string) => void;
   onAddPost: (columnIndex: number, content: string, rank: string) => void;
   onAddGroup: (columnIndex: number, rank: string) => void;
@@ -82,6 +83,7 @@ function GameMode({
   onLockSession,
   columns,
   options,
+  search,
 }: GameModeProps) {
   const { state } = useGlobalState();
 
@@ -135,9 +137,10 @@ function GameMode({
         <Columns numberOfColumns={columns.length}>
           {columns.map((column) => (
             <Column
+              key={column.index}
               column={column}
               options={options}
-              key={column.index}
+              search={search}
               posts={column.posts}
               groups={column.groups}
               question={column.label}

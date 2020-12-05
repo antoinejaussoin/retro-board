@@ -38,11 +38,13 @@ import { trackEvent } from '../../../../track';
 import useCrypto from '../../../../crypto/useCrypto';
 import { getLorem } from './lorem';
 import useCanDecrypt from '../../../../crypto/useCanDecrypt';
+import isFaded from '../../isFaded';
 
 interface PostItemProps {
   index: number;
   post: Post;
   color: string;
+  search: string;
   onLike: () => void;
   onDislike: () => void;
   onEdit: (content: string) => void;
@@ -67,6 +69,7 @@ const PostItem = ({
   index,
   post,
   color,
+  search,
   onLike,
   onDislike,
   onEdit,
@@ -133,6 +136,8 @@ const PostItem = ({
     return isBlurred ? generateLoremIpsum(post.content) : decrypt(post.content);
   }, [decrypt, isBlurred, post.content]);
 
+  const faded = isFaded(post, search, isBlurred);
+
   return (
     <>
       <Draggable
@@ -141,7 +146,11 @@ const PostItem = ({
         isDragDisabled={!canReorder}
       >
         {(provided: DraggableProvided) => (
-          <PostCard ref={provided.innerRef} {...provided.draggableProps}>
+          <PostCard
+            elevation={search ? (faded ? 0 : 3) : 2}
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+          >
             {isBlurred ? (
               <Tooltip title="Cards from other people will be shown when the moderator chooses to reveal them.">
                 <BlurOverlay />
@@ -206,7 +215,7 @@ const PostItem = ({
               </CardContent>
             )}
             <ActionsBar
-              color={color}
+              color={faded ? colors.grey[100] : color}
               displayExtra={
                 canDelete ||
                 canCreateAction ||
@@ -382,11 +391,11 @@ const BlurOverlay = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(255, 255, 255, 0.9);
+  z-index: 100;
   @supports (backdrop-filter: blur(3px)) {
     background-color: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(3px);
   }
-  z-index: 100;
 `;
 
 const LabelContainer = styled.div<{ blurred: boolean }>`

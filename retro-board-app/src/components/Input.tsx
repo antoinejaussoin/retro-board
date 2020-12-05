@@ -29,16 +29,6 @@ const Input = ({ onChangeValue, leftIcon, ...props }: InputProps) => {
       {...props}
       onChange={handleUsernameChange}
     />
-    // <BaseInput
-    //   startAdornment={
-    //     leftIcon ? (
-    //       <InputAdornment position="start">{leftIcon}</InputAdornment>
-    //     ) : undefined
-    //   }
-    //   {...props}
-    //   onChange={handleUsernameChange}
-    // />
-    // </TextField>
   );
 };
 

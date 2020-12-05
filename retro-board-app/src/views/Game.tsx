@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import {
   useParams,
@@ -19,6 +19,7 @@ import useColumns from './game/useColumns';
 import NoContent from '../components/NoContent';
 import useCrypto from '../crypto/useCrypto';
 import Unauthorized from './game/Unauthorized';
+import SearchBar from './game/SearchBar';
 
 interface RouteParams {
   gameId: string;
@@ -35,6 +36,7 @@ function GamePage() {
   const handleChange = useCallback((_, v) => history.push(v), [history]);
   const columns = useColumns();
   const { decrypt } = useCrypto();
+  const [search, setSearch] = useState('');
   const { session, unauthorized, unauthorized_reason } = state;
   const rootUrl = `${match.url}${hash}`;
   const summaryUrl = `${match.url}/summary${hash}`;
@@ -114,20 +116,29 @@ function GamePage() {
         </DisconnectedContainer>
       ) : null}
       <AppBar position="static" color="default">
-        <Tabs
-          value={path}
-          onChange={handleChange}
-          variant="scrollable"
-          scrollButtons="on"
-          indicatorColor="primary"
-          textColor="primary"
-          aria-label="Game mode tabs"
-        >
-          <Tab label={GameMenu.board} icon={<Dashboard />} value={rootUrl} />
-          {!session.options.blurCards ? (
-            <Tab label={GameMenu.summary} icon={<List />} value={summaryUrl} />
-          ) : null}
-        </Tabs>
+        <AppBarContent>
+          <Tabs
+            value={path}
+            onChange={handleChange}
+            variant="scrollable"
+            scrollButtons="on"
+            indicatorColor="primary"
+            textColor="primary"
+            aria-label="Game mode tabs"
+          >
+            <Tab label={GameMenu.board} icon={<Dashboard />} value={rootUrl} />
+            {!session.options.blurCards ? (
+              <Tab
+                label={GameMenu.summary}
+                icon={<List />}
+                value={summaryUrl}
+              />
+            ) : null}
+          </Tabs>
+          <SearchContent>
+            <SearchBar value={search} onChange={setSearch} />
+          </SearchContent>
+        </AppBarContent>
       </AppBar>
       <Route
         path={`${match.url}`}
@@ -136,6 +147,7 @@ function GamePage() {
           <Board
             columns={columns}
             options={session.options}
+            search={search}
             onEdit={onEditPost}
             onAddPost={onAddPost}
             onMovePost={onMovePost}
@@ -189,6 +201,18 @@ const DisconnectedTitle = styled.h2`
   font-weight: 300;
   text-align: center;
   margin: 0 20px 20px;
+`;
+
+const AppBarContent = styled.div`
+  display: flex;
+`;
+
+const SearchContent = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex: 1;
+  margin-right: 20px;
 `;
 
 export default GamePage;

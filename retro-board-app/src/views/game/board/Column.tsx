@@ -30,6 +30,7 @@ interface ColumnProps {
   question: string;
   color: string;
   options: SessionOptions;
+  search: string;
   onAdd: (content: string) => void;
   onAddGroup: () => void;
   onEditGroup: (group: PostGroup) => void;
@@ -54,6 +55,7 @@ const Column: React.FC<ColumnProps> = ({
   icon: Icon,
   question,
   color,
+  search,
   onAdd,
   onAddGroup,
   onLike,
@@ -130,6 +132,7 @@ const Column: React.FC<ColumnProps> = ({
                 index={index}
                 key={post.id}
                 post={post}
+                search={search}
                 color={color}
                 onLike={() => onLike(post)}
                 onDislike={() => onDislike(post)}
@@ -173,6 +176,7 @@ const Column: React.FC<ColumnProps> = ({
                 index={index}
                 key={post.id}
                 post={post}
+                search={search}
                 color={color}
                 onLike={() => onLike(post)}
                 onDislike={() => onDislike(post)}
