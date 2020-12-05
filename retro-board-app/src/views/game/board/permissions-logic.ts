@@ -4,6 +4,8 @@ import { some } from 'lodash';
 export interface UserPermissions {
   canUpVote: boolean;
   canDownVote: boolean;
+  canDisplayUpVote: boolean;
+  canDisplayDownVote: boolean;
   canCreateAction: boolean;
   canEdit: boolean;
   canDelete: boolean;
@@ -28,6 +30,8 @@ export function permissionLogic(
       canShowAuthor: false,
       canUpVote: false,
       canUseGiphy: false,
+      canDisplayDownVote: false,
+      canDisplayUpVote: false,
       canReorder: false,
       canCreateGroup: false,
       isBlurred: false,
@@ -64,6 +68,8 @@ export function permissionLogic(
     maxDownVotes === null ? false : downVotes >= maxDownVotes;
   const canUpVote = isLoggedIn && !hasVotedOrAuthor && !hasMaxedUpVotes;
   const canDownVote = isLoggedIn && !hasVotedOrAuthor && !hasMaxedDownVotes;
+  const canDisplayUpVote = maxUpVotes !== null ? maxUpVotes > 0 : true;
+  const canDisplayDownVote = maxDownVotes !== null ? maxDownVotes > 0 : true;
   const canEdit = isLoggedIn && isAuthor;
   const canDelete = isLoggedIn && isAuthor;
   const canShowAuthor = allowAuthorVisible;
@@ -76,6 +82,8 @@ export function permissionLogic(
     canCreateAction,
     canDownVote,
     canUpVote,
+    canDisplayDownVote,
+    canDisplayUpVote,
     canEdit,
     canDelete,
     canShowAuthor,

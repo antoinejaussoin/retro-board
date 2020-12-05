@@ -83,6 +83,8 @@ describe('Permission Logic', () => {
     expect(result.canDelete).toBe(true);
     expect(result.canDownVote).toBe(false);
     expect(result.canUpVote).toBe(false);
+    expect(result.canDisplayUpVote).toBe(true);
+    expect(result.canDisplayDownVote).toBe(true);
   });
 
   it('When using default rules, a non-logged in user', () => {
@@ -94,6 +96,8 @@ describe('Permission Logic', () => {
     expect(result.canDelete).toBe(false);
     expect(result.canDownVote).toBe(false);
     expect(result.canUpVote).toBe(false);
+    expect(result.canDisplayUpVote).toBe(true);
+    expect(result.canDisplayDownVote).toBe(true);
   });
 
   it('When using default rules, a user on another users post', () => {
@@ -105,6 +109,8 @@ describe('Permission Logic', () => {
     expect(result.canDelete).toBe(false);
     expect(result.canDownVote).toBe(true);
     expect(result.canUpVote).toBe(true);
+    expect(result.canDisplayUpVote).toBe(true);
+    expect(result.canDisplayDownVote).toBe(true);
   });
 
   it('When using default rules, a user on another users post but already voted', () => {
@@ -116,6 +122,8 @@ describe('Permission Logic', () => {
     expect(result.canDelete).toBe(false);
     expect(result.canDownVote).toBe(false);
     expect(result.canUpVote).toBe(false);
+    expect(result.canDisplayUpVote).toBe(true);
+    expect(result.canDisplayDownVote).toBe(true);
   });
 
   it('When limiting to 2 up votes, but already voted once', () => {
@@ -156,6 +164,8 @@ describe('Permission Logic', () => {
     expect(result.canDelete).toBe(false);
     expect(result.canDownVote).toBe(true);
     expect(result.canUpVote).toBe(false);
+    expect(result.canDisplayUpVote).toBe(true);
+    expect(result.canDisplayDownVote).toBe(true);
   });
 
   it('When preventing actions', () => {
@@ -173,6 +183,8 @@ describe('Permission Logic', () => {
     expect(result.canDelete).toBe(false);
     expect(result.canDownVote).toBe(true);
     expect(result.canUpVote).toBe(true);
+    expect(result.canDisplayUpVote).toBe(true);
+    expect(result.canDisplayDownVote).toBe(true);
   });
 
   it('When preventing actions', () => {
@@ -190,6 +202,8 @@ describe('Permission Logic', () => {
     expect(result.canDelete).toBe(false);
     expect(result.canDownVote).toBe(true);
     expect(result.canUpVote).toBe(true);
+    expect(result.canDisplayUpVote).toBe(true);
+    expect(result.canDisplayDownVote).toBe(true);
   });
 
   it('When allowing self-voting', () => {
@@ -207,6 +221,8 @@ describe('Permission Logic', () => {
     expect(result.canDelete).toBe(true);
     expect(result.canDownVote).toBe(true);
     expect(result.canUpVote).toBe(true);
+    expect(result.canDisplayUpVote).toBe(true);
+    expect(result.canDisplayDownVote).toBe(true);
   });
 
   it('When allowing multi-votes (unlimited votes)', () => {
@@ -224,6 +240,8 @@ describe('Permission Logic', () => {
     expect(result.canDelete).toBe(false);
     expect(result.canDownVote).toBe(true);
     expect(result.canUpVote).toBe(true);
+    expect(result.canDisplayUpVote).toBe(true);
+    expect(result.canDisplayDownVote).toBe(true);
   });
 
   it('When allowing multi-votes (limited votes but not reached limit)', () => {
@@ -242,6 +260,8 @@ describe('Permission Logic', () => {
     expect(result.canDelete).toBe(false);
     expect(result.canDownVote).toBe(true);
     expect(result.canUpVote).toBe(true);
+    expect(result.canDisplayUpVote).toBe(true);
+    expect(result.canDisplayDownVote).toBe(true);
   });
 
   it('When allowing multi-votes (limited votes but reached limit)', () => {
@@ -260,6 +280,28 @@ describe('Permission Logic', () => {
     expect(result.canDelete).toBe(false);
     expect(result.canDownVote).toBe(true);
     expect(result.canUpVote).toBe(false);
+    expect(result.canDisplayUpVote).toBe(true);
+    expect(result.canDisplayDownVote).toBe(true);
+  });
+
+  it('When dis-allowing down-votes', () => {
+    const p = post(anotherUser, [currentUser, currentUser, currentUser]);
+    const s = session(
+      {
+        ...defaultOptions,
+        allowMultipleVotes: true,
+        maxDownVotes: 0,
+      },
+      p
+    );
+    const result = permissionLogic(p, s, currentUser);
+    expect(result.canCreateAction).toBe(true);
+    expect(result.canEdit).toBe(false);
+    expect(result.canDelete).toBe(false);
+    expect(result.canDownVote).toBe(false);
+    expect(result.canUpVote).toBe(true);
+    expect(result.canDisplayUpVote).toBe(true);
+    expect(result.canDisplayDownVote).toBe(false);
   });
 
   it('When allowing Giphy', () => {

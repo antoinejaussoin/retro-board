@@ -5,6 +5,7 @@ import Badge from '@material-ui/core/Badge';
 import Tooltip from '@material-ui/core/Tooltip';
 import { ThumbUpOutlined, ThumbDownOutlined } from '@material-ui/icons';
 import useTranslations, { Translation } from '../../../../translations';
+import useGlobalState from '../../../../state';
 
 interface RemainingVotesProps {
   up: number | null;
@@ -13,13 +14,16 @@ interface RemainingVotesProps {
 
 const RemainingVotes = ({ up, down }: RemainingVotesProps) => {
   const translations = useTranslations();
-  if (up === null && down === null) {
+  const { state } = useGlobalState();
+  const hideUpVotes = state.session?.options.maxUpVotes === 0;
+  const hideDownVotes = state.session?.options.maxDownVotes === 0;
+  if (up === null && down === null && hideUpVotes && hideDownVotes) {
     return <div />;
   }
 
   return (
     <Container>
-      {up !== null ? (
+      {up !== null && !hideUpVotes ? (
         <Tooltip placement="bottom" title={getTooltip(translations, up, 'up')}>
           <Badge
             badgeContent={up.toString()}
@@ -29,7 +33,7 @@ const RemainingVotes = ({ up, down }: RemainingVotesProps) => {
           </Badge>
         </Tooltip>
       ) : null}
-      {down !== null ? (
+      {down !== null && !hideDownVotes ? (
         <Tooltip
           placement="bottom"
           title={getTooltip(translations, down, 'down')}

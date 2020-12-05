@@ -83,6 +83,8 @@ const PostItem = ({
     canDelete,
     canUpVote,
     canDownVote,
+    canDisplayUpVote,
+    canDisplayDownVote,
     canShowAuthor,
     canReorder,
     canUseGiphy,
@@ -261,24 +263,30 @@ const PostItem = ({
                 </>
               }
             >
-              <VoteButton
-                voters={upVoters}
-                canVote={canUpVote}
-                count={upVotes}
-                icon={<ThumbUpOutlined style={{ color: Palette.positive }} />}
-                onClick={onLike}
-                showTooltip={canShowAuthor}
-                ariaLabel="Like"
-              />
-              <VoteButton
-                voters={downVoters}
-                canVote={canDownVote}
-                count={downVotes}
-                icon={<ThumbDownOutlined style={{ color: Palette.negative }} />}
-                onClick={onDislike}
-                showTooltip={canShowAuthor}
-                ariaLabel="Dislike"
-              />
+              {canDisplayUpVote ? (
+                <VoteButton
+                  voters={upVoters}
+                  canVote={canUpVote}
+                  count={upVotes}
+                  icon={<ThumbUpOutlined style={{ color: Palette.positive }} />}
+                  onClick={onLike}
+                  showTooltip={canShowAuthor}
+                  ariaLabel="Like"
+                />
+              ) : null}
+              {canDisplayDownVote ? (
+                <VoteButton
+                  voters={downVoters}
+                  canVote={canDownVote}
+                  count={downVotes}
+                  icon={
+                    <ThumbDownOutlined style={{ color: Palette.negative }} />
+                  }
+                  onClick={onDislike}
+                  showTooltip={canShowAuthor}
+                  ariaLabel="Dislike"
+                />
+              ) : null}
               {giphyImageUrl && (
                 <ActionButton
                   ariaLabel={postTranslations.toggleGiphyButton!}
