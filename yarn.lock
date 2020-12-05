@@ -11227,11 +11227,6 @@ react-beautiful-dnd@^13.0.0:
     redux "^4.0.4"
     use-memo-one "^1.1.1"
 
-react-card-flip@^1.0.11:
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/react-card-flip/-/react-card-flip-1.0.11.tgz#4d1d11637d0d6de8668c8c47550bb522bc8f6049"
-  integrity sha512-JwPJM4L7Fz3g+DN3N4XYfmZkWUPuc/00T6h8UUsAcXaWgGDNOVUd4vBm724I+a4ZlkNwRbCzHS7gbZEzysF/SA==
-
 react-color@^2.19.3:
   version "2.19.3"
   resolved "https://registry.yarnpkg.com/react-color/-/react-color-2.19.3.tgz#ec6c6b4568312a3c6a18420ab0472e146aa5683d"
