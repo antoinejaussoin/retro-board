@@ -10,9 +10,10 @@ import SummaryMode from './SummaryMode';
 
 interface SummaryModeProps {
   columns: ColumnContent[];
+  search: string;
 }
 
-const SummaryHome = ({ columns }: SummaryModeProps) => {
+const SummaryHome = ({ columns, search }: SummaryModeProps) => {
   const [tab, setTab] = useState(0);
   const handleChange = useCallback((_, v) => setTab(v), []);
   return (
@@ -32,7 +33,7 @@ const SummaryHome = ({ columns }: SummaryModeProps) => {
         </Tabs>
       </AppBar>
       <Page>
-        <SummaryMode columns={columns} />
+        <SummaryMode columns={columns} search={search} />
       </Page>
     </>
   );

@@ -168,7 +168,7 @@ function GamePage() {
       {!session.options.blurCards ? (
         <Route
           path={`${match.url}/summary`}
-          render={() => <SummaryMode columns={columns} />}
+          render={() => <SummaryMode columns={columns} search={search} />}
         />
       ) : null}
     </div>

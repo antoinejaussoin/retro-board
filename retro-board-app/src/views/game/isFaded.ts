@@ -1,6 +1,8 @@
-import { Post } from '@retrospected/common';
-
-export default function isFaded(post: Post, search: string, blurred: boolean) {
+export default function isFaded(
+  content: string,
+  search: string,
+  blurred: boolean
+) {
   if (!search) {
     return false;
   }
@@ -8,5 +10,5 @@ export default function isFaded(post: Post, search: string, blurred: boolean) {
     return true;
   }
 
-  return !post.content.toLocaleLowerCase().includes(search.toLocaleLowerCase());
+  return !content.toLocaleLowerCase().includes(search.toLocaleLowerCase());
 }

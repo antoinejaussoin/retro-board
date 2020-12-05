@@ -136,7 +136,7 @@ const PostItem = ({
     return isBlurred ? generateLoremIpsum(post.content) : decrypt(post.content);
   }, [decrypt, isBlurred, post.content]);
 
-  const faded = isFaded(post, search, isBlurred);
+  const faded = isFaded(post.content, search, isBlurred);
 
   return (
     <>
