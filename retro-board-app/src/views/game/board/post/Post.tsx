@@ -13,8 +13,6 @@ import {
   ThumbUpOutlined,
   ThumbDownOutlined,
   DeleteForeverOutlined,
-  FeedbackOutlined,
-  Feedback,
   Close,
   EmojiEmotions,
   DragIndicator,
