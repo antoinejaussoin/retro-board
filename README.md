@@ -151,8 +151,10 @@ When using the Docker deployment, your database runs from a container. But if yo
 - Slack Authentication (OAuth) 🔑
 - Replacing Travis by GitHub Actions for CI and Deployment 🚀
 - New Freemium model
-- Adding dynamic HTML title for better browser experience ([#167](https://github.com/antoinejaussoin/retro-board/issues/167)). 👏 Thanks [@sam-pires](https://github.com/sam-pires)!
-- Adding a search functionality to find the needle in your haystack. 👏 Thanks [@ayxos](https://github.com/ayxos) for the suggestion!
+- Adding dynamic HTML title for better browser experience. 👏 Thanks [@sam-pires](https://github.com/sam-pires)! ([#167](https://github.com/antoinejaussoin/retro-board/issues/167))
+- Adding a search functionality to find the needle in your haystack. 👏 Thanks [@ayxos](https://github.com/ayxos) for the suggestion! ([#171](https://github.com/antoinejaussoin/retro-board/issues/171))
+- Improving the Post component to hide up/down votes when they are disabled. Also got rid of the "flippable" panel,
+  all actions are now visible directly. 👏 Thanks [@Xyaren](https://github.com/Xyaren) for pointing this out. ([#150](https://github.com/antoinejaussoin/retro-board/issues/150))
 - Automatic Backend code linting, and CI linting
 - Upgrade to TypeScript 4
 - Upgrade to React 17
