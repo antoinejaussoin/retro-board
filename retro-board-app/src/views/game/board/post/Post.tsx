@@ -216,7 +216,67 @@ const PostItem = ({
                 </Typography>
               </CardContent>
             )}
-            <ActionsBar color={faded ? colors.grey[100] : color}>
+            <ActionsBar
+              color={faded ? colors.grey[100] : color}
+              rightActions={
+                <>
+                  {giphyImageUrl && (
+                    <ActionButton
+                      ariaLabel={postTranslations.toggleGiphyButton!}
+                      tooltip={postTranslations.toggleGiphyButton!}
+                      icon={
+                        <InsertPhotoTwoTone
+                          style={{
+                            color: !showGiphyImage
+                              ? colors.green[200]
+                              : colors.red[200],
+                          }}
+                        />
+                      }
+                      onClick={toggleShowGiphyImage}
+                    />
+                  )}
+
+                  {canCreateAction && (
+                    <ActionButton
+                      ariaLabel={postTranslations.setActionButton!}
+                      tooltip={postTranslations.setActionButton!}
+                      icon={
+                        post.action ? (
+                          <Feedback className={classes.actionIcon} />
+                        ) : (
+                          <FeedbackOutlined className={classes.actionIcon} />
+                        )
+                      }
+                      onClick={toggleAction}
+                    />
+                  )}
+                  {canEdit && config.hasGiphy && canUseGiphy && (
+                    <ActionButton
+                      ariaLabel={postTranslations.setGiphyButton!}
+                      tooltip={postTranslations.setGiphyButton!}
+                      icon={<EmojiEmotions className={classes.ghipyIcon} />}
+                      innerRef={postElement}
+                      onClick={handleShowGiphy}
+                    />
+                  )}
+                  {canDelete && (
+                    <ActionButton
+                      ariaLabel={postTranslations.deleteButton!}
+                      tooltip={postTranslations.deleteButton!}
+                      icon={
+                        <DeleteForeverOutlined
+                          style={{
+                            color: Palette.negative,
+                          }}
+                        />
+                      }
+                      onClick={onDelete}
+                    />
+                  )}
+                </>
+              }
+            >
               {canDisplayUpVote ? (
                 <VoteButton
                   voters={upVoters}
@@ -241,60 +301,6 @@ const PostItem = ({
                   ariaLabel="Dislike"
                 />
               ) : null}
-              {giphyImageUrl && (
-                <ActionButton
-                  ariaLabel={postTranslations.toggleGiphyButton!}
-                  tooltip={postTranslations.toggleGiphyButton!}
-                  icon={
-                    <InsertPhotoTwoTone
-                      style={{
-                        color: !showGiphyImage
-                          ? colors.green[200]
-                          : colors.red[200],
-                      }}
-                    />
-                  }
-                  onClick={toggleShowGiphyImage}
-                />
-              )}
-
-              {canCreateAction && (
-                <ActionButton
-                  ariaLabel={postTranslations.setActionButton!}
-                  tooltip={postTranslations.setActionButton!}
-                  icon={
-                    post.action ? (
-                      <Feedback className={classes.actionIcon} />
-                    ) : (
-                      <FeedbackOutlined className={classes.actionIcon} />
-                    )
-                  }
-                  onClick={toggleAction}
-                />
-              )}
-              {canEdit && config.hasGiphy && canUseGiphy && (
-                <ActionButton
-                  ariaLabel={postTranslations.setGiphyButton!}
-                  tooltip={postTranslations.setGiphyButton!}
-                  icon={<EmojiEmotions className={classes.ghipyIcon} />}
-                  innerRef={postElement}
-                  onClick={handleShowGiphy}
-                />
-              )}
-              {canDelete && (
-                <ActionButton
-                  ariaLabel={postTranslations.deleteButton!}
-                  tooltip={postTranslations.deleteButton!}
-                  icon={
-                    <DeleteForeverOutlined
-                      style={{
-                        color: Palette.negative,
-                      }}
-                    />
-                  }
-                  onClick={onDelete}
-                />
-              )}
             </ActionsBar>
           </PostCard>
         )}

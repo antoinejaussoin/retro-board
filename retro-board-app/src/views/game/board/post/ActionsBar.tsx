@@ -4,16 +4,19 @@ import { CardActions } from '@material-ui/core';
 
 interface ActionsBarProps {
   color: string;
+  rightActions: React.ReactNode;
 }
 
 const ActionsBar = ({
   children,
+  rightActions,
   color,
 }: React.PropsWithChildren<ActionsBarProps>) => {
   return (
     <Actions>
       <ButtonsContainer style={{ backgroundColor: color }}>
         <MainButtons>{children}</MainButtons>
+        <RightActions>{rightActions}</RightActions>
       </ButtonsContainer>
     </Actions>
   );
@@ -30,13 +33,15 @@ const Actions = styled(CardActions)`
   }
 `;
 
-const Flippable = styled.div`
+const ButtonsContainer = styled.div`
   display: flex;
   margin: 0;
   padding: 8px;
 `;
 
-const ButtonsContainer = styled(Flippable)``;
+const RightActions = styled.div`
+  // justify-self: flex-end;
+`;
 
 const MainButtons = styled.div`
   flex: 1;
