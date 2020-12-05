@@ -19,6 +19,8 @@ import {
   EmojiEmotions,
   DragIndicator,
   InsertPhotoTwoTone,
+  Assignment,
+  AssignmentOutlined,
 } from '@material-ui/icons';
 import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
 import useTranslations from '../../../../translations';
@@ -243,9 +245,9 @@ const PostItem = ({
                       tooltip={postTranslations.setActionButton!}
                       icon={
                         post.action ? (
-                          <Feedback className={classes.actionIcon} />
+                          <Assignment className={classes.actionIcon} />
                         ) : (
-                          <FeedbackOutlined className={classes.actionIcon} />
+                          <AssignmentOutlined className={classes.actionIcon} />
                         )
                       }
                       onClick={toggleAction}
