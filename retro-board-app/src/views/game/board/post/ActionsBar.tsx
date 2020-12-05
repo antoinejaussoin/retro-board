@@ -39,9 +39,7 @@ const ButtonsContainer = styled.div`
   padding: 8px;
 `;
 
-const RightActions = styled.div`
-  // justify-self: flex-end;
-`;
+const RightActions = styled.div``;
 
 const MainButtons = styled.div`
   flex: 1;
