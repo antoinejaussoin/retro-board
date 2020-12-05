@@ -83,6 +83,7 @@ function MembersEditor() {
         </Alert>
       )}
       <ChipInput
+        placeholder="(enter emails here)"
         value={members}
         onAdd={handleAdd}
         onDelete={handleRemove}

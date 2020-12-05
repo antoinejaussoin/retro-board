@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  useMediaQuery,
 } from '@material-ui/core';
 import { Lock, LockOpen } from '@material-ui/icons';
 import React, { useCallback, useState } from 'react';
@@ -25,6 +26,7 @@ function LockSession({ onLock }: LockSessionProps) {
   const [open, setOpen] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const { Locking: translations } = useTranslations();
+  const fullScreen = useMediaQuery('(max-width:600px)');
 
   const session = state.session;
   const players = state.players;
@@ -72,6 +74,7 @@ function LockSession({ onLock }: LockSessionProps) {
       </ProButton>
       <Dialog
         onClose={handleCloseDialog}
+        fullScreen={fullScreen}
         aria-labelledby="lock-session-dialog"
         open={open}
       >
