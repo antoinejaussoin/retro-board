@@ -14,11 +14,11 @@ import {
   ThumbDownOutlined,
   DeleteForeverOutlined,
   Close,
-  EmojiEmotions,
   DragIndicator,
   InsertPhotoTwoTone,
   Assignment,
   AssignmentOutlined,
+  EmojiEmotionsOutlined,
 } from '@material-ui/icons';
 import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
 import useTranslations from '../../../../translations';
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.grey[100],
   },
   actionIcon: {
-    color: theme.palette.primary.main,
+    color: colors.blue[400],
   },
   ghipyIcon: {
     color: colors.yellow[700],
@@ -255,7 +255,9 @@ const PostItem = ({
                     <ActionButton
                       ariaLabel={postTranslations.setGiphyButton!}
                       tooltip={postTranslations.setGiphyButton!}
-                      icon={<EmojiEmotions className={classes.ghipyIcon} />}
+                      icon={
+                        <EmojiEmotionsOutlined className={classes.ghipyIcon} />
+                      }
                       innerRef={postElement}
                       onClick={handleShowGiphy}
                     />

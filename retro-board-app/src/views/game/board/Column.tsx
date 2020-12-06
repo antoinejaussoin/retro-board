@@ -6,8 +6,9 @@ import {
   makeStyles,
   IconButton,
   Tooltip,
+  colors,
 } from '@material-ui/core';
-import { CreateNewFolder } from '@material-ui/icons';
+import { CreateNewFolder, SubdirectoryArrowLeft } from '@material-ui/icons';
 import PostItem from './post/Post';
 import { Post, PostGroup, SessionOptions } from '@retrospected/common';
 import useUser from '../../../auth/useUser';
@@ -43,7 +44,7 @@ interface ColumnProps {
 
 const useStyles = makeStyles({
   icon: {
-    color: 'grey',
+    color: colors.grey[400],
   },
 });
 
@@ -98,9 +99,19 @@ const Column: React.FC<ColumnProps> = ({
           startAdornment={
             Icon ? (
               <InputAdornment position="start">
-                <Icon className={classes.icon} />
+                <Icon
+                  className={classes.icon}
+                  style={{ color: colors.grey[700] }}
+                />
               </InputAdornment>
             ) : null
+          }
+          endAdornment={
+            <InputAdornment position="start">
+              <EnterIcon>
+                <SubdirectoryArrowLeft style={{ color: colors.grey[300] }} />
+              </EnterIcon>
+            </InputAdornment>
           }
         />
         {options.allowGrouping && !isReadOnly ? (
@@ -244,6 +255,24 @@ const Add = styled.div`
 const AddGroup = styled.div`
   position: relative;
   top: 3px;
+  border-left: 1px solid ${colors.grey[300]};
+  margin-left: 12px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  > * {
+    position: relative;
+    top: -2px;
+  }
+`;
+
+const EnterIcon = styled.div`
+  display: flex;
+  align-items: center;
+  @media (max-width: 600px) {
+    display: none;
+    visibility: hidden;
+  }
 `;
 
 export default Column;
