@@ -149,7 +149,6 @@ function stripeRouter(connection: Connection): Router {
         },
         line_items: [
           {
-            // price: product.priceId,
             quantity: 1,
             price_data: {
               product: product.productId,
