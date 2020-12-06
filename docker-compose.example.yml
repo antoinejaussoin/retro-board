@@ -71,6 +71,8 @@ services:
       GITHUB_SECRET:
       SENDGRID_API_KEY: # Used for Sendgrid email reminders
       SENDGRID_SENDER: # Email to be used as the sender for emails
+      SENDGRID_VERIFICATION_EMAIL_TID: # Verification email template ID
+      SENDGRID_RESET_PASSWORD_TID: # Reset password email template ID
       STRIPE_SECRET: # Stripe payment account secret
       STRIPE_WEBHOOK_SECRET: # Stripe webhook secret
       STRIPE_TEAM_PRODUCT: # Stripe product information

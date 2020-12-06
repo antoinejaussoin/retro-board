@@ -11,7 +11,7 @@ export async function sendVerificationEmail(
   const msg: MailDataRequired = {
     to: email,
     from: config.SENDGRID_SENDER,
-    templateId: 'd-ae1f003b9c5145f99dbb6ef6095c865f', // TODO: parameterise that
+    templateId: config.SENDGRID_VERIFICATION_EMAIL_TID,
     dynamicTemplateData: {
       name,
       code,
@@ -34,7 +34,7 @@ export async function sendResetPassword(
   const msg: MailDataRequired = {
     to: email,
     from: config.SENDGRID_SENDER,
-    templateId: 'd-c1ebafa8412d444caf372d0846389b46', // TODO: parameterise that
+    templateId: config.SENDGRID_RESET_PASSWORD_TID,
     dynamicTemplateData: {
       name,
       code,
