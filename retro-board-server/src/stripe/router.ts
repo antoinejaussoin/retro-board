@@ -23,7 +23,9 @@ import {
 } from '../db/actions/subscriptions';
 import { Connection } from 'typeorm';
 
-const stripe = new Stripe(config.STRIPE_SECRET, {} as Stripe.StripeConfig);
+const stripe = new Stripe(config.STRIPE_SECRET, {
+  apiVersion: '2020-08-27',
+} as Stripe.StripeConfig);
 
 function stripeRouter(connection: Connection): Router {
   const router = express.Router();
