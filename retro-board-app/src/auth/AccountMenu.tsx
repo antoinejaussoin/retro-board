@@ -11,6 +11,8 @@ import { logout } from '../api';
 import UserContext from './Context';
 import Avatar from '../components/Avatar';
 import { useHistory } from 'react-router-dom';
+import { Star } from '@material-ui/icons';
+import { colors } from '@material-ui/core';
 
 const AccountMenu = () => {
   const translations = useTranslation();
@@ -45,6 +47,11 @@ const AccountMenu = () => {
     setMenuOpen(false);
   }, [history]);
 
+  const handleSubscribe = useCallback(() => {
+    history.push('/subscribe');
+    setMenuOpen(false);
+  }, [history]);
+
   const user = useUser();
   if (user) {
     return (
@@ -60,6 +67,19 @@ const AccountMenu = () => {
           {user && user.accountType !== 'anonymous' ? (
             <MenuItem onClick={handleAccount}>
               {translations.Header.account}
+            </MenuItem>
+          ) : null}
+          {user && !user.pro && user.accountType !== 'anonymous' ? (
+            <MenuItem onClick={handleSubscribe}>
+              <Star
+                style={{
+                  color: colors.yellow[700],
+                  position: 'relative',
+                  top: -2,
+                  left: -5,
+                }}
+              />{' '}
+              Go Pro!
             </MenuItem>
           ) : null}
         </Menu>
