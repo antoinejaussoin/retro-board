@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import {
   Input,
   InputAdornment,
-  makeStyles,
   IconButton,
   Tooltip,
   colors,
@@ -42,12 +41,6 @@ interface ColumnProps {
   onDelete: (post: Post) => void;
 }
 
-const useStyles = makeStyles({
-  icon: {
-    color: colors.grey[400],
-  },
-});
-
 const Column: React.FC<ColumnProps> = ({
   column,
   options,
@@ -76,7 +69,6 @@ const Column: React.FC<ColumnProps> = ({
     (e: React.ChangeEvent<HTMLInputElement>) => setContent(e.target.value),
     [setContent]
   );
-  const classes = useStyles();
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.keyCode === 13 && content) {
@@ -99,10 +91,7 @@ const Column: React.FC<ColumnProps> = ({
           startAdornment={
             Icon ? (
               <InputAdornment position="start">
-                <Icon
-                  className={classes.icon}
-                  style={{ color: colors.grey[700] }}
-                />
+                <Icon style={{ color: colors.grey[500] }} />
               </InputAdornment>
             ) : null
           }
