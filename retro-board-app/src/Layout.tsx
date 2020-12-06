@@ -9,7 +9,7 @@ import Game from './views/Game';
 import Panel from './views/Panel';
 import PrivacyPolicyPage from './views/policies/Privacy';
 import Invite from './views/layout/Invite';
-import LoginButton from './auth/LoginButton';
+import AccountMenu from './auth/AccountMenu';
 import useGlobalState from './state';
 import useIsCompatibleBrowser from './hooks/useIsCompatibleBrowser';
 import OutdatedBrowser from './components/OutdatedBrowser';
@@ -65,7 +65,7 @@ function App() {
           </HomeButton>
           <Route path="/game/:gameId" component={Invite} />
           {isInitialised ? (
-            <LoginButton />
+            <AccountMenu />
           ) : (
             <Initialising>Loading...</Initialising>
           )}

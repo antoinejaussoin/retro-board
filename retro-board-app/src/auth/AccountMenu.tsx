@@ -12,7 +12,7 @@ import UserContext from './Context';
 import Avatar from '../components/Avatar';
 import { useHistory } from 'react-router-dom';
 
-const LoginButton = () => {
+const AccountMenu = () => {
   const translations = useTranslation();
   const { setUser } = useContext(UserContext);
   const [modalOpened, setModalOpen] = useState(false);
@@ -101,4 +101,4 @@ const DisplayName = styled.div`
   overflow: hidden;
 `;
 
-export default LoginButton;
+export default AccountMenu;
