@@ -306,7 +306,7 @@ export default {
     subscribe: {
       title: 'Payer',
       description: `Vous serez redirigé vers notre partenaire Stripe. Aucune coordonnées bancaire n'est stockée par Retrospected.`,
-      cannotRegisterWithAnon: `Vous ne pouvez vous abonner en utilisant un compte anonyme. Merci de vous enregistrer avec un compte classique (mot de passe) ou via un l'authentification tierce (Google, Github).`,
+      cannotRegisterWithAnon: `Vous ne pouvez vous abonner en utilisant un compte anonyme. Merci de vous enregistrer avec un compte classique (mot de passe) ou via un compte OAuth (Google, Github, Slack...).`,
       checkout: 'Payer',
     },
   },
