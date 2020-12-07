@@ -93,8 +93,9 @@ You must have `docker` and `docker-compose` installed on your system.
 
 ### Prerequisites 💿
 
-- You must have `docker` and `docker-compose` installed on your system.
 - You must obtain a self-hosting licence, please contact support@retrospected.com to obtain one.
+- You must have `docker` and `docker-compose` installed on your system.
+
 
 ### Run 🚀
 
