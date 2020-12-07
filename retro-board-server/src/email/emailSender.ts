@@ -1,13 +1,18 @@
 import sendGrid, { MailDataRequired } from '@sendgrid/mail';
 import config from '../db/config';
 
-sendGrid.setApiKey(config.SENDGRID_API_KEY);
+if (config.SENDGRID_API_KEY) {
+  sendGrid.setApiKey(config.SENDGRID_API_KEY);
+}
 
 export async function sendVerificationEmail(
   email: string,
   name: string,
   code: string
 ) {
+  if (!config.SENDGRID_API_KEY) {
+    throw Error('Sendgrid is not activated.');
+  }
   const msg: MailDataRequired = {
     to: email,
     from: config.SENDGRID_SENDER,
@@ -31,6 +36,9 @@ export async function sendResetPassword(
   name: string,
   code: string
 ) {
+  if (!config.SENDGRID_API_KEY) {
+    throw Error('Sendgrid is not activated.');
+  }
   const msg: MailDataRequired = {
     to: email,
     from: config.SENDGRID_SENDER,
