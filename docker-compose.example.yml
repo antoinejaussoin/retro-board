@@ -102,7 +102,7 @@ services:
       AUTH_GITHUB_ENABLED: 'false'
       AUTH_SLACK_ENABLED: 'false'
       DEFAULT_LANGUAGE: 'en' # Set the default language for new users
-      STRIPE_KEY: # Stripe publishable key (for frontend)
+      STRIPE_KEY: '' # Stripe publishable key (for frontend)
     restart: unless-stopped
     logging:
       driver: 'json-file'
