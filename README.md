@@ -27,11 +27,11 @@ This project is both an actual product, and also a technology demo using the lat
 
 It features the following technologies:
 
-- [React 16](https://github.com/facebook/react)
+- [React 17](https://github.com/facebook/react)
 - [React Hooks](https://reactjs.org/docs/hooks-intro.html)
 - [React Router 4](https://github.com/ReactTraining/react-router)
 - [Mono Repo / Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces)
-- [TypeScript](https://www.typescriptlang.org/)
+- [TypeScript 4](https://www.typescriptlang.org/)
 - [Hot-reloading](https://github.com/gaearon/react-hot-loader)
 - [Socket IO](http://socket.io)
 - [Webpack 4](https://github.com/webpack/webpack) (See older versions for Webpack 1, 2 and 3)
@@ -39,10 +39,11 @@ It features the following technologies:
 - [Styled Components](https://www.styled-components.com/)
 - [Multilingual](https://stackoverflow.com/questions/33413880/react-redux-and-multilingual-internationalization-apps-architecture) / Internationalization
 - [Postgres](https://www.postgresql.org/) (optional), defaults to [NeDB](https://github.com/louischatriot/nedb) (in-process)
-- [Passport](http://www.passportjs.org/) for seamless authentication with:
+- [Passport](http://www.passportjs.org/) for seamless OAuth authentication with:
   - Google
   - Twitter
   - GitHub
+  - Slack
 - [Giphy](https://giphy.com/) because adding a bit of fun to your retro can't hurt!
 - [React Beautiful DND](https://github.com/atlassian/react-beautiful-dnd) to allow re-ordering and grouping by drag-and-drop
 - [Jest](https://facebook.github.io/jest) for Unit Testing
@@ -52,6 +53,7 @@ It features the following technologies:
 - [Kubernetes](https://kubernetes.io/), to scale Retrospected for its 10M+ users (not)
 - [Travis](http://travis-ci.org/), for Continuous Integration and Deployment (CI/CD)
 - [Multi-Architecture](https://github.com/docker/buildx/), for automatic compatibility with ARM-based servers
+- [Stripe](https://stripe.com/), for our payment mechanism
 
 Previous versions, up to v1.0.1 featured the following libraries:
 
@@ -92,12 +94,13 @@ You must have `docker` and `docker-compose` installed on your system.
 ### Prerequisites 💿
 
 - You must have `docker` and `docker-compose` installed on your system.
+- You must obtain a self-hosting licence, please contact support@retrospected.com to obtain one.
 
 ### Run 🚀
 
 - Copy `docker-compose.example.yml` to `docker-compose.yml`
 - Edit `docker-compose.yml` to change credentials and secrets
-- _Optional: for ARM-based systems, remove the PGAdmin section_
+- _Optional: for ARM-based systems, use biarms/pgadmin4 instead_
 - Run `docker-compose up -d`
 - Voilà!
 
@@ -111,7 +114,8 @@ This will run a production-ready version of Retrospected automatically, using Po
 
 ## How to run for Production using Kubernetes ☸
 
-Please read the [readme](/k8s/readme.md) file in the `k8s` folder.
+Please read the [readme](/k8s/readme.md) file in the `k8s` folder. Please note: Kubernetes
+example configs are not maintained, and are only provided as an example.
 
 ## Backups 💾
 
