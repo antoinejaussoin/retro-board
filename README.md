@@ -21,7 +21,7 @@ This is a Retrospective Idea board, powering [retrospected.com](http://www.retro
 
 &nbsp;
 
-![Retrospected.com](/content/screenshot-v3.png?raw=true 'Retrospected.com')
+![Retrospected.com](/content/screenshot-v4.png?raw=true 'Retrospected.com')
 
 This project is both an actual product, and also a technology demo using the latest and greatest JavaScript/TypeScript libraries of the month.
 
@@ -95,7 +95,6 @@ You must have `docker` and `docker-compose` installed on your system.
 
 - You must obtain a self-hosting licence, please contact support@retrospected.com to obtain one.
 - You must have `docker` and `docker-compose` installed on your system.
-
 
 ### Run 🚀
 
