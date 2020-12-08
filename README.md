@@ -53,7 +53,7 @@ It features the following technologies:
 - [Kubernetes](https://kubernetes.io/), to scale Retrospected for its 10M+ users (not)
 - [Travis](http://travis-ci.org/), for Continuous Integration and Deployment (CI/CD)
 - [Multi-Architecture](https://github.com/docker/buildx/), for automatic compatibility with ARM-based servers
-- [Stripe](https://stripe.com/), for our payment mechanism
+- [Stripe](https://stripe.com/), for our payment solution
 
 Previous versions, up to v1.0.1 featured the following libraries:
 
