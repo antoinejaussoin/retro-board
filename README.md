@@ -19,7 +19,6 @@ This is a Retrospective Idea board, powering [retrospected.com](http://www.retro
   <img src="./content/logos/socketio.png" height="65">
 </p>
 
-&nbsp;
 
 ![Retrospected.com](/content/screenshot-v4.jpeg?raw=true 'Retrospected.com')
 
