@@ -82,9 +82,9 @@ You must have `docker` and `docker-compose` installed on your system.
 ### Run 🚀
 
 - Clone this repository
-- Run Postgres, Redis, PGAdmin locally (in the `./dev` directory, `docker-compose up -d`)
+- Run Postgres, Redis, PGAdmin locally (in the `./retro-board` directory, `docker-compose up -d`)
 - `yarn` to install the dependencies (_not_ `npm i`!)
-- Open another terminal (you need two of those, and the order is important)
+- Open another terminal
 - `yarn start-ui` on the first terminal to run live Webpack with hot-reload
 - `yarn start-server` on the second terminal to start the backend
 - Open your browser on [http://localhost:3000](http://localhost:3000)
