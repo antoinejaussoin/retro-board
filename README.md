@@ -19,7 +19,6 @@ This is a Retrospective Idea board, powering [retrospected.com](http://www.retro
   <img src="./content/logos/socketio.png" height="65">
 </p>
 
-
 ![Retrospected.com](/content/screenshot-v4.jpeg?raw=true 'Retrospected.com')
 
 This project is both an actual product, and also a technology demo using the latest and greatest JavaScript/TypeScript libraries of the month.
@@ -75,7 +74,8 @@ You must have `docker` and `docker-compose` installed on your system.
 
 ### Prerequisites 💿
 
-- You must have `docker` and `docker-compose` installed on your system.
+- You must have [docker](https://www.docker.com) and [docker-compose](https://docs.docker.com/compose/) installed on your system.
+- You must also have [Node.js](https://nodejs.org/en/), version 14 (other recent versions will probably work too).
 - `Yarn`: Please install [Yarn](https://yarnpkg.com/en/), as this mono-repo uses **Yarn Workspaces** which won't work with NPM.
 
 ### Run 🚀
@@ -83,9 +83,10 @@ You must have `docker` and `docker-compose` installed on your system.
 - Clone this repository
 - Run Postgres, Redis, PGAdmin locally (in the `./retro-board` directory, `docker-compose up -d`)
 - `yarn` to install the dependencies (_not_ `npm i`!)
+- `yarn migrate` to run the database migrations
 - Open another terminal
-- `yarn start-ui` on the first terminal to run live Webpack with hot-reload
-- `yarn start-server` on the second terminal to start the backend
+- `yarn start-server` on the first terminal to start the backend
+- `yarn start-ui` on the second terminal to run the UI
 - Open your browser on [http://localhost:3000](http://localhost:3000)
 
 ## How to run for Production using Docker 🐳
@@ -93,7 +94,7 @@ You must have `docker` and `docker-compose` installed on your system.
 ### Prerequisites 💿
 
 - You must obtain a self-hosting licence, please contact support@retrospected.com to obtain one.
-- You must have `docker` and `docker-compose` installed on your system.
+- You must have [docker](https://www.docker.com) and [docker-compose](https://docs.docker.com/compose/) installed on your system.
 
 ### Run 🚀
 
@@ -108,7 +109,7 @@ This will run a production-ready version of Retrospected automatically, using Po
 - Postgres
 - pgAdmin4 (Web UI for postgres)
 - Redis
-- The Retrospected NodeJS Backend
+- The Retrospected Node.js Backend
 - The Retrospected React Frontend, served by `nginx`.
 
 ## How to run for Production using Kubernetes ☸
