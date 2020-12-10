@@ -70,8 +70,14 @@ function AccountPage() {
         </Section>
       ) : null}
 
+      {ownsThePlan && user && user.plan && user.plan === 'team' ? (
+        <Section title={translations.subscription?.membersEditor?.title}>
+          <MembersEditor />
+        </Section>
+      ) : null}
+
       {ownsThePlan ? (
-        <Section title="Your Subscription">
+        <Section title={translations.subscription.header}>
           {url ? (
             <Button
               variant="contained"
@@ -82,7 +88,6 @@ function AccountPage() {
               {translations.subscription?.manageButton}
             </Button>
           ) : null}
-          {user && user.plan && user.plan === 'team' ? <MembersEditor /> : null}
         </Section>
       ) : null}
     </Page>

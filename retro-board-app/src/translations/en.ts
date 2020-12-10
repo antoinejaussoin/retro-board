@@ -273,7 +273,7 @@ export default {
         info: (
           limit
         ) => `Add emails below to grant Pro accounts to up to ${limit} other
-        colleagues.`,
+        colleagues. Press Enter after each email address.`,
       },
     },
   },

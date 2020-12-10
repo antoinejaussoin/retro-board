@@ -6,6 +6,7 @@ import { validate } from 'isemail';
 import styled from 'styled-components';
 import { Alert } from '@material-ui/lab';
 import useTranslations from '../../translations';
+import { useSnackbar } from 'notistack';
 
 const MAX_MEMBERS = 19;
 
@@ -23,6 +24,7 @@ function isNotFull(members: string[] | null): boolean {
 
 function MembersEditor() {
   const { AccountPage: translations } = useTranslations();
+  const { enqueueSnackbar } = useSnackbar();
   const [members, setMembers] = useStateFetch<string[] | null>(
     '/api/stripe/members',
     null
@@ -35,9 +37,12 @@ function MembersEditor() {
           updateMembers(updated);
           return updated;
         });
+        enqueueSnackbar(`${value} has been given a pro account.`, {
+          variant: 'success',
+        });
       }
     },
-    [members, setMembers]
+    [members, setMembers, enqueueSnackbar]
   );
   const handleRemove = useCallback(
     (value: string) => {
@@ -49,9 +54,10 @@ function MembersEditor() {
           }
           return updated;
         });
+        enqueueSnackbar(`${value} has been removed.`, { variant: 'info' });
       }
     },
-    [members, setMembers]
+    [members, setMembers, enqueueSnackbar]
   );
   const handleBeforeAdd = useCallback(
     (value: string) => {
@@ -70,7 +76,6 @@ function MembersEditor() {
 
   return (
     <Container>
-      <Title>{translations.subscription?.membersEditor?.title}</Title>
       {!isNotFull(members) ? (
         <Alert severity="warning" style={{ marginBottom: 10 }}>
           {translations.subscription!.membersEditor!.limitReached!(
@@ -88,6 +93,7 @@ function MembersEditor() {
         onAdd={handleAdd}
         onDelete={handleRemove}
         onBeforeAdd={handleBeforeAdd}
+        fullWidth
       />
     </Container>
   );
@@ -96,9 +102,4 @@ const Container = styled.div`
   margin-top: 20px;
 `;
 
-const Title = styled.div`
-  font-size: 1.5em;
-  font-weight: 100;
-  margin-bottom: 10px;
-`;
 export default MembersEditor;

@@ -280,7 +280,7 @@ export default {
         limitReached: (limit) =>
           `Vous avez atteint le nombre maximum de membres (${limit}) permis par votre abonnement. Vous pouvez passer à l'abonnement Company pour un nombre de collaborateur illimité.`,
         info: (limit) =>
-          `Ajouter des addresses emails ci-dessous pour donner un accès Pro à vos collaborateurs (dans la limite de ${limit} collaborateurs).`,
+          `Ajouter des addresses emails ci-dessous pour donner un accès Pro à vos collaborateurs (dans la limite de ${limit} collaborateurs). Appuyez sur Entrée après chaque email.`,
       },
     },
   },
