@@ -124,9 +124,12 @@ function SubscriberPage() {
           />
         </Step>
       ) : null}
+
       <Step
         index={needDomain ? 4 : 3}
-        title={translations.subscribe.title}
+        title={`${translations.subscribe.title} ${
+          product ? ` - ${product.name}` : ''
+        }`}
         description={translations.subscribe.description}
       >
         {!user || user.accountType === 'anonymous' ? (

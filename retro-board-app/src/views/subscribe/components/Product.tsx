@@ -25,7 +25,7 @@ function ProductDisplay({
 
   return (
     <Container onClick={handleOrder} selected={selected}>
-      <Paper elevation={3}>
+      <Paper elevation={selected ? 24 : 2}>
         <Header>{product.name}</Header>
         <Description>{translations[product.plan]}</Description>
         <Seats>
@@ -46,7 +46,7 @@ const Container = styled.div<{ selected: boolean }>`
   display: flex;
   flex-direction: column;
   width: 300px;
-  outline: ${(props) => (props.selected ? '1' : '0')}px solid
+  outline: ${(props) => (props.selected ? '3' : '0')}px solid
     ${colors.deepPurple[500]};
 `;
 
