@@ -27,6 +27,7 @@ import SuccessPage from './views/subscribe/SuccessPage';
 import CancelPage from './views/subscribe/CancelPage';
 import AccountPage from './views/account/AccountPage';
 import ProPill from './components/ProPill';
+import LoginPage from './views/login/LoginPage';
 
 const Title = styled(Typography)`
   flex-grow: 1;
@@ -80,6 +81,7 @@ function App() {
         <Route path="/validate" component={ValidatePage} />
         <Route path="/reset" component={ResetPasswordPage} />
         <Route path="/account" component={AccountPage} />
+        <Route path="/login" component={LoginPage} />
         <Route path="/subscribe" component={SubscribePage} exact />
         <Route path="/subscribe/success" component={SuccessPage} exact />
         <Route path="/subscribe/cancel" component={CancelPage} exact />
