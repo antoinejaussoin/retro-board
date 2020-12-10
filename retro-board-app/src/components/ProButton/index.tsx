@@ -153,6 +153,10 @@ const Header = styled.div`
   @media screen and (max-width: 400px) {
     display: none;
   }
+
+  @media screen and (max-height: 700px) {
+    display: none;
+  }
 `;
 
 const Features = styled.div`
