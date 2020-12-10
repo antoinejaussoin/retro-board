@@ -81,11 +81,15 @@ You must have `docker` and `docker-compose` installed on your system.
 ### Run 🚀
 
 - Clone this repository
-- Run Postgres, Redis, PGAdmin locally (in the `./retro-board` directory, `docker-compose up -d`)
+- Run Postgres, Redis, PGAdmin locally:
+  - `cd ./retro-board/retro-board` (that is the `retro-board` directory within the repository)
+  - `docker-compose up -d`
+  - `cd ..`
 - `yarn` to install the dependencies (_not_ `npm i`!)
+- `yarn build-common` to build the shared module
 - `yarn migrate` to run the database migrations
+- `yarn start-server` to start the backend
 - Open another terminal
-- `yarn start-server` on the first terminal to start the backend
 - `yarn start-ui` on the second terminal to run the UI
 - Open your browser on [http://localhost:3000](http://localhost:3000)
 
@@ -129,8 +133,8 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 - Clone this repository
 - `yarn` to install the dependencies (_not_ `npm i`!)
-- `npm test` to run the tests
-- **or** `yarn test-watch` to run the tests every time you change a file
+- `yarn test` to run the tests in watch mode
+- **or** `yarn ci-test` to run the tests once
 
 ## How to debug
 

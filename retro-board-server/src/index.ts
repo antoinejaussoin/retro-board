@@ -48,7 +48,7 @@ import isLicenced from './security/is-licenced';
 if (!isLicenced()) {
   console.log(chalk`{red ----------------------------------------------- }`);
   console.log(
-    chalk`⚠️ {red This software is not licenced. Please contact
+    chalk`⚠️  {red This software is not licenced. Please contact
 support@retrospected.com to obtain a licence.} ⚠️`
   );
   console.log(chalk`{red ----------------------------------------------- }`);
