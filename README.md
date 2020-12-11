@@ -75,7 +75,7 @@ You must have `docker` and `docker-compose` installed on your system.
 ### Prerequisites 💿
 
 - You must have [docker](https://www.docker.com) and [docker-compose](https://docs.docker.com/compose/) installed on your system.
-- You must also have [Node.js](https://nodejs.org/en/), version 14 (other recent versions will probably work too).
+- You must also have [Node.js](https://nodejs.org/en/), version 15 (other recent versions will probably work too).
 - `Yarn`: Please install [Yarn](https://yarnpkg.com/en/), as this mono-repo uses **Yarn Workspaces** which won't work with NPM.
 
 ### Run 🚀
@@ -97,7 +97,7 @@ You must have `docker` and `docker-compose` installed on your system.
 
 ### Prerequisites 💿
 
-- You must obtain a self-hosting licence, please contact support@retrospected.com to obtain one.
+- You must obtain a self-hosting licence, please contact support@retrospected.com to get one.
 - You must have [docker](https://www.docker.com) and [docker-compose](https://docs.docker.com/compose/) installed on your system.
 
 ### Run 🚀
