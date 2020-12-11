@@ -14,6 +14,7 @@ import {
 import config from '../utils/getConfig';
 import { v4 } from 'uuid';
 import { CHECK_PREFIX, encrypt } from '../crypto/crypto';
+import { getItem, setItem } from '../utils/localStorage';
 
 const requestConfig: Partial<RequestInit> = {
   mode: 'cors',
@@ -250,10 +251,10 @@ export async function resetChangePassword(
 
 function getAnonymousUsername(username: string): string {
   const key = `anonymous-username-${username}`;
-  const storedUsername = localStorage.getItem(key);
+  const storedUsername = getItem(key);
   if (storedUsername === null) {
     const generatedUsername = `${username.replace('^', '')}^${v4()}`;
-    localStorage.setItem(key, generatedUsername);
+    setItem(key, generatedUsername);
     return generatedUsername;
   }
   return storedUsername;

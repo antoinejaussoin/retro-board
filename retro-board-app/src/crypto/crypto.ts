@@ -1,5 +1,6 @@
 import aes from 'crypto-js/aes';
 import { stringify } from 'crypto-js/enc-utf8';
+import { getItem, setItem } from '../utils/localStorage';
 
 export const ENCRYPTED_PREFIX = '<<ENCRYPTED>>';
 export const CHECK_PREFIX = 'check';
@@ -54,7 +55,7 @@ export function storeEncryptionKeyLocally(
 ) {
   const localStorageKey = getLocalStorageKey(sessionId);
   if (localStorageKey) {
-    localStorage.setItem(localStorageKey, key);
+    setItem(localStorageKey, key);
   }
 }
 
@@ -63,7 +64,7 @@ export function getStoredEncryptionKey(
 ): string | null {
   const localStorageKey = getLocalStorageKey(sessionId);
   if (localStorageKey) {
-    return localStorage.getItem(localStorageKey);
+    return getItem(localStorageKey);
   }
   return null;
 }
