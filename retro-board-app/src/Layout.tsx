@@ -56,14 +56,14 @@ function App() {
           <IconButton color="inherit" aria-label="Menu" onClick={togglePanel}>
             <MenuIcon />
           </IconButton>
-          <MainTitle variant="h6" color="inherit" onClick={goToHome}>
-            Retrospected&nbsp;{user?.pro ? <ProPill small /> : null}
-          </MainTitle>
           <HomeButton>
             <IconButton color="inherit" aria-label="Home" onClick={goToHome}>
               <HomeOutlined />
             </IconButton>
           </HomeButton>
+          <MainTitle variant="h6" color="inherit" onClick={goToHome}>
+            Retrospected&nbsp;{user?.pro ? <ProPill small /> : null}
+          </MainTitle>
           <Route path="/game/:gameId" component={Invite} />
           {isInitialised ? (
             <AccountMenu />
@@ -107,10 +107,10 @@ const MainTitle = styled(Title)`
 `;
 
 const HomeButton = styled.div`
-  flex: 1;
-  display: none;
+  margin-right: 10px;
+
   @media screen and (max-width: 600px) {
-    display: block;
+    flex: 1;
   }
 `;
 
