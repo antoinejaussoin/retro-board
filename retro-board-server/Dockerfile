@@ -6,9 +6,6 @@ FROM node:15-alpine
 # App directory
 WORKDIR /usr/src/backend
 
-# Install Yarn
-RUN apk add yarn
-
 COPY ./yarn.lock ./
 COPY ./package.json ./
 COPY ./retro-board-server/package.json ./retro-board-server/
