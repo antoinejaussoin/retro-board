@@ -344,7 +344,7 @@ export default {
     newEncryptedSessionWarningTitle: `Cette session est chiffrée localement`,
     newEncryptedSessionWarningContent: (key: string) =>
       `Il est très important de sauvegarder l'URL complète de cette page (qui contient la clef de chiffrement). Le cas échéant, vous pouvez également sauvegarder la clef elle-même (${key}). Si vous perdez cette clef, il vous sera impossible de récupérer vos données.`,
-    sessionEncryptionError: `Cette session est crytée, et vous ne semblez pas avoir la clef de chiffrement dans voter navigateur. Merci d'utiliser le lien complet qui vous a été donné lors de la création de cette session.`,
+    sessionEncryptionError: `Cette session est cryptée, et vous ne semblez pas avoir la clef de chiffrement dans votre navigateur. Merci d'utiliser le lien complet qui vous a été donné lors de la création de cette session.`,
     passwordModalTitle: `Session chiffrée - Saisie du mot de passe`,
     passwordModelIncorrect: `Le mot de passe (ou clef de chiffrement) est incorrect.`,
   },
