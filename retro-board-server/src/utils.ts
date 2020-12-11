@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { genSalt, hash } from 'bcrypt';
+import { genSalt, hash } from 'bcryptjs';
 import { UserView, UserEntity } from './db/entities';
 import { Connection } from 'typeorm';
 import { getUserView, getUser } from './db/actions/users';

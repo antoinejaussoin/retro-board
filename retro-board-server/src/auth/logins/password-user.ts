@@ -1,4 +1,4 @@
-import { compare } from 'bcrypt';
+import { compare } from 'bcryptjs';
 import { UserEntity } from '../../db/entities';
 import { Connection } from 'typeorm';
 import { getUserByUsername } from '../../db/actions/users';
