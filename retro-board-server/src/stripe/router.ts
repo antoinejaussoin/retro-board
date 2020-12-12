@@ -15,6 +15,7 @@ import {
 import { plans, getProduct } from './products';
 import { updateUser } from '../db/actions/users';
 import { getUserFromRequest } from '../utils';
+import isValidDomain from '../security/is-valid-domain';
 import {
   cancelSubscription,
   activateSubscription,
@@ -22,7 +23,6 @@ import {
   saveSubscription,
 } from '../db/actions/subscriptions';
 import { Connection } from 'typeorm';
-import { isFree, isDisposable } from 'freemail';
 
 const stripe = new Stripe(config.STRIPE_SECRET, {
   apiVersion: '2020-08-27',
@@ -139,6 +139,10 @@ function stripeRouter(connection: Connection): Router {
     const user = await getUserFromRequest(connection, req);
     const product = getProduct(payload.plan);
 
+    if (payload.domain && !isValidDomain(payload.domain)) {
+      return res.status(403).send();
+    }
+
     if (user) {
       const customerId = await getCustomerId(user, payload.locale);
       const session = await stripe.checkout.sessions.create({
@@ -216,9 +220,7 @@ function stripeRouter(connection: Connection): Router {
 
   router.get('/domain/:domain', async (req, res) => {
     const domain = req.params.domain;
-    const email = `foo@${domain}`;
-    console.log('Domain: ', email);
-    return res.status(200).send(!isFree(email) && !isDisposable(email));
+    return res.status(200).send(isValidDomain(domain));
   });
 
   return router;
