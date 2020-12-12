@@ -31,8 +31,11 @@ function ProductDisplay({
         <Seats>
           {product.seats
             ? translations.users!(product.seats)
-            : translations.unlimited_seats}
+            : `${translations.unlimited_seats} 🎉`}
         </Seats>
+        <RegularPrice>
+          {(product[currency] / 50).toFixed(2)} {currency.toUpperCase()}
+        </RegularPrice>
         <Total>
           {(product[currency] / 100).toFixed(2)} {currency.toUpperCase()}
           <PerMonth>/ {translations.month}</PerMonth>
@@ -81,6 +84,15 @@ const Total = styled.div`
 
 const PerMonth = styled.span`
   font-size: 0.4em;
+`;
+
+const RegularPrice = styled.div`
+  background-color: ${colors.deepPurple[500]};
+  color: white;
+  text-align: center;
+  font-size: 1em;
+  font-weight: 100;
+  text-decoration: line-through;
 `;
 
 export default ProductDisplay;
