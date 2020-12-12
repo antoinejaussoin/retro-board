@@ -3,7 +3,7 @@ services:
   redis:
     image: redis:latest
     ports:
-      - '6379:6379' 
+      - '6379:6379'
     depends_on:
       - postgres
     restart: unless-stopped
@@ -16,7 +16,7 @@ services:
     image: postgres:11.6
     hostname: postgres
     ports:
-      - '5432:5432' 
+      - '5432:5432'
     environment:
       POSTGRES_USER: postgres # Must be the same as DB_USER below
       POSTGRES_PASSWORD: postgres # Must be the same as DB_PASSWORD below

@@ -33,14 +33,19 @@ export async function activateSubscription(
 export async function cancelSubscription(
   connection: Connection,
   stripeSubscriptionId: string
-): Promise<SubscriptionEntity> {
+): Promise<SubscriptionEntity | null> {
   const subscriptionRepository = connection.getCustomRepository(
     SubscriptionRepository
   );
-  const existingSubscription = await subscriptionRepository.cancel(
-    stripeSubscriptionId
-  );
-  return existingSubscription;
+  try {
+    const existingSubscription = await subscriptionRepository.cancel(
+      stripeSubscriptionId
+    );
+    return existingSubscription;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 }
 
 export async function getActiveSubscription(

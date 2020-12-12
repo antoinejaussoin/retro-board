@@ -113,7 +113,7 @@ function stripeRouter(connection: Connection): Router {
           // handle subscription cancelled automatically based
           // upon your subscription settings.
         }
-        cancelSubscription(connection, cancelEvent.data.object.id);
+        await cancelSubscription(connection, cancelEvent.data.object.id);
         break;
       case 'checkout.session.completed':
         const subEvent = (event as unknown) as StripeEvent<CheckoutCompletedPayload>;
