@@ -14,6 +14,7 @@ import { SessionEntity, SessionTemplateEntity } from '.';
 export const ALL_FIELDS: Array<keyof UserEntity> = [
   'id',
   'name',
+  'email',
   'accountType',
   'username',
   'password',

@@ -41,14 +41,15 @@ function stripeRouter(connection: Connection): Router {
 
     if (!user.stripeId && user.username) {
       // Create a new customer object
-      const customer = await stripe.customers.create({
+      const userData = {
         email: user.email || user.username,
         name: user.name,
         metadata: {
           userId: user.id,
         },
         preferred_locales: [locale],
-      });
+      };
+      const customer = await stripe.customers.create(userData);
 
       await updateUser(connection, user.id, {
         stripeId: customer.id,
