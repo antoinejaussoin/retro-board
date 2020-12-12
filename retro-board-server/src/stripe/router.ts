@@ -22,6 +22,7 @@ import {
   saveSubscription,
 } from '../db/actions/subscriptions';
 import { Connection } from 'typeorm';
+import { isFree, isDisposable } from 'freemail';
 
 const stripe = new Stripe(config.STRIPE_SECRET, {
   apiVersion: '2020-08-27',
@@ -211,6 +212,13 @@ function stripeRouter(connection: Connection): Router {
       }
     }
     res.status(401).send();
+  });
+
+  router.get('/domain/:domain', async (req, res) => {
+    const domain = req.params.domain;
+    const email = `foo@${domain}`;
+    console.log('Domain: ', email);
+    return res.status(200).send(!isFree(email) && !isDisposable(email));
   });
 
   return router;

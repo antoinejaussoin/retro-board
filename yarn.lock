@@ -6258,6 +6258,13 @@ fragment-cache@^0.2.1:
   dependencies:
     map-cache "^0.2.2"
 
+freemail@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/freemail/-/freemail-1.7.0.tgz#c54b8bd11b1580d051909f866c665b6a46886eeb"
+  integrity sha512-XzEdol9AxxwDN5ISi+J560MgQRKTiGOTRFakRQLUQDEjr48hBMzU5Eo7c2U13zzz3IwcaD+54jWHJrg6/wqRNA==
+  dependencies:
+    tldjs "^1.5.2"
+
 fresh@0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
@@ -10904,7 +10911,7 @@ punycode@2.x.x, punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
-punycode@^1.2.4:
+punycode@^1.2.4, punycode@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
   integrity sha1-wNWmOycYgArY4esPpSachN1BhF4=
@@ -12958,6 +12965,13 @@ tinycolor2@^1.4.1:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.2.tgz#3f6a4d1071ad07676d7fa472e1fac40a719d8803"
   integrity sha512-vJhccZPs965sV/L2sU4oRQVAos0pQXwsvTLkWYdqJ+a8Q5kPFzJTuOFwy7UniPli44NKQGAglksjvOcpo95aZA==
+
+tldjs@^1.5.2:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/tldjs/-/tldjs-1.8.0.tgz#b9c16bd6de357b55ffcbe7d5be41f6b3ca76e3fa"
+  integrity sha1-ucFr1t41e1X/y+fVvkH2s8p24/o=
+  dependencies:
+    punycode "^1.4.1"
 
 tmpl@1.0.x:
   version "1.0.4"

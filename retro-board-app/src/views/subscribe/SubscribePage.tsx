@@ -1,6 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { useStripe } from '@stripe/react-stripe-js';
-import { createCheckoutSession } from './api';
+import { createCheckoutSession, isValidDomain } from './api';
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import Step from './components/Step';
@@ -35,17 +35,20 @@ function SubscriberPage() {
   const { SubscribePage: translations } = useTranslations();
   const language = useLanguage();
   const needDomain = product && product.seats === null;
+  const [validDomain, setValidDomain] = useState(false);
 
-  const validDomain = useMemo(() => {
+  useEffect(() => {
+    setValidDomain(false);
     const domainRegex = /^[a-zA-Z0-9][a-zA-Z0-9-_]{0,61}[a-zA-Z0-9]{0,1}\.([a-zA-Z]{1,6}|[a-zA-Z0-9-]{1,30}\.[a-zA-Z]{2,3})$/g;
-    return domainRegex.test(domain);
+    if (!domainRegex.test(domain)) {
+      return;
+    }
+    async function checkFreeDomain() {
+      const isValid = await isValidDomain(domain);
+      setValidDomain(isValid);
+    }
+    checkFreeDomain();
   }, [domain]);
-
-  const validForm =
-    (!needDomain || validDomain) &&
-    !!product &&
-    user &&
-    user.accountType !== 'anonymous';
 
   useEffect(() => {
     if (user && domain === DEFAULT_DOMAIN) {
@@ -72,6 +75,12 @@ function SubscriberPage() {
       }
     }
   }, [stripe, product, currency, domain, language]);
+
+  const validForm =
+    (!needDomain || validDomain) &&
+    !!product &&
+    user &&
+    user.accountType !== 'anonymous';
 
   return (
     <Container>

@@ -51,6 +51,7 @@
     "express": "^4.17.1",
     "express-mung": "^0.5.1",
     "express-session": "^1.17.1",
+    "freemail": "^1.7.0",
     "lexorank": "^1.0.4",
     "lodash": "^4.17.20",
     "md5": "^2.3.0",

@@ -39,3 +39,16 @@ export async function createCheckoutSession(
   }
   return null;
 }
+
+export async function isValidDomain(domain: string): Promise<boolean> {
+  const response = await fetch(
+    `/api/stripe/domain/${encodeURIComponent(domain)}`,
+    {
+      ...requestConfig,
+    }
+  );
+  if (response.ok) {
+    return (await response.text()) === 'true';
+  }
+  return false;
+}

@@ -16,3 +16,4 @@ declare namespace Express {
 }
 
 declare module 'passport-slack';
+declare module 'freemail';
