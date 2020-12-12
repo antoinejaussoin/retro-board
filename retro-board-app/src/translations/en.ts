@@ -336,6 +336,7 @@ For as low as $11.90 / £8.90, get the following Pro features and more:`,
   },
   Encryption: {
     createEncryptedSession: 'Encrypted Session',
+    sessionNotEncrypted: 'This session is not encrypted.',
     sessionEncryptedHaveKeyTooltip: `This session is encrypted, and the key is stored in your browser. You can open this session without having to provide the password again.`,
     sessionEncryptedNoKeyTooltip:
       'This session is encrypted, and the key is not stored in your browser. You will be asked for the decryption key when opening this session.',
@@ -363,5 +364,9 @@ For as low as $11.90 / £8.90, get the following Pro features and more:`,
     sessionNonProTitle: 'This session is only accessible to Pro users',
     sessionNonProDescription:
       'This session uses features only available to Pro users. Please ask the moderator or subscription holder to give you a Pro account.',
+    sessionIsPublic: 'This session is public and accessible to anyone.',
+    sessionIsPrivate: 'This session is private, and you have access.',
+    sessionIsPrivateNoAccess:
+      'This session is private, but you do not have access.',
   },
 } as Translation;

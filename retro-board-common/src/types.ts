@@ -20,6 +20,8 @@ export interface SessionMetadata extends Entity {
   createdBy: User;
   canBeDeleted: boolean;
   encrypted: string;
+  locked: boolean;
+  lockedForUser: boolean;
 }
 
 export interface SessionTemplate extends Entity {

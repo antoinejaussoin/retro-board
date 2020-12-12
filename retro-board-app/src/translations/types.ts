@@ -303,6 +303,7 @@ export interface Translation {
   };
   Encryption: {
     createEncryptedSession?: string;
+    sessionNotEncrypted?: string;
     sessionEncryptedHaveKeyTooltip?: string;
     sessionEncryptedNoKeyTooltip?: string;
     sessionEncryptedWrongKeyTooltip?: string;
@@ -323,5 +324,8 @@ export interface Translation {
     sessionLockedDescription?: string;
     sessionNonProTitle?: string;
     sessionNonProDescription?: string;
+    sessionIsPublic?: string;
+    sessionIsPrivate?: string;
+    sessionIsPrivateNoAccess?: string;
   };
 }

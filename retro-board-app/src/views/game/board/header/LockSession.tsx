@@ -8,7 +8,7 @@ import {
   DialogTitle,
   useMediaQuery,
 } from '@material-ui/core';
-import { Lock, LockOpen, VerifiedUser } from '@material-ui/icons';
+import { Lock, VerifiedUser } from '@material-ui/icons';
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import CustomAvatar from '../../../../components/Avatar';

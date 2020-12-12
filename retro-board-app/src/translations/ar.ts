@@ -304,6 +304,7 @@ export default {
   },
   Encryption: {
     createEncryptedSession: undefined,
+    sessionNotEncrypted: undefined,
     sessionEncryptedHaveKeyTooltip: undefined,
     sessionEncryptedNoKeyTooltip: undefined,
     sessionEncryptedWrongKeyTooltip: undefined,
@@ -324,5 +325,8 @@ export default {
     sessionLockedDescription: undefined,
     sessionNonProTitle: undefined,
     sessionNonProDescription: undefined,
+    sessionIsPublic: undefined,
+    sessionIsPrivate: undefined,
+    sessionIsPrivateNoAccess: undefined,
   },
 } as Translation;

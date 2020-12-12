@@ -337,6 +337,7 @@ export default {
   },
   Encryption: {
     createEncryptedSession: 'Session cryptée',
+    sessionNotEncrypted: `Cette session n'est pas cryptée`,
     sessionEncryptedHaveKeyTooltip: `Cette session est chiffrée, et la clef est stockée dans votre navigateur. Vous pouvez ouvrir cette session sans avoir à en donner le mot de passe.`,
     sessionEncryptedNoKeyTooltip: `Cette session est chiffrée, et la clef n'a pas été trouvée dans votre navigateur. Il vous sera demandé de donner le mot de passe lors de l'ouverture de cette session.`,
     sessionEncryptedWrongKeyTooltip: `Cette session est chiffrée, et la clef qui est stockée dans votre navigateur n'est pas la bonne.`,
@@ -360,5 +361,9 @@ export default {
       'Demandez à votre modérateur de la rendre publique pour que vous puissiez la rejoindre. Ensuite, rafraichissez la page.',
     sessionNonProTitle: `Cette session n'est accessible qu'aux utilisateurs Pro.`,
     sessionNonProDescription: `Cette session n'est ouverte qu'aux détenteurs d'un compte Retrospected Pro. Vous pouvez demander au modérateur ou au gérant de l'abonnement Pro de vous donner un accès.`,
+    sessionIsPublic:
+      'Cette session est publique, et accessible à tout le monde.',
+    sessionIsPrivate: 'Cette session est privée, et vous y avez accès.',
+    sessionIsPrivateNoAccess: `Cette session est privée, mais vous n'y avez pas accès.`,
   },
 } as Translation;

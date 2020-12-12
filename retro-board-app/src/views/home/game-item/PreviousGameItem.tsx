@@ -24,6 +24,7 @@ import { DeleteForever } from '@material-ui/icons';
 import { useEncryptionKey } from '../../../crypto/useEncryptionKey';
 import { decrypt } from '../../../crypto/crypto';
 import EncryptedLock from './EncryptedLock';
+import PrivateSessionIcon from './PrivateSessionIcon';
 
 interface PreviousGameItemProps {
   session: SessionMetadata;
@@ -89,6 +90,7 @@ const PreviousGameItem = ({
               {decrypt(session.name, encryptionKey) || defaultSessionName}&nbsp;
             </Typography>
             <EncryptedLock session={session} />
+            <PrivateSessionIcon session={session} />
           </NameContainer>
           <Typography color="textSecondary" style={{ marginBottom: 20 }}>
             {translations.createdBy} <em>{session.createdBy.name}</em>

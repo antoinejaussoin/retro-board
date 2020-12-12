@@ -254,6 +254,11 @@ export async function previousSessions(
           numberOfPositiveVotes: numberOfVotes('like', session),
           numberOfPosts: session.posts?.length,
           numberOfActions: numberOfActions(session.posts),
+          locked: session.locked,
+          lockedForUser:
+            session.locked && session.visitors
+              ? !session.visitors.map((v) => v.id).includes(userId)
+              : false,
           participants: getParticipants(session.visitors),
           canBeDeleted:
             userId === session.createdBy.id &&
