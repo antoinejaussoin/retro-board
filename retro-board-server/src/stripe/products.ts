@@ -8,9 +8,9 @@ export const teamPlan: InternalProduct = {
   productId: config.STRIPE_TEAM_PRODUCT,
   priceId: config.STRIPE_TEAM_PRICE,
   seats: 20,
-  eur: 990,
-  gbp: 890,
-  usd: 1190,
+  eur: 995,
+  gbp: 895,
+  usd: 995,
 };
 
 export const companyPlan: InternalProduct = {
@@ -19,9 +19,9 @@ export const companyPlan: InternalProduct = {
   productId: config.STRIPE_UNLIMITED_PRODUCT,
   priceId: config.STRIPE_UNLIMITED_PRICE,
   seats: null,
-  eur: 4990,
-  gbp: 3990,
-  usd: 5990,
+  eur: 4995,
+  gbp: 3995,
+  usd: 4995,
 };
 
 export const plans: InternalProduct[] = [teamPlan, companyPlan];

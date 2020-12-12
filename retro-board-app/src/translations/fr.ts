@@ -312,7 +312,7 @@ export default {
   SubscribeModal: {
     title: 'Abonnement Pro',
     header: 'Retrospected Pro',
-    description: `Protégez les données de votre entreprise en vous abonnant à Retrospected Pro. Pour seulement 9.90 €, bénéficiez des fonctionalités suivantes:`,
+    description: `Protégez les données de votre entreprise en vous abonnant à Retrospected Pro. Avec Retrospected Pro, bénéficiez des fonctionalités suivantes:`,
     features: {
       encryptedSession: {
         title: 'Session Cryptées',

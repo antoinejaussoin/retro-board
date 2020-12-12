@@ -10,3 +10,11 @@ ul.pricing-feature-list em {
 p.lead em {
   font-weight: bold;
 }
+
+.crossed-out {
+  text-decoration: line-through;
+}
+
+.launch-offer {
+  margin-bottom: 15px;
+}

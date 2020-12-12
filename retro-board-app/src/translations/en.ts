@@ -308,8 +308,7 @@ export default {
   SubscribeModal: {
     title: 'Pro Subscription',
     header: 'Retrospected Pro',
-    description: `Protect your company's data by subscribing to Retrospected Pro.
-For as low as $11.90 / £8.90, get the following Pro features and more:`,
+    description: `Protect your company's data by subscribing to Retrospected Pro. With Retrospected Pro, get the following features and more:`,
     features: {
       encryptedSession: {
         title: 'Encrypted Sessions',
