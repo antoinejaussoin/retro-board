@@ -301,7 +301,7 @@ export default {
       title: 'Checkout',
       description: 'You will be redirected to our partner, Stripe, for payment',
       cannotRegisterWithAnon:
-        'You cannot register with an anonymous account. Please register with a Social Media or a Password account before continuing.',
+        'You need to be logged in with an OAuth or Password account to continue.',
       checkout: 'Checkout',
     },
   },
