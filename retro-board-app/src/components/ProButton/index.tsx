@@ -36,23 +36,37 @@ function ProButton({ children }: ProButtonProps) {
   const { SubscribeModal: translations } = useTranslation();
   const fullScreen = useMediaQuery('(max-width:600px)');
 
-  const goToSubscribe = useCallback(() => {
-    history.push('/subscribe');
-  }, [history]);
+  const goToSubscribe = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
+      e.stopPropagation();
+      e.preventDefault();
+      history.push('/subscribe');
+    },
+    [history]
+  );
+
+  const handleClose = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
+      e.stopPropagation();
+      e.preventDefault();
+      close();
+    },
+    [close]
+  );
 
   if (isPro) {
     return <>{clone}</>;
   }
 
   return (
-    <Container>
+    <Container onClick={open}>
       <ProPill onClick={open}>
         <span>Pro feature</span>
         <Arrow />
       </ProPill>
       {clone}
       <Dialog
-        onClose={close}
+        onClose={handleClose}
         maxWidth="sm"
         aria-labelledby="lock-session-dialog"
         fullScreen={fullScreen}
@@ -82,7 +96,7 @@ function ProButton({ children }: ProButtonProps) {
           </Features>
         </DialogContent>
         <DialogActions>
-          <Button onClick={close}>{translations.cancelButton}</Button>
+          <Button onClick={handleClose}>{translations.cancelButton}</Button>
           <Button variant="contained" color="primary" onClick={goToSubscribe}>
             {translations.subscribeButton}
           </Button>
@@ -94,6 +108,7 @@ function ProButton({ children }: ProButtonProps) {
 
 const Container = styled.div`
   position: relative;
+  cursor: pointer;
   display: flex;
   > * {
     flex: 1;
@@ -127,9 +142,6 @@ const ProPill = styled.div`
     position: relative;
     top: 10px;
     left: 10px;
-  }
-
-  span {
   }
 
   cursor: pointer;

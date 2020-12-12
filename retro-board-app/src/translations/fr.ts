@@ -299,8 +299,7 @@ export default {
     },
     domain: {
       title: 'Nom de domaine',
-      description:
-        'Votre abonnement illimité est basé sur le nom de domaine de votre email.',
+      description: `Votre abonnement illimité est basé sur le nom de domaine de votre email. Tout utilisateur dont l'email contient ce nom de domaine sera automatiquement un utilisateur Pro.`,
       invalidDomain: `Merci d'entrer un nom de domaine valide.`,
     },
     subscribe: {
