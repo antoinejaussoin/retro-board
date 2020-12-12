@@ -286,7 +286,7 @@ export interface Translation {
         title?: string;
         description?: string;
       };
-      sessionLocking: {
+      privateSessions: {
         title?: string;
         description?: string;
       };
@@ -312,7 +312,7 @@ export interface Translation {
     passwordModalTitle?: string;
     passwordModelIncorrect?: string;
   };
-  Locking: {
+  Private: {
     lockSuccessNotification?: string;
     unlockSuccessNotification?: string;
     lockButton?: string;

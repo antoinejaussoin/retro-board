@@ -319,8 +319,8 @@ export default {
         description:
           'Vos données sont cryptées localement, sur votre navigateur, les rendant impossible à déchiffrer sur le serveur.',
       },
-      sessionLocking: {
-        title: 'Session restreintes',
+      privateSessions: {
+        title: 'Session privées',
         description:
           'Assurez-vous que seules les personnes choisies puissent accéder à votre session.',
       },
@@ -347,17 +347,17 @@ export default {
     passwordModalTitle: `Session chiffrée - Saisie du mot de passe`,
     passwordModelIncorrect: `Le mot de passe (ou clef de chiffrement) est incorrect.`,
   },
-  Locking: {
+  Private: {
     lockSuccessNotification:
-      'La session a été correctement vérouillée. Aucun nouveau participant ne pourra y accéder.',
-    unlockSuccessNotification: 'La session a été correctement dévérouillée.',
-    lockButton: 'Vérouiller',
-    unlockButton: 'Dévérouiller',
-    lockDescription: `Vous êtes sur le point de vérouiller la session. Seuls les utilisateurs ayant déjà accédé à cette session (dont la liste s'affiche ci-dessous) pourront accéder à cette session une fois vérouillée.`,
+      'La session a été correctement privatisée. Aucun nouveau participant ne pourra y accéder.',
+    unlockSuccessNotification: 'La session a été correctement rendue publique.',
+    lockButton: 'Rendre privée',
+    unlockButton: 'Rendre publique',
+    lockDescription: `Vous êtes sur le point de privatiser la session. Seuls les utilisateurs ayant déjà accédé à cette session (dont la liste s'affiche ci-dessous) pourront accéder à cette session une fois vérouillée.`,
     cancelButton: 'Annuler',
-    sessionLockedTitle: 'Cette session est vérouillée.',
+    sessionLockedTitle: 'Cette session est privée.',
     sessionLockedDescription:
-      'Demandez à votre modérateur de la dévérouiller pour que vous puissiez la rejoindre. Ensuite, rafraichissez la page.',
+      'Demandez à votre modérateur de la rendre publique pour que vous puissiez la rejoindre. Ensuite, rafraichissez la page.',
     sessionNonProTitle: `Cette session n'est accessible qu'aux utilisateurs Pro.`,
     sessionNonProDescription: `Cette session n'est ouverte qu'aux détenteurs d'un compte Retrospected Pro. Vous pouvez demander au modérateur ou au gérant de l'abonnement Pro de vous donner un accès.`,
   },

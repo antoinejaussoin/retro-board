@@ -22,13 +22,13 @@ function useGetErrors(reason?: AccessErrorType): Errors {
   switch (reason) {
     case 'locked':
       return {
-        title: translations.Locking.sessionLockedTitle!,
-        subtitle: translations.Locking.sessionLockedDescription!,
+        title: translations.Private.sessionLockedTitle!,
+        subtitle: translations.Private.sessionLockedDescription!,
       };
     case 'non_pro':
       return {
-        title: translations.Locking.sessionNonProTitle!,
-        subtitle: translations.Locking.sessionNonProDescription!,
+        title: translations.Private.sessionNonProTitle!,
+        subtitle: translations.Private.sessionNonProDescription!,
       };
   }
 

@@ -302,7 +302,7 @@ export default {
         title: undefined,
         description: undefined,
       },
-      sessionLocking: {
+      privateSessions: {
         title: undefined,
         description: undefined,
       },
@@ -328,7 +328,7 @@ export default {
     passwordModalTitle: undefined,
     passwordModelIncorrect: undefined,
   },
-  Locking: {
+  Private: {
     lockSuccessNotification: undefined,
     unlockSuccessNotification: undefined,
     lockButton: undefined,

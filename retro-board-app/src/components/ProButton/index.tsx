@@ -8,7 +8,7 @@ import {
   DialogTitle,
   useMediaQuery,
 } from '@material-ui/core';
-import { Lock } from '@material-ui/icons';
+import { VerifiedUser } from '@material-ui/icons';
 import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -86,10 +86,10 @@ function ProButton({ children }: ProButtonProps) {
               description={translations.features.encryptedSession.description!}
             />
             <Feature
-              icon={<Lock />}
+              icon={<VerifiedUser />}
               color={colors.green[700]}
-              title={translations.features.sessionLocking.title!}
-              description={translations.features.sessionLocking.description!}
+              title={translations.features.privateSessions.title!}
+              description={translations.features.privateSessions.description!}
             />
           </Features>
         </DialogContent>

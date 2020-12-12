@@ -8,7 +8,7 @@ import {
   DialogTitle,
   useMediaQuery,
 } from '@material-ui/core';
-import { Lock, LockOpen } from '@material-ui/icons';
+import { Lock, LockOpen, VerifiedUser } from '@material-ui/icons';
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import CustomAvatar from '../../../../components/Avatar';
@@ -25,7 +25,7 @@ function LockSession({ onLock }: LockSessionProps) {
   const { state } = useGlobalState();
   const [open, setOpen] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
-  const { Locking: translations } = useTranslations();
+  const { Private: translations } = useTranslations();
   const fullScreen = useMediaQuery('(max-width:600px)');
 
   const session = state.session;
@@ -66,7 +66,13 @@ function LockSession({ onLock }: LockSessionProps) {
         <Button
           variant="outlined"
           color="primary"
-          startIcon={session.locked ? <LockOpen /> : <Lock />}
+          startIcon={
+            session.locked ? (
+              <VerifiedUser style={{ color: colors.red[800] }} />
+            ) : (
+              <VerifiedUser style={{ color: colors.green[800] }} />
+            )
+          }
           onClick={handleOpenDialog}
         >
           {session.locked ? translations.unlockButton : translations.lockButton}

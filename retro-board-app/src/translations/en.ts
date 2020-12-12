@@ -316,8 +316,8 @@ For as low as $11.90 / £8.90, get the following Pro features and more:`,
         description:
           'Your data is encrypted in your browser, making any decryption impossible on the Retrospected server.',
       },
-      sessionLocking: {
-        title: 'Session Locking',
+      privateSessions: {
+        title: 'Private Sessions',
         description:
           'Make sure only authorised people can access your session.',
       },
@@ -347,17 +347,17 @@ For as low as $11.90 / £8.90, get the following Pro features and more:`,
     passwordModalTitle: `Encrypted Session - Enter Password`,
     passwordModelIncorrect: `The encryption key is incorrect.`,
   },
-  Locking: {
+  Private: {
     lockSuccessNotification:
-      'Your session has been successfuly locked. No new participants can join.',
+      'Your session has been successfuly made private. No new participants can join.',
     unlockSuccessNotification:
-      'Your session has been successfuly unlocked. Anyone can join.',
-    lockButton: 'Lock Session',
-    unlockButton: 'Unlock Session',
+      'Your session has been successfuly made public. Anyone can join.',
+    lockButton: 'Make Private',
+    unlockButton: 'Make Public',
     lockDescription:
-      'You are about to lock the session. Only the current participants (listed below) will be allowed access to this session once locked.',
+      'You are about to make the session private. Only the current participants (listed below) will be allowed access to this session once locked.',
     cancelButton: 'Cancel',
-    sessionLockedTitle: 'This session is locked.',
+    sessionLockedTitle: 'This session is private.',
     sessionLockedDescription:
       'Please ask its moderator to unlock it so you can join. Then, refresh this page.',
     sessionNonProTitle: 'This session is only accessible to Pro users',
