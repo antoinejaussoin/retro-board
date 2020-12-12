@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { Fab, makeStyles, colors } from '@material-ui/core';
-import { ThumbUpAlt } from '@material-ui/icons';
+import { Lock, ThumbUpAlt } from '@material-ui/icons';
 import useTranslations from '../translations';
 import PreviousGames from './home/PreviousGames';
 import { SessionMetadata } from '@retrospected/common';
@@ -14,7 +14,6 @@ import useUser from '../auth/useUser';
 import shortid from 'shortid';
 import { storeEncryptionKeyLocally } from '../crypto/crypto';
 import ProButton from '../components/ProButton';
-import EncryptionIcon from '../icons/EncryptionIcon';
 
 const useStyles = makeStyles({
   media: {
@@ -84,7 +83,7 @@ function Home() {
             color="secondary"
             disabled={!isLoggedIn}
           >
-            <EncryptionIcon className={classes.buttonIcon} />
+            <Lock className={classes.buttonIcon} />
             {translations.Encryption.createEncryptedSession}
           </Fab>
         </ProButton>

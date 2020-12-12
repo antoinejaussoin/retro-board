@@ -320,7 +320,7 @@ export default {
           'Vos données sont cryptées localement, sur votre navigateur, les rendant impossible à déchiffrer sur le serveur.',
       },
       privateSessions: {
-        title: 'Session privées',
+        title: 'Session Privées',
         description:
           'Assurez-vous que seules les personnes choisies puissent accéder à votre session.',
       },
