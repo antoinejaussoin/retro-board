@@ -16,11 +16,11 @@ import useUser from '../../auth/useUser';
 import useModal from '../../hooks/useModal';
 import EncryptionIcon from '../../icons/EncryptionIcon';
 import useTranslation from '../../translations/useTranslations';
-import Arrow from './Arrow';
 import Feature from './Feature';
 
 interface ComponentProp {
   disabled?: boolean;
+  onClick?: () => void;
 }
 
 interface ProButtonProps {
@@ -31,7 +31,9 @@ function ProButton({ children }: ProButtonProps) {
   const user = useUser();
   const isPro = user && user.pro;
   const [opened, open, close] = useModal();
-  const clone = React.cloneElement(children, { disabled: !isPro });
+  const clone = isPro
+    ? children
+    : React.cloneElement(children, { onClick: open });
   const history = useHistory();
   const { SubscribeModal: translations } = useTranslation();
   const fullScreen = useMediaQuery('(max-width:600px)');
@@ -60,10 +62,6 @@ function ProButton({ children }: ProButtonProps) {
 
   return (
     <Container onClick={open}>
-      <ProPill onClick={open}>
-        <span>Pro feature</span>
-        <Arrow />
-      </ProPill>
       {clone}
       <Dialog
         onClose={handleClose}
@@ -113,38 +111,6 @@ const Container = styled.div`
   > * {
     flex: 1;
   }
-`;
-
-const ProPill = styled.div`
-  font-family: 'Reenie Beanie', cursive;
-
-  display: flex;
-  align-items: center;
-  position: absolute;
-  top: -27px;
-  right: 20px;
-  padding: 2px 10px;
-  border-radius: 3px;
-  color: ${colors.pink[300]};
-  z-index: 1;
-  font-size: 25px;
-  white-space: nowrap;
-
-  :hover {
-    color: ${colors.pink[700]};
-    svg {
-      color: ${colors.pink[700]};
-    }
-  }
-
-  svg {
-    fill: ${colors.pink[300]};
-    position: relative;
-    top: 10px;
-    left: 10px;
-  }
-
-  cursor: pointer;
 `;
 
 const Header = styled.div`
