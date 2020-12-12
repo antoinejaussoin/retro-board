@@ -113,8 +113,8 @@ function SubscriberPage() {
         description={translations.plan.description}
       >
         <Alert>
-          <AlertTitle>Product Launch Promotion</AlertTitle>Retrospected Pro is
-          50% off for a limited time, to celebrate our new Pro features launch.
+          <AlertTitle>Limited Offer</AlertTitle>Retrospected Pro is 50% off for
+          a limited time, to celebrate our new Pro features launch.
         </Alert>
         <ProductPicker
           value={product}

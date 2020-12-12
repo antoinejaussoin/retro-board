@@ -18,7 +18,10 @@ function ProductDisplay({
   currency,
   onSelect,
 }: ProductDisplayProps) {
-  const { Products: translations } = useTranslations();
+  const {
+    Products: translations,
+    SubscribeModal: subscribeTranslations,
+  } = useTranslations();
   const handleOrder = useCallback(() => {
     onSelect(product);
   }, [onSelect, product]);
@@ -40,6 +43,9 @@ function ProductDisplay({
           {(product[currency] / 100).toFixed(2)} {currency.toUpperCase()}
           <PerMonth>/ {translations.month}</PerMonth>
         </Total>
+        <PickMe>
+          <PickMeButton>{subscribeTranslations.subscribeButton}</PickMeButton>
+        </PickMe>
       </Paper>
     </Container>
   );
@@ -48,20 +54,24 @@ function ProductDisplay({
 const Container = styled.div<{ selected: boolean }>`
   display: flex;
   flex-direction: column;
+  cursor: pointer;
   width: 300px;
-  outline: ${(props) => (props.selected ? '3' : '0')}px solid
-    ${colors.deepPurple[500]};
+  border-radius: 5px;
+  border: 3px solid
+    ${(props) => (props.selected ? colors.deepPurple[500] : colors.grey[50])};
 `;
 
 const Header = styled.div`
   padding: 20px;
-  border-bottom: 1px solid ${colors.deepPurple[500]};
+  text-align: center;
+  font-size: 2em;
+  font-weight: 100;
 `;
 
 const Description = styled.div`
   padding: 20px;
-  border-bottom: 1px solid ${colors.deepPurple[500]};
-  background-color: ${colors.deepPurple[100]};
+  background-color: ${colors.grey[100]};
+  color: ${colors.grey[700]};
   flex: 1;
 `;
 
@@ -71,7 +81,8 @@ const Seats = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 1.5em;
-  font-weight: 100;
+  font-weight: 300;
+  color: ${colors.deepPurple[500]};
 `;
 
 const Total = styled.div`
@@ -79,7 +90,7 @@ const Total = styled.div`
   color: white;
   text-align: center;
   font-size: 2em;
-  font-weight: 100;
+  font-weight: 300;
 `;
 
 const PerMonth = styled.span`
@@ -93,6 +104,25 @@ const RegularPrice = styled.div`
   font-size: 1em;
   font-weight: 100;
   text-decoration: line-through;
+`;
+
+const PickMe = styled.div`
+  padding: 20px;
+`;
+
+const PickMeButton = styled.div`
+  border: 1px solid ${colors.deepPurple[500]};
+  color: ${colors.deepPurple[500]};
+  border-radius: 10px;
+  font-size: 1.5em;
+  font-weight: 100;
+  text-align: center;
+  padding: 5px;
+
+  :hover {
+    background-color: ${colors.deepPurple[500]};
+    color: white;
+  }
 `;
 
 export default ProductDisplay;
