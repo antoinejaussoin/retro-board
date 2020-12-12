@@ -1,10 +1,5 @@
 import { colors, Tooltip } from '@material-ui/core';
-import {
-  Lock,
-  LockOpen,
-  LockOpenOutlined,
-  LockOutlined,
-} from '@material-ui/icons';
+import { Lock, LockOpenOutlined, LockOutlined } from '@material-ui/icons';
 import React from 'react';
 import { SessionMetadata } from '@retrospected/common';
 import { CHECK_PREFIX, decrypt } from '../../../crypto/crypto';
