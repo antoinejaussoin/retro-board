@@ -56,12 +56,22 @@ function ProButton({ children }: ProButtonProps) {
     [close]
   );
 
+  const handleOpen = useCallback(
+    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      e.stopPropagation();
+      e.preventDefault();
+
+      open();
+    },
+    [open]
+  );
+
   if (isPro) {
     return <>{clone}</>;
   }
 
   return (
-    <Container onClick={open}>
+    <Container onClick={handleOpen}>
       {clone}
       <Dialog
         onClose={handleClose}
@@ -104,8 +114,7 @@ function ProButton({ children }: ProButtonProps) {
   );
 }
 
-const Container = styled.div`
-  position: relative;
+const Container = styled.span`
   cursor: pointer;
   display: flex;
   > * {

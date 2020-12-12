@@ -3,6 +3,7 @@ import { VerifiedUser, VerifiedUserOutlined } from '@material-ui/icons';
 import React from 'react';
 import { SessionMetadata } from '@retrospected/common';
 import useTranslation from '../../../translations/useTranslations';
+import ProButton from '../../../components/ProButton';
 
 interface PrivateSessionIconProps {
   session: SessionMetadata;
@@ -13,9 +14,13 @@ function PrivateSessionIcon({ session }: PrivateSessionIconProps) {
 
   if (!session.locked) {
     return (
-      <Tooltip title={translations.sessionIsPublic!}>
-        <VerifiedUserOutlined htmlColor={colors.grey[400]} />
-      </Tooltip>
+      <ProButton>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Tooltip title={translations.sessionIsPublic!}>
+            <VerifiedUserOutlined htmlColor={colors.grey[400]} />
+          </Tooltip>
+        </div>
+      </ProButton>
     );
   }
 
