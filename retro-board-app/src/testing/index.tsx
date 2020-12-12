@@ -55,6 +55,7 @@ const AllTheProviders: React.FC = ({ children }) => {
     subscriptionsId: null,
     currency: null,
     plan: null,
+    domain: null,
     ownPlan: null,
     ownSubscriptionsId: null,
   });
@@ -72,6 +73,7 @@ const AllTheProviders: React.FC = ({ children }) => {
       subscriptionsId: null,
       currency: null,
       plan: null,
+      domain: null,
       ownPlan: null,
       ownSubscriptionsId: null,
     });

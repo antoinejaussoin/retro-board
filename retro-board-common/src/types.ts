@@ -114,6 +114,7 @@ export interface FullUser extends User {
   subscriptionsId: string | null;
   currency: Currency | null;
   plan: Plan | null;
+  domain: string | null;
   ownPlan: Plan | null;
   ownSubscriptionsId: string | null;
 }

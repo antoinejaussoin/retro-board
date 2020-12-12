@@ -17,7 +17,8 @@ select
   s.plan as "ownPlan",
   coalesce(s.id, s2.id, s3.id) as "subscriptionsId",
   coalesce(s.active, s2.active, s3.active, false) as "pro",
-  coalesce(s.plan, s2.plan, s3.plan) as "plan"
+  coalesce(s.plan, s2.plan, s3.plan) as "plan",
+  coalesce(s.domain, s2.domain, s3.domain) as "domain"
 from users u 
 left join subscriptions s on s."ownerId" = u.id and s.active is true
 left join subscriptions s2 on u.email = ANY(s2.members) and s2.active is true
@@ -50,6 +51,8 @@ export default class UserView {
   @ViewColumn()
   public plan: Plan | null;
   @ViewColumn()
+  public domain: string | null;
+  @ViewColumn()
   public currency: Currency | null;
   @ViewColumn()
   public pro: boolean;
@@ -69,6 +72,7 @@ export default class UserView {
     this.ownPlan = null;
     this.ownSubscriptionsId = null;
     this.plan = null;
+    this.domain = null;
   }
 
   toJson(): FullUser {
@@ -85,6 +89,7 @@ export default class UserView {
       stripeId: this.stripeId,
       currency: this.currency,
       plan: this.plan,
+      domain: this.domain,
       ownPlan: this.ownPlan,
       ownSubscriptionsId: this.ownSubscriptionsId,
     };

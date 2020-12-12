@@ -13,7 +13,10 @@ import useTranslations from '../../translations';
 function AccountPage() {
   const url = usePortalUrl();
   const user = useUser();
-  const { AccountPage: translations } = useTranslations();
+  const {
+    AccountPage: translations,
+    SubscribePage: subscribeTranslations,
+  } = useTranslations();
 
   const ownsThePlan =
     user &&
@@ -61,6 +64,13 @@ function AccountPage() {
             <Title>{translations.plan?.plan}</Title>
             <Value>{user.plan}</Value>
           </Data>
+
+          {user.domain ? (
+            <Data>
+              <Title>{subscribeTranslations.domain.title}</Title>
+              <Value>{user.domain}</Value>
+            </Data>
+          ) : null}
           {onSomebodysPlan && (
             <Alert severity="info">{translations.plan?.youAreMember}</Alert>
           )}
