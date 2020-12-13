@@ -292,7 +292,7 @@ const useGame = (sessionId: string) => {
         state.players
       );
       if (removed.length) {
-        enqueueSnackbar(`${joinNames(removed)} left.`, { variant: 'error' });
+        enqueueSnackbar(`${joinNames(removed)} left.`, { variant: 'info' });
       }
       setPreviousParticipants(state.players);
     }
