@@ -60,8 +60,6 @@ export default (connection: Connection) => {
           throw new Error('Unknown provider: ' + type);
       }
 
-      console.log('User: ', user);
-
       const dbUser = await getOrSaveUser(connection, user);
       const callback = (cb as unknown) as (
         error: string | null,
