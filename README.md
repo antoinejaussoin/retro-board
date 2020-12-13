@@ -151,6 +151,10 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
+### Version 4.0.1
+
+- Fixed a bug where the author of a new session wasn't registered as a participant
+
 ### Version 4.0.0
 
 - [⭐️ Pro Feature] Encrypted Sessions: full client-side encryption of your data

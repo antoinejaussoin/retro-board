@@ -37,7 +37,6 @@ import { sendVerificationEmail, sendResetPassword } from './email/emailSender';
 import { v4 } from 'uuid';
 import {
   createSession,
-  createCustom,
   previousSessions,
   deleteSessions,
   getDefaultTemplate,
@@ -157,32 +156,6 @@ db().then((connection) => {
             connection,
             user,
             payload.encryptedCheck
-          );
-          res.status(200).send(session);
-        } catch (err) {
-          reportQueryError(scope, err);
-          res.status(500).send();
-          throw err;
-        }
-      } else {
-        res
-          .status(401)
-          .send('You must be logged in in order to create a session');
-      }
-    });
-  });
-
-  app.post('/api/create-custom', async (req, res) => {
-    const user = await getUserFromRequest(connection, req);
-    setScope(async (scope) => {
-      if (user) {
-        try {
-          const session = await createCustom(
-            connection,
-            req.body.options,
-            req.body.columns,
-            req.body.setDefault,
-            user
           );
           res.status(200).send(session);
         } catch (err) {

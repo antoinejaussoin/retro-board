@@ -64,6 +64,7 @@ export async function createSession(
       },
       author.id
     );
+    await storeVisitor(connection, newSession.id, author);
     return newSession;
   } else {
     const newSession = await sessionRepository.saveFromJson(
@@ -78,6 +79,7 @@ export async function createSession(
       },
       author.id
     );
+    await storeVisitor(connection, newSession.id, author);
     return newSession;
   }
 }
@@ -303,7 +305,7 @@ export async function updateColumns(
 export async function saveTemplate(
   connection: Connection,
   userId: string,
-  session: Session,
+  _: Session,
   columns: ColumnDefinition[],
   options: SessionOptions
 ) {

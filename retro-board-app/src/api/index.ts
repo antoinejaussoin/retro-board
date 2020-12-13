@@ -1,6 +1,4 @@
 import {
-  SessionOptions,
-  ColumnDefinition,
   Session,
   SessionTemplate,
   SessionMetadata,
@@ -49,26 +47,6 @@ export async function createEncryptedGame(
     ...requestConfig,
     body: JSON.stringify({
       encryptedCheck,
-    }),
-  });
-  if (response.ok) {
-    return await response.json();
-  }
-  throw new Error('Could not create a session');
-}
-
-export async function createCustomGame(
-  setDefault: boolean,
-  options: SessionOptions,
-  columns: ColumnDefinition[]
-): Promise<Session> {
-  const response = await fetch(`/api/create-custom`, {
-    method: 'POST',
-    ...requestConfig,
-    body: JSON.stringify({
-      options,
-      columns,
-      setDefault,
     }),
   });
   if (response.ok) {
