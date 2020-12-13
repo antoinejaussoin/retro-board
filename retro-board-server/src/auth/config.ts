@@ -1,6 +1,6 @@
 import { IStrategyOption } from 'passport-twitter';
 import { IOAuth2StrategyOption } from 'passport-google-oauth';
-import { StrategyOptions } from 'passport-github';
+import { StrategyOptions as GitHubStrategy } from 'passport-github2';
 import config from '../db/config';
 
 const providers = ['twitter', 'google', 'github', 'slack'];
@@ -32,7 +32,7 @@ export const GOOGLE_CONFIG: IOAuth2StrategyOption | null =
       }
     : null;
 
-export const GITHUB_CONFIG: StrategyOptions | null =
+export const GITHUB_CONFIG: GitHubStrategy | null =
   config.GITHUB_KEY && config.GITHUB_SECRET
     ? {
         clientID: config.GITHUB_KEY || '',

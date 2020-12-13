@@ -33,8 +33,6 @@ export interface GoogleProfile extends BaseProfile {
 
 interface GitHubProfileEmail {
   value: string;
-  primary: boolean;
-  verified: boolean;
 }
 
 export interface GitHubProfile extends BaseProfile {

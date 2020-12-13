@@ -10,7 +10,7 @@ const googleAuth = passport.authenticate('google', {
   scope: ['profile', 'email'],
 });
 const facebookAuth = passport.authenticate('facebook');
-const githubAuth = passport.authenticate('github');
+const githubAuth = passport.authenticate('github', { scope: ['user:email'] });
 const slackAuth = passport.authenticate('slack');
 const anonAuth = passport.authenticate('local');
 
