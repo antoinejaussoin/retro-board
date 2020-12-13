@@ -136,15 +136,6 @@ When using the Docker deployment, your database runs from a container. But if yo
 - `yarn test` to run the tests in watch mode
 - **or** `yarn ci-test` to run the tests once
 
-## How to debug
-
-### Debugging the client
-
-- Run both client and server normally (`yarn start-server` and `yarn start-ui`)
-- From the browser window where the website is open, open the Chrome Dev tools
-- Go on the **Sources** tab, and on the left, find your sources under `webpack://` and then `.`.
-- You can then put breakpoints in there and debugging
-
 ## Roadmap and ideas 🚗 💡
 
 - Highlight posts where the user voted
@@ -153,7 +144,10 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ### Version 4.0.1
 
-- Fixed a bug where the author of a new session wasn't registered as a participant
+- Added the list of participants to the bottom of the screen 🧑‍💻
+- Added a notification on connection or disconnection of participants 🟢 🔴
+- 🐛 Fixed a bug where the author of a new session wasn't registered as a participant
+- 🐛 Fixed a bug where online participants were not showing
 
 ### Version 4.0.0
 
@@ -180,11 +174,11 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ### Version 3.2.2
 
-- Fixed a bug where any user editing the name of the session would become owner of the session.
+- 🐛 Fixed a bug where any user editing the name of the session would become owner of the session.
 
 ### Version 3.2.1
 
-- Fixed a serious bug under Firefox, where users could not see the content of the post ([#154](https://github.com/antoinejaussoin/retro-board/issues/154), [#148](https://github.com/antoinejaussoin/retro-board/issues/148)). 👏 Thanks to all people who reported this ([@Xyaren](https://github.com/Xyaren), [@dallasgutauckis](https://github.com/dallasgutauckis), [@courtney-thwaites](https://github.com/courtney-thwaites)).
+- 🐛 Fixed a serious bug under Firefox, where users could not see the content of the post ([#154](https://github.com/antoinejaussoin/retro-board/issues/154), [#148](https://github.com/antoinejaussoin/retro-board/issues/148)). 👏 Thanks to all people who reported this ([@Xyaren](https://github.com/Xyaren), [@dallasgutauckis](https://github.com/dallasgutauckis), [@courtney-thwaites](https://github.com/courtney-thwaites)).
 
 ### Version 3.2.0
 
@@ -209,13 +203,13 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ### Version 3.0.3
 
-- Bug fix: [Issue 121](https://github.com/antoinejaussoin/retro-board/issues/121), [Issue 123](https://github.com/antoinejaussoin/retro-board/issues/123)
+- 🐛 Bug fix: [Issue 121](https://github.com/antoinejaussoin/retro-board/issues/121), [Issue 123](https://github.com/antoinejaussoin/retro-board/issues/123)
 - Dependencies update
 
 ### Version 3.0.2
 
 - Adding privacy policy, terms and conditions, GDPR support
-- Fix various bugs reported by Sentry
+- 🐛 Fix various bugs reported by Sentry
 
 ### Version 3.0.1
 
@@ -283,7 +277,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 ### Version 2.1.4
 
 - 🇩🇪 German Translation (👏 Thanks [@PaulBrandt](https://github.com/PaulBrandt))
-- Bugfix: First post was sometimes not saved on regular sessions
+- 🐛 Bugfix: First post was sometimes not saved on regular sessions
 
 ### Version 2.1.3
 
@@ -336,14 +330,14 @@ When using the Docker deployment, your database runs from a container. But if yo
 ### Version 2.0.2
 
 - Added an "Action" field on each Post: this allows the user to define a list of actions that need doing in the next sprint, and allows displaying this list in the Summary Mode.
-- Bugfix: In certain conditions, some race-condition would store a post with a null session ID (so the post was lost forever).
-- Bugfix: Disabled the Web Worker, as it's not working properly when loading a game directly (and not loading the homepage).
+- 🐛 Bugfix: In certain conditions, some race-condition would store a post with a null session ID (so the post was lost forever).
+- 🐛 Bugfix: Disabled the Web Worker, as it's not working properly when loading a game directly (and not loading the homepage).
 
 ### Version 2.0.1
 
 - Adding support for Postgres migrations
 - Adding created/updated fields on Post and Session
-- Bugfix: Summary mode wasn't ordered by votes anymore. (👏 Thanks [@cindyccook](https://github.com/cindyccook))
+- 🐛 Bugfix: Summary mode wasn't ordered by votes anymore. (👏 Thanks [@cindyccook](https://github.com/cindyccook))
 
 ### Version 2.0.0
 
@@ -397,7 +391,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 - Using [Yarn](https://yarnpkg.com/en/)
 - Updating dependencies
 - Fixing some Spanish translation mistakes (👏 Thanks @MrPolymath)
-- Fixed a bug where the Vote buttons would allow a user to vote multiple times (on the UI only)
+- 🐛 Fixed a bug where the Vote buttons would allow a user to vote multiple times (on the UI only)
 
 ### Version 0.7.0
 
@@ -423,8 +417,8 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ### Version 0.5.2
 
-- Fixed a bug on the anti-spam when if using a proxy (nginx for instance), the wrong ip was used
-- Fixed a bug where the linting would fail if the default configuration was used (👏 Thanks @veselignome)
+- 🐛 Fixed a bug on the anti-spam when if using a proxy (nginx for instance), the wrong ip was used
+- 🐛 Fixed a bug where the linting would fail if the default configuration was used (👏 Thanks @veselignome)
 
 ### Version 0.5.1
 
