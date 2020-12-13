@@ -185,15 +185,10 @@ export default (connection: Connection, io: Server) => {
     await deletePostGroup(connection, userId, sessionId, groupId);
   };
 
-  const sendClientList = async (
-    session: SessionEntity,
-    socket: ExtendedSocket
-  ): Promise<void> => {
-    const sockets = await io
-      .of('/')
-      .adapter.sockets(new Set(getRoom(session.id)));
+  const sendClientList = (session: SessionEntity, socket: ExtendedSocket) => {
+    const sockets = io.of('/').in(getRoom(session.id)).sockets;
     if (sockets) {
-      const clients = Array.from(sockets.values());
+      const clients = Array.from(sockets.keys());
       const onlineParticipants: Participant[] = clients
         .map((id, i) =>
           users[id]
@@ -232,6 +227,12 @@ export default (connection: Connection, io: Server) => {
     if (!users[socketId] || users[socketId]!.id !== user.id) {
       users[socketId] = user || null;
     }
+
+    console.log(
+      'Record user against socket id',
+      socket.id,
+      Object.getOwnPropertyNames(users).length
+    );
 
     sendClientList(session, socket);
   };
@@ -281,10 +282,17 @@ export default (connection: Connection, io: Server) => {
       const userAllowed = isAllowed(sessionEntity, user);
       if (userAllowed.allowed) {
         if (user) {
-          recordUser(sessionEntity, user, socket);
           const userEntity = await getUser(connection, user.id);
           if (userEntity) {
+            // TODO : inneficient, rework all this
             await storeVisitor(connection, session.id, userEntity);
+            const sessionEntity2 = await getSessionWithVisitors(
+              connection,
+              session.id
+            );
+            if (sessionEntity2) {
+              recordUser(sessionEntity2, user, socket);
+            }
           }
         }
         sendToSelf(socket, RECEIVE_BOARD, session);
