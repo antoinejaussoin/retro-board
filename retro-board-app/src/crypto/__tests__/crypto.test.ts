@@ -39,4 +39,12 @@ describe('Cryptography', () => {
     const source = '<<ENCRYPTED>>hello world';
     expect(decrypt(encrypt(source, key), key)).toEqual('hello world');
   });
+
+  it('Sanity check to ensure the crypto algo doesnt change and always produce the same result', () => {
+    const key = 'foobar';
+    const encrypted =
+      '<<ENCRYPTED>>U2FsdGVkX19vBaSLDa0pMKwIum97gdBaKYRFV48N5caP2aba4l1zCWsLF0yu/dQe';
+    const source = 'hello world';
+    expect(decrypt(encrypted, key)).toEqual(source);
+  });
 });
