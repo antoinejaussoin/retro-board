@@ -228,12 +228,11 @@ const SearchContent = styled.div`
 
 const ParticipantContainer = styled.div`
   position: fixed;
-  bottom: -10px;
-  right: -10px;
-  padding: 10px 20px 20px 10px;
-  border-radius: 10px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  padding: 10px;
   border-top: 1px solid ${colors.grey[300]};
-  border-left: 1px solid ${colors.grey[300]};
   background-color: white;
 `;
 

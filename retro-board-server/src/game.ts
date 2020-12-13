@@ -228,12 +228,6 @@ export default (connection: Connection, io: Server) => {
       users[socketId] = user || null;
     }
 
-    console.log(
-      'Record user against socket id',
-      socket.id,
-      Object.getOwnPropertyNames(users).length
-    );
-
     sendClientList(session, socket);
   };
 
