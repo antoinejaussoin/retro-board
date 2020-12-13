@@ -118,6 +118,8 @@ export default {
   },
   Clients: {
     header: 'Są dziś z nami:',
+    joined: undefined,
+    left: undefined,
   },
   Join: {
     welcome: 'Witaj w Retrospected',

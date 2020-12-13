@@ -126,6 +126,8 @@ export default {
   },
   Clients: {
     header: 'Participants:',
+    joined: (users: string) => `${users} joined.`,
+    left: (users: string) => `${users} left.`,
   },
   Join: {
     welcome: 'Welcome to Retrospected',

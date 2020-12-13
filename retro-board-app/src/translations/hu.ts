@@ -118,6 +118,8 @@ export default {
   },
   Clients: {
     header: 'Jelenleg itt van:',
+    joined: undefined,
+    left: undefined,
   },
   Join: {
     welcome: 'Üdv, ez itt a Retrospected',

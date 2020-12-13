@@ -118,6 +118,8 @@ export default {
   },
   Clients: {
     header: '現在の参加者',
+    joined: undefined,
+    left: undefined,
   },
   Join: {
     welcome: 'Retrospectedへようこそ',

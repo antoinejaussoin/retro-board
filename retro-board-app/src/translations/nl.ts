@@ -127,6 +127,8 @@ export default {
   },
   Clients: {
     header: 'Deelnemers:',
+    joined: undefined,
+    left: undefined,
   },
   Join: {
     welcome: 'Welkom bij Retrospected',

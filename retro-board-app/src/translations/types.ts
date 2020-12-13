@@ -116,6 +116,8 @@ export interface Translation {
   };
   Clients: {
     header?: string;
+    joined?: (users: string) => string;
+    left?: (users: string) => string;
   };
   Join: {
     welcome?: string;

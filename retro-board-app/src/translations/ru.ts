@@ -118,6 +118,8 @@ export default {
   },
   Clients: {
     header: 'Участники:',
+    joined: undefined,
+    left: undefined,
   },
   Join: {
     welcome: 'Добро пожаловать в Retrospected',

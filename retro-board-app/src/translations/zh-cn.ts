@@ -118,6 +118,8 @@ export default {
   },
   Clients: {
     header: '已加入我们的:',
+    joined: undefined,
+    left: undefined,
   },
   Join: {
     welcome: '欢迎 Retrospected',

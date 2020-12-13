@@ -118,6 +118,8 @@ export default {
   },
   Clients: {
     header: 'Acompañenos amablemente en este momento:',
+    joined: undefined,
+    left: undefined,
   },
   Join: {
     welcome: 'Bienvenido a la retrospectiva',

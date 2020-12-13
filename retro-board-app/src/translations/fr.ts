@@ -128,6 +128,8 @@ export default {
   },
   Clients: {
     header: 'Participants:',
+    joined: (users: string) => `${users} connecté.`,
+    left: (users: string) => `${users} déconnecté.`,
   },
   Join: {
     welcome: 'Bienvenue',

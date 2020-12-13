@@ -117,6 +117,8 @@ export default {
   },
   Clients: {
     header: 'الضيوف الحاضرين معنا الآن:',
+    joined: undefined,
+    left: undefined,
   },
   Join: {
     welcome: ' ! مرحبا',

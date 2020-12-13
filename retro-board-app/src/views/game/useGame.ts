@@ -23,6 +23,7 @@ import {
   getRemovedParticipants,
   joinNames,
 } from './participants-notifiers';
+import useTranslation from '../../translations/useTranslations';
 
 const debug = process.env.NODE_ENV === 'development';
 
@@ -43,6 +44,7 @@ function sendFactory(socket: SocketIOClient.Socket, sessionId: string) {
 
 const useGame = (sessionId: string) => {
   const { enqueueSnackbar } = useSnackbar();
+  const translations = useTranslation();
   const [initialised, setInitialised] = useState(false);
   const [disconnected, setDisconnected] = useState(false);
   const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null);
@@ -281,7 +283,7 @@ const useGame = (sessionId: string) => {
         state.players
       );
       if (added.length) {
-        enqueueSnackbar(`${joinNames(added)} joined.`, {
+        enqueueSnackbar(translations.Clients.joined!(joinNames(added)), {
           variant: 'success',
         });
       }
@@ -291,11 +293,19 @@ const useGame = (sessionId: string) => {
         state.players
       );
       if (removed.length) {
-        enqueueSnackbar(`${joinNames(removed)} left.`, { variant: 'info' });
+        enqueueSnackbar(translations.Clients.left!(joinNames(removed)), {
+          variant: 'info',
+        });
       }
       setPreviousParticipants(state.players);
     }
-  }, [state.players, previousParticipans, enqueueSnackbar, userId]);
+  }, [
+    state.players,
+    previousParticipans,
+    enqueueSnackbar,
+    userId,
+    translations,
+  ]);
 
   // Callbacks
   const onAddPost = useCallback(

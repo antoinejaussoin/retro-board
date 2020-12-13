@@ -119,6 +119,8 @@ export default {
   },
   Clients: {
     header: 'Participando conosco agora:',
+    joined: undefined,
+    left: undefined,
   },
   Join: {
     welcome: 'Bem-vindo ao Retrospected',
