@@ -147,6 +147,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 - Added the list of participants to the bottom of the screen 🧑‍💻
 - Added a notification on connection or disconnection of participants 🟢 🔴
 - Update OAuth photo on every login
+- Replaced GitHub OAuth library by a more recent version, to avoid deprecated GitHub API.
 - 🐛 Fixed a bug where the author of a new session wasn't registered as a participant
 - 🐛 Fixed a bug where online participants were not showing
 
