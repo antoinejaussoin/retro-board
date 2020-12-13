@@ -268,7 +268,6 @@ const useGame = (sessionId: string) => {
     lockSession,
     unauthorized,
     disconnected,
-    enqueueSnackbar,
   ]);
 
   const [previousParticipans, setPreviousParticipants] = useState(
