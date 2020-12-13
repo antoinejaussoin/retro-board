@@ -8,8 +8,9 @@ import Avatar from '../../components/Avatar';
 
 import useTranslations from '../../translations';
 import useGlobalState from '../../state';
+import { colors } from '@material-ui/core';
 
-function PlayerList() {
+function ParticipantsList() {
   const translations = useTranslations();
   const { state } = useGlobalState();
 
@@ -24,7 +25,12 @@ function PlayerList() {
             <ListItemAvatar>
               <Avatar user={player} online={player.online} />
             </ListItemAvatar>
-            <ListItemText primary={player.name} />
+            <ListItemText
+              primary={player.name}
+              style={{
+                color: player.online ? colors.grey[900] : colors.grey[500],
+              }}
+            />
           </ListItem>
         ))}
       </List>
@@ -32,4 +38,4 @@ function PlayerList() {
   );
 }
 
-export default PlayerList;
+export default ParticipantsList;

@@ -5,7 +5,7 @@ import { colors, Drawer, Link, Typography } from '@material-ui/core';
 import { LanguageContext } from '../translations';
 import useGlobalState from '../state';
 import LanguagePicker from '../components/LanguagePicker';
-import PlayerList from './panel/PlayerList';
+import ParticipantsList from './panel/ParticipantsList';
 import config from '../utils/getConfig';
 
 interface Policy {
@@ -34,7 +34,7 @@ function Panel() {
             onChange={languageContext.setLanguage}
           />
           <Content>
-            <Route path="/game/:gameId" component={PlayerList} />
+            <Route path="/game/:gameId" component={ParticipantsList} />
           </Content>
         </Top>
         <Bottom>
