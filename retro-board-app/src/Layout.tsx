@@ -42,6 +42,7 @@ function App() {
   const user = useUser();
   const goToHome = useCallback(() => history.push('/'), [history]);
   useEffect(() => {
+    trackPageView(window.location.pathname);
     const unregister = history.listen((location) => {
       trackPageView(location.pathname);
     });
