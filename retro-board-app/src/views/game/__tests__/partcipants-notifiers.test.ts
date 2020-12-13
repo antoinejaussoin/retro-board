@@ -89,6 +89,15 @@ describe('Testing new participants notifier', () => {
     expect(result).toHaveLength(1);
     expect(result[0].id).toBe('charlie');
   });
+
+  it('should ignore if we start from an empty list (it means first connection)', () => {
+    const result = getAddedParticipants(
+      'zigby',
+      [],
+      [p('alice'), p('bob'), p('charlie'), p('zigby')]
+    );
+    expect(result).toHaveLength(0);
+  });
 });
 
 describe('Testing removed participants notifier', () => {

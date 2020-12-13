@@ -10,6 +10,9 @@ export function getAddedParticipants(
   currentList: Participant[],
   newList: Participant[]
 ): Participant[] {
+  if (!currentList.length) {
+    return [];
+  }
   const currentIds = onlineIds(currentList);
   const newIds = onlineIds(newList);
   const diff = difference(newIds, currentIds);
