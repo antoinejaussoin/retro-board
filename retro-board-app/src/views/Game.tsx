@@ -8,7 +8,14 @@ import {
   useHistory,
 } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { CircularProgress, AppBar, Tabs, Tab, Button } from '@material-ui/core';
+import {
+  CircularProgress,
+  AppBar,
+  Tabs,
+  Tab,
+  Button,
+  colors,
+} from '@material-ui/core';
 import { Dashboard, List, CloudOff } from '@material-ui/icons';
 import useGlobalState from '../state';
 import useTranslations from '../translations';
@@ -20,6 +27,7 @@ import NoContent from '../components/NoContent';
 import useCrypto from '../crypto/useCrypto';
 import Unauthorized from './game/Unauthorized';
 import SearchBar from './game/SearchBar';
+import Participants from './game/Participants';
 
 interface RouteParams {
   gameId: string;
@@ -171,6 +179,9 @@ function GamePage() {
           render={() => <SummaryMode columns={columns} search={search} />}
         />
       ) : null}
+      <ParticipantContainer>
+        <Participants />
+      </ParticipantContainer>
     </div>
   );
 }
@@ -213,6 +224,17 @@ const SearchContent = styled.div`
   align-items: center;
   flex: 1;
   margin-right: 20px;
+`;
+
+const ParticipantContainer = styled.div`
+  position: fixed;
+  bottom: -10px;
+  right: -10px;
+  padding: 10px 20px 20px 10px;
+  border-radius: 10px;
+  border-top: 1px solid ${colors.grey[300]};
+  border-left: 1px solid ${colors.grey[300]};
+  background-color: white;
 `;
 
 export default GamePage;
