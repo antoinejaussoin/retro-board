@@ -186,13 +186,16 @@ export default (connection: Connection, io: Server) => {
   };
 
   const sendClientList = (session: SessionEntity, socket: ExtendedSocket) => {
-    const sockets = io.of('/').in(getRoom(session.id)).sockets;
-    if (sockets) {
-      const clients = Array.from(sockets.keys());
-      const onlineParticipants: Participant[] = clients
-        .map((id, i) =>
-          users[id]
-            ? users[id]!.toJson()
+    const roomId = getRoom(session.id);
+    const allSockets = io.of('/').in(getRoom(session.id)).sockets; // That doesn't actually do what it's supposed to do
+
+    if (allSockets) {
+      const sockets = Array.from(allSockets.values());
+      const roomSockets = sockets.filter((s) => s.rooms.has(roomId));
+      const onlineParticipants: Participant[] = roomSockets
+        .map((socket, i) =>
+          users[socket.id]
+            ? users[socket.id]!.toJson()
             : {
                 id: socket.id,
                 name: `(Spectator #${i})`,
