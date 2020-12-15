@@ -4,6 +4,7 @@ import {
   PostRepository,
   PostGroupRepository,
   VoteRepository,
+  SessionRepository,
 } from '../repositories';
 
 export async function savePost(
@@ -31,7 +32,7 @@ export async function savePostGroup(
 export async function saveVote(
   connection: Connection,
   userId: string,
-  sessionId: string,
+  _: string,
   postId: string,
   vote: Vote
 ): Promise<void> {
@@ -52,11 +53,23 @@ export async function deletePost(
 export async function deletePostGroup(
   connection: Connection,
   userId: string,
-  _: string,
+  sessionId: string,
   groupId: string
 ): Promise<void> {
   const postGroupRepository = connection.getCustomRepository(
     PostGroupRepository
   );
-  await postGroupRepository.delete({ id: groupId, user: { id: userId } });
+  const sessionRepository = connection.getCustomRepository(SessionRepository);
+  const session = await sessionRepository.findOne(sessionId, {
+    relations: ['visitors'],
+  });
+  if (
+    session &&
+    session.visitors &&
+    session.visitors.find((v) => v.id === userId)
+  ) {
+    await postGroupRepository.delete({ id: groupId });
+  } else {
+    console.error('The user is not a visitor, cannot delete group');
+  }
 }
