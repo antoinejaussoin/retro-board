@@ -142,6 +142,10 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
+### Version 4.0.3
+
+- 🐛 Fixed a bug where groups couldn't be deleted if you didn't create it in the first place
+
 ### Version 4.0.2
 
 - 🚨 Emergency fix, for a serious bug that made it seem like a lot of people were participant to your session. This was never the case, it was displaying every non-logged in people as spectators to your session, while it wasn't the case.
