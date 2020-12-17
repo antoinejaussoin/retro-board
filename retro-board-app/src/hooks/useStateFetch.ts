@@ -18,13 +18,19 @@ function useStateFetch<T>(
   useEffect(() => {
     async function fetchData() {
       if (url) {
-        const response = await fetch(url);
-        if (response.ok) {
-          const responseData = await response.json();
-          setData(responseData);
-          setLoading(false);
-          setError(null);
-        } else {
+        try {
+          const response = await fetch(url);
+          if (response.ok) {
+            const responseData = await response.json();
+            setData(responseData);
+            setLoading(false);
+            setError(null);
+          } else {
+            setLoading(false);
+            setError(new Error('Unspecified error'));
+          }
+        } catch (error) {
+          console.error('Fetching data failed: ', error);
           setLoading(false);
           setError(new Error('Unspecified error'));
         }

@@ -5,10 +5,14 @@ export default function useMd(url: string) {
 
   useEffect(() => {
     async function loadMd() {
-      const response = await fetch(url);
-      if (response.ok) {
-        const mdContent = await response.text();
-        setContent(mdContent);
+      try {
+        const response = await fetch(url);
+        if (response.ok) {
+          const mdContent = await response.text();
+          setContent(mdContent);
+        }
+      } catch (error) {
+        console.error('Error while fetching a MD file', error);
       }
     }
     loadMd();

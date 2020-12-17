@@ -4,51 +4,45 @@ import {
   Currency,
   StripeLocales,
 } from '@retrospected/common';
+import { fetchGet, fetchPostGet } from '../../api/fetch';
 
-const requestConfig: Partial<RequestInit> = {
-  mode: 'cors',
-  cache: 'no-cache',
-  credentials: 'same-origin',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  redirect: 'follow',
-  referrer: 'no-referrer',
-};
+interface SessionIdResponse {
+  id: string;
+}
 
 export async function createCheckoutSession(
   plan: Plan,
   currency: Currency,
   locale: StripeLocales,
   domain: string | null
-): Promise<{ id: string } | null> {
+): Promise<SessionIdResponse | null> {
   const payload: CreateSubscriptionPayload = {
     plan,
     currency,
     domain,
     locale,
   };
-  const response = await fetch(`/api/stripe/create-checkout-session`, {
-    method: 'POST',
-    ...requestConfig,
-    body: JSON.stringify(payload),
-  });
-  if (response.ok) {
-    const session: { id: string } = await response.json();
-    return session;
-  }
-  return null;
+  return await fetchPostGet<
+    CreateSubscriptionPayload,
+    SessionIdResponse | null
+  >('/api/stripe/create-checkout-session', null, payload);
 }
 
 export async function isValidDomain(domain: string): Promise<boolean> {
-  const response = await fetch(
+  const result = await fetchGet(
     `/api/stripe/domain/${encodeURIComponent(domain)}`,
-    {
-      ...requestConfig,
-    }
+    false
   );
-  if (response.ok) {
-    return (await response.text()) === 'true';
-  }
-  return false;
+  return result;
+  // return result === 'true';
+  // const response = await fetch(
+  //   `/api/stripe/domain/${encodeURIComponent(domain)}`,
+  //   {
+  //     ...requestConfig,
+  //   }
+  // );
+  // if (response.ok) {
+  //   return (await response.text()) === 'true';
+  // }
+  // return false;
 }
