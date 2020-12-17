@@ -1,6 +1,5 @@
 import React from 'react';
 import { Tooltip, Button } from '@material-ui/core';
-import styled from 'styled-components';
 
 interface ActionButtonProps {
   tooltip: React.ReactElement | string | number;
@@ -30,29 +29,25 @@ const ActionButton: React.FC<ActionButtonProps> = ({
       title={tooltip}
     >
       <span>
-        <SmallerButton
+        <Button
           onClick={onClick}
           disabled={!!disabled}
           aria-label={ariaLabel}
           tabIndex={-1}
           innerRef={innerRef}
-          large={children !== undefined}
           style={{
             position: 'relative',
             paddingLeft: 0,
             paddingRight: 0,
+            minWidth: children !== undefined ? 64 : 42,
           }}
         >
           {icon}
           {children !== undefined ? <>&nbsp;{children}</> : null}
-        </SmallerButton>
+        </Button>
       </span>
     </Tooltip>
   );
 };
-
-const SmallerButton = styled(Button)<{ large: boolean }>`
-  min-width: ${(props) => (props.large ? 64 : 42)}px;
-`;
 
 export default ActionButton;
