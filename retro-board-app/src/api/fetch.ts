@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/browser';
+
 export const requestConfig: Partial<RequestInit> = {
   mode: 'same-origin',
   cache: 'no-cache',
@@ -19,36 +21,46 @@ export async function fetchGet<T>(url: string, defaultValue: T): Promise<T> {
     }
     return defaultValue;
   } catch (error) {
-    // Log to sentry
+    logToSentry(error);
     return defaultValue;
   }
 }
 
 export async function fetchPost<T>(url: string, payload?: T): Promise<boolean> {
-  const response = await fetch(url, {
-    method: 'POST',
-    body: payload ? JSON.stringify(payload) : undefined,
-    ...requestConfig,
-  });
-  if (response.ok) {
-    return true;
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      body: payload ? JSON.stringify(payload) : undefined,
+      ...requestConfig,
+    });
+    if (response.ok) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    logToSentry(error);
+    return false;
   }
-  return false;
 }
 
 export async function fetchDelete<T>(
   url: string,
   payload?: T
 ): Promise<boolean> {
-  const response = await fetch(url, {
-    method: 'DELETE',
-    body: payload ? JSON.stringify(payload) : undefined,
-    ...requestConfig,
-  });
-  if (response.ok) {
-    return true;
+  try {
+    const response = await fetch(url, {
+      method: 'DELETE',
+      body: payload ? JSON.stringify(payload) : undefined,
+      ...requestConfig,
+    });
+    if (response.ok) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    logToSentry(error);
+    return false;
   }
-  return false;
 }
 
 export async function fetchPostGet<T, R>(
@@ -56,13 +68,25 @@ export async function fetchPostGet<T, R>(
   defaultValue: R,
   payload?: T
 ): Promise<R> {
-  const response = await fetch(url, {
-    method: 'POST',
-    body: payload ? JSON.stringify(payload) : undefined,
-    ...requestConfig,
-  });
-  if (response.ok) {
-    return (await response.json()) as R;
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      body: payload ? JSON.stringify(payload) : undefined,
+      ...requestConfig,
+    });
+    if (response.ok) {
+      return (await response.json()) as R;
+    }
+    return defaultValue;
+  } catch (error) {
+    logToSentry(error);
+    return defaultValue;
   }
-  return defaultValue;
+}
+
+function logToSentry(error: unknown) {
+  Sentry.withScope((scope) => {
+    scope.setLevel('error' as Sentry.Severity);
+    Sentry.captureException(error);
+  });
 }
