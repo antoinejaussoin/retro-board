@@ -192,7 +192,8 @@ export async function deleteSession(sessionId: string): Promise<boolean> {
 export async function getGiphyUrl(giphyId: string): Promise<string | null> {
   try {
     const response = await fetch(
-      `//api.giphy.com/v1/gifs/${giphyId}?api_key=${config.GiphyApiKey}`
+      `//api.giphy.com/v1/gifs/${giphyId}?api_key=${config.GiphyApiKey}`,
+      { credentials: 'omit' }
     );
     if (response.ok) {
       const { data } = await response.json();

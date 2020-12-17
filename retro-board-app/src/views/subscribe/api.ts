@@ -34,15 +34,4 @@ export async function isValidDomain(domain: string): Promise<boolean> {
     false
   );
   return result;
-  // return result === 'true';
-  // const response = await fetch(
-  //   `/api/stripe/domain/${encodeURIComponent(domain)}`,
-  //   {
-  //     ...requestConfig,
-  //   }
-  // );
-  // if (response.ok) {
-  //   return (await response.text()) === 'true';
-  // }
-  // return false;
 }

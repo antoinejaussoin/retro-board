@@ -1,12 +1,12 @@
 export const requestConfig: Partial<RequestInit> = {
-  mode: 'cors',
+  mode: 'same-origin',
   cache: 'no-cache',
   credentials: 'same-origin',
   headers: {
     'Content-Type': 'application/json',
   },
   redirect: 'follow',
-  referrer: 'no-referrer',
+  referrer: 'same-origin',
 };
 
 export async function fetchGet<T>(url: string, defaultValue: T): Promise<T> {
