@@ -22,7 +22,7 @@ import DisclaimerPage from './views/policies/Disclaimer';
 import { HomeOutlined } from '@material-ui/icons';
 import ValidatePage from './views/Validate';
 import ResetPasswordPage from './views/Reset';
-import SubscribePage from './views/subscribe/SubscribePage';
+import SubscribePageOuter from './views/subscribe/SubscribePageOuter';
 import SuccessPage from './views/subscribe/SuccessPage';
 import CancelPage from './views/subscribe/CancelPage';
 import AccountPage from './views/account/AccountPage';
@@ -83,7 +83,7 @@ function App() {
         <Route path="/reset" component={ResetPasswordPage} />
         <Route path="/account" component={AccountPage} />
         <Route path="/login" component={LoginPage} />
-        <Route path="/subscribe" component={SubscribePage} exact />
+        <Route path="/subscribe" component={SubscribePageOuter} exact />
         <Route path="/subscribe/success" component={SuccessPage} exact />
         <Route path="/subscribe/cancel" component={CancelPage} exact />
         <Route path="/privacy" component={PrivacyPolicyPage} />
