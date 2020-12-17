@@ -14,6 +14,7 @@ import useUser from '../auth/useUser';
 import shortid from 'shortid';
 import { storeEncryptionKeyLocally } from '../crypto/crypto';
 import ProButton from '../components/ProButton';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles({
   media: {
@@ -34,6 +35,7 @@ function Home() {
   const user = useUser();
   const isLoggedIn = !!user;
   const translations = useTranslations();
+  const { enqueueSnackbar } = useSnackbar();
   const [previousSessions, refreshPreviousSessions] = usePreviousSessions();
   const hasPreviousSessions = previousSessions.length > 0;
 
@@ -41,17 +43,30 @@ function Home() {
 
   const createDefaultSession = useCallback(async () => {
     const session = await createGame();
-    trackEvent('home/create/default');
-    history.push('/game/' + session.id);
-  }, [history]);
+    if (session) {
+      trackEvent('home/create/default');
+      history.push('/game/' + session.id);
+    } else {
+      enqueueSnackbar('Something went wrong when creating the session', {
+        variant: 'error',
+      });
+    }
+  }, [history, enqueueSnackbar]);
 
   const createEncryptedSession = useCallback(async () => {
     const key = shortid();
     const session = await createEncryptedGame(key);
-    storeEncryptionKeyLocally(session.id, key);
-    trackEvent('home/create/encrypted');
-    history.push(`/game/${session.id}#${key}`);
-  }, [history]);
+    if (session) {
+      storeEncryptionKeyLocally(session.id, key);
+      trackEvent('home/create/encrypted');
+      history.push(`/game/${session.id}#${key}`);
+    } else {
+      enqueueSnackbar(
+        'Something went wrong when creating the encrypted session',
+        { variant: 'error' }
+      );
+    }
+  }, [history, enqueueSnackbar]);
 
   const handleDeleteSession = useCallback(
     async (session: SessionMetadata) => {

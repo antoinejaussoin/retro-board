@@ -1,0 +1,68 @@
+export const requestConfig: Partial<RequestInit> = {
+  mode: 'cors',
+  cache: 'no-cache',
+  credentials: 'same-origin',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  redirect: 'follow',
+  referrer: 'no-referrer',
+};
+
+export async function fetchGet<T>(url: string, defaultValue: T): Promise<T> {
+  try {
+    const response = await fetch(url, {
+      ...requestConfig,
+    });
+    if (response.ok) {
+      return (await response.json()) as T;
+    }
+    return defaultValue;
+  } catch (error) {
+    // Log to sentry
+    return defaultValue;
+  }
+}
+
+export async function fetchPost<T>(url: string, payload?: T): Promise<boolean> {
+  const response = await fetch(url, {
+    method: 'POST',
+    body: payload ? JSON.stringify(payload) : undefined,
+    ...requestConfig,
+  });
+  if (response.ok) {
+    return true;
+  }
+  return false;
+}
+
+export async function fetchDelete<T>(
+  url: string,
+  payload?: T
+): Promise<boolean> {
+  const response = await fetch(url, {
+    method: 'DELETE',
+    body: payload ? JSON.stringify(payload) : undefined,
+    ...requestConfig,
+  });
+  if (response.ok) {
+    return true;
+  }
+  return false;
+}
+
+export async function fetchPostGet<T, R>(
+  url: string,
+  defaultValue: R,
+  payload?: T
+): Promise<R> {
+  const response = await fetch(url, {
+    method: 'POST',
+    body: payload ? JSON.stringify(payload) : undefined,
+    ...requestConfig,
+  });
+  if (response.ok) {
+    return (await response.json()) as R;
+  }
+  return defaultValue;
+}

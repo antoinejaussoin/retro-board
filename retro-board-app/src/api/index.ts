@@ -13,112 +13,63 @@ import config from '../utils/getConfig';
 import { v4 } from 'uuid';
 import { CHECK_PREFIX, encrypt } from '../crypto/crypto';
 import { getItem, setItem } from '../utils/localStorage';
+import {
+  fetchGet,
+  fetchPost,
+  fetchPostGet,
+  fetchDelete,
+  requestConfig,
+} from './fetch';
 
-const requestConfig: Partial<RequestInit> = {
-  mode: 'cors',
-  cache: 'no-cache',
-  credentials: 'same-origin',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  redirect: 'follow',
-  referrer: 'no-referrer',
-};
-
-export async function createGame(): Promise<Session> {
-  const response = await fetch(`/api/create`, {
-    method: 'POST',
-    ...requestConfig,
-  });
-  if (response.ok) {
-    return await response.json();
-  }
-  throw new Error('Could not create a session');
+export async function createGame(): Promise<Session | null> {
+  return await fetchPostGet<unknown, Session | null>('/api/create', null);
 }
 
 export async function createEncryptedGame(
   encryptionKey: string
-): Promise<Session> {
+): Promise<Session | null> {
   // We are not sending the encryption key to the backend, only an encrypted string
   // so we can check, client-side, that the key used by the user is the correct one.
   const encryptedCheck = encrypt(CHECK_PREFIX, encryptionKey);
-  const response = await fetch(`/api/create`, {
-    method: 'POST',
-    ...requestConfig,
-    body: JSON.stringify({
-      encryptedCheck,
-    }),
-  });
-  if (response.ok) {
-    return await response.json();
-  }
-  throw new Error('Could not create a session');
+  return await fetchPostGet<{ encryptedCheck: string }, Session | null>(
+    '/api/create',
+    null,
+    { encryptedCheck }
+  );
 }
 
 export async function me(): Promise<FullUser | null> {
-  const response = await fetch('/api/me', {
-    credentials: 'same-origin',
-  });
-  if (response.ok) {
-    return (await response.json()) as FullUser;
-  }
-  return null;
+  return await fetchGet<FullUser | null>('/api/me', null);
 }
 
 export async function getProducts(): Promise<Product[] | null> {
-  const response = await fetch('/api/stripe/products', {
-    credentials: 'same-origin',
-  });
-  if (response.ok) {
-    return (await response.json()) as Product[];
-  }
-  return null;
+  return await fetchGet<Product[] | null>('/api/stripe/products', null);
 }
 
 export async function fetchDefaultTemplate(): Promise<SessionTemplate | null> {
-  const response = await fetch('/api/me/default-template', {
-    credentials: 'same-origin',
-  });
-  if (response.ok) {
-    return (await response.json()) as SessionTemplate | null;
-  }
-  return null;
+  return await fetchGet<SessionTemplate | null>(
+    '/api/me/default-template',
+    null
+  );
 }
 
 export async function fetchPreviousSessions(): Promise<SessionMetadata[]> {
-  const response = await fetch('/api/previous', {
-    credentials: 'same-origin',
-  });
-  if (response.ok) {
-    return (await response.json()) as SessionMetadata[];
-  }
-  return Promise.resolve([]);
+  return await fetchGet<SessionMetadata[]>('/api/previous', []);
 }
 
 export async function logout() {
-  const response = await fetch(`/api/logout`, {
-    method: 'POST',
-    ...requestConfig,
-  });
-  if (response.ok) {
-    return true;
-  }
-  return false;
+  return await fetchPost('/api/logout');
 }
 
 export async function anonymousLogin(
   username: string
 ): Promise<FullUser | null> {
   const anonymousUsername = getAnonymousUsername(username);
-  const response = await fetch(`/api/auth/anonymous/login`, {
-    method: 'POST',
-    ...requestConfig,
-    body: JSON.stringify({
-      username: anonymousUsername,
-      password: '<<<<<NONE>>>>>',
-    }),
+  const success = await fetchPost('/api/auth/anonymous/login', {
+    username: anonymousUsername,
+    password: '<<<<<NONE>>>>>',
   });
-  if (response.ok) {
+  if (success) {
     return me();
   }
   return null;
@@ -128,12 +79,11 @@ export async function accountLogin(
   email: string,
   password: string
 ): Promise<FullUser | null> {
-  const response = await fetch(`/api/auth/login`, {
-    method: 'POST',
-    ...requestConfig,
-    body: JSON.stringify({ username: email, password }),
+  const success = await fetchPost('/api/auth/login', {
+    username: email,
+    password,
   });
-  if (response.ok) {
+  if (success) {
     return me();
   }
   return null;
@@ -156,22 +106,27 @@ export async function register(
     name,
     language,
   };
-  const response = await fetch(`/api/register`, {
-    method: 'POST',
-    ...requestConfig,
-    body: JSON.stringify(payload),
-  });
-  if (response.ok) {
-    const user = await response.json();
-    return {
-      user,
-      error: null,
-    };
-  } else if (response.status === 403) {
-    return {
-      user: null,
-      error: 'already-exists',
-    };
+  try {
+    const response = await fetch(`/api/register`, {
+      method: 'POST',
+      ...requestConfig,
+      body: JSON.stringify(payload),
+    });
+    if (response.ok) {
+      const user = await response.json();
+      return {
+        user,
+        error: null,
+      };
+    } else if (response.status === 403) {
+      return {
+        user: null,
+        error: 'already-exists',
+      };
+    }
+  } catch (error) {
+    // Todo capture in Sentry
+    console.error('Could not register', error);
   }
   return {
     user: null,
@@ -184,29 +139,16 @@ export async function verifyEmail(
   code: string
 ): Promise<FullUser | null> {
   const payload: ValidateEmailPayload = { email, code };
-  const response = await fetch(`/api/validate`, {
-    method: 'POST',
-    ...requestConfig,
-    body: JSON.stringify(payload),
-  });
-  if (response.ok) {
-    const user = await response.json();
-    return user;
-  }
-  return null;
+  return await fetchPostGet<ValidateEmailPayload, FullUser | null>(
+    '/api/validate',
+    null,
+    payload
+  );
 }
 
 export async function resetPassword(email: string): Promise<boolean> {
   const payload: ResetPasswordPayload = { email };
-  const response = await fetch(`/api/reset`, {
-    method: 'POST',
-    ...requestConfig,
-    body: JSON.stringify(payload),
-  });
-  if (response.ok) {
-    return true;
-  }
-  return false;
+  return await fetchPost('/api/reset', payload);
 }
 
 export async function resetChangePassword(
@@ -215,16 +157,11 @@ export async function resetChangePassword(
   code: string
 ): Promise<FullUser | null> {
   const payload: ResetChangePasswordPayload = { email, password, code };
-  const response = await fetch(`/api/reset-password`, {
-    method: 'POST',
-    ...requestConfig,
-    body: JSON.stringify(payload),
-  });
-  if (response.ok) {
-    const user: FullUser = await response.json();
-    return user;
-  }
-  return null;
+  return await fetchPostGet<ResetChangePasswordPayload, FullUser | null>(
+    '/api/reset-password',
+    null,
+    payload
+  );
 }
 
 function getAnonymousUsername(username: string): string {
@@ -241,35 +178,29 @@ function getAnonymousUsername(username: string): string {
 export async function updateLanguage(
   language: string
 ): Promise<FullUser | null> {
-  const response = await fetch(`/api/me/language`, {
-    method: 'POST',
-    ...requestConfig,
-    body: JSON.stringify({ language }),
-  });
-  if (response.ok) {
-    return await response.json();
-  }
-  return null;
+  return await fetchPostGet<{ language: string }, FullUser | null>(
+    '/api/me/language',
+    null,
+    { language }
+  );
 }
 
 export async function deleteSession(sessionId: string): Promise<boolean> {
-  const response = await fetch(`/api/session/${sessionId}`, {
-    method: 'DELETE',
-    ...requestConfig,
-  });
-  if (response.ok) {
-    return true;
-  }
-  return false;
+  return await fetchDelete(`/api/session/${sessionId}`);
 }
 
 export async function getGiphyUrl(giphyId: string): Promise<string | null> {
-  const response = await fetch(
-    `//api.giphy.com/v1/gifs/${giphyId}?api_key=${config.GiphyApiKey}`
-  );
-  if (response.ok) {
-    const { data } = await response.json();
-    return data && data.images ? data.images.downsized_medium.url : null;
+  try {
+    const response = await fetch(
+      `//api.giphy.com/v1/gifs/${giphyId}?api_key=${config.GiphyApiKey}`
+    );
+    if (response.ok) {
+      const { data } = await response.json();
+      return data && data.images ? data.images.downsized_medium.url : null;
+    }
+    return null;
+  } catch (error) {
+    console.error('Could not fetch Giphy', error);
+    return null;
   }
-  return null;
 }
