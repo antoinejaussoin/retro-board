@@ -6,6 +6,7 @@
   "scripts": {
     "build": "rimraf dist && tsc --build",
     "start": "nodemon --exec 'yarn fix & ts-node' --files ./src/index.ts",
+    "fake": "nodemon --exec 'yarn fix & ts-node' --files ./src/fake-client.ts",
     "create-migration": "ts-node ../node_modules/typeorm/cli.js migration:generate -n ",
     "migrate": "ts-node ./src/init.ts && ts-node ../node_modules/typeorm/cli.js migration:run",
     "revert": "ts-node ../node_modules/typeorm/cli.js migration:revert",
@@ -70,6 +71,7 @@
     "rimraf": "^3.0.2",
     "shortid": "^2.2.16",
     "socket.io": "3.0.4",
+    "socket.io-client": "^3.0.4",
     "socket.io-redis": "6.0.1",
     "stripe": "^8.129.0",
     "ts-node": "9.1.1",

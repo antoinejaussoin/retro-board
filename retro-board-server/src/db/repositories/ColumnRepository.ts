@@ -12,11 +12,21 @@ export default class ColumnDefinitionRepository extends Repository<ColumnDefinit
     colDef: JsonColumnDefinition,
     sessionId: string
   ): Promise<void> {
-    await this.save({
+    if (!sessionId) {
+      console.error(
+        'The session ID should not be null when saving columns',
+        sessionId
+      );
+    }
+    const newColumn = {
       ...colDef,
       id: colDef.id || v4(),
       session: { id: sessionId },
-    });
+    };
+    // Todo: remove this once we figure out why this sometimes break
+    // Todo: write code to simulate simultaneous calls to columns API to check for race condition
+    console.warn('Trying to persist', newColumn);
+    await this.save(newColumn);
   }
 
   async updateColumns(

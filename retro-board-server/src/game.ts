@@ -461,9 +461,7 @@ export default (connection: Connection, io: Server) => {
     if (userId !== session.createdBy.id) {
       return;
     }
-
     await updateColumns(connection, session, data);
-
     sendToAll(socket, session.id, RECEIVE_COLUMNS, data);
   };
 
