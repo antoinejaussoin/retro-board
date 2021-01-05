@@ -19,7 +19,7 @@ import {
 } from '@retrospected/common';
 import shortId from 'shortid';
 import { v4 } from 'uuid';
-import { Connection } from 'typeorm';
+import { Connection, getConnection } from 'typeorm';
 import {
   UserRepository,
   SessionRepository,
@@ -294,12 +294,17 @@ export async function updateOptions(
 }
 
 export async function updateColumns(
-  connection: Connection,
   session: Session,
   columns: ColumnDefinition[]
 ): Promise<ColumnDefinition[]> {
-  const columnRepository = connection.getCustomRepository(ColumnRepository);
-  return await columnRepository.updateColumns(session, columns);
+  console.log('Before transaction');
+  const updatedColumns = await getConnection().transaction(async (manager) => {
+    const columnRepository = manager.getCustomRepository(ColumnRepository);
+    console.log('Before update');
+    return await columnRepository.updateColumns(session, columns);
+  });
+  console.log('After transaction');
+  return updatedColumns;
 }
 
 export async function saveTemplate(
