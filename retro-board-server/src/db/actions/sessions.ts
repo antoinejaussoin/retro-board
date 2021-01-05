@@ -297,13 +297,13 @@ export async function updateColumns(
   session: Session,
   columns: ColumnDefinition[]
 ): Promise<ColumnDefinition[]> {
-  console.log('Before transaction');
+  console.log('Before transaction', session.id);
   const updatedColumns = await getConnection().transaction(async (manager) => {
     const columnRepository = manager.getCustomRepository(ColumnRepository);
-    console.log('Before update');
+    console.log('Before update', session.id);
     return await columnRepository.updateColumns(session, columns);
   });
-  console.log('After transaction');
+  console.log('After transaction', session.id);
   return updatedColumns;
 }
 
