@@ -3,13 +3,11 @@ import { v4 } from 'uuid';
 import { hashPassword } from '../../utils';
 import UserEntity from '../../db/entities/User';
 import { getUserByUsername, getOrSaveUser } from '../../db/actions/users';
-import { Connection } from 'typeorm';
 
 export default async function registerUser(
-  connection: Connection,
   details: RegisterPayload
 ): Promise<UserEntity | null> {
-  const existingUser = await getUserByUsername(connection, details.username);
+  const existingUser = await getUserByUsername(details.username);
   if (existingUser) {
     return null;
   }
@@ -21,6 +19,6 @@ export default async function registerUser(
   newUser.emailVerification = v4();
   newUser.accountType = 'password';
 
-  const persistedUser = await getOrSaveUser(connection, newUser);
+  const persistedUser = await getOrSaveUser(newUser);
   return persistedUser;
 }

@@ -38,7 +38,6 @@ import {
   deletePost,
   deletePostGroup,
 } from './db/actions/posts';
-import { Connection } from 'typeorm';
 
 const {
   RECEIVE_POST,
@@ -98,7 +97,7 @@ interface LikeUpdate extends PostUpdate {
 
 const s = (str: string) => chalk`{blue ${str.replace('retrospected/', '')}}`;
 
-export default (connection: Connection, io: Server) => {
+export default (io: Server) => {
   const users: Users = {};
   const d = () => chalk`{yellow [${moment().format('HH:mm:ss')}]} `;
 
@@ -137,7 +136,7 @@ export default (connection: Connection, io: Server) => {
     if (!userId) {
       return;
     }
-    await savePost(connection, userId, sessionId, post);
+    await savePost(userId, sessionId, post);
   };
 
   const persistPostGroup = async (
@@ -148,7 +147,7 @@ export default (connection: Connection, io: Server) => {
     if (!userId) {
       return;
     }
-    await savePostGroup(connection, userId, sessionId, group);
+    await savePostGroup(userId, sessionId, group);
   };
 
   const persistVote = async (
@@ -160,7 +159,7 @@ export default (connection: Connection, io: Server) => {
     if (!userId) {
       return;
     }
-    await saveVote(connection, userId, sessionId, postId, vote);
+    await saveVote(userId, sessionId, postId, vote);
   };
 
   const removePost = async (
@@ -171,7 +170,7 @@ export default (connection: Connection, io: Server) => {
     if (!userId) {
       return;
     }
-    await deletePost(connection, userId, sessionId, postId);
+    await deletePost(userId, sessionId, postId);
   };
 
   const removePostGroup = async (
@@ -182,7 +181,7 @@ export default (connection: Connection, io: Server) => {
     if (!userId) {
       return;
     }
-    await deletePostGroup(connection, userId, sessionId, groupId);
+    await deletePostGroup(userId, sessionId, groupId);
   };
 
   const sendClientList = (session: SessionEntity, socket: ExtendedSocket) => {
@@ -272,21 +271,18 @@ export default (connection: Connection, io: Server) => {
   ) => {
     await socket.join(getRoom(session.id));
     socket.sessionId = session.id;
-    const user = userId ? await getUserView(connection, userId) : null;
-    const sessionEntity = await getSessionWithVisitors(connection, session.id);
+    const user = userId ? await getUserView(userId) : null;
+    const sessionEntity = await getSessionWithVisitors(session.id);
 
     if (sessionEntity) {
       const userAllowed = isAllowed(sessionEntity, user);
       if (userAllowed.allowed) {
         if (user) {
-          const userEntity = await getUser(connection, user.id);
+          const userEntity = await getUser(user.id);
           if (userEntity) {
             // TODO : inneficient, rework all this
-            await storeVisitor(connection, session.id, userEntity);
-            const sessionEntity2 = await getSessionWithVisitors(
-              connection,
-              session.id
-            );
+            await storeVisitor(session.id, userEntity);
+            const sessionEntity2 = await getSessionWithVisitors(session.id);
             if (sessionEntity2) {
               recordUser(sessionEntity2, user, socket);
             }
@@ -314,7 +310,7 @@ export default (connection: Connection, io: Server) => {
       return;
     }
     session.name = data.name;
-    await updateName(connection, session.id, data.name);
+    await updateName(session.id, data.name);
     sendToAll(socket, session.id, RECEIVE_SESSION_NAME, data.name);
   };
 
@@ -325,7 +321,7 @@ export default (connection: Connection, io: Server) => {
     socket: ExtendedSocket
   ) => {
     await socket.leave(getRoom(session.id));
-    const sessionEntity = await getSessionWithVisitors(connection, session.id);
+    const sessionEntity = await getSessionWithVisitors(session.id);
     if (sessionEntity) {
       sendClientList(sessionEntity, socket);
     }
@@ -368,7 +364,7 @@ export default (connection: Connection, io: Server) => {
     if (!userId) {
       return;
     }
-    const user = await getUser(connection, userId);
+    const user = await getUser(userId);
     const post = find(session.posts, (p) => p.id === data.post.id);
     if (post && user) {
       const existingVote: Vote | undefined = find(
@@ -443,7 +439,7 @@ export default (connection: Connection, io: Server) => {
       return;
     }
 
-    await updateOptions(connection, session, data);
+    await updateOptions(session, data);
 
     sendToAll(socket, session.id, RECEIVE_OPTIONS, data);
   };
@@ -479,7 +475,7 @@ export default (connection: Connection, io: Server) => {
       return;
     }
 
-    await saveTemplate(connection, userId, session, data.columns, data.options);
+    await saveTemplate(userId, session, data.columns, data.options);
   };
 
   const onLockSession = async (
@@ -497,7 +493,7 @@ export default (connection: Connection, io: Server) => {
       return;
     }
 
-    await toggleSessionLock(connection, session.id, locked);
+    await toggleSessionLock(session.id, locked);
 
     sendToAll(socket, session.id, RECEIVE_LOCK_SESSION, locked);
   };
@@ -558,7 +554,7 @@ export default (connection: Connection, io: Server) => {
           const sid =
             action.type === LEAVE_SESSION ? socket.sessionId : data.sessionId;
           if (sid) {
-            const session = await getSession(connection, sid); // Todo check if that's not a performance issue
+            const session = await getSession(sid); // Todo check if that's not a performance issue
             if (session) {
               try {
                 await action.handler(userId, session, data.payload, socket);
@@ -579,10 +575,7 @@ export default (connection: Connection, io: Server) => {
             socket.id
           } ${ip}}`
         );
-        const sessionEntity = await getSessionWithVisitors(
-          connection,
-          socket.sessionId
-        );
+        const sessionEntity = await getSessionWithVisitors(socket.sessionId);
         if (sessionEntity) {
           sendClientList(sessionEntity, socket);
         }

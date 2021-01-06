@@ -24,9 +24,8 @@ import {
   SlackProfile,
 } from './types';
 import { getOrSaveUser } from '../db/actions/users';
-import { Connection } from 'typeorm';
 
-export default (connection: Connection) => {
+export default () => {
   passport.serializeUser((user: string, cb) => {
     cb(null, user);
   });
@@ -60,7 +59,7 @@ export default (connection: Connection) => {
           throw new Error('Unknown provider: ' + type);
       }
 
-      const dbUser = await getOrSaveUser(connection, user);
+      const dbUser = await getOrSaveUser(user);
       const callback = (cb as unknown) as (
         error: string | null,
         user: string
@@ -152,10 +151,10 @@ export default (connection: Connection) => {
         ) => void
       ) => {
         if (password && password !== '<<<<<NONE>>>>>') {
-          const user = await loginUser(connection, username, password);
+          const user = await loginUser(username, password);
           done(!user ? 'User cannot log in' : null, user?.id);
         } else {
-          const user = await loginAnonymous(connection, username);
+          const user = await loginAnonymous(username);
           done(null, user.id);
         }
       }

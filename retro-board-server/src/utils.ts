@@ -1,26 +1,23 @@
 import { Request } from 'express';
 import { genSalt, hash } from 'bcryptjs';
 import { UserView, UserEntity } from './db/entities';
-import { Connection } from 'typeorm';
 import { getUserView, getUser } from './db/actions/users';
 
 export async function getUserViewFromRequest(
-  connection: Connection,
   request: Request
 ): Promise<UserView | null> {
   if (request.user) {
-    const user = await getUserView(connection, request.user);
+    const user = await getUserView(request.user);
     return user;
   }
   return null;
 }
 
 export async function getUserFromRequest(
-  connection: Connection,
   request: Request
 ): Promise<UserEntity | null> {
   if (request.user) {
-    const user = await getUser(connection, request.user);
+    const user = await getUser(request.user);
     return user;
   }
   return null;

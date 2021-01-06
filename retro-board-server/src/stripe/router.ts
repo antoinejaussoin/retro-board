@@ -22,13 +22,12 @@ import {
   getActiveSubscription,
   saveSubscription,
 } from '../db/actions/subscriptions';
-import { Connection } from 'typeorm';
 
 const stripe = new Stripe(config.STRIPE_SECRET, {
   apiVersion: '2020-08-27',
 } as Stripe.StripeConfig);
 
-function stripeRouter(connection: Connection): Router {
+function stripeRouter(): Router {
   const router = express.Router();
 
   async function getCustomerId(
@@ -51,7 +50,7 @@ function stripeRouter(connection: Connection): Router {
       };
       const customer = await stripe.customers.create(userData);
 
-      await updateUser(connection, user.id, {
+      await updateUser(user.id, {
         stripeId: customer.id,
       });
       return customer.id;
@@ -113,14 +112,13 @@ function stripeRouter(connection: Connection): Router {
           // handle subscription cancelled automatically based
           // upon your subscription settings.
         }
-        await cancelSubscription(connection, cancelEvent.data.object.id);
+        await cancelSubscription(cancelEvent.data.object.id);
         break;
       case 'checkout.session.completed':
         const subEvent = (event as unknown) as StripeEvent<CheckoutCompletedPayload>;
 
         if (subEvent.data.object.payment_status === 'paid') {
           await activateSubscription(
-            connection,
             subEvent.data.object.client_reference_id,
             subEvent.data.object.subscription,
             subEvent.data.object.metadata.plan,
@@ -137,7 +135,7 @@ function stripeRouter(connection: Connection): Router {
 
   router.post('/create-checkout-session', async (req, res) => {
     const payload = req.body as CreateSubscriptionPayload;
-    const user = await getUserFromRequest(connection, req);
+    const user = await getUserFromRequest(req);
     const product = getProduct(payload.plan);
 
     if (payload.domain && !isValidDomain(payload.domain)) {
@@ -183,7 +181,7 @@ function stripeRouter(connection: Connection): Router {
   });
 
   router.get('/portal', async (req, res) => {
-    const user = await getUserFromRequest(connection, req);
+    const user = await getUserFromRequest(req);
     if (user && user.stripeId) {
       const session = await stripe.billingPortal.sessions.create({
         customer: user.stripeId,
@@ -196,9 +194,9 @@ function stripeRouter(connection: Connection): Router {
   });
 
   router.get('/members', async (req, res) => {
-    const user = await getUserFromRequest(connection, req);
+    const user = await getUserFromRequest(req);
     if (user) {
-      const subscription = await getActiveSubscription(connection, user.id);
+      const subscription = await getActiveSubscription(user.id);
       if (subscription && subscription.plan === 'team') {
         return res.status(200).send(subscription.members);
       }
@@ -207,12 +205,12 @@ function stripeRouter(connection: Connection): Router {
   });
 
   router.patch('/members', async (req, res) => {
-    const user = await getUserFromRequest(connection, req);
+    const user = await getUserFromRequest(req);
     if (user) {
-      const subscription = await getActiveSubscription(connection, user.id);
+      const subscription = await getActiveSubscription(user.id);
       if (subscription && subscription.plan === 'team') {
         subscription.members = req.body as string[];
-        await saveSubscription(connection, subscription);
+        await saveSubscription(subscription);
         return res.status(200).send();
       }
     }

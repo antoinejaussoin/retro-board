@@ -19,7 +19,6 @@ import {
 } from '@retrospected/common';
 import shortId from 'shortid';
 import { v4 } from 'uuid';
-import { Connection, getConnection } from 'typeorm';
 import {
   UserRepository,
   SessionRepository,
@@ -29,185 +28,191 @@ import {
   ColumnRepository,
 } from '../repositories';
 import { orderBy } from 'lodash';
+import { transaction } from './transaction';
+import { EntityManager } from 'typeorm';
 
 export async function createSession(
-  connection: Connection,
   author: UserEntity,
   encryptionCheck?: string
 ): Promise<Session> {
-  const userRepository = connection.getCustomRepository(UserRepository);
-  const sessionRepository = connection.getCustomRepository(SessionRepository);
-
-  const id = shortId();
-  const userWithDefaultTemplate = await userRepository.findOne(
-    { id: author.id },
-    { relations: ['defaultTemplate', 'defaultTemplate.columns'] }
-  );
-  if (userWithDefaultTemplate?.defaultTemplate) {
-    const template = userWithDefaultTemplate.defaultTemplate;
-    const newSession = await sessionRepository.saveFromJson(
-      {
-        ...defaultSession,
-        id,
-        encrypted: encryptionCheck || null,
-        options: { ...template.options },
-        columns: template.columns
-          ? template.columns.map(
-              (c) =>
-                ({
-                  ...c,
-                  id: v4(),
-                  author: { id: author.id },
-                } as ColumnDefinition)
-            )
-          : [],
-      },
-      author.id
+  return await transaction(async (manager) => {
+    const userRepository = manager.getCustomRepository(UserRepository);
+    const sessionRepository = manager.getCustomRepository(SessionRepository);
+    const id = shortId();
+    const userWithDefaultTemplate = await userRepository.findOne(
+      { id: author.id },
+      { relations: ['defaultTemplate', 'defaultTemplate.columns'] }
     );
-    await storeVisitor(connection, newSession.id, author);
-    return newSession;
-  } else {
-    const newSession = await sessionRepository.saveFromJson(
-      {
-        ...defaultSession,
-        columns: defaultSession.columns.map((c) => ({
-          ...c,
-          id: v4(),
-        })),
-        id,
-        encrypted: encryptionCheck || null,
-      },
-      author.id
-    );
-    await storeVisitor(connection, newSession.id, author);
-    return newSession;
-  }
+    if (userWithDefaultTemplate?.defaultTemplate) {
+      const template = userWithDefaultTemplate.defaultTemplate;
+      const newSession = await sessionRepository.saveFromJson(
+        {
+          ...defaultSession,
+          id,
+          encrypted: encryptionCheck || null,
+          options: { ...template.options },
+          columns: template.columns
+            ? template.columns.map(
+                (c) =>
+                  ({
+                    ...c,
+                    id: v4(),
+                    author: { id: author.id },
+                  } as ColumnDefinition)
+              )
+            : [],
+        },
+        author.id
+      );
+      await storeVisitorInner(manager, newSession.id, author);
+      return newSession;
+    } else {
+      const newSession = await sessionRepository.saveFromJson(
+        {
+          ...defaultSession,
+          columns: defaultSession.columns.map((c) => ({
+            ...c,
+            id: v4(),
+          })),
+          id,
+          encrypted: encryptionCheck || null,
+        },
+        author.id
+      );
+      await storeVisitorInner(manager, newSession.id, author);
+      return newSession;
+    }
+  });
 }
 
 export async function createCustom(
-  connection: Connection,
   options: SessionOptions,
   columns: ColumnDefinition[],
   setDefault: boolean,
   author: UserEntity
 ): Promise<Session> {
-  const userRepository = connection.getCustomRepository(UserRepository);
-  const sessionRepository = connection.getCustomRepository(SessionRepository);
-  const templateRepository = connection.getCustomRepository(
-    SessionTemplateRepository
-  );
-  const id = shortId();
-  const session = await sessionRepository.findOne({ id });
-  if (!session) {
-    const newSession = await sessionRepository.saveFromJson(
-      {
-        ...defaultSession,
-        id,
-        options,
-        columns,
-      },
-      author.id
+  return await transaction(async (manager) => {
+    const userRepository = manager.getCustomRepository(UserRepository);
+    const sessionRepository = manager.getCustomRepository(SessionRepository);
+    const templateRepository = manager.getCustomRepository(
+      SessionTemplateRepository
     );
-
-    if (setDefault) {
-      const defaultTemplate = await templateRepository.saveFromJson(
-        'Default Template',
-        columns,
-        options,
+    const id = shortId();
+    const session = await sessionRepository.findOne({ id });
+    if (!session) {
+      const newSession = await sessionRepository.saveFromJson(
+        {
+          ...defaultSession,
+          id,
+          options,
+          columns,
+        },
         author.id
       );
-      await userRepository.persistTemplate(author.id, defaultTemplate.id);
+
+      if (setDefault) {
+        const defaultTemplate = await templateRepository.saveFromJson(
+          'Default Template',
+          columns,
+          options,
+          author.id
+        );
+        await userRepository.persistTemplate(author.id, defaultTemplate.id);
+      }
+
+      return newSession;
     }
 
-    return newSession;
-  }
-
-  throw Error('The session already exists');
+    throw Error('The session already exists');
+  });
 }
 
-export async function getSession(
-  connection: Connection,
-  sessionId: string
-): Promise<Session | null> {
-  const postRepository = connection.getCustomRepository(PostRepository);
-  const postGroupRepository = connection.getCustomRepository(
-    PostGroupRepository
-  );
-  const sessionRepository = connection.getCustomRepository(SessionRepository);
-  const columnRepository = connection.getCustomRepository(ColumnRepository);
+export async function getSession(sessionId: string): Promise<Session | null> {
+  return await transaction(async (manager) => {
+    const postRepository = manager.getCustomRepository(PostRepository);
+    const postGroupRepository = manager.getCustomRepository(
+      PostGroupRepository
+    );
+    const sessionRepository = manager.getCustomRepository(SessionRepository);
+    const columnRepository = manager.getCustomRepository(ColumnRepository);
 
-  const session = await sessionRepository.findOne({ id: sessionId });
-  if (session) {
-    const posts = (await postRepository.find({
-      where: { session },
-      order: { created: 'ASC' },
-    })) as PostEntity[];
-    const groups = (await postGroupRepository.find({
-      where: { session },
-      order: { created: 'ASC' },
-    })) as PostGroupEntity[];
-    const columns = (await columnRepository.find({
-      where: { session },
-      order: { index: 'ASC' },
-    })) as ColumnDefinitionEntity[];
-    return {
-      ...session.toJson(),
-      columns: columns.map((c) => c.toJson()),
-      posts: posts.map((p) => p.toJson()),
-      groups: groups.map((g) => g.toJson()),
-    };
-  } else {
-    return null;
-  }
+    const session = await sessionRepository.findOne({ id: sessionId });
+    if (session) {
+      const posts = (await postRepository.find({
+        where: { session },
+        order: { created: 'ASC' },
+      })) as PostEntity[];
+      const groups = (await postGroupRepository.find({
+        where: { session },
+        order: { created: 'ASC' },
+      })) as PostGroupEntity[];
+      const columns = (await columnRepository.find({
+        where: { session },
+        order: { index: 'ASC' },
+      })) as ColumnDefinitionEntity[];
+      return {
+        ...session.toJson(),
+        columns: columns.map((c) => c.toJson()),
+        posts: posts.map((p) => p.toJson()),
+        groups: groups.map((g) => g.toJson()),
+      };
+    } else {
+      return null;
+    }
+  });
 }
 
 export async function saveSession(
-  connection: Connection,
   userId: string,
   session: Session
 ): Promise<void> {
-  const sessionRepository = connection.getCustomRepository(SessionRepository);
-  await sessionRepository.saveFromJson(session, userId);
+  return await transaction(async (manager) => {
+    const sessionRepository = manager.getCustomRepository(SessionRepository);
+    await sessionRepository.saveFromJson(session, userId);
+  });
 }
 
 export async function deleteSessions(
-  connection: Connection,
   userId: string,
   sessionId: string
 ): Promise<boolean> {
-  const sessionRepository = connection.getCustomRepository(SessionRepository);
-  const session = await sessionRepository.findOne(sessionId);
-  if (!session) {
-    console.info('Session not found', sessionId);
-    return false;
-  }
-  if (
-    session.createdBy.id !== userId ||
-    session.createdBy.accountType === 'anonymous'
-  ) {
-    console.error(
-      'The user is not the one who created the session, or is anonymous'
+  return await transaction(async (manager) => {
+    const sessionRepository = manager.getCustomRepository(SessionRepository);
+    const session = await sessionRepository.findOne(sessionId);
+    if (!session) {
+      console.info('Session not found', sessionId);
+      return false;
+    }
+    if (
+      session.createdBy.id !== userId ||
+      session.createdBy.accountType === 'anonymous'
+    ) {
+      console.error(
+        'The user is not the one who created the session, or is anonymous'
+      );
+      return false;
+    }
+    await sessionRepository.query(
+      `delete from visitors where "sessionsId" = $1;`,
+      [sessionId]
     );
-    return false;
-  }
-  await sessionRepository.query(
-    `delete from visitors where "sessionsId" = $1;`,
-    [sessionId]
-  );
-  await sessionRepository.query(`delete from posts where "sessionId" = $1;`, [
-    sessionId,
-  ]);
-  await sessionRepository.query(`delete from columns where "sessionId" = $1;`, [
-    sessionId,
-  ]);
-  await sessionRepository.query(`delete from groups where "sessionId" = $1;`, [
-    sessionId,
-  ]);
-  await sessionRepository.query(`delete from sessions where id = $1;`, [
-    sessionId,
-  ]);
+    await sessionRepository.query(`delete from posts where "sessionId" = $1;`, [
+      sessionId,
+    ]);
+    await sessionRepository.query(
+      `delete from columns where "sessionId" = $1;`,
+      [sessionId]
+    );
+    await sessionRepository.query(
+      `delete from groups where "sessionId" = $1;`,
+      [sessionId]
+    );
+    await sessionRepository.query(`delete from sessions where id = $1;`, [
+      sessionId,
+    ]);
 
-  return true;
+    return true;
+  });
 }
 
 function numberOfVotes(type: VoteType, session: SessionEntity) {
@@ -236,129 +241,144 @@ function getParticipants(visitors: UserEntity[] | undefined): User[] {
 }
 
 export async function previousSessions(
-  connection: Connection,
   userId: string
 ): Promise<SessionMetadata[]> {
-  const userRepository = connection.getCustomRepository(UserRepository);
-  const loadedUser = await userRepository.findOne(userId, {
-    relations: ['sessions', 'sessions.posts', 'sessions.visitors'],
-  });
-  if (loadedUser && loadedUser.sessions) {
-    return orderBy(loadedUser.sessions, (s) => s.updated, 'desc').map(
-      (session) =>
-        ({
-          created: session.created,
-          createdBy: session.createdBy.toJson(),
-          encrypted: session.encrypted,
-          id: session.id,
-          name: session.name,
-          numberOfNegativeVotes: numberOfVotes('dislike', session),
-          numberOfPositiveVotes: numberOfVotes('like', session),
-          numberOfPosts: session.posts?.length,
-          numberOfActions: numberOfActions(session.posts),
-          locked: session.locked,
-          lockedForUser:
-            session.locked && session.visitors
-              ? !session.visitors.map((v) => v.id).includes(userId)
-              : false,
-          participants: getParticipants(session.visitors),
-          canBeDeleted:
-            userId === session.createdBy.id &&
-            session.createdBy.accountType !== 'anonymous',
-        } as SessionMetadata)
-    );
-  }
+  return await transaction(async (manager) => {
+    const userRepository = manager.getCustomRepository(UserRepository);
+    const loadedUser = await userRepository.findOne(userId, {
+      relations: ['sessions', 'sessions.posts', 'sessions.visitors'],
+    });
+    if (loadedUser && loadedUser.sessions) {
+      return orderBy(loadedUser.sessions, (s) => s.updated, 'desc').map(
+        (session) =>
+          ({
+            created: session.created,
+            createdBy: session.createdBy.toJson(),
+            encrypted: session.encrypted,
+            id: session.id,
+            name: session.name,
+            numberOfNegativeVotes: numberOfVotes('dislike', session),
+            numberOfPositiveVotes: numberOfVotes('like', session),
+            numberOfPosts: session.posts?.length,
+            numberOfActions: numberOfActions(session.posts),
+            locked: session.locked,
+            lockedForUser:
+              session.locked && session.visitors
+                ? !session.visitors.map((v) => v.id).includes(userId)
+                : false,
+            participants: getParticipants(session.visitors),
+            canBeDeleted:
+              userId === session.createdBy.id &&
+              session.createdBy.accountType !== 'anonymous',
+          } as SessionMetadata)
+      );
+    }
 
-  return [];
+    return [];
+  });
 }
 
 export async function getDefaultTemplate(
-  connection: Connection,
   id: string
 ): Promise<SessionTemplateEntity | null> {
-  const userRepository = connection.getCustomRepository(UserRepository);
-  const userWithDefaultTemplate = await userRepository.findOne(
-    { id },
-    { relations: ['defaultTemplate', 'defaultTemplate.columns'] }
-  );
-  return userWithDefaultTemplate?.defaultTemplate || null;
+  return await transaction(async (manager) => {
+    const userRepository = manager.getCustomRepository(UserRepository);
+    const userWithDefaultTemplate = await userRepository.findOne(
+      { id },
+      { relations: ['defaultTemplate', 'defaultTemplate.columns'] }
+    );
+    return userWithDefaultTemplate?.defaultTemplate || null;
+  });
 }
 
 export async function updateOptions(
-  connection: Connection,
   session: Session,
   options: SessionOptions
 ): Promise<SessionOptions> {
-  const sessionRepository = connection.getCustomRepository(SessionRepository);
-  return await sessionRepository.updateOptions(session, options);
+  return await transaction(async (manager) => {
+    const sessionRepository = manager.getCustomRepository(SessionRepository);
+    return await sessionRepository.updateOptions(session, options);
+  });
 }
 
 export async function updateColumns(
   session: Session,
   columns: ColumnDefinition[]
 ): Promise<ColumnDefinition[]> {
-  console.log('Before transaction', session.id);
-  const updatedColumns = await getConnection().transaction(async (manager) => {
+  return await transaction(async (manager) => {
     const columnRepository = manager.getCustomRepository(ColumnRepository);
-    console.log('Before update', session.id);
     return await columnRepository.updateColumns(session, columns);
   });
-  console.log('After transaction', session.id);
-  return updatedColumns;
 }
 
 export async function saveTemplate(
-  connection: Connection,
   userId: string,
   _: Session,
   columns: ColumnDefinition[],
   options: SessionOptions
 ) {
-  const userRepository = connection.getCustomRepository(UserRepository);
-  const templateRepository = connection.getCustomRepository(
-    SessionTemplateRepository
-  );
+  return await transaction(async (manager) => {
+    const userRepository = manager.getCustomRepository(UserRepository);
+    const templateRepository = manager.getCustomRepository(
+      SessionTemplateRepository
+    );
 
-  const defaultTemplate = await templateRepository.saveFromJson(
-    'Default Template',
-    columns,
-    options,
-    userId
-  );
-  await userRepository.persistTemplate(userId, defaultTemplate.id);
+    const defaultTemplate = await templateRepository.saveFromJson(
+      'Default Template',
+      columns,
+      options,
+      userId
+    );
+    await userRepository.persistTemplate(userId, defaultTemplate.id);
+  });
 }
 
 export async function updateName(
-  connection: Connection,
   sessionId: string,
   name: string
 ): Promise<void> {
-  const sessionRepository = connection.getCustomRepository(SessionRepository);
-  const session = await sessionRepository.findOne(sessionId);
-  if (session) {
-    session.name = name;
-    await sessionRepository.save(session);
-  }
+  return await transaction(async (manager) => {
+    const sessionRepository = manager.getCustomRepository(SessionRepository);
+    const session = await sessionRepository.findOne(sessionId);
+    if (session) {
+      session.name = name;
+      await sessionRepository.save(session);
+    }
+  });
 }
 
 export async function getSessionWithVisitors(
-  connection: Connection,
   sessionId: string
 ): Promise<SessionEntity | null> {
-  const sessionRepository = connection.getCustomRepository(SessionRepository);
+  return await transaction(async (manager) => {
+    return getSessionWithVisitorsInner(manager, sessionId);
+  });
+}
+
+async function getSessionWithVisitorsInner(
+  manager: EntityManager,
+  sessionId: string
+): Promise<SessionEntity | null> {
+  const sessionRepository = manager.getCustomRepository(SessionRepository);
   const session = await sessionRepository.findOne(sessionId, {
     relations: ['visitors'],
   });
   return session || null;
 }
 
-export async function storeVisitor(
-  connection: Connection,
+export async function storeVisitor(sessionId: string, user: UserEntity) {
+  return await transaction(async (manager) => {
+    return storeVisitorInner(manager, sessionId, user);
+  });
+}
+
+async function storeVisitorInner(
+  manager: EntityManager,
   sessionId: string,
   user: UserEntity
 ) {
-  const sessionRepository = connection.getCustomRepository(SessionRepository);
-  const session = await getSessionWithVisitors(connection, sessionId);
+  const sessionRepository = manager.getCustomRepository(SessionRepository);
+  const session = await getSessionWithVisitorsInner(manager, sessionId);
   if (
     session &&
     session.visitors &&
@@ -369,17 +389,15 @@ export async function storeVisitor(
   }
 }
 
-export async function toggleSessionLock(
-  connection: Connection,
-  sessionId: string,
-  lock: boolean
-) {
-  const sessionRepository = connection.getCustomRepository(SessionRepository);
-  const session = await sessionRepository.findOne(sessionId);
-  if (session) {
-    session.locked = lock;
-    await sessionRepository.save(session);
-  }
+export async function toggleSessionLock(sessionId: string, lock: boolean) {
+  return await transaction(async (manager) => {
+    const sessionRepository = manager.getCustomRepository(SessionRepository);
+    const session = await sessionRepository.findOne(sessionId);
+    if (session) {
+      session.locked = lock;
+      await sessionRepository.save(session);
+    }
+  });
 }
 
 interface AllowedResponse {

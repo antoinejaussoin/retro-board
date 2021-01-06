@@ -1,83 +1,87 @@
 import { SubscriptionRepository, UserRepository } from '../repositories';
 import { Plan, Currency } from '@retrospected/common';
 import { SubscriptionEntity } from '../entities';
-import { Connection } from 'typeorm';
+import { transaction } from './transaction';
 
 export async function activateSubscription(
-  connection: Connection,
   userId: string,
   stripeSubscriptionId: string,
   plan: Plan,
   domain: string | null,
   currency: Currency
 ): Promise<SubscriptionEntity> {
-  const userRepository = connection.getCustomRepository(UserRepository);
-  const subscriptionRepository = connection.getCustomRepository(
-    SubscriptionRepository
-  );
-  const user = await userRepository.findOne(userId);
-  if (!user) {
-    throw Error('Cannot activate subscription on a non existing user');
-  }
-  const existingSubscription = await subscriptionRepository.activate(
-    stripeSubscriptionId,
-    user,
-    plan,
-    domain
-  );
-  user.currency = currency;
-  await userRepository.save(user);
-  return existingSubscription;
+  return await transaction(async (manager) => {
+    const userRepository = manager.getCustomRepository(UserRepository);
+    const subscriptionRepository = manager.getCustomRepository(
+      SubscriptionRepository
+    );
+    const user = await userRepository.findOne(userId);
+    if (!user) {
+      throw Error('Cannot activate subscription on a non existing user');
+    }
+    const existingSubscription = await subscriptionRepository.activate(
+      stripeSubscriptionId,
+      user,
+      plan,
+      domain
+    );
+    user.currency = currency;
+    await userRepository.save(user);
+    return existingSubscription;
+  });
 }
 
 export async function cancelSubscription(
-  connection: Connection,
   stripeSubscriptionId: string
 ): Promise<SubscriptionEntity | null> {
-  const subscriptionRepository = connection.getCustomRepository(
-    SubscriptionRepository
-  );
-  try {
-    const existingSubscription = await subscriptionRepository.cancel(
-      stripeSubscriptionId
+  return await transaction(async (manager) => {
+    const subscriptionRepository = manager.getCustomRepository(
+      SubscriptionRepository
     );
-    return existingSubscription;
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
+    try {
+      const existingSubscription = await subscriptionRepository.cancel(
+        stripeSubscriptionId
+      );
+      return existingSubscription;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  });
 }
 
 export async function getActiveSubscription(
-  connection: Connection,
   userId: string
 ): Promise<SubscriptionEntity | null> {
-  const subscriptionRepository = connection.getCustomRepository(
-    SubscriptionRepository
-  );
-  const subscriptions = await subscriptionRepository.find({
-    where: {
-      owner: {
-        id: userId,
+  return await transaction(async (manager) => {
+    const subscriptionRepository = manager.getCustomRepository(
+      SubscriptionRepository
+    );
+    const subscriptions = await subscriptionRepository.find({
+      where: {
+        owner: {
+          id: userId,
+        },
+        active: true,
       },
-      active: true,
-    },
-    order: {
-      updated: 'DESC',
-    },
+      order: {
+        updated: 'DESC',
+      },
+    });
+    if (subscriptions.length === 0) {
+      return null;
+    }
+    return subscriptions[0];
   });
-  if (subscriptions.length === 0) {
-    return null;
-  }
-  return subscriptions[0];
 }
 
 export async function saveSubscription(
-  connection: Connection,
   subscription: SubscriptionEntity
 ): Promise<void> {
-  const subscriptionRepository = connection.getCustomRepository(
-    SubscriptionRepository
-  );
-  await subscriptionRepository.save(subscription);
+  return await transaction(async (manager) => {
+    const subscriptionRepository = manager.getCustomRepository(
+      SubscriptionRepository
+    );
+    await subscriptionRepository.save(subscription);
+  });
 }

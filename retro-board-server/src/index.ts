@@ -138,25 +138,21 @@ io.use(function (socket, next) {
 app.set('io', io);
 const port = config.BACKEND_PORT || 8081;
 
-db().then((connection) => {
-  passportInit(connection);
-  game(connection, io);
+db().then(() => {
+  passportInit();
+  game(io);
 
   // Stripe
-  app.use('/api/stripe', stripeRouter(connection));
+  app.use('/api/stripe', stripeRouter());
 
   // Create session
   app.post('/api/create', async (req, res) => {
-    const user = await getUserFromRequest(connection, req);
+    const user = await getUserFromRequest(req);
     const payload: CreateSessionPayload = req.body;
     setScope(async (scope) => {
       if (user) {
         try {
-          const session = await createSession(
-            connection,
-            user,
-            payload.encryptedCheck
-          );
+          const session = await createSession(user, payload.encryptedCheck);
           res.status(200).send(session);
         } catch (err) {
           reportQueryError(scope, err);
@@ -182,7 +178,7 @@ db().then((connection) => {
   });
 
   app.get('/api/me', async (req, res) => {
-    const user = await getUserViewFromRequest(connection, req);
+    const user = await getUserViewFromRequest(req);
     if (user) {
       res.status(200).send(user.toJson());
     } else {
@@ -191,9 +187,9 @@ db().then((connection) => {
   });
 
   app.get('/api/previous', async (req, res) => {
-    const user = await getUserFromRequest(connection, req);
+    const user = await getUserFromRequest(req);
     if (user) {
-      const sessions = await previousSessions(connection, user.id);
+      const sessions = await previousSessions(user.id);
       res.status(200).send(sessions);
     } else {
       res.status(200).send([]);
@@ -202,9 +198,9 @@ db().then((connection) => {
 
   app.delete('/api/session/:sessionId', async (req, res) => {
     const sessionId = req.params.sessionId;
-    const user = await getUserFromRequest(connection, req);
+    const user = await getUserFromRequest(req);
     if (user && user.accountType !== 'anonymous') {
-      const success = await deleteSessions(connection, user.id, sessionId);
+      const success = await deleteSessions(user.id, sessionId);
       if (success) {
         res.status(200).send();
       } else {
@@ -217,10 +213,10 @@ db().then((connection) => {
 
   app.post('/api/me/language', async (req, res) => {
     if (req.user) {
-      await updateUser(connection, req.user, {
+      await updateUser(req.user, {
         language: req.body.language,
       });
-      const updatedUser = await getUserViewFromRequest(connection, req);
+      const updatedUser = await getUserViewFromRequest(req);
       if (updatedUser) {
         res.status(200).send(updatedUser.toJson());
       } else {
@@ -233,7 +229,7 @@ db().then((connection) => {
 
   app.get('/api/me/default-template', async (req, res) => {
     if (req.user) {
-      const defaultTemplate = await getDefaultTemplate(connection, req.user);
+      const defaultTemplate = await getDefaultTemplate(req.user);
       if (defaultTemplate) {
         res.status(200).send(defaultTemplate);
       } else {
@@ -250,13 +246,11 @@ db().then((connection) => {
       return;
     }
     const registerPayload = req.body as RegisterPayload;
-    if (
-      (await getUserByUsername(connection, registerPayload.username)) !== null
-    ) {
+    if ((await getUserByUsername(registerPayload.username)) !== null) {
       res.status(403).send('User already exists');
       return;
     }
-    const user = await registerUser(connection, registerPayload);
+    const user = await registerUser(registerPayload);
     if (!user) {
       res.status(500).send();
     } else {
@@ -265,7 +259,7 @@ db().then((connection) => {
         registerPayload.name,
         user.emailVerification!
       );
-      const userView = await getUserView(connection, user.id);
+      const userView = await getUserView(user.id);
       if (userView) {
         res.status(200).send(userView.toJson());
       } else {
@@ -276,7 +270,7 @@ db().then((connection) => {
 
   app.post('/api/validate', async (req, res) => {
     const validatePayload = req.body as ValidateEmailPayload;
-    const user = await getUserByUsername(connection, validatePayload.email);
+    const user = await getUserByUsername(validatePayload.email);
     if (!user) {
       res.status(404).send('Email not found');
       return;
@@ -285,7 +279,7 @@ db().then((connection) => {
       user.emailVerification &&
       user.emailVerification === validatePayload.code
     ) {
-      const updatedUser = await updateUser(connection, user.id, {
+      const updatedUser = await updateUser(user.id, {
         emailVerification: null,
       });
       req.logIn(user.id, (err) => {
@@ -305,13 +299,13 @@ db().then((connection) => {
 
   app.post('/api/reset', async (req, res) => {
     const resetPayload = req.body as ResetPasswordPayload;
-    const user = await getUserByUsername(connection, resetPayload.email);
+    const user = await getUserByUsername(resetPayload.email);
     if (!user) {
       res.status(404).send('Email not found');
       return;
     }
     const code = v4();
-    await updateUser(connection, user.id, {
+    await updateUser(user.id, {
       emailVerification: code,
     });
     await sendResetPassword(resetPayload.email, user.name, code);
@@ -324,7 +318,7 @@ db().then((connection) => {
 
   app.post('/api/reset-password', async (req, res) => {
     const validatePayload = req.body as ResetChangePasswordPayload;
-    const user = await getUserByUsername(connection, validatePayload.email);
+    const user = await getUserByUsername(validatePayload.email);
     if (!user) {
       res.status(404).send('Email not found');
       return;
@@ -334,7 +328,7 @@ db().then((connection) => {
       user.emailVerification === validatePayload.code
     ) {
       const hashedPassword = await hashPassword(validatePayload.password);
-      const updatedUser = await updateUser(connection, user.id, {
+      const updatedUser = await updateUser(user.id, {
         emailVerification: null,
         password: hashedPassword,
       });
