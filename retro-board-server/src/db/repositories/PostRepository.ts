@@ -1,4 +1,4 @@
-import { EntityRepository, Repository, getCustomRepository } from 'typeorm';
+import { EntityRepository, Repository } from 'typeorm';
 import { SessionEntity, PostEntity } from '../entities';
 import SessionRepository from './SessionRepository';
 import { Post as JsonPost, defaultSession } from '@retrospected/common';
@@ -27,7 +27,9 @@ export default class PostRepository extends Repository<PostEntity> {
           : null,
       });
     } else {
-      const sessionRepository = getCustomRepository(SessionRepository);
+      const sessionRepository = this.manager.getCustomRepository(
+        SessionRepository
+      );
       const newSession = {
         ...defaultSession,
         id: sessionId,

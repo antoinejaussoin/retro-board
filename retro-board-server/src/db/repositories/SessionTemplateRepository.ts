@@ -1,4 +1,4 @@
-import { EntityRepository, Repository, getCustomRepository } from 'typeorm';
+import { EntityRepository, Repository } from 'typeorm';
 import { SessionTemplateEntity } from '../entities';
 import {
   SessionTemplate as JsonSessionTemplate,
@@ -24,7 +24,9 @@ export default class SessionTemplateRepository extends Repository<SessionTemplat
       createdBy: { id: authorId },
     };
 
-    const columnsRepo = getCustomRepository(TemplateColumnRepository);
+    const columnsRepo = this.manager.getCustomRepository(
+      TemplateColumnRepository
+    );
     const createdTemplate = await this.save(template);
 
     const reloadedTemplate = await this.findOne(createdTemplate.id);

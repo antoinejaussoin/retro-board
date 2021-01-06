@@ -560,7 +560,7 @@ export default (io: Server) => {
                 await action.handler(userId, session, data.payload, socket);
               } catch (err) {
                 reportQueryError(scope, err);
-                throw err;
+                // TODO: send error to UI
               }
             }
           }

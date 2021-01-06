@@ -83,7 +83,7 @@ if (config.REDIS_ENABLED) {
   });
   const subClient = redisClient.duplicate();
   sessionMiddleware = session({
-    secret: `${process.env.SESSION_SECRET!}-1`, // Increment to force re-auth
+    secret: `${process.env.SESSION_SECRET!}-2`, // Increment to force re-auth
     resave: true,
     saveUninitialized: true,
     store: new RedisStore({ client: redisClient }),
