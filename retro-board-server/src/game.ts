@@ -131,12 +131,13 @@ export default (io: Server) => {
   const persistPost = async (
     userId: string | null,
     sessionId: string,
-    post: Post
+    post: Post,
+    update: boolean
   ) => {
     if (!userId) {
       return;
     }
-    await savePost(userId, sessionId, post);
+    await savePost(userId, sessionId, post, update);
   };
 
   const persistPostGroup = async (
@@ -242,7 +243,7 @@ export default (io: Server) => {
     if (!userId) {
       return;
     }
-    await persistPost(userId, session.id, post);
+    await persistPost(userId, session.id, post, false);
     sendToAll(socket, session.id, RECEIVE_POST, post);
   };
 
@@ -401,7 +402,7 @@ export default (io: Server) => {
       post.column = data.post.column;
       post.group = data.post.group;
       post.rank = data.post.rank;
-      await persistPost(userId, session.id, post);
+      await persistPost(userId, session.id, post, true);
       sendToAll(socket, session.id, RECEIVE_EDIT_POST, data);
     }
   };

@@ -10,11 +10,16 @@ import { transaction } from './transaction';
 export async function savePost(
   userId: string,
   sessionId: string,
-  post: Post
+  post: Post,
+  update: boolean
 ): Promise<void> {
   return await transaction(async (manager) => {
     const postRepository = manager.getCustomRepository(PostRepository);
-    await postRepository.saveFromJson(sessionId, userId, post);
+    if (update) {
+      await postRepository.updateFromJson(post);
+    } else {
+      await postRepository.saveFromJson(sessionId, userId, post);
+    }
   });
 }
 

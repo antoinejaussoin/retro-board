@@ -5,6 +5,9 @@ import { Post as JsonPost, defaultSession } from '@retrospected/common';
 
 @EntityRepository(PostEntity)
 export default class PostRepository extends Repository<PostEntity> {
+  async updateFromJson(post: JsonPost) {
+    await this.save(post);
+  }
   async saveFromJson(
     sessionId: string,
     userId: string,
