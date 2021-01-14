@@ -136,19 +136,26 @@ When using the Docker deployment, your database runs from a container. But if yo
 - `yarn test` to run the tests in watch mode
 - **or** `yarn ci-test` to run the tests once
 
-## Roadmap and ideas 🚗 💡
+## Road-Map and ideas 🚗 💡
 
 - Highlight posts where the user voted
 
 ## Versions History
 
+### Version 4.0.4
+
+- 🐛 Fixed a bug where adding an action was changing ownership of the post to the person adding the action. 👏 Thanks Karol P.! ([#209](https://github.com/antoinejaussoin/retro-board/issues/209))
+- Use TypeORM transactions for every database interactions, fixing some random races conditions.
+- Improving multi-arch support
+- Improving API calls and Sentry
+
 ### Version 4.0.3
 
-- 🐛 Fixed a bug where groups couldn't be deleted if you didn't create it in the first place
+- 🐛 Fixed a bug where groups couldn't be deleted if you didn't create them in the first place.
 
 ### Version 4.0.2
 
-- 🚨 Emergency fix, for a serious bug that made it seem like a lot of people were participant to your session. This was never the case, it was displaying every non-logged in people as spectators to your session, while it wasn't the case.
+- 🚨 Emergency fix, for a serious bug that made it seem like a lot of people were participant to your session. This was never the case, it was displaying every non-logged in people as spectators to your session erroneously.
 
 ### Version 4.0.1
 
