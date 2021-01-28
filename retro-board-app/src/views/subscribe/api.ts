@@ -3,6 +3,7 @@ import {
   Plan,
   Currency,
   StripeLocales,
+  StartTrialPayload,
 } from '@retrospected/common';
 import { fetchGet, fetchPostGet } from '../../api/fetch';
 
@@ -26,6 +27,21 @@ export async function createCheckoutSession(
     CreateSubscriptionPayload,
     SessionIdResponse | null
   >('/api/stripe/create-checkout-session', null, payload);
+}
+
+export async function startTrial(
+  plan: Plan,
+  domain: string | null
+): Promise<SessionIdResponse | null> {
+  const payload: StartTrialPayload = {
+    domain,
+    plan,
+  };
+  return await fetchPostGet<StartTrialPayload, SessionIdResponse | null>(
+    '/api/stripe/start-trial',
+    null,
+    payload
+  );
 }
 
 export async function isValidDomain(domain: string): Promise<boolean> {

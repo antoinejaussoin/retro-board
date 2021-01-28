@@ -21,6 +21,8 @@ export default class SubscriptionEntity {
   public owner: UserEntity;
   @Column({ nullable: true, type: 'character varying' })
   public domain: string | null;
+  @Column({ type: 'timestamp with time zone', nullable: true })
+  public trial: Date | null;
   @Column('text', { array: true, default: '{}' })
   public members: string[];
   @CreateDateColumn({ type: 'timestamp with time zone', select: false })
@@ -34,5 +36,6 @@ export default class SubscriptionEntity {
     this.plan = plan;
     this.domain = null;
     this.members = [];
+    this.trial = null;
   }
 }

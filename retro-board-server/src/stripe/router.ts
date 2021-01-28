@@ -3,6 +3,7 @@ import {
   CreateSubscriptionPayload,
   Product,
   StripeLocales,
+  StartTrialPayload,
 } from '@retrospected/common';
 import config from '../db/config';
 import Stripe from 'stripe';
@@ -21,6 +22,7 @@ import {
   activateSubscription,
   getActiveSubscription,
   saveSubscription,
+  startTrial,
 } from '../db/actions/subscriptions';
 
 const stripe = new Stripe(config.STRIPE_SECRET, {
@@ -220,6 +222,23 @@ function stripeRouter(): Router {
   router.get('/domain/:domain', async (req, res) => {
     const domain = req.params.domain;
     return res.status(200).send(isValidDomain(domain));
+  });
+
+  router.post('/start-trial', async (req, res) => {
+    const user = await getUserFromRequest(req);
+    const payload = req.body as StartTrialPayload;
+    if (user) {
+      const subscription = await startTrial(
+        user.id,
+        payload.plan,
+        payload.domain
+      );
+      if (subscription) {
+        return res.status(200).send();
+      }
+    }
+
+    return res.status(500).send();
   });
 
   return router;

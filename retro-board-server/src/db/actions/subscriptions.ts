@@ -85,3 +85,21 @@ export async function saveSubscription(
     await subscriptionRepository.save(subscription);
   });
 }
+
+export async function startTrial(
+  userId: string,
+  plan: Plan,
+  domain: string | null
+): Promise<SubscriptionEntity | null> {
+  return await transaction(async (manager) => {
+    const userRepository = manager.getCustomRepository(UserRepository);
+    const user = await userRepository.findOne(userId);
+    if (user) {
+      const subscriptionRepository = manager.getCustomRepository(
+        SubscriptionRepository
+      );
+      return await subscriptionRepository.startTrial(user, plan, domain);
+    }
+    return null;
+  });
+}
