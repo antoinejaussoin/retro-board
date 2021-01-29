@@ -1,6 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { PostGroupEntity } from '../entities';
 import { PostGroup as JsonPostGroup } from '@retrospected/common';
+import { cloneDeep } from 'lodash';
 
 @EntityRepository(PostGroupEntity)
 export default class PostGroupRepository extends Repository<PostGroupEntity> {
@@ -10,7 +11,7 @@ export default class PostGroupRepository extends Repository<PostGroupEntity> {
     group: Omit<JsonPostGroup, 'createdBy'>
   ): Promise<JsonPostGroup> {
     const groupWithoutPosts = {
-      ...group,
+      ...cloneDeep(group),
       posts: undefined,
       session: { id: sessionId },
       createdBy: { id: authorId },

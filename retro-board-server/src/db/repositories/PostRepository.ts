@@ -2,6 +2,7 @@ import { EntityRepository, Repository } from 'typeorm';
 import { SessionEntity, PostEntity } from '../entities';
 import SessionRepository from './SessionRepository';
 import { Post as JsonPost, defaultSession } from '@retrospected/common';
+import { cloneDeep } from 'lodash';
 
 @EntityRepository(PostEntity)
 export default class PostRepository extends Repository<PostEntity> {
@@ -16,7 +17,7 @@ export default class PostRepository extends Repository<PostEntity> {
     const session = await this.manager.findOne(SessionEntity, sessionId);
     if (session) {
       await this.save({
-        ...post,
+        ...cloneDeep(post),
         user: {
           id: userId,
         },
