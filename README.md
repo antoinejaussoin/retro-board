@@ -142,6 +142,10 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
+### Version 4.0.5
+
+- 🐛 Fixed a bug whereby adding multiple cards on a single group wouldn't work correctly (only the first card would be persisted in that group). 👏 Thanks to Daniel N. for reporting this by email.
+
 ### Version 4.0.4
 
 - 🐛 Fixed a bug where adding an action was changing ownership of the post to the person adding the action. 👏 Thanks [@botactic](https://github.com/botactic)! ([#209](https://github.com/antoinejaussoin/retro-board/issues/209))
