@@ -16,7 +16,7 @@ export async function savePost(
   return await transaction(async (manager) => {
     const postRepository = manager.getCustomRepository(PostRepository);
     if (update) {
-      await postRepository.updateFromJson(post);
+      await postRepository.updateFromJson(sessionId, post);
     } else {
       await postRepository.saveFromJson(sessionId, userId, post);
     }

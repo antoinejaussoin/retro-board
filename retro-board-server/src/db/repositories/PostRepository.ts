@@ -6,8 +6,22 @@ import { cloneDeep } from 'lodash';
 
 @EntityRepository(PostEntity)
 export default class PostRepository extends Repository<PostEntity> {
-  async updateFromJson(post: JsonPost) {
-    await this.save(cloneDeep(post));
+  async updateFromJson(sessionId: string, post: JsonPost) {
+    await this.save({
+      ...cloneDeep(post),
+      session: {
+        id: sessionId,
+      },
+      votes: undefined,
+      user: {
+        id: post.user.id,
+      },
+      group: post.group
+        ? {
+            id: post.group.id,
+          }
+        : null,
+    });
   }
   async saveFromJson(
     sessionId: string,
