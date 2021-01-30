@@ -63,7 +63,8 @@ function App() {
             </IconButton>
           </HomeButton>
           <MainTitle variant="h6" color="inherit" onClick={goToHome}>
-            Retrospected&nbsp;{user?.pro ? <ProPill small /> : null}
+            Retrospected&nbsp;
+            {user?.pro ? <ProPill small trial={!!user.trial} /> : null}
           </MainTitle>
           <Route path="/game/:gameId" component={Invite} />
           {isInitialised ? (

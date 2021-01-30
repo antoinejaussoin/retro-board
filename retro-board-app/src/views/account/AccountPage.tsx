@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatDistanceToNow } from 'date-fns';
 import usePortalUrl from './usePortalUrl';
 import { Button } from '@material-ui/core';
 import { Page } from '../../components/Page';
@@ -9,10 +10,12 @@ import { Alert } from '@material-ui/lab';
 import Section from './Section';
 import MembersEditor from './MembersEditor';
 import useTranslations from '../../translations';
+import { useHistory } from 'react-router-dom';
 
 function AccountPage() {
   const url = usePortalUrl();
   const user = useUser();
+  const history = useHistory();
   const {
     AccountPage: translations,
     SubscribePage: subscribeTranslations,
@@ -38,7 +41,7 @@ function AccountPage() {
   return (
     <Page>
       <Name>
-        {user.name}&nbsp;{user.pro ? <ProPill /> : null}
+        {user.name}&nbsp;{user.pro ? <ProPill trial={!!user.trial} /> : null}
       </Name>
 
       <Section title={translations.details?.header}>
@@ -86,7 +89,7 @@ function AccountPage() {
         </Section>
       ) : null}
 
-      {ownsThePlan ? (
+      {ownsThePlan && !user.trial ? (
         <Section title={translations.subscription.header}>
           {url ? (
             <Button
@@ -98,6 +101,23 @@ function AccountPage() {
               {translations.subscription?.manageButton}
             </Button>
           ) : null}
+        </Section>
+      ) : null}
+
+      {!!user.trial ? (
+        <Section title="Your Trial">
+          <Alert severity="info">
+            Your trial will expire in{' '}
+            {formatDistanceToNow(new Date(user.trial))}.
+          </Alert>
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ marginTop: 20 }}
+            onClick={() => history.push('/subscribe')}
+          >
+            Subscribe
+          </Button>
         </Section>
       ) : null}
     </Page>

@@ -4,9 +4,10 @@ import { Star } from '@material-ui/icons';
 
 interface ProPillProps {
   small?: boolean;
+  trial?: boolean;
 }
 
-function ProPill({ small = false }: ProPillProps) {
+function ProPill({ small = false, trial = false }: ProPillProps) {
   return (
     <Chip
       icon={
@@ -20,7 +21,7 @@ function ProPill({ small = false }: ProPillProps) {
           }}
         />
       }
-      label="Pro"
+      label={trial ? `Pro Trial` : 'Pro'}
       color="secondary"
       size={small ? 'small' : 'medium'}
     />

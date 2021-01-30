@@ -15,7 +15,6 @@ import styled from 'styled-components';
 import useUser from '../../auth/useUser';
 import useModal from '../../hooks/useModal';
 import useTranslation from '../../translations/useTranslations';
-import { startTrial } from '../../views/subscribe/api';
 import Feature from './Feature';
 
 interface ComponentProp {
@@ -51,11 +50,12 @@ function ProButton({ children }: ProButtonProps) {
     async (e: React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
       e.stopPropagation();
       e.preventDefault();
-      await startTrial('team', null);
-      close();
+      history.push('/subscribe?trial');
+      // await startTrial('team', null);
+      // close();
       window.location.reload();
     },
-    [close]
+    [history]
   );
 
   const handleClose = useCallback(

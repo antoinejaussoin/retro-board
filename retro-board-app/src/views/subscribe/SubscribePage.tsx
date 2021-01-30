@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useStripe } from '@stripe/react-stripe-js';
-import { createCheckoutSession, isValidDomain } from './api';
+import { createCheckoutSession, isValidDomain, startTrial } from './api';
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import Step from './components/Step';
@@ -13,6 +13,7 @@ import useUser from '../../auth/useUser';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { useEffect } from 'react';
 import useTranslations, { useLanguage } from '../../translations';
+import { useLocation } from 'react-router-dom';
 
 function guessDomain(user: FullUser): string {
   if (user.email) {
@@ -26,6 +27,10 @@ function guessDomain(user: FullUser): string {
 
 const DEFAULT_DOMAIN = 'acme.com';
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 function SubscriberPage() {
   const user = useUser();
   const [currency, setCurrency] = useState<Currency>('eur');
@@ -36,6 +41,8 @@ function SubscriberPage() {
   const language = useLanguage();
   const needDomain = product && product.seats === null;
   const [validDomain, setValidDomain] = useState(false);
+  const query = useQuery();
+  const isTrial = query.has('trial');
 
   useEffect(() => {
     setValidDomain(false);
@@ -76,6 +83,13 @@ function SubscriberPage() {
     }
   }, [stripe, product, currency, domain, language]);
 
+  const handleTrial = useCallback(async () => {
+    if (product) {
+      await startTrial(product.plan, !product.seats ? domain : null);
+      window.location.replace('/');
+    }
+  }, [product, domain]);
+
   const validForm =
     (!needDomain || validDomain) &&
     !!product &&
@@ -88,34 +102,39 @@ function SubscriberPage() {
       {user && user.pro && !user.subscriptionsId ? (
         <Alert severity="info">{translations.alertAlreadyPro}</Alert>
       ) : null}
-      {user && user.subscriptionsId ? (
+      {user && user.subscriptionsId && !user.trial ? (
         <Alert severity="info">{translations.alertAlreadySubscribed}</Alert>
       ) : null}
+
+      {!isTrial ? (
+        <Step
+          index={1}
+          title={translations.currency.title}
+          description={translations.currency.description}
+        >
+          {user && !!user.currency ? (
+            <Alert severity="warning" style={{ marginBottom: 10 }}>
+              {translations.currency.warning!(currency.toUpperCase())}
+            </Alert>
+          ) : null}
+          <CurrencyPicker
+            disabled={(user && !!user.currency) || false}
+            value={currency}
+            onChange={setCurrency}
+          />
+        </Step>
+      ) : null}
       <Step
-        index={1}
-        title={translations.currency.title}
-        description={translations.currency.description}
-      >
-        {user && !!user.currency ? (
-          <Alert severity="warning" style={{ marginBottom: 10 }}>
-            {translations.currency.warning!(currency.toUpperCase())}
-          </Alert>
-        ) : null}
-        <CurrencyPicker
-          disabled={(user && !!user.currency) || false}
-          value={currency}
-          onChange={setCurrency}
-        />
-      </Step>
-      <Step
-        index={2}
+        index={isTrial ? 1 : 2}
         title={translations.plan.title}
         description={translations.plan.description}
       >
-        <Alert>
-          <AlertTitle>Limited Offer</AlertTitle>Retrospected Pro is 50% off for
-          a limited time, to celebrate our new Pro features launch.
-        </Alert>
+        {!isTrial ? (
+          <Alert>
+            <AlertTitle>Limited Offer</AlertTitle>Retrospected Pro is 50% off
+            for a limited time, to celebrate our new Pro features launch.
+          </Alert>
+        ) : null}
         <ProductPicker
           value={product}
           currency={currency}
@@ -124,7 +143,7 @@ function SubscriberPage() {
       </Step>
       {needDomain ? (
         <Step
-          index={3}
+          index={isTrial ? 2 : 3}
           title={translations.domain.title}
           description={translations.domain.description}
         >
@@ -138,27 +157,49 @@ function SubscriberPage() {
         </Step>
       ) : null}
 
-      <Step
-        index={needDomain ? 4 : 3}
-        title={`${translations.subscribe.title} ${
-          product ? ` - ${product.name}` : ''
-        }`}
-        description={translations.subscribe.description}
-      >
-        {!user || user.accountType === 'anonymous' ? (
-          <Alert severity="info" style={{ marginBottom: 10 }}>
-            {translations.subscribe.cannotRegisterWithAnon}
-          </Alert>
-        ) : null}
-        <Button
-          onClick={handleCheckout}
-          variant="contained"
-          color="primary"
-          disabled={!validForm}
+      {isTrial ? (
+        <Step
+          index={needDomain ? (isTrial ? 3 : 4) : isTrial ? 2 : 3}
+          title={`Trial ${product ? ` - ${product.name}` : ''}`}
+          description="After clicking the button bellow, you will start your 30-day trial period."
         >
-          {translations.subscribe.checkout}
-        </Button>
-      </Step>
+          {!user || user.accountType === 'anonymous' ? (
+            <Alert severity="info" style={{ marginBottom: 10 }}>
+              {translations.subscribe.cannotRegisterWithAnon}
+            </Alert>
+          ) : null}
+          <Button
+            onClick={handleTrial}
+            variant="contained"
+            color="primary"
+            disabled={!validForm}
+          >
+            Start Trial
+          </Button>
+        </Step>
+      ) : (
+        <Step
+          index={needDomain ? (isTrial ? 3 : 4) : isTrial ? 2 : 3}
+          title={`${translations.subscribe.title} ${
+            product ? ` - ${product.name}` : ''
+          }`}
+          description={translations.subscribe.description}
+        >
+          {!user || user.accountType === 'anonymous' ? (
+            <Alert severity="info" style={{ marginBottom: 10 }}>
+              {translations.subscribe.cannotRegisterWithAnon}
+            </Alert>
+          ) : null}
+          <Button
+            onClick={handleCheckout}
+            variant="contained"
+            color="primary"
+            disabled={!validForm}
+          >
+            {translations.subscribe.checkout}
+          </Button>
+        </Step>
+      )}
     </Container>
   );
 }
