@@ -254,6 +254,11 @@ export interface Translation {
         info?: (limit: number) => string;
       };
     };
+    trial: {
+      header?: string;
+      yourTrialWillExpireIn?: (date: string) => string;
+      subscribe?: string;
+    };
   };
   SubscribePage: {
     alertAlreadyPro?: string;
@@ -295,6 +300,7 @@ export interface Translation {
     };
     subscribeButton?: string;
     cancelButton?: string;
+    startTrial?: string;
   };
   Products: {
     team?: string;
@@ -329,5 +335,12 @@ export interface Translation {
     sessionIsPublic?: string;
     sessionIsPrivate?: string;
     sessionIsPrivateNoAccess?: string;
+  };
+  TrialPrompt: {
+    onTrialTitle?: string;
+    remainingTrialSentence?: (remaining: string) => string;
+    trialEndedTitle?: string;
+    trialEndedSentence?: string;
+    subscribeNow?: string;
   };
 }

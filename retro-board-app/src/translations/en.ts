@@ -325,6 +325,7 @@ export default {
     },
     subscribeButton: 'Subscribe',
     cancelButton: 'Cancel',
+    startTrial: 'Start Trial',
   },
   Products: {
     team:

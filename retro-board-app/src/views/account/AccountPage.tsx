@@ -111,10 +111,11 @@ function AccountPage() {
         ) : null}
 
         {isTrial ? (
-          <Section title="Your Trial">
+          <Section title={translations.trial.header}>
             <Alert severity="info">
-              Your trial will expire in{' '}
-              {formatDistanceToNow(new Date(user.trial!))}.
+              {translations.trial.yourTrialWillExpireIn!(
+                formatDistanceToNow(new Date(user.trial!))
+              )}
             </Alert>
             <Button
               variant="contained"
@@ -122,7 +123,7 @@ function AccountPage() {
               style={{ marginTop: 20 }}
               onClick={() => history.push('/subscribe')}
             >
-              Subscribe
+              {translations.trial.subscribe}
             </Button>
           </Section>
         ) : null}

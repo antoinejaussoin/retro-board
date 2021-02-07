@@ -119,10 +119,10 @@ function ProButton({ children }: ProButtonProps) {
           </Button>
           <Button
             variant="contained"
-            color="primary"
+            color="secondary"
             onClick={handleStartTrial}
           >
-            TRIAL
+            {translations.startTrial}
           </Button>
         </DialogActions>
       </Dialog>
