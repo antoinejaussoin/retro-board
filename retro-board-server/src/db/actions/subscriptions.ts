@@ -1,6 +1,6 @@
 import { SubscriptionRepository, UserRepository } from '../repositories';
 import { Plan, Currency } from '@retrospected/common';
-import { SubscriptionEntity, UserEntity } from '../entities';
+import { SubscriptionEntity, UserEntity, UserView } from '../entities';
 import { transaction } from './transaction';
 
 export async function activateSubscription(
@@ -88,8 +88,13 @@ export async function saveSubscription(
 
 export async function startTrial(userId: string): Promise<UserEntity | null> {
   return await transaction(async (manager) => {
-    const userRepository = manager.getCustomRepository(UserRepository);
-    const user = await userRepository.startTrial(userId);
-    return user;
+    const userViewRepository = manager.getRepository(UserView);
+    const fullUser = await userViewRepository.findOne(userId);
+    if (fullUser) {
+      const userRepository = manager.getCustomRepository(UserRepository);
+      const user = await userRepository.startTrial(fullUser);
+      return user;
+    }
+    return null;
   });
 }

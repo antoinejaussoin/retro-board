@@ -94,22 +94,6 @@ function SubscriberPage() {
 
       <Step
         index={1}
-        title={translations.currency.title}
-        description={translations.currency.description}
-      >
-        {user && !!user.currency ? (
-          <Alert severity="warning" style={{ marginBottom: 10 }}>
-            {translations.currency.warning!(currency.toUpperCase())}
-          </Alert>
-        ) : null}
-        <CurrencyPicker
-          disabled={(user && !!user.currency) || false}
-          value={currency}
-          onChange={setCurrency}
-        />
-      </Step>
-      <Step
-        index={2}
         title={translations.plan.title}
         description={translations.plan.description}
       >
@@ -125,7 +109,7 @@ function SubscriberPage() {
       </Step>
       {needDomain ? (
         <Step
-          index={3}
+          index={2}
           title={translations.domain.title}
           description={translations.domain.description}
         >
@@ -138,6 +122,22 @@ function SubscriberPage() {
           />
         </Step>
       ) : null}
+      <Step
+        index={needDomain ? 3 : 2}
+        title={translations.currency.title}
+        description={translations.currency.description}
+      >
+        {user && !!user.currency ? (
+          <Alert severity="warning" style={{ marginBottom: 10 }}>
+            {translations.currency.warning!(currency.toUpperCase())}
+          </Alert>
+        ) : null}
+        <CurrencyPicker
+          disabled={(user && !!user.currency) || false}
+          value={currency}
+          onChange={setCurrency}
+        />
+      </Step>
 
       <Step
         index={needDomain ? 4 : 3}
