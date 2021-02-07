@@ -142,6 +142,10 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
+### Version 4.1.0 (work in progress)
+
+- Adding a 30-day trial
+
 ### Version 4.0.5
 
 - 🐛 Fixed a bug whereby adding multiple cards on a single group wouldn't work correctly (only the first card would be persisted in that group). 👏 Thanks to Daniel N. for reporting this by email.
