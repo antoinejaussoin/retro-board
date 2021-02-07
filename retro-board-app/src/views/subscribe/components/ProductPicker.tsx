@@ -7,11 +7,17 @@ import useProducts from './useProducts';
 
 interface ProductPickerProps {
   value: Product | null;
+  trial: boolean;
   currency: Currency;
   onChange: (value: Product) => void;
 }
 
-function ProductPicker({ value, currency, onChange }: ProductPickerProps) {
+function ProductPicker({
+  value,
+  currency,
+  trial,
+  onChange,
+}: ProductPickerProps) {
   const products = useProducts();
   return (
     <Container>
@@ -20,6 +26,7 @@ function ProductPicker({ value, currency, onChange }: ProductPickerProps) {
           key={product.plan}
           product={product}
           currency={currency}
+          trial={trial}
           onSelect={onChange}
           selected={value === product}
         />

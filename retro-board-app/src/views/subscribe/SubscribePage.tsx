@@ -43,6 +43,7 @@ function SubscriberPage() {
   const [validDomain, setValidDomain] = useState(false);
   const query = useQuery();
   const isTrial = query.has('trial');
+  const hasHadATrialAlready = !!user && user.trialCount > 0;
 
   useEffect(() => {
     setValidDomain(false);
@@ -93,7 +94,7 @@ function SubscriberPage() {
   const validForm =
     (!needDomain || validDomain) &&
     !!product &&
-    user &&
+    !!user &&
     user.accountType !== 'anonymous';
 
   return (
@@ -139,6 +140,7 @@ function SubscriberPage() {
           value={product}
           currency={currency}
           onChange={setProduct}
+          trial={isTrial}
         />
       </Step>
       {needDomain ? (
@@ -161,18 +163,25 @@ function SubscriberPage() {
         <Step
           index={needDomain ? (isTrial ? 3 : 4) : isTrial ? 2 : 3}
           title={`Trial ${product ? ` - ${product.name}` : ''}`}
-          description="After clicking the button bellow, you will start your 30-day trial period."
+          description="After clicking the button bellow, you will start your 30-day trial period. No credit card required."
         >
           {!user || user.accountType === 'anonymous' ? (
             <Alert severity="info" style={{ marginBottom: 10 }}>
               {translations.subscribe.cannotRegisterWithAnon}
             </Alert>
           ) : null}
+          {user && hasHadATrialAlready ? (
+            <Alert severity="warning" style={{ marginBottom: 10 }}>
+              You are already in a trial, or were in a trial. You are also
+              considered being in a trial if you became a Pro User via somebody
+              else's trial.
+            </Alert>
+          ) : null}
           <Button
             onClick={handleTrial}
             variant="contained"
             color="primary"
-            disabled={!validForm}
+            // disabled={!validForm || hasHadATrialAlready}
           >
             Start Trial
           </Button>
