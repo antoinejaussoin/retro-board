@@ -3,7 +3,6 @@ import {
   CreateSubscriptionPayload,
   Product,
   StripeLocales,
-  StartTrialPayload,
 } from '@retrospected/common';
 import config from '../db/config';
 import Stripe from 'stripe';
@@ -226,14 +225,9 @@ function stripeRouter(): Router {
 
   router.post('/start-trial', async (req, res) => {
     const user = await getUserFromRequest(req);
-    const payload = req.body as StartTrialPayload;
     if (user) {
-      const subscription = await startTrial(
-        user.id,
-        payload.plan,
-        payload.domain
-      );
-      if (subscription) {
+      const updatedUser = await startTrial(user.id);
+      if (updatedUser) {
         return res.status(200).send();
       }
     }

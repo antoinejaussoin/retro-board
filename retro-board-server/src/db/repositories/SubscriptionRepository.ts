@@ -1,8 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { UserEntity, SubscriptionEntity } from '../entities';
 import { Plan } from '@retrospected/common';
-import { v4 } from 'uuid';
-import { addDays } from 'date-fns';
 @EntityRepository(SubscriptionEntity)
 export default class SubscriptionRepository extends Repository<SubscriptionEntity> {
   async activate(
@@ -35,17 +33,5 @@ export default class SubscriptionRepository extends Repository<SubscriptionEntit
     }
     existingSub.active = false;
     return await this.save(existingSub);
-  }
-
-  async startTrial(
-    owner: UserEntity,
-    plan: Plan,
-    domain: string | null
-  ): Promise<SubscriptionEntity> {
-    const newSubscription = new SubscriptionEntity(v4(), owner, plan);
-    newSubscription.trial = addDays(new Date(), 30);
-    newSubscription.domain = domain;
-    newSubscription.active = true;
-    return await this.save(newSubscription);
   }
 }

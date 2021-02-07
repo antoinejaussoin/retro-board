@@ -59,7 +59,6 @@ const AllTheProviders: React.FC = ({ children }) => {
     ownPlan: null,
     ownSubscriptionsId: null,
     trial: null,
-    trialCount: 0,
   });
   useEffect(() => {
     setUser({
@@ -79,7 +78,6 @@ const AllTheProviders: React.FC = ({ children }) => {
       ownPlan: null,
       ownSubscriptionsId: null,
       trial: null,
-      trialCount: 0,
     });
   }, []);
   return (

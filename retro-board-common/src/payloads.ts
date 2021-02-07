@@ -33,11 +33,6 @@ export interface CreateSubscriptionPayload {
   domain: string | null;
 }
 
-export interface StartTrialPayload {
-  plan: Plan;
-  domain: string | null;
-}
-
 export interface CreateSessionPayload {
   encryptedCheck?: string;
 }

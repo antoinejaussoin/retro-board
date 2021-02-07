@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { colors, Paper } from '@material-ui/core';
 import { useCallback } from 'react';
@@ -8,7 +7,6 @@ import useTranslations from '../../../translations';
 interface ProductDisplayProps {
   product: Product;
   currency: Currency;
-  trial: boolean;
   selected: boolean;
   onSelect: (product: Product) => void;
 }
@@ -17,7 +15,6 @@ function ProductDisplay({
   product,
   selected,
   currency,
-  trial,
   onSelect,
 }: ProductDisplayProps) {
   const {
@@ -38,35 +35,17 @@ function ProductDisplay({
             ? translations.users!(product.seats)
             : `${translations.unlimited_seats} 🎉`}
         </Seats>
-        {trial ? (
-          <>
-            <RegularPrice>
-              {(product[currency] / 100).toFixed(2)} {currency.toUpperCase()}
-            </RegularPrice>
-            <Total>
-              Free&nbsp;
-              <PerMonth>(for 30 days)</PerMonth>
-            </Total>
-            <PickMe>
-              <PickMeButton>Choose</PickMeButton>
-            </PickMe>
-          </>
-        ) : (
-          <>
-            <RegularPrice>
-              {(product[currency] / 50).toFixed(2)} {currency.toUpperCase()}
-            </RegularPrice>
-            <Total>
-              {(product[currency] / 100).toFixed(2)} {currency.toUpperCase()}
-              <PerMonth>/ {translations.month}</PerMonth>
-            </Total>
-            <PickMe>
-              <PickMeButton>
-                {subscribeTranslations.subscribeButton}
-              </PickMeButton>
-            </PickMe>
-          </>
-        )}
+
+        <RegularPrice>
+          {(product[currency] / 50).toFixed(2)} {currency.toUpperCase()}
+        </RegularPrice>
+        <Total>
+          {(product[currency] / 100).toFixed(2)} {currency.toUpperCase()}
+          <PerMonth>/ {translations.month}</PerMonth>
+        </Total>
+        <PickMe>
+          <PickMeButton>{subscribeTranslations.subscribeButton}</PickMeButton>
+        </PickMe>
       </Paper>
     </Container>
   );

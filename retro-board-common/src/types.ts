@@ -120,7 +120,6 @@ export interface FullUser extends User {
   ownPlan: Plan | null;
   ownSubscriptionsId: string | null;
   trial: Date | null;
-  trialCount: number;
 }
 
 export type AccountType =
