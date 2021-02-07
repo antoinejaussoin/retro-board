@@ -1,5 +1,3 @@
-import React from 'react';
-import { formatDistanceToNow } from 'date-fns';
 import usePortalUrl from './usePortalUrl';
 import { Button } from '@material-ui/core';
 import { Page } from '../../components/Page';
@@ -13,11 +11,13 @@ import useTranslations from '../../translations';
 import { useHistory } from 'react-router-dom';
 import useIsTrial from '../../auth/useIsTrial';
 import TrialPrompt from '../home/TrialPrompt';
+import useFormatDate from '../../hooks/useFormatDate';
 
 function AccountPage() {
   const url = usePortalUrl();
   const user = useUser();
   const isTrial = useIsTrial();
+  const { formatDistanceToNow } = useFormatDate();
   const history = useHistory();
   const {
     AccountPage: translations,

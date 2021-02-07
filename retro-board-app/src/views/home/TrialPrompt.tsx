@@ -1,13 +1,15 @@
 import { Alert, AlertTitle, Color } from '@material-ui/lab';
-import { differenceInDays, formatDistanceToNow } from 'date-fns';
+import { differenceInDays } from 'date-fns';
 import { Link } from 'react-router-dom';
 import useIsTrial from '../../auth/useIsTrial';
 import useUser from '../../auth/useUser';
+import useFormatDate from '../../hooks/useFormatDate';
 import useTranslations from '../../translations';
 
 export default function TrialPrompt() {
   const user = useUser();
   const isInTrial = useIsTrial();
+  const { formatDistanceToNow } = useFormatDate();
   const { TrialPrompt: translations } = useTranslations();
 
   if (!user || user.pro || !user?.trial) {

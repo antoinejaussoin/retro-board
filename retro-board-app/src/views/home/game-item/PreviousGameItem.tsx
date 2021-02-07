@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react';
-import { formatDistanceToNow } from 'date-fns';
 import {
   Card as CardBase,
   CardContent,
@@ -19,9 +18,10 @@ import CustomAvatar from '../../../components/Avatar';
 import ItemStat from '../ItemStat';
 import styled from 'styled-components';
 import useOnHover from '../../../hooks/useOnHover';
-import useTranslations, { useLanguage } from '../../../translations';
+import useTranslations from '../../../translations';
 import { DeleteForever } from '@material-ui/icons';
 import { useEncryptionKey } from '../../../crypto/useEncryptionKey';
+import useFormatDate from '../../../hooks/useFormatDate';
 import { decrypt } from '../../../crypto/crypto';
 import EncryptedLock from './EncryptedLock';
 import PrivateSessionIcon from './PrivateSessionIcon';
@@ -42,8 +42,8 @@ const PreviousGameItem = ({
     SessionName: { defaultSessionName },
     DeleteSession,
   } = useTranslations();
-  const language = useLanguage();
   const [encryptionKey] = useEncryptionKey(session.id);
+  const { formatDistanceToNow } = useFormatDate();
   const [hover, hoverRef] = useOnHover();
   const handleClick = useCallback(() => {
     onClick(session, encryptionKey);
@@ -73,7 +73,7 @@ const PreviousGameItem = ({
               <LastUpdated>
                 {formatDistanceToNow(
                   Date.parse((session.created as unknown) as string),
-                  { locale: language.dateLocale, addSuffix: true }
+                  true
                 )}
               </LastUpdated>
               <Delete>
