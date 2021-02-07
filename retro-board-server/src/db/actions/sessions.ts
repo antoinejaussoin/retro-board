@@ -30,6 +30,7 @@ import {
 import { orderBy } from 'lodash';
 import { transaction } from './transaction';
 import { EntityManager } from 'typeorm';
+import { isUserPro } from './users';
 
 export async function createSession(
   author: UserEntity,
@@ -409,10 +410,10 @@ export function isAllowed(
   session: SessionEntity,
   user: FullUser | null
 ): AllowedResponse {
-  if ((session.locked || session.encrypted) && user && !user.pro) {
+  if ((session.locked || session.encrypted) && user && !isUserPro(user)) {
     return { allowed: false, reason: 'non_pro' };
   }
-  if (session.locked && session.visitors && user && user.pro) {
+  if (session.locked && session.visitors && user && isUserPro(user)) {
     if (session.visitors.map((v) => v.id).includes(user.id)) {
       return { allowed: true };
     } else {

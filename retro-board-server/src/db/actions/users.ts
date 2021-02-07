@@ -3,6 +3,7 @@ import { EntityManager } from 'typeorm';
 import { UserRepository } from '../repositories';
 import { ALL_FIELDS } from '../entities/User';
 import { transaction } from './transaction';
+import { FullUser } from '@retrospected/common';
 
 export async function getUser(id: string): Promise<UserEntity | null> {
   return await transaction(async (manager) => {
@@ -78,4 +79,10 @@ export async function getOrSaveUser(user: UserEntity): Promise<UserEntity> {
     }
     return await userRepository.save(user);
   });
+}
+
+export function isUserPro(user: FullUser) {
+  // TODO: deduplicate from same logic in Frontend retro-board-app/src/auth/useIsPro.ts
+  const activeTrial = user && user.trial && new Date(user.trial) > new Date();
+  return user && (user.pro || activeTrial);
 }
