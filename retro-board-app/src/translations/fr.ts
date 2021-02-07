@@ -285,6 +285,12 @@ export default {
           `Ajouter des addresses emails ci-dessous pour donner un accès Pro à vos collaborateurs (dans la limite de ${limit} collaborateurs). Appuyez sur Entrée après chaque email.`,
       },
     },
+    trial: {
+      header: `Votre Periode d'Essai`,
+      yourTrialWillExpireIn: (date: string) =>
+        `Votre période d'essai va se terminer dans ${date}.`,
+      subscribe: `S'abonner`,
+    },
   },
   SubscribePage: {
     alertAlreadyPro: `Vous avez déjà un compte Pro, vous n'avez peut-être donc pas besoin d'un abonnement supplémentaire.`,
@@ -329,6 +335,7 @@ export default {
     },
     subscribeButton: `S'abonner`,
     cancelButton: `Annuler`,
+    startTrial: `Période d'essai`,
   },
   Products: {
     team: `Parfait pour une équipe, vous pouvez sélectioner jusqu'à 20 collègues qui recevront un compte Retrospected Pro.`,
@@ -367,5 +374,13 @@ export default {
       'Cette session est publique, et accessible à tout le monde.',
     sessionIsPrivate: 'Cette session est privée, et vous y avez accès.',
     sessionIsPrivateNoAccess: `Cette session est privée, mais vous n'y avez pas accès.`,
+  },
+  TrialPrompt: {
+    onTrialTitle: `Vous utilisez une version d'essai.`,
+    remainingTrialSentence: (remaining) =>
+      `Vous avez ${remaining} restant sur votre période d'essai.`,
+    trialEndedTitle: `Votre période d'essai est terminée`,
+    trialEndedSentence: `Abonnez-vous aujourd'hui pour continuer à bénéficier des avantages de la version Pro.`,
+    subscribeNow: `Je m'abonne`,
   },
 } as Translation;

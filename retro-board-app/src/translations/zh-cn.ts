@@ -256,6 +256,11 @@ export default {
         info: undefined,
       },
     },
+    trial: {
+      header: undefined,
+      yourTrialWillExpireIn: undefined,
+      subscribe: undefined,
+    },
   },
   SubscribePage: {
     alertAlreadyPro: undefined,
@@ -297,6 +302,7 @@ export default {
     },
     subscribeButton: undefined,
     cancelButton: undefined,
+    startTrial: undefined,
   },
   Products: {
     team: undefined,
@@ -331,5 +337,12 @@ export default {
     sessionIsPublic: undefined,
     sessionIsPrivate: undefined,
     sessionIsPrivateNoAccess: undefined,
+  },
+  TrialPrompt: {
+    onTrialTitle: undefined,
+    remainingTrialSentence: undefined,
+    trialEndedTitle: undefined,
+    trialEndedSentence: undefined,
+    subscribeNow: undefined,
   },
 } as Translation;

@@ -3,10 +3,12 @@ import { differenceInDays, formatDistanceToNow } from 'date-fns';
 import { Link } from 'react-router-dom';
 import useIsTrial from '../../auth/useIsTrial';
 import useUser from '../../auth/useUser';
+import useTranslations from '../../translations';
 
 export default function TrialPrompt() {
   const user = useUser();
   const isInTrial = useIsTrial();
+  const { TrialPrompt: translations } = useTranslations();
 
   if (!user || user.pro || !user?.trial) {
     return null;
@@ -18,22 +20,24 @@ export default function TrialPrompt() {
 
     return (
       <Alert severity={color}>
-        <AlertTitle>You are on a trial subscription.</AlertTitle>
-        You have {formatDistanceToNow(new Date(user.trial))} left on your
-        trial.&nbsp;
+        <AlertTitle>{translations.onTrialTitle}</AlertTitle>
+        {translations.remainingTrialSentence!(
+          formatDistanceToNow(new Date(user.trial))
+        )}
+        &nbsp;
         <Link style={{ textDecoration: 'none' }} to="/subscribe">
-          Subscribe now!
+          {translations.subscribeNow}
         </Link>
       </Alert>
     );
   } else {
     return (
       <Alert severity="error">
-        <AlertTitle>Your trial has ended</AlertTitle>
+        <AlertTitle>{translations.trialEndedTitle}</AlertTitle>
+        {translations.trialEndedSentence}&nbsp;
         <Link style={{ textDecoration: 'none' }} to="/subscribe">
-          Subscribe now
-        </Link>{' '}
-        to continue to have access to the pro features.
+          {translations.subscribeNow}
+        </Link>
       </Alert>
     );
   }

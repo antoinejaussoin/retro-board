@@ -278,6 +278,12 @@ export default {
         colleagues. Press Enter after each email address.`,
       },
     },
+    trial: {
+      header: `Your Trial`,
+      yourTrialWillExpireIn: (date: string) =>
+        `Your trial will end in ${date}.`,
+      subscribe: `Subscribe now`,
+    },
   },
   SubscribePage: {
     alertAlreadyPro: `You already are a Pro user, so you might not need another subscription.`,
@@ -370,5 +376,13 @@ export default {
     sessionIsPrivate: 'This session is private, and you have access.',
     sessionIsPrivateNoAccess:
       'This session is private, but you do not have access.',
+  },
+  TrialPrompt: {
+    onTrialTitle: 'You are on a trial subscription.',
+    remainingTrialSentence: (remaining) =>
+      `You have ${remaining} left on your trial.`,
+    trialEndedTitle: 'Your trial has ended',
+    trialEndedSentence: 'Subscribe today to regain access to the Pro features.',
+    subscribeNow: 'Subscribe now!',
   },
 } as Translation;
