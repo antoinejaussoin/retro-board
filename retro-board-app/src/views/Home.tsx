@@ -15,6 +15,7 @@ import shortid from 'shortid';
 import { storeEncryptionKeyLocally } from '../crypto/crypto';
 import ProButton from '../components/ProButton';
 import { useSnackbar } from 'notistack';
+import TrialPrompt from './home/TrialPrompt';
 
 const useStyles = makeStyles({
   media: {
@@ -77,43 +78,47 @@ function Home() {
   );
 
   return (
-    <Page>
-      <MainHeader>{translations.Home.welcome!(user?.name || '')}</MainHeader>
-      <LaunchButtons>
-        <Fab
-          variant="extended"
-          onClick={createDefaultSession}
-          size="large"
-          color="secondary"
-          disabled={!isLoggedIn}
-        >
-          <ThumbUpAlt className={classes.buttonIcon} />
-          {translations.Join.standardTab.button}
-        </Fab>
-        <ProButton>
+    <>
+      <TrialPrompt />
+      <Page>
+        <MainHeader>{translations.Home.welcome!(user?.name || '')}</MainHeader>
+
+        <LaunchButtons>
           <Fab
             variant="extended"
-            onClick={createEncryptedSession}
+            onClick={createDefaultSession}
             size="large"
             color="secondary"
             disabled={!isLoggedIn}
           >
-            <Lock className={classes.buttonIcon} />
-            {translations.Encryption.createEncryptedSession}
+            <ThumbUpAlt className={classes.buttonIcon} />
+            {translations.Join.standardTab.button}
           </Fab>
-        </ProButton>
-      </LaunchButtons>
+          <ProButton>
+            <Fab
+              variant="extended"
+              onClick={createEncryptedSession}
+              size="large"
+              color="secondary"
+              disabled={!isLoggedIn}
+            >
+              <Lock className={classes.buttonIcon} />
+              {translations.Encryption.createEncryptedSession}
+            </Fab>
+          </ProButton>
+        </LaunchButtons>
 
-      {hasPreviousSessions ? (
-        <>
-          <SubHeader>{translations.Join.previousTab.header}</SubHeader>
-          <PreviousGames
-            games={previousSessions}
-            onDelete={handleDeleteSession}
-          />
-        </>
-      ) : null}
-    </Page>
+        {hasPreviousSessions ? (
+          <>
+            <SubHeader>{translations.Join.previousTab.header}</SubHeader>
+            <PreviousGames
+              games={previousSessions}
+              onDelete={handleDeleteSession}
+            />
+          </>
+        ) : null}
+      </Page>
+    </>
   );
 }
 
