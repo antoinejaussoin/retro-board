@@ -113,22 +113,29 @@ function ProButton({ children }: ProButtonProps) {
           </Features>
         </DialogContent>
         <DialogActions>
+          <LeftButtons>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleStartTrial}
+            >
+              {translations.startTrial}
+            </Button>
+          </LeftButtons>
           <Button onClick={handleClose}>{translations.cancelButton}</Button>
           <Button variant="contained" color="primary" onClick={goToSubscribe}>
             {translations.subscribeButton}
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleStartTrial}
-          >
-            {translations.startTrial}
           </Button>
         </DialogActions>
       </Dialog>
     </Container>
   );
 }
+
+const LeftButtons = styled.div`
+  display: flex;
+  flex: 1;
+`;
 
 const Container = styled.span`
   cursor: pointer;

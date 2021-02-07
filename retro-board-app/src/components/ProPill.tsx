@@ -11,7 +11,14 @@ function ProPill({ small = false }: ProPillProps) {
   const isPro = useIsPro();
   const isTrial = useIsTrial();
   if (!isPro) {
-    return null;
+    return (
+      <Chip
+        label={'Free'}
+        color="primary"
+        style={{ backgroundColor: colors.grey[500] }}
+        size={small ? 'small' : 'medium'}
+      />
+    );
   }
   return (
     <Chip
