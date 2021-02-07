@@ -41,7 +41,8 @@ function AccountPage() {
   return (
     <Page>
       <Name>
-        {user.name}&nbsp;{user.pro ? <ProPill trial={!!user.trial} /> : null}
+        {user.name}&nbsp;
+        <ProPill />
       </Name>
 
       <Section title={translations.details?.header}>

@@ -1,13 +1,18 @@
-import React from 'react';
 import { Chip, colors } from '@material-ui/core';
 import { Star } from '@material-ui/icons';
+import useIsPro from '../auth/useIsPro';
+import useIsTrial from '../auth/useIsTrial';
 
 interface ProPillProps {
   small?: boolean;
-  trial?: boolean;
 }
 
-function ProPill({ small = false, trial = false }: ProPillProps) {
+function ProPill({ small = false }: ProPillProps) {
+  const isPro = useIsPro();
+  const isTrial = useIsTrial();
+  if (!isPro) {
+    return null;
+  }
   return (
     <Chip
       icon={
@@ -21,7 +26,7 @@ function ProPill({ small = false, trial = false }: ProPillProps) {
           }}
         />
       }
-      label={trial ? `Pro Trial` : 'Pro'}
+      label={isTrial ? `Pro Trial` : 'Pro'}
       color="secondary"
       size={small ? 'small' : 'medium'}
     />

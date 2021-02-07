@@ -6,7 +6,7 @@ import useUser from '../../auth/useUser';
 export default function TrialPrompt() {
   const user = useUser();
 
-  if (!user || !user?.trial) {
+  if (!user || user.pro || !user?.trial) {
     return null;
   }
 

@@ -12,7 +12,7 @@ import { Lock, VerifiedUser } from '@material-ui/icons';
 import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import useUser from '../../auth/useUser';
+import useIsPro from '../../auth/useIsPro';
 import useModal from '../../hooks/useModal';
 import useTranslation from '../../translations/useTranslations';
 import { startTrial } from '../../views/subscribe/api';
@@ -28,8 +28,7 @@ interface ProButtonProps {
 }
 
 function ProButton({ children }: ProButtonProps) {
-  const user = useUser();
-  const isPro = user && user.pro;
+  const isPro = useIsPro();
   const [opened, open, close] = useModal();
   const clone = isPro
     ? children
