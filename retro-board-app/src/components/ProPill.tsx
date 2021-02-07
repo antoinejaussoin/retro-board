@@ -2,6 +2,7 @@ import { Chip, colors } from '@material-ui/core';
 import { Star } from '@material-ui/icons';
 import useIsPro from '../auth/useIsPro';
 import useIsTrial from '../auth/useIsTrial';
+import useUser from '../auth/useUser';
 
 interface ProPillProps {
   small?: boolean;
@@ -10,6 +11,10 @@ interface ProPillProps {
 function ProPill({ small = false }: ProPillProps) {
   const isPro = useIsPro();
   const isTrial = useIsTrial();
+  const user = useUser();
+  if (!user) {
+    return null;
+  }
   if (!isPro) {
     return (
       <Chip
