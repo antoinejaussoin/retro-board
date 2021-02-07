@@ -21,11 +21,13 @@ select
   coalesce(s.domain, s2.domain, s3.domain) as "domain",
   coalesce(s.trial, s2.trial, s3.trial) as "trial",
  	(
-		select count(*) from users iu
-		left join subscriptions t on t."ownerId" = iu.id and t.trial is not null
-		left join subscriptions t2 on iu.email = ANY(t2.members) and t2.trial is not null
-		left join subscriptions t3 on t3.domain = split_part(iu.email, '@', 2) and s3.trial is not null
-		where iu.id = u.id
+		select count(*) from subscriptions t
+		where
+			t.trial is not null and (
+				t."ownerId" = u.id 
+				or u.email = ANY(t.members)
+				or t.domain = split_part(u.email, '@', 2)
+			)
 	) as "trialCount"
 from users u 
 
