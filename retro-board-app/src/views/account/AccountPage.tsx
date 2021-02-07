@@ -11,10 +11,13 @@ import Section from './Section';
 import MembersEditor from './MembersEditor';
 import useTranslations from '../../translations';
 import { useHistory } from 'react-router-dom';
+import useIsTrial from '../../auth/useIsTrial';
+import TrialPrompt from '../home/TrialPrompt';
 
 function AccountPage() {
   const url = usePortalUrl();
   const user = useUser();
+  const isTrial = useIsTrial();
   const history = useHistory();
   const {
     AccountPage: translations,
@@ -39,89 +42,92 @@ function AccountPage() {
   }
 
   return (
-    <Page>
-      <Name>
-        {user.name}&nbsp;
-        <ProPill />
-      </Name>
+    <>
+      <TrialPrompt />
+      <Page>
+        <Name>
+          {user.name}&nbsp;
+          <ProPill />
+        </Name>
 
-      <Section title={translations.details?.header}>
-        <Data>
-          <Title>{translations.details?.username}</Title>
-          <Value>{user.username}</Value>
-        </Data>
-
-        <Data>
-          <Title>{translations.details?.email}</Title>
-          <Value>{user.email}</Value>
-        </Data>
-
-        <Data>
-          <Title>{translations.details?.accountType}</Title>
-          <Value>{user.accountType}</Value>
-        </Data>
-      </Section>
-
-      {user.plan ? (
-        <Section title={translations.plan?.header}>
+        <Section title={translations.details?.header}>
           <Data>
-            <Title>{translations.plan?.plan}</Title>
-            <Value>{user.plan}</Value>
+            <Title>{translations.details?.username}</Title>
+            <Value>{user.username}</Value>
           </Data>
 
-          {user.domain ? (
+          <Data>
+            <Title>{translations.details?.email}</Title>
+            <Value>{user.email}</Value>
+          </Data>
+
+          <Data>
+            <Title>{translations.details?.accountType}</Title>
+            <Value>{user.accountType}</Value>
+          </Data>
+        </Section>
+
+        {user.plan ? (
+          <Section title={translations.plan?.header}>
             <Data>
-              <Title>{subscribeTranslations.domain.title}</Title>
-              <Value>{user.domain}</Value>
+              <Title>{translations.plan?.plan}</Title>
+              <Value>{user.plan}</Value>
             </Data>
-          ) : null}
-          {onSomebodysPlan && (
-            <Alert severity="info">{translations.plan?.youAreMember}</Alert>
-          )}
-          {ownsThePlan && (
-            <Alert severity="info">{translations.plan?.youAreOwner}</Alert>
-          )}
-        </Section>
-      ) : null}
 
-      {ownsThePlan && user && user.plan && user.plan === 'team' ? (
-        <Section title={translations.subscription?.membersEditor?.title}>
-          <MembersEditor />
-        </Section>
-      ) : null}
+            {user.domain ? (
+              <Data>
+                <Title>{subscribeTranslations.domain.title}</Title>
+                <Value>{user.domain}</Value>
+              </Data>
+            ) : null}
+            {onSomebodysPlan && (
+              <Alert severity="info">{translations.plan?.youAreMember}</Alert>
+            )}
+            {ownsThePlan && (
+              <Alert severity="info">{translations.plan?.youAreOwner}</Alert>
+            )}
+          </Section>
+        ) : null}
 
-      {ownsThePlan && !user.trial ? (
-        <Section title={translations.subscription.header}>
-          {url ? (
+        {ownsThePlan && user && user.plan && user.plan === 'team' ? (
+          <Section title={translations.subscription?.membersEditor?.title}>
+            <MembersEditor />
+          </Section>
+        ) : null}
+
+        {ownsThePlan && !isTrial ? (
+          <Section title={translations.subscription.header}>
+            {url ? (
+              <Button
+                variant="contained"
+                color="secondary"
+                href={url}
+                style={{ marginTop: 20 }}
+              >
+                {translations.subscription?.manageButton}
+              </Button>
+            ) : null}
+          </Section>
+        ) : null}
+
+        {isTrial ? (
+          <Section title="Your Trial">
+            <Alert severity="info">
+              Your trial will expire in{' '}
+              {formatDistanceToNow(new Date(user.trial!))}.
+            </Alert>
             <Button
               variant="contained"
               color="secondary"
-              href={url}
               style={{ marginTop: 20 }}
+              onClick={() => history.push('/subscribe')}
             >
-              {translations.subscription?.manageButton}
+              Subscribe
             </Button>
-          ) : null}
-        </Section>
-      ) : null}
-
-      {!!user.trial ? (
-        <Section title="Your Trial">
-          <Alert severity="info">
-            Your trial will expire in{' '}
-            {formatDistanceToNow(new Date(user.trial))}.
-          </Alert>
-          <Button
-            variant="contained"
-            color="secondary"
-            style={{ marginTop: 20 }}
-            onClick={() => history.push('/subscribe')}
-          >
-            Subscribe
-          </Button>
-        </Section>
-      ) : null}
-    </Page>
+          </Section>
+        ) : null}
+      </Page>
+    </>
   );
 }
 

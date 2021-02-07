@@ -7,5 +7,5 @@ export default function useIsTrial() {
     user.trial &&
     new Date(user.trial) > new Date()
   );
-  return activeTrial;
+  return activeTrial && user && !user.pro;
 }
