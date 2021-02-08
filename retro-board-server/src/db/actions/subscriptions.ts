@@ -89,7 +89,7 @@ export async function saveSubscription(
 export async function startTrial(userId: string): Promise<UserEntity | null> {
   return await transaction(async (manager) => {
     const userViewRepository = manager.getRepository(UserView);
-    const fullUser = await userViewRepository.findOne(userId);
+    const fullUser = await userViewRepository.findOne({ id: userId });
     if (fullUser) {
       const userRepository = manager.getCustomRepository(UserRepository);
       const user = await userRepository.startTrial(fullUser);
