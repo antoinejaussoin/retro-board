@@ -80,6 +80,9 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
     <Wrapper header={translations.header}>
       <Alert severity="info">{translations.info}</Alert>
       <AccountsButtons>
+        {config.MicrosoftAuthEnabled && (
+          <MicrosoftLoginButton onClick={handleMicrosoft} text="Microsoft" />
+        )}
         {config.GoogleAuthEnabled && (
           <GoogleLoginButton onClick={handleGoogle} text="Google" />
         )}
@@ -91,9 +94,6 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
         )}
         {config.TwitterAuthEnabled && (
           <TwitterLoginButton onClick={handleTwitter} text="Twitter" />
-        )}
-        {config.MicrosoftAuthEnabled && (
-          <MicrosoftLoginButton onClick={handleMicrosoft} text="Microsoft" />
         )}
       </AccountsButtons>
     </Wrapper>
