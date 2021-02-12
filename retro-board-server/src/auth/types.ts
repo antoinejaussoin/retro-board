@@ -1,6 +1,6 @@
 export interface BaseProfile {
   id: string;
-  provider: 'google' | 'github' | 'twitter' | 'Slack';
+  provider: 'google' | 'github' | 'twitter' | 'Slack' | 'microsoft';
 }
 
 interface GoogleProfileEmail {
@@ -150,4 +150,26 @@ export interface TwitterProfile extends BaseProfile {
     email: string;
   };
   _accessLevel: 'read' | string;
+}
+
+export interface MicrosoftProfile extends BaseProfile {
+  provider: 'microsoft';
+  name: { familyName: string; givenName: string };
+  displayName: string;
+  emails: Array<{ type: string; value: string }>;
+  _raw: string;
+  _json: {
+    '@odata.context': string;
+    businessPhones: string[];
+    displayName: string;
+    givenName: string;
+    jobTitle: string | null;
+    mail: string;
+    mobilePhone: null;
+    officeLocation: null;
+    preferredLanguage: string;
+    surname: string;
+    userPrincipalName: string;
+    id: string;
+  };
 }

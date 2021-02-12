@@ -1,9 +1,10 @@
 import { IStrategyOption } from 'passport-twitter';
 import { IOAuth2StrategyOption } from 'passport-google-oauth';
 import { StrategyOptions as GitHubStrategy } from 'passport-github2';
+import { MicrosoftStrategyOptions } from 'passport-microsoft';
 import config from '../db/config';
 
-const providers = ['twitter', 'google', 'github', 'slack'];
+const providers = ['twitter', 'google', 'github', 'slack', 'microsoft'];
 
 const CLIENT_ORIGIN = config.BASE_URL || 'http://localhost:3000';
 
@@ -11,7 +12,7 @@ const callbacks = providers.map((provider) => {
   return `${CLIENT_ORIGIN}/api/auth/${provider}/callback`;
 });
 
-const [twitterURL, googleURL, githubURL, slackURL] = callbacks;
+const [twitterURL, googleURL, githubURL, slackURL, microsoftURL] = callbacks;
 
 export const TWITTER_CONFIG: IStrategyOption | null =
   config.TWITTER_KEY && config.TWITTER_SECRET
@@ -49,5 +50,15 @@ export const SLACK_CONFIG =
         clientSecret: config.SLACK_SECRET || '',
         callbackURL: slackURL,
         scope: ['identity.email', 'identity.avatar', 'identity.basic'],
+      }
+    : null;
+
+export const MICROSOFT_CONFIG: MicrosoftStrategyOptions | null =
+  config.MICROSOFT_KEY && config.MICROSOFT_SECRET
+    ? {
+        clientID: config.MICROSOFT_KEY || '',
+        clientSecret: config.MICROSOFT_SECRET || '',
+        callbackURL: microsoftURL,
+        scope: ['user.read'],
       }
     : null;

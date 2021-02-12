@@ -69,6 +69,10 @@ services:
       GOOGLE_SECRET:
       GITHUB_KEY:
       GITHUB_SECRET:
+      SLACK_KEY:
+      SLACK_SECRET:
+      MICROSOFT_KEY:
+      MICROSOFT_SECRET:
       SENDGRID_API_KEY: # Used for Sendgrid email reminders
       SENDGRID_SENDER: # Email to be used as the sender for emails
       SENDGRID_VERIFICATION_EMAIL_TID: # Verification email template ID
@@ -101,6 +105,7 @@ services:
       AUTH_TWITTER_ENABLED: 'false'
       AUTH_GITHUB_ENABLED: 'false'
       AUTH_SLACK_ENABLED: 'false'
+      AUTH_MICROSOFT_ENABLED: 'false'
       DEFAULT_LANGUAGE: 'en' # Set the default language for new users
       STRIPE_KEY: '' # Stripe publishable key (for frontend)
     restart: unless-stopped

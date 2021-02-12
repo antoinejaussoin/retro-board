@@ -20,6 +20,8 @@ export interface Configuration {
   GITHUB_SECRET: string;
   SLACK_KEY: string;
   SLACK_SECRET: string;
+  MICROSOFT_KEY: string;
+  MICROSOFT_SECRET: string;
   SENDGRID_API_KEY: string;
   SENDGRID_SENDER: string;
   SENDGRID_VERIFICATION_EMAIL_TID: string;

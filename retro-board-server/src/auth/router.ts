@@ -12,6 +12,7 @@ const googleAuth = passport.authenticate('google', {
 const facebookAuth = passport.authenticate('facebook');
 const githubAuth = passport.authenticate('github', { scope: ['user:email'] });
 const slackAuth = passport.authenticate('slack');
+const microsoftAuth = passport.authenticate('microsoft');
 const anonAuth = passport.authenticate('local');
 
 export const endOAuthHandler = (req: Request2, res: Response) => {
@@ -36,6 +37,7 @@ router.get('/twitter/callback', twitterAuth, endOAuthHandler);
 router.get('/google/callback', googleAuth, endOAuthHandler);
 router.get('/github/callback', githubAuth, endOAuthHandler);
 router.get('/slack/callback', slackAuth, endOAuthHandler);
+router.get('/microsoft/callback', microsoftAuth, endOAuthHandler);
 router.post('/anonymous/login', anonAuth, endAnonHandler);
 router.post('/login', anonAuth, endAnonHandler);
 
@@ -56,5 +58,6 @@ router.get('/google', googleAuth);
 router.get('/facebook', facebookAuth);
 router.get('/github', githubAuth);
 router.get('/slack', slackAuth);
+router.get('/microsoft', microsoftAuth);
 
 export default router;

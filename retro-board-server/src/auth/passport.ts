@@ -4,10 +4,12 @@ import { Strategy as TwitterStrategy } from 'passport-twitter';
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
 import { Strategy as GithubStrategy } from 'passport-github2';
 import { Strategy as SlackStrategy } from 'passport-slack';
+import { Strategy as MicrosoftStrategy } from 'passport-microsoft';
 import {
   TWITTER_CONFIG,
   GOOGLE_CONFIG,
   GITHUB_CONFIG,
+  MICROSOFT_CONFIG,
   SLACK_CONFIG,
 } from './config';
 import { v4 } from 'uuid';
@@ -21,6 +23,7 @@ import {
   TwitterProfile,
   GoogleProfile,
   GitHubProfile,
+  MicrosoftProfile,
   SlackProfile,
 } from './types';
 import { getOrSaveUser } from '../db/actions/users';
@@ -54,6 +57,9 @@ export default () => {
           break;
         case 'slack':
           user = buildFromSlackProfile(profile as SlackProfile);
+          break;
+        case 'microsoft':
+          user = buildFromMicrosoftProfile(profile as MicrosoftProfile);
           break;
         default:
           throw new Error('Unknown provider: ' + type);
@@ -117,6 +123,16 @@ export default () => {
     return user;
   }
 
+  function buildFromMicrosoftProfile(profile: MicrosoftProfile): UserEntity {
+    const user: UserEntity = new UserEntity(v4(), profile.displayName);
+    const email = profile.emails[0].value;
+    user.accountType = 'microsoft';
+    user.language = 'en';
+    user.username = email;
+    user.email = email;
+    return user;
+  }
+
   // Adding each OAuth provider's strategy to passport
   if (TWITTER_CONFIG) {
     passport.use(new TwitterStrategy(TWITTER_CONFIG, callback('twitter')));
@@ -136,6 +152,13 @@ export default () => {
   if (SLACK_CONFIG) {
     passport.use(new SlackStrategy(SLACK_CONFIG, callback('slack')));
     console.log(chalk`{blue 🔑  {red Slack} authentication activated}`);
+  }
+
+  if (MICROSOFT_CONFIG) {
+    passport.use(
+      new MicrosoftStrategy(MICROSOFT_CONFIG, callback('microsoft'))
+    );
+    console.log(chalk`{blue 🔑  {red Microsoft} authentication activated}`);
   }
 
   passport.use(
