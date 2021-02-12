@@ -145,6 +145,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 ### Version 4.1.0 (work in progress)
 
 - Adding a 30-day trial
+- Adding Microsoft OAuth 2.0
 
 ### Version 4.0.5
 
