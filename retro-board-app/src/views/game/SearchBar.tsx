@@ -1,5 +1,4 @@
 import { Search } from '@material-ui/icons';
-import React from 'react';
 import Input from '../../components/Input';
 
 interface SearchBarProps {

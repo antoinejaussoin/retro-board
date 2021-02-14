@@ -1,5 +1,4 @@
 import { Elements } from '@stripe/react-stripe-js';
-import React from 'react';
 import { getStripe } from '../../stripe/get-stripe';
 import SubscriberPage from './SubscribePage';
 

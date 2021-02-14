@@ -1,6 +1,5 @@
 import { colors, Tooltip } from '@material-ui/core';
 import { VerifiedUser, VerifiedUserOutlined } from '@material-ui/icons';
-import React from 'react';
 import { SessionMetadata } from '@retrospected/common';
 import useTranslation from '../../../translations/useTranslations';
 import ProButton from '../../../components/ProButton';

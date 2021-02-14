@@ -1,4 +1,3 @@
-import React from 'react';
 import { noop } from 'lodash';
 import { Currency } from '@retrospected/common';
 import 'flag-icon-css/css/flag-icon.min.css';

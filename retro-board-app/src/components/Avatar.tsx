@@ -1,4 +1,3 @@
-import React from 'react';
 import { User } from '@retrospected/common';
 import { Avatar, AvatarTypeMap, Badge, Theme } from '@material-ui/core';
 import md5 from 'md5';

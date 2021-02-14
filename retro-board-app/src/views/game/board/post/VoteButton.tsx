@@ -1,4 +1,3 @@
-import React from 'react';
 import { VoteEnumeration } from '../../utils';
 import ActionButton from './ActionButton';
 

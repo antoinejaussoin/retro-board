@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import styled from 'styled-components';
 import * as Sentry from '@sentry/browser';
 import { Typography, Button } from '@material-ui/core';
@@ -8,10 +8,7 @@ interface ErrorBoundaryState {
   errored: boolean;
 }
 
-class ErrorBoundary extends React.Component<
-  RouteComponentProps,
-  ErrorBoundaryState
-> {
+class ErrorBoundary extends Component<RouteComponentProps, ErrorBoundaryState> {
   unregisterHistoryListener?: () => void = undefined;
 
   constructor(props: RouteComponentProps) {
@@ -38,7 +35,7 @@ class ErrorBoundary extends React.Component<
   }
 
   componentDidCatch(error: Error, errorInfo: any) {
-    Sentry.withScope(scope => {
+    Sentry.withScope((scope) => {
       scope.setLevel('error' as Sentry.Severity);
       scope.setExtras(errorInfo);
       Sentry.captureException(error);

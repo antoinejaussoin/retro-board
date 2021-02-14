@@ -1,4 +1,3 @@
-import React from 'react';
 import policy from './terms.md';
 import GenericPolicy from './Policy';
 

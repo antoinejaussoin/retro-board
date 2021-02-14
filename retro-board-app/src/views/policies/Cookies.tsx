@@ -1,4 +1,3 @@
-import React from 'react';
 import policy from './cookies.md';
 import GenericPolicy from './Policy';
 

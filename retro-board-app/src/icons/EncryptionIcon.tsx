@@ -1,4 +1,3 @@
-import React from 'react';
 import { SvgIcon, SvgIconTypeMap } from '@material-ui/core';
 import { OverrideProps } from '@material-ui/core/OverridableComponent';
 

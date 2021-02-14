@@ -1,4 +1,3 @@
-import React from 'react';
 import { Tooltip, Button } from '@material-ui/core';
 
 interface ActionButtonProps {

@@ -1,5 +1,4 @@
 import { AvatarGroup } from '@material-ui/lab';
-import React from 'react';
 import CustomAvatar from '../../components/Avatar';
 import useGlobalState from '../../state';
 

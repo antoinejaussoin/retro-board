@@ -1,4 +1,3 @@
-import React from 'react';
 import { Product, Currency } from '@retrospected/common';
 import 'flag-icon-css/css/flag-icon.min.css';
 import styled from 'styled-components';

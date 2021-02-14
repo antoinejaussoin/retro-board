@@ -1,5 +1,4 @@
 import { createButton, createSvgIcon } from 'react-social-login-buttons';
-import React from 'react';
 import { colors } from '@material-ui/core';
 
 const config = {

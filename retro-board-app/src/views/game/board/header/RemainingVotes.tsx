@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { Palette } from '../../../../Theme';
 import Badge from '@material-ui/core/Badge';

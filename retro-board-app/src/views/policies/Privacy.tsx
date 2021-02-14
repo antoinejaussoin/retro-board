@@ -1,4 +1,3 @@
-import React from 'react';
 import policy from './privacy.md';
 import GenericPolicy from './Policy';
 

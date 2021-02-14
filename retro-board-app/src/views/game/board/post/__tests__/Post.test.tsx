@@ -1,4 +1,3 @@
-import React from 'react';
 import { noop, groupBy, values } from 'lodash';
 import { render, fireEvent } from '../../../../../testing';
 import PostItem from '../Post';

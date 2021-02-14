@@ -1,4 +1,3 @@
-import React from 'react';
 import { v4 } from 'uuid';
 import { render, getAllByRole } from '../../../../testing';
 import SummaryMode from '../SummaryMode';

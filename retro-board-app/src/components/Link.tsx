@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link as BaseLink, LinkTypeMap, colors } from '@material-ui/core';
 import styled from 'styled-components';
 import { DefaultComponentProps } from '@material-ui/core/OverridableComponent';
