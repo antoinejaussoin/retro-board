@@ -25,6 +25,8 @@ export const ALL_FIELDS: Array<keyof UserEntity> = [
   'stripeId',
   'created',
   'updated',
+  'trial',
+  'quota',
 ];
 
 @Entity({ name: 'users' })

@@ -17,6 +17,7 @@ import {
   hashPassword,
   getUserFromRequest,
   getUserViewFromRequest,
+  getUserQuota,
 } from './utils';
 import {
   initSentry,
@@ -181,6 +182,15 @@ db().then(() => {
     const user = await getUserViewFromRequest(req);
     if (user) {
       res.status(200).send(user.toJson());
+    } else {
+      res.status(401).send('Not logged in');
+    }
+  });
+
+  app.get('/api/quota', async (req, res) => {
+    const quota = await getUserQuota(req);
+    if (quota) {
+      res.status(200).send(quota);
     } else {
       res.status(401).send('Not logged in');
     }

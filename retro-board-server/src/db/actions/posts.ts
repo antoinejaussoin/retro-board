@@ -7,6 +7,13 @@ import {
 } from '../repositories';
 import { transaction } from './transaction';
 
+export async function getNumberOfPosts(userId: string): Promise<number> {
+  return await transaction(async (manager) => {
+    const postRepository = manager.getCustomRepository(PostRepository);
+    return await postRepository.count({ where: { user: { id: userId } } });
+  });
+}
+
 export async function savePost(
   userId: string,
   sessionId: string,

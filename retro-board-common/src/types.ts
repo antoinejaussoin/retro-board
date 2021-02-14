@@ -122,6 +122,11 @@ export interface FullUser extends User {
   trial: Date | null;
 }
 
+export interface Quota {
+  quota: number;
+  posts: number;
+}
+
 export type AccountType =
   | 'anonymous'
   | 'google'
