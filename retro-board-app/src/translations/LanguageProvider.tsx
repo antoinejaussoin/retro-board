@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import { useState, useEffect, useCallback, useContext } from 'react';
 import Context from './Context';
 import UserContext from '../auth/Context';
 import { TrackingEvent } from '@retrospected/common';

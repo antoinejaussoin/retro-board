@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import useGlobalState from '../../../../state';
 import { Button } from '@material-ui/core';
 import SessionEditor from '../../../session-editor/SessionEditor';

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import { PropsWithChildren, useState } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
@@ -15,7 +15,7 @@ export default function TransitionAlert({
   severity,
   children,
 }: PropsWithChildren<TransitionAlertProps>) {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
 
   return (
     <Collapse in={open}>

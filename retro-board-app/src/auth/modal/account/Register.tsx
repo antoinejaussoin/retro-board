@@ -1,4 +1,4 @@
-import React, { Suspense, useCallback, useState, useMemo } from 'react';
+import { Suspense, useCallback, useState, useMemo, lazy } from 'react';
 import { Button } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import useTranslations, { useLanguage } from '../../../translations';
@@ -8,9 +8,7 @@ import { Person, Email, VpnKey } from '@material-ui/icons';
 import { register } from '../../../api';
 import { validate } from 'isemail';
 
-const PasswordStrength = React.lazy(
-  () => import('react-password-strength-bar')
-);
+const PasswordStrength = lazy(() => import('react-password-strength-bar'));
 
 const Register = () => {
   const {

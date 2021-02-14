@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { Fab, makeStyles, colors } from '@material-ui/core';

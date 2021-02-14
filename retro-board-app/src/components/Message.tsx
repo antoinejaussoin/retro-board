@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useEffect } from 'react';
+import { useState, SyntheticEvent, useEffect } from 'react';
 import clsx from 'clsx';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
@@ -87,7 +87,7 @@ export default function Message({
   className,
   onClose,
 }: MessageProps) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (message) {

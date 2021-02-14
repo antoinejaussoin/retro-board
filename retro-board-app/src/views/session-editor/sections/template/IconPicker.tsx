@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { getIcon, getAllIcons } from '../../../../state/icons';
 import { IconName } from '@retrospected/common';
 import Select from '@material-ui/core/Select';

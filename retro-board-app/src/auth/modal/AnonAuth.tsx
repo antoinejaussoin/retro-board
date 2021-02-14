@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Button, Input } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import useTranslations, { useLanguage } from '../../translations';

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import styled from 'styled-components';
 import { Select, MenuItem } from '@material-ui/core';
 import { languages } from '../translations';
@@ -19,7 +19,7 @@ const LanguagePicker = ({ value, onChange }: LanguagePickerProps) => {
   );
   return (
     <StyledSelect value={value} onChange={handleSelect}>
-      {languages.map(language => (
+      {languages.map((language) => (
         <MenuItem value={language.value} key={language.value}>
           <LanguageItem>
             <Flag className={`flag-icon flag-icon-${language.iso}`}>

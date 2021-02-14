@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import Button from '@material-ui/core/Button';

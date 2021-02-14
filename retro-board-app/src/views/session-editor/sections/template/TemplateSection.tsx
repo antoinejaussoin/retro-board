@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import SettingCategory from '../SettingCategory';
 import OptionItem from '../OptionItem';
 import TemplatePicker from './TemplatePicker';

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import styled from 'styled-components';
 import { SessionOptions, ColumnDefinition } from '@retrospected/common';
 import { Typography, makeStyles } from '@material-ui/core';

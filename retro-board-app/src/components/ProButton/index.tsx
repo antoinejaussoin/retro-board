@@ -9,7 +9,7 @@ import {
   useMediaQuery,
 } from '@material-ui/core';
 import { Lock, VerifiedUser } from '@material-ui/icons';
-import React, { useCallback } from 'react';
+import { useCallback, cloneElement } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import useIsPro from '../../auth/useIsPro';
@@ -30,9 +30,7 @@ interface ProButtonProps {
 function ProButton({ children }: ProButtonProps) {
   const isPro = useIsPro();
   const [opened, open, close] = useModal();
-  const clone = isPro
-    ? children
-    : React.cloneElement(children, { onClick: open });
+  const clone = isPro ? children : cloneElement(children, { onClick: open });
   const history = useHistory();
   const { SubscribeModal: translations } = useTranslation();
   const fullScreen = useMediaQuery('(max-width:600px)');

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FullUser } from '@retrospected/common';
 import Login from './account/Login';
 import Register from './account/Register';

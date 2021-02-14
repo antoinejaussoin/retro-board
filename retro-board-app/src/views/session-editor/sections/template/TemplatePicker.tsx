@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Template } from '../../../../state/types';
 import { getAllTemplates } from '../../../../state/templates';
 import useTranslations from '../../../../translations';

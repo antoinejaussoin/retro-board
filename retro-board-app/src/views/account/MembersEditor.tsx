@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import ChipInput from 'material-ui-chip-input';
 import useStateFetch from '../../hooks/useStateFetch';
 import { updateMembers } from './api';

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { ColumnSettings } from '../../../../state/types';
 import ColumnEditor from './ColumnEditor';
 import useTranslation from '../../../../translations/useTranslations';

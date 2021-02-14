@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import SliderBase, { Mark } from '@material-ui/core/Slider';
 

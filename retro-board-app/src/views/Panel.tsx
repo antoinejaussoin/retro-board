@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import styled from 'styled-components';
 import { Route, Link as RouterLink } from 'react-router-dom';
 import { colors, Drawer, Link, Typography } from '@material-ui/core';

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { colors } from '@material-ui/core';
 import { Edit } from '@material-ui/icons';

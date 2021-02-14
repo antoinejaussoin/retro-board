@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useContext } from 'react';
+import { useCallback, useState, useContext } from 'react';
 import {
   Dialog,
   DialogContent,

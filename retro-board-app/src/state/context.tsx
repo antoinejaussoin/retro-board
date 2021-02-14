@@ -1,10 +1,4 @@
-import React, {
-  useContext,
-  useReducer,
-  createContext,
-  useMemo,
-  SFC,
-} from 'react';
+import { useContext, useReducer, createContext, useMemo, SFC } from 'react';
 import { State, Action } from './types';
 import reducer from './reducer';
 import {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 import { verifyEmail } from '../api';
