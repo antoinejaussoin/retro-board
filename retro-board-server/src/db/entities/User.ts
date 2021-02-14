@@ -51,6 +51,8 @@ export default class UserEntity {
   public stripeId: string | null;
   @Column({ type: 'timestamp with time zone', nullable: true })
   public trial: Date | null;
+  @Column({ nullable: false, default: 50 })
+  public quota: number;
   @Column({ nullable: true, type: 'character varying' })
   public photo: string | null;
   @Column({ nullable: false, type: 'character varying', default: 'en' })
@@ -78,6 +80,7 @@ export default class UserEntity {
     this.stripeId = null;
     this.currency = null;
     this.trial = null;
+    this.quota = 0;
   }
 
   toJson(): User {
