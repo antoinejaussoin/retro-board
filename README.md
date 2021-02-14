@@ -146,6 +146,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 - Adding a 30-day trial
 - Adding Microsoft OAuth 2.0
+- Removing all `import React from 'react';` imports, as they are now redundant.
 
 ### Version 4.0.5
 
