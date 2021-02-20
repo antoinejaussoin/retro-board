@@ -137,7 +137,7 @@ const LeftButtons = styled.div`
 
 const Container = styled.span`
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   > * {
     flex: 1;
   }

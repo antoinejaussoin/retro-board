@@ -6,6 +6,8 @@ import useUser from '../../auth/useUser';
 import useFormatDate from '../../hooks/useFormatDate';
 import useTranslations from '../../translations';
 import useQuota from '../../hooks/useQuota';
+import { Button } from '@material-ui/core';
+import ProButton from '../../components/ProButton';
 
 export default function TrialPrompt() {
   const user = useUser();
@@ -13,6 +15,7 @@ export default function TrialPrompt() {
   const { formatDistanceToNow } = useFormatDate();
   const { TrialPrompt: translations } = useTranslations();
   const quota = useQuota();
+  const quotaLeft = !!quota ? quota.quota - quota.posts : null;
   const overQuota = !!quota && quota.posts >= quota.quota;
   const nearQuota = !!quota && !overQuota && quota.posts >= quota.quota - 20;
 
@@ -51,20 +54,34 @@ export default function TrialPrompt() {
       ) : null}
       {overQuota ? (
         <Alert severity="error">
-          <AlertTitle>You have reached your quota</AlertTitle>
-          Some blah about how you reached quota
-          <Link style={{ textDecoration: 'none' }} to="/subscribe">
-            {translations.subscribeNow}
-          </Link>
+          <AlertTitle>You have reached your free allowance</AlertTitle>
+          It's time to subscribe to Retrospected Pro!
+          <ProButton>
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              style={{ marginLeft: 10 }}
+            >
+              {translations.subscribeNow}
+            </Button>
+          </ProButton>
         </Alert>
       ) : null}
       {nearQuota ? (
         <Alert severity="warning">
-          <AlertTitle>You are nearing your quota</AlertTitle>
-          Some blah about how you reached quota
-          <Link style={{ textDecoration: 'none' }} to="/subscribe">
-            {translations.subscribeNow}
-          </Link>
+          <AlertTitle>You are nearing the end of your quota</AlertTitle>
+          You have about {quotaLeft} posts left.
+          <ProButton>
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              style={{ marginLeft: 10 }}
+            >
+              {translations.subscribeNow}
+            </Button>
+          </ProButton>
         </Alert>
       ) : null}
     </>
