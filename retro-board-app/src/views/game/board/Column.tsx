@@ -21,6 +21,7 @@ import {
 import { ColumnContent } from '../types';
 import useCrypto from '../../../crypto/useCrypto';
 import useCanDecrypt from '../../../crypto/useCanDecrypt';
+import useIsDisabled from '../../../hooks/useIsDisabled';
 
 interface ColumnProps {
   column: ColumnContent;
@@ -65,6 +66,7 @@ const Column: React.FC<ColumnProps> = ({
   const [content, setContent] = useState('');
   const { encrypt } = useCrypto();
   const canDecrypt = useCanDecrypt();
+  const isDisabled = useIsDisabled();
   const onContentChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => setContent(e.target.value),
     [setContent]
@@ -78,7 +80,7 @@ const Column: React.FC<ColumnProps> = ({
     },
     [onAdd, setContent, content, encrypt]
   );
-  const isReadOnly = !canDecrypt || !isLoggedIn;
+  const isReadOnly = !canDecrypt || !isLoggedIn || isDisabled;
   return (
     <ColumnWrapper>
       <Add>

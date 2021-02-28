@@ -13,8 +13,8 @@ import { useCallback, cloneElement } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import useIsPro from '../../auth/useIsPro';
+import useIsDisabled from '../../hooks/useIsDisabled';
 import useModal from '../../hooks/useModal';
-import useQuota from '../../hooks/useQuota';
 import useTranslation from '../../translations/useTranslations';
 import { startTrial } from '../../views/subscribe/api';
 import Feature from './Feature';
@@ -34,9 +34,8 @@ interface ProButtonProps {
 
 function ProButton({ children, quota }: ProButtonProps) {
   const isPro = useIsPro();
-  const actualQuota = useQuota();
-  const overQuota = !!actualQuota && actualQuota.posts >= actualQuota.quota;
-  const isValid = isPro || (quota && !overQuota);
+  const isDisabled = useIsDisabled();
+  const isValid = isPro || (quota && !isDisabled);
   const [opened, open, close] = useModal();
   const clone = isValid ? children : cloneElement(children, { onClick: open });
   const history = useHistory();
