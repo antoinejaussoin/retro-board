@@ -1,28 +1,29 @@
-import { useContext, useMemo } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import LanguageContext from './Context';
-import en from './en';
-import es from './es';
-import fr from './fr';
-import hu from './hu';
-import ptbr from './pt-br';
-import pl from './pl';
-import nl from './nl';
-import ru from './ru';
-import zhtw from './zh-tw';
-import zhcn from './zh-cn';
-import ar from './ar';
-import ja from './ja';
-import de from './de';
-import it from './it';
 import { Translation } from './types';
 import { merge, cloneDeep } from 'lodash';
 
+import en from './en';
+
+const fr = import('./fr' /* webpackChunkName: 'fr' */);
+const hu = import('./hu' /* webpackChunkName: 'hu' */);
+const ptbr = import('./pt-br' /* webpackChunkName: 'pt-br' */);
+const pl = import('./pl' /* webpackChunkName: 'pl' */);
+const nl = import('./nl' /* webpackChunkName: 'nl' */);
+const ru = import('./ru' /* webpackChunkName: 'ru' */);
+const zhtw = import('./zh-tw' /* webpackChunkName: 'zh-tw' */);
+const zhcn = import('./zh-cn' /* webpackChunkName: 'zh-cn' */);
+const ar = import('./ar' /* webpackChunkName: 'ar' */);
+const ja = import('./ja' /* webpackChunkName: 'ja' */);
+const de = import('./de' /* webpackChunkName: 'de' */);
+const it = import('./it' /* webpackChunkName: 'it' */);
+const es = import('./es' /* webpackChunkName: "es" */);
+
 interface Translations {
-  [key: string]: Translation;
+  [key: string]: Promise<any>;
 }
 
 const languages: Translations = {
-  en,
   es,
   fr,
   hu,
@@ -45,16 +46,29 @@ export function useLanguage(): [string, (language: string) => void] {
 
 function useTranslation() {
   const [language] = useLanguage();
+  const [merged, setMerged] = useState<Translation>(en);
 
-  const result = useMemo(() => {
-    const translations = languages[language];
-    const english = languages['en'];
-    return language === 'en'
-      ? translations
-      : merge(cloneDeep(english), translations);
+  useEffect(() => {
+    async function load() {
+      if (language === 'en') {
+        setMerged(en);
+      } else {
+        const { default: translations } = await languages[language];
+        setMerged(merge(cloneDeep(en), translations));
+      }
+    }
+    load();
   }, [language]);
 
-  return result;
+  // const result = useMemo(() => {
+  //   const translations = languages[language].then(x => x.default);
+  //   const english = en;
+  //   return language === 'en'
+  //     ? translations
+  //     : merge(cloneDeep(english), translations);
+  // }, [language]);
+
+  return merged;
 }
 
 export default useTranslation;
