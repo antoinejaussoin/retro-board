@@ -2,9 +2,14 @@ import { useEffect, useCallback, lazy, Suspense } from 'react';
 import { useHistory, Redirect, Switch, Route } from 'react-router-dom';
 import { trackPageView } from './track';
 import styled from 'styled-components';
-import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  CircularProgress,
+} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import Home from './views/Home';
 import AccountMenu from './auth/AccountMenu';
 import useGlobalState from './state';
 import useIsCompatibleBrowser from './hooks/useIsCompatibleBrowser';
@@ -14,6 +19,7 @@ import useUser from './auth/useUser';
 import { HomeOutlined } from '@material-ui/icons';
 import ProPill from './components/ProPill';
 
+const Home = lazy(() => import('./views/Home'));
 const Game = lazy(() => import('./views/Game'));
 const LoginPage = lazy(() => import('./views/login/LoginPage'));
 const AccountPage = lazy(() => import('./views/account/AccountPage'));
@@ -79,11 +85,11 @@ function App() {
           )}
         </Toolbar>
       </AppBar>
-      <Route path="/" exact>
-        {user ? <Home /> : null}
-      </Route>
-      <Suspense fallback={<div>Loading!!</div>}>
+      <Suspense fallback={<CircularProgress />}>
         <Switch>
+          <Route path="/" exact>
+            {user ? <Home /> : null}
+          </Route>
           <Redirect from="/session/:gameId" to="/game/:gameId" />
           <Route path="/game/:gameId" component={Game} />
           <Route path="/validate" component={ValidatePage} />

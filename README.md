@@ -147,6 +147,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 - Adding a 30-day trial
 - Adding Microsoft OAuth 2.0
+- Code splitting: all pages have their own bundle now, for a faster first-load experience
 - Removing all `import React from 'react';` imports, as they are now redundant.
 - Introducing Recoil.js (as an experiment)
 - Limiting the number of posts to 50 for free accounts
