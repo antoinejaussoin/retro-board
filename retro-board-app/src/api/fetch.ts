@@ -26,10 +26,14 @@ export async function fetchGet<T>(url: string, defaultValue: T): Promise<T> {
   }
 }
 
-export async function fetchPost<T>(url: string, payload?: T): Promise<boolean> {
+async function fetchPostPatchDelete<T>(
+  verb: 'PATCH' | 'POST' | 'DELETE',
+  url: string,
+  payload?: T
+): Promise<boolean> {
   try {
     const response = await fetch(url, {
-      method: 'POST',
+      method: verb,
       body: payload ? JSON.stringify(payload) : undefined,
       ...requestConfig,
     });
@@ -43,24 +47,21 @@ export async function fetchPost<T>(url: string, payload?: T): Promise<boolean> {
   }
 }
 
+export async function fetchPost<T>(url: string, payload?: T): Promise<boolean> {
+  return fetchPostPatchDelete('POST', url, payload);
+}
+export async function fetchPatch<T>(
+  url: string,
+  payload?: T
+): Promise<boolean> {
+  return fetchPostPatchDelete('PATCH', url, payload);
+}
+
 export async function fetchDelete<T>(
   url: string,
   payload?: T
 ): Promise<boolean> {
-  try {
-    const response = await fetch(url, {
-      method: 'DELETE',
-      body: payload ? JSON.stringify(payload) : undefined,
-      ...requestConfig,
-    });
-    if (response.ok) {
-      return true;
-    }
-    return false;
-  } catch (error) {
-    logToSentry(error);
-    return false;
-  }
+  return fetchPostPatchDelete('DELETE', url, payload);
 }
 
 export async function fetchPostGet<T, R>(
