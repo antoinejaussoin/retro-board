@@ -1,19 +1,17 @@
-import {
-  enGB,
-  fr,
-  arDZ,
-  zhCN,
-  zhTW,
-  nl,
-  de,
-  hu,
-  it,
-  ja,
-  pl,
-  ptBR,
-  ru,
-  es,
-} from 'date-fns/locale';
+import enGB from 'date-fns/locale/en-GB';
+import fr from 'date-fns/locale/fr';
+import arDZ from 'date-fns/locale/ar-DZ';
+import zhCN from 'date-fns/locale/zh-CN';
+import zhTW from 'date-fns/locale/zh-TW';
+import nl from 'date-fns/locale/nl';
+import de from 'date-fns/locale/de';
+import hu from 'date-fns/locale/hu';
+import it from 'date-fns/locale/it';
+import ja from 'date-fns/locale/ja';
+import pl from 'date-fns/locale/pl';
+import ptBR from 'date-fns/locale/pt-BR';
+import ru from 'date-fns/locale/ru';
+import es from 'date-fns/locale/es';
 import { Locale } from 'date-fns';
 import { StripeLocales } from '@retrospected/common';
 
