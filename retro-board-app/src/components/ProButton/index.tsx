@@ -158,6 +158,11 @@ const Container = styled.span`
 
 const Header = styled.div`
   background-color: ${colors.deepPurple[300]};
+  background: ${`linear-gradient(
+    171deg,
+    ${colors.deepPurple[300]} 35%,
+    ${colors.deepPurple[600]} 100%
+  )`};
   color: white;
   min-width: 60hw;
   padding: 50px 20px;
