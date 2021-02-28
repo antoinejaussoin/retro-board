@@ -1,3 +1,5 @@
+import { Quota } from '@retrospected/common';
+
 const requestConfig: Partial<RequestInit> = {
   mode: 'cors',
   cache: 'no-cache',
@@ -33,6 +35,17 @@ export async function getMembers(): Promise<string[] | null> {
   return null;
 }
 
+export async function getQuota(): Promise<Quota | null> {
+  const response = await fetch(`/api/quota`, {
+    method: 'GET',
+    ...requestConfig,
+  });
+  if (response.ok) {
+    const quota: Quota | null = await response.json();
+    return quota;
+  }
+  return null;
+}
 export async function updateMembers(members: string[]): Promise<void> {
   await fetch(`/api/stripe/members`, {
     method: 'PATCH',

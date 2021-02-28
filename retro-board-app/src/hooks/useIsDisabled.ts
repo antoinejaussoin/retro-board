@@ -6,8 +6,8 @@ import useQuota from './useQuota';
  */
 export default function useIsDisabled() {
   const isPro = useIsPro();
-  const actualQuota = useQuota();
-  const overQuota = !!actualQuota && actualQuota.posts >= actualQuota.quota;
+  const { quota } = useQuota();
+  const overQuota = !!quota && quota.posts >= quota.quota;
   const isDisabled = !isPro && overQuota;
   return isDisabled;
 }

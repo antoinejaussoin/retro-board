@@ -11,11 +11,12 @@ import ErrorBoundary from './ErrorBoundary';
 import { SnackbarProvider } from 'notistack';
 import useIsLicenced from './hooks/useIsLicenced';
 import { Alert, AlertTitle } from '@material-ui/lab';
+import { RecoilRoot } from 'recoil';
 
 function App() {
   const licenced = useIsLicenced();
   return (
-    <>
+    <RecoilRoot>
       <Helmet>
         <meta property="og:title" content="Retrospected.com" />
         <meta
@@ -56,7 +57,7 @@ function App() {
           </BrowserRouter>
         </ThemeProvider>
       </SnackbarProvider>
-    </>
+    </RecoilRoot>
   );
 }
 

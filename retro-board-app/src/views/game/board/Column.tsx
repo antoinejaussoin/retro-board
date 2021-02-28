@@ -22,6 +22,7 @@ import { ColumnContent } from '../types';
 import useCrypto from '../../../crypto/useCrypto';
 import useCanDecrypt from '../../../crypto/useCanDecrypt';
 import useIsDisabled from '../../../hooks/useIsDisabled';
+import useQuota from '../../../hooks/useQuota';
 
 interface ColumnProps {
   column: ColumnContent;
@@ -67,18 +68,20 @@ const Column: React.FC<ColumnProps> = ({
   const { encrypt } = useCrypto();
   const canDecrypt = useCanDecrypt();
   const isDisabled = useIsDisabled();
+  const { increment } = useQuota();
   const onContentChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => setContent(e.target.value),
     [setContent]
   );
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      if (e.keyCode === 13 && content) {
+      if (e.code === 'Enter' && content) {
+        increment();
         onAdd(encrypt(content));
         setContent('');
       }
     },
-    [onAdd, setContent, content, encrypt]
+    [onAdd, setContent, content, encrypt, increment]
   );
   const isReadOnly = !canDecrypt || !isLoggedIn || isDisabled;
   return (
