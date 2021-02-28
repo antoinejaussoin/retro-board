@@ -47,6 +47,7 @@
     "date-fns": "^2.17.0",
     "dotenv": "^8.2.0",
     "eslint": "^7.21.0",
+    "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",
     "express": "^4.17.1",
     "express-mung": "^0.5.1",
