@@ -12,6 +12,8 @@ import { SnackbarProvider } from 'notistack';
 import useIsLicenced from './hooks/useIsLicenced';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { RecoilRoot } from 'recoil';
+import { Suspense } from 'react';
+import { CircularProgress } from '@material-ui/core';
 
 function App() {
   const licenced = useIsLicenced();
@@ -49,7 +51,9 @@ function App() {
                         to obtain a licence.
                       </Alert>
                     ) : null}
-                    <Layout />
+                    <Suspense fallback={<CircularProgress />}>
+                      <Layout />
+                    </Suspense>
                   </ErrorBoundary>
                 </StateContext>
               </LanguageProvider>
