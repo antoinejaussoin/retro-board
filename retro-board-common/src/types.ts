@@ -164,6 +164,10 @@ export type TrackingEvent =
   | 'game/post/giphy/choose'
   | 'game/post/giphy/toggle'
   | 'game/post/extra-menu/open'
+  | 'trial/start'
+  | 'trial/modal/cancel'
+  | 'trial/modal/subscribe'
+  | 'trial/modal/open'
   | 'language/change/';
 
 export type ColumnDefinitionType =

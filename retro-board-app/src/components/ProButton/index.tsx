@@ -18,6 +18,7 @@ import useModal from '../../hooks/useModal';
 import useTranslation from '../../translations/useTranslations';
 import { startTrial } from '../../views/subscribe/api';
 import Feature from './Feature';
+import { trackEvent } from '../../track';
 
 interface ComponentProp {
   disabled?: boolean;
@@ -46,6 +47,7 @@ function ProButton({ children, quota }: ProButtonProps) {
     (e: React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
       e.stopPropagation();
       e.preventDefault();
+      trackEvent('trial/modal/subscribe');
       history.push('/subscribe');
     },
     [history]
@@ -55,6 +57,7 @@ function ProButton({ children, quota }: ProButtonProps) {
     async (e: React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
       e.stopPropagation();
       e.preventDefault();
+      trackEvent('trial/start');
       await startTrial();
       window.location.reload();
     },
@@ -65,6 +68,7 @@ function ProButton({ children, quota }: ProButtonProps) {
     (e: React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
       e.stopPropagation();
       e.preventDefault();
+      trackEvent('trial/modal/cancel');
       close();
     },
     [close]
@@ -74,7 +78,7 @@ function ProButton({ children, quota }: ProButtonProps) {
     (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       e.stopPropagation();
       e.preventDefault();
-
+      trackEvent('trial/modal/open');
       open();
     },
     [open]
