@@ -5,31 +5,34 @@ import styled from 'styled-components';
 import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import Home from './views/Home';
-// import Game from './views/Game';
-import Panel from './views/Panel';
-import PrivacyPolicyPage from './views/policies/Privacy';
-import Invite from './views/layout/Invite';
 import AccountMenu from './auth/AccountMenu';
 import useGlobalState from './state';
 import useIsCompatibleBrowser from './hooks/useIsCompatibleBrowser';
 import OutdatedBrowser from './components/OutdatedBrowser';
 import useIsInitialised from './auth/useIsInitialised';
 import useUser from './auth/useUser';
-import TermsAndConditionsPage from './views/policies/Terms';
-import CookiesPolicyPage from './views/policies/Cookies';
-import AcceptableUsePolicyPage from './views/policies/AcceptableUse';
-import DisclaimerPage from './views/policies/Disclaimer';
 import { HomeOutlined } from '@material-ui/icons';
-import ValidatePage from './views/Validate';
-import ResetPasswordPage from './views/Reset';
-import SubscribePageOuter from './views/subscribe/SubscribePageOuter';
-import SuccessPage from './views/subscribe/SuccessPage';
-import CancelPage from './views/subscribe/CancelPage';
-import AccountPage from './views/account/AccountPage';
 import ProPill from './components/ProPill';
-import LoginPage from './views/login/LoginPage';
 
 const Game = lazy(() => import('./views/Game'));
+const LoginPage = lazy(() => import('./views/login/LoginPage'));
+const AccountPage = lazy(() => import('./views/account/AccountPage'));
+const CancelPage = lazy(() => import('./views/subscribe/CancelPage'));
+const SuccessPage = lazy(() => import('./views/subscribe/SuccessPage'));
+const SubscribePageOuter = lazy(
+  () => import('./views/subscribe/SubscribePageOuter')
+);
+const ResetPasswordPage = lazy(() => import('./views/Reset'));
+const ValidatePage = lazy(() => import('./views/Validate'));
+const DisclaimerPage = lazy(() => import('./views/policies/Disclaimer'));
+const AcceptableUsePolicyPage = lazy(
+  () => import('./views/policies/AcceptableUse')
+);
+const CookiesPolicyPage = lazy(() => import('./views/policies/Cookies'));
+const TermsAndConditionsPage = lazy(() => import('./views/policies/Terms'));
+const Invite = lazy(() => import('./views/layout/Invite'));
+const PrivacyPolicyPage = lazy(() => import('./views/policies/Privacy'));
+const Panel = lazy(() => import('./views/Panel'));
 
 const Title = styled(Typography)`
   flex-grow: 1;
