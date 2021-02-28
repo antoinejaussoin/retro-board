@@ -328,6 +328,10 @@ export default {
         description:
           'Make sure only authorised people can access your session.',
       },
+      unlimitedPosts: {
+        title: 'Unlimited Posts',
+        description: 'With a Pro subscription, get unlimited posts.',
+      },
     },
     subscribeButton: 'Subscribe',
     cancelButton: 'Cancel',
@@ -378,6 +382,11 @@ export default {
       'This session is private, but you do not have access.',
   },
   TrialPrompt: {
+    allowanceReachedTitle: 'You have reached your free allowance',
+    allowanceReachedDescription: `It's time to subscribe to Retrospected Pro`,
+    nearEndAllowanceTitle: 'You are nearing the end of your quota',
+    nearEndAllowanceDescription: (quota) =>
+      `You have about ${quota} posts left`,
     onTrialTitle: 'You are on a trial subscription.',
     remainingTrialSentence: (remaining) =>
       `You have ${remaining} left on your trial.`,

@@ -297,6 +297,10 @@ export interface Translation {
         title?: string;
         description?: string;
       };
+      unlimitedPosts: {
+        title?: string;
+        description?: string;
+      };
     };
     subscribeButton?: string;
     cancelButton?: string;
@@ -337,6 +341,10 @@ export interface Translation {
     sessionIsPrivateNoAccess?: string;
   };
   TrialPrompt: {
+    allowanceReachedTitle?: string;
+    allowanceReachedDescription?: string;
+    nearEndAllowanceTitle?: string;
+    nearEndAllowanceDescription?: (quota: number | null) => string;
     onTrialTitle?: string;
     remainingTrialSentence?: (remaining: string) => string;
     trialEndedTitle?: string;

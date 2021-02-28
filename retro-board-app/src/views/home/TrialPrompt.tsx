@@ -54,8 +54,8 @@ export default function TrialPrompt() {
       ) : null}
       {overQuota ? (
         <Alert severity="error">
-          <AlertTitle>You have reached your free allowance</AlertTitle>
-          It's time to subscribe to Retrospected Pro!
+          <AlertTitle>{translations.allowanceReachedTitle}</AlertTitle>
+          {translations.allowanceReachedDescription}
           <ProButton>
             <Button
               variant="contained"
@@ -70,8 +70,8 @@ export default function TrialPrompt() {
       ) : null}
       {nearQuota ? (
         <Alert severity="warning">
-          <AlertTitle>You are nearing the end of your quota</AlertTitle>
-          You have about {quotaLeft} posts left.
+          <AlertTitle>{translations.nearEndAllowanceTitle}</AlertTitle>
+          {translations.nearEndAllowanceDescription!(quotaLeft)}
           <ProButton>
             <Button
               variant="contained"

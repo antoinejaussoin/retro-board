@@ -332,6 +332,10 @@ export default {
         description:
           'Assurez-vous que seules les personnes choisies puissent accéder à votre session.',
       },
+      unlimitedPosts: {
+        title: 'Posts illimités',
+        description: 'Nombre de posts illimité avec Retrospected Pro.',
+      },
     },
     subscribeButton: `S'abonner`,
     cancelButton: `Annuler`,
@@ -376,6 +380,12 @@ export default {
     sessionIsPrivateNoAccess: `Cette session est privée, mais vous n'y avez pas accès.`,
   },
   TrialPrompt: {
+    allowanceReachedTitle: 'Vous avez atteint la limite de posts gratuits',
+    allowanceReachedDescription:
+      'Inscrivez-vous à Retrospected Pro pour passer en illimité',
+    nearEndAllowanceTitle: 'Vous approchez la limite de posts gratuits',
+    nearEndAllowanceDescription: (quota) =>
+      `Vous avez environ ${quota} posts restants.`,
     onTrialTitle: `Vous utilisez une version d'essai.`,
     remainingTrialSentence: (remaining) =>
       `Vous avez ${remaining} restant sur votre période d'essai.`,

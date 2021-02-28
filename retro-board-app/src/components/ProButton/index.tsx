@@ -8,7 +8,7 @@ import {
   DialogTitle,
   useMediaQuery,
 } from '@material-ui/core';
-import { Lock, VerifiedUser } from '@material-ui/icons';
+import { AllInclusive, Lock, VerifiedUser } from '@material-ui/icons';
 import { useCallback, cloneElement } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -98,7 +98,7 @@ function ProButton({ children }: ProButtonProps) {
           <Features>
             <Feature
               icon={<Lock />}
-              color={colors.green[700]}
+              color={colors.red[700]}
               title={translations.features.encryptedSession.title!}
               description={translations.features.encryptedSession.description!}
             />
@@ -107,6 +107,12 @@ function ProButton({ children }: ProButtonProps) {
               color={colors.green[700]}
               title={translations.features.privateSessions.title!}
               description={translations.features.privateSessions.description!}
+            />
+            <Feature
+              icon={<AllInclusive />}
+              color={colors.orange[700]}
+              title={translations.features.unlimitedPosts.title!}
+              description={translations.features.unlimitedPosts.description!}
             />
           </Features>
         </DialogContent>

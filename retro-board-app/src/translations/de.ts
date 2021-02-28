@@ -306,6 +306,10 @@ export default {
         title: undefined,
         description: undefined,
       },
+      unlimitedPosts: {
+        title: undefined,
+        description: undefined,
+      },
     },
     subscribeButton: undefined,
     cancelButton: undefined,
@@ -346,6 +350,10 @@ export default {
     sessionIsPrivateNoAccess: undefined,
   },
   TrialPrompt: {
+    allowanceReachedTitle: undefined,
+    allowanceReachedDescription: undefined,
+    nearEndAllowanceTitle: undefined,
+    nearEndAllowanceDescription: undefined,
     onTrialTitle: undefined,
     remainingTrialSentence: undefined,
     trialEndedTitle: undefined,
