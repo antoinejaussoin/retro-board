@@ -19,26 +19,58 @@ import useUser from './auth/useUser';
 import { HomeOutlined } from '@material-ui/icons';
 import ProPill from './components/ProPill';
 
-const Home = lazy(() => import('./views/Home'));
-const Game = lazy(() => import('./views/Game'));
-const LoginPage = lazy(() => import('./views/login/LoginPage'));
-const AccountPage = lazy(() => import('./views/account/AccountPage'));
-const CancelPage = lazy(() => import('./views/subscribe/CancelPage'));
-const SuccessPage = lazy(() => import('./views/subscribe/SuccessPage'));
+const Home = lazy(() => import('./views/Home' /* webpackChunkName: "home" */));
+const Game = lazy(() => import('./views/Game' /* webpackChunkName: "game" */));
+const LoginPage = lazy(
+  () => import('./views/login/LoginPage' /* webpackChunkName: "login" */)
+);
+const AccountPage = lazy(
+  () => import('./views/account/AccountPage' /* webpackChunkName: "account" */)
+);
+const CancelPage = lazy(
+  () => import('./views/subscribe/CancelPage' /* webpackChunkName: "cancel" */)
+);
+const SuccessPage = lazy(
+  () =>
+    import('./views/subscribe/SuccessPage' /* webpackChunkName: "success" */)
+);
 const SubscribePageOuter = lazy(
-  () => import('./views/subscribe/SubscribePageOuter')
+  () =>
+    import(
+      './views/subscribe/SubscribePageOuter' /* webpackChunkName: "subscribe" */
+    )
 );
-const ResetPasswordPage = lazy(() => import('./views/Reset'));
-const ValidatePage = lazy(() => import('./views/Validate'));
-const DisclaimerPage = lazy(() => import('./views/policies/Disclaimer'));
+const ResetPasswordPage = lazy(
+  () => import('./views/Reset' /* webpackChunkName: "reset" */)
+);
+const ValidatePage = lazy(
+  () => import('./views/Validate' /* webpackChunkName: "validate" */)
+);
+const DisclaimerPage = lazy(
+  () =>
+    import('./views/policies/Disclaimer' /* webpackChunkName: "disclaimer" */)
+);
 const AcceptableUsePolicyPage = lazy(
-  () => import('./views/policies/AcceptableUse')
+  () =>
+    import(
+      './views/policies/AcceptableUse' /* webpackChunkName: "acceptable-use" */
+    )
 );
-const CookiesPolicyPage = lazy(() => import('./views/policies/Cookies'));
-const TermsAndConditionsPage = lazy(() => import('./views/policies/Terms'));
-const Invite = lazy(() => import('./views/layout/Invite'));
-const PrivacyPolicyPage = lazy(() => import('./views/policies/Privacy'));
-const Panel = lazy(() => import('./views/Panel'));
+const CookiesPolicyPage = lazy(
+  () => import('./views/policies/Cookies' /* webpackChunkName: "cookies" */)
+);
+const TermsAndConditionsPage = lazy(
+  () => import('./views/policies/Terms' /* webpackChunkName: "terms" */)
+);
+const Invite = lazy(
+  () => import('./views/layout/Invite' /* webpackChunkName: "invite" */)
+);
+const PrivacyPolicyPage = lazy(
+  () => import('./views/policies/Privacy' /* webpackChunkName: "privacy" */)
+);
+const Panel = lazy(
+  () => import('./views/Panel' /* webpackChunkName: "panel" */)
+);
 
 const Title = styled(Typography)`
   flex-grow: 1;
