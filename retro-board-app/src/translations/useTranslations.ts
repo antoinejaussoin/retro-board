@@ -60,14 +60,6 @@ function useTranslation() {
     load();
   }, [language]);
 
-  // const result = useMemo(() => {
-  //   const translations = languages[language].then(x => x.default);
-  //   const english = en;
-  //   return language === 'en'
-  //     ? translations
-  //     : merge(cloneDeep(english), translations);
-  // }, [language]);
-
   return merged;
 }
 
