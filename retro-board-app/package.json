@@ -72,7 +72,7 @@
     "build": "NODE_ENV=production && react-scripts build",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "test": "react-scripts test",
-    "analyze": "source-map-explorer build/static/js/main.*"
+    "analyze": "source-map-explorer build/static/js/*"
   },
   "eslintConfig": {
     "extends": "react-app"
