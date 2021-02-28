@@ -14,6 +14,7 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import useIsPro from '../../auth/useIsPro';
 import useModal from '../../hooks/useModal';
+import useQuota from '../../hooks/useQuota';
 import useTranslation from '../../translations/useTranslations';
 import { startTrial } from '../../views/subscribe/api';
 import Feature from './Feature';
@@ -25,12 +26,19 @@ interface ComponentProp {
 
 interface ProButtonProps {
   children: React.ReactElement<ComponentProp>;
+  /**
+   * Will only show the modal if the quota is reached
+   */
+  quota?: boolean;
 }
 
-function ProButton({ children }: ProButtonProps) {
+function ProButton({ children, quota }: ProButtonProps) {
   const isPro = useIsPro();
+  const actualQuota = useQuota();
+  const overQuota = !!actualQuota && actualQuota.posts >= actualQuota.quota;
+  const isValid = isPro || (quota && !overQuota);
   const [opened, open, close] = useModal();
-  const clone = isPro ? children : cloneElement(children, { onClick: open });
+  const clone = isValid ? children : cloneElement(children, { onClick: open });
   const history = useHistory();
   const { SubscribeModal: translations } = useTranslation();
   const fullScreen = useMediaQuery('(max-width:600px)');
@@ -73,7 +81,7 @@ function ProButton({ children }: ProButtonProps) {
     [open]
   );
 
-  if (isPro) {
+  if (isValid) {
     return <>{clone}</>;
   }
 

@@ -84,16 +84,19 @@ function Home() {
         <MainHeader>{translations.Home.welcome!(user?.name || '')}</MainHeader>
 
         <LaunchButtons>
-          <Fab
-            variant="extended"
-            onClick={createDefaultSession}
-            size="large"
-            color="secondary"
-            disabled={!isLoggedIn}
-          >
-            <ThumbUpAlt className={classes.buttonIcon} />
-            {translations.Join.standardTab.button}
-          </Fab>
+          <ProButton quota>
+            <Fab
+              variant="extended"
+              onClick={createDefaultSession}
+              size="large"
+              color="secondary"
+              disabled={!isLoggedIn}
+            >
+              <ThumbUpAlt className={classes.buttonIcon} />
+              {translations.Join.standardTab.button}
+            </Fab>
+          </ProButton>
+          <div style={{ width: 30 }} />
           <ProButton>
             <Fab
               variant="extended"
