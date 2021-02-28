@@ -52,6 +52,7 @@ It features the following technologies:
 - [Travis](http://travis-ci.org/), for Continuous Integration and Deployment (CI/CD)
 - [Multi-Architecture](https://github.com/docker/buildx/), for automatic compatibility with ARM-based servers
 - [Stripe](https://stripe.com/), for our payment solution
+- [Recoil.js](https://recoiljs.org), as an experimental state management library
 
 Previous versions, up to v1.0.1 featured the following libraries:
 
@@ -147,6 +148,8 @@ When using the Docker deployment, your database runs from a container. But if yo
 - Adding a 30-day trial
 - Adding Microsoft OAuth 2.0
 - Removing all `import React from 'react';` imports, as they are now redundant.
+- Introducing Recoil.js (as an experiment)
+- Limiting the number of posts to 50 for free accounts
 
 ### Version 4.0.5
 
