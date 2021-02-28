@@ -29,8 +29,6 @@ import AccountPage from './views/account/AccountPage';
 import ProPill from './components/ProPill';
 import LoginPage from './views/login/LoginPage';
 
-const x = 'xx';
-
 const Game = lazy(() => import('./views/Game'));
 
 const Title = styled(Typography)`
@@ -81,29 +79,24 @@ function App() {
       <Route path="/" exact>
         {user ? <Home /> : null}
       </Route>
-      <Switch>
-        <Redirect from="/session/:gameId" to="/game/:gameId" />
-        <Route
-          path="/game/:gameId"
-          render={() => (
-            <Suspense fallback={<div>Loading...</div>}>
-              <Game />
-            </Suspense>
-          )}
-        />
-        <Route path="/validate" component={ValidatePage} />
-        <Route path="/reset" component={ResetPasswordPage} />
-        <Route path="/account" component={AccountPage} />
-        <Route path="/login" component={LoginPage} />
-        <Route path="/subscribe" component={SubscribePageOuter} exact />
-        <Route path="/subscribe/success" component={SuccessPage} exact />
-        <Route path="/subscribe/cancel" component={CancelPage} exact />
-        <Route path="/privacy" component={PrivacyPolicyPage} />
-        <Route path="/terms" component={TermsAndConditionsPage} />
-        <Route path="/cookies" component={CookiesPolicyPage} />
-        <Route path="/acceptable-use" component={AcceptableUsePolicyPage} />
-        <Route path="/disclaimer" component={DisclaimerPage} />
-      </Switch>
+      <Suspense fallback={<div>Loading!!</div>}>
+        <Switch>
+          <Redirect from="/session/:gameId" to="/game/:gameId" />
+          <Route path="/game/:gameId" component={Game} />
+          <Route path="/validate" component={ValidatePage} />
+          <Route path="/reset" component={ResetPasswordPage} />
+          <Route path="/account" component={AccountPage} />
+          <Route path="/login" component={LoginPage} />
+          <Route path="/subscribe" component={SubscribePageOuter} exact />
+          <Route path="/subscribe/success" component={SuccessPage} exact />
+          <Route path="/subscribe/cancel" component={CancelPage} exact />
+          <Route path="/privacy" component={PrivacyPolicyPage} />
+          <Route path="/terms" component={TermsAndConditionsPage} />
+          <Route path="/cookies" component={CookiesPolicyPage} />
+          <Route path="/acceptable-use" component={AcceptableUsePolicyPage} />
+          <Route path="/disclaimer" component={DisclaimerPage} />
+        </Switch>
+      </Suspense>
       <Panel />
       <OutdatedBrowser show={!isCompatible} />
     </div>
