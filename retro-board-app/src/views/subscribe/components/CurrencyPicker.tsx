@@ -1,4 +1,4 @@
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 import { Currency } from '@retrospected/common';
 import 'flag-icon-css/css/flag-icon.min.css';
 import { currencies } from './types';

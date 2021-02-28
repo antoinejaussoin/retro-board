@@ -1,5 +1,5 @@
 import { Participant } from '@retrospected/common';
-import { difference } from 'lodash';
+import difference from 'lodash/difference';
 
 function onlineIds(partipants: Participant[]) {
   return partipants.filter((p) => p.online).map((p) => p.id);

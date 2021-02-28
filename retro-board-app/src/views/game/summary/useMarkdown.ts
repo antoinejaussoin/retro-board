@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
-import { flatten, sortedUniq, sortBy } from 'lodash';
+import flatten from 'lodash/flatten';
+import sortedUniq from 'lodash/sortedUniq';
+import sortBy from 'lodash/sortBy';
 import { format } from 'date-fns';
 import useGlobalState from '../../../state';
 import useColumns from '../useColumns';

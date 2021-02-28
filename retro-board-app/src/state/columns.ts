@@ -5,10 +5,10 @@ import {
 } from '@retrospected/common';
 import { Translation } from '../translations';
 import { v4 } from 'uuid';
-import { keyBy } from 'lodash';
+import keyBy from 'lodash/keyBy';
 import { ColumnSettings, Template } from './types';
 import { getTemplate } from './templates';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 
 export function buildDefaults(
   template: Template,

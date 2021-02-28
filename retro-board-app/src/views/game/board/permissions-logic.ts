@@ -1,5 +1,5 @@
 import { Post, Session, User, VoteType } from '@retrospected/common';
-import { some } from 'lodash';
+import some from 'lodash/some';
 
 export interface UserPermissions {
   canUpVote: boolean;

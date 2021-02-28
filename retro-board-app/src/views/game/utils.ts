@@ -1,5 +1,7 @@
 import { Post, VoteType, PostGroup } from '@retrospected/common';
-import { groupBy, toPairs, sum } from 'lodash';
+import groupBy from 'lodash/groupBy';
+import toPairs from 'lodash/toPairs';
+import sum from 'lodash/sum';
 
 export function countVotes(post: Post, type: VoteType): number {
   return post.votes.filter((v) => v.type === type).length;

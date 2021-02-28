@@ -1,5 +1,6 @@
 import { Post, PostGroup } from '@retrospected/common';
-import { sortBy, flattenDeep } from 'lodash';
+import sortBy from 'lodash/sortBy';
+import flattenDeep from 'lodash/flattenDeep';
 import { ColumnContent } from '../types';
 import { ColumnStats, ColumnStatsItem, Stats, ActionItem } from './types';
 import { countVotes, countVotesForGroup } from '../utils';

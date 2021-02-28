@@ -11,7 +11,7 @@ import {
   UnauthorizedAccessPayload,
 } from '@retrospected/common';
 import { v4 } from 'uuid';
-import { find } from 'lodash';
+import find from 'lodash/find';
 import { trackAction, trackEvent } from './../../track';
 import io from 'socket.io-client';
 import useGlobalState from '../../state';

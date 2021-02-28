@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import LanguageContext from './Context';
 import { Translation } from './types';
-import { merge, cloneDeep } from 'lodash';
+import merge from 'lodash/merge';
+import cloneDeep from 'lodash/cloneDeep';
 
 import en from './en';
 

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { sortBy } from 'lodash';
+import sortBy from 'lodash/sortBy';
 import useTranslations from '../../translations';
 import useGlobalState from '../../state';
 import { ColumnContent } from './types';
