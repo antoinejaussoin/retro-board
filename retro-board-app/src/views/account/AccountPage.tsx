@@ -1,5 +1,5 @@
 import usePortalUrl from './usePortalUrl';
-import { Button } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import { Page } from '../../components/Page';
 import useUser from '../../auth/useUser';
 import styled from 'styled-components';

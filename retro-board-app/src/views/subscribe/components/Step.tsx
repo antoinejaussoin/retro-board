@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { colors } from '@material-ui/core';
+import grey from '@material-ui/core/colors/grey';
 
 interface StepProps {
   index: number;
@@ -23,7 +23,7 @@ const Step: React.FC<StepProps> = ({ index, title, description, children }) => {
 };
 
 const Container = styled.div`
-  border: 1px solid ${colors.grey[200]};
+  border: 1px solid ${grey[200]};
   border-radius: 10px;
   margin: 10px;
   padding: 20px;
@@ -39,7 +39,7 @@ const Index = styled.div`
   font-size: 4em;
   font-weight: 100;
   margin-right: 20px;
-  color: ${colors.grey[500]};
+  color: ${grey[500]};
 
   @media screen and (max-width: 600px) {
     font-size: 1.5em;

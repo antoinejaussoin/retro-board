@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { Button } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import { Alert } from '@material-ui/lab';
 import useTranslations from '../../../translations';
 import Wrapper from './../Wrapper';

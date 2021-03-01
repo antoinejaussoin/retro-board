@@ -3,7 +3,8 @@ import { Currency } from '@retrospected/common';
 import 'flag-icon-css/css/flag-icon.min.css';
 import { currencies } from './types';
 import styled from 'styled-components';
-import { colors } from '@material-ui/core';
+import deepPurple from '@material-ui/core/colors/deepPurple';
+import grey from '@material-ui/core/colors/grey';
 
 interface CurrencyPickerProps {
   value: Currency;
@@ -38,8 +39,7 @@ const CurrencyContainer = styled.div<{ selected: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: ${(props) => (props.selected ? '1' : '0')}px solid
-    ${colors.deepPurple[500]};
+  border: ${(props) => (props.selected ? '1' : '0')}px solid ${deepPurple[500]};
   border-radius: 3px;
   margin: ${(props) => (props.selected ? '0' : '1')}px;
   padding: 5px 0 2px 0px;
@@ -47,7 +47,7 @@ const CurrencyContainer = styled.div<{ selected: boolean }>`
 `;
 
 const CurrencyValue = styled.div`
-  color: ${colors.grey[500]};
+  color: ${grey[500]};
   font-size: 0.7em;
   margin-top: 2px;
 `;

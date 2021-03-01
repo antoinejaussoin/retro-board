@@ -6,7 +6,7 @@ import useUser from '../../auth/useUser';
 import useFormatDate from '../../hooks/useFormatDate';
 import useTranslations from '../../translations';
 import useQuota from '../../hooks/useQuota';
-import { Button } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import ProButton from '../../components/ProButton';
 
 export default function TrialPrompt() {

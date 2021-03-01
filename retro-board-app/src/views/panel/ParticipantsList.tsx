@@ -7,7 +7,7 @@ import Avatar from '../../components/Avatar';
 
 import useTranslations from '../../translations';
 import useGlobalState from '../../state';
-import { colors } from '@material-ui/core';
+import grey from '@material-ui/core/colors/grey';
 
 function ParticipantsList() {
   const translations = useTranslations();
@@ -27,7 +27,7 @@ function ParticipantsList() {
             <ListItemText
               primary={player.name}
               style={{
-                color: player.online ? colors.grey[900] : colors.grey[500],
+                color: player.online ? grey[900] : grey[500],
               }}
             />
           </ListItem>

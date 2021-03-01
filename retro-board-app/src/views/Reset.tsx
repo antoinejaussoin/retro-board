@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import UserContext from '../auth/Context';
 import Input from '../components/Input';
 import { VpnKey } from '@material-ui/icons';
-import { Button } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import useTranslations from '../translations';
 
 const PasswordStrength = lazy(

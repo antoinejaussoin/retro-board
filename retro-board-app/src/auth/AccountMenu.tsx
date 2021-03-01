@@ -12,7 +12,7 @@ import UserContext from './Context';
 import Avatar from '../components/Avatar';
 import { useHistory } from 'react-router-dom';
 import { Star } from '@material-ui/icons';
-import { colors } from '@material-ui/core';
+import yellow from '@material-ui/core/colors/yellow';
 
 const AccountMenu = () => {
   const translations = useTranslation();
@@ -73,7 +73,7 @@ const AccountMenu = () => {
             <MenuItem onClick={handleSubscribe}>
               <Star
                 style={{
-                  color: colors.yellow[700],
+                  color: yellow[700],
                   position: 'relative',
                   top: -2,
                   left: -5,

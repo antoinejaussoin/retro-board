@@ -3,7 +3,7 @@ import { ColumnSettings } from '../../../../state/types';
 import ColumnEditor from './ColumnEditor';
 import useTranslation from '../../../../translations/useTranslations';
 import { getTemplateColumnByType } from '../../../../state/columns';
-import { IconButton } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
 import { trackEvent } from '../../../../track';
 import { Add } from '@material-ui/icons';
 

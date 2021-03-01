@@ -10,7 +10,7 @@ import useGlobalState from '../../../../state';
 import { Alert } from '@material-ui/lab';
 import { useEncryptionKey } from '../../../../crypto/useEncryptionKey';
 import { useHistory, useLocation } from 'react-router-dom';
-import { colors } from '@material-ui/core';
+import deepPurple from '@material-ui/core/colors/deepPurple';
 import useTranslation from '../../../../translations/useTranslations';
 
 function EncryptionModal() {
@@ -60,7 +60,7 @@ function EncryptionModal() {
 
 const Input = styled.input`
   text-align: center;
-  border: 1px solid ${colors.deepPurple[900]};
+  border: 1px solid ${deepPurple[900]};
   font-size: 2em;
 `;
 

@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import styled from 'styled-components';
-import { Button } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 
 interface QuantitySelectorProps {
   value: number;

@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import useGlobalState from '../../../../state';
-import { Button } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import SessionEditor from '../../../session-editor/SessionEditor';
 import { ColumnSettings } from '../../../../state/types';
 import { SessionOptions, ColumnDefinition } from '@retrospected/common';

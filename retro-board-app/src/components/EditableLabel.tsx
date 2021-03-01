@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { colors } from '@material-ui/core';
+import grey from '@material-ui/core/colors/grey';
+import purple from '@material-ui/core/colors/purple';
 import { Edit } from '@material-ui/icons';
 import TextareaAutosize from 'react-autosize-textarea';
 
@@ -123,7 +124,7 @@ const ViewMode = styled.span`
 
   &:hover {
     > svg {
-      color: ${colors.purple[500]};
+      color: ${purple[500]};
     }
   }
 `;
@@ -154,7 +155,7 @@ const EditMode = styled.span<CenteredProp>`
 const EditIcon = styled(Edit)`
   position: relative;
   top: 2px;
-  color: ${colors.grey[500]};
+  color: ${grey[500]};
 `;
 
 const InvisibleEditIcon = styled(EditIcon)`
