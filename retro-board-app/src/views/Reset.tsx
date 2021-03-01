@@ -9,7 +9,12 @@ import { VpnKey } from '@material-ui/icons';
 import { Button } from '@material-ui/core';
 import useTranslations from '../translations';
 
-const PasswordStrength = lazy(() => import('react-password-strength-bar'));
+const PasswordStrength = lazy(
+  () =>
+    import(
+      'react-password-strength-bar' /* webpackChunkName: "password-strength" */
+    )
+);
 
 function ResetPasswordPage() {
   const { setUser } = useContext(UserContext);

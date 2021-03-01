@@ -8,7 +8,12 @@ import { Person, Email, VpnKey } from '@material-ui/icons';
 import { register } from '../../../api';
 import { validate } from 'isemail';
 
-const PasswordStrength = lazy(() => import('react-password-strength-bar'));
+const PasswordStrength = lazy(
+  () =>
+    import(
+      'react-password-strength-bar' /* webpackChunkName: "password-strength" */
+    )
+);
 
 const Register = () => {
   const {
