@@ -1,19 +1,24 @@
 import { Locale } from 'date-fns';
 import { StripeLocales } from '@retrospected/common';
-const arDZ = () => import('date-fns/locale/ar-DZ');
-const zhCN = () => import('date-fns/locale/zh-CN');
-const zhTW = () => import('date-fns/locale/zh-TW');
-const fr = () => import('date-fns/locale/fr');
-const enGB = () => import('date-fns/locale/en-GB');
-const nl = () => import('date-fns/locale/nl');
-const de = () => import('date-fns/locale/de');
-const hu = () => import('date-fns/locale/hu');
-const it = () => import('date-fns/locale/it');
-const ja = () => import('date-fns/locale/ja');
-const pl = () => import('date-fns/locale/pl');
-const ptBR = () => import('date-fns/locale/pt-BR');
-const ru = () => import('date-fns/locale/ru');
-const es = () => import('date-fns/locale/es');
+const arDZ = () =>
+  import('date-fns/locale/ar-DZ' /* webpackChunkName: "ar-DZ" */);
+const zhCN = () =>
+  import('date-fns/locale/zh-CN' /* webpackChunkName: "zh-CN" */);
+const zhTW = () =>
+  import('date-fns/locale/zh-TW' /* webpackChunkName: "zh-TW" */);
+const fr = () => import('date-fns/locale/fr' /* webpackChunkName: "fr" */);
+const enGB = () =>
+  import('date-fns/locale/en-GB' /* webpackChunkName: "en-GB" */);
+const nl = () => import('date-fns/locale/nl' /* webpackChunkName: "nl" */);
+const de = () => import('date-fns/locale/de' /* webpackChunkName: "de" */);
+const hu = () => import('date-fns/locale/hu' /* webpackChunkName: "hu" */);
+const it = () => import('date-fns/locale/it' /* webpackChunkName: "it" */);
+const ja = () => import('date-fns/locale/ja' /* webpackChunkName: "ja" */);
+const pl = () => import('date-fns/locale/pl' /* webpackChunkName: "pl" */);
+const ptBR = () =>
+  import('date-fns/locale/pt-BR' /* webpackChunkName: "pt-BR" */);
+const ru = () => import('date-fns/locale/ru' /* webpackChunkName: "ru" */);
+const es = () => import('date-fns/locale/es' /* webpackChunkName: "es" */);
 
 export interface Language {
   value: string;
