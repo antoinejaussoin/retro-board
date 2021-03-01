@@ -1,26 +1,26 @@
-import enGB from 'date-fns/locale/en-GB';
-import fr from 'date-fns/locale/fr';
-import arDZ from 'date-fns/locale/ar-DZ';
-import zhCN from 'date-fns/locale/zh-CN';
-import zhTW from 'date-fns/locale/zh-TW';
-import nl from 'date-fns/locale/nl';
-import de from 'date-fns/locale/de';
-import hu from 'date-fns/locale/hu';
-import it from 'date-fns/locale/it';
-import ja from 'date-fns/locale/ja';
-import pl from 'date-fns/locale/pl';
-import ptBR from 'date-fns/locale/pt-BR';
-import ru from 'date-fns/locale/ru';
-import es from 'date-fns/locale/es';
 import { Locale } from 'date-fns';
 import { StripeLocales } from '@retrospected/common';
+const arDZ = () => import('date-fns/locale/ar-DZ');
+const zhCN = () => import('date-fns/locale/zh-CN');
+const zhTW = () => import('date-fns/locale/zh-TW');
+const fr = () => import('date-fns/locale/fr');
+const enGB = () => import('date-fns/locale/en-GB');
+const nl = () => import('date-fns/locale/nl');
+const de = () => import('date-fns/locale/de');
+const hu = () => import('date-fns/locale/hu');
+const it = () => import('date-fns/locale/it');
+const ja = () => import('date-fns/locale/ja');
+const pl = () => import('date-fns/locale/pl');
+const ptBR = () => import('date-fns/locale/pt-BR');
+const ru = () => import('date-fns/locale/ru');
+const es = () => import('date-fns/locale/es');
 
 export interface Language {
   value: string;
   iso: string;
   name: string;
   englishName: string;
-  dateLocale: Locale;
+  dateLocale: () => Promise<{ default: Locale }>;
   stripeLocale: StripeLocales;
 }
 
