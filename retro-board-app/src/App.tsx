@@ -13,7 +13,7 @@ import useIsLicenced from './hooks/useIsLicenced';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { RecoilRoot } from 'recoil';
 import { Suspense } from 'react';
-import { CircularProgress } from '@material-ui/core';
+import { CodeSplitLoader } from './CodeSplitLoader';
 
 function App() {
   const licenced = useIsLicenced();
@@ -51,7 +51,7 @@ function App() {
                         to obtain a licence.
                       </Alert>
                     ) : null}
-                    <Suspense fallback={<CircularProgress />}>
+                    <Suspense fallback={<CodeSplitLoader />}>
                       <Layout />
                     </Suspense>
                   </ErrorBoundary>
