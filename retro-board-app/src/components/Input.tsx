@@ -1,9 +1,6 @@
 import { useCallback } from 'react';
-import {
-  InputAdornment,
-  TextField,
-  StandardTextFieldProps,
-} from '@material-ui/core';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import TextField, { StandardTextFieldProps } from '@material-ui/core/TextField';
 
 interface InputProps extends StandardTextFieldProps {
   onChangeValue: (value: string) => void;

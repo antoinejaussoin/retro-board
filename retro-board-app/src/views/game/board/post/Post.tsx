@@ -1,14 +1,16 @@
 import { useState, useCallback, useMemo, useRef } from 'react';
 import styled from 'styled-components';
-import {
-  Typography,
-  makeStyles,
-  Popover,
-  Card,
-  CardContent,
-  colors,
-  Tooltip,
-} from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import Popover from '@material-ui/core/Popover';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Tooltip from '@material-ui/core/Tooltip';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import blue from '@material-ui/core/colors/blue';
+import yellow from '@material-ui/core/colors/yellow';
+import green from '@material-ui/core/colors/green';
+import red from '@material-ui/core/colors/red';
+import grey from '@material-ui/core/colors/grey';
 import {
   ThumbUpOutlined,
   ThumbDownOutlined,
@@ -58,10 +60,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.grey[100],
   },
   actionIcon: {
-    color: colors.blue[400],
+    color: blue[400],
   },
   ghipyIcon: {
-    color: colors.yellow[700],
+    color: yellow[700],
   },
 }));
 
@@ -217,7 +219,7 @@ const PostItem = ({
               </CardContent>
             )}
             <ActionsBar
-              color={faded ? colors.grey[100] : color}
+              color={faded ? grey[100] : color}
               rightActions={
                 <>
                   {giphyImageUrl && (
@@ -227,9 +229,7 @@ const PostItem = ({
                       icon={
                         <InsertPhotoTwoTone
                           style={{
-                            color: !showGiphyImage
-                              ? colors.green[200]
-                              : colors.red[200],
+                            color: !showGiphyImage ? green[200] : red[200],
                           }}
                         />
                       }
@@ -340,7 +340,7 @@ const DragHandle = styled.div`
   top: 3px;
   right: 3px;
   visibility: hidden;
-  color: ${colors.grey[500]};
+  color: ${grey[500]};
 `;
 
 const PostCard = styled(Card)`
@@ -388,7 +388,7 @@ const CloseButtonContainer = styled.div`
   border-radius: 15px;
   color: white;
   font-size: 0.5em;
-  background-color: ${colors.red[400]};
+  background-color: ${red[400]};
   cursor: pointer;
 `;
 

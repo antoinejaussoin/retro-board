@@ -1,7 +1,8 @@
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import { SessionOptions, ColumnDefinition } from '@retrospected/common';
-import { Typography, makeStyles } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import useTranslations from '../../../../translations';
 import useGlobalState from '../../../../state';
 import useRemainingVotes from './useRemainingVotes';

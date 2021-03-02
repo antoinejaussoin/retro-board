@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
-import { Button, Input } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
 import { Alert } from '@material-ui/lab';
 import useTranslations, { useLanguage } from '../../translations';
 import { anonymousLogin, updateLanguage } from '../../api';

@@ -1,19 +1,17 @@
 import { useMemo } from 'react';
 import styled from 'styled-components';
-import {
-  Typography,
-  Card,
-  CardHeader,
-  CardContent,
-  Grid,
-  useTheme,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  Avatar,
-  colors,
-} from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
+import useTheme from '@material-ui/core/styles/useTheme';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Avatar from '@material-ui/core/Avatar';
+import grey from '@material-ui/core/colors/grey';
 import { Feedback } from '@material-ui/icons';
 import { ColumnContent } from '../types';
 import { Palette } from '../../../Theme';
@@ -85,7 +83,7 @@ const GroupSummary = ({ group, search }: GroupSummaryProps) => {
 };
 
 const GroupContainer = styled.div`
-  border-left: 1px dashed ${colors.grey[500]};
+  border-left: 1px dashed ${grey[500]};
   margin-left: -10px;
   padding-left: 10px;
   > :nth-child(2) {

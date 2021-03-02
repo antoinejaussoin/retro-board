@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-import { colors, Paper } from '@material-ui/core';
+import deepPurple from '@material-ui/core/colors/deepPurple';
+import grey from '@material-ui/core/colors/grey';
+import Paper from '@material-ui/core/Paper';
 import { useCallback } from 'react';
 import { Product, Currency } from '@retrospected/common';
 import useTranslations from '../../../translations';
@@ -57,8 +59,7 @@ const Container = styled.div<{ selected: boolean }>`
   cursor: pointer;
   width: 300px;
   border-radius: 5px;
-  border: 3px solid
-    ${(props) => (props.selected ? colors.deepPurple[500] : colors.grey[50])};
+  border: 3px solid ${(props) => (props.selected ? deepPurple[500] : grey[50])};
 `;
 
 const Header = styled.div`
@@ -70,8 +71,8 @@ const Header = styled.div`
 
 const Description = styled.div`
   padding: 20px;
-  background-color: ${colors.grey[100]};
-  color: ${colors.grey[700]};
+  background-color: ${grey[100]};
+  color: ${grey[700]};
   flex: 1;
 `;
 
@@ -82,11 +83,11 @@ const Seats = styled.div`
   justify-content: center;
   font-size: 1.5em;
   font-weight: 300;
-  color: ${colors.deepPurple[500]};
+  color: ${deepPurple[500]};
 `;
 
 const Total = styled.div`
-  background-color: ${colors.deepPurple[500]};
+  background-color: ${deepPurple[500]};
   color: white;
   text-align: center;
   font-size: 2em;
@@ -98,7 +99,7 @@ const PerMonth = styled.span`
 `;
 
 const RegularPrice = styled.div`
-  background-color: ${colors.deepPurple[500]};
+  background-color: ${deepPurple[500]};
   color: white;
   text-align: center;
   font-size: 1em;
@@ -111,8 +112,8 @@ const PickMe = styled.div`
 `;
 
 const PickMeButton = styled.div`
-  border: 1px solid ${colors.deepPurple[500]};
-  color: ${colors.deepPurple[500]};
+  border: 1px solid ${deepPurple[500]};
+  color: ${deepPurple[500]};
   border-radius: 10px;
   font-size: 1.5em;
   font-weight: 100;
@@ -120,7 +121,7 @@ const PickMeButton = styled.div`
   padding: 5px;
 
   :hover {
-    background-color: ${colors.deepPurple[500]};
+    background-color: ${deepPurple[500]};
     color: white;
   }
 `;

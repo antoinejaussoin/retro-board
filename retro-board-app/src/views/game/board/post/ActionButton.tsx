@@ -1,4 +1,5 @@
-import { Tooltip, Button } from '@material-ui/core';
+import Tooltip from '@material-ui/core/Tooltip';
+import Button from '@material-ui/core/Button';
 
 interface ActionButtonProps {
   tooltip: React.ReactElement | string | number;

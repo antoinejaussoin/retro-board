@@ -7,7 +7,9 @@ import { ColumnSettings } from '../../../../state/types';
 import { IconName } from '@retrospected/common';
 import { TwitterPicker, ColorResult } from 'react-color';
 import IconPicker from './IconPicker';
-import { IconButton, colors, useMediaQuery } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import red from '@material-ui/core/colors/red';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { DeleteForeverOutlined } from '@material-ui/icons';
 
 interface ColumnEditorProps {
@@ -135,7 +137,7 @@ const Container = styled.div`
 
 const DeleteContainer = styled.div`
   svg {
-    color: ${colors.red[500]};
+    color: ${red[500]};
   }
 `;
 

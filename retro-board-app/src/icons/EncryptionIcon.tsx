@@ -1,4 +1,4 @@
-import { SvgIcon, SvgIconTypeMap } from '@material-ui/core';
+import SvgIcon, { SvgIconTypeMap } from '@material-ui/core/SvgIcon';
 import { OverrideProps } from '@material-ui/core/OverridableComponent';
 
 export default function EncryptionIcon(

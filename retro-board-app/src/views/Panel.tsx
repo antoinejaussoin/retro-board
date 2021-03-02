@@ -1,7 +1,10 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
 import { Route, Link as RouterLink } from 'react-router-dom';
-import { colors, Drawer, Link, Typography } from '@material-ui/core';
+import grey from '@material-ui/core/colors/grey';
+import Drawer from '@material-ui/core/Drawer';
+import Link from '@material-ui/core/Link';
+import Typography from '@material-ui/core/Typography';
 import { LanguageContext } from '../translations';
 import useGlobalState from '../state';
 import LanguagePicker from '../components/LanguagePicker';
@@ -55,7 +58,7 @@ function Panel() {
           </Typography>
           <Typography
             component="div"
-            style={{ color: colors.grey[700], textAlign: 'center' }}
+            style={{ color: grey[700], textAlign: 'center' }}
           >
             <Content>Version {config.version}</Content>
           </Typography>

@@ -6,7 +6,8 @@ import {
   DroppableProvided,
   DroppableStateSnapshot,
 } from 'react-beautiful-dnd';
-import { colors, IconButton } from '@material-ui/core';
+import grey from '@material-ui/core/colors/grey';
+import IconButton from '@material-ui/core/IconButton';
 import { Delete } from '@material-ui/icons';
 import EditableLabel from '../../../components/EditableLabel';
 import { Alert, AlertTitle } from '@material-ui/lab';
@@ -84,14 +85,13 @@ const GroupContainer = styled.div<{ draggingOver: boolean }>`
   border: 1px dashed lightgray;
   border-radius: 10px;
   margin: 10px 0;
-  background-color: ${(props) =>
-    props.draggingOver ? colors.grey[200] : 'unset'};
+  background-color: ${(props) => (props.draggingOver ? grey[200] : 'unset')};
 `;
 
 const Header = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${colors.grey[100]};
+  background-color: ${grey[100]};
   padding: 10px;
 `;
 

@@ -1,4 +1,6 @@
-import { Chip, colors } from '@material-ui/core';
+import Chip from '@material-ui/core/Chip';
+import grey from '@material-ui/core/colors/grey';
+import yellow from '@material-ui/core/colors/yellow';
 import { Star } from '@material-ui/icons';
 import useIsPro from '../auth/useIsPro';
 import useIsTrial from '../auth/useIsTrial';
@@ -20,7 +22,7 @@ function ProPill({ small = false }: ProPillProps) {
       <Chip
         label={'Free'}
         color="primary"
-        style={{ backgroundColor: colors.grey[500] }}
+        style={{ backgroundColor: grey[500] }}
         size={small ? 'small' : 'medium'}
       />
     );
@@ -31,7 +33,7 @@ function ProPill({ small = false }: ProPillProps) {
         <Star
           color="inherit"
           style={{
-            color: colors.yellow[500],
+            color: yellow[500],
             position: 'relative',
             top: -1,
             left: 1,

@@ -1,17 +1,19 @@
 import { useCallback, useState } from 'react';
-import {
-  Card as CardBase,
-  CardContent,
-  Typography,
-  colors,
-  IconButton,
-  Dialog,
-  DialogTitle,
-  DialogActions,
-  Button,
-  DialogContentText,
-  DialogContent,
-} from '@material-ui/core';
+import CardBase from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogActions from '@material-ui/core/DialogActions';
+import Button from '@material-ui/core/Button';
+import red from '@material-ui/core/colors/red';
+import indigo from '@material-ui/core/colors/indigo';
+import green from '@material-ui/core/colors/green';
+import amber from '@material-ui/core/colors/amber';
+import grey from '@material-ui/core/colors/grey';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogContent from '@material-ui/core/DialogContent';
 import { SessionMetadata } from '@retrospected/common';
 import { AvatarGroup } from '@material-ui/lab';
 import CustomAvatar from '../../../components/Avatar';
@@ -99,24 +101,24 @@ const PreviousGameItem = ({
             <ItemStat
               value={session.numberOfPosts}
               label={translations.posts!}
-              color={colors.green[500]}
+              color={green[500]}
             />
             <ItemStat
               value={session.participants.length}
               label={translations.participants!}
-              color={colors.indigo[500]}
+              color={indigo[500]}
             />
             <ItemStat
               value={
                 session.numberOfNegativeVotes + session.numberOfPositiveVotes
               }
               label={translations.votes!}
-              color={colors.red[500]}
+              color={red[500]}
             />
             <ItemStat
               value={session.numberOfActions}
               label={translations.actions!}
-              color={colors.amber[500]}
+              color={amber[500]}
             />
           </Stats>
           <AvatarGroup max={10} title={translations.participants!}>
@@ -145,7 +147,7 @@ const PreviousGameItem = ({
           <Button
             variant="contained"
             color="inherit"
-            style={{ backgroundColor: colors.red[500], color: 'white' }}
+            style={{ backgroundColor: red[500], color: 'white' }}
             onClick={handleDelete}
           >
             {DeleteSession.yesImSure}
@@ -170,7 +172,7 @@ const Stats = styled.div`
   display: flex;
   justify-content: space-evenly;
   margin-bottom: 10px;
-  background-color: ${colors.grey[100]};
+  background-color: ${grey[100]};
   margin: 0 -20px 20px;
 `;
 
@@ -187,7 +189,7 @@ const LastUpdated = styled.div`
 
 const Delete = styled.div`
   svg {
-    color: ${colors.red[500]};
+    color: ${red[500]};
   }
   position: relative;
   left: 12px;

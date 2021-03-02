@@ -1,7 +1,9 @@
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { Fab, makeStyles, colors } from '@material-ui/core';
+import Fab from '@material-ui/core/Fab';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import grey from '@material-ui/core/colors/grey';
 import { Lock, ThumbUpAlt } from '@material-ui/icons';
 import useTranslations from '../translations';
 import PreviousGames from './home/PreviousGames';
@@ -20,7 +22,7 @@ import TrialPrompt from './home/TrialPrompt';
 const useStyles = makeStyles({
   media: {
     objectFit: 'cover',
-    backgroundColor: colors.grey[200],
+    backgroundColor: grey[200],
   },
   actions: {
     justifyContent: 'center',

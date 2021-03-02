@@ -1,13 +1,13 @@
-import {
-  Button,
-  colors,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  useMediaQuery,
-} from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import red from '@material-ui/core/colors/red';
+import green from '@material-ui/core/colors/green';
+import grey from '@material-ui/core/colors/grey';
 import { Lock, VerifiedUser } from '@material-ui/icons';
 import { useCallback, useState } from 'react';
 import styled from 'styled-components';
@@ -68,9 +68,9 @@ function LockSession({ onLock }: LockSessionProps) {
           color="primary"
           startIcon={
             session.locked ? (
-              <VerifiedUser style={{ color: colors.red[800] }} />
+              <VerifiedUser style={{ color: red[800] }} />
             ) : (
-              <VerifiedUser style={{ color: colors.green[800] }} />
+              <VerifiedUser style={{ color: green[800] }} />
             )
           }
           onClick={handleOpenDialog}
@@ -137,7 +137,7 @@ const AvatarContainer = styled.div`
 const Name = styled.div`
   display: flex;
   justify-content: center;
-  color: ${colors.grey[700]};
+  color: ${grey[700]};
   margin-top: 10px;
 `;
 

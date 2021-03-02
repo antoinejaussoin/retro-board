@@ -8,14 +8,12 @@ import {
   useHistory,
 } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import {
-  CircularProgress,
-  AppBar,
-  Tabs,
-  Tab,
-  Button,
-  colors,
-} from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Button from '@material-ui/core/Button';
+import grey from '@material-ui/core/colors/grey';
 import { Dashboard, List, CloudOff } from '@material-ui/icons';
 import useGlobalState from '../state';
 import useTranslations from '../translations';
@@ -232,7 +230,7 @@ const ParticipantContainer = styled.div`
   right: 0px;
   left: 0px;
   padding: 10px;
-  border-top: 1px solid ${colors.grey[300]};
+  border-top: 1px solid ${grey[300]};
   background-color: white;
 `;
 

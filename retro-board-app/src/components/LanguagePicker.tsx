@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import styled from 'styled-components';
-import { Select, MenuItem } from '@material-ui/core';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import { languages } from '../translations';
 import 'flag-icon-css/css/flag-icon.min.css';
 

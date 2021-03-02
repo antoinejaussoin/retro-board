@@ -1,17 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
 import { SessionOptions } from '@retrospected/common';
-import {
-  Dialog,
-  DialogContent,
-  useMediaQuery,
-  DialogActions,
-  FormControlLabel,
-  Checkbox,
-  Button,
-  AppBar,
-  Tabs,
-  Tab,
-} from '@material-ui/core';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import DialogActions from '@material-ui/core/DialogActions';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Button from '@material-ui/core/Button';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import useTranslations from '../../translations';
 import useToggle from '../../hooks/useToggle';
 import { ColumnSettings } from '../../state/types';

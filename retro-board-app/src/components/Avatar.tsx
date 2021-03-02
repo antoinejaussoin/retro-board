@@ -1,5 +1,6 @@
 import { User } from '@retrospected/common';
-import { Avatar, AvatarTypeMap, Badge, Theme } from '@material-ui/core';
+import Avatar, { AvatarTypeMap } from '@material-ui/core/Avatar';
+import Badge from '@material-ui/core/Badge';
 import md5 from 'md5';
 import { DefaultComponentProps } from '@material-ui/core/OverridableComponent';
 import { createStyles, withStyles } from '@material-ui/styles';
@@ -9,7 +10,7 @@ interface AvatarProps extends DefaultComponentProps<AvatarTypeMap<{}, 'div'>> {
   online?: boolean;
 }
 
-const StyledBadge = withStyles((theme: Theme) =>
+const StyledBadge = withStyles((theme) =>
   createStyles({
     badge: {
       backgroundColor: '#44b700',
