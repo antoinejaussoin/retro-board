@@ -22,12 +22,12 @@ export async function getUserQuota(request: Request): Promise<Quota | null> {
     if (user) {
       return {
         posts,
-        quota: user?.quota,
+        quota: user.quota,
       };
     }
     return {
       posts,
-      quota: 0,
+      quota: 50,
     };
   }
   return null;

@@ -15,6 +15,7 @@ import Alert from '@material-ui/lab/Alert';
 import { RecoilRoot } from 'recoil';
 import { Suspense } from 'react';
 import { CodeSplitLoader } from './CodeSplitLoader';
+import QuotaManager from './auth/QuotaManager';
 
 function App() {
   const licenced = useIsLicenced();
@@ -39,24 +40,26 @@ function App() {
           <BrowserRouter>
             <AuthProvider>
               <LanguageProvider>
-                <StateContext>
-                  <GlobalStyles />
-                  <ErrorBoundary>
-                    {!licenced ? (
-                      <Alert title="Unlicenced" severity="error">
-                        <AlertTitle>Retrospected is Unlicenced</AlertTitle>
-                        This software is unlicenced. Please contact{' '}
-                        <a href="mailto:support@retrospected.com">
-                          support@retrospected.com
-                        </a>{' '}
-                        to obtain a licence.
-                      </Alert>
-                    ) : null}
-                    <Suspense fallback={<CodeSplitLoader />}>
-                      <Layout />
-                    </Suspense>
-                  </ErrorBoundary>
-                </StateContext>
+                <QuotaManager>
+                  <StateContext>
+                    <GlobalStyles />
+                    <ErrorBoundary>
+                      {!licenced ? (
+                        <Alert title="Unlicenced" severity="error">
+                          <AlertTitle>Retrospected is Unlicenced</AlertTitle>
+                          This software is unlicenced. Please contact{' '}
+                          <a href="mailto:support@retrospected.com">
+                            support@retrospected.com
+                          </a>{' '}
+                          to obtain a licence.
+                        </Alert>
+                      ) : null}
+                      <Suspense fallback={<CodeSplitLoader />}>
+                        <Layout />
+                      </Suspense>
+                    </ErrorBoundary>
+                  </StateContext>
+                </QuotaManager>
               </LanguageProvider>
             </AuthProvider>
           </BrowserRouter>
