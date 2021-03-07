@@ -77,6 +77,8 @@ const PreviousGameItem = ({
                   Date.parse((session.created as unknown) as string),
                   true
                 )}
+                &nbsp;
+                <SessionId>{session.id}</SessionId>
               </LastUpdated>
               <Delete>
                 {session.canBeDeleted ? (
@@ -198,6 +200,11 @@ const Delete = styled.div`
 const NameContainer = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const SessionId = styled.span`
+  color: ${grey[300]};
+  padding-left: 5px;
 `;
 
 export default PreviousGameItem;
