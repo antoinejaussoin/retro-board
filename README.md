@@ -143,7 +143,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
-### Version 4.1.0 (work in progress)
+### Version 4.1.0
 
 - Adding a 30-day trial
 - Adding Microsoft OAuth 2.0
