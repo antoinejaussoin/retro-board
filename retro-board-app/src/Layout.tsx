@@ -71,7 +71,6 @@ const Panel = lazy(
 );
 
 const Title = styled(Typography)`
-  flex-grow: 1;
   color: white;
 `;
 
@@ -105,8 +104,10 @@ function App() {
           </HomeButton>
           <MainTitle variant="h6" color="inherit" onClick={goToHome}>
             Retrospected&nbsp;
-            <ProPill small />
           </MainTitle>
+          <ProPillContainer>
+            <ProPill small />
+          </ProPillContainer>
           <Route path="/game/:gameId" component={Invite} />
           {isInitialised ? (
             <AccountMenu />
@@ -144,8 +145,7 @@ function App() {
 
 const MainTitle = styled(Title)`
   cursor: pointer;
-  display: flex;
-  align-items: center;
+  margin-right: 10px;
   @media screen and (max-width: 600px) {
     display: none;
   }
@@ -153,10 +153,10 @@ const MainTitle = styled(Title)`
 
 const HomeButton = styled.div`
   margin-right: 10px;
+`;
 
-  @media screen and (max-width: 600px) {
-    flex: 1;
-  }
+const ProPillContainer = styled.div`
+  flex: 1;
 `;
 
 const Initialising = styled.div``;
