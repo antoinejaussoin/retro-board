@@ -143,6 +143,10 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
+### Version 4.1.1
+
+- 🐛 Fixed a bug where Slack OAuth was disabled
+
 ### Version 4.1.0
 
 - Adding a 30-day trial
