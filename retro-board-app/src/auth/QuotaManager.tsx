@@ -21,7 +21,6 @@ export default function QuotaManager({
   }, [user, setQuota]);
 
   useEffect(() => {
-    console.log('load quota, ', user, quota);
     async function load() {
       if (user && !quota) {
         if (user.accountType === 'anonymous') {
