@@ -19,7 +19,7 @@ const AccountMenu = () => {
   const { setUser } = useContext(UserContext);
   const [modalOpened, setModalOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const menuAnchor = useRef(null);
+  const menuAnchor = useRef<HTMLDivElement>(null);
   const history = useHistory();
   const closeMenu = useCallback(() => setMenuOpen(false), []);
   const openMenu = useCallback(() => setMenuOpen(true), []);
@@ -60,29 +60,35 @@ const AccountMenu = () => {
           <Avatar user={user} />
           <DisplayName>{user.name}</DisplayName>
         </AvatarContainer>
-        <Menu anchorEl={menuAnchor.current} open={menuOpen} onClose={closeMenu}>
-          <MenuItem onClick={handleLogout}>
-            {translations.Header.logout}
-          </MenuItem>
-          {user && user.accountType !== 'anonymous' ? (
-            <MenuItem onClick={handleAccount}>
-              {translations.Header.account}
+        {menuAnchor.current ? (
+          <Menu
+            anchorEl={menuAnchor.current}
+            open={menuOpen}
+            onClose={closeMenu}
+          >
+            <MenuItem onClick={handleLogout}>
+              {translations.Header.logout}
             </MenuItem>
-          ) : null}
-          {user && !user.pro && user.accountType !== 'anonymous' ? (
-            <MenuItem onClick={handleSubscribe}>
-              <Star
-                style={{
-                  color: yellow[700],
-                  position: 'relative',
-                  top: -2,
-                  left: -5,
-                }}
-              />{' '}
-              Go Pro!
-            </MenuItem>
-          ) : null}
-        </Menu>
+            {user && user.accountType !== 'anonymous' ? (
+              <MenuItem onClick={handleAccount}>
+                {translations.Header.account}
+              </MenuItem>
+            ) : null}
+            {user && !user.pro && user.accountType !== 'anonymous' ? (
+              <MenuItem onClick={handleSubscribe}>
+                <Star
+                  style={{
+                    color: yellow[700],
+                    position: 'relative',
+                    top: -2,
+                    left: -5,
+                  }}
+                />{' '}
+                Go Pro!
+              </MenuItem>
+            ) : null}
+          </Menu>
+        ) : null}
       </div>
     );
   }

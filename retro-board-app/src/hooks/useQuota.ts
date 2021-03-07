@@ -26,10 +26,14 @@ export default function useQuota(): QuotaResult {
             localStorage.getItem(LOCAL_STORAGE_POSTS_KEY) || '0'
           );
           setQuota({
-            posts: storedPosts || 0,
+            posts: storedPosts,
             quota: DEFAULT_QUOTA,
           });
         } else {
+          setQuota({
+            posts: 0,
+            quota: DEFAULT_QUOTA,
+          });
           const backendQuota = await getQuota();
           setQuota(backendQuota);
         }
@@ -42,6 +46,7 @@ export default function useQuota(): QuotaResult {
 
     if (!LOCK) {
       LOCK = true;
+      // setQuota({ posts: 0, quota: DEFAULT_QUOTA });
       load();
     }
   }, [user, setQuota, quota]);
