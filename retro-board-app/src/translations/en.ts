@@ -335,7 +335,7 @@ export default {
     },
     subscribeButton: 'Subscribe',
     cancelButton: 'Cancel',
-    startTrial: 'Start Trial',
+    startTrial: '30-day Trial',
   },
   Products: {
     team:
@@ -383,14 +383,14 @@ export default {
   },
   TrialPrompt: {
     allowanceReachedTitle: 'You have reached your free allowance',
-    allowanceReachedDescription: `It's time to subscribe to Retrospected Pro`,
+    allowanceReachedDescription: `In order to get unlimited posts, please  subscribe to Retrospected Pro`,
     nearEndAllowanceTitle: 'You are nearing the end of your quota',
     nearEndAllowanceDescription: (quota) =>
       `You have about ${quota} posts left`,
-    onTrialTitle: 'You are on a trial subscription.',
+    onTrialTitle: 'Retrospected Pro - Trial',
     remainingTrialSentence: (remaining) =>
       `You have ${remaining} left on your trial.`,
-    trialEndedTitle: 'Your trial has ended',
+    trialEndedTitle: 'Your Retrospected Pro Trial has ended',
     trialEndedSentence: 'Subscribe today to regain access to the Pro features.',
     subscribeNow: 'Subscribe now!',
   },

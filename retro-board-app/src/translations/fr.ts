@@ -339,7 +339,7 @@ export default {
     },
     subscribeButton: `S'abonner`,
     cancelButton: `Annuler`,
-    startTrial: `Période d'essai`,
+    startTrial: `Essai 30 jours`,
   },
   Products: {
     team: `Parfait pour une équipe, vous pouvez sélectioner jusqu'à 20 collègues qui recevront un compte Retrospected Pro.`,
@@ -386,10 +386,10 @@ export default {
     nearEndAllowanceTitle: 'Vous approchez la limite de posts gratuits',
     nearEndAllowanceDescription: (quota) =>
       `Vous avez environ ${quota} posts restants.`,
-    onTrialTitle: `Vous utilisez une version d'essai.`,
+    onTrialTitle: `Retrospected Pro - Période d'essai`,
     remainingTrialSentence: (remaining) =>
       `Vous avez ${remaining} restant sur votre période d'essai.`,
-    trialEndedTitle: `Votre période d'essai est terminée`,
+    trialEndedTitle: `Votre période d'essai Retrospected Pro est terminée`,
     trialEndedSentence: `Abonnez-vous aujourd'hui pour continuer à bénéficier des avantages de la version Pro.`,
     subscribeNow: `Je m'abonne`,
   },
