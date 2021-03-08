@@ -7,6 +7,7 @@ import {
   LOCAL_STORAGE_POSTS_KEY,
 } from '../auth/QuotaManager';
 import useUser from '../auth/useUser';
+import { setItem } from '../utils/localStorage';
 
 type QuotaResult = {
   quota: Quota | null;
@@ -29,10 +30,7 @@ export default function useQuota(): QuotaResult {
             posts: 1,
           };
       if (user && user.accountType === 'anonymous') {
-        localStorage.setItem(
-          LOCAL_STORAGE_POSTS_KEY,
-          newQuota.posts.toString()
-        );
+        setItem(LOCAL_STORAGE_POSTS_KEY, newQuota.posts.toString());
       }
       return newQuota;
     });
