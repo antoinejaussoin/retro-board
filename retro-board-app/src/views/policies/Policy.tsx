@@ -10,7 +10,7 @@ const GenericPolicy = ({ url }: GenericPolicyProps) => {
   const content = useMd(url);
   return content !== null ? (
     <Container>
-      <Markdown source={content} />
+      <Markdown>{content}</Markdown>
     </Container>
   ) : (
     <div />

@@ -18,6 +18,7 @@ import { storeEncryptionKeyLocally } from '../crypto/crypto';
 import ProButton from '../components/ProButton';
 import { useSnackbar } from 'notistack';
 import TrialPrompt from './home/TrialPrompt';
+import Link from '../components/Link';
 
 const useStyles = makeStyles({
   media: {
@@ -41,7 +42,6 @@ function Home() {
   const { enqueueSnackbar } = useSnackbar();
   const [previousSessions, refreshPreviousSessions] = usePreviousSessions();
   const hasPreviousSessions = previousSessions.length > 0;
-
   const classes = useStyles();
 
   const createDefaultSession = useCallback(async () => {
@@ -99,18 +99,23 @@ function Home() {
             </Fab>
           </ProButton>
           <div style={{ width: 30 }} />
-          <ProButton>
-            <Fab
-              variant="extended"
-              onClick={createEncryptedSession}
-              size="large"
-              color="secondary"
-              disabled={!isLoggedIn}
-            >
-              <Lock className={classes.buttonIcon} />
-              {translations.Encryption.createEncryptedSession}
-            </Fab>
-          </ProButton>
+          <div>
+            <ProButton>
+              <Fab
+                variant="extended"
+                onClick={createEncryptedSession}
+                size="large"
+                color="secondary"
+                disabled={!isLoggedIn}
+              >
+                <Lock className={classes.buttonIcon} />
+                {translations.Encryption.createEncryptedSession}
+              </Fab>
+            </ProButton>
+            <Link onClick={() => history.push('/how-does-encryption-work')}>
+              How does that work?
+            </Link>
+          </div>
         </LaunchButtons>
 
         {hasPreviousSessions ? (

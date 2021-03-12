@@ -66,7 +66,7 @@ const CopySpeedDial = () => {
       />
       <MdContainer>
         <div ref={mdElement}>
-          <ReactMarkdown source={md} />
+          <ReactMarkdown>{md}</ReactMarkdown>
         </div>
       </MdContainer>
     </>
