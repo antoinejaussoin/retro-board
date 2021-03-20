@@ -143,6 +143,10 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
+### Version 4.2.0 (wip)
+
+- Add a page explaining how local encryption works
+
 ### Version 4.1.4 (hotfix)
 
 - 🐛 Language loading issues
