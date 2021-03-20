@@ -17,7 +17,7 @@ You can then share the URL via a secure mean (email, Slack...), store it in a bo
 
 ## Anatomy of a URL
 
-<span style="color: blue">https://www.retrospected.com/game/P2NWCVKNJ</span><span style="color: green">#</span><span style="color: red">pZ0ipXFBn</span>
+<span style="color: blue">https://www.retrospected.com/game/<wbr />P2NWCVKNJ</span><wbr /><span style="color: green">#</span><span style="color: red">pZ0ipXFBn</span>
 
 The <span style="color: blue">blue</span> part contains the Session ID, while the <span style="color: red">red</span> part,
 after the <span style="color: green">#</span>, is the encryption key.

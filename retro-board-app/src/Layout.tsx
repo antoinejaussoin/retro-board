@@ -69,7 +69,10 @@ const PrivacyPolicyPage = lazy(
 const Panel = lazy(
   () => import('./views/Panel' /* webpackChunkName: "panel" */)
 );
-const EncryptionDoc = lazy(() => import('./views/home/Encryption'));
+const EncryptionDoc = lazy(
+  () =>
+    import('./views/home/Encryption' /* webpackChunkName: "encryption-doc" */)
+);
 
 const Title = styled(Typography)`
   color: white;

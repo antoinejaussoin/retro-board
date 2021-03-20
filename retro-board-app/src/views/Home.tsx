@@ -18,7 +18,7 @@ import { storeEncryptionKeyLocally } from '../crypto/crypto';
 import ProButton from '../components/ProButton';
 import { useSnackbar } from 'notistack';
 import TrialPrompt from './home/TrialPrompt';
-import Link from '../components/Link';
+import HowDoesItWorkButton from '../components/HowDoesItWorkButton';
 
 const useStyles = makeStyles({
   media: {
@@ -99,7 +99,7 @@ function Home() {
             </Fab>
           </ProButton>
           <div style={{ width: 30 }} />
-          <div>
+          <HowDoesItWorkButton url="/how-does-encryption-work">
             <ProButton>
               <Fab
                 variant="extended"
@@ -112,10 +112,7 @@ function Home() {
                 {translations.Encryption.createEncryptedSession}
               </Fab>
             </ProButton>
-            <Link onClick={() => history.push('/how-does-encryption-work')}>
-              How does that work?
-            </Link>
-          </div>
+          </HowDoesItWorkButton>
         </LaunchButtons>
 
         {hasPreviousSessions ? (
@@ -157,7 +154,8 @@ const LaunchButtons = styled.div`
 
   @media (max-width: 500px) {
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
+    align-items: center;
     > button {
       margin: 0;
     }
