@@ -146,6 +146,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 ### Version 4.2.0 (wip)
 
 - Add a page explaining how local encryption works
+- Re-introducing rate limiting, both for the REST API and the Websocket connections.
 
 ### Version 4.1.4 (hotfix)
 
