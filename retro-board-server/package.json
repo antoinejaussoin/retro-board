@@ -70,6 +70,7 @@
     "passport-twitter": "^1.0.4",
     "pg": "^8.5.1",
     "prettier": "^2.2.1",
+    "rate-limiter-flexible": "^2.2.1",
     "redis": "^3.0.2",
     "rimraf": "^3.0.2",
     "shortid": "^2.2.16",

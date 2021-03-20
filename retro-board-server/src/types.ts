@@ -34,4 +34,6 @@ export interface Configuration {
   STRIPE_UNLIMITED_PRICE: string;
   RATE_LIMIT_WINDOW: number;
   RATE_LIMIT_MAX: number;
+  RATE_LIMIT_WS_POINTS: number;
+  RATE_LIMIT_WS_DURATION: number;
 }

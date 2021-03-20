@@ -10,12 +10,13 @@ import {
   ColumnDefinition,
   UnauthorizedAccessPayload,
 } from '@retrospected/common';
+import { RateLimiterMemory } from 'rate-limiter-flexible';
 import chalk from 'chalk';
 import moment from 'moment';
 import { Server, Socket } from 'socket.io';
 import { find } from 'lodash';
 import { v4 } from 'uuid';
-import { setScope, reportQueryError } from './sentry';
+import { setScope, reportQueryError, throttledManualReport } from './sentry';
 import SessionOptionsEntity from './db/entities/SessionOptions';
 import { SessionEntity, UserView } from './db/entities';
 import { hasField } from './security/payload-checker';
@@ -38,6 +39,7 @@ import {
   deletePost,
   deletePostGroup,
 } from './db/actions/posts';
+import config from './db/config';
 
 const {
   RECEIVE_POST,
@@ -94,6 +96,11 @@ interface PostUpdate extends UserData {
 interface LikeUpdate extends PostUpdate {
   type: VoteType;
 }
+
+const rateLimiter = new RateLimiterMemory({
+  points: config.RATE_LIMIT_WS_POINTS,
+  duration: config.RATE_LIMIT_WS_DURATION,
+});
 
 const s = (str: string) => chalk`{blue ${str.replace('retrospected/', '')}}`;
 
@@ -546,26 +553,37 @@ export default (io: Server) => {
 
     actions.forEach((action) => {
       socket.on(action.type, async (data) => {
-        setScope(async (scope) => {
+        const sid =
+          action.type === LEAVE_SESSION ? socket.sessionId : data.sessionId;
+
+        try {
           console.log(
             chalk`${d()}{red  <-- } ${s(action.type)} {grey ${JSON.stringify(
               data
             )}}`
           );
-          const sid =
-            action.type === LEAVE_SESSION ? socket.sessionId : data.sessionId;
-          if (sid) {
-            const session = await getSession(sid); // Todo check if that's not a performance issue
-            if (session) {
-              try {
-                await action.handler(userId, session, data.payload, socket);
-              } catch (err) {
-                reportQueryError(scope, err);
-                // TODO: send error to UI
+          await rateLimiter.consume(sid);
+          setScope(async (scope) => {
+            if (sid) {
+              const session = await getSession(sid); // Todo check if that's not a performance issue
+              if (session) {
+                try {
+                  await action.handler(userId, session, data.payload, socket);
+                } catch (err) {
+                  reportQueryError(scope, err);
+                  // TODO: send error to UI
+                }
               }
             }
-          }
-        });
+          });
+        } catch (rejection) {
+          // https://stackoverflow.com/questions/22110010/node-socket-io-anything-to-prevent-flooding/23548884
+          console.error(
+            chalk`${d()} {red Websocket has been rate limited for user {yellow ${userId}} and SID {yellow ${sid}}}`
+          );
+          throttledManualReport('websocket is being throttled', undefined);
+          socket.emit('rate-limited');
+        }
       });
     });
 

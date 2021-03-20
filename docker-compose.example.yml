@@ -85,6 +85,8 @@ services:
       STRIPE_UNLIMITED_PRICE: # Stripe product information
       RATE_LIMIT_WINDOW: 900000 # Rate Limiting window size (in ms), 900,000 = 15 min
       RATE_LIMIT_MAX: 100 # Rate Limiting max requests per window
+      RATE_LIMIT_WS_POINTS: 10 # Websocket rate limiting, max messages per duration
+      RATE_LIMIT_WS_DURATION: 1 # Websocket rate limiting, window duration (in seconds)
     restart: unless-stopped
     logging:
       driver: 'json-file'

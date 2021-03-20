@@ -25,7 +25,7 @@ import {
   setupSentryRequestHandler,
   setScope,
   reportQueryError,
-  manualReport,
+  throttledManualReport,
 } from './sentry';
 import {
   RegisterPayload,
@@ -66,11 +66,11 @@ const limiter = rateLimit({
   windowMs: config.RATE_LIMIT_WINDOW,
   max: config.RATE_LIMIT_MAX,
   message: 'Your request has been rate-limited',
-  onLimitReached: (req, res, options) => {
+  onLimitReached: (req, _, options) => {
     console.error(
       chalk`{red Request has been rate limited for} {blue ${req.ip}} with options {yellow ${options.windowMs}/${options.max}}`
     );
-    manualReport('A user has been rate limited', req);
+    throttledManualReport('A user has been rate limited', req);
   },
 });
 app.use(limiter);
