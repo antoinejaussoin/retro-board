@@ -1,13 +1,21 @@
 import config from './db/config';
 import * as Sentry from '@sentry/node';
 import chalk from 'chalk';
-import { Express } from 'express';
+import { Express, Request } from 'express';
 import { version } from '../package.json';
 import { QueryFailedError } from 'typeorm';
 
 const useSentry = !!config.SENTRY_URL && config.SENTRY_URL !== 'NO_SENTRY';
 
 type ConfigureScopeFn = (scope: Sentry.Scope | null) => void;
+
+export function manualReport(message: string, request: Request) {
+  Sentry.captureEvent({
+    message,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    request: request as any,
+  });
+}
 
 export function initSentry() {
   if (useSentry) {

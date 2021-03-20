@@ -83,6 +83,8 @@ services:
       STRIPE_TEAM_PRICE: # Stripe product information
       STRIPE_UNLIMITED_PRODUCT: # Stripe product information
       STRIPE_UNLIMITED_PRICE: # Stripe product information
+      RATE_LIMIT_WINDOW: 900000 # Rate Limiting window size (in ms), 900,000 = 15 min
+      RATE_LIMIT_MAX: 100 # Rate Limiting max requests per window
     restart: unless-stopped
     logging:
       driver: 'json-file'

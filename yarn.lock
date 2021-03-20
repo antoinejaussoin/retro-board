@@ -2124,6 +2124,13 @@
     "@types/express" "*"
     "@types/node" "*"
 
+"@types/express-rate-limit@^5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@types/express-rate-limit/-/express-rate-limit-5.1.1.tgz#e5b0239d18c1580e52ae56dce4248333302a1dc8"
+  integrity sha512-6oMYZBLlhxC5sdcRXXz528QyfGz3zTy9YdHwqlxLfgx5Cd3zwYaUjjPpJcaTtHmRefLi9P8kLBPz2wB7yz4JtQ==
+  dependencies:
+    "@types/express" "*"
+
 "@types/express-serve-static-core@^4.17.18":
   version "4.17.18"
   resolved "https://registry.yarnpkg.com/@types/express-serve-static-core/-/express-serve-static-core-4.17.18.tgz#8371e260f40e0e1ca0c116a9afcd9426fa094c40"
@@ -2133,7 +2140,7 @@
     "@types/qs" "*"
     "@types/range-parser" "*"
 
-"@types/express-session@*", "@types/express-session@^1.17.3":
+"@types/express-session@*", "@types/express-session@1.17.3", "@types/express-session@^1.17.3":
   version "1.17.3"
   resolved "https://registry.yarnpkg.com/@types/express-session/-/express-session-1.17.3.tgz#4a37c5c4428b8f922ac8ac1cb4bd9190a4d2b097"
   integrity sha512-57DnyxiqClXOIjoCgeKCUYfKxBPOlOY/k+l1TPK+7bSwyiPTrS5FIk1Ycql7twk4wO7P5lfOVy6akDGiaMSLfw==
@@ -6177,6 +6184,11 @@ express-mung@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/express-mung/-/express-mung-0.5.1.tgz#403ca3710745a208c676f1024314f1ead139919a"
   integrity sha512-5M8Oi2s9ePuP86YMyLT+hefWPPGxuxW3Vnuni/Hq3r2nGE0L4qulG0HkWuc4PIOpzZuZTwONwyfBFtR2xlnfgg==
+
+express-rate-limit@^5.2.6:
+  version "5.2.6"
+  resolved "https://registry.yarnpkg.com/express-rate-limit/-/express-rate-limit-5.2.6.tgz#b454e1be8a252081bda58460e0a25bf43ee0f7b0"
+  integrity sha512-nE96xaxGfxiS5jP3tD3kIW1Jg9yQgX0rXCs3rCkZtmbWHEGyotwaezkLj7bnB41Z0uaOLM8W4AX6qHao4IZ2YA==
 
 express-session@^1.17.1:
   version "1.17.1"

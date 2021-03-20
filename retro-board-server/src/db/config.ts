@@ -47,6 +47,8 @@ const config: Configuration = {
   STRIPE_TEAM_PRICE: process.env.STRIPE_TEAM_PRICE!,
   STRIPE_UNLIMITED_PRODUCT: process.env.STRIPE_UNLIMITED_PRODUCT!,
   STRIPE_UNLIMITED_PRICE: process.env.STRIPE_UNLIMITED_PRICE!,
+  RATE_LIMIT_WINDOW: parseInt(process.env.RATE_LIMIT_WINDOW!),
+  RATE_LIMIT_MAX: parseInt(process.env.RATE_LIMIT_MAX!),
 };
 
 export default config;
