@@ -70,6 +70,7 @@ const {
   LOCK_SESSION,
   RECEIVE_LOCK_SESSION,
   RECEIVE_UNAUTHORIZED,
+  RECEIVE_RATE_LIMITED,
 } = Actions;
 
 interface ExtendedSocket extends Socket {
@@ -582,7 +583,7 @@ export default (io: Server) => {
             chalk`${d()} {red Websocket has been rate limited for user {yellow ${userId}} and SID {yellow ${sid}}}`
           );
           throttledManualReport('websocket is being throttled', undefined);
-          socket.emit('rate-limited');
+          socket.emit(RECEIVE_RATE_LIMITED);
         }
       });
     });

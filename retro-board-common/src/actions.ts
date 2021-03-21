@@ -30,4 +30,5 @@ export default {
   RECEIVE_SESSION_NAME: 'retrospected/session/receive/rename',
   RECEIVE_LOCK_SESSION: 'retrospected/session/receive/lock',
   RECEIVE_UNAUTHORIZED: 'retrospected/session/receive/unauthorized',
+  RECEIVE_RATE_LIMITED: 'retrospected/rate-limited-error',
 };
