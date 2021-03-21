@@ -554,6 +554,8 @@ export default (io: Server) => {
 
     actions.forEach((action) => {
       socket.on(action.type, async (data) => {
+        // To remove
+        // console.log('Message length: ', JSON.stringify(data).length);
         const sid =
           action.type === LEAVE_SESSION ? socket.sessionId : data.sessionId;
 

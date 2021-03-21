@@ -95,7 +95,9 @@ app.use(express.urlencoded({ extended: true }));
 let sessionMiddleware: express.RequestHandler;
 
 const httpServer = new http.Server(app);
-const io = new socketIo.Server(httpServer);
+const io = new socketIo.Server(httpServer, {
+  maxHttpBufferSize: config.WS_MAX_BUFFER_SIZE,
+});
 
 if (config.REDIS_ENABLED) {
   const RedisStore = connectRedis(session);

@@ -87,6 +87,7 @@ services:
       RATE_LIMIT_MAX: 100 # Rate Limiting max requests per window
       RATE_LIMIT_WS_POINTS: 10 # Websocket rate limiting, max messages per duration
       RATE_LIMIT_WS_DURATION: 1 # Websocket rate limiting, window duration (in seconds)
+      WS_MAX_BUFFER_SIZE: 100000 # Max websocket message size in bytes
     restart: unless-stopped
     logging:
       driver: 'json-file'

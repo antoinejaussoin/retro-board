@@ -36,4 +36,5 @@ export interface Configuration {
   RATE_LIMIT_MAX: number;
   RATE_LIMIT_WS_POINTS: number;
   RATE_LIMIT_WS_DURATION: number;
+  WS_MAX_BUFFER_SIZE: number;
 }

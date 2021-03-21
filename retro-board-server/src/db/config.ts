@@ -51,6 +51,7 @@ const config: Configuration = {
   RATE_LIMIT_MAX: parseInt(process.env.RATE_LIMIT_MAX!),
   RATE_LIMIT_WS_POINTS: parseInt(process.env.RATE_LIMIT_WS_POINTS!),
   RATE_LIMIT_WS_DURATION: parseInt(process.env.RATE_LIMIT_WS_DURATION!),
+  WS_MAX_BUFFER_SIZE: parseInt(process.env.WS_MAX_BUFFER_SIZE!),
 };
 
 export default config;
