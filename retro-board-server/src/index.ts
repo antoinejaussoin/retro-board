@@ -47,6 +47,8 @@ import { updateUser, getUserByUsername, getUserView } from './db/actions/users';
 import isLicenced from './security/is-licenced';
 import rateLimit from 'express-rate-limit';
 
+const realIpHeader = 'X-Real-IP';
+
 if (!isLicenced()) {
   console.log(chalk`{red ----------------------------------------------- }`);
   console.log(
@@ -60,20 +62,42 @@ initSentry();
 
 const app = express();
 
+function getActualIp(req: express.Request): string {
+  if (req.headers[realIpHeader]) {
+    return req.headers[realIpHeader] as string;
+  }
+  return req.ip;
+}
+
 // Rate Limiter
 app.set('trust proxy', 1);
-const limiter = rateLimit({
-  windowMs: config.RATE_LIMIT_WINDOW,
-  max: config.RATE_LIMIT_MAX,
-  message: 'Your request has been rate-limited',
-  onLimitReached: (req, _, options) => {
+// const limiter = rateLimit({
+//   windowMs: config.RATE_LIMIT_WINDOW,
+//   max: config.RATE_LIMIT_MAX,
+//   message: 'Your request has been rate-limited',
+//   keyGenerator: getActualIp,
+//   onLimitReached: (req, _, options) => {
+//     console.error(
+//       chalk`{red Request has been rate limited for} {blue ${req.ip}} with options {yellow ${options.windowMs}/${options.max}}`
+//     );
+//     throttledManualReport('A user has been rate limited', req);
+//   },
+// });
+const heavyLoadLimiter = rateLimit({
+  windowMs: 10000, // 10s
+  max: 3, // 3 requests
+  message: 'Your request has been cancelled due to a high load',
+  keyGenerator: getActualIp,
+  onLimitReached: (req) => {
     console.error(
-      chalk`{red Request has been rate limited for} {blue ${req.ip}} with options {yellow ${options.windowMs}/${options.max}}`
+      chalk`{red High load request has been rate limited for} {blue ${getActualIp(
+        req
+      )}}`
     );
-    throttledManualReport('A user has been rate limited', req);
+    throttledManualReport('A heavy load request has been rate limited', req);
   },
 });
-app.use(limiter);
+// app.use(limiter);
 
 // Sentry
 setupSentryRequestHandler(app);
@@ -152,7 +176,7 @@ app.get('/healthz', async (_, res) => {
   res.status(200).send();
 });
 
-app.use('/api/auth', authRouter);
+app.use('/api/auth', heavyLoadLimiter, authRouter);
 
 io.use(function (socket, next) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -170,7 +194,7 @@ db().then(() => {
   app.use('/api/stripe', stripeRouter());
 
   // Create session
-  app.post('/api/create', async (req, res) => {
+  app.post('/api/create', heavyLoadLimiter, async (req, res) => {
     const user = await getUserFromRequest(req);
     const payload: CreateSessionPayload = req.body;
     setScope(async (scope) => {
@@ -219,7 +243,7 @@ db().then(() => {
     }
   });
 
-  app.get('/api/previous', async (req, res) => {
+  app.get('/api/previous', heavyLoadLimiter, async (req, res) => {
     const user = await getUserFromRequest(req);
     if (user) {
       const sessions = await previousSessions(user.id);
@@ -229,7 +253,7 @@ db().then(() => {
     }
   });
 
-  app.delete('/api/session/:sessionId', async (req, res) => {
+  app.delete('/api/session/:sessionId', heavyLoadLimiter, async (req, res) => {
     const sessionId = req.params.sessionId;
     const user = await getUserFromRequest(req);
     if (user && user.accountType !== 'anonymous') {
@@ -260,7 +284,7 @@ db().then(() => {
     }
   });
 
-  app.get('/api/me/default-template', async (req, res) => {
+  app.get('/api/me/default-template', heavyLoadLimiter, async (req, res) => {
     if (req.user) {
       const defaultTemplate = await getDefaultTemplate(req.user);
       if (defaultTemplate) {
@@ -273,7 +297,7 @@ db().then(() => {
     }
   });
 
-  app.post('/api/register', async (req, res) => {
+  app.post('/api/register', heavyLoadLimiter, async (req, res) => {
     if (req.user) {
       res.status(500).send('You are already logged in');
       return;
@@ -301,7 +325,7 @@ db().then(() => {
     }
   });
 
-  app.post('/api/validate', async (req, res) => {
+  app.post('/api/validate', heavyLoadLimiter, async (req, res) => {
     const validatePayload = req.body as ValidateEmailPayload;
     const user = await getUserByUsername(validatePayload.email);
     if (!user) {
@@ -330,7 +354,7 @@ db().then(() => {
     }
   });
 
-  app.post('/api/reset', async (req, res) => {
+  app.post('/api/reset', heavyLoadLimiter, async (req, res) => {
     const resetPayload = req.body as ResetPasswordPayload;
     const user = await getUserByUsername(resetPayload.email);
     if (!user) {
@@ -349,7 +373,7 @@ db().then(() => {
     res.status(200).send(isLicenced());
   });
 
-  app.post('/api/reset-password', async (req, res) => {
+  app.post('/api/reset-password', heavyLoadLimiter, async (req, res) => {
     const validatePayload = req.body as ResetChangePasswordPayload;
     const user = await getUserByUsername(validatePayload.email);
     if (!user) {
