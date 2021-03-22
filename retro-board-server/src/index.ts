@@ -63,8 +63,13 @@ initSentry();
 const app = express();
 
 function getActualIp(req: express.Request): string {
+  console.log('Getting real ip');
+  console.error('Headers: ', req.rawHeaders);
+  console.error('X-Forwarder-For', req.headers[realIpHeader]);
   if (req.headers[realIpHeader]) {
-    return (req.headers[realIpHeader] as string).split(',')[0];
+    const firstIp = (req.headers[realIpHeader] as string).split(',')[0];
+    console.log('Found first IP: ', firstIp);
+    return firstIp;
   }
   return req.ip;
 }
@@ -83,7 +88,6 @@ const heavyLoadLimiter = rateLimit({
         req
       )}} with options {yellow ${options.windowMs}/${options.max}}}`
     );
-    console.error('Headers: ', req.rawHeaders);
     throttledManualReport('A heavy load request has been rate limited', req);
   },
 });
