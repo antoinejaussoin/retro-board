@@ -63,15 +63,9 @@ initSentry();
 const app = express();
 
 function getActualIp(req: express.Request): string {
-  console.log('Getting real ip');
-  console.error('Headers: ', req.rawHeaders);
-  console.error(realIpHeader, req.headers[realIpHeader]);
   const headerValue = req.header(realIpHeader);
-  console.error('Value: ', headerValue);
   if (headerValue) {
-    const firstIp = headerValue.split(',')[0];
-    console.log('Found first IP: ', firstIp);
-    return firstIp;
+    return headerValue.split(',')[0];
   }
   return req.ip;
 }
