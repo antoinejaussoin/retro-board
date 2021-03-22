@@ -65,9 +65,11 @@ const app = express();
 function getActualIp(req: express.Request): string {
   console.log('Getting real ip');
   console.error('Headers: ', req.rawHeaders);
-  console.error('X-Forwarder-For', req.headers[realIpHeader]);
-  if (req.headers[realIpHeader]) {
-    const firstIp = (req.headers[realIpHeader] as string).split(',')[0];
+  console.error(realIpHeader, req.headers[realIpHeader]);
+  const headerValue = req.header(realIpHeader);
+  console.error('Value: ', headerValue);
+  if (headerValue) {
+    const firstIp = headerValue.split(',')[0];
     console.log('Found first IP: ', firstIp);
     return firstIp;
   }
