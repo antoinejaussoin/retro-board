@@ -1,8 +1,8 @@
-name: 'V4 Build'
+name: 'Alpha Build'
 
 on:
   push:
-    branches: [v4]
+    branches: [alpha]
 
 jobs:
   build:
@@ -43,8 +43,8 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: retro-board-server/Dockerfile
           context: .
-          tags: antoinejaussoin/retro-board-backend:v4
-          platforms: linux/amd64,linux/arm64
+          tags: antoinejaussoin/retro-board-backend:alpha
+          platforms: linux/amd64
           push: true
 
       - name: Build and push Frontend
@@ -53,8 +53,8 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: retro-board-app/Dockerfile
           context: .
-          tags: antoinejaussoin/retro-board-frontend:v4
-          platforms: linux/amd64,linux/arm64
+          tags: antoinejaussoin/retro-board-frontend:alpha
+          platforms: linux/amd64
           push: true
 
       - name: Build and push Maintenance
@@ -63,6 +63,6 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: retro-board-maintenance/Dockerfile
           context: retro-board-maintenance
-          tags: antoinejaussoin/retro-board-maintenance:v4
-          platforms: linux/amd64,linux/arm64
+          tags: antoinejaussoin/retro-board-maintenance:alpha
+          platforms: linux/amd64
           push: true
