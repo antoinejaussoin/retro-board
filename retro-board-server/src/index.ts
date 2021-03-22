@@ -71,33 +71,21 @@ function getActualIp(req: express.Request): string {
 
 // Rate Limiter
 app.set('trust proxy', 1);
-// const limiter = rateLimit({
-//   windowMs: config.RATE_LIMIT_WINDOW,
-//   max: config.RATE_LIMIT_MAX,
-//   message: 'Your request has been rate-limited',
-//   keyGenerator: getActualIp,
-//   onLimitReached: (req, _, options) => {
-//     console.error(
-//       chalk`{red Request has been rate limited for} {blue ${req.ip}} with options {yellow ${options.windowMs}/${options.max}}`
-//     );
-//     throttledManualReport('A user has been rate limited', req);
-//   },
-// });
 const heavyLoadLimiter = rateLimit({
-  windowMs: 10000, // 10s
-  max: 3, // 3 requests
-  message: 'Your request has been cancelled due to a high load',
+  windowMs: config.RATE_LIMIT_WINDOW,
+  max: config.RATE_LIMIT_MAX,
+  message:
+    'Your request has been rate-limited. Please try again in a few seconds.',
   keyGenerator: getActualIp,
-  onLimitReached: (req) => {
+  onLimitReached: (req, _, options) => {
     console.error(
-      chalk`{red High load request has been rate limited for} {blue ${getActualIp(
+      chalk`{red High load request has been rate limited for {blue ${getActualIp(
         req
-      )}}`
+      )}} with options {yellow ${options.windowMs}/${options.max}}}`
     );
     throttledManualReport('A heavy load request has been rate limited', req);
   },
 });
-// app.use(limiter);
 
 // Sentry
 setupSentryRequestHandler(app);
