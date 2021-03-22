@@ -1,5 +1,5 @@
 # Rate Limiting https://www.nginx.com/blog/rate-limiting-nginx/
-limit_req_zone $binary_remote_addr zone=mylimit:10m rate=10r/s;
+limit_req_zone $binary_remote_addr zone=mylimit:10m rate=1r/s;
 
 server {
   listen       80;
@@ -40,7 +40,6 @@ server {
   }
 
   location /socket.io/ {
-    limit_req zone=mylimit burst=5 nodelay;
     proxy_pass http://${BACKEND_HOST}:${BACKEND_PORT};
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
@@ -52,7 +51,7 @@ server {
   }
 
   location /api/ {
-    limit_req zone=mylimit burst=5 nodelay;
+    limit_req zone=mylimit burst=1 nodelay;
     proxy_pass http://${BACKEND_HOST}:${BACKEND_PORT};
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
