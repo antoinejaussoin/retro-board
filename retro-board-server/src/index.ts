@@ -47,7 +47,7 @@ import { updateUser, getUserByUsername, getUserView } from './db/actions/users';
 import isLicenced from './security/is-licenced';
 import rateLimit from 'express-rate-limit';
 
-const realIpHeader = 'X-Real-IP';
+const realIpHeader = 'X-Forwarded-For';
 
 if (!isLicenced()) {
   console.log(chalk`{red ----------------------------------------------- }`);
@@ -64,7 +64,7 @@ const app = express();
 
 function getActualIp(req: express.Request): string {
   if (req.headers[realIpHeader]) {
-    return req.headers[realIpHeader] as string;
+    return (req.headers[realIpHeader] as string).split(',')[0];
   }
   return req.ip;
 }
@@ -273,7 +273,7 @@ db().then(() => {
     }
   });
 
-  app.get('/api/me/default-template', heavyLoadLimiter, async (req, res) => {
+  app.get('/api/me/default-template', async (req, res) => {
     if (req.user) {
       const defaultTemplate = await getDefaultTemplate(req.user);
       if (defaultTemplate) {
@@ -314,7 +314,7 @@ db().then(() => {
     }
   });
 
-  app.post('/api/validate', heavyLoadLimiter, async (req, res) => {
+  app.post('/api/validate', async (req, res) => {
     const validatePayload = req.body as ValidateEmailPayload;
     const user = await getUserByUsername(validatePayload.email);
     if (!user) {
