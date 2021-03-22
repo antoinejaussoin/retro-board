@@ -83,6 +83,7 @@ const heavyLoadLimiter = rateLimit({
         req
       )}} with options {yellow ${options.windowMs}/${options.max}}}`
     );
+    console.error('Headers: ', req.rawHeaders);
     throttledManualReport('A heavy load request has been rate limited', req);
   },
 });
