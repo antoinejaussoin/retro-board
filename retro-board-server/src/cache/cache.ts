@@ -43,14 +43,14 @@ export function createCache(
   return { get, set, invalidate };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const _inMemoryCache: any = {};
+const _inMemoryCache = new Map<string, unknown>();
 
 export function inMemoryCache() {
   return createCache(
-    (key) => _inMemoryCache[key],
+    (key) =>
+      Promise.resolve(_inMemoryCache.has(key) ? _inMemoryCache.get(key) : null),
     (key, value) => {
-      _inMemoryCache[key] = value;
+      _inMemoryCache.set(key, value);
       return Promise.resolve();
     }
   );
