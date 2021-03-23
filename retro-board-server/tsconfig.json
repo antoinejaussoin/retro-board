@@ -21,9 +21,7 @@
     "inlineSources": true,
     "sourceRoot": "/",
     "lib": ["es2015", "es2017", "dom"],
-    "baseUrl": ".",
-    // "types": ["jest", "node"],
-    // "typeRoots": ["./node_modules/@types", "./src/typings"]
+    "baseUrl": "."
   },
   "include": ["src", "./package.json"],
 
