@@ -46,6 +46,7 @@ import {
 import { updateUser, getUserByUsername, getUserView } from './db/actions/users';
 import isLicenced from './security/is-licenced';
 import rateLimit from 'express-rate-limit';
+import { Cache, inMemoryCache, redisCache } from './cache/cache';
 
 const realIpHeader = 'X-Forwarded-For';
 
@@ -111,6 +112,7 @@ const httpServer = new http.Server(app);
 const io = new socketIo.Server(httpServer, {
   maxHttpBufferSize: config.WS_MAX_BUFFER_SIZE,
 });
+let cache: Cache;
 
 if (config.REDIS_ENABLED) {
   const RedisStore = connectRedis(session);
@@ -129,6 +131,7 @@ if (config.REDIS_ENABLED) {
     },
   });
   io.adapter(createAdapter({ pubClient: redisClient, subClient }));
+  cache = redisCache(redisClient);
   console.log(chalk`{red Redis} was properly activated`);
 } else {
   sessionMiddleware = session({
@@ -139,6 +142,7 @@ if (config.REDIS_ENABLED) {
       secure: false,
     },
   });
+  cache = inMemoryCache();
 }
 
 app.use(sessionMiddleware);
@@ -190,6 +194,7 @@ db().then(() => {
       if (user) {
         try {
           const session = await createSession(user, payload.encryptedCheck);
+          await cache.invalidate(user.id);
           res.status(200).send(session);
         } catch (err) {
           reportQueryError(scope, err);
@@ -233,10 +238,15 @@ db().then(() => {
   });
 
   app.get('/api/previous', heavyLoadLimiter, async (req, res) => {
-    // TODO: Cache this https://livecodestream.dev/post/beginners-guide-to-redis-and-caching-with-nodejs/
     const user = await getUserFromRequest(req);
     if (user) {
+      const cached = await cache.get(user.id);
+      if (cached) {
+        return res.status(200).send(cached);
+      }
+
       const sessions = await previousSessions(user.id);
+      await cache.set(user.id, sessions, 60 * 1000);
       res.status(200).send(sessions);
     } else {
       res.status(200).send([]);
@@ -248,6 +258,7 @@ db().then(() => {
     const user = await getUserFromRequest(req);
     if (user && user.accountType !== 'anonymous') {
       const success = await deleteSessions(user.id, sessionId);
+      cache.invalidate(user.id);
       if (success) {
         res.status(200).send();
       } else {
