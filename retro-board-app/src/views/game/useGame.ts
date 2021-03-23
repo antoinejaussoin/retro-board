@@ -495,7 +495,7 @@ const useGame = (sessionId: string) => {
         updatePost(modifiedPost);
         send(Actions.LIKE_SUCCESS, {
           type,
-          post,
+          postId: post.id,
         });
         trackAction(Actions.LIKE_SUCCESS);
       }

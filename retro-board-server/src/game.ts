@@ -94,8 +94,9 @@ interface PostUpdate extends UserData {
   post: Post;
 }
 
-interface LikeUpdate extends PostUpdate {
+interface LikeUpdate {
   type: VoteType;
+  postId: string;
 }
 
 const rateLimiter = new RateLimiterMemory({
@@ -374,7 +375,7 @@ export default (io: Server) => {
       return;
     }
     const user = await getUser(userId);
-    const post = find(session.posts, (p) => p.id === data.post.id);
+    const post = find(session.posts, (p) => p.id === data.postId);
     if (post && user) {
       const existingVote: Vote | undefined = find(
         post.votes,
