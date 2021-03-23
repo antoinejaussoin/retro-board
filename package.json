@@ -9,7 +9,7 @@
     "retro-board-common"
   ],
   "scripts": {
-    "test": "yarn build-common && cd retro-board-app && yarn test && cd .. && cd retro-board-server && yarn jest",
+    "test": "yarn build-common && cd retro-board-app && yarn test",
     "ci-test": "CI=true yarn test",
     "lint": "cd retro-board-app && yarn lint && cd ../retro-board-server && yarn lint",
     "clean": "del ./retro-board-*/yarn.lock && del ./yarn.lock && del ./retro-board-*/node_modules && del ./node_modules",
