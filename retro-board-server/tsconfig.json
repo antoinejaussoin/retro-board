@@ -22,8 +22,8 @@
     "sourceRoot": "/",
     "lib": ["es2015", "es2017", "dom"],
     "baseUrl": ".",
-    // "types": ["jest"],
-    "typeRoots": ["./node_modules/@types", "./src/typings"]
+    // "types": ["jest", "node"],
+    // "typeRoots": ["./node_modules/@types", "./src/typings"]
   },
   "include": ["src", "./package.json"],
 
