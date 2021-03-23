@@ -1,3 +1,4 @@
+import 'jest';
 import { inMemoryCache } from '../cache';
 
 const { set, get, invalidate } = inMemoryCache();

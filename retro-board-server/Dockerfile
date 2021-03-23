@@ -8,8 +8,6 @@ WORKDIR /usr/src/backend
 
 COPY ./yarn.lock ./
 COPY ./package.json ./
-COPY ./tsconfig.json ./
-COPY ./jest.config.js ./
 COPY ./retro-board-server/package.json ./retro-board-server/
 COPY ./retro-board-common/package.json ./retro-board-common/
 
