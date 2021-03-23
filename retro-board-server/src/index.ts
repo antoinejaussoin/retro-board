@@ -53,7 +53,7 @@ if (!isLicenced()) {
   console.log(chalk`{red ----------------------------------------------- }`);
   console.log(
     chalk`⚠️  {red This software is not licenced. Please contact
-support@retrospected.com to obtain a licence.} ⚠️`
+support@retrospected.com to get a licence.} ⚠️`
   );
   console.log(chalk`{red ----------------------------------------------- }`);
 }
@@ -233,6 +233,7 @@ db().then(() => {
   });
 
   app.get('/api/previous', heavyLoadLimiter, async (req, res) => {
+    // TODO: Cache this https://livecodestream.dev/post/beginners-guide-to-redis-and-caching-with-nodejs/
     const user = await getUserFromRequest(req);
     if (user) {
       const sessions = await previousSessions(user.id);
