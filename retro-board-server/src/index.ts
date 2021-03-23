@@ -326,7 +326,7 @@ db().then(() => {
     }
   });
 
-  app.post('/api/validate', async (req, res) => {
+  app.post('/api/validate', heavyLoadLimiter, async (req, res) => {
     const validatePayload = req.body as ValidateEmailPayload;
     const user = await getUserByUsername(validatePayload.email);
     if (!user) {
