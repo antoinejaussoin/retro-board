@@ -41,12 +41,20 @@ export async function savePostGroup(
   userId: string,
   sessionId: string,
   group: PostGroup
-): Promise<void> {
+): Promise<PostGroup | null> {
   return await transaction(async (manager) => {
     const postGroupRepository = manager.getCustomRepository(
       PostGroupRepository
     );
-    await postGroupRepository.saveFromJson(sessionId, userId, group);
+    const entity = await postGroupRepository.saveFromJson(
+      sessionId,
+      userId,
+      group
+    );
+    if (entity) {
+      return entity.toJson();
+    }
+    return null;
   });
 }
 

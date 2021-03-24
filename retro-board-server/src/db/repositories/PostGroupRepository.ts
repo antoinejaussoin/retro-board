@@ -9,7 +9,7 @@ export default class PostGroupRepository extends Repository<PostGroupEntity> {
     sessionId: string,
     authorId: string,
     group: Omit<JsonPostGroup, 'createdBy'>
-  ): Promise<JsonPostGroup> {
+  ): Promise<PostGroupEntity | undefined> {
     const groupWithoutPosts = {
       ...cloneDeep(group),
       posts: undefined,
@@ -18,11 +18,7 @@ export default class PostGroupRepository extends Repository<PostGroupEntity> {
     };
     delete groupWithoutPosts.posts;
 
-    const createdPostGroup = await this.save(groupWithoutPosts);
-
-    return {
-      ...createdPostGroup,
-      posts: [],
-    };
+    await this.save(groupWithoutPosts);
+    return this.findOne(groupWithoutPosts.id);
   }
 }

@@ -141,11 +141,11 @@ export default (io: Server) => {
     userId: string | null,
     sessionId: string,
     group: PostGroup
-  ) => {
+  ): Promise<PostGroup | null> => {
     if (!userId) {
-      return;
+      return null;
     }
-    await savePostGroup(userId, sessionId, group);
+    return await savePostGroup(userId, sessionId, group);
   };
 
   const persistVote = async (
@@ -253,8 +253,8 @@ export default (io: Server) => {
     if (!userId) {
       return;
     }
-    await persistPostGroup(userId, session.id, group);
-    sendToAll(socket, session.id, RECEIVE_POST_GROUP, group);
+    const createdGroup = await persistPostGroup(userId, session.id, group);
+    sendToAll(socket, session.id, RECEIVE_POST_GROUP, createdGroup);
   };
 
   const log = (msg: string) => {
@@ -400,7 +400,9 @@ export default (io: Server) => {
       post.group = data.post.group;
       post.rank = data.post.rank;
       const persistedPost = await persistPost(userId, session.id, post, true);
-      sendToAll(socket, session.id, RECEIVE_EDIT_POST, persistedPost);
+      if (persistedPost) {
+        sendToAll(socket, session.id, RECEIVE_EDIT_POST, persistedPost);
+      }
     }
   };
 
@@ -418,8 +420,10 @@ export default (io: Server) => {
       group.column = data.column;
       group.label = data.label;
       group.rank = data.rank;
-      await persistPostGroup(userId, session.id, group);
-      sendToAll(socket, session.id, RECEIVE_EDIT_POST_GROUP, data);
+      const persistedGroup = await persistPostGroup(userId, session.id, group);
+      if (persistedGroup) {
+        sendToAll(socket, session.id, RECEIVE_EDIT_POST_GROUP, persistedGroup);
+      }
     }
   };
 
