@@ -6,7 +6,10 @@ import { cloneDeep } from 'lodash';
 
 @EntityRepository(PostEntity)
 export default class PostRepository extends Repository<PostEntity> {
-  async updateFromJson(sessionId: string, post: JsonPost) {
+  async updateFromJson(
+    sessionId: string,
+    post: JsonPost
+  ): Promise<PostEntity | undefined> {
     await this.save({
       ...cloneDeep(post),
       session: {
@@ -22,12 +25,13 @@ export default class PostRepository extends Repository<PostEntity> {
           }
         : null,
     });
+    return await this.findOne(post.id);
   }
   async saveFromJson(
     sessionId: string,
     userId: string,
     post: JsonPost
-  ): Promise<void> {
+  ): Promise<PostEntity | undefined> {
     const session = await this.manager.findOne(SessionEntity, sessionId);
     if (session) {
       await this.save({
@@ -44,6 +48,7 @@ export default class PostRepository extends Repository<PostEntity> {
             }
           : null,
       });
+      return await this.findOne(post.id);
     } else {
       const sessionRepository = this.manager.getCustomRepository(
         SessionRepository
@@ -53,7 +58,7 @@ export default class PostRepository extends Repository<PostEntity> {
         id: sessionId,
       };
       await sessionRepository.saveFromJson(newSession, userId);
-      await this.saveFromJson(sessionId, userId, cloneDeep(post));
+      return await this.saveFromJson(sessionId, userId, cloneDeep(post));
     }
   }
 }

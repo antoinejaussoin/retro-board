@@ -19,14 +19,21 @@ export async function savePost(
   sessionId: string,
   post: Post,
   update: boolean
-): Promise<void> {
+): Promise<Post | null> {
   return await transaction(async (manager) => {
     const postRepository = manager.getCustomRepository(PostRepository);
     if (update) {
-      await postRepository.updateFromJson(sessionId, post);
+      const entity = await postRepository.updateFromJson(sessionId, post);
+      if (entity) {
+        return entity.toJson();
+      }
     } else {
-      await postRepository.saveFromJson(sessionId, userId, post);
+      const entity = await postRepository.saveFromJson(sessionId, userId, post);
+      if (entity) {
+        return entity.toJson();
+      }
     }
+    return null;
   });
 }
 

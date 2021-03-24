@@ -1,4 +1,4 @@
-import { useContext, useReducer, createContext, useMemo, SFC } from 'react';
+import { useContext, useReducer, createContext, useMemo } from 'react';
 import { State, Action } from './types';
 import reducer from './reducer';
 import {
@@ -19,6 +19,7 @@ import {
   lockSession,
   unauthorized,
 } from './actions';
+import { FC } from 'react';
 
 export const initialState: State = {
   panelOpen: false,
@@ -36,7 +37,7 @@ interface ProviderProps {
   initialState?: State;
 }
 
-export const Provider: SFC<ProviderProps> = (props) => {
+export const Provider: FC<ProviderProps> = (props) => {
   const [state, dispatch] = useReducer(
     reducer,
     props.initialState ? props.initialState : initialState

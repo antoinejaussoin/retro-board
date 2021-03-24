@@ -130,11 +130,11 @@ export default (io: Server) => {
     sessionId: string,
     post: Post,
     update: boolean
-  ) => {
+  ): Promise<Post | null> => {
     if (!userId) {
-      return;
+      return null;
     }
-    await savePost(userId, sessionId, post, update);
+    return await savePost(userId, sessionId, post, update);
   };
 
   const persistPostGroup = async (
@@ -240,8 +240,8 @@ export default (io: Server) => {
     if (!userId) {
       return;
     }
-    await persistPost(userId, session.id, post, false);
-    sendToAll(socket, session.id, RECEIVE_POST, post);
+    const createdPost = await persistPost(userId, session.id, post, false);
+    sendToAll(socket, session.id, RECEIVE_POST, createdPost);
   };
 
   const onAddPostGroup = async (
@@ -399,8 +399,8 @@ export default (io: Server) => {
       post.column = data.post.column;
       post.group = data.post.group;
       post.rank = data.post.rank;
-      await persistPost(userId, session.id, post, true);
-      sendToAll(socket, session.id, RECEIVE_EDIT_POST, data);
+      const persistedPost = await persistPost(userId, session.id, post, true);
+      sendToAll(socket, session.id, RECEIVE_EDIT_POST, persistedPost);
     }
   };
 
