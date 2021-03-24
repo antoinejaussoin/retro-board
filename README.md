@@ -149,7 +149,6 @@ When using the Docker deployment, your database runs from a container. But if yo
 - Re-introducing rate limiting, both for the REST API and the Websocket connections, in Node and Nginx
 - Reduce the quantity of data sent over Websockets (for instance, sending post ID instead of whole post when voting)
 
-
 ### Version 4.1.4 (hotfix)
 
 - 🐛 Language loading issues
