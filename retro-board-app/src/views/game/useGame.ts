@@ -9,6 +9,12 @@ import {
   ColumnDefinition,
   Participant,
   UnauthorizedAccessPayload,
+  WsLikeUpdatePayload,
+  WsPostUpdatePayload,
+  WsDeletePostPayload,
+  WsDeleteGroupPayload,
+  WsNameData,
+  WsSaveTemplatePayload,
 } from '@retrospected/common';
 import { v4 } from 'uuid';
 import find from 'lodash/find';
@@ -24,11 +30,12 @@ import {
   joinNames,
 } from './participants-notifiers';
 import useTranslation from '../../translations/useTranslations';
+import { omit } from 'lodash';
 
 const debug = process.env.NODE_ENV === 'development';
 
 function sendFactory(socket: SocketIOClient.Socket, sessionId: string) {
-  return function (action: string, payload?: any) {
+  return function <T>(action: string, payload?: T) {
     if (socket) {
       const messagePayload = {
         sessionId: sessionId,
@@ -134,7 +141,7 @@ const useGame = (sessionId: string) => {
         console.log('Connected to the socket');
       }
       setInitialised(true);
-      send(Actions.JOIN_SESSION);
+      send<void>(Actions.JOIN_SESSION);
       trackAction(Actions.JOIN_SESSION);
     });
 
@@ -181,19 +188,22 @@ const useGame = (sessionId: string) => {
       setPlayers(participants);
     });
 
-    newSocket.on(Actions.RECEIVE_DELETE_POST, (post: Post) => {
+    newSocket.on(Actions.RECEIVE_DELETE_POST, (post: WsDeletePostPayload) => {
       if (debug) {
         console.log('Delete post: ', post);
       }
-      deletePost(post);
+      deletePost(post.postId);
     });
 
-    newSocket.on(Actions.RECEIVE_DELETE_POST_GROUP, (group: PostGroup) => {
-      if (debug) {
-        console.log('Delete post group: ', group);
+    newSocket.on(
+      Actions.RECEIVE_DELETE_POST_GROUP,
+      (group: WsDeleteGroupPayload) => {
+        if (debug) {
+          console.log('Delete post group: ', group);
+        }
+        deletePostGroup(group.groupId);
       }
-      deletePostGroup(group);
-    });
+    );
 
     newSocket.on(
       Actions.RECEIVE_LIKE,
@@ -332,7 +342,7 @@ const useGame = (sessionId: string) => {
         };
 
         receivePost(post);
-        send(Actions.ADD_POST_SUCCESS, post);
+        send<Post>(Actions.ADD_POST_SUCCESS, post);
         trackAction(Actions.ADD_POST_SUCCESS);
       }
     },
@@ -352,7 +362,7 @@ const useGame = (sessionId: string) => {
         };
 
         receivePostGroup(group);
-        send(Actions.ADD_POST_GROUP_SUCCESS, group);
+        send<PostGroup>(Actions.ADD_POST_GROUP_SUCCESS, group);
         trackAction(Actions.ADD_POST_GROUP_SUCCESS);
       }
     },
@@ -363,7 +373,7 @@ const useGame = (sessionId: string) => {
     (post: Post) => {
       if (send) {
         updatePost(post);
-        send(Actions.EDIT_POST, { post });
+        send<WsPostUpdatePayload>(Actions.EDIT_POST, toPostUpdate(post));
         trackAction(Actions.EDIT_POST);
       }
     },
@@ -374,7 +384,7 @@ const useGame = (sessionId: string) => {
     (group: PostGroup) => {
       if (send) {
         updatePostGroup(group);
-        send(Actions.EDIT_POST_GROUP, group);
+        send<PostGroup>(Actions.EDIT_POST_GROUP, group);
         trackAction(Actions.EDIT_POST_GROUP);
       }
     },
@@ -396,9 +406,7 @@ const useGame = (sessionId: string) => {
           rank: newRank,
         };
         updatePost(updatedPost);
-        send(Actions.EDIT_POST, {
-          post: updatedPost,
-        });
+        send<WsPostUpdatePayload>(Actions.EDIT_POST, toPostUpdate(updatedPost));
         trackAction(Actions.MOVE_POST);
       }
     },
@@ -419,7 +427,7 @@ const useGame = (sessionId: string) => {
         };
 
         receivePostGroup(group);
-        send(Actions.ADD_POST_GROUP_SUCCESS, group);
+        send<PostGroup>(Actions.ADD_POST_GROUP_SUCCESS, group);
         trackAction(Actions.ADD_POST_GROUP_SUCCESS);
 
         const updatedPost1: Post = {
@@ -429,9 +437,10 @@ const useGame = (sessionId: string) => {
           rank: getMiddle(),
         };
         updatePost(updatedPost1);
-        send(Actions.EDIT_POST, {
-          post: updatedPost1,
-        });
+        send<WsPostUpdatePayload>(
+          Actions.EDIT_POST,
+          toPostUpdate(updatedPost1)
+        );
 
         const updatedPost2: Post = {
           ...post2,
@@ -440,9 +449,10 @@ const useGame = (sessionId: string) => {
           rank: getNext(getMiddle()),
         };
         updatePost(updatedPost2);
-        send(Actions.EDIT_POST, {
-          post: updatedPost2,
-        });
+        send<WsPostUpdatePayload>(
+          Actions.EDIT_POST,
+          toPostUpdate(updatedPost2)
+        );
 
         trackAction(Actions.MOVE_POST);
       }
@@ -453,8 +463,10 @@ const useGame = (sessionId: string) => {
   const onDeletePost = useCallback(
     (post: Post) => {
       if (send) {
-        deletePost(post);
-        send(Actions.DELETE_POST, post);
+        deletePost(post.id);
+        send<WsDeletePostPayload>(Actions.DELETE_POST, {
+          postId: post.id,
+        });
         trackAction(Actions.DELETE_POST);
       }
     },
@@ -464,8 +476,10 @@ const useGame = (sessionId: string) => {
   const onDeletePostGroup = useCallback(
     (group: PostGroup) => {
       if (send) {
-        deletePostGroup(group);
-        send(Actions.DELETE_POST_GROUP, group);
+        deletePostGroup(group.id);
+        send<WsDeleteGroupPayload>(Actions.DELETE_POST_GROUP, {
+          groupId: group.id,
+        });
         trackAction(Actions.DELETE_POST_GROUP);
       }
     },
@@ -493,7 +507,7 @@ const useGame = (sessionId: string) => {
           votes: [...post.votes, vote],
         };
         updatePost(modifiedPost);
-        send(Actions.LIKE_SUCCESS, {
+        send<WsLikeUpdatePayload>(Actions.LIKE_SUCCESS, {
           type,
           postId: post.id,
         });
@@ -507,7 +521,7 @@ const useGame = (sessionId: string) => {
     (name: string) => {
       if (send) {
         renameSession(name);
-        send(Actions.RENAME_SESSION, { name });
+        send<WsNameData>(Actions.RENAME_SESSION, { name });
         trackAction(Actions.RENAME_SESSION);
       }
     },
@@ -518,7 +532,7 @@ const useGame = (sessionId: string) => {
     (options: SessionOptions) => {
       if (send) {
         editOptions(options);
-        send(Actions.EDIT_OPTIONS, options);
+        send<SessionOptions>(Actions.EDIT_OPTIONS, options);
         trackAction(Actions.EDIT_OPTIONS);
       }
     },
@@ -529,7 +543,7 @@ const useGame = (sessionId: string) => {
     (columns: ColumnDefinition[]) => {
       if (send) {
         editColumns(columns);
-        send(Actions.EDIT_COLUMNS, columns);
+        send<ColumnDefinition[]>(Actions.EDIT_COLUMNS, columns);
         trackAction(Actions.EDIT_COLUMNS);
       }
     },
@@ -539,7 +553,10 @@ const useGame = (sessionId: string) => {
   const onSaveTemplate = useCallback(
     (options: SessionOptions, columns: ColumnDefinition[]) => {
       if (send) {
-        send(Actions.SAVE_TEMPLATE, { options, columns });
+        send<WsSaveTemplatePayload>(Actions.SAVE_TEMPLATE, {
+          options,
+          columns,
+        });
         trackAction(Actions.SAVE_TEMPLATE);
       }
     },
@@ -550,7 +567,7 @@ const useGame = (sessionId: string) => {
     (locked: boolean) => {
       if (send) {
         lockSession(locked);
-        send(Actions.LOCK_SESSION, locked);
+        send<boolean>(Actions.LOCK_SESSION, locked);
         trackAction(Actions.LOCK_SESSION);
       }
     },
@@ -577,5 +594,11 @@ const useGame = (sessionId: string) => {
     reconnect,
   };
 };
+
+function toPostUpdate(post: Post): WsPostUpdatePayload {
+  return {
+    post: omit(post, ['votes', 'user']),
+  };
+}
 
 export default useGame;

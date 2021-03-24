@@ -89,7 +89,7 @@ export default function reducer(state: State, action: Action): State {
         ...state,
         session: {
           ...state.session,
-          posts: state.session.posts.filter((p) => p.id !== action.payload.id),
+          posts: state.session.posts.filter((p) => p.id !== action.payload),
         },
       };
     case DELETE_POST_GROUP:
@@ -100,11 +100,9 @@ export default function reducer(state: State, action: Action): State {
         ...state,
         session: {
           ...state.session,
-          groups: state.session.groups.filter(
-            (g) => g.id !== action.payload.id
-          ),
+          groups: state.session.groups.filter((g) => g.id !== action.payload),
           posts: state.session.posts.map((p) =>
-            p.group && p.group.id === action.payload.id
+            p.group && p.group.id === action.payload
               ? {
                   ...p,
                   group: null,

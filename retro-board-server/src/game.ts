@@ -3,12 +3,17 @@ import {
   Session,
   Post,
   PostGroup,
-  User,
   Participant,
   Vote,
-  VoteType,
   ColumnDefinition,
   UnauthorizedAccessPayload,
+  WsUserData,
+  WsNameData,
+  WsLikeUpdatePayload,
+  WsPostUpdatePayload,
+  WsDeletePostPayload,
+  WsDeleteGroupPayload,
+  WsSaveTemplatePayload,
 } from '@retrospected/common';
 import { RateLimiterMemory } from 'rate-limiter-flexible';
 import chalk from 'chalk';
@@ -80,23 +85,6 @@ interface ExtendedSocket extends Socket {
 
 interface Users {
   [socketId: string]: UserView | null;
-}
-
-interface UserData {
-  user: User;
-}
-
-interface NameData extends UserData {
-  name: string;
-}
-
-interface PostUpdate extends UserData {
-  post: Post;
-}
-
-interface LikeUpdate {
-  type: VoteType;
-  postId: string;
 }
 
 const rateLimiter = new RateLimiterMemory({
@@ -276,7 +264,7 @@ export default (io: Server) => {
   const onJoinSession = async (
     userId: string | null,
     session: Session,
-    _: UserData,
+    _: WsUserData,
     socket: ExtendedSocket
   ) => {
     await socket.join(getRoom(session.id));
@@ -313,7 +301,7 @@ export default (io: Server) => {
   const onRenameSession = async (
     userId: string | null,
     session: Session,
-    data: NameData,
+    data: WsNameData,
     socket: ExtendedSocket
   ) => {
     if (!userId) {
@@ -340,35 +328,35 @@ export default (io: Server) => {
   const onDeletePost = async (
     userId: string | null,
     session: Session,
-    data: Post,
+    data: WsDeletePostPayload,
     socket: ExtendedSocket
   ) => {
     if (!userId) {
       return;
     }
-    session.posts = session.posts.filter((p) => p.id !== data.id);
-    await removePost(userId, session.id, data.id);
+    session.posts = session.posts.filter((p) => p.id !== data.postId);
+    await removePost(userId, session.id, data.postId);
     sendToAll(socket, session.id, RECEIVE_DELETE_POST, data);
   };
 
   const onDeletePostGroup = async (
     userId: string | null,
     session: Session,
-    data: PostGroup,
+    data: WsDeleteGroupPayload,
     socket: ExtendedSocket
   ) => {
     if (!userId) {
       return;
     }
-    session.groups = session.groups.filter((g) => g.id !== data.id);
-    await removePostGroup(userId, session.id, data.id);
+    session.groups = session.groups.filter((g) => g.id !== data.groupId);
+    await removePostGroup(userId, session.id, data.groupId);
     sendToAll(socket, session.id, RECEIVE_DELETE_POST_GROUP, data);
   };
 
   const onLikePost = async (
     userId: string | null,
     session: Session,
-    data: LikeUpdate,
+    data: WsLikeUpdatePayload,
     socket: ExtendedSocket
   ) => {
     if (!userId) {
@@ -397,7 +385,7 @@ export default (io: Server) => {
   const onEditPost = async (
     userId: string | null,
     session: Session,
-    data: PostUpdate,
+    data: WsPostUpdatePayload,
     socket: ExtendedSocket
   ) => {
     if (!userId) {
@@ -474,7 +462,7 @@ export default (io: Server) => {
   const onSaveTemplate = async (
     userId: string | null,
     session: Session,
-    data: { columns: ColumnDefinition[]; options: SessionOptionsEntity },
+    data: WsSaveTemplatePayload,
     _: ExtendedSocket
   ) => {
     if (!userId || !session) {
