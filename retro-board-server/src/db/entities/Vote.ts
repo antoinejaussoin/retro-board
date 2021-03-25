@@ -6,7 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { VoteType, Vote } from '@retrospected/common';
+import { VoteType, Vote, VoteExtract } from '@retrospected/common';
 import UserEntity from './User';
 import PostEntity from './Post';
 
@@ -35,6 +35,15 @@ export default class VoteEntity {
       id: this.id,
       type: this.type,
       user: this.user.toJson(),
+    };
+  }
+
+  toExtractJson(): VoteExtract {
+    return {
+      id: this.id,
+      type: this.type,
+      userName: this.user.name,
+      userId: this.user.id,
     };
   }
 

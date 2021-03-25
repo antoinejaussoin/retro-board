@@ -27,7 +27,7 @@ export default function useMarkdown() {
         flatten(
           session.posts.map((p) => [
             p.user.name,
-            ...p.votes.map((v) => v.user.name),
+            ...p.votes.map((v) => v.userName),
           ])
         )
       )

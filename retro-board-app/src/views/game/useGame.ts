@@ -15,6 +15,7 @@ import {
   WsDeleteGroupPayload,
   WsNameData,
   WsSaveTemplatePayload,
+  VoteExtract,
 } from '@retrospected/common';
 import { v4 } from 'uuid';
 import find from 'lodash/find';
@@ -494,19 +495,21 @@ const useGame = (sessionId: string) => {
         const type: VoteType = like ? 'like' : 'dislike';
         const existingVote = find(
           post.votes,
-          (v) => v.type === type && v.user.id === user!.id
+          (v) => v.type === type && v.userId === user!.id
         );
         if (existingVote && !allowMultipleVotes) {
           return;
         }
-        const vote: Vote = {
+
+        const voteExtract: VoteExtract = {
           id: v4(),
           type,
-          user: user!,
+          userName: user!.name,
+          userId: user!.id,
         };
         const modifiedPost: Post = {
           ...post,
-          votes: [...post.votes, vote],
+          votes: [...post.votes, voteExtract],
         };
         updatePost(modifiedPost);
         send<WsLikeUpdatePayload>(Actions.LIKE_SUCCESS, {

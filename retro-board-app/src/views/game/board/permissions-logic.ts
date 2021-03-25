@@ -57,9 +57,9 @@ export function permissionLogic(
   const canPotentiallyVote = isLoggedIn && allowSelfVoting ? true : !isAuthor;
   const hasVotedOrAuthor =
     (!allowMultipleVotes &&
-      some(post.votes, (u) => u.user.id === userId && u.type === 'like')) ||
+      some(post.votes, (u) => u.userId === userId && u.type === 'like')) ||
     (!allowMultipleVotes &&
-      some(post.votes, (u) => u.user.id === userId && u.type === 'dislike')) ||
+      some(post.votes, (u) => u.userId === userId && u.type === 'dislike')) ||
     !canPotentiallyVote;
   const upVotes = numberOfVotes('like', userId, session);
   const downVotes = numberOfVotes('dislike', userId, session);
@@ -102,7 +102,7 @@ export function numberOfVotes(
   return session.posts.reduce<number>((prev, cur) => {
     return (
       prev +
-      cur.votes.filter((v) => v.user.id === userId && v.type === type).length
+      cur.votes.filter((v) => v.userId === userId && v.type === type).length
     );
   }, 0);
 }

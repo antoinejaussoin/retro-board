@@ -71,7 +71,7 @@ export interface Post extends Rankable, Entity {
   giphy: string | null;
   user: User;
   group: PostGroup | null;
-  votes: Vote[];
+  votes: VoteExtract[];
 }
 
 export interface PostGroup extends PostContainer, Rankable, Entity {
@@ -139,6 +139,12 @@ export type AccountType =
 export interface Vote extends Entity {
   user: User;
   type: VoteType;
+}
+
+export interface VoteExtract extends Entity {
+  type: VoteType;
+  userName: string;
+  userId: string;
 }
 
 export type VoteType = 'like' | 'dislike';
