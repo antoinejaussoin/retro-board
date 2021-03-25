@@ -20,7 +20,10 @@ function post(id: string): Post {
     votes: [],
     action: '',
     column: 0,
-    user: { id: '1', name: 'danièle' },
+    giphy: null,
+    group: null,
+    rank: '0',
+    user: { id: '1', name: 'danièle', photo: 'bl' },
   };
 }
 
@@ -30,12 +33,22 @@ describe('Global state reducer', () => {
     state = {
       panelOpen: false,
       players: [],
+      unauthorized: false,
+      unauthorized_reason: undefined,
       session: {
-        ...defaultOptions,
         id: '1',
         name: '',
         columns: [],
         posts: [],
+        createdBy: {
+          id: 'foo',
+          name: 'Bar',
+          photo: '',
+        },
+        encrypted: null,
+        groups: [],
+        locked: false,
+        options: defaultOptions,
       },
     };
   });
@@ -81,7 +94,7 @@ describe('Global state reducer', () => {
     };
     state = reducer(state, {
       type: DELETE_POST,
-      payload: post('2'),
+      payload: '2',
     });
     expect(state.session!.posts).toEqual([post('1'), post('3')]);
   });
@@ -140,11 +153,19 @@ describe('Global state reducer', () => {
     state = {
       ...state,
       session: {
-        ...defaultOptions,
         name: 'foo',
         id: '1234',
         columns: [],
         posts: [post('1'), post('2'), post('3')],
+        createdBy: {
+          id: 'foo',
+          name: 'Bar',
+          photo: '',
+        },
+        encrypted: null,
+        groups: [],
+        locked: false,
+        options: defaultOptions,
       },
     };
     state = reducer(state, {
