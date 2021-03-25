@@ -41,6 +41,7 @@ import {
   savePostGroup,
   deletePost,
   deletePostGroup,
+  updatePost,
 } from './db/actions/posts';
 import config from './db/config';
 import { registerVote } from './db/actions/votes';
@@ -179,7 +180,7 @@ export default (io: Server) => {
     post: Post,
     socket: ExtendedSocket
   ) => {
-    const createdPost = await savePost(userId, sessionId, post, false);
+    const createdPost = await savePost(userId, sessionId, post);
     sendToAll(socket, sessionId, RECEIVE_POST, createdPost);
   };
 
@@ -299,26 +300,14 @@ export default (io: Server) => {
   };
 
   const onEditPost = async (
-    userId: string,
+    _userId: string,
     sessionId: string,
     data: WsPostUpdatePayload,
     socket: ExtendedSocket
   ) => {
-    const session = await getSession(sessionId);
-    if (session) {
-      const post = find(session.posts, (p) => p.id === data.post.id);
-      if (post) {
-        post.content = data.post.content;
-        post.action = data.post.action;
-        post.giphy = data.post.giphy;
-        post.column = data.post.column;
-        post.group = data.post.group;
-        post.rank = data.post.rank;
-        const persistedPost = await savePost(userId, sessionId, post, true);
-        if (persistedPost) {
-          sendToAll(socket, sessionId, RECEIVE_EDIT_POST, persistedPost);
-        }
-      }
+    const persistedPost = updatePost(sessionId, data.post);
+    if (persistedPost) {
+      sendToAll(socket, sessionId, RECEIVE_EDIT_POST, persistedPost);
     }
   };
 

@@ -1,4 +1,6 @@
 import { Post, PostGroup, Vote } from '@retrospected/common';
+import { fi } from 'date-fns/locale';
+import { PostEntity } from '../entities';
 import {
   PostRepository,
   PostGroupRepository,
@@ -17,22 +19,41 @@ export async function getNumberOfPosts(userId: string): Promise<number> {
 export async function savePost(
   userId: string,
   sessionId: string,
-  post: Post,
-  update: boolean
+  post: Post
 ): Promise<Post | null> {
   return await transaction(async (manager) => {
     const postRepository = manager.getCustomRepository(PostRepository);
-    if (update) {
-      const entity = await postRepository.updateFromJson(sessionId, post);
-      if (entity) {
-        return entity.toJson();
-      }
-    } else {
-      const entity = await postRepository.saveFromJson(sessionId, userId, post);
-      if (entity) {
-        return entity.toJson();
-      }
+    const entity = await postRepository.saveFromJson(sessionId, userId, post);
+    if (entity) {
+      return entity.toJson();
     }
+
+    return null;
+  });
+}
+
+export async function updatePost(
+  sessionId: string,
+  postData: Omit<Omit<Post, 'votes'>, 'user'>
+): Promise<Post | null> {
+  return await transaction(async (manager) => {
+    const postRepository = manager.getCustomRepository(PostRepository);
+    const entity = (
+      await postRepository.findOne(postData.id, {
+        where: { session: { id: sessionId } },
+      })
+    )?.toJson();
+    if (entity) {
+      entity.content = postData.content;
+      entity.action = postData.action;
+      entity.giphy = postData.giphy;
+      entity.column = postData.column;
+      entity.group = postData.group;
+      entity.rank = postData.rank;
+      const persisted = await postRepository.updateFromJson(sessionId, entity);
+      return persisted ? persisted.toJson() : null;
+    }
+
     return null;
   });
 }
