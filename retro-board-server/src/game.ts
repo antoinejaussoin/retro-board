@@ -33,6 +33,7 @@ import {
   isAllowed,
   saveTemplate,
   doesSessionExists,
+  wasSessionCreatedBy,
 } from './db/actions/sessions';
 import { getUser, getUserView } from './db/actions/users';
 import {
@@ -481,15 +482,8 @@ export default (io: Server) => {
     if (!userId) {
       return;
     }
-    const session = await getSession(sessionId);
-    if (session) {
-      // Prevent non author from locking/unlocking sessions
-      if (userId !== session.createdBy.id) {
-        return;
-      }
-
+    if (await wasSessionCreatedBy(sessionId, userId)) {
       await toggleSessionLock(sessionId, locked);
-
       sendToAll(socket, sessionId, RECEIVE_LOCK_SESSION, locked);
     }
   };
@@ -555,8 +549,7 @@ export default (io: Server) => {
           await rateLimiter.consume(sid);
           setScope(async (scope) => {
             if (sid) {
-              // const session = await getSession(sid); // Todo check if that's not a performance issue
-              const exists = await doesSessionExists(sid);
+              const exists = await doesSessionExists(sid); // might be removed
               if (exists) {
                 try {
                   await action.handler(userId, sid, data.payload, socket);

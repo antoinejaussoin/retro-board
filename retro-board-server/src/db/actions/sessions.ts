@@ -408,6 +408,17 @@ export async function toggleSessionLock(sessionId: string, lock: boolean) {
   });
 }
 
+export async function wasSessionCreatedBy(
+  sessionId: string,
+  userId: string
+): Promise<boolean> {
+  return await transaction(async (manager) => {
+    const sessionRepository = manager.getCustomRepository(SessionRepository);
+    const session = await sessionRepository.findOne(sessionId);
+    return !!session && session.createdBy.id === userId;
+  });
+}
+
 interface AllowedResponse {
   allowed: boolean;
   reason?: AccessErrorType;
