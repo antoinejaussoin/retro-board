@@ -1,6 +1,4 @@
 import { Post, PostGroup, Vote } from '@retrospected/common';
-import { fi } from 'date-fns/locale';
-import { PostEntity } from '../entities';
 import {
   PostRepository,
   PostGroupRepository,
@@ -38,19 +36,18 @@ export async function updatePost(
 ): Promise<Post | null> {
   return await transaction(async (manager) => {
     const postRepository = manager.getCustomRepository(PostRepository);
-    const entity = (
-      await postRepository.findOne(postData.id, {
-        where: { session: { id: sessionId } },
-      })
-    )?.toJson();
+    const entity = await postRepository.findOne(postData.id, {
+      where: { session: { id: sessionId } },
+    });
     if (entity) {
-      entity.content = postData.content;
-      entity.action = postData.action;
-      entity.giphy = postData.giphy;
-      entity.column = postData.column;
-      entity.group = postData.group;
-      entity.rank = postData.rank;
-      const persisted = await postRepository.updateFromJson(sessionId, entity);
+      const post = entity.toJson();
+      post.content = postData.content;
+      post.action = postData.action;
+      post.giphy = postData.giphy;
+      post.column = postData.column;
+      post.group = postData.group;
+      post.rank = postData.rank;
+      const persisted = await postRepository.updateFromJson(sessionId, post);
       return persisted ? persisted.toJson() : null;
     }
 

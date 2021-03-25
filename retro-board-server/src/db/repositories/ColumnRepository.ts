@@ -1,9 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { ColumnDefinitionEntity } from '../entities';
-import {
-  ColumnDefinition as JsonColumnDefinition,
-  Session as JsonSession,
-} from '@retrospected/common';
+import { ColumnDefinition as JsonColumnDefinition } from '@retrospected/common';
 import { v4 } from 'uuid';
 
 @EntityRepository(ColumnDefinitionEntity)
@@ -21,7 +18,6 @@ export default class ColumnDefinitionRepository extends Repository<ColumnDefinit
     const newColumn = {
       ...colDef,
       id: colDef.id || v4(),
-      // session: { id: 'xxx' }, // sessionId },
       session: { id: sessionId },
     };
     await this.save(newColumn);

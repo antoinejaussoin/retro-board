@@ -305,7 +305,7 @@ export default (io: Server) => {
     data: WsPostUpdatePayload,
     socket: ExtendedSocket
   ) => {
-    const persistedPost = updatePost(sessionId, data.post);
+    const persistedPost = await updatePost(sessionId, data.post);
     if (persistedPost) {
       sendToAll(socket, sessionId, RECEIVE_EDIT_POST, persistedPost);
     }
