@@ -79,7 +79,7 @@ const {
 
 interface ExtendedSocket extends Socket {
   sessionId: string;
-  userId: string | null;
+  userId: string;
 }
 
 interface Users {
@@ -125,47 +125,35 @@ export default (io: Server) => {
   }
 
   const persistPost = async (
-    userId: string | null,
+    userId: string,
     sessionId: string,
     post: Post,
     update: boolean
   ): Promise<Post | null> => {
-    if (!userId) {
-      return null;
-    }
     return await savePost(userId, sessionId, post, update);
   };
 
   const persistPostGroup = async (
-    userId: string | null,
+    userId: string,
     sessionId: string,
     group: PostGroup
   ): Promise<PostGroup | null> => {
-    if (!userId) {
-      return null;
-    }
     return await savePostGroup(userId, sessionId, group);
   };
 
   const removePost = async (
-    userId: string | null,
+    userId: string,
     sessionId: string,
     postId: string
   ) => {
-    if (!userId) {
-      return;
-    }
     await deletePost(userId, sessionId, postId);
   };
 
   const removePostGroup = async (
-    userId: string | null,
+    userId: string,
     sessionId: string,
     groupId: string
   ) => {
-    if (!userId) {
-      return;
-    }
     await deletePostGroup(userId, sessionId, groupId);
   };
 
@@ -219,27 +207,21 @@ export default (io: Server) => {
   };
 
   const onAddPost = async (
-    userId: string | null,
+    userId: string,
     sessionId: string,
     post: Post,
     socket: ExtendedSocket
   ) => {
-    if (!userId) {
-      return;
-    }
     const createdPost = await persistPost(userId, sessionId, post, false);
     sendToAll(socket, sessionId, RECEIVE_POST, createdPost);
   };
 
   const onAddPostGroup = async (
-    userId: string | null,
+    userId: string,
     sessionId: string,
     group: PostGroup,
     socket: ExtendedSocket
   ) => {
-    if (!userId) {
-      return;
-    }
     const createdGroup = await persistPostGroup(userId, sessionId, group);
     sendToAll(socket, sessionId, RECEIVE_POST_GROUP, createdGroup);
   };
@@ -249,7 +231,7 @@ export default (io: Server) => {
   };
 
   const onJoinSession = async (
-    userId: string | null,
+    userId: string,
     sessionId: string,
     _: WsUserData,
     socket: ExtendedSocket
@@ -287,20 +269,17 @@ export default (io: Server) => {
   };
 
   const onRenameSession = async (
-    userId: string | null,
+    _userId: string,
     sessionId: string,
     data: WsNameData,
     socket: ExtendedSocket
   ) => {
-    if (!userId) {
-      return;
-    }
     await updateName(sessionId, data.name);
     sendToAll(socket, sessionId, RECEIVE_SESSION_NAME, data.name);
   };
 
   const onLeaveSession = async (
-    _userId: string | null,
+    _userId: string,
     sessionId: string,
     _data: void,
     socket: ExtendedSocket
@@ -313,40 +292,31 @@ export default (io: Server) => {
   };
 
   const onDeletePost = async (
-    userId: string | null,
+    userId: string,
     sessionId: string,
     data: WsDeletePostPayload,
     socket: ExtendedSocket
   ) => {
-    if (!userId) {
-      return;
-    }
     await removePost(userId, sessionId, data.postId);
     sendToAll(socket, sessionId, RECEIVE_DELETE_POST, data);
   };
 
   const onDeletePostGroup = async (
-    userId: string | null,
+    userId: string,
     sessionId: string,
     data: WsDeleteGroupPayload,
     socket: ExtendedSocket
   ) => {
-    if (!userId) {
-      return;
-    }
     await removePostGroup(userId, sessionId, data.groupId);
     sendToAll(socket, sessionId, RECEIVE_DELETE_POST_GROUP, data);
   };
 
   const onLikePost = async (
-    userId: string | null,
+    userId: string,
     sessionId: string,
     data: WsLikeUpdatePayload,
     socket: ExtendedSocket
   ) => {
-    if (!userId) {
-      return;
-    }
     const success = await registerVote(
       userId,
       sessionId,
@@ -362,14 +332,11 @@ export default (io: Server) => {
   };
 
   const onEditPost = async (
-    userId: string | null,
+    userId: string,
     sessionId: string,
     data: WsPostUpdatePayload,
     socket: ExtendedSocket
   ) => {
-    if (!userId) {
-      return;
-    }
     const session = await getSession(sessionId);
     if (session) {
       const post = find(session.posts, (p) => p.id === data.post.id);
@@ -389,14 +356,11 @@ export default (io: Server) => {
   };
 
   const onEditPostGroup = async (
-    userId: string | null,
+    userId: string,
     sessionId: string,
     data: PostGroup,
     socket: ExtendedSocket
   ) => {
-    if (!userId) {
-      return;
-    }
     const session = await getSession(sessionId);
     if (session) {
       const group = find(session.groups, (g) => g.id === data.id);
@@ -413,79 +377,51 @@ export default (io: Server) => {
   };
 
   const onEditOptions = async (
-    userId: string | null,
+    userId: string,
     sessionId: string,
     data: SessionOptionsEntity,
     socket: ExtendedSocket
   ) => {
-    if (!userId || !sessionId) {
-      return;
-    }
     const session = await getSession(sessionId);
     if (session) {
-      // Prevent non author from modifying options
-      if (userId !== session.createdBy.id) {
-        return;
-      }
-
-      await updateOptions(session, data);
+      await updateOptions(session, data); // todo
       sendToAll(socket, sessionId, RECEIVE_OPTIONS, data);
     }
   };
 
   const onEditColumns = async (
-    userId: string | null,
+    _: string,
     sessionId: string,
     data: ColumnDefinition[],
     socket: ExtendedSocket
   ) => {
-    if (!userId || !sessionId) {
-      return;
-    }
     const session = await getSession(sessionId);
     if (session) {
-      // Prevent non author from modifying columns
-      if (userId !== session.createdBy.id) {
-        return;
-      }
-      await updateColumns(session, data);
+      await updateColumns(session, data); // todo
       sendToAll(socket, sessionId, RECEIVE_COLUMNS, data);
     }
   };
 
   const onSaveTemplate = async (
-    userId: string | null,
+    userId: string,
     sessionId: string,
     data: WsSaveTemplatePayload,
     _: ExtendedSocket
   ) => {
-    if (!userId || !sessionId) {
-      return;
-    }
     const session = await getSession(sessionId);
     if (session) {
-      // Prevent non author from saving as template
-      if (userId !== session.createdBy.id) {
-        return;
-      }
-
-      await saveTemplate(userId, session, data.columns, data.options);
+      await saveTemplate(userId, session, data.columns, data.options); // todo
     }
   };
 
   const onLockSession = async (
-    userId: string | null,
+    _: string,
     sessionId: string,
     locked: boolean,
     socket: ExtendedSocket
   ) => {
-    if (!userId) {
-      return;
-    }
-    if (await wasSessionCreatedBy(sessionId, userId)) {
-      await toggleSessionLock(sessionId, locked);
-      sendToAll(socket, sessionId, RECEIVE_LOCK_SESSION, locked);
-    }
+    await toggleSessionLock(sessionId, locked);
+    sendToAll(socket, sessionId, RECEIVE_LOCK_SESSION, locked);
   };
 
   io.on('connection', async (socket: ExtendedSocket) => {
@@ -503,15 +439,18 @@ export default (io: Server) => {
         } ${ip} ${userId ? userId : 'anon'}}}`
     );
 
+    type ActionHandler = (
+      userId: string,
+      sessionId: string,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      data: any,
+      socket: ExtendedSocket
+    ) => Promise<void>;
+
     interface Action {
       type: string;
-      handler: (
-        userId: string | null,
-        sessionId: string,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        data: any,
-        socket: ExtendedSocket
-      ) => Promise<void>;
+      handler: ActionHandler;
+      onlyAuthor?: boolean;
     }
 
     const actions: Action[] = [
@@ -525,12 +464,12 @@ export default (io: Server) => {
       { type: DELETE_POST_GROUP, handler: onDeletePostGroup },
 
       { type: JOIN_SESSION, handler: onJoinSession },
-      { type: RENAME_SESSION, handler: onRenameSession },
+      { type: RENAME_SESSION, handler: onRenameSession, onlyAuthor: true },
       { type: LEAVE_SESSION, handler: onLeaveSession },
-      { type: EDIT_OPTIONS, handler: onEditOptions },
-      { type: EDIT_COLUMNS, handler: onEditColumns },
-      { type: SAVE_TEMPLATE, handler: onSaveTemplate },
-      { type: LOCK_SESSION, handler: onLockSession },
+      { type: EDIT_OPTIONS, handler: onEditOptions, onlyAuthor: true },
+      { type: EDIT_COLUMNS, handler: onEditColumns, onlyAuthor: true },
+      { type: SAVE_TEMPLATE, handler: onSaveTemplate, onlyAuthor: true },
+      { type: LOCK_SESSION, handler: onLockSession, onlyAuthor: true },
     ];
 
     actions.forEach((action) => {
@@ -552,6 +491,11 @@ export default (io: Server) => {
               const exists = await doesSessionExists(sid); // might be removed
               if (exists) {
                 try {
+                  if (action.onlyAuthor) {
+                    if (!(await wasSessionCreatedBy(sid, userId))) {
+                      return; // TODO: return error
+                    }
+                  }
                   await action.handler(userId, sid, data.payload, socket);
                 } catch (err) {
                   reportQueryError(scope, err);
