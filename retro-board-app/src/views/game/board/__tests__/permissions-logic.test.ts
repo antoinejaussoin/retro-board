@@ -4,7 +4,6 @@ import {
   Session,
   User,
   SessionOptions,
-  Vote,
   VoteType,
   defaultOptions,
   VoteExtract,

@@ -2,6 +2,7 @@ import { Vote, VoteType } from '@retrospected/common';
 import { find } from 'lodash';
 import { v4 } from 'uuid';
 import {
+  PostRepository,
   SessionRepository,
   UserRepository,
   VoteRepository,
@@ -18,17 +19,13 @@ export async function registerVote(
     const sessionRepository = manager.getCustomRepository(SessionRepository);
     const userRepository = manager.getCustomRepository(UserRepository);
     const voteRepository = manager.getCustomRepository(VoteRepository);
-
-    if (!userId) {
-      return false;
-    }
-    const session = await sessionRepository.findOne(sessionId);
-    if (!session) {
-      return false;
-    }
+    const postRepository = manager.getCustomRepository(PostRepository);
     const user = await userRepository.findOne(userId);
-    const post = find(session.posts, (p) => p.id === postId);
-    if (post && user) {
+    const post = await postRepository.findOne(postId, {
+      where: { session: { id: sessionId } },
+    });
+    const session = await sessionRepository.findOne(sessionId);
+    if (post && session && user) {
       const existingVote: Vote | undefined = find(
         post.votes,
         (v) => v.user.id === user.id && v.type === type
