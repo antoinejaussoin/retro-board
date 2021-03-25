@@ -6,11 +6,11 @@ import { Session as JsonSession, SessionOptions } from '@retrospected/common';
 @EntityRepository(SessionEntity)
 export default class SessionRepository extends Repository<SessionEntity> {
   async updateOptions(
-    session: JsonSession,
+    sessionId: string,
     options: SessionOptions
   ): Promise<SessionOptions> {
     await this.save({
-      ...session,
+      id: sessionId,
       options,
     });
     return options;

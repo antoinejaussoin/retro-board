@@ -344,36 +344,30 @@ export default (io: Server) => {
   };
 
   const onEditOptions = async (
-    userId: string,
+    _userId: string,
     sessionId: string,
     data: SessionOptionsEntity,
     socket: ExtendedSocket
   ) => {
-    const session = await getSession(sessionId);
-    if (session) {
-      await updateOptions(session, data); // todo
-      sendToAll(socket, sessionId, RECEIVE_OPTIONS, data);
-    }
+    await updateOptions(sessionId, data);
+    sendToAll(socket, sessionId, RECEIVE_OPTIONS, data);
   };
 
   const onEditColumns = async (
-    _: string,
+    _userId: string,
     sessionId: string,
     data: ColumnDefinition[],
     socket: ExtendedSocket
   ) => {
-    const session = await getSession(sessionId);
-    if (session) {
-      await updateColumns(session, data); // todo
-      sendToAll(socket, sessionId, RECEIVE_COLUMNS, data);
-    }
+    await updateColumns(sessionId, data);
+    sendToAll(socket, sessionId, RECEIVE_COLUMNS, data);
   };
 
   const onSaveTemplate = async (
     userId: string,
     sessionId: string,
     data: WsSaveTemplatePayload,
-    _: ExtendedSocket
+    _socket: ExtendedSocket
   ) => {
     const session = await getSession(sessionId);
     if (session) {

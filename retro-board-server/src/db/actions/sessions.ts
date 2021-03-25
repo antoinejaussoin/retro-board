@@ -300,22 +300,22 @@ export async function getDefaultTemplate(
 }
 
 export async function updateOptions(
-  session: Session,
+  sessionId: string,
   options: SessionOptions
 ): Promise<SessionOptions> {
   return await transaction(async (manager) => {
     const sessionRepository = manager.getCustomRepository(SessionRepository);
-    return await sessionRepository.updateOptions(session, options);
+    return await sessionRepository.updateOptions(sessionId, options);
   });
 }
 
 export async function updateColumns(
-  session: Session,
+  sessionId: string,
   columns: ColumnDefinition[]
 ): Promise<ColumnDefinition[]> {
   return await transaction(async (manager) => {
     const columnRepository = manager.getCustomRepository(ColumnRepository);
-    return await columnRepository.updateColumns(session, columns);
+    return await columnRepository.updateColumns(sessionId, columns);
   });
 }
 
