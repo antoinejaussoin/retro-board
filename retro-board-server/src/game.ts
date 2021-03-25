@@ -124,39 +124,6 @@ export default (io: Server) => {
     socket.emit(action, data);
   }
 
-  const persistPost = async (
-    userId: string,
-    sessionId: string,
-    post: Post,
-    update: boolean
-  ): Promise<Post | null> => {
-    return await savePost(userId, sessionId, post, update);
-  };
-
-  const persistPostGroup = async (
-    userId: string,
-    sessionId: string,
-    group: PostGroup
-  ): Promise<PostGroup | null> => {
-    return await savePostGroup(userId, sessionId, group);
-  };
-
-  const removePost = async (
-    userId: string,
-    sessionId: string,
-    postId: string
-  ) => {
-    await deletePost(userId, sessionId, postId);
-  };
-
-  const removePostGroup = async (
-    userId: string,
-    sessionId: string,
-    groupId: string
-  ) => {
-    await deletePostGroup(userId, sessionId, groupId);
-  };
-
   const sendClientList = (session: SessionEntity, socket: ExtendedSocket) => {
     const roomId = getRoom(session.id);
     const allSockets = io.of('/').in(getRoom(session.id)).sockets; // That doesn't actually do what it's supposed to do
@@ -212,7 +179,7 @@ export default (io: Server) => {
     post: Post,
     socket: ExtendedSocket
   ) => {
-    const createdPost = await persistPost(userId, sessionId, post, false);
+    const createdPost = await savePost(userId, sessionId, post, false);
     sendToAll(socket, sessionId, RECEIVE_POST, createdPost);
   };
 
@@ -222,7 +189,7 @@ export default (io: Server) => {
     group: PostGroup,
     socket: ExtendedSocket
   ) => {
-    const createdGroup = await persistPostGroup(userId, sessionId, group);
+    const createdGroup = await savePostGroup(userId, sessionId, group);
     sendToAll(socket, sessionId, RECEIVE_POST_GROUP, createdGroup);
   };
 
@@ -297,7 +264,7 @@ export default (io: Server) => {
     data: WsDeletePostPayload,
     socket: ExtendedSocket
   ) => {
-    await removePost(userId, sessionId, data.postId);
+    await deletePost(userId, sessionId, data.postId);
     sendToAll(socket, sessionId, RECEIVE_DELETE_POST, data);
   };
 
@@ -307,7 +274,7 @@ export default (io: Server) => {
     data: WsDeleteGroupPayload,
     socket: ExtendedSocket
   ) => {
-    await removePostGroup(userId, sessionId, data.groupId);
+    await deletePostGroup(userId, sessionId, data.groupId);
     sendToAll(socket, sessionId, RECEIVE_DELETE_POST_GROUP, data);
   };
 
@@ -347,7 +314,7 @@ export default (io: Server) => {
         post.column = data.post.column;
         post.group = data.post.group;
         post.rank = data.post.rank;
-        const persistedPost = await persistPost(userId, sessionId, post, true);
+        const persistedPost = await savePost(userId, sessionId, post, true);
         if (persistedPost) {
           sendToAll(socket, sessionId, RECEIVE_EDIT_POST, persistedPost);
         }
@@ -368,7 +335,7 @@ export default (io: Server) => {
         group.column = data.column;
         group.label = data.label;
         group.rank = data.rank;
-        const persistedGroup = await persistPostGroup(userId, sessionId, group);
+        const persistedGroup = await savePostGroup(userId, sessionId, group);
         if (persistedGroup) {
           sendToAll(socket, sessionId, RECEIVE_EDIT_POST_GROUP, persistedGroup);
         }
