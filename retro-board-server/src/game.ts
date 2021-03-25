@@ -285,16 +285,11 @@ export default (io: Server) => {
     data: WsLikeUpdatePayload,
     socket: ExtendedSocket
   ) => {
-    const success = await registerVote(
-      userId,
-      sessionId,
-      data.postId,
-      data.type
-    );
-    if (success) {
+    const vote = await registerVote(userId, sessionId, data.postId, data.type);
+    if (vote) {
       sendToAll(socket, sessionId, RECEIVE_LIKE, {
         postId: data.postId,
-        vote: data.type,
+        vote,
       });
     }
   };

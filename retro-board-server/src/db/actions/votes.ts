@@ -14,7 +14,7 @@ export async function registerVote(
   sessionId: string,
   postId: string,
   type: VoteType
-): Promise<boolean> {
+): Promise<Vote | null> {
   return await transaction(async (manager) => {
     const sessionRepository = manager.getCustomRepository(SessionRepository);
     const userRepository = manager.getCustomRepository(UserRepository);
@@ -38,9 +38,9 @@ export async function registerVote(
           type,
         };
         await voteRepository.saveFromJson(postId, userId, vote);
-        return true;
+        return vote;
       }
     }
-    return false;
+    return null;
   });
 }
