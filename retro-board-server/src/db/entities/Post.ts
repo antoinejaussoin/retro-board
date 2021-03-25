@@ -63,7 +63,10 @@ export default class PostEntity {
       group: this.group ? this.group.toJson() : null,
       rank: this.rank,
       user: this.user.toJson(),
-      votes: this.votes === undefined ? [] : this.votes.map((v) => v.toJson()),
+      votes:
+        this.votes === undefined
+          ? []
+          : this.votes.map((v) => v.toExtractJson()),
     };
   }
 

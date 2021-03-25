@@ -17,22 +17,40 @@ export async function getNumberOfPosts(userId: string): Promise<number> {
 export async function savePost(
   userId: string,
   sessionId: string,
-  post: Post,
-  update: boolean
+  post: Post
 ): Promise<Post | null> {
   return await transaction(async (manager) => {
     const postRepository = manager.getCustomRepository(PostRepository);
-    if (update) {
-      const entity = await postRepository.updateFromJson(sessionId, post);
-      if (entity) {
-        return entity.toJson();
-      }
-    } else {
-      const entity = await postRepository.saveFromJson(sessionId, userId, post);
-      if (entity) {
-        return entity.toJson();
-      }
+    const entity = await postRepository.saveFromJson(sessionId, userId, post);
+    if (entity) {
+      return entity.toJson();
     }
+
+    return null;
+  });
+}
+
+export async function updatePost(
+  sessionId: string,
+  postData: Omit<Omit<Post, 'votes'>, 'user'>
+): Promise<Post | null> {
+  return await transaction(async (manager) => {
+    const postRepository = manager.getCustomRepository(PostRepository);
+    const entity = await postRepository.findOne(postData.id, {
+      where: { session: { id: sessionId } },
+    });
+    if (entity) {
+      const post = entity.toJson();
+      post.content = postData.content;
+      post.action = postData.action;
+      post.giphy = postData.giphy;
+      post.column = postData.column;
+      post.group = postData.group;
+      post.rank = postData.rank;
+      const persisted = await postRepository.updateFromJson(sessionId, post);
+      return persisted ? persisted.toJson() : null;
+    }
+
     return null;
   });
 }
@@ -54,6 +72,35 @@ export async function savePostGroup(
     if (entity) {
       return entity.toJson();
     }
+    return null;
+  });
+}
+
+export async function updatePostGroup(
+  userId: string,
+  sessionId: string,
+  groupData: PostGroup
+) {
+  return await transaction(async (manager) => {
+    const postGroupRepository = manager.getCustomRepository(
+      PostGroupRepository
+    );
+    const entity = await postGroupRepository.findOne(groupData.id, {
+      where: { session: { id: sessionId } },
+    });
+    if (entity) {
+      const group = entity.toJson();
+      group.column = groupData.column;
+      group.label = groupData.label;
+      group.rank = groupData.rank;
+      const persisted = await postGroupRepository.saveFromJson(
+        sessionId,
+        userId,
+        group
+      );
+      return persisted ? persisted.toJson() : null;
+    }
+
     return null;
   });
 }

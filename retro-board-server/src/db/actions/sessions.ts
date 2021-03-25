@@ -128,6 +128,13 @@ export async function createCustom(
   });
 }
 
+export async function doesSessionExists(sessionId: string): Promise<boolean> {
+  return await transaction(async (manager) => {
+    const sessionRepository = manager.getCustomRepository(SessionRepository);
+    return (await sessionRepository.count({ where: { id: sessionId } })) === 1;
+  });
+}
+
 export async function getSession(sessionId: string): Promise<Session | null> {
   return await transaction(async (manager) => {
     const postRepository = manager.getCustomRepository(PostRepository);
@@ -293,28 +300,27 @@ export async function getDefaultTemplate(
 }
 
 export async function updateOptions(
-  session: Session,
+  sessionId: string,
   options: SessionOptions
 ): Promise<SessionOptions> {
   return await transaction(async (manager) => {
     const sessionRepository = manager.getCustomRepository(SessionRepository);
-    return await sessionRepository.updateOptions(session, options);
+    return await sessionRepository.updateOptions(sessionId, options);
   });
 }
 
 export async function updateColumns(
-  session: Session,
+  sessionId: string,
   columns: ColumnDefinition[]
 ): Promise<ColumnDefinition[]> {
   return await transaction(async (manager) => {
     const columnRepository = manager.getCustomRepository(ColumnRepository);
-    return await columnRepository.updateColumns(session, columns);
+    return await columnRepository.updateColumns(sessionId, columns);
   });
 }
 
 export async function saveTemplate(
   userId: string,
-  _: Session,
   columns: ColumnDefinition[],
   options: SessionOptions
 ) {
@@ -398,6 +404,17 @@ export async function toggleSessionLock(sessionId: string, lock: boolean) {
       session.locked = lock;
       await sessionRepository.save(session);
     }
+  });
+}
+
+export async function wasSessionCreatedBy(
+  sessionId: string,
+  userId: string
+): Promise<boolean> {
+  return await transaction(async (manager) => {
+    const sessionRepository = manager.getCustomRepository(SessionRepository);
+    const session = await sessionRepository.findOne(sessionId);
+    return !!session && session.createdBy.id === userId;
   });
 }
 
