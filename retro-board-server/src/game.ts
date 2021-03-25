@@ -365,14 +365,11 @@ export default (io: Server) => {
 
   const onSaveTemplate = async (
     userId: string,
-    sessionId: string,
+    _sessionId: string,
     data: WsSaveTemplatePayload,
     _socket: ExtendedSocket
   ) => {
-    const session = await getSession(sessionId);
-    if (session) {
-      await saveTemplate(userId, session, data.columns, data.options); // todo
-    }
+    await saveTemplate(userId, data.columns, data.options);
   };
 
   const onLockSession = async (

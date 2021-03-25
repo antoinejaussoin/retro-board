@@ -321,7 +321,6 @@ export async function updateColumns(
 
 export async function saveTemplate(
   userId: string,
-  _: Session,
   columns: ColumnDefinition[],
   options: SessionOptions
 ) {
