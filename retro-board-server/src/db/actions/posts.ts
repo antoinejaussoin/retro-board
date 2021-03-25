@@ -76,6 +76,35 @@ export async function savePostGroup(
   });
 }
 
+export async function updatePostGroup(
+  userId: string,
+  sessionId: string,
+  groupData: PostGroup
+) {
+  return await transaction(async (manager) => {
+    const postGroupRepository = manager.getCustomRepository(
+      PostGroupRepository
+    );
+    const entity = await postGroupRepository.findOne(groupData.id, {
+      where: { session: { id: sessionId } },
+    });
+    if (entity) {
+      const group = entity.toJson();
+      group.column = groupData.column;
+      group.label = groupData.label;
+      group.rank = groupData.rank;
+      const persisted = await postGroupRepository.saveFromJson(
+        sessionId,
+        userId,
+        group
+      );
+      return persisted ? persisted.toJson() : null;
+    }
+
+    return null;
+  });
+}
+
 export async function saveVote(
   userId: string,
   _: string,

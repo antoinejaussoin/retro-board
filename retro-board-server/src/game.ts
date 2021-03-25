@@ -17,7 +17,6 @@ import { RateLimiterMemory } from 'rate-limiter-flexible';
 import chalk from 'chalk';
 import moment from 'moment';
 import { Server, Socket } from 'socket.io';
-import { find } from 'lodash';
 import { setScope, reportQueryError, throttledManualReport } from './sentry';
 import SessionOptionsEntity from './db/entities/SessionOptions';
 import { SessionEntity, UserView } from './db/entities';
@@ -42,6 +41,7 @@ import {
   deletePost,
   deletePostGroup,
   updatePost,
+  updatePostGroup,
 } from './db/actions/posts';
 import config from './db/config';
 import { registerVote } from './db/actions/votes';
@@ -317,18 +317,9 @@ export default (io: Server) => {
     data: PostGroup,
     socket: ExtendedSocket
   ) => {
-    const session = await getSession(sessionId);
-    if (session) {
-      const group = find(session.groups, (g) => g.id === data.id);
-      if (group) {
-        group.column = data.column;
-        group.label = data.label;
-        group.rank = data.rank;
-        const persistedGroup = await savePostGroup(userId, sessionId, group);
-        if (persistedGroup) {
-          sendToAll(socket, sessionId, RECEIVE_EDIT_POST_GROUP, persistedGroup);
-        }
-      }
+    const group = await updatePostGroup(userId, sessionId, data);
+    if (group) {
+      sendToAll(socket, sessionId, RECEIVE_EDIT_POST_GROUP, group);
     }
   };
 
