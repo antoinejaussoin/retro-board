@@ -541,6 +541,11 @@ export default (io: Server) => {
           );
           await rateLimiter.consume(sid);
           setScope(async (scope) => {
+            if (scope) {
+              scope.setUser({ id: userId, ip_address: ip });
+              scope.setExtra('action', action.type);
+              scope.setExtra('session', sid);
+            }
             if (sid) {
               const exists = await doesSessionExists(sid); // might be removed
               if (exists) {
