@@ -26,10 +26,14 @@ export default class ColumnDefinitionRepository extends Repository<ColumnDefinit
   async updateColumns(
     sessionId: string,
     columns: JsonColumnDefinition[]
-  ): Promise<JsonColumnDefinition[]> {
-    await this.delete({ session: { id: sessionId } });
-    const promises = columns.map((c) => this.saveFromJson(c, sessionId));
-    await Promise.all(promises);
-    return columns;
+  ): Promise<JsonColumnDefinition[] | null> {
+    try {
+      await this.delete({ session: { id: sessionId } });
+      const promises = columns.map((c) => this.saveFromJson(c, sessionId));
+      await Promise.all(promises);
+      return columns;
+    } catch {
+      return null;
+    }
   }
 }

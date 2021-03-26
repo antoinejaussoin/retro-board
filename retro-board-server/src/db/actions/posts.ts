@@ -121,10 +121,18 @@ export async function deletePost(
   userId: string,
   _: string,
   postId: string
-): Promise<void> {
+): Promise<boolean> {
   return await transaction(async (manager) => {
-    const postRepository = manager.getCustomRepository(PostRepository);
-    await postRepository.delete({ id: postId, user: { id: userId } });
+    try {
+      const postRepository = manager.getCustomRepository(PostRepository);
+      const result = await postRepository.delete({
+        id: postId,
+        user: { id: userId },
+      });
+      return !!result.affected;
+    } catch {
+      return false;
+    }
   });
 }
 
@@ -132,23 +140,29 @@ export async function deletePostGroup(
   userId: string,
   sessionId: string,
   groupId: string
-): Promise<void> {
+): Promise<boolean> {
   return await transaction(async (manager) => {
-    const postGroupRepository = manager.getCustomRepository(
-      PostGroupRepository
-    );
-    const sessionRepository = manager.getCustomRepository(SessionRepository);
-    const session = await sessionRepository.findOne(sessionId, {
-      relations: ['visitors'],
-    });
-    if (
-      session &&
-      session.visitors &&
-      session.visitors.find((v) => v.id === userId)
-    ) {
-      await postGroupRepository.delete({ id: groupId });
-    } else {
-      console.error('The user is not a visitor, cannot delete group');
+    try {
+      const postGroupRepository = manager.getCustomRepository(
+        PostGroupRepository
+      );
+      const sessionRepository = manager.getCustomRepository(SessionRepository);
+      const session = await sessionRepository.findOne(sessionId, {
+        relations: ['visitors'],
+      });
+      if (
+        session &&
+        session.visitors &&
+        session.visitors.find((v) => v.id === userId)
+      ) {
+        const result = await postGroupRepository.delete({ id: groupId });
+        return !!result.affected;
+      } else {
+        console.error('The user is not a visitor, cannot delete group');
+        return false;
+      }
+    } catch {
+      return false;
     }
   });
 }

@@ -131,6 +131,16 @@ export default {
           return `Le groupe que vous avez créé n'a pas pu être enregistré correctement.`;
         case 'cannot_save_post':
           return `Le post que vous avez créé n'a pas pu être enregistré correctement.`;
+        case 'cannot_delete_group':
+          return 'Le groupe ne peut être supprimé';
+        case 'cannot_delete_post':
+          return 'Le post ne peut être supprimé';
+        case 'cannot_rename_session':
+          return 'La session ne peut être renommée';
+        case 'cannot_save_columns':
+          return `Les colonnes n'ont pu être enregistrées`;
+        case 'cannot_save_options':
+          return `Les options n'ont pu être enregistrées`;
         default:
           return 'Une erreur inconnue est survenue';
       }

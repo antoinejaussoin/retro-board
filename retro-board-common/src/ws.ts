@@ -49,6 +49,11 @@ export type WsErrorType =
   | 'cannot_register_vote'
   | 'cannot_edit_post'
   | 'cannot_edit_group'
+  | 'cannot_save_options'
+  | 'cannot_save_columns'
+  | 'cannot_delete_post'
+  | 'cannot_delete_group'
+  | 'cannot_rename_session'
   | 'action_unauthorised';
 
 export interface WsErrorPayload {

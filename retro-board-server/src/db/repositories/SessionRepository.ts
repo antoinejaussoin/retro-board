@@ -8,12 +8,16 @@ export default class SessionRepository extends Repository<SessionEntity> {
   async updateOptions(
     sessionId: string,
     options: SessionOptions
-  ): Promise<SessionOptions> {
-    await this.save({
-      id: sessionId,
-      options,
-    });
-    return options;
+  ): Promise<SessionOptions | null> {
+    try {
+      await this.save({
+        id: sessionId,
+        options,
+      });
+      return options;
+    } catch {
+      return null;
+    }
   }
   async updateName(sessionId: string, name: string) {
     const sessionEntity = await this.findOne(sessionId);

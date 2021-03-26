@@ -305,8 +305,14 @@ export default (io: Server) => {
     data: WsNameData,
     socket: ExtendedSocket
   ) => {
-    await updateName(sessionId, data.name);
-    sendToAll<string>(socket, sessionId, RECEIVE_SESSION_NAME, data.name);
+    const success = await updateName(sessionId, data.name);
+    sendToAllOrError<string>(
+      socket,
+      sessionId,
+      RECEIVE_SESSION_NAME,
+      'cannot_rename_session',
+      success ? data.name : null
+    );
   };
 
   const onLeaveSession = async (
@@ -328,12 +334,13 @@ export default (io: Server) => {
     data: WsDeletePostPayload,
     socket: ExtendedSocket
   ) => {
-    await deletePost(userId, sessionId, data.postId);
-    sendToAll<WsDeletePostPayload>(
+    const success = await deletePost(userId, sessionId, data.postId);
+    sendToAllOrError<WsDeletePostPayload>(
       socket,
       sessionId,
       RECEIVE_DELETE_POST,
-      data
+      'cannot_delete_post',
+      success ? data : null
     );
   };
 
@@ -343,12 +350,13 @@ export default (io: Server) => {
     data: WsDeleteGroupPayload,
     socket: ExtendedSocket
   ) => {
-    await deletePostGroup(userId, sessionId, data.groupId);
-    sendToAll<WsDeleteGroupPayload>(
+    const success = await deletePostGroup(userId, sessionId, data.groupId);
+    sendToAllOrError<WsDeleteGroupPayload>(
       socket,
       sessionId,
       RECEIVE_DELETE_POST_GROUP,
-      data
+      'cannot_delete_group',
+      success ? data : null
     );
   };
 
@@ -412,8 +420,14 @@ export default (io: Server) => {
     data: SessionOptions,
     socket: ExtendedSocket
   ) => {
-    await updateOptions(sessionId, data);
-    sendToAll<SessionOptions>(socket, sessionId, RECEIVE_OPTIONS, data);
+    const options = await updateOptions(sessionId, data);
+    sendToAllOrError<SessionOptions>(
+      socket,
+      sessionId,
+      RECEIVE_OPTIONS,
+      'cannot_save_options',
+      options
+    );
   };
 
   const onEditColumns = async (
@@ -422,8 +436,14 @@ export default (io: Server) => {
     data: ColumnDefinition[],
     socket: ExtendedSocket
   ) => {
-    await updateColumns(sessionId, data);
-    sendToAll<ColumnDefinition[]>(socket, sessionId, RECEIVE_COLUMNS, data);
+    const columns = await updateColumns(sessionId, data);
+    sendToAllOrError<ColumnDefinition[]>(
+      socket,
+      sessionId,
+      RECEIVE_COLUMNS,
+      'cannot_save_columns',
+      columns
+    );
   };
 
   const onSaveTemplate = async (

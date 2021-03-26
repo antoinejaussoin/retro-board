@@ -129,6 +129,16 @@ export default {
           return 'The group you created could not be saved.';
         case 'cannot_save_post':
           return 'The post you created could not be saved.';
+        case 'cannot_delete_group':
+          return 'The group could not be deleted';
+        case 'cannot_delete_post':
+          return 'The post could not be deleted';
+        case 'cannot_rename_session':
+          return 'Renaming the session failed';
+        case 'cannot_save_columns':
+          return 'Saving columns failed';
+        case 'cannot_save_options':
+          return 'Saving options failed';
         default:
           return 'An unknown error happened';
       }

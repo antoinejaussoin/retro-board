@@ -302,7 +302,7 @@ export async function getDefaultTemplate(
 export async function updateOptions(
   sessionId: string,
   options: SessionOptions
-): Promise<SessionOptions> {
+): Promise<SessionOptions | null> {
   return await transaction(async (manager) => {
     const sessionRepository = manager.getCustomRepository(SessionRepository);
     return await sessionRepository.updateOptions(sessionId, options);
@@ -312,7 +312,7 @@ export async function updateOptions(
 export async function updateColumns(
   sessionId: string,
   columns: ColumnDefinition[]
-): Promise<ColumnDefinition[]> {
+): Promise<ColumnDefinition[] | null> {
   return await transaction(async (manager) => {
     const columnRepository = manager.getCustomRepository(ColumnRepository);
     return await columnRepository.updateColumns(sessionId, columns);
@@ -343,13 +343,19 @@ export async function saveTemplate(
 export async function updateName(
   sessionId: string,
   name: string
-): Promise<void> {
+): Promise<boolean> {
   return await transaction(async (manager) => {
-    const sessionRepository = manager.getCustomRepository(SessionRepository);
-    const session = await sessionRepository.findOne(sessionId);
-    if (session) {
-      session.name = name;
-      await sessionRepository.save(session);
+    try {
+      const sessionRepository = manager.getCustomRepository(SessionRepository);
+      const session = await sessionRepository.findOne(sessionId);
+      if (session) {
+        session.name = name;
+        await sessionRepository.save(session);
+        return true;
+      }
+      return false;
+    } catch {
+      return false;
     }
   });
 }
