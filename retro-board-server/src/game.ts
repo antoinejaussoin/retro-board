@@ -17,6 +17,7 @@ import {
   Session,
   SessionOptions,
   WsErrorPayload,
+  VoteExtract,
 } from '@retrospected/common';
 import { RateLimiterMemory } from 'rate-limiter-flexible';
 import chalk from 'chalk';
@@ -372,7 +373,12 @@ export default (io: Server) => {
     data: WsLikeUpdatePayload,
     socket: ExtendedSocket
   ) => {
-    const vote = await registerVote(userId, sessionId, data.postId, data.type);
+    let vote: VoteExtract | null; // NEED TO REMOVE THIS!!
+    if (Math.random() < 0.5 && data.type === 'dislike') {
+      vote = await registerVote(userId, sessionId, data.postId, data.type);
+    } else {
+      vote = null;
+    }
 
     sendToAllOrError<WsReceiveLikeUpdatePayload>(
       socket,
