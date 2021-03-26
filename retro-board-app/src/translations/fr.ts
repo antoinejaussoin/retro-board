@@ -1,3 +1,4 @@
+import { WsErrorType } from '@retrospected/common';
 import { Translation } from './types';
 export default {
   Header: {
@@ -114,6 +115,26 @@ export default {
     reconnect: 'Se reconnecter',
     notLoggedIn:
       "Vous n'êtes pas connecté. Vous pouvez regarder cette session en tant que spectateur, mais vous devez vous connecter pour participer.",
+    error: (error: WsErrorType) => {
+      switch (error) {
+        case 'action_unauthorised':
+          return `Vous n'avez pas la permission de performer cette action.`;
+        case 'cannot_edit_group':
+          return 'La modification de ce groupe à échoué.';
+        case 'cannot_edit_post':
+          return 'La modification de ce post à échoué';
+        case 'cannot_get_session':
+          return 'Impossible de charger les données de cette session.';
+        case 'cannot_register_vote':
+          return `Votre vote n'a pas été enregistré.`;
+        case 'cannot_save_group':
+          return `Le groupe que vous avez créé n'a pas pu être enregistré correctement.`;
+        case 'cannot_save_post':
+          return `Le post que vous avez créé n'a pas pu être enregistré correctement.`;
+        default:
+          return 'Une erreur inconnue est survenue';
+      }
+    },
   },
   GameMenu: {
     board: 'Board', // Si qqn à une suggestion de traduction...

@@ -1,3 +1,4 @@
+import { WsErrorType } from '@retrospected/common';
 import { Translation } from './types';
 export default {
   Header: {
@@ -112,6 +113,26 @@ export default {
     reconnect: 'Reconnect',
     notLoggedIn:
       'You are not logged in. You can view this session as a spectator, but must login to participate.',
+    error: (error: WsErrorType) => {
+      switch (error) {
+        case 'action_unauthorised':
+          return 'You are not allowed to perform this action.';
+        case 'cannot_edit_group':
+          return 'Editing the group failed.';
+        case 'cannot_edit_post':
+          return 'Editing the post failed.';
+        case 'cannot_get_session':
+          return 'Could not get the session data. Please reload the page.';
+        case 'cannot_register_vote':
+          return 'Your vote was not registered successfully.';
+        case 'cannot_save_group':
+          return 'The group you created could not be saved.';
+        case 'cannot_save_post':
+          return 'The post you created could not be saved.';
+        default:
+          return 'An unknown error happened';
+      }
+    },
   },
   GameMenu: {
     board: 'Board',

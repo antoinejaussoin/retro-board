@@ -104,6 +104,7 @@ export default {
     disconnected: undefined,
     reconnect: undefined,
     notLoggedIn: undefined,
+    error: undefined,
   },
   GameMenu: {
     board: 'Записи',

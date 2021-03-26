@@ -14,6 +14,7 @@ export default {
   EDIT_COLUMNS: 'retrospected/session/columns/edit',
   SAVE_TEMPLATE: 'retrospected/session/template/save',
   LOCK_SESSION: 'retrospected/session/lock',
+  REQUEST_BOARD: 'retrospected/session/request',
 
   RECEIVE_POST: 'retrospected/posts/receive/add',
   RECEIVE_DELETE_POST: 'retrospected/posts/receive/delete',
@@ -31,4 +32,5 @@ export default {
   RECEIVE_LOCK_SESSION: 'retrospected/session/receive/lock',
   RECEIVE_UNAUTHORIZED: 'retrospected/session/receive/unauthorized',
   RECEIVE_RATE_LIMITED: 'retrospected/rate-limited-error',
+  RECEIVE_ERROR: 'retrospected/receive/error',
 };

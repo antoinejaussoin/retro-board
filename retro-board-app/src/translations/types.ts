@@ -1,3 +1,5 @@
+import { WsErrorType } from '@retrospected/common';
+
 export interface Translation {
   Header: {
     subtitle?: string;
@@ -102,6 +104,7 @@ export interface Translation {
     disconnected?: string;
     reconnect?: string;
     notLoggedIn?: string;
+    error?: (error: WsErrorType) => string;
   };
   GameMenu: {
     board?: string;

@@ -16,10 +16,11 @@ import {
   WsSaveTemplatePayload,
   VoteExtract,
   WsReceiveLikeUpdatePayload,
+  WsErrorPayload,
 } from '@retrospected/common';
 import { v4 } from 'uuid';
 import find from 'lodash/find';
-import { trackAction, trackEvent } from './../../track';
+import { trackAction, trackEvent } from '../../track';
 import io from 'socket.io-client';
 import useGlobalState from '../../state';
 import useUser from '../../auth/useUser';
@@ -185,7 +186,6 @@ const useGame = (sessionId: string) => {
       if (debug) {
         console.log('Receive participants list: ', participants);
       }
-
       setPlayers(participants);
     });
 
@@ -256,6 +256,16 @@ const useGame = (sessionId: string) => {
       }
     );
 
+    newSocket.on(Actions.RECEIVE_ERROR, (payload: WsErrorPayload) => {
+      if (debug) {
+        console.log('Receive Error: ', payload);
+      }
+      enqueueSnackbar(translations.PostBoard.error!(payload.type), {
+        variant: 'error',
+      });
+      send<void>(Actions.REQUEST_BOARD);
+    });
+
     newSocket.on(Actions.RECEIVE_RATE_LIMITED, () => {
       enqueueSnackbar(
         'You have been rate-limited, as you have sent too many messages in a short period of time.',
@@ -291,6 +301,7 @@ const useGame = (sessionId: string) => {
     unauthorized,
     disconnected,
     enqueueSnackbar,
+    translations,
   ]);
 
   const [previousParticipans, setPreviousParticipants] = useState(
