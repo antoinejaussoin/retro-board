@@ -3,7 +3,6 @@ import {
   Actions,
   Post,
   PostGroup,
-  Vote,
   VoteType,
   SessionOptions,
   ColumnDefinition,
@@ -16,6 +15,7 @@ import {
   WsNameData,
   WsSaveTemplatePayload,
   VoteExtract,
+  WsReceiveLikeUpdatePayload,
 } from '@retrospected/common';
 import { v4 } from 'uuid';
 import find from 'lodash/find';
@@ -208,7 +208,7 @@ const useGame = (sessionId: string) => {
 
     newSocket.on(
       Actions.RECEIVE_LIKE,
-      ({ postId, vote }: { postId: string; vote: Vote }) => {
+      ({ postId, vote }: WsReceiveLikeUpdatePayload) => {
         if (debug) {
           console.log('Receive vote: ', postId, vote);
         }

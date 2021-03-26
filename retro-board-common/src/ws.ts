@@ -3,6 +3,7 @@ import {
   Post,
   SessionOptions,
   User,
+  VoteExtract,
   VoteType,
 } from './types';
 
@@ -21,6 +22,11 @@ export interface WsPostUpdatePayload {
 export interface WsLikeUpdatePayload {
   type: VoteType;
   postId: string;
+}
+
+export interface WsReceiveLikeUpdatePayload {
+  postId: string;
+  vote: VoteExtract;
 }
 
 export interface WsDeletePostPayload {

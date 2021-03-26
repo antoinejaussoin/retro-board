@@ -1,12 +1,12 @@
 import { Dispatch } from './types';
 import {
   Post,
-  Vote,
   PostGroup,
   SessionOptions,
   ColumnDefinition,
   Participant,
   AccessErrorType,
+  VoteExtract,
 } from '@retrospected/common';
 
 export const TOGGLE_PANEL = 'retrospected/panel/toggle';
@@ -69,7 +69,7 @@ export const updatePostGroup = (dispatch: Dispatch) => (group: PostGroup) => {
 
 export const receiveVote = (dispatch: Dispatch) => (
   postId: string,
-  vote: Vote
+  vote: VoteExtract
 ) => {
   dispatch(createAction(RECEIVE_VOTE, { postId, vote }));
 };

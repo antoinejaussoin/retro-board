@@ -1,4 +1,4 @@
-import { Vote, VoteType } from '@retrospected/common';
+import { Vote, VoteExtract, VoteType } from '@retrospected/common';
 import { find } from 'lodash';
 import { v4 } from 'uuid';
 import {
@@ -14,7 +14,7 @@ export async function registerVote(
   sessionId: string,
   postId: string,
   type: VoteType
-): Promise<Vote | null> {
+): Promise<VoteExtract | null> {
   return await transaction(async (manager) => {
     const sessionRepository = manager.getCustomRepository(SessionRepository);
     const userRepository = manager.getCustomRepository(UserRepository);
@@ -38,7 +38,12 @@ export async function registerVote(
           type,
         };
         await voteRepository.saveFromJson(postId, userId, vote);
-        return vote;
+        return {
+          id: vote.id,
+          userName: vote.user.name,
+          userId: vote.user.id,
+          type: vote.type,
+        };
       }
     }
     return null;

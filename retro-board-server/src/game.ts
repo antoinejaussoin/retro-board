@@ -12,13 +12,15 @@ import {
   WsDeletePostPayload,
   WsDeleteGroupPayload,
   WsSaveTemplatePayload,
+  WsReceiveLikeUpdatePayload,
+  Session,
+  SessionOptions,
 } from '@retrospected/common';
 import { RateLimiterMemory } from 'rate-limiter-flexible';
 import chalk from 'chalk';
 import moment from 'moment';
 import { Server, Socket } from 'socket.io';
 import { setScope, reportQueryError, throttledManualReport } from './sentry';
-import SessionOptionsEntity from './db/entities/SessionOptions';
 import { SessionEntity, UserView } from './db/entities';
 import { hasField } from './security/payload-checker';
 import {
@@ -150,11 +152,11 @@ export default (io: Server) => {
         .visitors!.filter((op) => !onlineParticipantsIds.includes(op.id))
         .map((op) => ({ ...op.toJson(), online: false }));
 
-      sendToSelf(socket, RECEIVE_CLIENT_LIST, [
+      sendToSelf<Participant[]>(socket, RECEIVE_CLIENT_LIST, [
         ...onlineParticipants,
         ...offlineParticipants,
       ]);
-      sendToAll(socket, session.id, RECEIVE_CLIENT_LIST, [
+      sendToAll<Participant[]>(socket, session.id, RECEIVE_CLIENT_LIST, [
         ...onlineParticipants,
         ...offlineParticipants,
       ]);
@@ -181,7 +183,11 @@ export default (io: Server) => {
     socket: ExtendedSocket
   ) => {
     const createdPost = await savePost(userId, sessionId, post);
-    sendToAll(socket, sessionId, RECEIVE_POST, createdPost);
+    if (createdPost) {
+      sendToAll<Post>(socket, sessionId, RECEIVE_POST, createdPost);
+    } else {
+      // todo !!
+    }
   };
 
   const onAddPostGroup = async (
@@ -191,7 +197,11 @@ export default (io: Server) => {
     socket: ExtendedSocket
   ) => {
     const createdGroup = await savePostGroup(userId, sessionId, group);
-    sendToAll(socket, sessionId, RECEIVE_POST_GROUP, createdGroup);
+    if (createdGroup) {
+      sendToAll<PostGroup>(socket, sessionId, RECEIVE_POST_GROUP, createdGroup);
+    } else {
+      // todo
+    }
   };
 
   const log = (msg: string) => {
@@ -224,13 +234,21 @@ export default (io: Server) => {
           }
         }
         const session = await getSession(sessionId);
-        sendToSelf(socket, RECEIVE_BOARD, session);
+        if (session) {
+          sendToSelf<Session>(socket, RECEIVE_BOARD, session);
+        } else {
+          // todo
+        }
       } else {
         log(chalk`{red User not allowed, session locked}`);
         const payload: UnauthorizedAccessPayload = {
           type: userAllowed.reason,
         };
-        sendToSelf(socket, RECEIVE_UNAUTHORIZED, payload);
+        sendToSelf<UnauthorizedAccessPayload>(
+          socket,
+          RECEIVE_UNAUTHORIZED,
+          payload
+        );
         socket.disconnect();
       }
     }
@@ -243,7 +261,7 @@ export default (io: Server) => {
     socket: ExtendedSocket
   ) => {
     await updateName(sessionId, data.name);
-    sendToAll(socket, sessionId, RECEIVE_SESSION_NAME, data.name);
+    sendToAll<string>(socket, sessionId, RECEIVE_SESSION_NAME, data.name);
   };
 
   const onLeaveSession = async (
@@ -266,7 +284,12 @@ export default (io: Server) => {
     socket: ExtendedSocket
   ) => {
     await deletePost(userId, sessionId, data.postId);
-    sendToAll(socket, sessionId, RECEIVE_DELETE_POST, data);
+    sendToAll<WsDeletePostPayload>(
+      socket,
+      sessionId,
+      RECEIVE_DELETE_POST,
+      data
+    );
   };
 
   const onDeletePostGroup = async (
@@ -276,7 +299,12 @@ export default (io: Server) => {
     socket: ExtendedSocket
   ) => {
     await deletePostGroup(userId, sessionId, data.groupId);
-    sendToAll(socket, sessionId, RECEIVE_DELETE_POST_GROUP, data);
+    sendToAll<WsDeleteGroupPayload>(
+      socket,
+      sessionId,
+      RECEIVE_DELETE_POST_GROUP,
+      data
+    );
   };
 
   const onLikePost = async (
@@ -287,10 +315,12 @@ export default (io: Server) => {
   ) => {
     const vote = await registerVote(userId, sessionId, data.postId, data.type);
     if (vote) {
-      sendToAll(socket, sessionId, RECEIVE_LIKE, {
+      sendToAll<WsReceiveLikeUpdatePayload>(socket, sessionId, RECEIVE_LIKE, {
         postId: data.postId,
         vote,
       });
+    } else {
+      // todo
     }
   };
 
@@ -302,7 +332,7 @@ export default (io: Server) => {
   ) => {
     const persistedPost = await updatePost(sessionId, data.post);
     if (persistedPost) {
-      sendToAll(socket, sessionId, RECEIVE_EDIT_POST, persistedPost);
+      sendToAll<Post>(socket, sessionId, RECEIVE_EDIT_POST, persistedPost);
     }
   };
 
@@ -314,18 +344,20 @@ export default (io: Server) => {
   ) => {
     const group = await updatePostGroup(userId, sessionId, data);
     if (group) {
-      sendToAll(socket, sessionId, RECEIVE_EDIT_POST_GROUP, group);
+      sendToAll<PostGroup>(socket, sessionId, RECEIVE_EDIT_POST_GROUP, group);
+    } else {
+      // todo
     }
   };
 
   const onEditOptions = async (
     _userId: string,
     sessionId: string,
-    data: SessionOptionsEntity,
+    data: SessionOptions,
     socket: ExtendedSocket
   ) => {
     await updateOptions(sessionId, data);
-    sendToAll(socket, sessionId, RECEIVE_OPTIONS, data);
+    sendToAll<SessionOptions>(socket, sessionId, RECEIVE_OPTIONS, data);
   };
 
   const onEditColumns = async (
@@ -335,7 +367,7 @@ export default (io: Server) => {
     socket: ExtendedSocket
   ) => {
     await updateColumns(sessionId, data);
-    sendToAll(socket, sessionId, RECEIVE_COLUMNS, data);
+    sendToAll<ColumnDefinition[]>(socket, sessionId, RECEIVE_COLUMNS, data);
   };
 
   const onSaveTemplate = async (
@@ -354,7 +386,7 @@ export default (io: Server) => {
     socket: ExtendedSocket
   ) => {
     await toggleSessionLock(sessionId, locked);
-    sendToAll(socket, sessionId, RECEIVE_LOCK_SESSION, locked);
+    sendToAll<boolean>(socket, sessionId, RECEIVE_LOCK_SESSION, locked);
   };
 
   io.on('connection', async (socket: ExtendedSocket) => {
