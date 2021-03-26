@@ -35,9 +35,21 @@ import useTranslation from '../../translations/useTranslations';
 import { omit } from 'lodash';
 
 export type Status =
+  /**
+   * Not yet connected, will connect as soon as possible
+   */
   | 'not-connected'
+  /**
+   * Connected to the websocket, but hasn't got the session data yet
+   */
   | 'connecting'
+  /**
+   * Connected to the websocket, and got session data (all ready to display)
+   */
   | 'connected'
+  /**
+   * Disconnected, not planning to re-connect automatically (switch to not-connected for that)
+   */
   | 'disconnected';
 
 const debug = process.env.NODE_ENV === 'development';
@@ -608,7 +620,6 @@ const useGame = (sessionId: string) => {
   );
 
   return {
-    initialised: !!session,
     status,
     onAddPost,
     onAddGroup,

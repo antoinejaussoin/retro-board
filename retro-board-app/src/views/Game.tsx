@@ -50,7 +50,6 @@ function GamePage() {
   const path = pathname + hash;
 
   const {
-    initialised,
     status,
     onAddPost,
     onMovePost,
@@ -81,17 +80,7 @@ function GamePage() {
     return <Unauthorized reason={unauthorized_reason} />;
   }
 
-  // console.log('Session: ', session);
-
   if (!session) {
-    console.log(
-      'not exist: session',
-      session,
-      'status',
-      status,
-      'initialised',
-      initialised
-    );
     return (
       <NoContent
         title="This session does not exist."
