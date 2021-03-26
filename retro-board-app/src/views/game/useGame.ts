@@ -98,19 +98,13 @@ const useGame = (sessionId: string) => {
     setStatus('not-connected');
   }, []);
 
-  // console.log(' ==> session', session);
-  // console.log(' ==> status', status);
-  // console.log(' ==> initialised', !!session);
-
-  // Dealing with the socket
+  // Creating the socket
   useEffect(() => {
     let newSocket: SocketIOClient.Socket | null = null;
     if (status === 'not-connected') {
       newSocket = io();
       setSocket(newSocket);
     }
-
-    return () => {};
   }, [status]);
 
   // Cleaning up the socket
@@ -142,20 +136,20 @@ const useGame = (sessionId: string) => {
     if (status !== 'not-connected') {
       return;
     }
-    if (debug) {
-      console.log('Initialising Game socket');
-    }
-    const newSocket = socket;
-    if (!newSocket) {
+    if (!socket) {
       return;
     }
 
-    newSocket.removeAllListeners();
+    if (debug) {
+      console.log('Initialising Game socket');
+    }
 
-    const send = sendFactory(newSocket, sessionId);
+    socket.removeAllListeners();
+
+    const send = sendFactory(socket, sessionId);
 
     // Socket events listeners
-    newSocket.on('disconnect', () => {
+    socket.on('disconnect', () => {
       if (debug) {
         console.warn('Server disconnected');
       }
@@ -163,7 +157,7 @@ const useGame = (sessionId: string) => {
       setStatus('disconnected');
     });
 
-    newSocket.on('connect', () => {
+    socket.on('connect', () => {
       if (debug) {
         console.log('Connected to the socket');
       }
@@ -172,21 +166,21 @@ const useGame = (sessionId: string) => {
       trackAction(Actions.JOIN_SESSION);
     });
 
-    newSocket.on(Actions.RECEIVE_POST, (post: Post) => {
+    socket.on(Actions.RECEIVE_POST, (post: Post) => {
       if (debug) {
         console.log('Receive new post: ', post);
       }
       receivePost(post);
     });
 
-    newSocket.on(Actions.RECEIVE_POST_GROUP, (group: PostGroup) => {
+    socket.on(Actions.RECEIVE_POST_GROUP, (group: PostGroup) => {
       if (debug) {
         console.log('Receive new post group: ', group);
       }
       receivePostGroup(group);
     });
 
-    newSocket.on(Actions.RECEIVE_BOARD, (posts: Post[]) => {
+    socket.on(Actions.RECEIVE_BOARD, (posts: Post[]) => {
       if (debug) {
         console.log('Receive entire board: ', posts);
       }
@@ -194,35 +188,35 @@ const useGame = (sessionId: string) => {
       receiveBoard(posts);
     });
 
-    newSocket.on(Actions.RECEIVE_OPTIONS, (options: SessionOptions) => {
+    socket.on(Actions.RECEIVE_OPTIONS, (options: SessionOptions) => {
       if (debug) {
         console.log('Receive updated options: ', options);
       }
       editOptions(options);
     });
 
-    newSocket.on(Actions.RECEIVE_COLUMNS, (columns: ColumnDefinition[]) => {
+    socket.on(Actions.RECEIVE_COLUMNS, (columns: ColumnDefinition[]) => {
       if (debug) {
         console.log('Receive updated columns: ', columns);
       }
       editColumns(columns);
     });
 
-    newSocket.on(Actions.RECEIVE_CLIENT_LIST, (participants: Participant[]) => {
+    socket.on(Actions.RECEIVE_CLIENT_LIST, (participants: Participant[]) => {
       if (debug) {
         console.log('Receive participants list: ', participants);
       }
       setPlayers(participants);
     });
 
-    newSocket.on(Actions.RECEIVE_DELETE_POST, (post: WsDeletePostPayload) => {
+    socket.on(Actions.RECEIVE_DELETE_POST, (post: WsDeletePostPayload) => {
       if (debug) {
         console.log('Delete post: ', post);
       }
       deletePost(post.postId);
     });
 
-    newSocket.on(
+    socket.on(
       Actions.RECEIVE_DELETE_POST_GROUP,
       (group: WsDeleteGroupPayload) => {
         if (debug) {
@@ -232,7 +226,7 @@ const useGame = (sessionId: string) => {
       }
     );
 
-    newSocket.on(
+    socket.on(
       Actions.RECEIVE_LIKE,
       ({ postId, vote }: WsReceiveLikeUpdatePayload) => {
         if (debug) {
@@ -242,7 +236,7 @@ const useGame = (sessionId: string) => {
       }
     );
 
-    newSocket.on(Actions.RECEIVE_EDIT_POST, (post: Post | null) => {
+    socket.on(Actions.RECEIVE_EDIT_POST, (post: Post | null) => {
       if (debug) {
         console.log('Receive edit post: ', post);
       }
@@ -251,28 +245,28 @@ const useGame = (sessionId: string) => {
       }
     });
 
-    newSocket.on(Actions.RECEIVE_EDIT_POST_GROUP, (group: PostGroup) => {
+    socket.on(Actions.RECEIVE_EDIT_POST_GROUP, (group: PostGroup) => {
       if (debug) {
         console.log('Receive edit group: ', group);
       }
       updatePostGroup(group);
     });
 
-    newSocket.on(Actions.RECEIVE_SESSION_NAME, (name: string) => {
+    socket.on(Actions.RECEIVE_SESSION_NAME, (name: string) => {
       if (debug) {
         console.log('Receive session name: ', name);
       }
       renameSession(name);
     });
 
-    newSocket.on(Actions.RECEIVE_LOCK_SESSION, (locked: boolean) => {
+    socket.on(Actions.RECEIVE_LOCK_SESSION, (locked: boolean) => {
       if (debug) {
         console.log('Receive lock session: ', locked);
       }
       lockSession(locked);
     });
 
-    newSocket.on(
+    socket.on(
       Actions.RECEIVE_UNAUTHORIZED,
       (payload: UnauthorizedAccessPayload) => {
         if (debug) {
@@ -282,17 +276,21 @@ const useGame = (sessionId: string) => {
       }
     );
 
-    newSocket.on(Actions.RECEIVE_ERROR, (payload: WsErrorPayload) => {
+    socket.on(Actions.RECEIVE_ERROR, (payload: WsErrorPayload) => {
       if (debug) {
         console.log('Receive Error: ', payload);
       }
       enqueueSnackbar(translations.PostBoard.error!(payload.type), {
         variant: 'error',
       });
-      send<void>(Actions.REQUEST_BOARD);
+      if (payload.type !== 'cannot_get_session') {
+        send<void>(Actions.REQUEST_BOARD);
+      } else {
+        setStatus('connected');
+      }
     });
 
-    newSocket.on(Actions.RECEIVE_RATE_LIMITED, () => {
+    socket.on(Actions.RECEIVE_RATE_LIMITED, () => {
       enqueueSnackbar(
         'You have been rate-limited, as you have sent too many messages in a short period of time.',
         { variant: 'error', title: 'Rate Limit Error' }

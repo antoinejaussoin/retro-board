@@ -69,7 +69,7 @@ function GamePage() {
     reconnect,
   } = useGame(gameId);
 
-  if (status === 'not-connected') {
+  if (status === 'not-connected' || status === 'connecting') {
     return (
       <LoadingContainer>
         <CircularProgress />

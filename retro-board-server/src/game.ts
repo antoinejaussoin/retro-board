@@ -561,6 +561,11 @@ export default (io: Server) => {
                     details: null,
                   });
                 }
+              } else {
+                sendToSelf<WsErrorPayload>(socket, RECEIVE_ERROR, {
+                  type: 'cannot_get_session',
+                  details: null,
+                });
               }
             }
           });
