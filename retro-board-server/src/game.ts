@@ -22,7 +22,12 @@ import { RateLimiterMemory } from 'rate-limiter-flexible';
 import chalk from 'chalk';
 import moment from 'moment';
 import { Server, Socket } from 'socket.io';
-import { setScope, reportQueryError, throttledManualReport } from './sentry';
+import {
+  setScope,
+  reportQueryError,
+  throttledManualReport,
+  manualMessage,
+} from './sentry';
 import { SessionEntity, UserView } from './db/entities';
 import { hasField } from './security/payload-checker';
 import {
@@ -192,6 +197,7 @@ export default (io: Server) => {
         details: null,
         type: errorType,
       });
+      manualMessage(errorType);
     } else {
       sendToAll<T>(socket, sessionId, action, data);
     }

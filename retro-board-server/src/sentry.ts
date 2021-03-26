@@ -16,12 +16,20 @@ export const throttledManualReport = throttle(manualReport, 60000, {
 });
 
 export function manualReport(message: string, request?: Request) {
-  console.log(' ==> reporting to sentry');
-  Sentry.captureEvent({
-    message,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    request: request as any,
-  });
+  if (useSentry) {
+    console.log(' ==> reporting to sentry');
+    Sentry.captureEvent({
+      message,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      request: request as any,
+    });
+  }
+}
+
+export function manualMessage(message: string) {
+  if (useSentry) {
+    Sentry.captureMessage(message, Sentry.Severity.Error);
+  }
 }
 
 export function initSentry() {
