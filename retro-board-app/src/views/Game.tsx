@@ -51,7 +51,7 @@ function GamePage() {
 
   const {
     initialised,
-    disconnected,
+    status,
     onAddPost,
     onMovePost,
     onCombinePost,
@@ -69,7 +69,7 @@ function GamePage() {
     reconnect,
   } = useGame(gameId);
 
-  if (!disconnected && (!session || !initialised)) {
+  if (status === 'not-connected') {
     return (
       <LoadingContainer>
         <CircularProgress />
@@ -81,7 +81,17 @@ function GamePage() {
     return <Unauthorized reason={unauthorized_reason} />;
   }
 
+  // console.log('Session: ', session);
+
   if (!session) {
+    console.log(
+      'not exist: session',
+      session,
+      'status',
+      status,
+      'initialised',
+      initialised
+    );
     return (
       <NoContent
         title="This session does not exist."
@@ -108,7 +118,7 @@ function GamePage() {
           content={window.location.href.replace(hash, '')}
         />
       </Helmet>
-      {disconnected ? (
+      {status === 'disconnected' ? (
         <DisconnectedContainer>
           <DisconnectedTitle>
             <CloudOff

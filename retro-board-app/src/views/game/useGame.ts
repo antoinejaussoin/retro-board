@@ -34,6 +34,12 @@ import {
 import useTranslation from '../../translations/useTranslations';
 import { omit } from 'lodash';
 
+export type Status =
+  | 'not-connected'
+  | 'connecting'
+  | 'connected'
+  | 'disconnected';
+
 const debug = process.env.NODE_ENV === 'development';
 
 function sendFactory(socket: SocketIOClient.Socket, sessionId: string) {
@@ -54,8 +60,7 @@ function sendFactory(socket: SocketIOClient.Socket, sessionId: string) {
 const useGame = (sessionId: string) => {
   const { enqueueSnackbar } = useSnackbar();
   const translations = useTranslation();
-  const [initialised, setInitialised] = useState(false);
-  const [disconnected, setDisconnected] = useState(false);
+  const [status, setStatus] = useState<Status>('not-connected');
   const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null);
   const {
     state,
@@ -79,7 +84,6 @@ const useGame = (sessionId: string) => {
   const { session } = state;
   const user = useUser();
   const userId = user?.id;
-  const [prevUserId, setPrevUserId] = useState(userId);
   const allowMultipleVotes = session
     ? session.options.allowMultipleVotes
     : false;
@@ -90,7 +94,36 @@ const useGame = (sessionId: string) => {
     sessionId,
   ]);
 
-  const reconnect = useCallback(() => setDisconnected(false), []);
+  const reconnect = useCallback(() => {
+    setStatus('not-connected');
+  }, []);
+
+  // console.log(' ==> session', session);
+  // console.log(' ==> status', status);
+  // console.log(' ==> initialised', !!session);
+
+  // Dealing with the socket
+  useEffect(() => {
+    let newSocket: SocketIOClient.Socket | null = null;
+    if (status === 'not-connected') {
+      newSocket = io();
+      setSocket(newSocket);
+    }
+
+    return () => {};
+  }, [status]);
+
+  // Cleaning up the socket
+  useEffect(() => {
+    return () => {
+      if (debug) {
+        console.log('Attempting disconnection');
+      }
+      if (socket) {
+        socket.disconnect();
+      }
+    };
+  }, [socket]);
 
   // This will run on unmount
   useEffect(() => {
@@ -103,29 +136,21 @@ const useGame = (sessionId: string) => {
     };
   }, [resetSession]);
 
-  // Handles re-connection if the user changes (login/logout)
-  useEffect(() => {
-    if (userId !== prevUserId) {
-      if (debug) {
-        console.log('User changed, set disconnected to false');
-      }
-      setDisconnected(false);
-      setPrevUserId(userId);
-    }
-  }, [userId, prevUserId]);
-
   // This effect will run everytime the gameId, the user, or the socket changes.
   // It will close and restart the socket every time.
   useEffect(() => {
-    if (disconnected) {
+    if (status !== 'not-connected') {
       return;
     }
     if (debug) {
       console.log('Initialising Game socket');
     }
-    const newSocket = io();
-    resetSession();
-    setSocket(newSocket);
+    const newSocket = socket;
+    if (!newSocket) {
+      return;
+    }
+
+    newSocket.removeAllListeners();
 
     const send = sendFactory(newSocket, sessionId);
 
@@ -135,14 +160,14 @@ const useGame = (sessionId: string) => {
         console.warn('Server disconnected');
       }
       trackEvent('game/session/disconnect');
-      setDisconnected(true);
+      setStatus('disconnected');
     });
 
     newSocket.on('connect', () => {
       if (debug) {
         console.log('Connected to the socket');
       }
-      setInitialised(true);
+      setStatus('connecting');
       send<void>(Actions.JOIN_SESSION);
       trackAction(Actions.JOIN_SESSION);
     });
@@ -165,6 +190,7 @@ const useGame = (sessionId: string) => {
       if (debug) {
         console.log('Receive entire board: ', posts);
       }
+      setStatus('connected');
       receiveBoard(posts);
     });
 
@@ -272,16 +298,9 @@ const useGame = (sessionId: string) => {
         { variant: 'error', title: 'Rate Limit Error' }
       );
     });
-
-    return () => {
-      if (debug) {
-        console.log('Attempting disconnection');
-      }
-      if (newSocket) {
-        newSocket.disconnect();
-      }
-    };
   }, [
+    socket,
+    status,
     userId,
     sessionId,
     resetSession,
@@ -299,7 +318,6 @@ const useGame = (sessionId: string) => {
     renameSession,
     lockSession,
     unauthorized,
-    disconnected,
     enqueueSnackbar,
     translations,
   ]);
@@ -307,6 +325,7 @@ const useGame = (sessionId: string) => {
   const [previousParticipans, setPreviousParticipants] = useState(
     state.players
   );
+
   useEffect(() => {
     if (userId && previousParticipans !== state.players) {
       const added = getAddedParticipants(
@@ -591,8 +610,8 @@ const useGame = (sessionId: string) => {
   );
 
   return {
-    initialised,
-    disconnected,
+    initialised: !!session,
+    status,
     onAddPost,
     onAddGroup,
     onEditPost,

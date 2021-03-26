@@ -156,6 +156,12 @@ export default function reducer(state: State, action: Action): State {
         },
       };
     case RECEIVE_BOARD:
+      // console.log(
+      //   'Received board, before: ',
+      //   state.session,
+      //   ', after: ',
+      //   action.payload
+      // );
       return {
         ...state,
         session: action.payload,
@@ -172,6 +178,12 @@ export default function reducer(state: State, action: Action): State {
         },
       };
     case RESET_SESSION:
+      // console.log(
+      //   'reset session, before: ',
+      //   state.session,
+      //   ', after: ',
+      //   action.payload
+      // );
       return {
         ...state,
         session: null,
