@@ -17,7 +17,6 @@ import {
   Session,
   SessionOptions,
   WsErrorPayload,
-  VoteExtract,
 } from '@retrospected/common';
 import { RateLimiterMemory } from 'rate-limiter-flexible';
 import chalk from 'chalk';
@@ -373,12 +372,7 @@ export default (io: Server) => {
     data: WsLikeUpdatePayload,
     socket: ExtendedSocket
   ) => {
-    let vote: VoteExtract | null; // NEED TO REMOVE THIS!!
-    if (Math.random() < 0.5 && data.type === 'dislike') {
-      vote = await registerVote(userId, sessionId, data.postId, data.type);
-    } else {
-      vote = null;
-    }
+    const vote = await registerVote(userId, sessionId, data.postId, data.type);
 
     sendToAllOrError<WsReceiveLikeUpdatePayload>(
       socket,
@@ -542,23 +536,30 @@ export default (io: Server) => {
           await rateLimiter.consume(sid);
           setScope(async (scope) => {
             if (scope) {
-              scope.setUser({ id: userId, ip_address: ip });
+              scope.setUser({ id: userId });
               scope.setExtra('action', action.type);
               scope.setExtra('session', sid);
             }
             if (sid) {
-              const exists = await doesSessionExists(sid); // might be removed
+              const exists = await doesSessionExists(sid);
               if (exists) {
                 try {
                   if (action.onlyAuthor) {
                     if (!(await wasSessionCreatedBy(sid, userId))) {
-                      return; // TODO: return error
+                      sendToSelf<WsErrorPayload>(socket, RECEIVE_ERROR, {
+                        type: 'action_unauthorised',
+                        details: null,
+                      });
+                      return;
                     }
                   }
                   await action.handler(userId, sid, data.payload, socket);
                 } catch (err) {
                   reportQueryError(scope, err);
-                  // TODO: send error to UI
+                  sendToSelf<WsErrorPayload>(socket, RECEIVE_ERROR, {
+                    type: 'unknown_error',
+                    details: null,
+                  });
                 }
               }
             }

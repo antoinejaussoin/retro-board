@@ -54,6 +54,7 @@ export type WsErrorType =
   | 'cannot_delete_post'
   | 'cannot_delete_group'
   | 'cannot_rename_session'
+  | 'unknown_error'
   | 'action_unauthorised';
 
 export interface WsErrorPayload {
