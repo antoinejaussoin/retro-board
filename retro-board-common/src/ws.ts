@@ -7,6 +7,12 @@ import {
   VoteType,
 } from './types';
 
+export interface WebsocketMessage<T> {
+  payload: T;
+  sessionId: string;
+  ack: string;
+}
+
 export interface WsUserData {
   user: User;
 }

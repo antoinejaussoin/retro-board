@@ -1,4 +1,5 @@
 export default {
+  ACK: 'retrospected/ack',
   ADD_POST_SUCCESS: 'retrospected/posts/add/success',
   DELETE_POST: 'retrospected/posts/delete',
   EDIT_POST: 'retrospected/posts/edit',

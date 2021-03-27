@@ -17,6 +17,7 @@ import {
   VoteExtract,
   WsReceiveLikeUpdatePayload,
   WsErrorPayload,
+  WebsocketMessage,
 } from '@retrospected/common';
 import { v4 } from 'uuid';
 import find from 'lodash/find';
@@ -57,8 +58,9 @@ const debug = process.env.NODE_ENV === 'development';
 function sendFactory(socket: SocketIOClient.Socket, sessionId: string) {
   return function <T>(action: string, payload?: T) {
     if (socket) {
-      const messagePayload = {
-        sessionId: sessionId,
+      const messagePayload: WebsocketMessage<T | undefined> = {
+        sessionId,
+        ack: v4(),
         payload,
       };
       if (debug) {
