@@ -34,6 +34,7 @@ import {
 } from './participants-notifiers';
 import useTranslation from '../../translations/useTranslations';
 import { omit } from 'lodash';
+import { AckItem } from './types';
 
 export type Status =
   /**
@@ -55,7 +56,11 @@ export type Status =
 
 const debug = process.env.NODE_ENV === 'development';
 
-function sendFactory(socket: SocketIOClient.Socket, sessionId: string) {
+function sendFactory(
+  socket: SocketIOClient.Socket,
+  sessionId: string,
+  setAcks?: React.Dispatch<React.SetStateAction<AckItem[]>>
+) {
   return function <T>(action: string, payload?: T) {
     if (socket) {
       const messagePayload: WebsocketMessage<T | undefined> = {
@@ -63,6 +68,12 @@ function sendFactory(socket: SocketIOClient.Socket, sessionId: string) {
         ack: v4(),
         payload,
       };
+      if (setAcks) {
+        setAcks((acks) => [
+          ...acks,
+          { ack: messagePayload.ack, requested: new Date() },
+        ]);
+      }
       if (debug) {
         console.info('Sending message to socket', action, messagePayload);
       }
@@ -76,6 +87,7 @@ const useGame = (sessionId: string) => {
   const translations = useTranslation();
   const [status, setStatus] = useState<Status>('not-connected');
   const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null);
+  const [acks, setAcks] = useState<AckItem[]>([]);
   const {
     state,
     receivePost,
@@ -103,12 +115,13 @@ const useGame = (sessionId: string) => {
     : false;
 
   // Send function, built with current socket, user and sessionId
-  const send = useMemo(() => (socket ? sendFactory(socket, sessionId) : null), [
-    socket,
-    sessionId,
-  ]);
+  const send = useMemo(
+    () => (socket ? sendFactory(socket, sessionId, setAcks) : null),
+    [socket, sessionId]
+  );
 
   const reconnect = useCallback(() => {
+    setAcks([]);
     setStatus('not-connected');
   }, []);
 
@@ -178,6 +191,13 @@ const useGame = (sessionId: string) => {
       setStatus('connecting');
       send<void>(Actions.JOIN_SESSION);
       trackAction(Actions.JOIN_SESSION);
+    });
+
+    socket.on(Actions.ACK, (ack: string) => {
+      if (debug) {
+        console.log('Received ACK: ', ack);
+      }
+      setAcks((acks) => acks.filter((a) => a.ack !== ack));
     });
 
     socket.on(Actions.RECEIVE_POST, (post: Post) => {
@@ -623,6 +643,7 @@ const useGame = (sessionId: string) => {
 
   return {
     status,
+    acks,
     onAddPost,
     onAddGroup,
     onEditPost,

@@ -26,6 +26,7 @@ import useCrypto from '../crypto/useCrypto';
 import Unauthorized from './game/Unauthorized';
 import SearchBar from './game/SearchBar';
 import Participants from './game/Participants';
+import AckWarning from './game/AckWarning';
 
 interface RouteParams {
   gameId: string;
@@ -51,6 +52,7 @@ function GamePage() {
 
   const {
     status,
+    acks,
     onAddPost,
     onMovePost,
     onCombinePost,
@@ -145,6 +147,7 @@ function GamePage() {
           </SearchContent>
         </AppBarContent>
       </AppBar>
+      <AckWarning acks={acks} onRefresh={reconnect} />
       <Route
         path={`${match.url}`}
         exact

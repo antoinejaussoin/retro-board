@@ -174,6 +174,8 @@ export type TrackingEvent =
   | 'trial/modal/cancel'
   | 'trial/modal/subscribe'
   | 'trial/modal/open'
+  | 'ack/error'
+  | 'ack/refresh'
   | 'language/change/';
 
 export type ColumnDefinitionType =

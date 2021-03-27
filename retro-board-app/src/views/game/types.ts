@@ -6,3 +6,8 @@ export interface ColumnContent extends ColumnSettings {
   posts: Post[];
   groups: PostGroup[];
 }
+
+export interface AckItem {
+  ack: string;
+  requested: Date;
+}

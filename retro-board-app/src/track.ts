@@ -18,6 +18,15 @@ export const initialiseSentry = () => {
   }
 };
 
+export const recordManualError = (message: string) => {
+  if (config.hasSentry) {
+    Sentry.withScope((scope) => {
+      scope.setLevel(Sentry.Severity.Error);
+      Sentry.captureMessage(message, Sentry.Severity.Error);
+    });
+  }
+};
+
 export const trackAction = (event: string) => {
   if (isGAEnabled()) {
     ReactGA.event({

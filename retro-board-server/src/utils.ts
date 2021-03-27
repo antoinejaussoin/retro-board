@@ -48,3 +48,9 @@ export async function hashPassword(clearTextPassword: string): Promise<string> {
   const hashedPassword = await hash(clearTextPassword, salt);
   return hashedPassword;
 }
+
+export default async function wait(delay = 1000) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, delay);
+  });
+}
