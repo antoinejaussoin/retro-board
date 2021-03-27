@@ -92,11 +92,6 @@ const {
   REQUEST_BOARD,
 } = Actions;
 
-interface ExtendedSocket extends Socket {
-  sessionId: string;
-  userId: string;
-}
-
 interface Users {
   [socketId: string]: UserView | null;
 }
@@ -115,7 +110,7 @@ export default (io: Server) => {
   const getRoom = (sessionId: string) => `board-${sessionId}`;
 
   function sendToAll<T>(
-    socket: ExtendedSocket,
+    socket: Socket,
     sessionId: string,
     action: string,
     data: T
@@ -129,7 +124,7 @@ export default (io: Server) => {
     socket.broadcast.to(getRoom(sessionId)).emit(action, data);
   }
 
-  function sendToSelf<T>(socket: ExtendedSocket, action: string, data: T) {
+  function sendToSelf<T>(socket: Socket, action: string, data: T) {
     console.log(
       chalk`${d()}{green  --> } ${s(action)} {grey ${JSON.stringify(data)}}`
     );
@@ -139,19 +134,21 @@ export default (io: Server) => {
     socket.emit(action, data);
   }
 
-  const sendClientList = (session: SessionEntity, socket: ExtendedSocket) => {
-    const roomId = getRoom(session.id);
-    const allSockets = io.of('/').in(getRoom(session.id)).sockets; // That doesn't actually do what it's supposed to do
+  const sendClientList = async (session: SessionEntity, socket: Socket) => {
+    if (session && socket) {
+      console.log('send client list');
+    }
 
-    if (allSockets) {
-      const sockets = Array.from(allSockets.values());
-      const roomSockets = sockets.filter((s) => s.rooms.has(roomId));
-      const onlineParticipants: Participant[] = roomSockets
+    const roomId = getRoom(session.id);
+    const sockets = Array.from(await io.of('/').in(roomId).allSockets());
+
+    if (sockets) {
+      const onlineParticipants: Participant[] = sockets
         .map((socket, i) =>
-          users[socket.id]
-            ? users[socket.id]!.toJson()
+          users[socket]
+            ? users[socket]!.toJson()
             : {
-                id: socket.id,
+                id: socket,
                 name: `(Spectator #${i})`,
                 photo: null,
                 pro: null,
@@ -178,7 +175,7 @@ export default (io: Server) => {
   const recordUser = (
     session: SessionEntity,
     user: UserView,
-    socket: ExtendedSocket
+    socket: Socket
   ) => {
     const socketId = socket.id;
     if (!users[socketId] || users[socketId]!.id !== user.id) {
@@ -189,7 +186,7 @@ export default (io: Server) => {
   };
 
   function sendToAllOrError<T>(
-    socket: ExtendedSocket,
+    socket: Socket,
     sessionId: string,
     action: string,
     errorType: WsErrorType,
@@ -210,7 +207,7 @@ export default (io: Server) => {
     userId: string,
     sessionId: string,
     post: Post,
-    socket: ExtendedSocket
+    socket: Socket
   ) => {
     const createdPost = await savePost(userId, sessionId, post);
     sendToAllOrError<Post>(
@@ -226,7 +223,7 @@ export default (io: Server) => {
     userId: string,
     sessionId: string,
     group: PostGroup,
-    socket: ExtendedSocket
+    socket: Socket
   ) => {
     const createdGroup = await savePostGroup(userId, sessionId, group);
     sendToAllOrError<PostGroup>(
@@ -246,7 +243,7 @@ export default (io: Server) => {
     _userId: string,
     sessionId: string,
     _payload: undefined,
-    socket: ExtendedSocket
+    socket: Socket
   ) => {
     const session = await getSession(sessionId);
     if (session) {
@@ -263,10 +260,10 @@ export default (io: Server) => {
     userId: string,
     sessionId: string,
     _: WsUserData,
-    socket: ExtendedSocket
+    socket: Socket
   ) => {
     await socket.join(getRoom(sessionId));
-    socket.sessionId = sessionId;
+    socket.data.sessionId = sessionId;
     const user = userId ? await getUserView(userId) : null;
     const sessionEntity = await getSessionWithVisitors(sessionId);
 
@@ -312,7 +309,7 @@ export default (io: Server) => {
     _userId: string,
     sessionId: string,
     data: WsNameData,
-    socket: ExtendedSocket
+    socket: Socket
   ) => {
     const success = await updateName(sessionId, data.name);
     sendToAllOrError<string>(
@@ -328,7 +325,7 @@ export default (io: Server) => {
     _userId: string,
     sessionId: string,
     _data: void,
-    socket: ExtendedSocket
+    socket: Socket
   ) => {
     await socket.leave(getRoom(sessionId));
     const sessionEntity = await getSessionWithVisitors(sessionId);
@@ -341,7 +338,7 @@ export default (io: Server) => {
     userId: string,
     sessionId: string,
     data: WsDeletePostPayload,
-    socket: ExtendedSocket
+    socket: Socket
   ) => {
     const success = await deletePost(userId, sessionId, data.postId);
     sendToAllOrError<WsDeletePostPayload>(
@@ -357,7 +354,7 @@ export default (io: Server) => {
     userId: string,
     sessionId: string,
     data: WsDeleteGroupPayload,
-    socket: ExtendedSocket
+    socket: Socket
   ) => {
     const success = await deletePostGroup(userId, sessionId, data.groupId);
     sendToAllOrError<WsDeleteGroupPayload>(
@@ -373,7 +370,7 @@ export default (io: Server) => {
     userId: string,
     sessionId: string,
     data: WsLikeUpdatePayload,
-    socket: ExtendedSocket
+    socket: Socket
   ) => {
     const vote = await registerVote(userId, sessionId, data.postId, data.type);
 
@@ -395,7 +392,7 @@ export default (io: Server) => {
     _userId: string,
     sessionId: string,
     data: WsPostUpdatePayload,
-    socket: ExtendedSocket
+    socket: Socket
   ) => {
     const persistedPost = await updatePost(sessionId, data.post);
     sendToAllOrError<Post>(
@@ -411,7 +408,7 @@ export default (io: Server) => {
     userId: string,
     sessionId: string,
     data: PostGroup,
-    socket: ExtendedSocket
+    socket: Socket
   ) => {
     const group = await updatePostGroup(userId, sessionId, data);
     sendToAllOrError<PostGroup>(
@@ -427,7 +424,7 @@ export default (io: Server) => {
     _userId: string,
     sessionId: string,
     data: SessionOptions,
-    socket: ExtendedSocket
+    socket: Socket
   ) => {
     const options = await updateOptions(sessionId, data);
     sendToAllOrError<SessionOptions>(
@@ -443,7 +440,7 @@ export default (io: Server) => {
     _userId: string,
     sessionId: string,
     data: ColumnDefinition[],
-    socket: ExtendedSocket
+    socket: Socket
   ) => {
     const columns = await updateColumns(sessionId, data);
     sendToAllOrError<ColumnDefinition[]>(
@@ -459,7 +456,7 @@ export default (io: Server) => {
     userId: string,
     _sessionId: string,
     data: WsSaveTemplatePayload,
-    _socket: ExtendedSocket
+    _socket: Socket
   ) => {
     await saveTemplate(userId, data.columns, data.options);
   };
@@ -468,20 +465,21 @@ export default (io: Server) => {
     _: string,
     sessionId: string,
     locked: boolean,
-    socket: ExtendedSocket
+    socket: Socket
   ) => {
     await toggleSessionLock(sessionId, locked);
     sendToAll<boolean>(socket, sessionId, RECEIVE_LOCK_SESSION, locked);
   };
 
-  io.on('connection', async (socket: ExtendedSocket) => {
+  io.on('connection', async (socket) => {
     const ip =
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (socket.handshake as any).headers['x-forwarded-for'] ||
       socket.handshake.address;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const userId: string = (socket.request as any).session?.passport?.user;
-    socket.userId = userId;
+    socket.data.userId = userId;
+    //    socket.userId = userId;
     console.log(
       d() +
         chalk`{blue Connection: {red New user connected} {grey ${
@@ -494,7 +492,7 @@ export default (io: Server) => {
       sessionId: string,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       data: any,
-      socket: ExtendedSocket
+      socket: Socket
     ) => Promise<void>;
 
     interface Action {
@@ -529,7 +527,9 @@ export default (io: Server) => {
           // await wait(10000); // REMOVE
         }
         const sid =
-          action.type === LEAVE_SESSION ? socket.sessionId : data.sessionId;
+          action.type === LEAVE_SESSION
+            ? socket.data.sessionId
+            : data.sessionId;
 
         sendToSelf(socket, ACK, data.ack);
 
@@ -587,13 +587,15 @@ export default (io: Server) => {
     });
 
     socket.on('disconnect', async () => {
-      if (socket.sessionId) {
+      if (socket.data.sessionId) {
         console.log(
           chalk`${d()}{blue Disconnection: }{red User left} {grey ${
             socket.id
           } ${ip}}`
         );
-        const sessionEntity = await getSessionWithVisitors(socket.sessionId);
+        const sessionEntity = await getSessionWithVisitors(
+          socket.data.sessionId
+        );
         if (sessionEntity) {
           sendClientList(sessionEntity, socket);
         }
