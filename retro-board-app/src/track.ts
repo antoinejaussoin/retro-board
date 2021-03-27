@@ -18,6 +18,14 @@ export const initialiseSentry = () => {
   }
 };
 
+export const setScope = (fn: (scope: Sentry.Scope | null) => void) => {
+  if (config.hasSentry) {
+    Sentry.configureScope(fn);
+  } else {
+    fn(null);
+  }
+};
+
 export const recordManualError = (message: string) => {
   if (config.hasSentry) {
     Sentry.withScope((scope) => {

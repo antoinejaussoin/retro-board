@@ -526,7 +526,7 @@ export default (io: Server) => {
     actions.forEach((action) => {
       socket.on(action.type, async (data: WebsocketMessage<unknown>) => {
         if (action.type === LIKE_SUCCESS) {
-          // await wait(10000); // REMOVE
+          await wait(10000); // REMOVE
         }
         const sid =
           action.type === LEAVE_SESSION ? socket.sessionId : data.sessionId;

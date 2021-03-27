@@ -21,7 +21,7 @@ import {
 } from '@retrospected/common';
 import { v4 } from 'uuid';
 import find from 'lodash/find';
-import { trackAction, trackEvent } from '../../track';
+import { setScope, trackAction, trackEvent } from '../../track';
 import io from 'socket.io-client';
 import useGlobalState from '../../state';
 import useUser from '../../auth/useUser';
@@ -191,6 +191,11 @@ const useGame = (sessionId: string) => {
       setStatus('connecting');
       send<void>(Actions.JOIN_SESSION);
       trackAction(Actions.JOIN_SESSION);
+      setScope((scope) => {
+        if (scope) {
+          scope.setExtra('game', sessionId);
+        }
+      });
     });
 
     socket.on(Actions.ACK, (ack: string) => {
