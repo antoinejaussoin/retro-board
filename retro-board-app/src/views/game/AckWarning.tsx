@@ -2,6 +2,7 @@ import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
 import { useEffect, useState } from 'react';
+import throttle from 'lodash/throttle';
 import { AckItem } from './types';
 import { recordManualError, trackEvent } from '../../track';
 import { useCallback } from 'react';
@@ -13,6 +14,8 @@ interface AckWarningProps {
   acks: AckItem[];
   onRefresh: () => void;
 }
+
+const throttledError = throttle(recordManualError, 10000, { leading: true });
 
 export default function AckWarning({ acks, onRefresh }: AckWarningProps) {
   const [lateAcks, setLateAcks] = useState<AckItem[]>([]);
@@ -29,7 +32,7 @@ export default function AckWarning({ acks, onRefresh }: AckWarningProps) {
   useEffect(() => {
     if (!!lateAcks.length) {
       trackEvent('ack/error');
-      recordManualError('ack_not_received');
+      throttledError('ack_not_received');
     }
   }, [lateAcks]);
 
