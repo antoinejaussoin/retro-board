@@ -1,9 +1,13 @@
-import { Button } from '@material-ui/core';
-import { Alert, AlertTitle } from '@material-ui/lab';
+import Button from '@material-ui/core/Button';
+import Alert from '@material-ui/lab/Alert';
+import AlertTitle from '@material-ui/lab/AlertTitle';
 import { useEffect, useState } from 'react';
 import { AckItem } from './types';
 import { recordManualError, trackEvent } from '../../track';
 import { useCallback } from 'react';
+import styled from 'styled-components';
+import { Autorenew, Check } from '@material-ui/icons';
+import { green, orange } from '@material-ui/core/colors';
 
 interface AckWarningProps {
   acks: AckItem[];
@@ -34,8 +38,20 @@ export default function AckWarning({ acks, onRefresh }: AckWarningProps) {
     onRefresh();
   }, [onRefresh]);
 
+  if (!acks.length) {
+    return (
+      <Container>
+        <Check htmlColor={green[100]} />
+      </Container>
+    );
+  }
+
   if (!lateAcks.length) {
-    return null;
+    return (
+      <Container>
+        <LoopIcon htmlColor={orange[300]} />
+      </Container>
+    );
   }
 
   return (
@@ -47,9 +63,27 @@ export default function AckWarning({ acks, onRefresh }: AckWarningProps) {
         </Button>
       }
     >
-      <AlertTitle>Something went wrong</AlertTitle>
+      <AlertTitle>Something's not quite right 😓</AlertTitle>
       {lateAcks.length} message{lateAcks.length === 1 ? ' was' : 's were'} not
-      received by the server it seems. Reload the session to make sure.
+      received by the server in a timely manner. Please reload the session.
     </Alert>
   );
 }
+
+const Container = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin: 5px;
+  > svg {
+    font-size: 0.9em;
+  }
+`;
+
+const LoopIcon = styled(Autorenew)`
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  animation: spin 4s linear infinite;
+`;
