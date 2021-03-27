@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [v420/ack]
+    branches: [v420/deps]
 
 jobs:
   build:

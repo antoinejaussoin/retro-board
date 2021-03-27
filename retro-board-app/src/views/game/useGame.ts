@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useCallback } from 'react';
+import { useEffect, useMemo, useState, useCallback, useRef } from 'react';
 import {
   Actions,
   Post,
@@ -52,7 +52,11 @@ export type Status =
   /**
    * Disconnected, not planning to re-connect automatically (switch to not-connected for that)
    */
-  | 'disconnected';
+  | 'disconnected'
+  /**
+   * When something happens that requires disconnection
+   */
+  | 'need-to-disconnect';
 
 const debug = process.env.NODE_ENV === 'development';
 
@@ -83,11 +87,14 @@ function sendFactory(
 }
 
 const useGame = (sessionId: string) => {
+  const user = useUser();
+  const userId = user?.id || null;
   const { enqueueSnackbar } = useSnackbar();
   const translations = useTranslation();
   const [status, setStatus] = useState<Status>('not-connected');
   const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null);
   const [acks, setAcks] = useState<AckItem[]>([]);
+  const prevUser = useRef<string | null>(userId);
   const {
     state,
     receivePost,
@@ -108,8 +115,7 @@ const useGame = (sessionId: string) => {
   } = useGlobalState();
 
   const { session } = state;
-  const user = useUser();
-  const userId = user?.id;
+
   const allowMultipleVotes = session
     ? session.options.allowMultipleVotes
     : false;
@@ -137,14 +143,26 @@ const useGame = (sessionId: string) => {
   // Cleaning up the socket
   useEffect(() => {
     return () => {
-      if (debug) {
-        console.log('Attempting disconnection');
-      }
       if (socket) {
+        if (debug) {
+          console.log('Attempting disconnection');
+        }
         socket.disconnect();
       }
     };
   }, [socket]);
+
+  // Disconnect when needed
+  useEffect(() => {
+    if (socket && status === 'need-to-disconnect') {
+      if (debug) {
+        console.log('Disconnecting for need-to-disconnect');
+      }
+      socket.disconnect();
+      resetSession();
+      setStatus('not-connected');
+    }
+  }, [status, socket, resetSession]);
 
   // This will run on unmount
   useEffect(() => {
@@ -156,6 +174,18 @@ const useGame = (sessionId: string) => {
       resetSession();
     };
   }, [resetSession]);
+
+  // This will run on login/logout
+  useEffect(() => {
+    if (userId !== prevUser.current) {
+      if (debug) {
+        console.log('User changed, disconnecting', userId);
+      }
+
+      prevUser.current = userId;
+      setStatus('need-to-disconnect');
+    }
+  }, [userId]);
 
   // This effect will run everytime the gameId, the user, or the socket changes.
   // It will close and restart the socket every time.

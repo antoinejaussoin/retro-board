@@ -135,10 +135,6 @@ export default (io: Server) => {
   }
 
   const sendClientList = async (session: SessionEntity, socket: Socket) => {
-    if (session && socket) {
-      console.log('send client list');
-    }
-
     const roomId = getRoom(session.id);
     const sockets = Array.from(await io.of('/').in(roomId).allSockets());
 
@@ -280,6 +276,8 @@ export default (io: Server) => {
               recordUser(sessionEntity2, user, socket);
             }
           }
+        } else {
+          sendClientList(sessionEntity, socket);
         }
         const session = await getSession(sessionId);
         if (session) {
