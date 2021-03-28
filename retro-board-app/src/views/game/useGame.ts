@@ -24,7 +24,7 @@ import find from 'lodash/find';
 import { setScope, trackAction, trackEvent } from '../../track';
 import io from 'socket.io-client';
 import useGlobalState from '../../state';
-import useUser from '../../auth/useUser';
+import useUser, { useUserMetadata } from '../../auth/useUser';
 import { getMiddle, getNext } from './lexorank';
 import { useSnackbar } from 'notistack';
 import {
@@ -33,8 +33,9 @@ import {
   joinNames,
 } from './participants-notifiers';
 import useTranslation from '../../translations/useTranslations';
-import { omit } from 'lodash';
+import { initial, omit } from 'lodash';
 import { AckItem } from './types';
+import { useWhatChanged } from '@simbathesailor/use-what-changed';
 
 export type Status =
   /**
@@ -87,8 +88,8 @@ function sendFactory(
 }
 
 const useGame = (sessionId: string) => {
-  const user = useUser();
-  const userId = user?.id || null;
+  const { user, initialised: userInitialised } = useUserMetadata();
+  const userId = !user ? user : user.id;
   const { enqueueSnackbar } = useSnackbar();
   const translations = useTranslation();
   const [status, setStatus] = useState<Status>(
@@ -96,7 +97,7 @@ const useGame = (sessionId: string) => {
   );
   const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null);
   const [acks, setAcks] = useState<AckItem[]>([]);
-  const prevUser = useRef<string | null>(userId);
+  const prevUser = useRef<string | null | undefined>(undefined);
   const {
     state,
     receivePost,
@@ -122,6 +123,8 @@ const useGame = (sessionId: string) => {
     ? session.options.allowMultipleVotes
     : false;
 
+  useWhatChanged([prevUser.current, userId, userInitialised]);
+
   // Send function, built with current socket, user and sessionId
   const send = useMemo(
     () => (socket ? sendFactory(socket, sessionId, setAcks) : null),
@@ -136,18 +139,19 @@ const useGame = (sessionId: string) => {
   // Creating the socket
   useEffect(() => {
     let newSocket: SocketIOClient.Socket | null = null;
-    if (status === 'not-connected') {
+    if (status === 'not-connected' && userInitialised) {
       newSocket = io();
       setSocket(newSocket);
+      setStatus('connecting');
     }
-  }, [status]);
+  }, [status, userInitialised]);
 
   // Cleaning up the socket
   useEffect(() => {
     return () => {
       if (socket) {
         if (debug) {
-          console.log('Attempting disconnection');
+          console.log('Attempting disconnection ', socket);
         }
         socket.disconnect();
       }
@@ -162,9 +166,11 @@ const useGame = (sessionId: string) => {
       }
       socket.disconnect();
       resetSession();
-      setStatus('not-connected');
+      if (userInitialised) {
+        setStatus('not-connected');
+      }
     }
-  }, [status, socket, resetSession]);
+  }, [status, socket, resetSession, userInitialised]);
 
   // This will run on unmount
   useEffect(() => {
@@ -179,20 +185,23 @@ const useGame = (sessionId: string) => {
 
   // This will run on login/logout
   useEffect(() => {
-    if (userId !== prevUser.current) {
+    if (userInitialised && prevUser.current === undefined) {
+      console.log('User initialised, setting previous');
+      prevUser.current = userId;
+    }
+    if (userInitialised && userId !== prevUser.current) {
       if (debug) {
         console.log('User changed, disconnecting', userId);
       }
-
       prevUser.current = userId;
       setStatus('need-to-disconnect');
     }
-  }, [userId]);
+  }, [userId, userInitialised]);
 
   // This effect will run everytime the gameId, the user, or the socket changes.
   // It will close and restart the socket every time.
   useEffect(() => {
-    if (status !== 'not-connected') {
+    if (status !== 'connecting') {
       return;
     }
     if (!socket) {
@@ -220,7 +229,7 @@ const useGame = (sessionId: string) => {
       if (debug) {
         console.log('Connected to the socket');
       }
-      setStatus('connecting');
+      // setStatus('connecting');
       send<void>(Actions.JOIN_SESSION);
       trackAction(Actions.JOIN_SESSION);
       setScope((scope) => {
@@ -372,14 +381,14 @@ const useGame = (sessionId: string) => {
       ' ===> ',
       !!socket,
       status,
-      userId,
+      // userId,
       sessionId,
       translations.PostBoard.ideasQuestion
     );
   }, [
     socket,
     status,
-    userId,
+    // userId,
     sessionId,
     translations,
     resetSession,
@@ -399,6 +408,30 @@ const useGame = (sessionId: string) => {
     unauthorized,
     enqueueSnackbar,
   ]);
+
+  // useWhatChanged([
+  //   socket,
+  //   status,
+  //   // userId,
+  //   sessionId,
+  //   translations,
+  //   resetSession,
+  //   receivePost,
+  //   receiveVote,
+  //   receiveBoard,
+  //   setPlayers,
+  //   deletePost,
+  //   updatePost,
+  //   editOptions,
+  //   editColumns,
+  //   receivePostGroup,
+  //   deletePostGroup,
+  //   updatePostGroup,
+  //   renameSession,
+  //   lockSession,
+  //   unauthorized,
+  //   enqueueSnackbar,
+  // ]);
 
   const [previousParticipans, setPreviousParticipants] = useState(
     state.players

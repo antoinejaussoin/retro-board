@@ -2,13 +2,13 @@ import { createContext } from 'react';
 import { FullUser } from '@retrospected/common';
 
 interface UserContextProps {
-  user: FullUser | null | undefined;
+  user: FullUser | null;
   initialised: boolean;
   setUser: (user: FullUser | null) => void;
 }
 
 const UserContext = createContext<UserContextProps>({
-  user: undefined,
+  user: null,
   initialised: false,
   setUser: (_: FullUser | null) => {},
 });

@@ -1801,6 +1801,11 @@
     "@sentry/types" "6.2.3"
     tslib "^1.9.3"
 
+"@simbathesailor/use-what-changed@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@simbathesailor/use-what-changed/-/use-what-changed-1.0.0.tgz#14e29241ccae854211a9cb4e5080f52191398a45"
+  integrity sha512-L4UWzrkIImGNHMzPxYQ26xDHnqRsfaCT1zU6PumR8X55vJiZVEXyS3QGNl9q4Uolv16uT6qu6g7E820dNn58xw==
+
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
