@@ -225,7 +225,6 @@ const useGame = (sessionId: string) => {
       if (debug) {
         console.log('Connected to the socket');
       }
-      // setStatus('connecting');
       send<void>(Actions.JOIN_SESSION);
       trackAction(Actions.JOIN_SESSION);
       setScope((scope) => {
@@ -372,19 +371,9 @@ const useGame = (sessionId: string) => {
         { variant: 'error', title: 'Rate Limit Error' }
       );
     });
-
-    console.warn(
-      ' ===> ',
-      !!socket,
-      status,
-      // userId,
-      sessionId,
-      translations.PostBoard.ideasQuestion
-    );
   }, [
     socket,
     status,
-    // userId,
     sessionId,
     translations,
     resetSession,
@@ -404,30 +393,6 @@ const useGame = (sessionId: string) => {
     unauthorized,
     enqueueSnackbar,
   ]);
-
-  // useWhatChanged([
-  //   socket,
-  //   status,
-  //   // userId,
-  //   sessionId,
-  //   translations,
-  //   resetSession,
-  //   receivePost,
-  //   receiveVote,
-  //   receiveBoard,
-  //   setPlayers,
-  //   deletePost,
-  //   updatePost,
-  //   editOptions,
-  //   editColumns,
-  //   receivePostGroup,
-  //   deletePostGroup,
-  //   updatePostGroup,
-  //   renameSession,
-  //   lockSession,
-  //   unauthorized,
-  //   enqueueSnackbar,
-  // ]);
 
   const [previousParticipans, setPreviousParticipants] = useState(
     state.players
