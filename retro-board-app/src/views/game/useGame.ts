@@ -24,7 +24,7 @@ import find from 'lodash/find';
 import { setScope, trackAction, trackEvent } from '../../track';
 import io from 'socket.io-client';
 import useGlobalState from '../../state';
-import useUser, { useUserMetadata } from '../../auth/useUser';
+import { useUserMetadata } from '../../auth/useUser';
 import { getMiddle, getNext } from './lexorank';
 import { useSnackbar } from 'notistack';
 import {
@@ -33,9 +33,8 @@ import {
   joinNames,
 } from './participants-notifiers';
 import useTranslation from '../../translations/useTranslations';
-import { initial, omit } from 'lodash';
+import { omit } from 'lodash';
 import { AckItem } from './types';
-import { useWhatChanged } from '@simbathesailor/use-what-changed';
 
 export type Status =
   /**
@@ -97,7 +96,7 @@ const useGame = (sessionId: string) => {
   );
   const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null);
   const [acks, setAcks] = useState<AckItem[]>([]);
-  const prevUser = useRef<string | null | undefined>(undefined);
+  const prevUser = useRef<string | null | undefined>(undefined); // Undefined until the user is actually loaded
   const {
     state,
     receivePost,
@@ -122,8 +121,6 @@ const useGame = (sessionId: string) => {
   const allowMultipleVotes = session
     ? session.options.allowMultipleVotes
     : false;
-
-  useWhatChanged([prevUser.current, userId, userInitialised]);
 
   // Send function, built with current socket, user and sessionId
   const send = useMemo(
@@ -186,7 +183,6 @@ const useGame = (sessionId: string) => {
   // This will run on login/logout
   useEffect(() => {
     if (userInitialised && prevUser.current === undefined) {
-      console.log('User initialised, setting previous');
       prevUser.current = userId;
     }
     if (userInitialised && userId !== prevUser.current) {
