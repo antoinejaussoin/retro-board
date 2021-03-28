@@ -91,7 +91,9 @@ const useGame = (sessionId: string) => {
   const userId = user?.id || null;
   const { enqueueSnackbar } = useSnackbar();
   const translations = useTranslation();
-  const [status, setStatus] = useState<Status>('not-connected');
+  const [status, setStatus] = useState<Status>(
+    user === undefined ? 'disconnected' : 'not-connected'
+  );
   const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null);
   const [acks, setAcks] = useState<AckItem[]>([]);
   const prevUser = useRef<string | null>(userId);
@@ -365,11 +367,21 @@ const useGame = (sessionId: string) => {
         { variant: 'error', title: 'Rate Limit Error' }
       );
     });
+
+    console.warn(
+      ' ===> ',
+      !!socket,
+      status,
+      userId,
+      sessionId,
+      translations.PostBoard.ideasQuestion
+    );
   }, [
     socket,
     status,
     userId,
     sessionId,
+    translations,
     resetSession,
     receivePost,
     receiveVote,
@@ -386,7 +398,6 @@ const useGame = (sessionId: string) => {
     lockSession,
     unauthorized,
     enqueueSnackbar,
-    translations,
   ]);
 
   const [previousParticipans, setPreviousParticipants] = useState(

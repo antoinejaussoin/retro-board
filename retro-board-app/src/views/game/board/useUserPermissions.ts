@@ -6,5 +6,5 @@ import useUser from '../../../auth/useUser';
 export function useUserPermissions(post: Post): UserPermissions {
   const { state } = useGlobalState();
   const user = useUser();
-  return permissionLogic(post, state.session, user);
+  return permissionLogic(post, state.session, user || null);
 }
