@@ -151,6 +151,8 @@ When using the Docker deployment, your database runs from a container. But if yo
 - Reduce the number of SQL queries on the backend, simplifying the backend logic
 - (wip) Return an error message to the UI if a Websocket message doesn't succeed
 - Improve websocket reconnection logic
+- Upgrading to Socket.IO 4.0
+- Upgrading dependencies
 
 ### Version 4.1.4 (hotfix)
 

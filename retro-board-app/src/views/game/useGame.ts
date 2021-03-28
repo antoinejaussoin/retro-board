@@ -169,7 +169,7 @@ const useGame = (sessionId: string) => {
     }
   }, [status, socket, resetSession, userInitialised]);
 
-  // This will run on unmount
+  // Disconnecting on unmount
   useEffect(() => {
     return () => {
       if (debug) {
@@ -182,6 +182,7 @@ const useGame = (sessionId: string) => {
 
   // This will run on login/logout
   useEffect(() => {
+    // When user just get initialised for the first time, we set the "prev" value
     if (userInitialised && prevUser.current === undefined) {
       prevUser.current = userId;
     }
@@ -197,10 +198,7 @@ const useGame = (sessionId: string) => {
   // This effect will run everytime the gameId, the user, or the socket changes.
   // It will close and restart the socket every time.
   useEffect(() => {
-    if (status !== 'connecting') {
-      return;
-    }
-    if (!socket) {
+    if (status !== 'connecting' || !socket) {
       return;
     }
 
