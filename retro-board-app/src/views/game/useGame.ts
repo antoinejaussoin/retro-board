@@ -118,6 +118,8 @@ const useGame = (sessionId: string) => {
 
   const { session } = state;
 
+  console.warn(' ==> STATUS', status);
+
   const allowMultipleVotes = session
     ? session.options.allowMultipleVotes
     : false;
