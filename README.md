@@ -143,13 +143,13 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
-### Version 4.2.0 (wip)
+### Version 4.2.0 
 
 - Add a page explaining how local encryption works
 - Re-introducing rate limiting, both for the REST API and the Websocket connections, in Node and Nginx
 - Reduce the quantity of data sent over Websockets (for instance, only sending post ID instead of whole post when voting)
 - Reduce the number of SQL queries on the backend, simplifying the backend logic
-- (wip) Return an error message to the UI if a Websocket message doesn't succeed
+- Return an error message to the UI if a Websocket message doesn't succeed
 - Improve websocket reconnection logic
 - Upgrading to Socket.IO 4.0
 - Upgrading dependencies
