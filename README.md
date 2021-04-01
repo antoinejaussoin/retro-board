@@ -153,6 +153,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 - Improve websocket reconnection logic
 - Upgrading to Socket.IO 4.0
 - Upgrading dependencies
+- 🐛 The participants footer was sometimes hidden by the blur overlay of a post. 👏 Thanks [@Pajinell](https://github.com/Pajinell) for pointing this out. ([#240](https://github.com/antoinejaussoin/retro-board/pull/240))
 
 ### Version 4.1.4 (hotfix)
 
