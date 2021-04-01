@@ -399,7 +399,7 @@ const BlurOverlay = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(255, 255, 255, 0.9);
-  z-index: 100;
+  z-index: 2;
   @supports (backdrop-filter: blur(3px)) {
     background-color: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(3px);

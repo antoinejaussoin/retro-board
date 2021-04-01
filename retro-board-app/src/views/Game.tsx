@@ -232,6 +232,7 @@ const ParticipantContainer = styled.div`
   right: 0px;
   left: 0px;
   padding: 10px;
+  z-index: 3;
   border-top: 1px solid ${grey[300]};
   background-color: white;
 `;
