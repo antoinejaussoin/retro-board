@@ -166,6 +166,7 @@ export type TrackingEvent =
   | 'game/session/edit-columns'
   | 'game/session/reset'
   | 'game/session/disconnect'
+  | 'game/session/unexpected-disconnection'
   | 'game/post/giphy/open'
   | 'game/post/giphy/choose'
   | 'game/post/giphy/toggle'

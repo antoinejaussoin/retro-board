@@ -35,6 +35,7 @@ import {
 import useTranslation from '../../translations/useTranslations';
 import { omit } from 'lodash';
 import { AckItem } from './types';
+import useMutableRead from '../../hooks/useMutableRead';
 
 export type Status =
   /**
@@ -94,6 +95,7 @@ const useGame = (sessionId: string) => {
   const [status, setStatus] = useState<Status>(
     user === undefined ? 'disconnected' : 'not-connected'
   );
+  const statusValue = useMutableRead(status);
   const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null);
   const [acks, setAcks] = useState<AckItem[]>([]);
   const prevUser = useRef<string | null | undefined>(undefined); // Undefined until the user is actually loaded
@@ -150,10 +152,12 @@ const useGame = (sessionId: string) => {
         if (debug) {
           console.log('Attempting disconnection ', socket);
         }
+        statusValue.current = 'need-to-disconnect';
+        resetSession();
         socket.disconnect();
       }
     };
-  }, [socket]);
+  }, [socket, resetSession, statusValue]);
 
   // Disconnect when needed
   useEffect(() => {
@@ -173,10 +177,10 @@ const useGame = (sessionId: string) => {
   useEffect(() => {
     return () => {
       if (debug) {
-        console.log('Reset session');
+        console.log('Unmount');
       }
-      trackEvent('game/session/reset');
-      resetSession();
+
+      // trackEvent('game/session/reset');
     };
   }, [resetSession]);
 
@@ -213,9 +217,14 @@ const useGame = (sessionId: string) => {
     // Socket events listeners
     socket.on('disconnect', () => {
       if (debug) {
-        console.warn('Server disconnected');
+        console.warn('Server disconnected ', statusValue.current);
       }
-      trackEvent('game/session/disconnect');
+      if (statusValue.current === 'connected') {
+        trackEvent('game/session/unexpected-disconnection');
+        socket.disconnect();
+      } else {
+        trackEvent('game/session/disconnect');
+      }
       setStatus('disconnected');
     });
 
