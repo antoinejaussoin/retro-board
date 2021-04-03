@@ -383,6 +383,7 @@ const useGame = (sessionId: string) => {
     status,
     sessionId,
     translations,
+    statusValue,
     resetSession,
     receivePost,
     receiveVote,
