@@ -154,6 +154,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 - Upgrading to Socket.IO 4.0
 - Upgrading dependencies
 - 🐛 The participants footer was sometimes hidden by the blur overlay of a post. 👏 Thanks [@Pajinell](https://github.com/Pajinell) for pointing this out. ([#240](https://github.com/antoinejaussoin/retro-board/pull/240))
+- 👏 Thanks to [@cindyccook](https://github.com/cindyccook) for pointing  out reliability issues ([#232](https://github.com/antoinejaussoin/retro-board/issues/232)).
 
 ### Version 4.1.4 (hotfix)
 
