@@ -2,7 +2,6 @@ import { useContext, useReducer, createContext, useMemo } from 'react';
 import { State, Action } from './types';
 import reducer from './reducer';
 import {
-  setPlayers,
   receivePost,
   receivePostGroup,
   deletePost,
@@ -21,7 +20,6 @@ import {
 import { FC } from 'react';
 
 export const initialState: State = {
-  players: [],
   session: null,
   unauthorized: false,
 };
@@ -48,7 +46,6 @@ export function useGlobalState() {
   const { state, dispatch } = useContext(Context);
   const actions = useMemo(() => {
     return {
-      setPlayers: setPlayers(dispatch),
       receivePost: receivePost(dispatch),
       receivePostGroup: receivePostGroup(dispatch),
       deletePost: deletePost(dispatch),

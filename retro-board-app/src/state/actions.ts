@@ -4,12 +4,10 @@ import {
   PostGroup,
   SessionOptions,
   ColumnDefinition,
-  Participant,
   AccessErrorType,
   VoteExtract,
 } from '@retrospected/common';
 
-export const SET_PLAYERS = 'retrospected/game/players/set';
 export const RENAME_SESSION = 'retrospected/game/session/rename';
 export const RESET_SESSION = 'retrospected/game/session/reset';
 export const RECEIVE_POST = 'retrospected/game/post/receive';
@@ -36,10 +34,6 @@ export const renameSession = (dispatch: Dispatch) => (name: string) => {
 
 export const resetSession = (dispatch: Dispatch) => () => {
   dispatch(createAction(RESET_SESSION));
-};
-
-export const setPlayers = (dispatch: Dispatch) => (players: Participant[]) => {
-  dispatch(createAction(SET_PLAYERS, players));
 };
 
 export const receivePost = (dispatch: Dispatch) => (post: Post) => {

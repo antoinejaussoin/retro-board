@@ -2,7 +2,6 @@ import 'jest';
 import reducer from '../reducer';
 import { State } from '../types';
 import {
-  SET_PLAYERS,
   DELETE_POST,
   RECEIVE_BOARD,
   RECEIVE_POST,
@@ -30,7 +29,6 @@ describe('Global state reducer', () => {
   let state: State;
   beforeEach(() => {
     state = {
-      players: [],
       unauthorized: false,
       unauthorized_reason: undefined,
       session: {
@@ -49,11 +47,6 @@ describe('Global state reducer', () => {
         options: defaultOptions,
       },
     };
-  });
-
-  it('Should set the players on SET_PLAYERS', () => {
-    state = reducer(state, { type: SET_PLAYERS, payload: ['Alice', 'Bob'] });
-    expect(state.players).toEqual(['Alice', 'Bob']);
   });
 
   it('Should replace all posts on RECEIVE_BOARD', () => {

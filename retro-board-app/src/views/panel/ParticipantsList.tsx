@@ -4,14 +4,13 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Avatar from '../../components/Avatar';
-
 import useTranslations from '../../translations';
-import useGlobalState from '../../state';
 import grey from '@material-ui/core/colors/grey';
+import useParticipants from '../game/useParticipants';
 
 function ParticipantsList() {
   const translations = useTranslations();
-  const { state } = useGlobalState();
+  const { participants } = useParticipants();
 
   return (
     <>
@@ -19,7 +18,7 @@ function ParticipantsList() {
         component="section"
         subheader={<ListSubheader>{translations.Clients.header}</ListSubheader>}
       >
-        {state.players.map((player, index) => (
+        {participants.map((player, index) => (
           <ListItem key={index}>
             <ListItemAvatar>
               <Avatar user={player} online={player.online} />

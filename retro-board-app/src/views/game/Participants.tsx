@@ -1,15 +1,13 @@
 import { AvatarGroup } from '@material-ui/lab';
 import CustomAvatar from '../../components/Avatar';
-import useGlobalState from '../../state';
+import useParticipants from './useParticipants';
 
 function Participants() {
-  const {
-    state: { players },
-  } = useGlobalState();
+  const { participants } = useParticipants();
   return (
     <div>
       <AvatarGroup max={20}>
-        {players
+        {participants
           .filter((u) => u.online)
           .map((user) => {
             return <CustomAvatar user={user} key={user.id} title={user.name} />;

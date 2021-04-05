@@ -1,7 +1,6 @@
 import findIndex from 'lodash/findIndex';
 import { State, Action } from './types';
 import {
-  SET_PLAYERS,
   RECEIVE_POST,
   RECEIVE_POST_GROUP,
   DELETE_POST,
@@ -26,8 +25,6 @@ export default function reducer(state: State, action: Action): State {
         unauthorized: true,
         unauthorized_reason: action.payload,
       };
-    case SET_PLAYERS:
-      return { ...state, players: action.payload };
     case RECEIVE_POST:
       if (!state.session) {
         return state;
