@@ -257,8 +257,8 @@ const useGame = (sessionId: string) => {
       if (debug) {
         console.log('Receive entire board: ', session);
       }
-      setStatus('connected');
       receiveBoard(session);
+      setStatus('connected');
     });
 
     socket.on(Actions.RECEIVE_OPTIONS, (options: SessionOptions) => {
