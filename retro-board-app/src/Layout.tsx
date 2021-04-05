@@ -8,7 +8,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountMenu from './auth/AccountMenu';
-import useGlobalState from './state';
 import useIsCompatibleBrowser from './hooks/useIsCompatibleBrowser';
 import OutdatedBrowser from './components/OutdatedBrowser';
 import useIsInitialised from './auth/useIsInitialised';
@@ -16,6 +15,7 @@ import useUser from './auth/useUser';
 import { HomeOutlined } from '@material-ui/icons';
 import ProPill from './components/ProPill';
 import { CodeSplitLoader } from './CodeSplitLoader';
+import useSidePanel from './views/panel/useSidePanel';
 
 const Home = lazy(() => import('./views/Home' /* webpackChunkName: "home" */));
 const Game = lazy(() => import('./views/Game' /* webpackChunkName: "game" */));
@@ -81,7 +81,7 @@ const Title = styled(Typography)`
 function App() {
   const history = useHistory();
   const isCompatible = useIsCompatibleBrowser();
-  const { togglePanel } = useGlobalState();
+  const { toggle: togglePanel } = useSidePanel();
   const isInitialised = useIsInitialised();
   const user = useUser();
   const goToHome = useCallback(() => history.push('/'), [history]);

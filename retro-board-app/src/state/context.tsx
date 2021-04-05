@@ -2,7 +2,6 @@ import { useContext, useReducer, createContext, useMemo } from 'react';
 import { State, Action } from './types';
 import reducer from './reducer';
 import {
-  togglePanel,
   setPlayers,
   receivePost,
   receivePostGroup,
@@ -50,7 +49,6 @@ export function useGlobalState() {
   const { state, dispatch } = useContext(Context);
   const actions = useMemo(() => {
     return {
-      togglePanel: togglePanel(dispatch),
       setPlayers: setPlayers(dispatch),
       receivePost: receivePost(dispatch),
       receivePostGroup: receivePostGroup(dispatch),

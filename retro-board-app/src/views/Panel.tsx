@@ -6,10 +6,10 @@ import Drawer from '@material-ui/core/Drawer';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import { LanguageContext } from '../translations';
-import useGlobalState from '../state';
 import LanguagePicker from '../components/LanguagePicker';
 import ParticipantsList from './panel/ParticipantsList';
 import config from '../utils/getConfig';
+import useSidePanel from './panel/useSidePanel';
 
 interface Policy {
   name: string;
@@ -26,10 +26,10 @@ const policies: Policy[] = [
 
 function Panel() {
   const languageContext = useContext(LanguageContext);
-  const { state, togglePanel } = useGlobalState();
+  const { opened, toggle } = useSidePanel();
 
   return (
-    <Drawer open={state.panelOpen} onClose={togglePanel}>
+    <Drawer open={opened} onClose={toggle}>
       <DrawerContent>
         <Top>
           <LanguagePicker

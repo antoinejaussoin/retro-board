@@ -9,7 +9,6 @@ import {
   VoteExtract,
 } from '@retrospected/common';
 
-export const TOGGLE_PANEL = 'retrospected/panel/toggle';
 export const SET_PLAYERS = 'retrospected/game/players/set';
 export const RENAME_SESSION = 'retrospected/game/session/rename';
 export const RESET_SESSION = 'retrospected/game/session/reset';
@@ -30,10 +29,6 @@ const createAction = (type: string, payload?: any) => ({
   type,
   payload,
 });
-
-export const togglePanel = (dispatch: Dispatch) => () => {
-  dispatch(createAction(TOGGLE_PANEL));
-};
 
 export const renameSession = (dispatch: Dispatch) => (name: string) => {
   dispatch(createAction(RENAME_SESSION, name));
