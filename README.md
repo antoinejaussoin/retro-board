@@ -143,6 +143,11 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
+### Version 4.2.1
+
+- Search now also works with the author's name, if the author is displayed. 👏 Thanks [@ayxos](https://github.com/ayxos) for pointing this out. ([#202](https://github.com/antoinejaussoin/retro-board/issues/202))
+- Upgrading dependencies
+
 ### Version 4.2.0 
 
 - Add a page explaining how local encryption works
@@ -153,7 +158,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 - Improve websocket reconnection logic
 - Upgrading to Socket.IO 4.0
 - Upgrading dependencies
-- 🐛 The participants footer was sometimes hidden by the blur overlay of a post. 👏 Thanks [@Pajinell](https://github.com/Pajinell) for pointing this out. ([#240](https://github.com/antoinejaussoin/retro-board/pull/240))
+- 🐛 The participants footer was sometimes hidden by the blur overlay of a post. 👏 Thanks [@Pajinell](https://github.com/Pajinell) for pointing this out. ([#240](https://github.com/antoinejaussoin/retro-board/issues/240))
 - 👏 Thanks to [@cindyccook](https://github.com/cindyccook) for pointing  out reliability issues ([#232](https://github.com/antoinejaussoin/retro-board/issues/232)).
 
 ### Version 4.1.4 (hotfix)
