@@ -40,7 +40,7 @@ import { trackEvent } from '../../../../track';
 import useCrypto from '../../../../crypto/useCrypto';
 import { getLorem } from './lorem';
 import useCanDecrypt from '../../../../crypto/useCanDecrypt';
-import isFaded from '../../isFaded';
+import isSearchMatch from '../../is-search-match';
 
 interface PostItemProps {
   index: number;
@@ -140,7 +140,7 @@ const PostItem = ({
     return isBlurred ? generateLoremIpsum(post.content) : decrypt(post.content);
   }, [decrypt, isBlurred, post.content]);
 
-  const faded = isFaded(post.content, search, isBlurred);
+  const faded = !isSearchMatch(post.content, post.user.name, search, isBlurred);
 
   return (
     <>

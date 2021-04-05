@@ -22,7 +22,7 @@ import { calculateSummary } from './calculate-summary';
 import { ColumnStats, ColumnStatsItem, ActionItem } from './types';
 import useTranslation from '../../../translations';
 import useCrypto from '../../../crypto/useCrypto';
-import isFaded from '../isFaded';
+import isSearchMatch from '../is-search-match';
 
 interface SummaryModeProps {
   columns: ColumnContent[];
@@ -122,7 +122,7 @@ interface PostLineProps {
 
 const PostLine = ({ item, search }: PostLineProps) => {
   const { decrypt } = useCrypto();
-  const higlighted = search && !isFaded(item.content, search, false);
+  const higlighted = isSearchMatch(item.content, item.user.name, search, false);
   return (
     <Typography component="div">
       <PostContainer role="listitem">

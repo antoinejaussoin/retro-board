@@ -24,6 +24,7 @@ function postToItem(post: Post): ColumnStatsItem {
   return {
     id: post.id,
     content: post.content,
+    user: post.user,
     type: 'post',
     children: [],
     likes: countVotes(post, 'like'),
@@ -35,6 +36,7 @@ function groupToItem(group: PostGroup): ColumnStatsItem {
   return {
     id: group.id,
     content: group.label,
+    user: group.user,
     type: 'group',
     children: sortBy(group.posts.map(postToItem), sortingFunction),
     likes: countVotesForGroup(group, 'like'),

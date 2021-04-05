@@ -1,3 +1,4 @@
+import { User } from '@sentry/types';
 import { ColumnContent } from '../types';
 
 export interface Stats {
@@ -16,6 +17,7 @@ export interface ColumnStatsItem {
   likes: number;
   dislikes: number;
   content: string;
+  user: User;
   children: ColumnStatsItem[];
 }
 
