@@ -9,6 +9,7 @@ import {
 } from 'react-beautiful-dnd';
 import UserContext from '../auth/Context';
 import useSession from '../views/game/useSession';
+import { RecoilRoot } from 'recoil';
 
 const initialSession: Session = {
   id: 'test-session',
@@ -37,7 +38,15 @@ const initialSession: Session = {
   },
 };
 
-const AllTheProviders: React.FC = ({ children }) => {
+export const AllTheProviders: React.FC = ({ children }) => {
+  return (
+    <RecoilRoot>
+      <Inner>{children}</Inner>
+    </RecoilRoot>
+  );
+};
+
+const Inner: React.FC = ({ children }) => {
   const { receiveBoard } = useSession();
   const [user, setUser] = useState<FullUser | null>({
     id: 'John Doe',

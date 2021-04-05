@@ -1,0 +1,159 @@
+// import 'jest';
+// import reducer from '../reducer';
+// import { State } from '../types';
+// import {
+//   DELETE_POST,
+//   RECEIVE_BOARD,
+//   RECEIVE_POST,
+//   RENAME_SESSION,
+//   RESET_SESSION,
+//   UPDATE_POST,
+// } from '../actions';
+// import { Post, defaultOptions } from '@retrospected/common';
+
+// function post(id: string): Post {
+//   return {
+//     id,
+//     content: 'foo',
+//     votes: [],
+//     action: '',
+//     column: 0,
+//     giphy: null,
+//     group: null,
+//     rank: '0',
+//     user: { id: '1', name: 'danièle', photo: 'bl' },
+//   };
+// }
+
+// describe('Global state reducer', () => {
+//   let state: State;
+//   beforeEach(() => {
+//     state = {
+//       unauthorized: false,
+//       unauthorized_reason: undefined,
+//       session: {
+//         id: '1',
+//         name: '',
+//         columns: [],
+//         posts: [],
+//         createdBy: {
+//           id: 'foo',
+//           name: 'Bar',
+//           photo: '',
+//         },
+//         encrypted: null,
+//         groups: [],
+//         locked: false,
+//         options: defaultOptions,
+//       },
+//     };
+//   });
+
+//   it('Should replace all posts on RECEIVE_BOARD', () => {
+//     state = {
+//       ...state,
+//       session: {
+//         ...state.session!,
+//         posts: [post('1')],
+//       },
+//     };
+//     state = reducer(state, {
+//       type: RECEIVE_BOARD,
+//       payload: {
+//         ...state.session,
+//         posts: [post('2'), post('3')],
+//       },
+//     });
+//     expect(state.session!.posts).toEqual([post('2'), post('3')]);
+//   });
+
+//   it('Should delete the correct post on DELETE_POST', () => {
+//     state = {
+//       ...state,
+//       session: {
+//         ...state.session!,
+//         posts: [post('1'), post('2'), post('3')],
+//       },
+//     };
+//     state = reducer(state, {
+//       type: DELETE_POST,
+//       payload: '2',
+//     });
+//     expect(state.session!.posts).toEqual([post('1'), post('3')]);
+//   });
+
+//   it('Should replace the correct post on UPDATE_POST', () => {
+//     state = {
+//       ...state,
+//       session: {
+//         ...state.session!,
+//         posts: [post('1'), post('2'), post('3')],
+//       },
+//     };
+//     const editedPost = post('2');
+//     editedPost.content = 'bar';
+//     state = reducer(state, {
+//       type: UPDATE_POST,
+//       payload: editedPost,
+//     });
+//     expect(state.session!.posts[0].content).toBe('foo');
+//     expect(state.session!.posts[1].content).toBe('bar');
+//     expect(state.session!.posts[2].content).toBe('foo');
+//   });
+
+//   it('Should add the post to the end of the list on RECEIVE_POST', () => {
+//     state = {
+//       ...state,
+//       session: {
+//         ...state.session!,
+//         posts: [post('1'), post('2'), post('3')],
+//       },
+//     };
+//     state = reducer(state, {
+//       type: RECEIVE_POST,
+//       payload: post('4'),
+//     });
+//     expect(state.session!.posts).toHaveLength(4);
+//     expect(state.session!.posts[3].id).toBe('4');
+//   });
+
+//   it('Should rename the session on RENAME_SESSION', () => {
+//     state = {
+//       ...state,
+//       session: {
+//         ...state.session!,
+//         name: 'foo',
+//       },
+//     };
+//     state = reducer(state, {
+//       type: RENAME_SESSION,
+//       payload: 'bar',
+//     });
+//     expect(state.session!.name).toBe('bar');
+//   });
+
+//   it('Should reset the session on RESET_SESSION', () => {
+//     state = {
+//       ...state,
+//       session: {
+//         name: 'foo',
+//         id: '1234',
+//         columns: [],
+//         posts: [post('1'), post('2'), post('3')],
+//         createdBy: {
+//           id: 'foo',
+//           name: 'Bar',
+//           photo: '',
+//         },
+//         encrypted: null,
+//         groups: [],
+//         locked: false,
+//         options: defaultOptions,
+//       },
+//     };
+//     state = reducer(state, {
+//       type: RESET_SESSION,
+//     });
+//     expect(state.session).toBe(null);
+//   });
+// });

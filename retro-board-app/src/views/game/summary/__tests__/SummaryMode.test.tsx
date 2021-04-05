@@ -76,20 +76,26 @@ const data: ColumnContent[] = [
 
 describe('SummaryMode', () => {
   it('Should display all columns', () => {
-    const { getAllByRole } = renderWithRouter(<SummaryMode columns={data} />);
+    const { getAllByRole } = renderWithRouter(
+      <SummaryMode columns={data} search="" />
+    );
     const sections = getAllByRole('list');
     expect(sections).toHaveLength(2);
   });
 
   it('Should display all lines within a given column', () => {
-    const container = renderWithRouter(<SummaryMode columns={data} />);
+    const container = renderWithRouter(
+      <SummaryMode columns={data} search="" />
+    );
     const firstSection = container.getAllByRole('list')[0];
     const lines = getAllByRole(firstSection, 'listitem');
     expect(lines).toHaveLength(5);
   });
 
   it('Should display all lines ordered by votes', () => {
-    const container = renderWithRouter(<SummaryMode columns={data} />);
+    const container = renderWithRouter(
+      <SummaryMode columns={data} search="" />
+    );
     const firstSection = container.getAllByRole('list')[0];
     const lines = getAllByRole(firstSection, 'listitem');
     const texts = lines.map(

@@ -1,13 +1,4 @@
-import { Session, IconName, ColumnDefinitionType } from '@retrospected/common';
-
-export interface Action {
-  type: string;
-  payload?: any;
-}
-
-export interface State {
-  session: Session | null;
-}
+import { IconName, ColumnDefinitionType } from '@retrospected/common';
 
 export interface ColumnSettings {
   color: string;
@@ -27,5 +18,3 @@ export interface TemplateDefinition {
   type: Template;
   name: string;
 }
-
-export type Dispatch = (action: Action) => void;
