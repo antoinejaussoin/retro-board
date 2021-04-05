@@ -100,7 +100,7 @@ const useGame = (sessionId: string) => {
   const statusValue = useMutableRead(status);
   const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null);
   const { participants, updateParticipants } = useParticipants();
-  const { setUnauthorised } = useUnauthorised();
+  const { setUnauthorised, resetUnauthorised } = useUnauthorised();
   const [acks, setAcks] = useState<AckItem[]>([]);
   const prevUser = useRef<string | null | undefined>(undefined); // Undefined until the user is actually loaded
   const {
@@ -157,9 +157,10 @@ const useGame = (sessionId: string) => {
         statusValue.current = 'need-to-disconnect';
         resetSession();
         socket.disconnect();
+        resetUnauthorised();
       }
     };
-  }, [socket, resetSession, statusValue]);
+  }, [socket, resetSession, statusValue, resetUnauthorised]);
 
   // Disconnect when needed
   useEffect(() => {
@@ -174,17 +175,6 @@ const useGame = (sessionId: string) => {
       }
     }
   }, [status, socket, resetSession, userInitialised]);
-
-  // Disconnecting on unmount
-  useEffect(() => {
-    return () => {
-      if (debug) {
-        console.log('Unmount');
-      }
-
-      // trackEvent('game/session/reset');
-    };
-  }, [resetSession]);
 
   // This will run on login/logout
   useEffect(() => {

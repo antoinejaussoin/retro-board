@@ -7,6 +7,7 @@ interface UseUnauthorised {
   unauthorised: boolean;
   unauthorisedReason?: AccessErrorType;
   setUnauthorised: (reason?: AccessErrorType) => void;
+  resetUnauthorised: () => void;
 }
 
 export default function useUnauthorised(): UseUnauthorised {
@@ -25,5 +26,15 @@ export default function useUnauthorised(): UseUnauthorised {
     [setUnauthorisedValue, setReason]
   );
 
-  return { unauthorised, unauthorisedReason, setUnauthorised };
+  const resetUnauthorised = useCallback(() => {
+    setUnauthorisedValue(false);
+    setReason(undefined);
+  }, [setUnauthorisedValue, setReason]);
+
+  return {
+    unauthorised,
+    unauthorisedReason,
+    setUnauthorised,
+    resetUnauthorised,
+  };
 }
