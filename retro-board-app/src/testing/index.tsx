@@ -11,7 +11,7 @@ import UserContext from '../auth/Context';
 import useSession from '../views/game/useSession';
 import { RecoilRoot } from 'recoil';
 
-const initialSession: Session = {
+export const initialSession: Session = {
   id: 'test-session',
   name: 'My Retro',
   posts: [],
