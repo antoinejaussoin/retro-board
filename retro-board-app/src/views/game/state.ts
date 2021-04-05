@@ -1,4 +1,4 @@
-import { AccessErrorType, Participant } from '@retrospected/common';
+import { AccessErrorType, Participant, Session } from '@retrospected/common';
 import { atom } from 'recoil';
 
 export const ParticipantsState = atom<Participant[]>({
@@ -14,4 +14,9 @@ export const UnauthorisedState = atom<boolean>({
 export const UnauthorisedReasonState = atom<AccessErrorType | undefined>({
   key: 'ACCESS_ERROR_TYPE',
   default: undefined,
+});
+
+export const SessionState = atom<Session | null>({
+  key: 'SESSION',
+  default: null,
 });
