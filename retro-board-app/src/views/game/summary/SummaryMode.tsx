@@ -18,7 +18,7 @@ import { Palette } from '../../../Theme';
 import useTranslations from '../../../translations';
 import { Page } from '../../../components/Page';
 import SpeedDial from './SpeedDial';
-import { calculateSummary } from './calculate-summary';
+import { useSummary } from './useSummary';
 import { ColumnStats, ColumnStatsItem, ActionItem } from './types';
 import useTranslation from '../../../translations';
 import useCrypto from '../../../crypto/useCrypto';
@@ -122,7 +122,14 @@ interface PostLineProps {
 
 const PostLine = ({ item, search }: PostLineProps) => {
   const { decrypt } = useCrypto();
-  const higlighted = isSearchMatch(item.content, item.user.name, search, false);
+  const higlighted =
+    search &&
+    isSearchMatch(
+      item.content,
+      item.user ? item.user.name : null,
+      search,
+      false
+    );
   return (
     <Typography component="div">
       <PostContainer role="listitem">
@@ -217,9 +224,7 @@ const ActionsList = ({ actions }: ActionsListProps) => {
 };
 
 const SummaryMode = ({ columns, search }: SummaryModeProps) => {
-  const stats = useMemo(() => {
-    return calculateSummary(columns);
-  }, [columns]);
+  const stats = useSummary(columns);
   return (
     <Page>
       <div>

@@ -52,4 +52,10 @@ describe('Search Match logic', () => {
       false
     );
   });
+
+  it('Should NOT be a match if the author is null', () => {
+    expect(isSearchMatch('One little piggy', null, 'John', false)).toBe(false);
+
+    expect(isSearchMatch('One little piggy', null, 'Lenon', false)).toBe(false);
+  });
 });

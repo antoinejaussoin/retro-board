@@ -1,6 +1,6 @@
 export default function isSearchMatch(
   content: string,
-  userName: string,
+  userName: string | null,
   search: string,
   blurred: boolean
 ) {
@@ -13,6 +13,8 @@ export default function isSearchMatch(
 
   return (
     content.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
-    userName.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+    (userName
+      ? userName.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+      : false)
   );
 }

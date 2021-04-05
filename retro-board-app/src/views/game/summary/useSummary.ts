@@ -1,30 +1,53 @@
-import { Post, PostGroup } from '@retrospected/common';
+import { Post, PostGroup, Session, User } from '@retrospected/common';
 import sortBy from 'lodash/sortBy';
 import flattenDeep from 'lodash/flattenDeep';
 import { ColumnContent } from '../types';
 import { ColumnStats, ColumnStatsItem, Stats, ActionItem } from './types';
 import { countVotes, countVotesForGroup } from '../utils';
+import { permissionLogic } from '../board/permissions-logic';
+import { useMemo } from 'react';
+import useGlobalState from '../../../state';
+import useUser from '../../../auth/useUser';
 
-export function calculateSummary(columns: ColumnContent[]): Stats {
-  return {
-    columns: columns.map(calculateColumn),
-    actions: buildActions(columns),
-  };
+export function useSummary(columns: ColumnContent[]): Stats {
+  const { state } = useGlobalState();
+  const user = useUser();
+  const session = state.session;
+
+  const results = useMemo(() => {
+    return {
+      columns: columns.map((c) => calculateColumn(c, user, session)),
+      actions: buildActions(columns),
+    };
+  }, [columns, user, session]);
+
+  return results;
 }
 
-function calculateColumn(column: ColumnContent): ColumnStats {
-  const posts: ColumnStatsItem[] = column.posts.map(postToItem);
+function calculateColumn(
+  column: ColumnContent,
+  user: User | null,
+  session: Session | null
+): ColumnStats {
+  const posts: ColumnStatsItem[] = column.posts.map((p) =>
+    postToItem(p, user, session)
+  );
   const groups: ColumnStatsItem[] = column.groups
     .filter((g) => !!g.posts.length)
-    .map(groupToItem);
+    .map((g) => groupToItem(g, user, session));
   return { items: sortBy([...posts, ...groups], sortingFunction), column };
 }
 
-function postToItem(post: Post): ColumnStatsItem {
+function postToItem(
+  post: Post,
+  user: User | null,
+  session: Session | null
+): ColumnStatsItem {
+  const permissions = permissionLogic(post, session, user);
   return {
     id: post.id,
     content: post.content,
-    user: post.user,
+    user: permissions.canShowAuthor ? post.user : null,
     type: 'post',
     children: [],
     likes: countVotes(post, 'like'),
@@ -32,13 +55,20 @@ function postToItem(post: Post): ColumnStatsItem {
   };
 }
 
-function groupToItem(group: PostGroup): ColumnStatsItem {
+function groupToItem(
+  group: PostGroup,
+  user: User | null,
+  session: Session | null
+): ColumnStatsItem {
   return {
     id: group.id,
     content: group.label,
     user: group.user,
     type: 'group',
-    children: sortBy(group.posts.map(postToItem), sortingFunction),
+    children: sortBy(
+      group.posts.map((p) => postToItem(p, user, session)),
+      sortingFunction
+    ),
     likes: countVotesForGroup(group, 'like'),
     dislikes: countVotesForGroup(group, 'dislike'),
   };

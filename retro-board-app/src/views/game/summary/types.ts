@@ -17,7 +17,7 @@ export interface ColumnStatsItem {
   likes: number;
   dislikes: number;
   content: string;
-  user: User;
+  user: User | null;
   children: ColumnStatsItem[];
 }
 

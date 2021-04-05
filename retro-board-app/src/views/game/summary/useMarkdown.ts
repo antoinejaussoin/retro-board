@@ -6,14 +6,14 @@ import { format } from 'date-fns';
 import useGlobalState from '../../../state';
 import useColumns from '../useColumns';
 import useTranslations from '../../../translations';
-import { calculateSummary } from './calculate-summary';
+import { useSummary } from './useSummary';
 import { ColumnStatsItem, ActionItem } from './types';
 
 export default function useMarkdown() {
   const { state } = useGlobalState();
   const columns = useColumns();
   const translations = useTranslations();
-  const stats = calculateSummary(columns);
+  const stats = useSummary(columns);
 
   const result = useMemo(() => {
     if (!state.session) {

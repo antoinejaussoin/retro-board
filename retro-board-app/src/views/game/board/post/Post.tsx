@@ -140,7 +140,12 @@ const PostItem = ({
     return isBlurred ? generateLoremIpsum(post.content) : decrypt(post.content);
   }, [decrypt, isBlurred, post.content]);
 
-  const faded = !isSearchMatch(post.content, post.user.name, search, isBlurred);
+  const faded = !isSearchMatch(
+    post.content,
+    canShowAuthor ? post.user.name : null,
+    search,
+    isBlurred
+  );
 
   return (
     <>
