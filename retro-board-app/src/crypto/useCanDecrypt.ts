@@ -1,14 +1,14 @@
-import useGlobalState from '../state';
+import useSession from '../views/game/useSession';
 import { CHECK_PREFIX, decrypt } from './crypto';
 import { useEncryptionKey } from './useEncryptionKey';
 
 export default function useCanDecrypt() {
-  const { state } = useGlobalState();
+  const { session } = useSession();
   const [key] = useEncryptionKey();
 
-  if (!state.session || !state.session.encrypted) {
+  if (!session || !session.encrypted) {
     return true;
   }
 
-  return decrypt(state.session.encrypted, key) === CHECK_PREFIX;
+  return decrypt(session.encrypted, key) === CHECK_PREFIX;
 }

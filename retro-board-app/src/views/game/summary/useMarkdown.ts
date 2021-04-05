@@ -3,24 +3,22 @@ import flatten from 'lodash/flatten';
 import sortedUniq from 'lodash/sortedUniq';
 import sortBy from 'lodash/sortBy';
 import { format } from 'date-fns';
-import useGlobalState from '../../../state';
 import useColumns from '../useColumns';
 import useTranslations from '../../../translations';
 import { useSummary } from './useSummary';
 import { ColumnStatsItem, ActionItem } from './types';
+import useSession from '../useSession';
 
 export default function useMarkdown() {
-  const { state } = useGlobalState();
+  const { session } = useSession();
   const columns = useColumns();
   const translations = useTranslations();
   const stats = useSummary(columns);
 
   const result = useMemo(() => {
-    if (!state.session) {
+    if (!session) {
       return '';
     }
-
-    const { session } = state;
 
     const participants = sortedUniq(
       sortBy(
@@ -70,7 +68,7 @@ ${[...col.items].map((i) => toItem(i, 0)).join('\n')}
     });
 
     return md;
-  }, [state, translations.SessionName.defaultSessionName, stats]);
+  }, [session, translations.SessionName.defaultSessionName, stats]);
   return result;
 }
 

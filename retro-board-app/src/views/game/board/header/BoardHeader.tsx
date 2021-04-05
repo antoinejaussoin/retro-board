@@ -4,7 +4,6 @@ import { SessionOptions, ColumnDefinition } from '@retrospected/common';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import useTranslations from '../../../../translations';
-import useGlobalState from '../../../../state';
 import useRemainingVotes from './useRemainingVotes';
 import useCanReveal from './useCanReveal';
 import EditableLabel from '../../../../components/EditableLabel';
@@ -21,6 +20,7 @@ import useShouldDisplayEncryptionWarning from './useShouldDisplayEncryptionWarni
 import TransitionAlert from '../../../../components/TransitionAlert';
 import { useEncryptionKey } from '../../../../crypto/useEncryptionKey';
 import LockSession from './LockSession';
+import useSession from '../../useSession';
 
 interface BoardHeaderProps {
   onRenameSession: (name: string) => void;
@@ -49,7 +49,6 @@ function BoardHeader({
   onLockSession,
   onRenameSession,
 }: BoardHeaderProps) {
-  const { state } = useGlobalState();
   const translations = useTranslations();
   const classes = useStyles();
   const [key] = useEncryptionKey();
@@ -61,16 +60,17 @@ function BoardHeader({
   const { encrypt, decrypt } = useCrypto();
   const canDecrypt = useCanDecrypt();
   const shouldDisplayEncryptionWarning = useShouldDisplayEncryptionWarning();
+  const { session } = useSession();
 
   const handleReveal = useCallback(() => {
-    if (state && state.session) {
+    if (session) {
       const modifiedOptions: SessionOptions = {
-        ...state.session.options,
+        ...session.options,
         blurCards: false,
       };
       onEditOptions(modifiedOptions);
     }
-  }, [onEditOptions, state]);
+  }, [onEditOptions, session]);
 
   const handleRenameSession = useCallback(
     (name: string) => {
@@ -79,7 +79,7 @@ function BoardHeader({
     [onRenameSession, encrypt]
   );
 
-  if (!state.session) {
+  if (!session) {
     return <span>Loading...</span>;
   }
 
@@ -114,7 +114,7 @@ function BoardHeader({
           >
             <EditableLabel
               placeholder={translations.SessionName.defaultSessionName}
-              value={decrypt(state.session.name)}
+              value={decrypt(session.name)}
               centered
               onChange={handleRenameSession}
               readOnly={!isLoggedIn || !canDecrypt}

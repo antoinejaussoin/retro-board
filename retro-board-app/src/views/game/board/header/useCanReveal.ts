@@ -1,14 +1,14 @@
-import useGlobalState from '../../../../state';
 import useUser from '../../../../auth/useUser';
+import useSession from '../../useSession';
 
 export default function useCanReveal(): boolean {
-  const { state } = useGlobalState();
+  const { session } = useSession();
   const user = useUser();
   return (
     (!!user &&
-      state.session &&
-      user.id === state.session.createdBy.id &&
-      state.session.options.blurCards) ||
+      session &&
+      user.id === session.createdBy.id &&
+      session.options.blurCards) ||
     false
   );
 }

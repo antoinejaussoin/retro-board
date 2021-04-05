@@ -6,26 +6,26 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import styled from 'styled-components';
 import { CHECK_PREFIX, decrypt } from '../../../../crypto/crypto';
-import useGlobalState from '../../../../state';
 import { Alert } from '@material-ui/lab';
 import { useEncryptionKey } from '../../../../crypto/useEncryptionKey';
 import { useHistory, useLocation } from 'react-router-dom';
 import deepPurple from '@material-ui/core/colors/deepPurple';
 import useTranslation from '../../../../translations/useTranslations';
+import useSession from '../../useSession';
 
 function EncryptionModal() {
   const [password, setPassword] = useState('');
-  const { state } = useGlobalState();
+  const { session } = useSession();
   const storeKey = useEncryptionKey()[1];
   const history = useHistory();
   const location = useLocation();
   const { Encryption: translations } = useTranslation();
   const isCorrectPassword = useMemo(() => {
-    if (state && state.session && state.session.encrypted) {
-      return decrypt(state.session.encrypted, password) === CHECK_PREFIX;
+    if (session && session.encrypted) {
+      return decrypt(session.encrypted, password) === CHECK_PREFIX;
     }
     return false;
-  }, [password, state]);
+  }, [password, session]);
   const handlePassword = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setPassword(event.target.value);

@@ -1,14 +1,8 @@
-import useGlobalState from '../../../../state';
+import useSession from '../../useSession';
 
 export default function useShouldDisplayEncryptionWarning() {
-  const { state } = useGlobalState();
-
-  if (
-    state &&
-    state.session &&
-    state.session.encrypted &&
-    !state.session.posts.length
-  ) {
+  const { session } = useSession();
+  if (session && session.encrypted && !session.posts.length) {
     return true;
   }
 

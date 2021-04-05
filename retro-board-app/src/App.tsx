@@ -5,7 +5,6 @@ import GlobalStyles from './GlobalStyles';
 import AuthProvider from './auth/AuthProvider';
 import LanguageProvider from './translations/LanguageProvider';
 import theme from './Theme';
-import { Provider as StateContext } from './state';
 import Layout from './Layout';
 import ErrorBoundary from './ErrorBoundary';
 import { SnackbarProvider } from 'notistack';
@@ -41,24 +40,22 @@ function App() {
             <AuthProvider>
               <LanguageProvider>
                 <QuotaManager>
-                  <StateContext>
-                    <GlobalStyles />
-                    <ErrorBoundary>
-                      {!licenced ? (
-                        <Alert title="Unlicenced" severity="error">
-                          <AlertTitle>Retrospected is Unlicenced</AlertTitle>
-                          This software is unlicenced. Please contact{' '}
-                          <a href="mailto:support@retrospected.com">
-                            support@retrospected.com
-                          </a>{' '}
-                          to obtain a licence.
-                        </Alert>
-                      ) : null}
-                      <Suspense fallback={<CodeSplitLoader />}>
-                        <Layout />
-                      </Suspense>
-                    </ErrorBoundary>
-                  </StateContext>
+                  <GlobalStyles />
+                  <ErrorBoundary>
+                    {!licenced ? (
+                      <Alert title="Unlicenced" severity="error">
+                        <AlertTitle>Retrospected is Unlicenced</AlertTitle>
+                        This software is unlicenced. Please contact{' '}
+                        <a href="mailto:support@retrospected.com">
+                          support@retrospected.com
+                        </a>{' '}
+                        to obtain a licence.
+                      </Alert>
+                    ) : null}
+                    <Suspense fallback={<CodeSplitLoader />}>
+                      <Layout />
+                    </Suspense>
+                  </ErrorBoundary>
                 </QuotaManager>
               </LanguageProvider>
             </AuthProvider>

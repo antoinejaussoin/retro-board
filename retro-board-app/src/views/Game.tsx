@@ -15,7 +15,6 @@ import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
 import grey from '@material-ui/core/colors/grey';
 import { Dashboard, List, CloudOff } from '@material-ui/icons';
-import useGlobalState from '../state';
 import useTranslations from '../translations';
 import useGame from './game/useGame';
 import Board from './game/board/Board';
@@ -28,6 +27,7 @@ import SearchBar from './game/SearchBar';
 import Participants from './game/Participants';
 import AckWarning from './game/AckWarning';
 import useUnauthorised from './game/useUnauthorised';
+import useSession from './game/useSession';
 
 interface RouteParams {
   gameId: string;
@@ -40,12 +40,11 @@ function GamePage() {
   const history = useHistory();
   const translations = useTranslations();
   const { gameId } = useParams<RouteParams>();
-  const { state } = useGlobalState();
+  const { session } = useSession();
   const handleChange = useCallback((_, v) => history.push(v), [history]);
   const columns = useColumns();
   const { decrypt } = useCrypto();
   const [search, setSearch] = useState('');
-  const { session } = state;
   const { unauthorised, unauthorisedReason } = useUnauthorised();
   const rootUrl = `${match.url}${hash}`;
   const summaryUrl = `${match.url}/summary${hash}`;

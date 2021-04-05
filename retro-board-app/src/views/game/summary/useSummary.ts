@@ -6,13 +6,12 @@ import { ColumnStats, ColumnStatsItem, Stats, ActionItem } from './types';
 import { countVotes, countVotesForGroup } from '../utils';
 import { permissionLogic } from '../board/permissions-logic';
 import { useMemo } from 'react';
-import useGlobalState from '../../../state';
 import useUser from '../../../auth/useUser';
+import useSession from '../useSession';
 
 export function useSummary(columns: ColumnContent[]): Stats {
-  const { state } = useGlobalState();
+  const { session } = useSession();
   const user = useUser();
-  const session = state.session;
 
   const results = useMemo(() => {
     return {

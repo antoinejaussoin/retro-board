@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 import sortBy from 'lodash/sortBy';
 import useTranslations from '../../translations';
-import useGlobalState from '../../state';
 import { ColumnContent } from './types';
 import { extrapolate } from '../../state/columns';
 import { ColumnDefinition, Post, PostGroup } from '@retrospected/common';
+import useSession from './useSession';
 
 const emptyPosts: Post[] = [];
 const emptyGroups: PostGroup[] = [];
@@ -12,8 +12,7 @@ const emptyCols: ColumnDefinition[] = [];
 
 export default function useColumns() {
   const translations = useTranslations();
-  const { state } = useGlobalState();
-  const { session } = state;
+  const { session } = useSession();
   const posts = session ? session.posts : emptyPosts;
   const groups = session ? session.groups : emptyGroups;
   const cols = session ? session.columns : emptyCols;

@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import useGlobalState from '../state';
+import useSession from '../views/game/useSession';
 import { getStoredEncryptionKey, storeEncryptionKeyLocally } from './crypto';
 
 type UseEncryptionKeyValue = [
@@ -15,8 +15,8 @@ export function useEncryptionKey(
   sessionId: string | null = null
 ): UseEncryptionKeyValue {
   const { hash } = useLocation();
-  const { state } = useGlobalState();
-  const actualSessionId = sessionId || state.session?.id || null;
+  const { session } = useSession();
+  const actualSessionId = sessionId || session?.id || null;
 
   const storeKey = useCallback(
     (key: string) => {

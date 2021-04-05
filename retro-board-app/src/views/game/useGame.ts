@@ -18,12 +18,12 @@ import {
   WsReceiveLikeUpdatePayload,
   WsErrorPayload,
   WebsocketMessage,
+  Session,
 } from '@retrospected/common';
 import { v4 } from 'uuid';
 import find from 'lodash/find';
 import { setScope, trackAction, trackEvent } from '../../track';
 import io from 'socket.io-client';
-import useGlobalState from '../../state';
 import { useUserMetadata } from '../../auth/useUser';
 import { getMiddle, getNext } from './lexorank';
 import { useSnackbar } from 'notistack';
@@ -38,6 +38,7 @@ import { AckItem } from './types';
 import useMutableRead from '../../hooks/useMutableRead';
 import useParticipants from './useParticipants';
 import useUnauthorised from './useUnauthorised';
+import useSession from './useSession';
 
 export type Status =
   /**
@@ -104,7 +105,7 @@ const useGame = (sessionId: string) => {
   const [acks, setAcks] = useState<AckItem[]>([]);
   const prevUser = useRef<string | null | undefined>(undefined); // Undefined until the user is actually loaded
   const {
-    state,
+    session,
     receivePost,
     receivePostGroup,
     receiveBoard,
@@ -118,9 +119,7 @@ const useGame = (sessionId: string) => {
     editOptions,
     editColumns,
     lockSession,
-  } = useGlobalState();
-
-  const { session } = state;
+  } = useSession();
 
   const allowMultipleVotes = session
     ? session.options.allowMultipleVotes
@@ -254,12 +253,12 @@ const useGame = (sessionId: string) => {
       receivePostGroup(group);
     });
 
-    socket.on(Actions.RECEIVE_BOARD, (posts: Post[]) => {
+    socket.on(Actions.RECEIVE_BOARD, (session: Session) => {
       if (debug) {
-        console.log('Receive entire board: ', posts);
+        console.log('Receive entire board: ', session);
       }
       setStatus('connected');
-      receiveBoard(posts);
+      receiveBoard(session);
     });
 
     socket.on(Actions.RECEIVE_OPTIONS, (options: SessionOptions) => {

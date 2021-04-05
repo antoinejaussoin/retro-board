@@ -1,5 +1,4 @@
 import { useState, useCallback } from 'react';
-import useGlobalState from '../../../../state';
 import Button from '@material-ui/core/Button';
 import SessionEditor from '../../../session-editor/SessionEditor';
 import { ColumnSettings } from '../../../../state/types';
@@ -8,6 +7,7 @@ import { toColumnDefinitions } from '../../../../state/columns';
 import { trackEvent } from '../../../../track';
 import { Settings } from '@material-ui/icons';
 import useTranslations from '../../../../translations';
+import useSession from '../../useSession';
 
 interface ModifyOptionsProps {
   onEditOptions: (options: SessionOptions) => void;
@@ -25,7 +25,7 @@ function ModifyOptions({
 }: ModifyOptionsProps) {
   const { Join } = useTranslations();
   const [open, setOpen] = useState(false);
-  const { state } = useGlobalState();
+  const { session } = useSession();
 
   const handleChange = useCallback(
     (
@@ -34,10 +34,10 @@ function ModifyOptions({
       saveAsTemplate: boolean
     ) => {
       setOpen(false);
-      if (!state.session) {
+      if (!session) {
         return;
       }
-      const { options, columns } = state.session;
+      const { options, columns } = session;
       if (options !== updatedOptions) {
         onEditOptions(updatedOptions);
         trackEvent('game/session/edit-options');
@@ -52,14 +52,14 @@ function ModifyOptions({
         trackEvent('custom-modal/template/set-defaut');
       }
     },
-    [onEditOptions, onEditColumns, onSaveTemplate, state.session]
+    [onEditOptions, onEditColumns, onSaveTemplate, session]
   );
 
-  if (!state.session) {
+  if (!session) {
     return null;
   }
 
-  const { options, columns } = state.session;
+  const { options, columns } = session;
 
   return (
     <>

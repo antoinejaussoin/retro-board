@@ -1,10 +1,10 @@
-import useGlobalState from '../../../state';
 import { Post } from '@retrospected/common';
 import { permissionLogic, UserPermissions } from './permissions-logic';
 import useUser from '../../../auth/useUser';
+import useSession from '../useSession';
 
 export function useUserPermissions(post: Post): UserPermissions {
-  const { state } = useGlobalState();
+  const { session } = useSession();
   const user = useUser();
-  return permissionLogic(post, state.session, user);
+  return permissionLogic(post, session, user);
 }

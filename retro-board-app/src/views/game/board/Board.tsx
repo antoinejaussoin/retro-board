@@ -11,7 +11,6 @@ import {
   DropResult,
   ResponderProvided,
 } from 'react-beautiful-dnd';
-import useGlobalState from '../../../state';
 import { getIcon } from '../../../state/icons';
 import Column from './Column';
 import { Page } from '../../../components/Page';
@@ -23,6 +22,7 @@ import {
 } from './moving-logic';
 import { getNext, getMiddle } from '../lexorank';
 import BoardHeader from './header/BoardHeader';
+import useSession from '../useSession';
 
 interface GameModeProps {
   columns: ColumnContent[];
@@ -85,7 +85,7 @@ function GameMode({
   options,
   search,
 }: GameModeProps) {
-  const { state } = useGlobalState();
+  const { session } = useSession();
 
   const handleOnDragEnd = useCallback(
     (result: DropResult, _provided: ResponderProvided) => {
@@ -120,7 +120,7 @@ function GameMode({
     [onMovePost, onCombinePost, columns]
   );
 
-  if (!state.session) {
+  if (!session) {
     return <span>Loading...</span>;
   }
 
