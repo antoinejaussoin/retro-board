@@ -1,9 +1,4 @@
-import {
-  Session,
-  IconName,
-  ColumnDefinitionType,
-  AccessErrorType,
-} from '@retrospected/common';
+import { Session, IconName, ColumnDefinitionType } from '@retrospected/common';
 
 export interface Action {
   type: string;
@@ -12,8 +7,6 @@ export interface Action {
 
 export interface State {
   session: Session | null;
-  unauthorized: boolean;
-  unauthorized_reason?: AccessErrorType;
 }
 
 export interface ColumnSettings {

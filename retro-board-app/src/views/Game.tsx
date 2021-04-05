@@ -27,6 +27,7 @@ import Unauthorized from './game/Unauthorized';
 import SearchBar from './game/SearchBar';
 import Participants from './game/Participants';
 import AckWarning from './game/AckWarning';
+import useUnauthorised from './game/useUnauthorised';
 
 interface RouteParams {
   gameId: string;
@@ -44,7 +45,8 @@ function GamePage() {
   const columns = useColumns();
   const { decrypt } = useCrypto();
   const [search, setSearch] = useState('');
-  const { session, unauthorized, unauthorized_reason } = state;
+  const { session } = state;
+  const { unauthorised, unauthorisedReason } = useUnauthorised();
   const rootUrl = `${match.url}${hash}`;
   const summaryUrl = `${match.url}/summary${hash}`;
 
@@ -78,8 +80,8 @@ function GamePage() {
     );
   }
 
-  if (unauthorized) {
-    return <Unauthorized reason={unauthorized_reason} />;
+  if (unauthorised) {
+    return <Unauthorized reason={unauthorisedReason} />;
   }
 
   if (!session) {

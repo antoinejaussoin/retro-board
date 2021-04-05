@@ -14,17 +14,10 @@ import {
   EDIT_OPTIONS,
   EDIT_COLUMNS,
   LOCK_SESSION,
-  UNAUTHORIZED,
 } from './actions';
 
 export default function reducer(state: State, action: Action): State {
   switch (action.type) {
-    case UNAUTHORIZED:
-      return {
-        ...state,
-        unauthorized: true,
-        unauthorized_reason: action.payload,
-      };
     case RECEIVE_POST:
       if (!state.session) {
         return state;

@@ -37,6 +37,7 @@ import { omit } from 'lodash';
 import { AckItem } from './types';
 import useMutableRead from '../../hooks/useMutableRead';
 import useParticipants from './useParticipants';
+import useUnauthorised from './useUnauthorised';
 
 export type Status =
   /**
@@ -99,6 +100,7 @@ const useGame = (sessionId: string) => {
   const statusValue = useMutableRead(status);
   const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null);
   const { participants, updateParticipants } = useParticipants();
+  const { setUnauthorised } = useUnauthorised();
   const [acks, setAcks] = useState<AckItem[]>([]);
   const prevUser = useRef<string | null | undefined>(undefined); // Undefined until the user is actually loaded
   const {
@@ -116,7 +118,6 @@ const useGame = (sessionId: string) => {
     editOptions,
     editColumns,
     lockSession,
-    unauthorized,
   } = useGlobalState();
 
   const { session } = state;
@@ -355,7 +356,7 @@ const useGame = (sessionId: string) => {
         if (debug) {
           console.log('Receive unauthorized');
         }
-        unauthorized(payload.type);
+        setUnauthorised(payload.type);
       }
     );
 
@@ -399,8 +400,8 @@ const useGame = (sessionId: string) => {
     updatePostGroup,
     renameSession,
     lockSession,
-    unauthorized,
     enqueueSnackbar,
+    setUnauthorised,
   ]);
 
   const [previousParticipans, setPreviousParticipants] = useState(participants);

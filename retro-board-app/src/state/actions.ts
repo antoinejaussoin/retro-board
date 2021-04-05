@@ -4,7 +4,6 @@ import {
   PostGroup,
   SessionOptions,
   ColumnDefinition,
-  AccessErrorType,
   VoteExtract,
 } from '@retrospected/common';
 
@@ -21,7 +20,6 @@ export const RECEIVE_BOARD = 'retrospected/game/board/receive';
 export const EDIT_OPTIONS = 'retrospected/game/options/edit';
 export const EDIT_COLUMNS = 'retrospected/game/columns/edit';
 export const LOCK_SESSION = 'retrospected/game/lock';
-export const UNAUTHORIZED = 'retrospected/game/unauthorized';
 
 const createAction = (type: string, payload?: any) => ({
   type,
@@ -85,10 +83,4 @@ export const editColumns = (dispatch: Dispatch) => (
 
 export const lockSession = (dispatch: Dispatch) => (locked: boolean) => {
   dispatch(createAction(LOCK_SESSION, locked));
-};
-
-export const unauthorized = (dispatch: Dispatch) => (
-  type?: AccessErrorType
-) => {
-  dispatch(createAction(UNAUTHORIZED, type));
 };

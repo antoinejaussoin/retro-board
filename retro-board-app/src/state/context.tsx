@@ -15,13 +15,11 @@ import {
   editOptions,
   editColumns,
   lockSession,
-  unauthorized,
 } from './actions';
 import { FC } from 'react';
 
 export const initialState: State = {
   session: null,
-  unauthorized: false,
 };
 
 const Context = createContext({
@@ -59,7 +57,6 @@ export function useGlobalState() {
       editOptions: editOptions(dispatch),
       editColumns: editColumns(dispatch),
       lockSession: lockSession(dispatch),
-      unauthorized: unauthorized(dispatch),
     };
   }, [dispatch]);
   const globalState = useMemo(() => {
