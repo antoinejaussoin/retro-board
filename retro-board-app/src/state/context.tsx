@@ -21,7 +21,6 @@ import {
 import { FC } from 'react';
 
 export const initialState: State = {
-  panelOpen: false,
   players: [],
   session: null,
   unauthorized: false,

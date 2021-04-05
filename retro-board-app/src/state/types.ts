@@ -12,7 +12,6 @@ export interface Action {
 }
 
 export interface State {
-  panelOpen: boolean;
   players: Participant[];
   session: Session | null;
   unauthorized: boolean;

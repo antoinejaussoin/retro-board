@@ -2,7 +2,6 @@ import 'jest';
 import reducer from '../reducer';
 import { State } from '../types';
 import {
-  TOGGLE_PANEL,
   SET_PLAYERS,
   DELETE_POST,
   RECEIVE_BOARD,
@@ -31,7 +30,6 @@ describe('Global state reducer', () => {
   let state: State;
   beforeEach(() => {
     state = {
-      panelOpen: false,
       players: [],
       unauthorized: false,
       unauthorized_reason: undefined,
@@ -51,14 +49,6 @@ describe('Global state reducer', () => {
         options: defaultOptions,
       },
     };
-  });
-  it('Should toggle the panel on TOGGLE_PANEL', () => {
-    state = reducer(state, { type: TOGGLE_PANEL });
-    expect(state.panelOpen).toBe(true);
-    state = reducer(state, { type: TOGGLE_PANEL });
-    expect(state.panelOpen).toBe(false);
-    state = reducer(state, { type: TOGGLE_PANEL });
-    expect(state.panelOpen).toBe(true);
   });
 
   it('Should set the players on SET_PLAYERS', () => {
