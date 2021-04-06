@@ -21,6 +21,7 @@ import useCrypto from '../../../crypto/useCrypto';
 import useCanDecrypt from '../../../crypto/useCanDecrypt';
 import useIsDisabled from '../../../hooks/useIsDisabled';
 import useQuota from '../../../hooks/useQuota';
+import { deepPurple } from '@material-ui/core/colors';
 
 interface ColumnProps {
   column: ColumnContent;
@@ -71,16 +72,28 @@ const Column: React.FC<ColumnProps> = ({
     (e: React.ChangeEvent<HTMLInputElement>) => setContent(e.target.value),
     [setContent]
   );
-  const onKeyDown = useCallback(
+
+  const handleAdd = useCallback(() => {
+    increment();
+    onAdd(encrypt(content));
+    setContent('');
+  }, [increment, onAdd, setContent, encrypt, content]);
+
+  const handleAddKeyboard = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.code === 'Enter' && content) {
-        increment();
-        onAdd(encrypt(content));
-        setContent('');
+        handleAdd();
       }
     },
-    [onAdd, setContent, content, encrypt, increment]
+    [handleAdd, content]
   );
+
+  const handleAddButton = useCallback(() => {
+    if (content) {
+      handleAdd();
+    }
+  }, [handleAdd, content]);
+
   const isReadOnly = !canDecrypt || !isLoggedIn || isDisabled;
   return (
     <ColumnWrapper>
@@ -89,7 +102,7 @@ const Column: React.FC<ColumnProps> = ({
           placeholder={question}
           onChange={onContentChange}
           value={content}
-          onKeyDown={onKeyDown}
+          onKeyDown={handleAddKeyboard}
           readOnly={isReadOnly}
           startAdornment={
             Icon ? (
@@ -99,9 +112,9 @@ const Column: React.FC<ColumnProps> = ({
             ) : null
           }
           endAdornment={
-            <InputAdornment position="start">
-              <EnterIcon>
-                <SubdirectoryArrowLeft style={{ color: grey[300] }} />
+            <InputAdornment position="end">
+              <EnterIcon onClick={handleAddButton}>
+                <SubdirectoryArrowLeft />
               </EnterIcon>
             </InputAdornment>
           }
@@ -261,6 +274,16 @@ const AddGroup = styled.div`
 const EnterIcon = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
+  > * {
+    color: ${grey[500]};
+  }
+  :hover {
+    > * {
+      color: ${deepPurple[500]};
+    }
+  }
+
   @media (max-width: 600px) {
     display: none;
     visibility: hidden;
