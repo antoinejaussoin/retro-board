@@ -147,7 +147,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 - Search now also works with the author's name, if the author is displayed. 👏 Thanks [@ayxos](https://github.com/ayxos) for pointing this out. ([#202](https://github.com/antoinejaussoin/retro-board/issues/202))
 - Replacing the reducer logic with Recoil for global state management.
-- Adding the possibility of adding a post by clicking on the "return" icon (⮐) instead of hitting "Enter". 👏 Thanks to [@do606](https://github.com/do606) for pointing that Enter doesn't always seem to work ([#246](https://github.com/antoinejaussoin/retro-board/issues/246)).
+- Adding the possibility of creating a post by clicking on the "return" icon (⮐) instead of hitting "Enter". 👏 Thanks to [@do606](https://github.com/do606) for pointing out that Enter doesn't always seem to work ([#246](https://github.com/antoinejaussoin/retro-board/issues/246)).
 - Upgrading dependencies
 
 ### Version 4.2.0 
@@ -161,7 +161,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 - Upgrading to Socket.IO 4.0
 - Upgrading dependencies
 - 🐛 The participants footer was sometimes hidden by the blur overlay of a post. 👏 Thanks [@Pajinell](https://github.com/Pajinell) for pointing this out. ([#240](https://github.com/antoinejaussoin/retro-board/issues/240))
-- 👏 Thanks to [@cindyccook](https://github.com/cindyccook) for pointing  out reliability issues ([#232](https://github.com/antoinejaussoin/retro-board/issues/232)).
+- 👏 Thanks to [@cindyccook](https://github.com/cindyccook) for pointing out reliability issues ([#232](https://github.com/antoinejaussoin/retro-board/issues/232)).
 
 ### Version 4.1.4 (hotfix)
 
