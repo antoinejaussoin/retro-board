@@ -148,6 +148,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 - Search now also works with the author's name, if the author is displayed. 👏 Thanks [@ayxos](https://github.com/ayxos) for pointing this out. ([#202](https://github.com/antoinejaussoin/retro-board/issues/202))
 - Replacing the reducer logic with Recoil for global state management.
 - Adding the possibility of creating a post by clicking on the "return" icon (⮐) instead of hitting "Enter". 👏 Thanks to [@do606](https://github.com/do606) for pointing out that Enter doesn't always seem to work ([#246](https://github.com/antoinejaussoin/retro-board/issues/246)).
+- Re-adding the ability of creating a post by hitting Enter on a numeric pad. 👏 Thanks again to [@do606](https://github.com/do606) for that. 
 - Upgrading dependencies
 
 ### Version 4.2.0 
