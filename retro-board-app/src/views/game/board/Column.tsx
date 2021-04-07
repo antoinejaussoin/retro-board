@@ -81,7 +81,7 @@ const Column: React.FC<ColumnProps> = ({
 
   const handleAddKeyboard = useCallback(
     (e: React.KeyboardEvent) => {
-      if (e.code === 'Enter' && content) {
+      if (isEnter(e.code) && content) {
         handleAdd();
       }
     },
@@ -223,6 +223,10 @@ const Column: React.FC<ColumnProps> = ({
     </ColumnWrapper>
   );
 };
+
+function isEnter(code: string) {
+  return code === 'Enter' || code === 'NumpadEnter';
+}
 
 const ColumnWrapper = styled.div`
   display: flex;
