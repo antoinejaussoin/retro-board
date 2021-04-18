@@ -135,7 +135,7 @@ export default function useSession(): UseSession {
         if (!session) {
           return session;
         }
-        const postIndex = findIndex(session.groups, (p) => p.id === postId);
+        const postIndex = findIndex(session.posts, (p) => p.id === postId);
         const post = session.posts[postIndex];
         if (!post) {
           return session;
