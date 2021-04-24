@@ -413,15 +413,18 @@ db().then(() => {
 
   app.post('/api/self-hosted', heavyLoadLimiter, async (req, res) => {
     const payload = req.body as SelfHostedCheckPayload;
-    console.log('Authentify Self-Hosted server: ', payload);
+    console.log('Attempting to verify self-hosted licence for ', payload.key);
     try {
       const isValid = await checkSelfHostedLicence(payload.key);
       if (isValid) {
+        console.log(' ==> Self hosted licence granted.');
         res.status(200).send(true);
       } else {
+        console.log(' ==> Self hosted licence INVALID.');
         res.status(200).send(false);
       }
     } catch {
+      console.log(' ==> Could not check for self-hosted licence.');
       res.status(500).send('Something went wrong');
     }
   });

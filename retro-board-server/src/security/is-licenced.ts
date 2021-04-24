@@ -22,9 +22,8 @@ export default async function isLicenced() {
     const result = await response.text();
     return result === 'true';
   } else {
-    console.log('Could not contact the licence server');
-    console.log(response.statusText);
-    console.log(response.status);
+    console.error('Could not contact the licence server');
+    console.log(response.status, response.statusText);
   }
   return false;
 }
