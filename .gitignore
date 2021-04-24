@@ -47,3 +47,5 @@ configuration.json
 /docker-compose.yml
 .env
 /db
+
+*.rest

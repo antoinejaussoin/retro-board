@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [v421/recoil]
+    branches: [v430/licence-server]
 
 jobs:
   build:

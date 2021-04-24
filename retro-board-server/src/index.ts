@@ -33,6 +33,7 @@ import {
   ResetPasswordPayload,
   ResetChangePasswordPayload,
   CreateSessionPayload,
+  SelfHostedCheckPayload,
 } from '@retrospected/common';
 import registerUser from './auth/register/register-user';
 import { sendVerificationEmail, sendResetPassword } from './email/emailSender';
@@ -47,17 +48,22 @@ import { updateUser, getUserByUsername, getUserView } from './db/actions/users';
 import isLicenced from './security/is-licenced';
 import rateLimit from 'express-rate-limit';
 import { Cache, inMemoryCache, redisCache } from './cache/cache';
+import { checkSelfHostedLicence } from './db/actions/self-hosting';
 
 const realIpHeader = 'X-Forwarded-For';
+let licenced = false;
 
-if (!isLicenced()) {
-  console.log(chalk`{red ----------------------------------------------- }`);
-  console.log(
-    chalk`⚠️  {red This software is not licenced. Please contact
-support@retrospected.com to get a licence.} ⚠️`
-  );
-  console.log(chalk`{red ----------------------------------------------- }`);
-}
+isLicenced().then((hasLicence) => {
+  licenced = hasLicence;
+  if (!hasLicence) {
+    console.log(chalk`{red ----------------------------------------------- }`);
+    console.log(
+      chalk`⚠️  {red This software is not licenced. Please contact
+  support@retrospected.com to get a licence.} ⚠️`
+    );
+    console.log(chalk`{red ----------------------------------------------- }`);
+  }
+});
 
 initSentry();
 
@@ -370,8 +376,8 @@ db().then(() => {
     res.status(200).send();
   });
 
-  app.get('/api/licenced', async (_, res) => {
-    res.status(200).send(isLicenced());
+  app.get('/api/licenced', (_, res) => {
+    res.status(200).send(licenced);
   });
 
   app.post('/api/reset-password', heavyLoadLimiter, async (req, res) => {
@@ -402,6 +408,21 @@ db().then(() => {
       });
     } else {
       res.status(403).send('Code not valid');
+    }
+  });
+
+  app.post('/api/self-hosted', heavyLoadLimiter, async (req, res) => {
+    const payload = req.body as SelfHostedCheckPayload;
+    console.log('Authentify Self-Hosted server: ', payload);
+    try {
+      const isValid = await checkSelfHostedLicence(payload.key);
+      if (isValid) {
+        res.status(200).send(true);
+      } else {
+        res.status(200).send(false);
+      }
+    } catch {
+      res.status(500).send('Something went wrong');
     }
   });
 

@@ -40,3 +40,7 @@ export interface CreateSessionPayload {
 export interface UnauthorizedAccessPayload {
   type?: AccessErrorType;
 }
+
+export interface SelfHostedCheckPayload {
+  key: string;
+}
