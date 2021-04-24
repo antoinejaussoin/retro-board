@@ -11,19 +11,28 @@ export default async function isLicenced() {
   }
   const licenceKey = config.LICENCE_KEY;
   const payload: SelfHostedCheckPayload = { key: licenceKey };
-  const response = await fetch('https://www.retrospected.com/api/self-hosted', {
-    method: 'POST',
-    body: JSON.stringify(payload),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  if (response.ok) {
-    const result = await response.text();
-    return result === 'true';
-  } else {
+  try {
+    const response = await fetch(
+      'https://www.retrospected.com/api/self-hosted',
+      {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    if (response.ok) {
+      const result = await response.text();
+      return result === 'true';
+    } else {
+      console.error('Could not contact the licence server');
+      console.log(response.status, response.statusText);
+    }
+  } catch (err) {
     console.error('Could not contact the licence server');
-    console.log(response.status, response.statusText);
+    console.log(err);
   }
+
   return false;
 }
