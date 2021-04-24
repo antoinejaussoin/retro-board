@@ -146,6 +146,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 ### Version 4.2.2
 
 - Add a better check for self-hosted licences.
+- Upgrading dependencies
 
 ### Version 4.2.1
 
