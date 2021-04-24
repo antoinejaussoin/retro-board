@@ -18,11 +18,11 @@ export async function checkSelfHostedLicence(key: string): Promise<boolean> {
       return false;
     }
     const user = users[0];
-    return await isKeyValid(user, id);
+    return isKeyValid(user, id);
   });
 }
 
-export async function isKeyValid(user: UserView, id: string) {
+function isKeyValid(user: UserView, id: string) {
   if (user.pro && user.plan === 'unlimited' && user.id === id) {
     return true;
   }
