@@ -143,6 +143,10 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
+### Version 4.2.2
+
+- Add a better check for self-hosted licences.
+
 ### Version 4.2.1
 
 - Search now also works with the author's name, if the author is displayed. 👏 Thanks [@ayxos](https://github.com/ayxos) for pointing this out. ([#202](https://github.com/antoinejaussoin/retro-board/issues/202))
