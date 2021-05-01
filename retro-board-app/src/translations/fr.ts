@@ -147,6 +147,7 @@ export default {
           return 'Une erreur inconnue est survenue';
       }
     },
+    maxPostsReached: `Vous avez atteint le nombre de posts maximum prévu par le modérateur.`,
   },
   GameMenu: {
     board: 'Board', // Si qqn à une suggestion de traduction...

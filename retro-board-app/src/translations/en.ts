@@ -145,6 +145,7 @@ export default {
           return 'An unknown error happened';
       }
     },
+    maxPostsReached: `You have reached the maximum number of posts set by the moderator.`,
   },
   GameMenu: {
     board: 'Board',

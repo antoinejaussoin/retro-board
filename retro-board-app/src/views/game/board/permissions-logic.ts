@@ -4,6 +4,7 @@ import some from 'lodash/some';
 export interface SessionUserPermissions {
   canCreatePost: boolean;
   canCreateGroup: boolean;
+  hasReachedMaxPosts: boolean;
 }
 
 export function sessionPermissionLogic(
@@ -16,19 +17,20 @@ export function sessionPermissionLogic(
     session && user
       ? session.posts.filter((p) => p.user.id === user.id).length
       : 0;
-  const hasReachedLimit =
-    !!session &&
-    session.options.maxPosts &&
-    session.options.maxPosts <= numberOfPosts;
 
+  const hasReachedMaxPosts =
+    !!session &&
+    session.options.maxPosts !== null &&
+    session.options.maxPosts <= numberOfPosts;
   const canCreatePost =
-    !!user && canDecrypt && !userDisabled && !hasReachedLimit;
+    !!user && canDecrypt && !userDisabled && !hasReachedMaxPosts;
   const canCreateGroup =
     canCreatePost && !!session && session.options.allowGrouping;
 
   return {
     canCreatePost,
     canCreateGroup,
+    hasReachedMaxPosts,
   };
 }
 

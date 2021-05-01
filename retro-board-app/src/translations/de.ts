@@ -112,6 +112,7 @@ export default {
     reconnect: undefined,
     notLoggedIn: undefined,
     error: undefined,
+    maxPostsReached: undefined,
   },
   GameMenu: {
     board: undefined,

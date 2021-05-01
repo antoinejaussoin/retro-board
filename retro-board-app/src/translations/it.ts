@@ -115,6 +115,7 @@ export default {
     reconnect: 'Riconnesso',
     notLoggedIn:
       'Non sei autenticato. Puoi assistere a questa sessione come spettatore ma non puoi partecipare',
+    maxPostsReached: undefined,
   },
   GameMenu: {
     board: 'Board',

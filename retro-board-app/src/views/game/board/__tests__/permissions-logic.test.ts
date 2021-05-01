@@ -83,6 +83,7 @@ describe('Session Permission Logic', () => {
     const result = sessionPermissionLogic(s, currentUser, true, false);
     expect(result.canCreatePost).toBe(true);
     expect(result.canCreateGroup).toBe(true);
+    expect(result.hasReachedMaxPosts).toBe(false);
   });
 
   it('When using default rules, with a logged out user (no user)', () => {
@@ -90,6 +91,7 @@ describe('Session Permission Logic', () => {
     const result = sessionPermissionLogic(s, null, true, false);
     expect(result.canCreatePost).toBe(false);
     expect(result.canCreateGroup).toBe(false);
+    expect(result.hasReachedMaxPosts).toBe(false);
   });
 
   it('When using default rules, with a user who doesnt have the encryption key', () => {
@@ -97,6 +99,7 @@ describe('Session Permission Logic', () => {
     const result = sessionPermissionLogic(s, currentUser, false, false);
     expect(result.canCreatePost).toBe(false);
     expect(result.canCreateGroup).toBe(false);
+    expect(result.hasReachedMaxPosts).toBe(false);
   });
 
   it('When using default rules, with a user who is disabled', () => {
@@ -104,6 +107,7 @@ describe('Session Permission Logic', () => {
     const result = sessionPermissionLogic(s, currentUser, true, true);
     expect(result.canCreatePost).toBe(false);
     expect(result.canCreateGroup).toBe(false);
+    expect(result.hasReachedMaxPosts).toBe(false);
   });
 
   it('When using default rules, with a limit of posts but under the limit', () => {
@@ -116,6 +120,7 @@ describe('Session Permission Logic', () => {
     const result = sessionPermissionLogic(s, currentUser, true, false);
     expect(result.canCreatePost).toBe(true);
     expect(result.canCreateGroup).toBe(true);
+    expect(result.hasReachedMaxPosts).toBe(false);
   });
 
   it('When using default rules, with a limit of posts reached', () => {
@@ -128,6 +133,7 @@ describe('Session Permission Logic', () => {
     const result = sessionPermissionLogic(s, currentUser, true, false);
     expect(result.canCreatePost).toBe(false);
     expect(result.canCreateGroup).toBe(false);
+    expect(result.hasReachedMaxPosts).toBe(true);
   });
 
   it('When using default rules, when not allowing grouping', () => {
@@ -135,6 +141,7 @@ describe('Session Permission Logic', () => {
     const result = sessionPermissionLogic(s, currentUser, true, false);
     expect(result.canCreatePost).toBe(true);
     expect(result.canCreateGroup).toBe(false);
+    expect(result.hasReachedMaxPosts).toBe(false);
   });
 });
 

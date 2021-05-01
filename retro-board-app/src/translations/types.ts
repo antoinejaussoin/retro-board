@@ -107,6 +107,7 @@ export interface Translation {
     reconnect?: string;
     notLoggedIn?: string;
     error?: (error: WsErrorType) => string;
+    maxPostsReached?: string;
   };
   GameMenu: {
     board?: string;

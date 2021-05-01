@@ -9,7 +9,7 @@ import useCanReveal from './useCanReveal';
 import EditableLabel from '../../../../components/EditableLabel';
 import RemainingVotes from './RemainingVotes';
 import useUser from '../../../../auth/useUser';
-import { Alert } from '@material-ui/lab';
+import { Alert, AlertTitle } from '@material-ui/lab';
 import RevealButton from './RevealButton';
 import ModifyOptions from './ModifyOptions';
 import useCanModifyOptions from './useCanModifyOptions';
@@ -21,6 +21,8 @@ import TransitionAlert from '../../../../components/TransitionAlert';
 import { useEncryptionKey } from '../../../../crypto/useEncryptionKey';
 import LockSession from './LockSession';
 import useSession from '../../useSession';
+import useSessionUserPermissions from '../useSessionUserPermissions';
+import useIsDisabled from '../../../../hooks/useIsDisabled';
 
 interface BoardHeaderProps {
   onRenameSession: (name: string) => void;
@@ -59,8 +61,10 @@ function BoardHeader({
   const canModifyOptions = useCanModifyOptions();
   const { encrypt, decrypt } = useCrypto();
   const canDecrypt = useCanDecrypt();
+  const isDisabled = useIsDisabled();
   const shouldDisplayEncryptionWarning = useShouldDisplayEncryptionWarning();
   const { session } = useSession();
+  const permissions = useSessionUserPermissions();
 
   const handleReveal = useCallback(() => {
     if (session) {
@@ -92,6 +96,19 @@ function BoardHeader({
       {!canDecrypt ? (
         <Alert severity="error">
           {translations.Encryption.sessionEncryptionError}
+        </Alert>
+      ) : null}
+      {permissions.hasReachedMaxPosts ? (
+        <Alert severity="warning">
+          {translations.PostBoard.maxPostsReached}
+        </Alert>
+      ) : null}
+      {isDisabled ? (
+        <Alert severity="warning">
+          <AlertTitle>
+            {translations.TrialPrompt.allowanceReachedTitle}
+          </AlertTitle>
+          {translations.TrialPrompt.allowanceReachedDescription}
         </Alert>
       ) : null}
 

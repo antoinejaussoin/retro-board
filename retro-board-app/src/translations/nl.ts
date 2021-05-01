@@ -115,6 +115,7 @@ export default {
     reconnect: 'Opnieuw verbinden',
     notLoggedIn:
       'Je bent niet ingelogd. Je kan de sessie bekijken als toeschouwer maar moet inloggen om deel te nemen.',
+    maxPostsReached: undefined,
   },
   GameMenu: {
     board: 'Bord',
