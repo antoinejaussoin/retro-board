@@ -89,7 +89,6 @@ const Column: React.FC<ColumnProps> = ({
     }
   }, [handleAdd, content]);
 
-  // const isReadOnly = !canDecrypt || !isLoggedIn || isDisabled;
   return (
     <ColumnWrapper>
       <Add>
