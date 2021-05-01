@@ -143,6 +143,10 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
+### Version 4.3.0 (unreleased)
+
+- Add the ability to restrict the number of posts per user on a given session (as an option).
+
 ### Version 4.2.2
 
 - Add a better check for self-hosted licences.

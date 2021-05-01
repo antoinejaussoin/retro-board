@@ -1,6 +1,6 @@
 {
   "name": "@retrospected/common",
-  "version": "4.2.2",
+  "version": "4.3.0",
   "license": "GNU GPLv3",
   "private": true,
   "main": "dist/src/index.js",
