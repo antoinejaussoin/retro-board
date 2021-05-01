@@ -26,7 +26,7 @@ COPY --chown=node:node ./frontend/tsconfig.json ./frontend/tsconfig.json
 COPY --chown=node:node ./frontend/.env ./frontend/.env
 COPY --chown=node:node ./common ./common
 
-RUN yarn build-ui
+RUN yarn build-frontend
 
 FROM nginx:alpine
 

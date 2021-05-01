@@ -16,7 +16,7 @@ RUN yarn --network-timeout 1000000 install
 COPY ./backend ./backend
 COPY ./common ./common
 
-RUN yarn build-server
+RUN yarn build-backend
 
 EXPOSE ${BACKEND_PORT}
-CMD [ "yarn", "start-server-production" ]
+CMD [ "yarn", "backend-production" ]

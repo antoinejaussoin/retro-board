@@ -83,15 +83,15 @@ You must have `docker` and `docker-compose` installed on your system.
 
 - Clone this repository
 - Run Postgres, Redis, PGAdmin locally:
-  - `cd ./retro-board/retro-board` (that is the `retro-board` directory within the repository)
+  - `cd ./retro-board` (that is the `retro-board` directory **within** the repository)
   - `docker-compose up -d`
   - `cd ..`
 - `yarn` to install the dependencies (_not_ `npm i`!)
 - `yarn build-common` to build the shared module
 - `yarn migrate` to run the database migrations
-- `yarn start-server` to start the backend
+- `yarn backend` to start the backend
 - Open another terminal
-- `yarn start-ui` on the second terminal to run the UI
+- `yarn frontend` on the second terminal to run the frontend
 - Open your browser on [http://localhost:3000](http://localhost:3000)
 
 ## How to run for Production using Docker 🐳
