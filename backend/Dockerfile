@@ -8,13 +8,13 @@ WORKDIR /usr/src/backend
 
 COPY ./yarn.lock ./
 COPY ./package.json ./
-COPY ./retro-board-server/package.json ./retro-board-server/
-COPY ./retro-board-common/package.json ./retro-board-common/
+COPY ./backend/package.json ./backend/
+COPY ./common/package.json ./common/
 
 RUN yarn --network-timeout 1000000 install
 
-COPY ./retro-board-server ./retro-board-server
-COPY ./retro-board-common ./retro-board-common
+COPY ./backend ./backend
+COPY ./common ./common
 
 RUN yarn build-server
 

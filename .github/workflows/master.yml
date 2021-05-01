@@ -41,7 +41,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           builder: ${{ steps.buildx.outputs.name }}
-          file: retro-board-server/Dockerfile
+          file: backend/Dockerfile
           context: .
           tags: antoinejaussoin/retro-board-backend:latest,antoinejaussoin/retro-board-backend:${{ steps.package.outputs.content }}
           platforms: linux/amd64,linux/arm64,linux/arm/v7
@@ -51,7 +51,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           builder: ${{ steps.buildx.outputs.name }}
-          file: retro-board-app/Dockerfile
+          file: frontend/Dockerfile
           context: .
           tags: antoinejaussoin/retro-board-frontend:latest,antoinejaussoin/retro-board-frontend:${{ steps.package.outputs.content }}
           platforms: linux/amd64,linux/arm64,linux/arm/v7
@@ -61,8 +61,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           builder: ${{ steps.buildx.outputs.name }}
-          file: retro-board-maintenance/Dockerfile
-          context: retro-board-maintenance
-          tags: antoinejaussoin/retro-board-maintenance:latest,antoinejaussoin/retro-board-maintenance:${{ steps.package.outputs.content }}
+          file: maintenance/Dockerfile
+          context: maintenance
+          tags: antoinejaussoin/maintenance:latest,antoinejaussoin/maintenance:${{ steps.package.outputs.content }}
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true

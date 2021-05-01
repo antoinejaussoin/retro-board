@@ -82,7 +82,7 @@ export async function getOrSaveUser(user: UserEntity): Promise<UserEntity> {
 }
 
 export function isUserPro(user: FullUser) {
-  // TODO: deduplicate from same logic in Frontend retro-board-app/src/auth/useIsPro.ts
+  // TODO: deduplicate from same logic in Frontend frontend/src/auth/useIsPro.ts
   const activeTrial = user && user.trial && new Date(user.trial) > new Date();
   return user && (user.pro || activeTrial);
 }

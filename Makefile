@@ -10,11 +10,11 @@ setup:
 	
 build:
 	docker buildx inspect --bootstrap
-	docker buildx build --cache-from=antoinejaussoin/retro-board-maintenance:${PACKAGE_VERSION} --pull --platform ${TARGET_ARCHS} -f ./retro-board-maintenance/Dockerfile -t antoinejaussoin/retro-board-maintenance:${PACKAGE_VERSION} ./retro-board-maintenance
-	docker buildx build --cache-from=antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} --pull --platform ${TARGET_ARCHS} -f ./retro-board-server/Dockerfile -t antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} .
-	docker buildx build --cache-from=antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} --pull --platform ${TARGET_ARCHS} -f ./retro-board-app/Dockerfile -t antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} .
+	docker buildx build --cache-from=antoinejaussoin/maintenance:${PACKAGE_VERSION} --pull --platform ${TARGET_ARCHS} -f ./maintenance/Dockerfile -t antoinejaussoin/maintenance:${PACKAGE_VERSION} ./maintenance
+	docker buildx build --cache-from=antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} --pull --platform ${TARGET_ARCHS} -f ./backend/Dockerfile -t antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} .
+	docker buildx build --cache-from=antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} --pull --platform ${TARGET_ARCHS} -f ./frontend/Dockerfile -t antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} .
 
 single-build:
-	docker build -f ./retro-board-maintenance/Dockerfile -t antoinejaussoin/retro-board-maintenance:${PACKAGE_VERSION} ./retro-board-maintenance
-	docker build -f ./retro-board-server/Dockerfile -t antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} .
-	docker build -f ./retro-board-app/Dockerfile -t antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} .
+	docker build -f ./maintenance/Dockerfile -t antoinejaussoin/maintenance:${PACKAGE_VERSION} ./maintenance
+	docker build -f ./backend/Dockerfile -t antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} .
+	docker build -f ./frontend/Dockerfile -t antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} .

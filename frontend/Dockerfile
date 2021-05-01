@@ -10,8 +10,8 @@ RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
 COPY ./package.json ./
 COPY ./yarn.lock ./
-COPY ./retro-board-app/package.json ./retro-board-app/
-COPY ./retro-board-common/package.json ./retro-board-common/
+COPY ./frontend/package.json ./frontend/
+COPY ./common/package.json ./common/
 
 RUN chown -R node:node /home/node/app
 
@@ -19,12 +19,12 @@ USER node
 
 RUN yarn --network-timeout 1000000 install
 
-COPY --chown=node:node ./retro-board-app/src ./retro-board-app/src
-COPY --chown=node:node ./retro-board-app/public ./retro-board-app/public
-COPY --chown=node:node ./retro-board-app/config-overrides.js ./retro-board-app/config-overrides.js
-COPY --chown=node:node ./retro-board-app/tsconfig.json ./retro-board-app/tsconfig.json
-COPY --chown=node:node ./retro-board-app/.env ./retro-board-app/.env
-COPY --chown=node:node ./retro-board-common ./retro-board-common
+COPY --chown=node:node ./frontend/src ./frontend/src
+COPY --chown=node:node ./frontend/public ./frontend/public
+COPY --chown=node:node ./frontend/config-overrides.js ./frontend/config-overrides.js
+COPY --chown=node:node ./frontend/tsconfig.json ./frontend/tsconfig.json
+COPY --chown=node:node ./frontend/.env ./frontend/.env
+COPY --chown=node:node ./common ./common
 
 RUN yarn build-ui
 
@@ -33,9 +33,9 @@ FROM nginx:alpine
 ENV BACKEND_HOST=backend
 ENV BACKEND_PORT=3201
 
-COPY --from=Node /home/node/app/retro-board-app/build /usr/share/nginx/html
-COPY ./retro-board-app/docker/nginx.conf.template /etc/nginx/conf.d/default.conf.template
-COPY ./retro-board-app/docker/frontend-entrypoint.sh /
+COPY --from=Node /home/node/app/frontend/build /usr/share/nginx/html
+COPY ./frontend/docker/nginx.conf.template /etc/nginx/conf.d/default.conf.template
+COPY ./frontend/docker/frontend-entrypoint.sh /
 
 RUN ["chmod", "+x", "/frontend-entrypoint.sh"]
 ENTRYPOINT ["/frontend-entrypoint.sh"]
