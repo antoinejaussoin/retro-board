@@ -27,7 +27,7 @@ import useTranslations from '../../../../translations';
 import EditableLabel from '../../../../components/EditableLabel';
 import { Palette } from '../../../../Theme';
 import { Post } from '@retrospected/common';
-import { useUserPermissions } from '../useUserPermissions';
+import { usePostUserPermissions } from '../usePostUserPermissions';
 import { countVotes, enumerateVotes } from '../../utils';
 import GiphySearchBox from 'react-giphy-searchbox';
 import useGiphy from '../../../../hooks/useGiphy';
@@ -91,7 +91,7 @@ const PostItem = ({
     canReorder,
     canUseGiphy,
     isBlurred,
-  } = useUserPermissions(post);
+  } = usePostUserPermissions(post);
   const classes = useStyles();
   const { Actions: translations, Post: postTranslations } = useTranslations();
   const { encrypt, decrypt } = useCrypto();

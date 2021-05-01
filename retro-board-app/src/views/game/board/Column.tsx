@@ -8,7 +8,6 @@ import grey from '@material-ui/core/colors/grey';
 import { CreateNewFolder, SubdirectoryArrowLeft } from '@material-ui/icons';
 import PostItem from './post/Post';
 import { Post, PostGroup, SessionOptions } from '@retrospected/common';
-import useUser from '../../../auth/useUser';
 import useTranslations from '../../../translations';
 import Group from './Group';
 import {
@@ -18,10 +17,9 @@ import {
 } from 'react-beautiful-dnd';
 import { ColumnContent } from '../types';
 import useCrypto from '../../../crypto/useCrypto';
-import useCanDecrypt from '../../../crypto/useCanDecrypt';
-import useIsDisabled from '../../../hooks/useIsDisabled';
 import useQuota from '../../../hooks/useQuota';
 import { deepPurple } from '@material-ui/core/colors';
+import useSessionUserPermissions from './useSessionUserPermissions';
 
 interface ColumnProps {
   column: ColumnContent;
@@ -60,13 +58,10 @@ const Column: React.FC<ColumnProps> = ({
   onEditGroup,
   onDeleteGroup,
 }) => {
-  const user = useUser();
-  const isLoggedIn = !!user;
   const { Column: columnTranslations } = useTranslations();
   const [content, setContent] = useState('');
   const { encrypt } = useCrypto();
-  const canDecrypt = useCanDecrypt();
-  const isDisabled = useIsDisabled();
+  const permissions = useSessionUserPermissions();
   const { increment } = useQuota();
   const onContentChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => setContent(e.target.value),
@@ -94,7 +89,7 @@ const Column: React.FC<ColumnProps> = ({
     }
   }, [handleAdd, content]);
 
-  const isReadOnly = !canDecrypt || !isLoggedIn || isDisabled;
+  // const isReadOnly = !canDecrypt || !isLoggedIn || isDisabled;
   return (
     <ColumnWrapper>
       <Add>
@@ -103,7 +98,7 @@ const Column: React.FC<ColumnProps> = ({
           onChange={onContentChange}
           value={content}
           onKeyDown={handleAddKeyboard}
-          readOnly={isReadOnly}
+          readOnly={!permissions.canCreatePost}
           startAdornment={
             Icon ? (
               <InputAdornment position="start">
@@ -119,7 +114,7 @@ const Column: React.FC<ColumnProps> = ({
             </InputAdornment>
           }
         />
-        {options.allowGrouping && !isReadOnly ? (
+        {permissions.canCreateGroup ? (
           <AddGroup>
             <Tooltip title={columnTranslations.createGroupTooltip!}>
               <IconButton onClick={onAddGroup} tabIndex={-1}>

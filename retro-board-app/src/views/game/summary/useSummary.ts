@@ -4,7 +4,7 @@ import flattenDeep from 'lodash/flattenDeep';
 import { ColumnContent } from '../types';
 import { ColumnStats, ColumnStatsItem, Stats, ActionItem } from './types';
 import { countVotes, countVotesForGroup } from '../utils';
-import { permissionLogic } from '../board/permissions-logic';
+import { postPermissionLogic } from '../board/permissions-logic';
 import { useMemo } from 'react';
 import useUser from '../../../auth/useUser';
 import useSession from '../useSession';
@@ -42,7 +42,7 @@ function postToItem(
   user: User | null,
   session: Session | null
 ): ColumnStatsItem {
-  const permissions = permissionLogic(post, session, user);
+  const permissions = postPermissionLogic(post, session, user);
   return {
     id: post.id,
     content: post.content,
