@@ -4,7 +4,6 @@ import SettingCategory from '../SettingCategory';
 import OptionItem from '../OptionItem';
 import useTranslations from '../../../../translations';
 import BooleanOption from '../BooleanOption';
-import MaxVoteSlider from '../votes/MaxVoteSlider';
 import MaxPostsSlider from './MaxPostsSlider';
 
 interface PostsSectionProps {
