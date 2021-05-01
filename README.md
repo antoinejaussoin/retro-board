@@ -146,6 +146,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 ### Version 4.3.0 (unreleased)
 
 - Add the ability to restrict the number of posts per user on a given session (as an option).
+- Rename some folders in the repository to more sensible names
 
 ### Version 4.2.2
 
