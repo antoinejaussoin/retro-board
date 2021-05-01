@@ -10,6 +10,8 @@ export default class SessionOptionsEntity {
   public maxUpVotes: number | null;
   @Column({ nullable: true, type: 'numeric' })
   public maxDownVotes: number | null;
+  @Column({ nullable: true, type: 'numeric' })
+  public maxPosts: number | null;
   @Column({ default: true })
   public allowActions: boolean;
   @Column({ default: false })
@@ -37,6 +39,7 @@ export default class SessionOptionsEntity {
     const optionsWithDefault = getDefaultOptions(options);
     this.maxUpVotes = optionsWithDefault.maxUpVotes;
     this.maxDownVotes = optionsWithDefault.maxDownVotes;
+    this.maxPosts = optionsWithDefault.maxPosts;
     this.allowAuthorVisible = optionsWithDefault.allowAuthorVisible;
     this.allowActions = optionsWithDefault.allowActions;
     this.allowSelfVoting = optionsWithDefault.allowSelfVoting;

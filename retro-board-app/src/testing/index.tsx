@@ -27,6 +27,7 @@ export const initialSession: Session = {
   options: {
     maxDownVotes: null,
     maxUpVotes: null,
+    maxPosts: null,
     allowActions: true,
     allowAuthorVisible: false,
     allowMultipleVotes: false,

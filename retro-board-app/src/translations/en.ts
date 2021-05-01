@@ -67,6 +67,8 @@ export default {
     maxUpVotesHelp: `Maximum number of 'likes' votes a user is allowed to cast`,
     maxDownVotes: 'Max Down-Votes',
     maxDownVotesHelp: `Maximum number of 'dislikes' votes a user is allowed to cast`,
+    maxPosts: `Max Posts per user`,
+    maxPostsHelp: `Maximum number of posts a user can create per session`,
     allowSelfVoting: 'Allow Self Voting',
     allowSelfVotingHelp: 'Whether to allow a user to vote on their own post',
     allowMultipleVotes: 'Allow Multiple Votes',

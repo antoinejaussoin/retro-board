@@ -60,6 +60,8 @@ export interface Translation {
     editButton?: string;
     maxUpVotes?: string;
     maxUpVotesHelp?: string;
+    maxPosts?: string;
+    maxPostsHelp?: string;
     maxDownVotes?: string;
     maxDownVotesHelp?: string;
     allowSelfVoting?: string;

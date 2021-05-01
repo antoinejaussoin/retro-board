@@ -66,6 +66,8 @@ export default {
     maxUpVotesHelp: `Réglez le nombre de votes positifs maximum qu'un participant peut mettre dans une session`,
     maxDownVotes: 'Nb de votes max (négatifs)',
     maxDownVotesHelp: `Réglez le nombre de votes négatifs maximum qu'un participant peut mettre dans une session`,
+    maxPosts: `Nb de posts max`,
+    maxPostsHelp: `Nombre maximum de posts qu'un participant peut créer par session`,
     allowSelfVoting: 'Voter pour soi',
     allowSelfVotingHelp: 'Autoriser à voter pour ses propres posts',
     allowMultipleVotes: 'Votes multiples',

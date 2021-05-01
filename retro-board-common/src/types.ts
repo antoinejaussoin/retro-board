@@ -42,6 +42,7 @@ export interface ColumnDefinition extends Entity {
 export interface SessionOptions {
   maxUpVotes: number | null;
   maxDownVotes: number | null;
+  maxPosts: number | null;
   allowActions: boolean;
   allowSelfVoting: boolean;
   allowMultipleVotes: boolean;

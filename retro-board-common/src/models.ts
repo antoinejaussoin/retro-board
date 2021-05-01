@@ -7,6 +7,7 @@ export const defaultOptions: SessionOptions = {
   allowAuthorVisible: false,
   maxDownVotes: null,
   maxUpVotes: null,
+  maxPosts: null,
   allowGiphy: true,
   allowGrouping: true,
   allowReordering: true,

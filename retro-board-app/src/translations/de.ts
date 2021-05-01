@@ -65,6 +65,8 @@ export default {
     maxUpVotesHelp: `Maximale Anzahl an 'up-votes', die ein Nutzer geben kann`,
     maxDownVotes: 'Max Down-Votes',
     maxDownVotesHelp: `Maximale Anzahl an 'down-votes', die ein Nutzer geben kann`,
+    maxPosts: undefined,
+    maxPostsHelp: undefined,
     allowSelfVoting: 'Eigene Posts bewerten',
     allowSelfVotingHelp:
       'Soll es Nutzern möglich sein eigene Beiträge zu bewerten?',

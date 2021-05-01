@@ -62,6 +62,8 @@ export default {
     maxUpVotesHelp: undefined,
     maxDownVotes: undefined,
     maxDownVotesHelp: undefined,
+    maxPosts: undefined,
+    maxPostsHelp: undefined,
     allowSelfVoting: undefined,
     allowSelfVotingHelp: undefined,
     allowMultipleVotes: undefined,

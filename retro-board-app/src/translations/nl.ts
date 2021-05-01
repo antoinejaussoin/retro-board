@@ -65,6 +65,8 @@ export default {
     maxUpVotesHelp: `Maximum aantal 'likes' die een gebruiker mag uitbrengen`,
     maxDownVotes: 'Maximum down-votes',
     maxDownVotesHelp: `Maximum aantal 'dislikes' die een gebruiker mag uitbrengen`,
+    maxPosts: undefined,
+    maxPostsHelp: undefined,
     allowSelfVoting: 'Zelf-stemmen toestaan',
     allowSelfVotingHelp:
       'Of een gebruiker op zijn eigen retropunten mag stemmen',
