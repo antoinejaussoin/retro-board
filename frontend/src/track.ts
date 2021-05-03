@@ -3,6 +3,8 @@ import { TrackingEvent } from '@retrospected/common';
 import * as Sentry from '@sentry/browser';
 import config from './utils/getConfig';
 
+let sentryErrorCount = 0;
+
 export const initialiseAnalytics = () => {
   if (isGAEnabled()) {
     ReactGA.initialize(config.GoogleAnalyticsId);
@@ -28,10 +30,18 @@ export const setScope = (fn: (scope: Sentry.Scope | null) => void) => {
 
 export const recordManualError = (message: string) => {
   if (config.hasSentry) {
-    Sentry.withScope((scope) => {
-      scope.setLevel(Sentry.Severity.Error);
-      Sentry.captureMessage(message, Sentry.Severity.Error);
-    });
+    sentryErrorCount += 1;
+    if (sentryErrorCount > 100) {
+      console.error(
+        'Captured too many Sentry errors. Ignoring this one.',
+        sentryErrorCount
+      );
+    } else {
+      Sentry.withScope((scope) => {
+        scope.setLevel(Sentry.Severity.Error);
+        Sentry.captureMessage(message, Sentry.Severity.Error);
+      });
+    }
   }
 };
 
