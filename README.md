@@ -30,6 +30,7 @@ It features the following technologies:
 - [React Router 4](https://github.com/ReactTraining/react-router)
 - [Mono Repo / Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces)
 - [TypeScript 4](https://www.typescriptlang.org/)
+- [Recoil.js](https://recoiljs.org), as the global state management library
 - [Socket IO](http://socket.io)
 - [Webpack 4](https://github.com/webpack/webpack) (See older versions for Webpack 1, 2 and 3)
 - [Material UI design](https://www.google.com/design/spec/material-design/introduction.html)
@@ -52,7 +53,6 @@ It features the following technologies:
 - [Travis](http://travis-ci.org/), for Continuous Integration and Deployment (CI/CD)
 - [Multi-Architecture](https://github.com/docker/buildx/), for automatic compatibility with ARM-based servers
 - [Stripe](https://stripe.com/), for our payment solution
-- [Recoil.js](https://recoiljs.org), as an experimental state management library
 
 Previous versions, up to v1.0.1 featured the following libraries:
 
@@ -143,7 +143,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
-### Version 4.3.0 (unreleased)
+### Version 4.3.0
 
 - Add the ability to restrict the number of posts per user on a given session (as an option).
 - Rename some folders in the repository to more sensible names
