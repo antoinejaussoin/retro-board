@@ -243,7 +243,7 @@ const SpeedDialContainer = styled.div`
   position: fixed;
   bottom: 20px;
   right: 20px;
-  z-index: 1;
+  z-index: 4;
 `;
 
 export default SummaryMode;
