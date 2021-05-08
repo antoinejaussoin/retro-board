@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { PostGroup } from '@retrospected/common';
 import styled from 'styled-components';
 import {
@@ -8,7 +8,11 @@ import {
 } from 'react-beautiful-dnd';
 import grey from '@material-ui/core/colors/grey';
 import IconButton from '@material-ui/core/IconButton';
-import { Delete } from '@material-ui/icons';
+import {
+  Delete,
+  KeyboardArrowDown,
+  KeyboardArrowRight,
+} from '@material-ui/icons';
 import EditableLabel from '../../../components/EditableLabel';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import useTranslations from '../../../translations';
@@ -29,6 +33,7 @@ const Group: React.FC<GroupProps> = ({
   children,
 }) => {
   const { Group: groupTranslations } = useTranslations();
+  const [collapsed, setCollapsed] = useState(false);
   const { decrypt, encrypt } = useCrypto();
   const handleEditLabel = useCallback(
     (label: string) => {
@@ -36,6 +41,12 @@ const Group: React.FC<GroupProps> = ({
     },
     [onEditLabel, encrypt]
   );
+  const handleDelete = useCallback(() => {
+    onDelete(group);
+  }, [onDelete, group]);
+  const toggleCollapse = useCallback(() => {
+    setCollapsed((c) => !c);
+  }, []);
   return (
     <Droppable droppableId={'group#' + group.id} key={group.id} mode="standard">
       {(
@@ -56,22 +67,29 @@ const Group: React.FC<GroupProps> = ({
               />
             </Label>
             <DeleteContainer>
-              <IconButton onClick={() => onDelete(group)}>
-                <Delete />
+              {!collapsed ? (
+                <IconButton onClick={handleDelete}>
+                  <Delete />
+                </IconButton>
+              ) : null}
+              <IconButton onClick={toggleCollapse}>
+                {collapsed ? <KeyboardArrowRight /> : <KeyboardArrowDown />}
               </IconButton>
             </DeleteContainer>
           </Header>
-          <Content>
-            <div>{children}</div>
-            {group.posts.length === 0 ? (
-              <NoPosts>
-                <Alert severity="info">
-                  <AlertTitle>{groupTranslations.emptyGroupTitle}</AlertTitle>
-                  {groupTranslations.emptyGroupContent}
-                </Alert>
-              </NoPosts>
-            ) : null}
-          </Content>
+          {!collapsed ? (
+            <Content>
+              <div>{children}</div>
+              {group.posts.length === 0 ? (
+                <NoPosts>
+                  <Alert severity="info">
+                    <AlertTitle>{groupTranslations.emptyGroupTitle}</AlertTitle>
+                    {groupTranslations.emptyGroupContent}
+                  </Alert>
+                </NoPosts>
+              ) : null}
+            </Content>
+          ) : null}
         </GroupContainer>
       )}
     </Droppable>
