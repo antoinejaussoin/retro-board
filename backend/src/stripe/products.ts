@@ -1,6 +1,6 @@
 import { InternalProduct } from './types';
 import { Plan } from '@retrospected/common';
-import config from '../db/config';
+import config from '../config';
 
 export const teamPlan: InternalProduct = {
   name: 'Pro Team',

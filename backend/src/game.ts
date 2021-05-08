@@ -53,7 +53,7 @@ import {
   updatePost,
   updatePostGroup,
 } from './db/actions/posts';
-import config from './db/config';
+import config from './config';
 import { registerVote } from './db/actions/votes';
 // import wait from './utils';
 

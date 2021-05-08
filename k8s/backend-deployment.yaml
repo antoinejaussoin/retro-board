@@ -39,6 +39,8 @@ spec:
               value: rb-postgres-cluster-ip-service
             - name: REDIS_ENABLED
               value: 'true'
+            - name: REDIS_FOR_SOCKETIO_ENABLED
+              value: 'true' # Must be true if multiple replicas
             - name: REDIS_PORT
               value: '6379'
             - name: REDIS_HOST

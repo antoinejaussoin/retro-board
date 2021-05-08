@@ -1,5 +1,5 @@
 import { SelfHostedCheckPayload } from '@retrospected/common';
-import config from '../db/config';
+import config from '../config';
 import fetch from 'node-fetch';
 
 export default async function isLicenced() {

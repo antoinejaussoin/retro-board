@@ -59,6 +59,7 @@ services:
       BACKEND_PORT: 3201 # Don't change this (or change it in nginx.conf as well)
       SQL_LOG: 'false' # Whether to log SQL queries in the console
       REDIS_ENABLED: 'true' # Whether to enable Redis
+      REDIS_FOR_SOCKETIO_ENABLED: 'false' # Whether Socket.IO uses Redis (set to true when using more than 1 backend replica)
       REDIS_PORT: 6379 # Should match the Redis port
       REDIS_HOST: redis # Must be the name of the Redis service above
       SENTRY_URL: '' # Optional, Sentry URL (https://1234567890abcdef12345@sentry.io/1234567)

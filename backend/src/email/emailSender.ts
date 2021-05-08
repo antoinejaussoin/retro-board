@@ -1,5 +1,5 @@
 import sendGrid, { MailDataRequired } from '@sendgrid/mail';
-import config from '../db/config';
+import config from '../config';
 
 if (config.SENDGRID_API_KEY) {
   sendGrid.setApiKey(config.SENDGRID_API_KEY);

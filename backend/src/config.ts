@@ -1,9 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import { Configuration } from '../types';
+import { BackendConfig } from './types';
 import dotenv from 'dotenv';
-const confPath = path.resolve(__dirname, '../../../.env');
-const defaultConfPath = path.resolve(__dirname, '../../../.env.example');
+const confPath = path.resolve(__dirname, '../../.env');
+const defaultConfPath = path.resolve(__dirname, '../../.env.example');
 
 const fileExist = fs.existsSync(confPath);
 
@@ -13,7 +13,7 @@ if (fileExist) {
   dotenv.config({ path: defaultConfPath });
 }
 
-const config: Configuration = {
+const config: BackendConfig = {
   LICENCE_KEY: process.env.LICENCE_KEY!,
   DB_NAME: process.env.DB_NAME!,
   DB_USER: process.env.DB_USER!,
@@ -21,6 +21,7 @@ const config: Configuration = {
   DB_HOST: process.env.DB_HOST!,
   DB_PORT: parseInt(process.env.DB_PORT!),
   REDIS_ENABLED: process.env.REDIS_ENABLED === 'true',
+  REDIS_FOR_SOCKETIO_ENABLED: process.env.REDIS_FOR_SOCKETIO_ENABLED === 'true',
   REDIS_HOST: process.env.REDIS_HOST!,
   REDIS_PORT: parseInt(process.env.REDIS_PORT!),
   BACKEND_PORT: parseInt(process.env.BACKEND_PORT!),

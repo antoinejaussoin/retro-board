@@ -1,4 +1,4 @@
-export interface Configuration {
+export interface BackendConfig {
   LICENCE_KEY: string;
   DB_NAME: string;
   DB_USER: string;
@@ -6,6 +6,7 @@ export interface Configuration {
   DB_HOST: string;
   DB_PORT: number;
   REDIS_ENABLED: boolean;
+  REDIS_FOR_SOCKETIO_ENABLED: boolean;
   REDIS_HOST: string;
   REDIS_PORT: number;
   BACKEND_PORT: number;

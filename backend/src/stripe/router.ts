@@ -4,7 +4,7 @@ import {
   Product,
   StripeLocales,
 } from '@retrospected/common';
-import config from '../db/config';
+import config from '../config';
 import Stripe from 'stripe';
 import { UserEntity } from '../db/entities';
 import {

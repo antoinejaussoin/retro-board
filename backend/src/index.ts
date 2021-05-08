@@ -6,7 +6,7 @@ import connectRedis from 'connect-redis';
 import http from 'http';
 import chalk from 'chalk';
 import db from './db';
-import config from './db/config';
+import config from './config';
 import passport from 'passport';
 import passportInit from './auth/passport';
 import authRouter from './auth/router';
@@ -126,7 +126,7 @@ if (config.REDIS_ENABLED) {
     host: config.REDIS_HOST,
     port: config.REDIS_PORT,
   });
-  const subClient = redisClient.duplicate();
+
   sessionMiddleware = session({
     secret: `${process.env.SESSION_SECRET!}-2`, // Increment to force re-auth
     resave: true,
@@ -136,9 +136,19 @@ if (config.REDIS_ENABLED) {
       secure: false,
     },
   });
-  io.adapter(createAdapter({ pubClient: redisClient, subClient }));
+
+  if (config.REDIS_FOR_SOCKETIO_ENABLED) {
+    const subClient = redisClient.duplicate();
+    io.adapter(createAdapter({ pubClient: redisClient, subClient }));
+    console.log(
+      chalk`💾  {red Redis} for {yellow Socket.IO} was properly activated`
+    );
+  }
+
   cache = redisCache(redisClient);
-  console.log(chalk`{red Redis} was properly activated`);
+  console.log(
+    chalk`💾  {red Redis} for {yellow Express} was properly activated`
+  );
 } else {
   sessionMiddleware = session({
     secret: `${process.env.SESSION_SECRET!}-2`, // Increment to force re-auth

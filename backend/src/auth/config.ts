@@ -2,7 +2,7 @@ import { IStrategyOption } from 'passport-twitter';
 import { IOAuth2StrategyOption } from 'passport-google-oauth';
 import { StrategyOptions as GitHubStrategy } from 'passport-github2';
 import { MicrosoftStrategyOptions } from 'passport-microsoft';
-import config from '../db/config';
+import config from '../config';
 
 const providers = ['twitter', 'google', 'github', 'slack', 'microsoft'];
 
