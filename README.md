@@ -148,7 +148,8 @@ When using the Docker deployment, your database runs from a container. But if yo
 - 🐛 Fixed a bug where the export button on the summary page was hidden by the participants bar. 👏 Thanks [@hieuwu](https://github.com/hieuwu) for pointing this out. ([#262](https://github.com/antoinejaussoin/retro-board/issues/262))
 - Added the ability to collapse groups (hidding their content). 👏 Thanks to Sultan S. for the suggestion. ([#263](https://github.com/antoinejaussoin/retro-board/issues/263))
 - Added the possibility for deployements where the backend has a single instance (no replicas) to not use Redis with Socket.IO.
-- Upgraded dependencies
+- Fixed a bug that would trigger the rate limiting when adding posts to groups, triggering a disconnection
+- ⏫ Upgrading dependencies
 
 ### Version 4.3.0
 
@@ -159,7 +160,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 ### Version 4.2.2
 
 - Add a better check for self-hosted licences.
-- Upgrading dependencies
+- ⏫ Upgrading dependencies
 
 ### Version 4.2.1
 
@@ -167,7 +168,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 - Replacing the reducer logic with Recoil for global state management.
 - Adding the possibility of creating a post by clicking on the 'return' icon (⮐) instead of hitting "Enter". 👏 Thanks to [@do606](https://github.com/do606) for pointing out that Enter doesn't always seem to work ([#246](https://github.com/antoinejaussoin/retro-board/issues/246)).
 - Re-adding the ability of creating a post by hitting Enter on a numeric pad. 👏 Thanks again to [@do606](https://github.com/do606) for that.
-- Upgrading dependencies
+- ⏫ Upgrading dependencies
 
 ### Version 4.2.0
 
@@ -178,7 +179,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 - Return an error message to the UI if a Websocket message doesn't succeed
 - Improve websocket reconnection logic
 - Upgrading to Socket.IO 4.0
-- Upgrading dependencies
+- ⏫ Upgrading dependencies
 - 🐛 The participants footer was sometimes hidden by the blur overlay of a post. 👏 Thanks [@Pajinell](https://github.com/Pajinell) for pointing this out. ([#240](https://github.com/antoinejaussoin/retro-board/issues/240))
 - 👏 Thanks to [@cindyccook](https://github.com/cindyccook) for pointing out reliability issues ([#232](https://github.com/antoinejaussoin/retro-board/issues/232)).
 
@@ -248,10 +249,10 @@ When using the Docker deployment, your database runs from a container. But if yo
 - Improving the Post component to hide up/down votes when they are disabled. Also got rid of the "flippable" panel,
   all actions are now visible directly. 👏 Thanks [@Xyaren](https://github.com/Xyaren) for pointing this out. ([#150](https://github.com/antoinejaussoin/retro-board/issues/150))
 - Automatic Backend code linting, and CI linting
-- Upgrade to TypeScript 4
-- Upgrade to React 17
-- Upgrade to Create-React-App 4
-- Upgrade to Socket.IO 3.0
+- ⏫ Upgrade to TypeScript 4
+- ⏫ Upgrade to React 17
+- ⏫ Upgrade to Create-React-App 4
+- ⏫ Upgrade to Socket.IO 3.0
 - 👏 A big thanks to [@wooddar](https://github.com/wooddar) for beta-testing and his great feedback!
 
 ### Version 3.2.3
@@ -275,12 +276,12 @@ When using the Docker deployment, your database runs from a container. But if yo
 - Complete redesign of the Custom Session settings modal
 - Ability to modify session settings once the game has started. This is only available to the session moderator (author) ([#92](https://github.com/antoinejaussoin/retro-board/issues/92)).
 - Ability to display past sessions for Anonymous users. This is limited to viewing past sessions on the same browser, any login to a different browser will create a different anonymous account, for safety reasons ([#112](https://github.com/antoinejaussoin/retro-board/issues/112)).
-- Dependencies update
+- ⏫ Dependencies update
 
 ### Version 3.1.1
 
 - 🇳🇱 Improved Dutch translation (👏 Thanks [@jghaanstra](https://github.com/jghaanstra))
-- Dependencies update
+- ⏫ Dependencies update
 
 ### Version 3.1.0
 
@@ -290,7 +291,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 ### Version 3.0.3
 
 - 🐛 Bug fix: [Issue 121](https://github.com/antoinejaussoin/retro-board/issues/121), [Issue 123](https://github.com/antoinejaussoin/retro-board/issues/123)
-- Dependencies update
+- ⏫ Dependencies update
 
 ### Version 3.0.2
 
@@ -321,19 +322,19 @@ When using the Docker deployment, your database runs from a container. But if yo
 - 🇷🇺 Russian Translation improvements (👏 Thanks [@regmagik](https://github.com/regmagik))
 - Fixing logout button translation
 - Adding fetch polyfill for IE
-- Upgrading dependencies
+- ⏫ Upgrading dependencies
 
 ### Version 2.2.3
 
 - 🇮🇹 Italian Translation (👏 Thanks [@mventuri](https://github.com/mventuri))
 - Re-enabling source maps for Sentry
-- Upgrading dependencies
+- ⏫ Upgrading dependencies
 
 ### Version 2.2.2
 
 - Allowing a user to disable voting (by setting the max number of votes to 0) (👏 Thanks [@imranismail](https://github.com/imranismail))
 - Fixing an issue with Docker and Yarn's installation
-- Upgrading dependencies
+- ⏫ Upgrading dependencies
 
 ### Version 2.2.1
 
@@ -399,18 +400,18 @@ When using the Docker deployment, your database runs from a container. But if yo
   - Login modal improvements
   - Editable label improvements
 - Various Docker improvements
-- Upgraded dependencies
+- ⏫ Upgraded dependencies
 - 👏 Special thanks to [@jesusabp](https://github.com/jesusabp), [@zalexki](https://github.com/zalexki) and [@jfritz](https://github.com/jfritz) for their inputs and ideas!
 
 ### Version 2.0.4
 
-- Upgraded dependencies
+- ⏫ Upgraded dependencies
 - Allows multi-line posts and comments (use the shift key to add a new line) (👏 Thanks [@andyk314](https://github.com/andyk314))
 - Re-adding Hot Reload, which now works great with TypeScript and Create-React-App.
 
 ### Version 2.0.3
 
-- Upgraded dependencies
+- ⏫ Upgraded dependencies
 - Fixed an issue with Docker eating too much space with its unlimited log size. Log is now limited to 50mb.
 
 ### Version 2.0.2
@@ -439,21 +440,21 @@ When using the Docker deployment, your database runs from a container. But if yo
 - 🇯🇵 Japanese Translation (👏 Thanks [@sat0yu](https://github.com/sat0yu))
 - Simplified the ESLint configuration
 - Introducing Prettier (`yarn format`)
-- Upgrading to Babel 7
+- ⏫ Upgrading to Babel 7
 
 ### Version 1.0.0
 
 - React 16
 - Webpack 4 (for previous versions of webpack, see below)
 - Using [@bionikspoon/react-toolbox](https://github.com/bionikspoon/react-toolbox) instead of the original `react-toolbox`, as the project is no longer maintained and doesn't work with React 16.
-- Upgraded all the other dependencies, everything should be up-to-date
+- ⏫ Upgraded all the other dependencies, everything should be up-to-date
 - Improved the home screen
 
 ### Version 0.10.0
 
 - Webpack 3 (for Webpack 2, look at version 0.9.0)
 - Converting entire project to 2-space indentation
-- Upgrade other dependencies
+- ⏫ Upgrade other dependencies
 - 🇵🇱 Polish Translation (👏 Thanks [@olaf-cichocki](https://github.com/olaf-cichocki))
 - 🇦🇪 Arabic Translation (👏 Thanks [@Meshredded](https://github.com/Meshredded))
 - Improved the loading screen
@@ -464,7 +465,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 - React 15.5 (which needs the new `prop-types` module, among other things)
 - React Router 4 (completely different way of doing the routing)
 - Move the structure of the project to a modular structure
-- Upgraded all the other dependencies to the latest versions, except `react-toolbox`
+- ⏫ Upgraded all the other dependencies to the latest versions, except `react-toolbox`
 
 ### Version 0.8.1
 
@@ -475,7 +476,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 - Using [redux-saga-testing](https://github.com/antoinejaussoin/redux-saga-testing) to test sagas
 - 🇹🇼🇨🇳 Chinese (Traditional and Simplified) Translation (👏 Thanks [@aqutw](https://github.com/aqutw))
 - Using [Yarn](https://yarnpkg.com/en/)
-- Updating dependencies
+- ⏫ Updating dependencies
 - Fixing some Spanish translation mistakes (👏 Thanks @MrPolymath)
 - 🐛 Fixed a bug where the Vote buttons would allow a user to vote multiple times (on the UI only)
 

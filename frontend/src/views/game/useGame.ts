@@ -701,7 +701,8 @@ const useGame = (sessionId: string) => {
 
 function toPostUpdate(post: Post): WsPostUpdatePayload {
   return {
-    post: omit(post, ['votes', 'user']),
+    post: omit(post, ['votes', 'user', 'group']),
+    groupId: post.group ? post.group.id : null,
   };
 }
 

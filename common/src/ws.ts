@@ -22,7 +22,8 @@ export interface WsNameData {
 }
 
 export interface WsPostUpdatePayload {
-  post: Omit<Omit<Post, 'votes'>, 'user'>;
+  post: Omit<Omit<Omit<Post, 'votes'>, 'user'>, 'group'>;
+  groupId: string | null;
 }
 
 export interface WsLikeUpdatePayload {

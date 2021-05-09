@@ -392,7 +392,7 @@ export default (io: Server) => {
     data: WsPostUpdatePayload,
     socket: Socket
   ) => {
-    const persistedPost = await updatePost(sessionId, data.post);
+    const persistedPost = await updatePost(sessionId, data.post, data.groupId);
     sendToAllOrError<Post>(
       socket,
       sessionId,
