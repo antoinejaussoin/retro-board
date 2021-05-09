@@ -146,6 +146,9 @@ When using the Docker deployment, your database runs from a container. But if yo
 ### Version 4.4.0
 
 - 🐛 Fixed a bug where the export button on the summary page was hidden by the participants bar. 👏 Thanks [@hieuwu](https://github.com/hieuwu) for pointing this out. ([#262](https://github.com/antoinejaussoin/retro-board/issues/262))
+- Added the ability to collapse groups (hidding their content). 👏 Thanks to Sultan S. for the suggestion. ([#263](https://github.com/antoinejaussoin/retro-board/issues/263))
+- Added the possibility for deployements where the backend has a single instance (no replicas) to not use Redis with Socket.IO.
+- Upgraded dependencies
 
 ### Version 4.3.0
 
