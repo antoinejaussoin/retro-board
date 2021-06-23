@@ -83,7 +83,7 @@
     "socket.io-redis": "6.1.1",
     "stripe": "^8.156.0",
     "ts-jest": "^27.0.3",
-    "ts-node": "^10.0.0",
+    "ts-node": "^9.1.1",
     "typeorm": "^0.2.34",
     "uuid": "^8.3.2"
   },
