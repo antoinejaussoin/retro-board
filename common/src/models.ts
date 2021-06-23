@@ -12,6 +12,7 @@ export const defaultOptions: SessionOptions = {
   allowGrouping: true,
   allowReordering: true,
   blurCards: false,
+  newPostsFirst: true,
 };
 
 export const defaultSession: Omit<Session, 'createdBy'> = {

@@ -51,6 +51,7 @@ export interface SessionOptions {
   allowGrouping: boolean;
   allowReordering: boolean;
   blurCards: boolean;
+  newPostsFirst: boolean;
 }
 
 export interface Entity {

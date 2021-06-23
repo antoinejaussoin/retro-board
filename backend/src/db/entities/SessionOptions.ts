@@ -28,6 +28,8 @@ export default class SessionOptionsEntity {
   public allowReordering: boolean;
   @Column({ default: false })
   public blurCards: boolean;
+  @Column({ default: true })
+  public newPostsFirst: boolean;
 
   toJson(): SessionOptions {
     return {
@@ -48,6 +50,7 @@ export default class SessionOptionsEntity {
     this.allowGrouping = optionsWithDefault.allowGrouping;
     this.allowReordering = optionsWithDefault.allowMultipleVotes;
     this.blurCards = optionsWithDefault.blurCards;
+    this.newPostsFirst = optionsWithDefault.newPostsFirst;
   }
 }
 

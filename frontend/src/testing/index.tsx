@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { render, RenderOptions, RenderResult } from '@testing-library/react';
-import { FullUser, Session } from '@retrospected/common';
+import { FullUser, Session, defaultOptions } from '@retrospected/common';
 import {
   DragDropContext,
   Droppable,
@@ -25,17 +25,7 @@ export const initialSession: Session = {
     photo: null,
   },
   options: {
-    maxDownVotes: null,
-    maxUpVotes: null,
-    maxPosts: null,
-    allowActions: true,
-    allowAuthorVisible: false,
-    allowMultipleVotes: false,
-    allowSelfVoting: false,
-    allowGiphy: true,
-    allowGrouping: true,
-    allowReordering: true,
-    blurCards: false,
+    ...defaultOptions,
   },
 };
 
