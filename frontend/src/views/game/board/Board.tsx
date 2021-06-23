@@ -20,7 +20,7 @@ import {
   getCombiningEntities,
   calculateRank,
 } from './moving-logic';
-import { getNext, getMiddle } from '../lexorank';
+import { getNext, getMiddle, getPrevious } from '../lexorank';
 import BoardHeader from './header/BoardHeader';
 import useSession from '../useSession';
 
@@ -52,9 +52,16 @@ interface GameModeProps {
   onLockSession: (locked: boolean) => void;
 }
 
-const calculateRankForNewPost = (column: ColumnContent): string => {
+const calculateRankForNewPost = (
+  column: ColumnContent,
+  placeFirst: boolean
+): string => {
   if (column.posts.length) {
-    return getNext(column.posts[column.posts.length - 1].rank);
+    if (placeFirst) {
+      return getPrevious(column.posts[0].rank);
+    } else {
+      return getNext(column.posts[column.posts.length - 1].rank);
+    }
   }
   return getMiddle();
 };
@@ -139,7 +146,6 @@ function GameMode({
             <Column
               key={column.index}
               column={column}
-              options={options}
               search={search}
               posts={column.posts}
               groups={column.groups}
@@ -150,7 +156,7 @@ function GameMode({
                 onAddPost(
                   column.index,
                   content,
-                  calculateRankForNewPost(column)
+                  calculateRankForNewPost(column, options.newPostsFirst)
                 )
               }
               onAddGroup={() =>

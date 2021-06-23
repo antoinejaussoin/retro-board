@@ -7,7 +7,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import grey from '@material-ui/core/colors/grey';
 import { CreateNewFolder, SubdirectoryArrowLeft } from '@material-ui/icons';
 import PostItem from './post/Post';
-import { Post, PostGroup, SessionOptions } from '@retrospected/common';
+import { Post, PostGroup } from '@retrospected/common';
 import useTranslations from '../../../translations';
 import Group from './Group';
 import {
@@ -28,7 +28,6 @@ interface ColumnProps {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>> | null;
   question: string;
   color: string;
-  options: SessionOptions;
   search: string;
   onAdd: (content: string) => void;
   onAddGroup: () => void;
@@ -42,7 +41,6 @@ interface ColumnProps {
 
 const Column: React.FC<ColumnProps> = ({
   column,
-  options,
   posts,
   groups,
   icon: Icon,
