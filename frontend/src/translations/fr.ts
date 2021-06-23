@@ -80,7 +80,7 @@ export default {
     allowAuthorVisibleHelp: `Afficher l'auteur du post sur le post lui-même.`,
     newPostsFirst: `Nouveaux posts en premier`,
     newPostsFirstHelp:
-      'Les nouveaux posts sont ajouté en haut de chaque colonne',
+      'Les nouveaux posts sont ajoutés en haut de chaque colonne',
     allowGiphy: 'Activer Giphy',
     allowGiphyHelp:
       "Autoriser les utilisateurs à ajouter une image Giphy sur n'importe quel post",
