@@ -77,6 +77,8 @@ export default {
     allowActionsHelp: `Bestimmt ob Maßnahmen hinzugefügt werden können`,
     allowAuthorVisible: 'Zeige Author',
     allowAuthorVisibleHelp: 'Zeigt den Author eines Posts an.',
+    newPostsFirst: undefined,
+    newPostsFirstHelp: undefined,
     allowGiphy: undefined,
     allowGiphyHelp: undefined,
     allowGrouping: undefined,

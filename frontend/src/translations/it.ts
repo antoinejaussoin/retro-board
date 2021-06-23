@@ -78,6 +78,8 @@ export default {
     allowActionsHelp: `Se consentire il campo "Azione" (follow-up) su ciascun post`,
     allowAuthorVisible: 'Mostra Autore',
     allowAuthorVisibleHelp: "Mostra l'autore del post nel post stesso.",
+    newPostsFirst: undefined,
+    newPostsFirstHelp: undefined,
     allowGiphy: 'Consenti Giphy',
     allowGiphyHelp: 'Permetti la creazione di gruppi per raggruppare post',
     allowGrouping: 'Consenti il raggruppamento',

@@ -72,6 +72,8 @@ export interface Translation {
     allowActionsHelp?: string;
     allowAuthorVisible?: string;
     allowAuthorVisibleHelp?: string;
+    newPostsFirst?: string;
+    newPostsFirstHelp?: string;
     allowGiphy?: string;
     allowGiphyHelp?: string;
     allowGrouping?: string;

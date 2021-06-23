@@ -77,6 +77,8 @@ export default {
     allowActionsHelp: `Toestaan van 'Acties' veld (follow-up) op elk retropunt`,
     allowAuthorVisible: 'Toon auteur',
     allowAuthorVisibleHelp: 'Tonen van auteur op het retropunt.',
+    newPostsFirst: undefined,
+    newPostsFirstHelp: undefined,
     allowGiphy: 'Giphy toestaan',
     allowGiphyHelp:
       'Gebruikers toestaan een Giphy afbeelding bij een retropunt te plaatsen',

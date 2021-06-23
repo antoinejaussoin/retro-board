@@ -79,6 +79,8 @@ export default {
     allowAuthorVisible: 'Show Author',
     allowAuthorVisibleHelp:
       'Display the author of the post, on the post itself.',
+    newPostsFirst: 'Add new posts first',
+    newPostsFirstHelp: 'New posts are added at the top of the column',
     allowGiphy: 'Allow Giphy',
     allowGiphyHelp: 'Allow users to set a Giphy image against a post',
     allowGrouping: 'Allow Grouping',

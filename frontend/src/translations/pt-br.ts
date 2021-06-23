@@ -72,6 +72,8 @@ export default {
     allowActionsHelp: undefined,
     allowAuthorVisible: undefined,
     allowAuthorVisibleHelp: undefined,
+    newPostsFirst: undefined,
+    newPostsFirstHelp: undefined,
     allowGiphy: undefined,
     allowGiphyHelp: undefined,
     allowGrouping: undefined,

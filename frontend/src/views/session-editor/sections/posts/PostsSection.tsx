@@ -35,6 +35,16 @@ function PostsSection({ options, onChange }: PostsSectionProps) {
     [onChange, options]
   );
 
+  const setNewPostsFirst = useCallback(
+    (value: boolean) => {
+      onChange({
+        ...options,
+        newPostsFirst: value,
+      });
+    },
+    [onChange, options]
+  );
+
   const setAllowReordering = useCallback(
     (value: boolean) => {
       onChange({
@@ -113,6 +123,15 @@ function PostsSection({ options, onChange }: PostsSectionProps) {
         <BooleanOption
           value={options.allowAuthorVisible}
           onChange={setAllowAuthorVisible}
+        />
+      </OptionItem>
+      <OptionItem
+        label={Customize.newPostsFirst!}
+        help={Customize.newPostsFirstHelp!}
+      >
+        <BooleanOption
+          value={options.newPostsFirst}
+          onChange={setNewPostsFirst}
         />
       </OptionItem>
       <OptionItem
