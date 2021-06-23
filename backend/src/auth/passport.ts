@@ -43,7 +43,7 @@ export default () => {
       anyProfile: TProfile,
       cb: TCallback
     ) => {
-      const profile = (anyProfile as unknown) as BaseProfile;
+      const profile = anyProfile as unknown as BaseProfile;
       let user: UserEntity;
       switch (type) {
         case 'google':
@@ -66,7 +66,7 @@ export default () => {
       }
 
       const dbUser = await getOrSaveUser(user);
-      const callback = (cb as unknown) as (
+      const callback = cb as unknown as (
         error: string | null,
         user: string
       ) => void;

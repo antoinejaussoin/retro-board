@@ -103,7 +103,8 @@ function stripeRouter(): Router {
         break;
       case 'customer.subscription.deleted':
         console.log('Deleted Sub', event);
-        const cancelEvent = (event as unknown) as StripeEvent<SubscriptionDeletedPayload>;
+        const cancelEvent =
+          event as unknown as StripeEvent<SubscriptionDeletedPayload>;
         if (event.request != null) {
           console.log('Manual cancellation');
           // handle a subscription cancelled by your request
@@ -116,7 +117,8 @@ function stripeRouter(): Router {
         await cancelSubscription(cancelEvent.data.object.id);
         break;
       case 'checkout.session.completed':
-        const subEvent = (event as unknown) as StripeEvent<CheckoutCompletedPayload>;
+        const subEvent =
+          event as unknown as StripeEvent<CheckoutCompletedPayload>;
 
         if (subEvent.data.object.payment_status === 'paid') {
           await activateSubscription(

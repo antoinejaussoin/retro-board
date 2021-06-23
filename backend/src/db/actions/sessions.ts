@@ -138,9 +138,8 @@ export async function doesSessionExists(sessionId: string): Promise<boolean> {
 export async function getSession(sessionId: string): Promise<Session | null> {
   return await transaction(async (manager) => {
     const postRepository = manager.getCustomRepository(PostRepository);
-    const postGroupRepository = manager.getCustomRepository(
-      PostGroupRepository
-    );
+    const postGroupRepository =
+      manager.getCustomRepository(PostGroupRepository);
     const sessionRepository = manager.getCustomRepository(SessionRepository);
     const columnRepository = manager.getCustomRepository(ColumnRepository);
 

@@ -50,9 +50,8 @@ export default class PostRepository extends Repository<PostEntity> {
       });
       return await this.findOne(post.id);
     } else {
-      const sessionRepository = this.manager.getCustomRepository(
-        SessionRepository
-      );
+      const sessionRepository =
+        this.manager.getCustomRepository(SessionRepository);
       const newSession = {
         ...defaultSession,
         id: sessionId,

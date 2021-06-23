@@ -62,9 +62,8 @@ export async function savePostGroup(
   group: PostGroup
 ): Promise<PostGroup | null> {
   return await transaction(async (manager) => {
-    const postGroupRepository = manager.getCustomRepository(
-      PostGroupRepository
-    );
+    const postGroupRepository =
+      manager.getCustomRepository(PostGroupRepository);
     const entity = await postGroupRepository.saveFromJson(
       sessionId,
       userId,
@@ -83,9 +82,8 @@ export async function updatePostGroup(
   groupData: Omit<Omit<PostGroup, 'user'>, 'posts'>
 ) {
   return await transaction(async (manager) => {
-    const postGroupRepository = manager.getCustomRepository(
-      PostGroupRepository
-    );
+    const postGroupRepository =
+      manager.getCustomRepository(PostGroupRepository);
     const entity = await postGroupRepository.findOne(groupData.id, {
       where: { session: { id: sessionId } },
     });
@@ -144,9 +142,8 @@ export async function deletePostGroup(
 ): Promise<boolean> {
   return await transaction(async (manager) => {
     try {
-      const postGroupRepository = manager.getCustomRepository(
-        PostGroupRepository
-      );
+      const postGroupRepository =
+        manager.getCustomRepository(PostGroupRepository);
       const sessionRepository = manager.getCustomRepository(SessionRepository);
       const session = await sessionRepository.findOne(sessionId, {
         relations: ['visitors'],
