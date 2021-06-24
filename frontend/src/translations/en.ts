@@ -1,5 +1,6 @@
 import { WsErrorType } from '@retrospected/common';
 import { Translation } from './types';
+import { plural } from './utils';
 export default {
   Header: {
     subtitle: 'A good way of expressing oneself in an Agile way',
@@ -19,10 +20,10 @@ export default {
   },
   PreviousGame: {
     createdBy: 'Created by',
-    posts: 'posts',
-    participants: 'participants',
-    votes: 'votes',
-    actions: 'actions',
+    posts: plural('post'),
+    participants: plural('participant'),
+    votes: plural('vote'),
+    actions: plural('action'),
   },
   Column: {
     createGroupTooltip: 'Create a group to group posts together',

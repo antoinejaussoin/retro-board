@@ -1,4 +1,5 @@
 import { Translation } from './types';
+import { plural } from './utils';
 export default {
   Header: {
     subtitle: 'Un buon modo per esprimersi in Agile',
@@ -19,10 +20,10 @@ export default {
   },
   PreviousGame: {
     createdBy: 'Creato da',
-    posts: 'post',
-    participants: 'partecipanti',
-    votes: 'voti',
-    actions: 'azioni',
+    posts: plural('post'),
+    participants: plural('participante', 'partecipanti'),
+    votes: plural('voto', 'voti'),
+    actions: plural('azione', 'azioni'),
   },
   Column: {
     createGroupTooltip: 'Crea un gruppo per raggruppare i post',

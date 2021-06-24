@@ -1,4 +1,5 @@
 import { Translation } from './types';
+import { plural } from './utils';
 export default {
   Header: {
     subtitle: 'Een goede manier om in een gestructureerde manier te tieren',
@@ -19,10 +20,10 @@ export default {
   },
   PreviousGame: {
     createdBy: 'Aangemaakt door',
-    posts: 'retropunten',
-    participants: 'deelnemers',
-    votes: 'stemmen',
-    actions: 'acties',
+    posts: plural('post'),
+    participants: plural('deelnemer'),
+    votes: plural('stem', 'stemmen'),
+    actions: plural('actie'),
   },
   Column: {
     createGroupTooltip: 'Creeër een groep om retropunten te bundelen',

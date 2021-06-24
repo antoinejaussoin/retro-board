@@ -1,5 +1,7 @@
 import { WsErrorType } from '@retrospected/common';
 
+export type PluralWord = (numberOfItems: number) => string;
+
 export interface Translation {
   Header: {
     subtitle?: string;
@@ -19,10 +21,10 @@ export interface Translation {
   };
   PreviousGame: {
     createdBy?: string;
-    posts?: string;
-    participants?: string;
-    votes?: string;
-    actions?: string;
+    posts?: PluralWord;
+    participants?: PluralWord;
+    votes?: PluralWord;
+    actions?: PluralWord;
   };
   Column: {
     createGroupTooltip?: string;

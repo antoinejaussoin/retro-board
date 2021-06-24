@@ -102,28 +102,33 @@ const PreviousGameItem = ({
           <Stats>
             <ItemStat
               value={session.numberOfPosts}
-              label={translations.posts!}
+              label={translations.posts!(session.numberOfPosts)}
               color={green[500]}
             />
             <ItemStat
               value={session.participants.length}
-              label={translations.participants!}
+              label={translations.participants!(session.participants.length)}
               color={indigo[500]}
             />
             <ItemStat
               value={
                 session.numberOfNegativeVotes + session.numberOfPositiveVotes
               }
-              label={translations.votes!}
+              label={translations.votes!(
+                session.numberOfNegativeVotes + session.numberOfPositiveVotes
+              )}
               color={red[500]}
             />
             <ItemStat
               value={session.numberOfActions}
-              label={translations.actions!}
+              label={translations.actions!(session.numberOfActions)}
               color={amber[500]}
             />
           </Stats>
-          <AvatarGroup max={10} title={translations.participants!}>
+          <AvatarGroup
+            max={10}
+            title={translations.participants!(session.participants.length)}
+          >
             {session.participants.map((user) => {
               return <CustomAvatar user={user} key={user.id} />;
             })}
