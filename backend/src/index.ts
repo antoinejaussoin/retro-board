@@ -48,7 +48,7 @@ import { updateUser, getUserByUsername, getUserView } from './db/actions/users';
 import isLicenced from './security/is-licenced';
 import rateLimit from 'express-rate-limit';
 import { Cache, inMemoryCache, redisCache } from './cache/cache';
-import { checkSelfHostedLicence } from './db/actions/self-hosting';
+import { validateLicence } from './db/actions/licences';
 
 const realIpHeader = 'X-Forwarded-For';
 let licenced = false;
@@ -425,7 +425,7 @@ db().then(() => {
     const payload = req.body as SelfHostedCheckPayload;
     console.log('Attempting to verify self-hosted licence for ', payload.key);
     try {
-      const isValid = await checkSelfHostedLicence(payload.key);
+      const isValid = await validateLicence(payload.key);
       if (isValid) {
         console.log(' ==> Self hosted licence granted.');
         res.status(200).send(true);
