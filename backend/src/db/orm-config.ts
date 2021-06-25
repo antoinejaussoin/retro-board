@@ -12,6 +12,8 @@ import {
   SubscriptionEntity,
   UserView,
 } from './entities';
+import LicenceEntity from './entities/Licence';
+import SessionOptionsEntity from './entities/SessionOptions';
 
 const migrationsDirectory = 'src/db/migrations';
 
@@ -34,6 +36,8 @@ export default function (): ConnectionOptions {
       SessionTemplateEntity,
       TemplateColumnDefinitionEntity,
       SubscriptionEntity,
+      LicenceEntity,
+      SessionOptionsEntity,
     ],
     synchronize: false,
     logging: config.SQL_LOG ? 'all' : undefined,

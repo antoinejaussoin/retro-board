@@ -14,6 +14,7 @@ import {
 } from './types';
 import { plans, getProduct } from './products';
 import { updateUser } from '../db/actions/users';
+import { registerLicence } from '../db/actions/licences';
 import { getUserFromRequest } from '../utils';
 import isValidDomain from '../security/is-valid-domain';
 import {
@@ -133,6 +134,9 @@ function stripeRouter(): Router {
         console.log('Checkout session completed: ', session);
         console.log('Line item: ', session.line_items?.data[0]);
         const product = session.line_items?.data[0].price;
+        const customerEmail = session.customer_details?.email || null;
+        const stripeCustomerId = session.customer! as string;
+        const stripeSessionId = session.id;
 
         if (subEvent.data.object.payment_status === 'paid') {
           if (
@@ -140,7 +144,11 @@ function stripeRouter(): Router {
             product.product === config.STRIPE_SELF_HOSTED_PRODUCT
           ) {
             console.log(' >> Received payment for a Self Hosted product');
-            // do something
+            await registerLicence(
+              customerEmail,
+              stripeCustomerId,
+              stripeSessionId
+            );
           } else {
             console.log(' >> Received payment for a regular subscription');
             await activateSubscription(
