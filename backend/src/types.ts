@@ -35,6 +35,9 @@ export interface BackendConfig {
   STRIPE_UNLIMITED_PRODUCT: string;
   STRIPE_UNLIMITED_PRICE: string;
   STRIPE_SELF_HOSTED_PRODUCT: string;
+  STRIPE_SELF_HOSTED_URL_GBP: string;
+  STRIPE_SELF_HOSTED_URL_EUR: string;
+  STRIPE_SELF_HOSTED_URL_USD: string;
   RATE_LIMIT_WINDOW: number;
   RATE_LIMIT_MAX: number;
   RATE_LIMIT_WS_POINTS: number;

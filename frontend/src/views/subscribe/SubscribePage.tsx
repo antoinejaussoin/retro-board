@@ -36,12 +36,17 @@ function SubscriberPage() {
   const stripe = useStripe();
   const { SubscribePage: translations } = useTranslations();
   const language = useLanguage();
-  const needDomain = product && product.seats === null;
+  const needDomain = product && product.plan === 'unlimited';
+  const needLogin =
+    !!product &&
+    product.plan !== 'self-hosted' &&
+    (!user || user.accountType === 'anonymous');
   const [validDomain, setValidDomain] = useState(false);
 
   useEffect(() => {
     setValidDomain(false);
-    const domainRegex = /^[a-zA-Z0-9][a-zA-Z0-9-_]{0,61}[a-zA-Z0-9]{0,1}\.([a-zA-Z]{1,6}|[a-zA-Z0-9-]{1,30}\.[a-zA-Z]{2,3})$/g;
+    const domainRegex =
+      /^[a-zA-Z0-9][a-zA-Z0-9-_]{0,61}[a-zA-Z0-9]{0,1}\.([a-zA-Z]{1,6}|[a-zA-Z0-9-]{1,30}\.[a-zA-Z]{2,3})$/g;
     if (!domainRegex.test(domain)) {
       return;
     }
@@ -63,26 +68,29 @@ function SubscriberPage() {
 
   const handleCheckout = useCallback(async () => {
     if (product) {
-      const session = await createCheckoutSession(
-        product.plan,
-        currency,
-        language.stripeLocale,
-        !product.seats ? domain : null
-      );
+      if (!product.recurring) {
+        const stripeUrl = product.paymentsUrls?.[currency];
+        if (stripeUrl) {
+          window.location.assign(stripeUrl);
+        }
+      } else {
+        const session = await createCheckoutSession(
+          product.plan,
+          currency,
+          language.stripeLocale,
+          !product.seats ? domain : null
+        );
 
-      if (session && stripe) {
-        await stripe.redirectToCheckout({
-          sessionId: session.id,
-        });
+        if (session && stripe) {
+          await stripe.redirectToCheckout({
+            sessionId: session.id,
+          });
+        }
       }
     }
   }, [stripe, product, currency, domain, language]);
 
-  const validForm =
-    (!needDomain || validDomain) &&
-    !!product &&
-    !!user &&
-    user.accountType !== 'anonymous';
+  const validForm = (!needDomain || validDomain) && !!product && !needLogin;
 
   return (
     <Container>
@@ -148,7 +156,7 @@ function SubscriberPage() {
         }`}
         description={translations.subscribe.description}
       >
-        {!user || user.accountType === 'anonymous' ? (
+        {needLogin ? (
           <Alert severity="info" style={{ marginBottom: 10 }}>
             {translations.subscribe.cannotRegisterWithAnon}
           </Alert>

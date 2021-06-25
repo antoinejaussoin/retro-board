@@ -313,12 +313,14 @@ export interface Translation {
       };
     };
     subscribeButton?: string;
+    payButton?: string;
     cancelButton?: string;
     startTrial?: string;
   };
   Products: {
     team?: string;
     unlimited?: string;
+    'self-hosted'?: string;
     users?: (users: number) => string;
     unlimited_seats?: string;
     month?: string;

@@ -84,7 +84,7 @@ export interface PostGroup extends PostContainer, Rankable, Entity {
 
 export type ProStatus = 'valid' | 'payment_issue' | 'pending';
 
-export type Plan = 'team' | 'unlimited';
+export type Plan = 'team' | 'unlimited' | 'self-hosted';
 
 export type Currency = 'gbp' | 'eur' | 'usd';
 
@@ -97,6 +97,10 @@ export interface Product {
   usd: number;
   eur: number;
   seats: number | null;
+  recurring: boolean;
+  paymentsUrls?: {
+    [currency: string]: string;
+  };
 }
 
 export interface User extends Entity {

@@ -19,10 +19,8 @@ function ProductDisplay({
   currency,
   onSelect,
 }: ProductDisplayProps) {
-  const {
-    Products: translations,
-    SubscribeModal: subscribeTranslations,
-  } = useTranslations();
+  const { Products: translations, SubscribeModal: subscribeTranslations } =
+    useTranslations();
   const handleOrder = useCallback(() => {
     onSelect(product);
   }, [onSelect, product]);
@@ -43,10 +41,16 @@ function ProductDisplay({
         </RegularPrice>
         <Total>
           {(product[currency] / 100).toFixed(2)} {currency.toUpperCase()}
-          <PerMonth>/ {translations.month}</PerMonth>
+          {product.recurring ? (
+            <PerMonth>/ {translations.month}</PerMonth>
+          ) : null}
         </Total>
         <PickMe>
-          <PickMeButton>{subscribeTranslations.subscribeButton}</PickMeButton>
+          <PickMeButton>
+            {product.recurring
+              ? subscribeTranslations.subscribeButton
+              : subscribeTranslations.payButton}
+          </PickMeButton>
         </PickMe>
       </Paper>
     </Container>
