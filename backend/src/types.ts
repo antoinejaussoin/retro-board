@@ -33,6 +33,7 @@ export interface BackendConfig {
   STRIPE_TEAM_PRICE: string;
   STRIPE_UNLIMITED_PRODUCT: string;
   STRIPE_UNLIMITED_PRICE: string;
+  STRIPE_SELF_HOSTED_PRODUCT: string;
   RATE_LIMIT_WINDOW: number;
   RATE_LIMIT_MAX: number;
   RATE_LIMIT_WS_POINTS: number;

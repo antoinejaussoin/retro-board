@@ -23,6 +23,7 @@
     "build": "yarn build-frontend && yarn build-backend",
     "start": "yarn build-common && yarn backend & yarn frontend",
     "migrate": "cd backend && yarn migrate && cd ..",
+    "stripe-login": "stripe login",
     "stripe-listen": "stripe listen --forward-to localhost:3000/api/stripe/webhook"
   },
   "repository": {

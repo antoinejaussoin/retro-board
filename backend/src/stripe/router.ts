@@ -63,6 +63,7 @@ function stripeRouter(): Router {
   }
 
   router.post('/webhook', async (req, res) => {
+    console.log('Webhook called');
     const signature = (req.headers['stripe-signature'] as string).trim();
     // Retrieve the event by verifying the signature using the raw body and secret.
     let event;
@@ -120,18 +121,45 @@ function stripeRouter(): Router {
         const subEvent =
           event as unknown as StripeEvent<CheckoutCompletedPayload>;
 
+        console.log('> checkout session completed');
+
+        const session = await stripe.checkout.sessions.retrieve(
+          subEvent.data.object.id,
+          {
+            expand: ['line_items'],
+          }
+        );
+
+        console.log('Checkout session completed: ', session);
+        console.log('Line item: ', session.line_items?.data[0]);
+        const product = session.line_items?.data[0].price;
+
         if (subEvent.data.object.payment_status === 'paid') {
-          await activateSubscription(
-            subEvent.data.object.client_reference_id,
-            subEvent.data.object.subscription,
-            subEvent.data.object.metadata.plan,
-            subEvent.data.object.metadata.domain,
-            subEvent.data.object.metadata.currency
-          );
+          if (
+            product &&
+            product.product === config.STRIPE_SELF_HOSTED_PRODUCT
+          ) {
+            console.log(' >> Received payment for a Self Hosted product');
+            // do something
+          } else {
+            console.log(' >> Received payment for a regular subscription');
+            await activateSubscription(
+              subEvent.data.object.client_reference_id,
+              subEvent.data.object.subscription,
+              subEvent.data.object.metadata.plan,
+              subEvent.data.object.metadata.domain,
+              subEvent.data.object.metadata.currency
+            );
+          }
         }
+
+        break;
+      case 'charge.succeeded':
+        console.log(' >> Charge succeeded');
         break;
       default:
-      // Unexpected event type
+        // Unexpected event type
+        console.log(' >> Unknown event: ', event.type);
     }
     res.sendStatus(200);
   });
