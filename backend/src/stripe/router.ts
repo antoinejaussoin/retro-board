@@ -138,6 +138,11 @@ function stripeRouter(): Router {
         const stripeCustomerId = session.customer! as string;
         const stripeSessionId = session.id;
 
+        const customer = (await stripe.customers.retrieve(
+          stripeCustomerId
+        )) as Stripe.Response<Stripe.Customer>;
+        const customerName = customer.name;
+
         if (subEvent.data.object.payment_status === 'paid') {
           if (
             product &&
@@ -146,6 +151,7 @@ function stripeRouter(): Router {
             console.log(' >> Received payment for a Self Hosted product');
             await registerLicence(
               customerEmail,
+              customerName,
               stripeCustomerId,
               stripeSessionId
             );

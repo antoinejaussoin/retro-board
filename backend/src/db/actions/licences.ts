@@ -1,12 +1,14 @@
 import { transaction } from './transaction';
 import LicenceEntity from '../entities/Licence';
 import { v4 } from 'uuid';
+import { sendSelfHostWelcome } from '../../email/emailSender';
 
 export async function registerLicence(
   email: string | null,
+  name: string | null,
   customerId: string,
   sessionId: string
-): Promise<string | null> {
+): Promise<boolean> {
   return await transaction(async (manager) => {
     const repository = manager.getRepository(LicenceEntity);
     const key = v4();
@@ -14,12 +16,15 @@ export async function registerLicence(
     try {
       const savedLicence = await repository.save(licence);
       if (savedLicence) {
-        return `${email}|${savedLicence.key}`;
+        if (email) {
+          await sendSelfHostWelcome(email, name || '', key);
+        }
+        return true;
       }
-      return null;
+      return false;
     } catch (err) {
       console.log('Error while saving the licence: ', err);
-      return null;
+      return false;
     }
   });
 }

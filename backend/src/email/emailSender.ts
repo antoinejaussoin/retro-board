@@ -56,3 +56,27 @@ export async function sendResetPassword(
     console.error('Send grid error: ', e, e.response.body);
   }
 }
+
+export async function sendSelfHostWelcome(
+  email: string,
+  name: string,
+  key: string
+) {
+  if (!config.SENDGRID_API_KEY) {
+    throw Error('Sendgrid is not activated.');
+  }
+  const msg: MailDataRequired = {
+    to: email,
+    from: config.SENDGRID_SENDER,
+    templateId: config.SENDGRID_SELF_HOST_EMAIL_TID,
+    dynamicTemplateData: {
+      name,
+      key,
+    },
+  };
+  try {
+    await sendGrid.send(msg);
+  } catch (e) {
+    console.error('Send grid error: ', e, e.response.body);
+  }
+}
