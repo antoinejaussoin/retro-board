@@ -64,7 +64,6 @@ function stripeRouter(): Router {
   }
 
   router.post('/webhook', async (req, res) => {
-    console.log('Webhook called');
     const signature = (req.headers['stripe-signature'] as string).trim();
     // Retrieve the event by verifying the signature using the raw body and secret.
     let event;
