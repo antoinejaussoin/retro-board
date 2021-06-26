@@ -49,3 +49,9 @@ export interface UnauthorizedAccessPayload {
 export interface SelfHostedCheckPayload {
   key: string;
 }
+
+export interface SelfHostingPayload {
+  selfHosted: boolean;
+  adminEmail: string;
+  licenced: boolean;
+}

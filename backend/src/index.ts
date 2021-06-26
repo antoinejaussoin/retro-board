@@ -52,10 +52,8 @@ import { Cache, inMemoryCache, redisCache } from './cache/cache';
 import { validateLicence } from './db/actions/licences';
 
 const realIpHeader = 'X-Forwarded-For';
-let licenced = false;
 
 isLicenced().then((hasLicence) => {
-  licenced = hasLicence;
   if (!hasLicence) {
     console.log(chalk`{red ----------------------------------------------- }`);
     console.log(
@@ -399,10 +397,6 @@ db().then(() => {
     });
     await sendResetPassword(resetPayload.email, user.name, code);
     res.status(200).send();
-  });
-
-  app.get('/api/licenced', (_, res) => {
-    res.status(200).send(licenced);
   });
 
   app.post('/api/reset-password', heavyLoadLimiter, async (req, res) => {

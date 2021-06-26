@@ -1,17 +1,23 @@
 import express from 'express';
 import { getAllPasswordUsers, updateUser, getUser } from '../db/actions/users';
 import config from '../config';
-import { AdminChangePasswordPayload } from '@retrospected/common';
+import isLicenced from '../security/is-licenced';
+import {
+  AdminChangePasswordPayload,
+  SelfHostingPayload,
+} from '@retrospected/common';
 import { getUserFromRequest, hashPassword } from '../utils';
 
 const router = express.Router();
 
-router.get('/email', (_, res) => {
-  if (config.SELF_HOSTED_ADMIN) {
-    res.status(200).send(config.SELF_HOSTED_ADMIN);
-  } else {
-    res.status(404).send('No admin email set.');
-  }
+router.get('/self-hosting', async (_, res) => {
+  const licenced = await isLicenced();
+  const payload: SelfHostingPayload = {
+    adminEmail: config.SELF_HOSTED_ADMIN,
+    selfHosted: config.SELF_HOSTED,
+    licenced,
+  };
+  res.status(200).send(payload);
 });
 
 router.get('/users', async (req, res) => {

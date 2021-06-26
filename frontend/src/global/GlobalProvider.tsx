@@ -1,19 +1,25 @@
 import { useEffect } from 'react';
-import { fetchAdminEmail } from '../api';
+import { fetchSelfHostingInfo } from '../api';
 import { useSetRecoilState } from 'recoil';
-import { adminEmailState } from './state';
+import { adminEmailState, isLicencedState, selfHostedState } from './state';
 
 const GlobalProvider: React.FC = ({ children }) => {
   const setEmail = useSetRecoilState(adminEmailState);
+  const setLicenced = useSetRecoilState(isLicencedState);
+  const setSelfHosted = useSetRecoilState(selfHostedState);
 
   useEffect(() => {
     async function loadGlobal() {
-      const email = await fetchAdminEmail();
-      console.log('admin email: ', email);
-      setEmail(email);
+      const infos = await fetchSelfHostingInfo();
+      console.log('infos: ', infos);
+      if (infos) {
+        setEmail(infos.adminEmail);
+        setLicenced(infos.licenced);
+        setSelfHosted(infos.selfHosted);
+      }
     }
     loadGlobal();
-  }, [setEmail]);
+  }, [setEmail, setLicenced, setSelfHosted]);
 
   return <>{children}</>;
 };

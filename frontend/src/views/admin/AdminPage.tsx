@@ -4,14 +4,15 @@ import { FullUser } from '@retrospected/common';
 import useUser from '../../auth/useUser';
 import useAdminEmail from '../../global/useAdminEmail';
 import useStateFetch from '../../hooks/useStateFetch';
-import config from '../../utils/getConfig';
 import { useMemo } from 'react';
 import styled from 'styled-components';
 import ChangePassword from './ChangePassword';
+import useIsSelfHosted from '../../global/useIsSelfHosted';
 
 export default function AdminPage() {
   const user = useUser();
   const adminEmail = useAdminEmail();
+  const isSelfHosted = useIsSelfHosted();
   const [users] = useStateFetch<FullUser[]>('/api/admin/users', []);
 
   const columns: GridColDef[] = useMemo(() => {
@@ -27,7 +28,7 @@ export default function AdminPage() {
     ] as GridColDef[];
   }, []);
 
-  if (!config.selfHosted) {
+  if (!isSelfHosted) {
     <Alert severity="error">
       This page is only accessible for self-hosted instances.
     </Alert>;
