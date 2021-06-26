@@ -26,6 +26,21 @@ export async function fetchGet<T>(url: string, defaultValue: T): Promise<T> {
   }
 }
 
+export async function fetchGetText(url: string): Promise<string | null> {
+  try {
+    const response = await fetch(url, {
+      ...requestConfig,
+    });
+    if (response.ok) {
+      return await response.text();
+    }
+    return null;
+  } catch (error) {
+    logToSentry(error);
+    return null;
+  }
+}
+
 async function fetchPostPatchDelete<T>(
   verb: 'PATCH' | 'POST' | 'DELETE',
   url: string,

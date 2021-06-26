@@ -10,6 +10,7 @@ import config from './config';
 import passport from 'passport';
 import passportInit from './auth/passport';
 import authRouter from './auth/router';
+import adminRouter from './admin/router';
 import stripeRouter from './stripe/router';
 import session from 'express-session';
 import game from './game';
@@ -201,6 +202,9 @@ db().then(() => {
 
   // Stripe
   app.use('/api/stripe', stripeRouter());
+
+  // Admin
+  app.use('/api/admin', adminRouter);
 
   // Create session
   app.post('/api/create', heavyLoadLimiter, async (req, res) => {

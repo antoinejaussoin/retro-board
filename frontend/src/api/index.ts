@@ -19,6 +19,7 @@ import {
   fetchPostGet,
   fetchDelete,
   requestConfig,
+  fetchGetText,
 } from './fetch';
 
 export async function createGame(): Promise<Session | null> {
@@ -208,4 +209,8 @@ export async function getGiphyUrl(giphyId: string): Promise<string | null> {
     console.error('Could not fetch Giphy', error);
     return null;
   }
+}
+
+export async function fetchAdminEmail(): Promise<string | null> {
+  return await fetchGetText('/api/admin/email');
 }

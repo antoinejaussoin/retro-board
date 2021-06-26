@@ -50,6 +50,7 @@ services:
       NODE_ENV: production
       LICENCE_KEY: # This must be provided if you deploy Retrospected yourself. Contact support@retrospected.com.
       SELF_HOSTED: 'true' # This will make any account "Pro", but only works with a valid LICENCE_KEY
+      SELF_HOSTED_ADMIN: your@email.com # Enter an admin email here. This person will be the only one able to reset passwords for your organisation.
       BASE_URL: http://localhost:80 # This must be the URL of the frontend app once deployed
       DB_TYPE: postgres
       DB_NAME: retroboard # Must be the same as POSTGRES_DB above

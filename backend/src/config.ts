@@ -16,6 +16,7 @@ if (fileExist) {
 const config: BackendConfig = {
   LICENCE_KEY: process.env.LICENCE_KEY!,
   SELF_HOSTED: process.env.SELF_HOSTED === 'true',
+  SELF_HOSTED_ADMIN: process.env.SELF_HOSTED_ADMIN!,
   DB_NAME: process.env.DB_NAME!,
   DB_USER: process.env.DB_USER!,
   DB_PASSWORD: process.env.DB_PASSWORD!,

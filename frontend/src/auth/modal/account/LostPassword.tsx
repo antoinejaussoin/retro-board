@@ -6,14 +6,16 @@ import Wrapper from './../Wrapper';
 import Input from '../../../components/Input';
 import { Email } from '@material-ui/icons';
 import { resetPassword } from '../../../api';
+import config from '../../../utils/getConfig';
+import { Link } from 'react-router-dom';
+import useAdminEmail from '../../../global/useAdminEmail';
 
 const LostPassword = () => {
-  const {
-    ResetPassword: translations,
-    AuthCommon: authTranslations,
-  } = useTranslations();
+  const { ResetPassword: translations, AuthCommon: authTranslations } =
+    useTranslations();
   const [email, setEmail] = useState('');
   const [done, setDone] = useState(false);
+  const adminEmail = useAdminEmail();
   const handleForgotPassword = useCallback(() => {
     async function reset() {
       await resetPassword(email);
@@ -21,6 +23,17 @@ const LostPassword = () => {
     }
     reset();
   }, [email]);
+
+  if (config.selfHosted) {
+    return (
+      <Alert severity="info">
+        You are using a Self-Hosted version of Retrospected. In order to reset
+        your password, ask your admin ({adminEmail}) to access the admin page to
+        do that:&nbsp;
+        <Link to="/admin">Admin Panel</Link>
+      </Alert>
+    );
+  }
 
   return done ? (
     <Alert severity="success">{translations.doneMessage}</Alert>

@@ -1,6 +1,7 @@
 export interface BackendConfig {
   LICENCE_KEY: string;
   SELF_HOSTED: boolean;
+  SELF_HOSTED_ADMIN: string;
   DB_NAME: string;
   DB_USER: string;
   DB_PASSWORD: string;
