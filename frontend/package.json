@@ -44,6 +44,7 @@
     "md5": "^2.3.0",
     "notistack": "^1.0.9",
     "prop-types": "^15.7.2",
+    "query-string": "^7.0.1",
     "react": "^17.0.2",
     "react-autosize-textarea": "^7.1.0",
     "react-beautiful-dnd": "^13.1.0",

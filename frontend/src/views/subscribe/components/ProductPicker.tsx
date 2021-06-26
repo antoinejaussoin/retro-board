@@ -1,17 +1,28 @@
-import { Product, Currency } from '@retrospected/common';
+import { Product, Currency, Plan } from '@retrospected/common';
 import 'flag-icon-css/css/flag-icon.min.css';
+import { useCallback } from 'react';
 import styled from 'styled-components';
 import ProductDisplay from './Product';
-import useProducts from './useProducts';
 
 interface ProductPickerProps {
-  value: Product | null;
+  value: Plan | null;
   currency: Currency;
-  onChange: (value: Product) => void;
+  products: Product[];
+  onChange: (value: Plan) => void;
 }
 
-function ProductPicker({ value, currency, onChange }: ProductPickerProps) {
-  const products = useProducts();
+function ProductPicker({
+  value,
+  currency,
+  products,
+  onChange,
+}: ProductPickerProps) {
+  const handleChange = useCallback(
+    (product: Product) => {
+      onChange(product.plan);
+    },
+    [onChange]
+  );
   return (
     <Container>
       {products.map((product) => (
@@ -19,8 +30,8 @@ function ProductPicker({ value, currency, onChange }: ProductPickerProps) {
           key={product.plan}
           product={product}
           currency={currency}
-          onSelect={onChange}
-          selected={value === product}
+          onSelect={handleChange}
+          selected={value === product.plan}
         />
       ))}
     </Container>

@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useStripe } from '@stripe/react-stripe-js';
+import queryString from 'query-string';
 import { createCheckoutSession, isValidDomain } from './api';
 import { useCallback } from 'react';
 import styled from 'styled-components';
@@ -7,7 +8,7 @@ import Step from './components/Step';
 import Button from '@material-ui/core/Button';
 import deepPurple from '@material-ui/core/colors/deepPurple';
 import grey from '@material-ui/core/colors/grey';
-import { Currency, Product, FullUser } from '@retrospected/common';
+import { Currency, FullUser, Plan } from '@retrospected/common';
 import CurrencyPicker from './components/CurrencyPicker';
 import ProductPicker from './components/ProductPicker';
 import Input from '../../components/Input';
@@ -15,6 +16,8 @@ import useUser from '../../auth/useUser';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { useEffect } from 'react';
 import useTranslations, { useLanguage } from '../../translations';
+import useProducts from './components/useProducts';
+import { find } from 'lodash';
 
 function guessDomain(user: FullUser): string {
   if (user.email) {
@@ -30,8 +33,19 @@ const DEFAULT_DOMAIN = 'acme.com';
 
 function SubscriberPage() {
   const user = useUser();
+  const products = useProducts();
+  const query = queryString.parse(window.location.search);
+  const defaultProduct: Plan | null = query.product
+    ? (query.product as Plan)
+    : null;
   const [currency, setCurrency] = useState<Currency>('eur');
-  const [product, setProduct] = useState<Product | null>(null);
+  const [plan, setPlan] = useState<Plan | null>(defaultProduct);
+  const product = useMemo(() => {
+    if (!plan || !products) {
+      return null;
+    }
+    return find(products, (p) => p.plan === plan) || null;
+  }, [plan, products]);
   const [domain, setDomain] = useState<string>(DEFAULT_DOMAIN);
   const stripe = useStripe();
   const { SubscribePage: translations } = useTranslations();
@@ -112,9 +126,10 @@ function SubscriberPage() {
           a limited time, to celebrate our new Pro features launch.
         </Alert>
         <ProductPicker
-          value={product}
+          value={plan}
+          products={products}
           currency={currency}
-          onChange={setProduct}
+          onChange={setPlan}
         />
       </Step>
       {needDomain ? (
