@@ -11,8 +11,7 @@ export default {
     header: 'Sprache auswählen',
   },
   Main: {
-    hint:
-      'Du kannst Andere zu dieser Session einladen indem Du ihnen die URL schickst',
+    hint: 'Du kannst Andere zu dieser Session einladen indem Du ihnen die URL schickst',
   },
   Home: {
     welcome: undefined,
@@ -318,12 +317,14 @@ export default {
       },
     },
     subscribeButton: undefined,
+    payButton: undefined,
     cancelButton: undefined,
     startTrial: undefined,
   },
   Products: {
     team: undefined,
     unlimited: undefined,
+    'self-hosted': undefined,
     users: undefined,
     unlimited_seats: undefined,
     month: undefined,

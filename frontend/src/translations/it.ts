@@ -12,8 +12,7 @@ export default {
     header: 'Scegli una lingua',
   },
   Main: {
-    hint:
-      'Puoi invitare altre persone a questa sessione copiando ed incollando la URL',
+    hint: 'Puoi invitare altre persone a questa sessione copiando ed incollando la URL',
   },
   Home: {
     welcome: (userName: string) => `Benvenuto/a, ${userName}`,
@@ -167,8 +166,7 @@ export default {
   },
   SocialMediaLogin: {
     header: 'Autenticazione con i Social Media',
-    info:
-      'Questo utilizzerà il tuo account per autenticarti e ti permetterà di recuperare tutte le tue sessioni. Nessuna password viene memorizzata.',
+    info: 'Questo utilizzerà il tuo account per autenticarti e ti permetterà di recuperare tutte le tue sessioni. Nessuna password viene memorizzata.',
   },
   AuthCommon: {
     emailField: undefined,
@@ -325,12 +323,14 @@ export default {
       },
     },
     subscribeButton: undefined,
+    payButton: undefined,
     cancelButton: undefined,
     startTrial: undefined,
   },
   Products: {
     team: undefined,
     unlimited: undefined,
+    'self-hosted': undefined,
     users: undefined,
     unlimited_seats: undefined,
     month: undefined,

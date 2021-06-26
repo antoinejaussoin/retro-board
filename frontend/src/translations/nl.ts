@@ -12,8 +12,7 @@ export default {
     header: 'Kies een taal',
   },
   Main: {
-    hint:
-      'Je kan anderen uitnodigen voor deze sessie door de URL te kopiëren en te plakken',
+    hint: 'Je kan anderen uitnodigen voor deze sessie door de URL te kopiëren en te plakken',
   },
   Home: {
     welcome: (userName: string) => `Welkom, ${userName}`,
@@ -166,8 +165,7 @@ export default {
   },
   SocialMediaLogin: {
     header: 'Social Media authenticatie',
-    info:
-      'Dit gebruikt je social media account en slaat de sessies op onder je account. Er is geen wachtwoord nodig.',
+    info: 'Dit gebruikt je social media account en slaat de sessies op onder je account. Er is geen wachtwoord nodig.',
   },
   AuthCommon: {
     emailField: undefined,
@@ -325,12 +323,14 @@ export default {
       },
     },
     subscribeButton: undefined,
+    payButton: undefined,
     cancelButton: undefined,
     startTrial: undefined,
   },
   Products: {
     team: undefined,
     unlimited: undefined,
+    'self-hosted': undefined,
     users: undefined,
     unlimited_seats: undefined,
     month: undefined,

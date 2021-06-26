@@ -11,8 +11,7 @@ export default {
     header: 'Escolha uma língua',
   },
   Main: {
-    hint:
-      'Você pode convidar outras pessoas para esta seção compartilhando a URL',
+    hint: 'Você pode convidar outras pessoas para esta seção compartilhando a URL',
   },
   Home: {
     welcome: undefined,
@@ -314,12 +313,14 @@ export default {
       },
     },
     subscribeButton: undefined,
+    payButton: undefined,
     cancelButton: undefined,
     startTrial: undefined,
   },
   Products: {
     team: undefined,
     unlimited: undefined,
+    'self-hosted': undefined,
     users: undefined,
     unlimited_seats: undefined,
     month: undefined,

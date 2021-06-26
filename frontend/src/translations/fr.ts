@@ -13,8 +13,7 @@ export default {
     header: 'Changez de langue',
   },
   Main: {
-    hint:
-      "Vous pouvez inviter d'autres participants en leur envoyant l'URL de cette page",
+    hint: "Vous pouvez inviter d'autres participants en leur envoyant l'URL de cette page",
   },
   Home: {
     welcome: (userName: string) => `Bienvenue, ${userName}`,
@@ -199,8 +198,7 @@ export default {
   },
   SocialMediaLogin: {
     header: 'OAuth',
-    info:
-      'Un service tiers de votre choix va vous permettre de vous authentifier. Aucun mot de passe ne sera stocké.',
+    info: 'Un service tiers de votre choix va vous permettre de vous authentifier. Aucun mot de passe ne sera stocké.',
   },
   AuthCommon: {
     emailField: 'Adresse e-mail',
@@ -244,8 +242,7 @@ export default {
     doneMessage: `C'est fait ! Jetez un oeuil dans votre boîte email, vous devriez reçevoir un email pour mettre à jour votre mot de passe.`,
     header: 'Changer de mot de passe',
     resetButton: 'Mettre à jour',
-    info:
-      'Vous avez oublié votre mot de passe ? Pas de problème, entrez votre email et vous recevrez un email en retour.',
+    info: 'Vous avez oublié votre mot de passe ? Pas de problème, entrez votre email et vous recevrez un email en retour.',
     // Reset Page
     success: `Votre mot de passe a été mis à jour. Je vais vous connecter dans quelques secondes.`,
     error:
@@ -376,12 +373,15 @@ export default {
       },
     },
     subscribeButton: `S'abonner`,
+    payButton: 'Selectionner',
     cancelButton: `Annuler`,
     startTrial: `Essai 30 jours`,
   },
   Products: {
     team: `Parfait pour une équipe, vous pouvez sélectioner jusqu'à 20 collègues qui recevront un compte Retrospected Pro.`,
     unlimited: `Si vous avez besoin de plus, l'abonnement "Pro Unlimited" vous donnera un nombre de compte Pro illimité`,
+    'self-hosted':
+      'Installez Retrospected sur vos serveurs. Gardez le contrôle total de vos données, et profitez des mise-à-jours illimitées.',
     users: (users: number) => `${users} utilisateurs`,
     unlimited_seats: 'Illimité',
     month: 'mois',
