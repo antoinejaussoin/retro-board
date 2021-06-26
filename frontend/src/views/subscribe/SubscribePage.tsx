@@ -13,7 +13,7 @@ import CurrencyPicker from './components/CurrencyPicker';
 import ProductPicker from './components/ProductPicker';
 import Input from '../../components/Input';
 import useUser from '../../auth/useUser';
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { Alert } from '@material-ui/lab';
 import { useEffect } from 'react';
 import useTranslations, { useLanguage } from '../../translations';
 import useProducts from './components/useProducts';
@@ -121,10 +121,6 @@ function SubscriberPage() {
         title={translations.plan.title}
         description={translations.plan.description}
       >
-        <Alert>
-          <AlertTitle>Limited Offer</AlertTitle>Retrospected Pro is 50% off for
-          a limited time, to celebrate our new Pro features launch.
-        </Alert>
         <ProductPicker
           value={plan}
           products={products}
