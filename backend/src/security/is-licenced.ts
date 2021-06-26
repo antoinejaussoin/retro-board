@@ -13,7 +13,8 @@ export default async function isLicenced() {
   const payload: SelfHostedCheckPayload = { key: licenceKey };
   try {
     const response = await fetch(
-      'https://www.retrospected.com/api/self-hosted',
+      // 'https://www.retrospected.com/api/self-hosted',
+      'https://beta.retrospected.com/api/self-hosted', // TODO: RESTORE THIS TO PROD
       {
         method: 'POST',
         body: JSON.stringify(payload),
