@@ -73,6 +73,9 @@ const EncryptionDoc = lazy(
   () =>
     import('./views/home/Encryption' /* webpackChunkName: "encryption-doc" */)
 );
+const AdminPage = lazy(
+  () => import('./views/admin/AdminPage' /* webpackChunkName: "admin-page" */)
+);
 
 const Title = styled(Typography)`
   color: white;
@@ -134,6 +137,7 @@ function App() {
           <Route path="/subscribe" component={SubscribePageOuter} exact />
           <Route path="/subscribe/success" component={SuccessPage} exact />
           <Route path="/subscribe/cancel" component={CancelPage} exact />
+          <Route path="/admin" component={AdminPage} />
           <Route path="/privacy" component={PrivacyPolicyPage} />
           <Route path="/terms" component={TermsAndConditionsPage} />
           <Route path="/cookies" component={CookiesPolicyPage} />

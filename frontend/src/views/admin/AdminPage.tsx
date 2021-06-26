@@ -1,0 +1,53 @@
+import { Alert } from '@material-ui/lab';
+import { DataGrid, GridColDef } from '@material-ui/data-grid';
+import { FullUser } from '@retrospected/common';
+import useUser from '../../auth/useUser';
+import useAdminEmail from '../../global/useAdminEmail';
+import useStateFetch from '../../hooks/useStateFetch';
+import config from '../../utils/getConfig';
+import { useMemo } from 'react';
+import styled from 'styled-components';
+import ChangePassword from './ChangePassword';
+
+export default function AdminPage() {
+  const user = useUser();
+  const adminEmail = useAdminEmail();
+  const [users] = useStateFetch<FullUser[]>('/api/admin/users', []);
+
+  const columns: GridColDef[] = useMemo(() => {
+    return [
+      { field: 'email', headerName: 'Email', width: 300, filterable: true },
+      { field: 'name', headerName: 'Name', width: 300 },
+      {
+        field: '',
+        headerName: 'Actions',
+        width: 200,
+        renderCell: (p) => <ChangePassword user={p.row as FullUser} />,
+      },
+    ] as GridColDef[];
+  }, []);
+
+  if (!config.selfHosted) {
+    <Alert severity="error">
+      This page is only accessible for self-hosted instances.
+    </Alert>;
+  }
+  if (!user || user.email !== adminEmail) {
+    return (
+      <Alert severity="error">
+        This page is only accessible for the Self-Hosted Administrator (
+        {adminEmail}).
+      </Alert>
+    );
+  }
+  return (
+    <Container>
+      <DataGrid rows={users} columns={columns} />
+    </Container>
+  );
+}
+
+const Container = styled.div`
+  height: calc(100vh - 65px);
+  width: 100%;
+`;

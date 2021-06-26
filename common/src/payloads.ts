@@ -26,6 +26,11 @@ export interface CreateCustomerPayload {
   email: string;
 }
 
+export interface AdminChangePasswordPayload {
+  userId: string;
+  password: string;
+}
+
 export interface CreateSubscriptionPayload {
   plan: Plan;
   currency: Currency;
