@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllUsers, updateUser, getUser } from '../db/actions/users';
+import { getAllPasswordUsers, updateUser, getUser } from '../db/actions/users';
 import config from '../config';
 import { AdminChangePasswordPayload } from '@retrospected/common';
 import { getUserFromRequest, hashPassword } from '../utils';
@@ -19,7 +19,7 @@ router.get('/users', async (req, res) => {
   if (!authUser || authUser.email !== config.SELF_HOSTED_ADMIN) {
     return res.status(403).send('You are not allowed to do this');
   }
-  const users = await getAllUsers();
+  const users = await getAllPasswordUsers();
   res.send(users.map((u) => u.toJson()));
 });
 

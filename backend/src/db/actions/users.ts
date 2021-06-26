@@ -1,5 +1,5 @@
 import { UserEntity, UserView } from '../entities';
-import { EntityManager, Not } from 'typeorm';
+import { EntityManager } from 'typeorm';
 import { UserRepository } from '../repositories';
 import { ALL_FIELDS } from '../entities/User';
 import { transaction } from './transaction';
@@ -12,11 +12,11 @@ export async function getUser(id: string): Promise<UserEntity | null> {
   });
 }
 
-export async function getAllUsers(): Promise<UserView[]> {
+export async function getAllPasswordUsers(): Promise<UserView[]> {
   return await transaction(async (manager) => {
     const userRepository = manager.getRepository(UserView);
     const users = await userRepository.find({
-      where: { accountType: Not('anonymous') },
+      where: { accountType: 'password' },
     });
     return users;
   });
