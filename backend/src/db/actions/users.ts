@@ -4,7 +4,7 @@ import { UserRepository } from '../repositories';
 import { ALL_FIELDS } from '../entities/User';
 import { transaction } from './transaction';
 import { FullUser } from '@retrospected/common';
-import config from '../../config';
+import { isSelfHostedAndLicenced } from '../../security/is-licenced';
 
 export async function getUser(id: string): Promise<UserEntity | null> {
   return await transaction(async (manager) => {
@@ -43,7 +43,8 @@ async function getUserViewInner(
 ): Promise<UserView | null> {
   const userViewRepository = manager.getRepository(UserView);
   const user = await userViewRepository.findOne({ id });
-  if (user && config.SELF_HOSTED) {
+  // All users are pro if self-hosted and licenced
+  if (user && isSelfHostedAndLicenced()) {
     user.pro = true;
   }
   return user || null;
@@ -97,7 +98,7 @@ export async function getOrSaveUser(user: UserEntity): Promise<UserEntity> {
 
 export function isUserPro(user: FullUser) {
   // TODO: deduplicate from same logic in Frontend frontend/src/auth/useIsPro.ts
-  if (config.SELF_HOSTED) {
+  if (isSelfHostedAndLicenced()) {
     return true;
   }
   const activeTrial = user && user.trial && new Date(user.trial) > new Date();

@@ -1,7 +1,7 @@
 import express from 'express';
 import { getAllPasswordUsers, updateUser, getUser } from '../db/actions/users';
 import config from '../config';
-import isLicenced from '../security/is-licenced';
+import { isLicenced } from '../security/is-licenced';
 import {
   AdminChangePasswordPayload,
   SelfHostingPayload,

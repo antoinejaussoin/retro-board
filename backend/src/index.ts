@@ -46,7 +46,7 @@ import {
   getDefaultTemplate,
 } from './db/actions/sessions';
 import { updateUser, getUserByUsername, getUserView } from './db/actions/users';
-import isLicenced from './security/is-licenced';
+import { isLicenced } from './security/is-licenced';
 import rateLimit from 'express-rate-limit';
 import { Cache, inMemoryCache, redisCache } from './cache/cache';
 import { validateLicence } from './db/actions/licences';

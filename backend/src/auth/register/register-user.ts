@@ -17,6 +17,7 @@ export default async function registerUser(
   newUser.language = details.language;
   newUser.username = details.username;
   newUser.email = details.username;
+  // If self-hosted we skip the requirement for email checks
   if (!config.SELF_HOSTED) {
     newUser.emailVerification = v4();
   }

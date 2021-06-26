@@ -4,7 +4,11 @@ import fetch from 'node-fetch';
 
 let licenced: boolean | null = null;
 
-export default async function isLicenced() {
+export function isSelfHostedAndLicenced() {
+  return !!licenced && config.SELF_HOSTED;
+}
+
+export async function isLicenced() {
   if (licenced !== null) {
     return licenced;
   }
