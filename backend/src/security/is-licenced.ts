@@ -2,7 +2,18 @@ import { SelfHostedCheckPayload } from '@retrospected/common';
 import config from '../config';
 import fetch from 'node-fetch';
 
+let licenced: boolean | null = null;
+
 export default async function isLicenced() {
+  if (licenced !== null) {
+    return licenced;
+  }
+  const result = await isLicencedBase();
+  licenced = result;
+  return result;
+}
+
+async function isLicencedBase() {
   if (
     config.BASE_URL.endsWith('www.retrospected.com') ||
     config.BASE_URL === 'http://localhost:3000'
