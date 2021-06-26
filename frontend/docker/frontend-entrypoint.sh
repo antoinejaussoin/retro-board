@@ -14,5 +14,6 @@ sed -i "s#NO_AUTH_GITHUB_ENABLED#$AUTH_GITHUB_ENABLED#g" /usr/share/nginx/html/i
 sed -i "s#NO_AUTH_SLACK_ENABLED#$AUTH_SLACK_ENABLED#g" /usr/share/nginx/html/index.html
 sed -i "s#NO_AUTH_MICROSOFT_ENABLED#$AUTH_MICROSOFT_ENABLED#g" /usr/share/nginx/html/index.html
 sed -i "s#NO_DEFAULT_LANGUAGE#$DEFAULT_LANGUAGE#g" /usr/share/nginx/html/index.html
+sed -i "s#NO_SELF_HOSTED#$SELF_HOSTED#g" /usr/share/nginx/html/index.html
 
 exec "$@"

@@ -92,6 +92,7 @@ export async function accountLogin(
 interface RegisterResponse {
   user: FullUser | null;
   error: 'already-exists' | 'other' | null;
+  loggedIn: boolean;
 }
 
 export async function register(
@@ -113,15 +114,17 @@ export async function register(
       body: JSON.stringify(payload),
     });
     if (response.ok) {
-      const user = await response.json();
+      const { user, loggedIn } = await response.json();
       return {
         user,
         error: null,
+        loggedIn,
       };
     } else if (response.status === 403) {
       return {
         user: null,
         error: 'already-exists',
+        loggedIn: false,
       };
     }
   } catch (error) {
@@ -131,6 +134,7 @@ export async function register(
   return {
     user: null,
     error: 'other',
+    loggedIn: false,
   };
 }
 

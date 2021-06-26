@@ -328,14 +328,25 @@ db().then(() => {
     if (!user) {
       res.status(500).send();
     } else {
-      await sendVerificationEmail(
-        registerPayload.username,
-        registerPayload.name,
-        user.emailVerification!
-      );
+      if (user.emailVerification) {
+        await sendVerificationEmail(
+          registerPayload.username,
+          registerPayload.name,
+          user.emailVerification!
+        );
+      } else {
+        req.logIn(user.id, (err) => {
+          if (err) {
+            console.log('Cannot login Error: ', err);
+            res.status(500).send('Cannot login');
+          }
+        });
+      }
       const userView = await getUserView(user.id);
       if (userView) {
-        res.status(200).send(userView.toJson());
+        res
+          .status(200)
+          .send({ loggedIn: !user.emailVerification, user: userView.toJson() });
       } else {
         res.status(500).send();
       }

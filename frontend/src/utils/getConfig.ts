@@ -9,6 +9,7 @@ interface HtmlConfig {
   AUTH_SLACK_ENABLED: string;
   AUTH_MICROSOFT_ENABLED: string;
   DEFAULT_LANGUAGE: string;
+  SELF_HOSTED: string;
   VERSION: string;
 }
 
@@ -26,6 +27,7 @@ interface Config {
   SlackAuthEnabled: boolean;
   MicrosoftAuthEnabled: boolean;
   defaultLanguage: string;
+  selfHosted: boolean;
   version: string;
 }
 
@@ -44,6 +46,7 @@ function getKey(
     | 'GIPHY_API_KEY'
     | 'STRIPE_KEY'
     | 'DEFAULT_LANGUAGE'
+    | 'SELF_HOSTED'
     | 'AUTH_GOOGLE_ENABLED'
     | 'AUTH_TWITTER_ENABLED'
     | 'AUTH_GITHUB_ENABLED'
@@ -88,6 +91,8 @@ function getConfig(): Config {
       'AUTH_MICROSOFT_ENABLED',
       'NO_AUTH_MICROSOFT_ENABLED'
     ).toLowerCase() === 'true';
+  const isSelfHosted =
+    getKey('SELF_HOSTED', 'NO_SELF_HOSTED', 'false').toLowerCase() === 'true';
 
   return {
     hasGA: !!googleAnalyticsId,
@@ -103,6 +108,7 @@ function getConfig(): Config {
     SlackAuthEnabled: isSlackAuthEnabled,
     MicrosoftAuthEnabled: isMicrosoftAuthEnabled,
     defaultLanguage: defaultLanguage,
+    selfHosted: isSelfHosted,
     version: window.__env__['VERSION'],
   };
 }

@@ -23,7 +23,7 @@ const AccountAuth = ({ onClose, onUser }: AccountAuthProps) => {
           onAskPasswordReset={() => setMode('reset')}
         />
       ) : null}
-      {mode === 'register' ? <Register /> : null}
+      {mode === 'register' ? <Register onClose={onClose} /> : null}
       {mode === 'reset' ? <LostPassword /> : null}
     </>
   );

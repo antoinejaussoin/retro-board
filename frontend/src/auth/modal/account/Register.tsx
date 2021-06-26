@@ -1,4 +1,11 @@
-import { Suspense, useCallback, useState, useMemo, lazy } from 'react';
+import {
+  Suspense,
+  useCallback,
+  useState,
+  useMemo,
+  lazy,
+  useContext,
+} from 'react';
 import Button from '@material-ui/core/Button';
 import { Alert } from '@material-ui/lab';
 import useTranslations, { useLanguage } from '../../../translations';
@@ -7,6 +14,11 @@ import Input from '../../../components/Input';
 import { Person, Email, VpnKey } from '@material-ui/icons';
 import { register } from '../../../api';
 import { validate } from 'isemail';
+import UserContext from '../../Context';
+
+type RegisterProps = {
+  onClose: () => void;
+};
 
 const PasswordStrength = lazy(
   () =>
@@ -15,11 +27,9 @@ const PasswordStrength = lazy(
     )
 );
 
-const Register = () => {
-  const {
-    Register: translations,
-    AuthCommon: authTranslations,
-  } = useTranslations();
+const Register = ({ onClose }: RegisterProps) => {
+  const { Register: translations, AuthCommon: authTranslations } =
+    useTranslations();
   const language = useLanguage();
   const [registerName, setRegisterName] = useState('');
   const [registerEmail, setRegisterEmail] = useState('');
@@ -27,6 +37,7 @@ const Register = () => {
   const [passwordScore, setPasswordScore] = useState(0);
   const [generalError, setGeneralError] = useState<string | null>(null);
   const [isSuccessful, setIsSuccessful] = useState(false);
+  const { setUser } = useContext(UserContext);
 
   const validEmail = useMemo(() => {
     return validate(registerEmail);
@@ -52,6 +63,10 @@ const Register = () => {
       }
     } else {
       setIsSuccessful(true);
+      if (response.loggedIn) {
+        setUser(response.user);
+        onClose();
+      }
     }
   }, [
     registerName,
@@ -59,6 +74,8 @@ const Register = () => {
     registerPassword,
     language.value,
     translations,
+    setUser,
+    onClose,
   ]);
 
   return (

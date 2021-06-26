@@ -46,6 +46,7 @@ dist/
 configuration.json
 /docker-compose.yml
 .env
+.env copy
 /db
 
 *.rest
