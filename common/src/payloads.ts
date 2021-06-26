@@ -54,4 +54,13 @@ export interface SelfHostingPayload {
   selfHosted: boolean;
   adminEmail: string;
   licenced: boolean;
+  oAuth: OAuthAvailabilities;
+}
+
+export interface OAuthAvailabilities {
+  google: boolean;
+  twitter: boolean;
+  slack: boolean;
+  microsoft: boolean;
+  github: boolean;
 }

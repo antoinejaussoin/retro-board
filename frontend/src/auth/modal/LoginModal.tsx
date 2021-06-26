@@ -7,22 +7,18 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import useTranslations from '../../translations';
 import UserContext from '../Context';
-import config from '../../utils/getConfig';
 import SocialAuth from './SocialAuth';
 import AnonAuth from './AnonAuth';
 import AccountAuth from './AccountAuth';
+import useOAuthAvailabilities from '../../global/useOAuthAvailabilities';
 
 interface LoginModalProps {
   onClose: () => void;
 }
 
 const Login = ({ onClose }: LoginModalProps) => {
-  const hasNoSocialMediaAuth =
-    !config.GoogleAuthEnabled &&
-    !config.TwitterAuthEnabled &&
-    !config.GitHubAuthEnabled &&
-    !config.SlackAuthEnabled &&
-    !config.MicrosoftAuthEnabled;
+  const { any } = useOAuthAvailabilities();
+  const hasNoSocialMediaAuth = !any;
   const translations = useTranslations();
   const fullScreen = useMediaQuery('(max-width:600px)');
   const { setUser } = useContext(UserContext);

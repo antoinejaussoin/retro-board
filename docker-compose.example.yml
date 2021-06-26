@@ -14,8 +14,11 @@ services:
     image: postgres:11.6
     hostname: postgres
     environment:
-      POSTGRES_USER: postgres # Must be the same as DB_USER below
+      #  -- Change Recommended --
       POSTGRES_PASSWORD: postgres # Must be the same as DB_PASSWORD below
+
+      # -- Optional --
+      POSTGRES_USER: postgres # Must be the same as DB_USER below
       POSTGRES_DB: retroboard # Must be the same as DB_NAME below
     volumes:
       - database:/var/lib/postgresql/data
@@ -30,9 +33,10 @@ services:
     depends_on:
       - postgres
     ports:
-      - '8080:80' # Change 8080 to whatever port you want to access pgAdmin from
+      - '8080:80' # Change the first 8080 to whatever port you want to access pgAdmin from
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@retrospected.com # Can be anything
+      # -- Change Recommended --
+      PGADMIN_DEFAULT_EMAIL: admin@retrospected.com # Can be any email or username. This is used to access PGAdmin.
       PGADMIN_DEFAULT_PASSWORD: admin # Please change this!
     volumes:
       - pgadmin:/var/lib/pgadmin
@@ -47,25 +51,23 @@ services:
     depends_on:
       - redis
     environment:
-      NODE_ENV: production
+      # -- Change Recommended --
+      BASE_URL: http://localhost:80 # This must be the URL of the frontend app once deployed
       LICENCE_KEY: # This must be provided if you deploy Retrospected yourself. Contact support@retrospected.com.
       SELF_HOSTED: 'true' # This will make any account "Pro", but only works with a valid LICENCE_KEY
       SELF_HOSTED_ADMIN: your@email.com # Enter an admin email here. This person will be the only one able to reset passwords for your organisation.
-      BASE_URL: http://localhost:80 # This must be the URL of the frontend app once deployed
-      DB_TYPE: postgres
-      DB_NAME: retroboard # Must be the same as POSTGRES_DB above
       DB_USER: postgres # Must be the same as POSTGRES_USER above
       DB_PASSWORD: postgres # Must be the same as POSTGRES_PASSWORD above
-      DB_HOST: postgres # Must be the name of the Postgres service above
-      DB_PORT: 5432 # Don't change this.
-      BACKEND_PORT: 3201 # Don't change this (or change it in nginx.conf as well)
-      SQL_LOG: 'false' # Whether to log SQL queries in the console
+      SESSION_SECRET: changeme # Session secret. Can be anything you want, but change the default value
+
+      # -- Optional --      
       REDIS_ENABLED: 'true' # Whether to enable Redis
       REDIS_FOR_SOCKETIO_ENABLED: 'false' # Whether Socket.IO uses Redis (set to true when using more than 1 backend replica)
       REDIS_PORT: 6379 # Should match the Redis port
       REDIS_HOST: redis # Must be the name of the Redis service above
       SENTRY_URL: '' # Optional, Sentry URL (https://1234567890abcdef12345@sentry.io/1234567)
-      SESSION_SECRET: changeme
+
+      # -- OAuth: Set these to enable OAuth authentication for one or more provider. This is optional. --
       TWITTER_KEY:
       TWITTER_SECRET:
       GOOGLE_KEY:
@@ -76,6 +78,14 @@ services:
       SLACK_SECRET:
       MICROSOFT_KEY:
       MICROSOFT_SECRET:
+
+      # -- Do not change --
+      NODE_ENV: production
+      DB_NAME: retroboard # Must be the same as POSTGRES_DB above
+      DB_HOST: postgres # Must be the name of the Postgres service above
+      DB_PORT: 5432 # Don't change this.
+      BACKEND_PORT: 3201 # Don't change this (or change it in nginx.conf as well)
+      SQL_LOG: 'false' # Whether to log SQL queries in the console
       SENDGRID_API_KEY: # Used for Sendgrid email reminders
       SENDGRID_SENDER: # Email to be used as the sender for emails
       SENDGRID_VERIFICATION_EMAIL_TID: # Verification email template ID
@@ -96,6 +106,7 @@ services:
       RATE_LIMIT_WS_POINTS: 10 # Websocket rate limiting, max messages per duration
       RATE_LIMIT_WS_DURATION: 1 # Websocket rate limiting, window duration (in seconds)
       WS_MAX_BUFFER_SIZE: 100000 # Max websocket message size in bytes
+            
     restart: unless-stopped
     logging:
       driver: 'json-file'
@@ -109,18 +120,17 @@ services:
     ports:
       - '80:80' # Change the first 80 to whatever port you want to access Retrospected from
     environment:
-      BACKEND_HOST: backend # This should be the name of the backend service
-      BACKEND_PORT: 3201 # This should be the same as BACKEND_PORT on backend
+      # -- Optional --
       GA_ID: '' # Optional, Google Analytics ID (UA-1234456-7)
       SENTRY_URL: '' # Optional, Sentry URL (https://1234567890abcdef12345@sentry.io/1234567)
       GIPHY_API_KEY: '' # Optional, can be obtained here: https://developers.giphy.com/
-      AUTH_GOOGLE_ENABLED: 'false' # Set to true if you set GOOGLE_KEY and GOOGLE_SECRET above
-      AUTH_TWITTER_ENABLED: 'false'
-      AUTH_GITHUB_ENABLED: 'false'
-      AUTH_SLACK_ENABLED: 'false'
-      AUTH_MICROSOFT_ENABLED: 'false'
       DEFAULT_LANGUAGE: 'en' # Set the default language for new users
+
+      # -- Do Not Change --
+      BACKEND_HOST: backend # This should be the name of the backend service
+      BACKEND_PORT: 3201 # This should be the same as BACKEND_PORT on backend
       STRIPE_KEY: '' # Stripe publishable key (for frontend)
+
     restart: unless-stopped
     logging:
       driver: 'json-file'

@@ -16,6 +16,13 @@ router.get('/self-hosting', async (_, res) => {
     adminEmail: config.SELF_HOSTED_ADMIN,
     selfHosted: config.SELF_HOSTED,
     licenced,
+    oAuth: {
+      google: !!config.GOOGLE_KEY && !!config.GOOGLE_SECRET,
+      github: !!config.GITHUB_KEY && !!config.GITHUB_SECRET,
+      microsoft: !!config.MICROSOFT_KEY && !!config.MICROSOFT_SECRET,
+      slack: !!config.SLACK_KEY && !!config.SLACK_SECRET,
+      twitter: !!config.TWITTER_KEY && !!config.TWITTER_SECRET,
+    },
   };
   res.status(200).send(payload);
 });

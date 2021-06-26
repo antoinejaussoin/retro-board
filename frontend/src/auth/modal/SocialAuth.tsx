@@ -9,11 +9,11 @@ import {
 import styled from 'styled-components';
 import io from 'socket.io-client';
 import useTranslations, { useLanguage } from '../../translations';
-import config from '../../utils/getConfig';
 import { updateLanguage } from '../../api';
 import { FullUser } from '@retrospected/common';
 import Wrapper from './Wrapper';
 import SlackLoginButton from './social/SlackLoginButton';
+import useOAuthAvailabilities from '../../global/useOAuthAvailabilities';
 
 const API_URL = '/api/auth';
 
@@ -26,6 +26,7 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
   const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null);
   const windowRef = useRef<Window | null>(null);
   const { SocialMediaLogin: translations } = useTranslations();
+  const { details } = useOAuthAvailabilities();
   const language = useLanguage();
   const handleOAuth = useCallback(
     (provider: string) => {
@@ -47,13 +48,15 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
   );
   const handleGitHub = useCallback(() => handleOAuth('github'), [handleOAuth]);
   const handleSlack = useCallback(() => handleOAuth('slack'), [handleOAuth]);
-  const handleMicrosoft = useCallback(() => handleOAuth('microsoft'), [
-    handleOAuth,
-  ]);
+  const handleMicrosoft = useCallback(
+    () => handleOAuth('microsoft'),
+    [handleOAuth]
+  );
   const handleGoogle = useCallback(() => handleOAuth('google'), [handleOAuth]);
-  const handleTwitter = useCallback(() => handleOAuth('twitter'), [
-    handleOAuth,
-  ]);
+  const handleTwitter = useCallback(
+    () => handleOAuth('twitter'),
+    [handleOAuth]
+  );
 
   useEffect(() => {
     const s = io();
@@ -80,19 +83,19 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
     <Wrapper header={translations.header}>
       <Alert severity="info">{translations.info}</Alert>
       <AccountsButtons>
-        {config.MicrosoftAuthEnabled && (
+        {details.microsoft && (
           <MicrosoftLoginButton onClick={handleMicrosoft} text="Microsoft" />
         )}
-        {config.GoogleAuthEnabled && (
+        {details.google && (
           <GoogleLoginButton onClick={handleGoogle} text="Google" />
         )}
-        {config.GitHubAuthEnabled && (
+        {details.github && (
           <GithubLoginButton onClick={handleGitHub} text="GitHub" />
         )}
-        {config.SlackAuthEnabled && (
+        {details.slack && (
           <SlackLoginButton onClick={handleSlack} text="Slack" />
         )}
-        {config.TwitterAuthEnabled && (
+        {details.twitter && (
           <TwitterLoginButton onClick={handleTwitter} text="Twitter" />
         )}
       </AccountsButtons>

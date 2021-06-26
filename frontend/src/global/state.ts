@@ -1,4 +1,5 @@
 import { atom } from 'recoil';
+import { OAuthAvailabilities } from '@retrospected/common';
 
 export const adminEmailState = atom<string | null>({
   key: 'ADMIN_EMAIL',
@@ -11,4 +12,14 @@ export const isLicencedState = atom<boolean>({
 export const selfHostedState = atom<boolean>({
   key: 'SELF-HOSTED',
   default: false,
+});
+export const oauthAvailabilitiesState = atom<OAuthAvailabilities>({
+  key: 'OAuthAvailabilities',
+  default: {
+    google: false,
+    github: false,
+    twitter: false,
+    microsoft: false,
+    slack: false,
+  },
 });

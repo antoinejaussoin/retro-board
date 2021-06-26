@@ -3,11 +3,6 @@ interface HtmlConfig {
   SENTRY_URL: string;
   GIPHY_API_KEY: string;
   STRIPE_KEY: string;
-  AUTH_GOOGLE_ENABLED: string;
-  AUTH_TWITTER_ENABLED: string;
-  AUTH_GITHUB_ENABLED: string;
-  AUTH_SLACK_ENABLED: string;
-  AUTH_MICROSOFT_ENABLED: string;
   DEFAULT_LANGUAGE: string;
   VERSION: string;
 }
@@ -20,11 +15,6 @@ interface Config {
   SentryUrl: string;
   GiphyApiKey: string;
   StripeKey: string;
-  GoogleAuthEnabled: boolean;
-  TwitterAuthEnabled: boolean;
-  GitHubAuthEnabled: boolean;
-  SlackAuthEnabled: boolean;
-  MicrosoftAuthEnabled: boolean;
   defaultLanguage: string;
   version: string;
 }
@@ -43,12 +33,7 @@ function getKey(
     | 'SENTRY_URL'
     | 'GIPHY_API_KEY'
     | 'STRIPE_KEY'
-    | 'DEFAULT_LANGUAGE'
-    | 'AUTH_GOOGLE_ENABLED'
-    | 'AUTH_TWITTER_ENABLED'
-    | 'AUTH_GITHUB_ENABLED'
-    | 'AUTH_SLACK_ENABLED'
-    | 'AUTH_MICROSOFT_ENABLED',
+    | 'DEFAULT_LANGUAGE',
   noValue: string,
   defaultValue?: string
 ): string {
@@ -71,23 +56,6 @@ function getConfig(): Config {
     'NO_DEFAULT_LANGUAGE',
     'en'
   );
-  const isGoogleAuthEnabled =
-    getKey('AUTH_GOOGLE_ENABLED', 'NO_AUTH_GOOGLE_ENABLED').toLowerCase() ===
-    'true';
-  const isTwitterAuthEnabled =
-    getKey('AUTH_TWITTER_ENABLED', 'NO_AUTH_TWITTER_ENABLED').toLowerCase() ===
-    'true';
-  const isGitHubAuthEnabled =
-    getKey('AUTH_GITHUB_ENABLED', 'NO_AUTH_GITHUB_ENABLED').toLowerCase() ===
-    'true';
-  const isSlackAuthEnabled =
-    getKey('AUTH_SLACK_ENABLED', 'NO_AUTH_SLACK_ENABLED').toLowerCase() ===
-    'true';
-  const isMicrosoftAuthEnabled =
-    getKey(
-      'AUTH_MICROSOFT_ENABLED',
-      'NO_AUTH_MICROSOFT_ENABLED'
-    ).toLowerCase() === 'true';
 
   return {
     hasGA: !!googleAnalyticsId,
@@ -97,11 +65,6 @@ function getConfig(): Config {
     SentryUrl: sentryUrl,
     GiphyApiKey: giphyApiKey,
     StripeKey: stripeKey,
-    GoogleAuthEnabled: isGoogleAuthEnabled,
-    GitHubAuthEnabled: isGitHubAuthEnabled,
-    TwitterAuthEnabled: isTwitterAuthEnabled,
-    SlackAuthEnabled: isSlackAuthEnabled,
-    MicrosoftAuthEnabled: isMicrosoftAuthEnabled,
     defaultLanguage: defaultLanguage,
     version: window.__env__['VERSION'],
   };
