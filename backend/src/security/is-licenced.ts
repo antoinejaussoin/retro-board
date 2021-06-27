@@ -25,7 +25,7 @@ async function isLicencedBase() {
   const payload: SelfHostedCheckPayload = { key: licenceKey };
   try {
     const response = await fetch(
-      'https://www.retrospected.com/api/self-hosted',
+      'https://beta.retrospected.com/api/self-hosted',
       {
         method: 'POST',
         body: JSON.stringify(payload),
