@@ -15,6 +15,27 @@
 
       .file {
         font-family: 'Courier New', Courier, monospace;
+        background-color: #fff1f2;
+        padding: 3px;
+      }
+
+      .command {
+        font-family: 'Courier New', Courier, monospace;
+        background-color: #f1fff3;
+        padding: 3px;
+      }
+
+      .warning {
+        background-color: #fff1f2;
+        padding: 5px;
+      }
+      .warning h4 {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin: 2px 0;
+      }
+      .warning b {
+        color: red;
       }
     </style>
 
@@ -23,6 +44,69 @@
     <p>You can now use Retrospected Self-Hosted, by using the key below:</p>
 
     <div class="key">{{key}}</div>
+
+    <h2>Installation</h2>
+
+    <section>
+      <h3>Prerequisites</h3>
+
+      <p>
+        Install
+        <a href="https://docs.docker.com/engine/install/#server">Docker</a> and
+        <a href="https://docs.docker.com/compose/install/">Docker Compose</a>.
+      </p>
+    </section>
+
+    <section>
+      <h3>Create your docker-compose file</h3>
+
+      <p>
+        On the machine you wish to install Retrospected, please create a new
+        folder (that you can name "retrospected") then create a new
+        <span class="file">docker-compose.yml</span> file.
+      </p>
+      <p>
+        Then copy-paste the content of the file as shown below at the end of
+        this email.
+      </p>
+      <p>
+        You can modify some of the default values (in particular, passwords)
+        before running docker-compose for the first time.
+      </p>
+      <div class="warning">
+        <h4>Warning</h4>
+        <p>
+          It is very important that you change the passwords
+          <b>BEFORE</b> running docker-compose for the first time. Once run, all
+          passwords are set and modifying them later on will not work (it will
+          actually fail to run).
+        </p>
+      </div>
+
+      <p>
+        Finally, run docker-compose on this file by doing:
+        <span class="command">docker-compose up -d</span>.
+      </p>
+    </section>
+
+    <section>
+      <h3>Enjoy!</h3>
+
+      <p>
+        Retrospected is now running, on the port defined in your
+        <span class="file">docker-compose.yml</span> file (1800 by default).
+      </p>
+      <p>
+        You can also access <a href="https://www.pgadmin.org">PGAdmin</a>, which
+        will give you access to your database. PGAdmin is available on port 1801
+        (by default), and you can use the following credentials if you didn't
+        modify the defaults:
+      </p>
+      <ul>
+        <li>Username: <b>{{email}}</b></li>
+        <li>Password: <b>{{pgAdminPassword}}</b></li>
+      </ul>
+    </section>
 
     <p>
       Be sure to edit your
