@@ -105,11 +105,17 @@ function App() {
       {!licenced ? (
         <Alert title="Unlicenced" severity="error">
           <AlertTitle>Retrospected is Unlicenced</AlertTitle>
-          This software is unlicenced. Please contact{' '}
-          <a href="mailto:support@retrospected.com">
-            support@retrospected.com
-          </a>{' '}
-          to obtain a licence.
+          This software is unlicenced. You can obtain a licence{' '}
+          <a
+            target="_blank"
+            href="https://www.retrospected.com/subscribe?product=self-hosted"
+            rel="noreferrer"
+          >
+            here
+          </a>
+          . A licence will give you, for a one-time fee, unlimited updates,
+          access to all pro features for all users, and a dedicated
+          administration panel.
         </Alert>
       ) : null}
       <AppBar position="sticky">

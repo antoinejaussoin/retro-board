@@ -55,12 +55,17 @@ const realIpHeader = 'X-Forwarded-For';
 
 isLicenced().then((hasLicence) => {
   if (!hasLicence) {
-    console.log(chalk`{red ----------------------------------------------- }`);
     console.log(
-      chalk`⚠️  {red This software is not licenced. Please contact
-  support@retrospected.com to get a licence.} ⚠️`
+      chalk`{red ------------------------------------------------------------- }`
     );
-    console.log(chalk`{red ----------------------------------------------- }`);
+    console.log(
+      chalk`⚠️  {red This software is not licenced.
+   You can obtain a licence here:
+   https://www.retrospected.com/subscribe?product=self-hosted}`
+    );
+    console.log(
+      chalk`{red ------------------------------------------------------------- }`
+    );
   } else {
     console.log(
       chalk`{green ----------------------------------------------- }`

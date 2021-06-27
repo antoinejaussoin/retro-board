@@ -1,0 +1,80 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:11.6
+    hostname: postgres
+    environment:
+      # Only change the Database password below BEFORE running for the first time. Once the database
+      # is initialised, you can't change the password anymore.
+      # This password has to be the same as the DB_PASSWORD in the "backend" section below.
+      POSTGRES_PASSWORD: some-password
+
+      # -- Dot not modify --
+      POSTGRES_USER: postgres
+      POSTGRES_DB: retroboard
+    volumes:
+      - database:/var/lib/postgresql/data
+    restart: unless-stopped
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+
+  backend:
+    image: antoinejaussoin/retro-board-backend:latest
+    depends_on:
+      - redis
+    environment:
+      LICENCE_KEY:  # Your personal licence key
+      SELF_HOSTED_ADMIN: 'your@email.com' # This is the user who is going to be admin on the self-hosted Retrospected instance.
+      DB_PASSWORD: some-password # Must be the same as POSTGRES_PASSWORD above
+      SESSION_SECRET: im-a-secret # This can be anything. You don't have to change this.
+
+    restart: unless-stopped
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+
+  pgadmin:
+    image: dpage/pgadmin4:4.15 # use biarms/pgadmin4 on ARM
+    depends_on:
+      - postgres
+    ports:
+      - '1801:8080' # Change 8080 to whatever port you want to access pgAdmin from
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'admin@admin.com' # This will give you access to PGAdmin to manage your database
+      PGADMIN_DEFAULT_PASSWORD: admin # Your default password. Change this if you want, but BEFORE running for the first time.
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    restart: unless-stopped
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+
+  frontend:
+    image: antoinejaussoin/retro-board-frontend:latest
+    depends_on:
+      - backend
+    ports:
+      - '1800:80' # Change 1800 to whatever port you want to access Retrospected from
+    restart: unless-stopped
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+
+  redis:
+    image: redis:latest
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+
+volumes:
+  database:
+  pgadmin:
