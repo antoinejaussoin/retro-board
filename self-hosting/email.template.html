@@ -219,7 +219,7 @@
 <span class="hljs-comment" style="color: rgb(117, 113, 94);">      # is initialised, you can't change the password anymore.</span>
 <span class="hljs-comment" style="color: rgb(117, 113, 94);">      # This password has to be the same as the DB_PASSWORD in the "backend" section below.</span>
 <span class="hljs-attr">      POSTGRES_PASSWORD:</span> {{dbPassword}}
-			
+
 <span class="hljs-comment" style="color: rgb(117, 113, 94);">      # -- Dot not modify --</span>
 <span class="hljs-attr">      POSTGRES_USER:</span> postgres
 <span class="hljs-attr">      POSTGRES_DB:</span> retroboard
@@ -240,13 +240,13 @@
 <span class="hljs-attr">      SELF_HOSTED_ADMIN:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'<span class="hljs-template-variable" style="color: rgb(166, 226, 46);">{{email}}</span>'</span> <span class="hljs-comment" style="color: rgb(117, 113, 94);"># This is the user who is going to be admin on the self-hosted Retrospected instance.</span>
 <span class="hljs-attr">      DB_PASSWORD:</span> {{dbPassword}} <span class="hljs-comment" style="color: rgb(117, 113, 94);"># Must be the same as POSTGRES_PASSWORD above</span>
 <span class="hljs-attr">      SESSION_SECRET:</span> {{sessionSecret}} <span class="hljs-comment" style="color: rgb(117, 113, 94);"># This can be anything. You don't have to change this.</span>
-			
+
 <span class="hljs-attr">    restart:</span> unless-stopped
 <span class="hljs-attr">    logging:</span>
 <span class="hljs-attr">      driver:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'json-file'</span>
 <span class="hljs-attr">      options:</span>
 <span class="hljs-attr">        max-size:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'50m'</span>
-	
+
 <span class="hljs-attr">  pgadmin:</span>
 <span class="hljs-attr">    image:</span> dpage/pgadmin4:<span class="hljs-number">4.15</span> <span class="hljs-comment" style="color: rgb(117, 113, 94);"># use biarms/pgadmin4 on ARM</span>
 <span class="hljs-attr">    depends_on:</span>
@@ -263,7 +263,7 @@
 <span class="hljs-attr">      driver:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'json-file'</span>
 <span class="hljs-attr">      options:</span>
 <span class="hljs-attr">        max-size:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'50m'</span>
-			
+
 <span class="hljs-attr">  frontend:</span>
 <span class="hljs-attr">    image:</span> antoinejaussoin/retro-board-frontend:latest
 <span class="hljs-attr">    depends_on:</span>
@@ -285,7 +285,7 @@
 <span class="hljs-attr">      driver:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'json-file'</span>
 <span class="hljs-attr">      options:</span>
 <span class="hljs-attr">        max-size:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'50m'</span>
-			
+
 <span class="hljs-attr">volumes:</span>
 <span class="hljs-attr">  database:</span>
 <span class="hljs-attr">  pgadmin:</span></pre>
