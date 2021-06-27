@@ -1,0 +1,123 @@
+<html>
+  <body>
+    <style>
+      * {
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+          'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      }
+      h1 {
+      }
+
+      .key {
+        color: #ff3633;
+        font-size: 2rem;
+      }
+
+      .file {
+        font-family: 'Courier New', Courier, monospace;
+      }
+    </style>
+
+    <h1>Hello {{name}}!</h1>
+
+    <p>You can now use Retrospected Self-Hosted, by using the key below:</p>
+
+    <div class="key">{{key}}</div>
+
+    <p>
+      Be sure to edit your
+      <span class="file">docker-compose.yml</span>
+      file and provide the key:
+    </p>
+    <p>Let us know if you have any issue, we'll be happy to help!</p>
+    <p>The Retrospected Team</p>
+
+    <pre
+      class="hljs"
+      style="
+        display: block;
+        overflow-x: auto;
+        padding: 0.5em;
+        background-color: rgb(39, 40, 34);
+        color: rgb(221, 221, 221);
+      "
+    ><span class="hljs-attr">version:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'3'</span>
+<span class="hljs-attr">services:</span>
+<span class="hljs-attr">  redis:</span>
+<span class="hljs-attr">    image:</span> redis:latest
+<span class="hljs-attr">    depends_on:</span>
+<span class="hljs-bullet" style="color: rgb(166, 226, 46);">      -</span> postgres
+<span class="hljs-attr">    restart:</span> unless-stopped
+<span class="hljs-attr">    logging:</span>
+<span class="hljs-attr">      driver:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'json-file'</span>
+<span class="hljs-attr">      options:</span>
+<span class="hljs-attr">        max-size:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'50m'</span>
+
+<span class="hljs-attr">  postgres:</span>
+<span class="hljs-attr">    image:</span> postgres:<span class="hljs-number">11.6</span>
+<span class="hljs-attr">    hostname:</span> postgres
+<span class="hljs-attr">    environment:</span>
+<span class="hljs-attr">      POSTGRES_PASSWORD:</span> {{dbPassword}} <span class="hljs-comment" style="color: rgb(117, 113, 94);"># Must be the same as DB_PASSWORD below</span>
+      
+      <span class="hljs-comment" style="color: rgb(117, 113, 94);"># -- Dot not modify --</span>
+<span class="hljs-attr">      POSTGRES_USER:</span> postgres <span class="hljs-comment" style="color: rgb(117, 113, 94);"># Must be the same as DB_USER below</span>
+<span class="hljs-attr">      POSTGRES_DB:</span> retroboard <span class="hljs-comment" style="color: rgb(117, 113, 94);"># Must be the same as DB_NAME below</span>
+<span class="hljs-attr">    volumes:</span>
+<span class="hljs-attr">      - database:</span>/var/lib/postgresql/data
+<span class="hljs-attr">    restart:</span> unless-stopped
+<span class="hljs-attr">    logging:</span>
+<span class="hljs-attr">      driver:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'json-file'</span>
+<span class="hljs-attr">      options:</span>
+<span class="hljs-attr">        max-size:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'50m'</span>
+
+<span class="hljs-attr">  pgadmin:</span>
+<span class="hljs-attr">    image:</span> dpage/pgadmin4:<span class="hljs-number">4.15</span> <span class="hljs-comment" style="color: rgb(117, 113, 94);"># use biarms/pgadmin4 on ARM</span>
+<span class="hljs-attr">    depends_on:</span>
+<span class="hljs-bullet" style="color: rgb(166, 226, 46);">      -</span> postgres
+<span class="hljs-attr">    ports:</span>
+<span class="hljs-bullet" style="color: rgb(166, 226, 46);">      -</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'1801:8080'</span> <span class="hljs-comment" style="color: rgb(117, 113, 94);"># Change 8080 to whatever port you want to access pgAdmin from</span>
+<span class="hljs-attr">    environment:</span>
+<span class="hljs-attr">      PGADMIN_DEFAULT_EMAIL:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'<span class="hljs-template-variable" style="color: rgb(166, 226, 46);">{{email}}</span>'</span> <span class="hljs-comment" style="color: rgb(117, 113, 94);"># This will give you access to PGAdmin to manage your database</span>
+<span class="hljs-attr">      PGADMIN_DEFAULT_PASSWORD:</span> {{pgAdminPassword}} <span class="hljs-comment" style="color: rgb(117, 113, 94);"># Your default password. Change this if you want, but BEFORE running for the first time.</span>
+<span class="hljs-attr">    volumes:</span>
+<span class="hljs-attr">      - pgadmin:</span>/var/lib/pgadmin
+<span class="hljs-attr">    restart:</span> unless-stopped
+<span class="hljs-attr">    logging:</span>
+<span class="hljs-attr">      driver:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'json-file'</span>
+<span class="hljs-attr">      options:</span>
+<span class="hljs-attr">        max-size:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'50m'</span>
+
+<span class="hljs-attr">  backend:</span>
+<span class="hljs-attr">    image:</span> antoinejaussoin/retro-board-backend:latest
+<span class="hljs-attr">    depends_on:</span>
+<span class="hljs-bullet" style="color: rgb(166, 226, 46);">      -</span> redis
+<span class="hljs-attr">    environment:</span>
+<span class="hljs-attr">      LICENCE_KEY:</span> {{key}}
+<span class="hljs-attr">      SELF_HOSTED:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'true'</span>
+<span class="hljs-attr">      SELF_HOSTED_ADMIN:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'<span class="hljs-template-variable" style="color: rgb(166, 226, 46);">{{email}}</span>'</span>
+<span class="hljs-attr">      DB_PASSWORD:</span> {{dbPassword}} <span class="hljs-comment" style="color: rgb(117, 113, 94);"># Must be the same as POSTGRES_PASSWORD above</span>
+<span class="hljs-attr">      SESSION_SECRET:</span> {{sessionSecret}} <span class="hljs-comment" style="color: rgb(117, 113, 94);"># This can be anything</span>
+      
+<span class="hljs-attr">    restart:</span> unless-stopped
+<span class="hljs-attr">    logging:</span>
+<span class="hljs-attr">      driver:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'json-file'</span>
+<span class="hljs-attr">      options:</span>
+<span class="hljs-attr">        max-size:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'50m'</span>
+
+<span class="hljs-attr">  frontend:</span>
+<span class="hljs-attr">    image:</span> antoinejaussoin/retro-board-frontend:latest
+<span class="hljs-attr">    depends_on:</span>
+<span class="hljs-bullet" style="color: rgb(166, 226, 46);">      -</span> backend
+<span class="hljs-attr">    ports:</span>
+<span class="hljs-bullet" style="color: rgb(166, 226, 46);">      -</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'1800:80'</span> <span class="hljs-comment" style="color: rgb(117, 113, 94);"># Change the first 80 to whatever port you want to access Retrospected from</span>
+<span class="hljs-attr">    restart:</span> unless-stopped
+<span class="hljs-attr">    logging:</span>
+<span class="hljs-attr">      driver:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'json-file'</span>
+<span class="hljs-attr">      options:</span>
+<span class="hljs-attr">        max-size:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'50m'</span>
+
+<span class="hljs-attr">volumes:</span>
+<span class="hljs-attr">  database:</span>
+<span class="hljs-attr">  pgadmin:</span></pre>
+  </body>
+</html>

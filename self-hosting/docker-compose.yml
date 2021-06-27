@@ -1,0 +1,78 @@
+version: '3'
+services:
+  redis:
+    image: redis:latest
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+
+  postgres:
+    image: postgres:11.6
+    hostname: postgres
+    environment:
+      POSTGRES_PASSWORD: {{dbPassword}} # Must be the same as DB_PASSWORD below
+      
+      # -- Dot not modify --
+      POSTGRES_USER: postgres # Must be the same as DB_USER below
+      POSTGRES_DB: retroboard # Must be the same as DB_NAME below
+    volumes:
+      - database:/var/lib/postgresql/data
+    restart: unless-stopped
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+
+  pgadmin:
+    image: dpage/pgadmin4:4.15 # use biarms/pgadmin4 on ARM
+    depends_on:
+      - postgres
+    ports:
+      - '1801:8080' # Change 8080 to whatever port you want to access pgAdmin from
+    environment:
+      PGADMIN_DEFAULT_EMAIL: '{{email}}' # This will give you access to PGAdmin to manage your database
+      PGADMIN_DEFAULT_PASSWORD: {{pgAdminPassword}} # Your default password. Change this if you want, but BEFORE running for the first time.
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    restart: unless-stopped
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+
+  backend:
+    image: antoinejaussoin/retro-board-backend:latest
+    depends_on:
+      - redis
+    environment:
+      LICENCE_KEY: {{key}}
+      SELF_HOSTED: 'true'
+      SELF_HOSTED_ADMIN: '{{email}}'
+      DB_PASSWORD: {{dbPassword}} # Must be the same as POSTGRES_PASSWORD above
+      SESSION_SECRET: {{sessionSecret}} # This can be anything
+      
+    restart: unless-stopped
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+
+  frontend:
+    image: antoinejaussoin/retro-board-frontend:latest
+    depends_on:
+      - backend
+    ports:
+      - '1800:80' # Change the first 80 to whatever port you want to access Retrospected from
+    restart: unless-stopped
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+
+volumes:
+  database:
+  pgadmin:
