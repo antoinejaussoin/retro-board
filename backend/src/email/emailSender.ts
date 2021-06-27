@@ -1,5 +1,6 @@
 import sendGrid, { MailDataRequired } from '@sendgrid/mail';
 import config from '../config';
+import randomWords from 'random-words';
 
 if (config.SENDGRID_API_KEY) {
   sendGrid.setApiKey(config.SENDGRID_API_KEY);
@@ -57,6 +58,10 @@ export async function sendResetPassword(
   }
 }
 
+function generatePassword(): string {
+  return randomWords(4).join('-');
+}
+
 export async function sendSelfHostWelcome(
   email: string,
   name: string,
@@ -65,6 +70,11 @@ export async function sendSelfHostWelcome(
   if (!config.SENDGRID_API_KEY) {
     throw Error('Sendgrid is not activated.');
   }
+
+  const dbPassword = generatePassword();
+  const pgAdminPassword = generatePassword();
+  const sessionSecret = generatePassword();
+
   const msg: MailDataRequired = {
     to: email,
     from: config.SENDGRID_SENDER,
@@ -72,6 +82,10 @@ export async function sendSelfHostWelcome(
     dynamicTemplateData: {
       name,
       key,
+      dbPassword,
+      pgAdminPassword,
+      sessionSecret,
+      email,
     },
   };
   try {
