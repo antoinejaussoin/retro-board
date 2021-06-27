@@ -30,9 +30,6 @@ RUN yarn build-frontend
 
 FROM nginx:alpine
 
-ENV BACKEND_HOST=backend
-ENV BACKEND_PORT=3201
-
 COPY --from=Node /home/node/app/frontend/build /usr/share/nginx/html
 COPY ./frontend/docker/nginx.conf.template /etc/nginx/conf.d/default.conf.template
 COPY ./frontend/docker/frontend-entrypoint.sh /
