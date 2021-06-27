@@ -7,6 +7,7 @@ export interface BackendConfig {
   DB_PASSWORD: string;
   DB_HOST: string;
   DB_PORT: number;
+  SESSION_SECRET: string;
   REDIS_ENABLED: boolean;
   REDIS_FOR_SOCKETIO_ENABLED: boolean;
   REDIS_HOST: string;

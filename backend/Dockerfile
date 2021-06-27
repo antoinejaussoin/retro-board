@@ -6,6 +6,8 @@ FROM node:15-alpine
 # App directory
 WORKDIR /usr/src/backend
 
+ENV NODE_ENV production
+
 COPY ./yarn.lock ./
 COPY ./package.json ./
 COPY ./backend/package.json ./backend/

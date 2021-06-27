@@ -127,7 +127,7 @@ if (config.REDIS_ENABLED) {
   });
 
   sessionMiddleware = session({
-    secret: `${process.env.SESSION_SECRET!}-2`, // Increment to force re-auth
+    secret: `${config.SESSION_SECRET!}-2`, // Increment to force re-auth
     resave: true,
     saveUninitialized: true,
     store: new RedisStore({ client: redisClient }),
@@ -150,7 +150,7 @@ if (config.REDIS_ENABLED) {
   );
 } else {
   sessionMiddleware = session({
-    secret: `${process.env.SESSION_SECRET!}-2`, // Increment to force re-auth
+    secret: `${config.SESSION_SECRET!}-2`, // Increment to force re-auth
     resave: true,
     saveUninitialized: true,
     cookie: {
