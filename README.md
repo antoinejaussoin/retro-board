@@ -98,7 +98,7 @@ You must have `docker` and `docker-compose` installed on your system.
 
 ### Prerequisites 💿
 
-- You must obtain a self-hosting licence, please contact support@retrospected.com to get one.
+- You must obtain a self-hosting licence. You can obtain one [here](https://www.retrospected.com/subscribe?product=self-hosted).
 - When buying a licence, a ready-to-run `docker-compose.yml` file will be sent to you by email with installation instructions.
 - You must have [docker](https://www.docker.com) and [docker-compose](https://docs.docker.com/compose/) installed on your system.
 
