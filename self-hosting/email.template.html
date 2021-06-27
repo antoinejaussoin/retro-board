@@ -27,7 +27,7 @@
 
       .warning {
         background-color: #fff1f2;
-        padding: 5px;
+        padding: 15px;
       }
       .warning h4 {
         font-size: 1.2rem;
@@ -36,6 +36,23 @@
       }
       .warning b {
         color: red;
+      }
+      section {
+        margin-left: 10px;
+        margin-bottom: 30px;
+        padding: 0 20px 20px;
+        border: 1px solid #cacaca;
+        border-radius: 5px;
+      }
+
+      section h3 {
+        margin-left: -20px;
+        margin-right: -20px;
+        padding: 10px;
+        border-bottom: 1px solid #cacaca;
+        font-variant: small-caps;
+        background-color: #eee;
+        margin-top: 0;
       }
     </style>
 
@@ -47,8 +64,13 @@
 
     <h2>Installation</h2>
 
+    <p>
+      You'll be up and running in no time. Your
+      <span class="file">docker-compose.yml</span> file is ready to go.
+    </p>
+
     <section>
-      <h3>Prerequisites</h3>
+      <h3>1 - Prerequisites</h3>
 
       <p>
         Install
@@ -58,7 +80,7 @@
     </section>
 
     <section>
-      <h3>Create your docker-compose file</h3>
+      <h3>2 - Create your docker-compose file</h3>
 
       <p>
         On the machine you wish to install Retrospected, please create a new
@@ -76,7 +98,8 @@
       <div class="warning">
         <h4>Warning</h4>
         <p>
-          It is very important that you change the passwords
+          If you wish to change the default password, it is very important that
+          you change them
           <b>BEFORE</b> running docker-compose for the first time. Once run, all
           passwords are set and modifying them later on will not work (it will
           actually fail to run).
@@ -90,7 +113,7 @@
     </section>
 
     <section>
-      <h3>Enjoy!</h3>
+      <h3>3 - Enjoy!</h3>
 
       <p>
         Retrospected is now running, on the port defined in your
