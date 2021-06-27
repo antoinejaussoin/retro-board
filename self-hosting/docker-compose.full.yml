@@ -52,7 +52,7 @@ services:
       - redis
     environment:
       # -- Change Recommended --
-      LICENCE_KEY: # This must be provided if you deploy Retrospected yourself. Contact support@retrospected.com.
+      LICENCE_KEY: # This must be provided if you self-host Retrospected. Obtain a licence at https://www.retrospected.com/subscribe?product=self-hosted.
       SELF_HOSTED: 'true' # This will make any account "Pro", but only works with a valid LICENCE_KEY
       SELF_HOSTED_ADMIN: your@email.com # Enter an admin email here. This person will be the only one able to reset passwords for your organisation.
       DB_USER: postgres # Must be the same as POSTGRES_USER above
@@ -101,11 +101,11 @@ services:
       STRIPE_SELF_HOSTED_URL_GBP: # Stripe payment page for Self Hosting
       STRIPE_SELF_HOSTED_URL_EUR: # Stripe payment page for Self Hosting
       STRIPE_SELF_HOSTED_URL_USD: # Stripe payment page for Self Hosting
-      RATE_LIMIT_WINDOW: 10000 # Rate Limiting window size for expensive requests (in ms)
-      RATE_LIMIT_MAX: 3 # Rate Limiting max requests per window
-      RATE_LIMIT_WS_POINTS: 10 # Websocket rate limiting, max messages per duration
-      RATE_LIMIT_WS_DURATION: 1 # Websocket rate limiting, window duration (in seconds)
-      WS_MAX_BUFFER_SIZE: 100000 # Max websocket message size in bytes
+      RATE_LIMIT_WINDOW: 900000 # Rate Limiting window size for expensive requests (in ms)
+      RATE_LIMIT_MAX: 500 # Rate Limiting max requests per window
+      RATE_LIMIT_WS_POINTS: 600 # Websocket rate limiting, max messages per duration
+      RATE_LIMIT_WS_DURATION: 60 # Websocket rate limiting, window duration (in seconds)
+      WS_MAX_BUFFER_SIZE: 10000 # Max websocket message size in bytes
             
     restart: unless-stopped
     logging:

@@ -77,6 +77,12 @@ isLicenced().then((hasLicence) => {
   }
 });
 
+if (config.SELF_HOSTED) {
+  console.log(
+    chalk`🤳  {cyan This software is {bold self-hosted}. All users are {bold Pro}.}`
+  );
+}
+
 initSentry();
 
 const app = express();
