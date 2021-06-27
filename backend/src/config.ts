@@ -14,14 +14,14 @@ if (fileExist) {
 }
 
 function defaults(key: string, defaultValue: string): string {
-  if (!process.env[key]) {
+  if (process.env[key] === undefined) {
     return defaultValue;
   }
   return process.env[key]!;
 }
 
 function defaultsBool(key: string, defaultValue: boolean): boolean {
-  if (!process.env[key]) {
+  if (process.env[key] === undefined) {
     return defaultValue;
   }
   return process.env[key]! === 'true';
@@ -86,5 +86,7 @@ const config: BackendConfig = {
   RATE_LIMIT_WS_DURATION: defaultsNumber('RATE_LIMIT_WS_DURATION', 1),
   WS_MAX_BUFFER_SIZE: defaultsNumber('WS_MAX_BUFFER_SIZE', 100000),
 };
+
+console.log('Config: ', config);
 
 export default config;
