@@ -252,7 +252,7 @@
 <span class="hljs-attr">    depends_on:</span>
 <span class="hljs-bullet" style="color: rgb(166, 226, 46);">      -</span> postgres
 <span class="hljs-attr">    ports:</span>
-<span class="hljs-bullet" style="color: rgb(166, 226, 46);">      -</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'1801:8080'</span> <span class="hljs-comment" style="color: rgb(117, 113, 94);"># Change 8080 to whatever port you want to access pgAdmin from</span>
+<span class="hljs-bullet" style="color: rgb(166, 226, 46);">      -</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'1801:80'</span> <span class="hljs-comment" style="color: rgb(117, 113, 94);"># Change 1801 to whatever port you want to access pgAdmin from</span>
 <span class="hljs-attr">    environment:</span>
 <span class="hljs-attr">      PGADMIN_DEFAULT_EMAIL:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'<span class="hljs-template-variable" style="color: rgb(166, 226, 46);">{{email}}</span>'</span> <span class="hljs-comment" style="color: rgb(117, 113, 94);"># This will give you access to PGAdmin to manage your database</span>
 <span class="hljs-attr">      PGADMIN_DEFAULT_PASSWORD:</span> {{pgAdminPassword}} <span class="hljs-comment" style="color: rgb(117, 113, 94);"># Your default password. Change this if you want, but BEFORE running for the first time.</span>

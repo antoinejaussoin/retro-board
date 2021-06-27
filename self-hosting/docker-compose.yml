@@ -41,7 +41,7 @@ services:
     depends_on:
       - postgres
     ports:
-      - '1801:8080' # Change 8080 to whatever port you want to access pgAdmin from
+      - '1801:80' # Change 1801 to whatever port you want to access pgAdmin from
     environment:
       PGADMIN_DEFAULT_EMAIL: '{{email}}' # This will give you access to PGAdmin to manage your database
       PGADMIN_DEFAULT_PASSWORD: {{pgAdminPassword}} # Your default password. Change this if you want, but BEFORE running for the first time.
