@@ -5,7 +5,27 @@
         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
           'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
       }
+
+      p {
+        margin-bottom: 10px;
+      }
+
       h1 {
+        font-size: 1.5rem;
+        font-weight: normal;
+      }
+
+      section p:last-child {
+        margin-bottom: 0;
+      }
+
+      a {
+        color: #c2185b;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
       }
 
       .key {
@@ -53,14 +73,45 @@
         font-variant: small-caps;
         background-color: #eee;
         margin-top: 0;
+        font-weight: 100;
+      }
+      pre.hljs,
+      pre.hljs * {
+        font-family: 'Courier New', Courier, monospace;
+      }
+      hr.footer {
+        margin-top: 80px;
+      }
+      .team {
+        margin-left: 40px;
+        font-weight: bold;
+      }
+      li {
+        line-height: 1.5rem;
+      }
+
+      .optional {
+        font-style: italic;
+      }
+
+      hr {
+        margin: 50px 0;
       }
     </style>
 
     <h1>Hello {{name}}!</h1>
 
-    <p>You can now use Retrospected Self-Hosted, by using the key below:</p>
+    <p>
+      Thank you so much for purchasing a Self-Hosted licence of Retrospected.
+    </p>
+
+    <p>
+      You can now use Retrospected on your premises, by using the key below:
+    </p>
 
     <div class="key">{{key}}</div>
+
+    <hr />
 
     <h2>Installation</h2>
 
@@ -80,36 +131,38 @@
     </section>
 
     <section>
-      <h3>2 - Create your docker-compose file</h3>
+      <h3>2 - Install your docker-compose file</h3>
 
-      <p>
-        On the machine you wish to install Retrospected, please create a new
-        folder (that you can name "retrospected") then create a new
-        <span class="file">docker-compose.yml</span> file.
-      </p>
-      <p>
-        Then copy-paste the content of the file as shown below at the end of
-        this email.
-      </p>
-      <p>
-        You can modify some of the default values (in particular, passwords)
-        before running docker-compose for the first time.
-      </p>
+      <ol>
+        <li>
+          Create an empty <span class="file">docker-compose.yml</span> file
+        </li>
+        <li>
+          Copy the content at the end of this email, and paste it in that file
+          you created.
+        </li>
+        <li>
+          <span class="optional">
+            Optional: Change the various passwords, ports and other
+            settings.</span
+          >
+        </li>
+        <li>
+          In the same directory, do
+          <span class="command">docker-compose up -d</span>
+        </li>
+        <li>You're done!</li>
+      </ol>
       <div class="warning">
         <h4>Warning</h4>
         <p>
-          If you wish to change the default password, it is very important that
+          If you wish to change the default passwords, it is very important that
           you change them
           <b>BEFORE</b> running docker-compose for the first time. Once run, all
           passwords are set and modifying them later on will not work (it will
           actually fail to run).
         </p>
       </div>
-
-      <p>
-        Finally, run docker-compose on this file by doing:
-        <span class="command">docker-compose up -d</span>.
-      </p>
     </section>
 
     <section>
@@ -129,16 +182,24 @@
         <li>Username: <b>{{email}}</b></li>
         <li>Password: <b>{{pgAdminPassword}}</b></li>
       </ul>
+      <p>
+        If you want more configuration options, have a look at the full
+        <span class="file">docker-compose.yml</span>
+        <a
+          href="https://github.com/antoinejaussoin/retro-board/blob/develop/docker-compose.example.yml"
+          >here</a
+        >.
+      </p>
     </section>
 
-    <p>
-      Be sure to edit your
-      <span class="file">docker-compose.yml</span>
-      file and provide the key:
-    </p>
     <p>Let us know if you have any issue, we'll be happy to help!</p>
-    <p>The Retrospected Team</p>
+    <p class="team">The Retrospected Team</p>
 
+    <hr class="footer" />
+
+    <p>Your <span class="file">docker-compose.yml</span> file:</p>
+
+    <!-- DOCKER COMPOSE FILE -->
     <pre
       class="hljs"
       style="
@@ -150,25 +211,18 @@
       "
     ><span class="hljs-attr">version:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'3'</span>
 <span class="hljs-attr">services:</span>
-<span class="hljs-attr">  redis:</span>
-<span class="hljs-attr">    image:</span> redis:latest
-<span class="hljs-attr">    depends_on:</span>
-<span class="hljs-bullet" style="color: rgb(166, 226, 46);">      -</span> postgres
-<span class="hljs-attr">    restart:</span> unless-stopped
-<span class="hljs-attr">    logging:</span>
-<span class="hljs-attr">      driver:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'json-file'</span>
-<span class="hljs-attr">      options:</span>
-<span class="hljs-attr">        max-size:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'50m'</span>
-
 <span class="hljs-attr">  postgres:</span>
 <span class="hljs-attr">    image:</span> postgres:<span class="hljs-number">11.6</span>
 <span class="hljs-attr">    hostname:</span> postgres
 <span class="hljs-attr">    environment:</span>
-<span class="hljs-attr">      POSTGRES_PASSWORD:</span> {{dbPassword}} <span class="hljs-comment" style="color: rgb(117, 113, 94);"># Must be the same as DB_PASSWORD below</span>
-      
-      <span class="hljs-comment" style="color: rgb(117, 113, 94);"># -- Dot not modify --</span>
-<span class="hljs-attr">      POSTGRES_USER:</span> postgres <span class="hljs-comment" style="color: rgb(117, 113, 94);"># Must be the same as DB_USER below</span>
-<span class="hljs-attr">      POSTGRES_DB:</span> retroboard <span class="hljs-comment" style="color: rgb(117, 113, 94);"># Must be the same as DB_NAME below</span>
+<span class="hljs-comment" style="color: rgb(117, 113, 94);">      # Only change the Database password below BEFORE running for the first time. Once the database</span>
+<span class="hljs-comment" style="color: rgb(117, 113, 94);">      # is initialised, you can't change the password anymore.</span>
+<span class="hljs-comment" style="color: rgb(117, 113, 94);">      # This password has to be the same as the DB_PASSWORD in the "backend" section below.</span>
+<span class="hljs-attr">      POSTGRES_PASSWORD:</span> {{dbPassword}}
+			
+<span class="hljs-comment" style="color: rgb(117, 113, 94);">      # -- Dot not modify --</span>
+<span class="hljs-attr">      POSTGRES_USER:</span> postgres
+<span class="hljs-attr">      POSTGRES_DB:</span> retroboard
 <span class="hljs-attr">    volumes:</span>
 <span class="hljs-attr">      - database:</span>/var/lib/postgresql/data
 <span class="hljs-attr">    restart:</span> unless-stopped
@@ -177,6 +231,22 @@
 <span class="hljs-attr">      options:</span>
 <span class="hljs-attr">        max-size:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'50m'</span>
 
+<span class="hljs-attr">  backend:</span>
+<span class="hljs-attr">    image:</span> antoinejaussoin/retro-board-backend:latest
+<span class="hljs-attr">    depends_on:</span>
+<span class="hljs-bullet" style="color: rgb(166, 226, 46);">      -</span> redis
+<span class="hljs-attr">    environment:</span>
+<span class="hljs-attr">      LICENCE_KEY:</span> {{key}} <span class="hljs-comment" style="color: rgb(117, 113, 94);"># Your personal licence key</span>
+<span class="hljs-attr">      SELF_HOSTED_ADMIN:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'<span class="hljs-template-variable" style="color: rgb(166, 226, 46);">{{email}}</span>'</span> <span class="hljs-comment" style="color: rgb(117, 113, 94);"># This is the user who is going to be admin on the self-hosted Retrospected instance.</span>
+<span class="hljs-attr">      DB_PASSWORD:</span> {{dbPassword}} <span class="hljs-comment" style="color: rgb(117, 113, 94);"># Must be the same as POSTGRES_PASSWORD above</span>
+<span class="hljs-attr">      SESSION_SECRET:</span> {{sessionSecret}} <span class="hljs-comment" style="color: rgb(117, 113, 94);"># This can be anything. You don't have to change this.</span>
+			
+<span class="hljs-attr">    restart:</span> unless-stopped
+<span class="hljs-attr">    logging:</span>
+<span class="hljs-attr">      driver:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'json-file'</span>
+<span class="hljs-attr">      options:</span>
+<span class="hljs-attr">        max-size:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'50m'</span>
+	
 <span class="hljs-attr">  pgadmin:</span>
 <span class="hljs-attr">    image:</span> dpage/pgadmin4:<span class="hljs-number">4.15</span> <span class="hljs-comment" style="color: rgb(117, 113, 94);"># use biarms/pgadmin4 on ARM</span>
 <span class="hljs-attr">    depends_on:</span>
@@ -193,38 +263,33 @@
 <span class="hljs-attr">      driver:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'json-file'</span>
 <span class="hljs-attr">      options:</span>
 <span class="hljs-attr">        max-size:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'50m'</span>
-
-<span class="hljs-attr">  backend:</span>
-<span class="hljs-attr">    image:</span> antoinejaussoin/retro-board-backend:latest
-<span class="hljs-attr">    depends_on:</span>
-<span class="hljs-bullet" style="color: rgb(166, 226, 46);">      -</span> redis
-<span class="hljs-attr">    environment:</span>
-<span class="hljs-attr">      LICENCE_KEY:</span> {{key}}
-<span class="hljs-attr">      SELF_HOSTED:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'true'</span>
-<span class="hljs-attr">      SELF_HOSTED_ADMIN:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'<span class="hljs-template-variable" style="color: rgb(166, 226, 46);">{{email}}</span>'</span>
-<span class="hljs-attr">      DB_PASSWORD:</span> {{dbPassword}} <span class="hljs-comment" style="color: rgb(117, 113, 94);"># Must be the same as POSTGRES_PASSWORD above</span>
-<span class="hljs-attr">      SESSION_SECRET:</span> {{sessionSecret}} <span class="hljs-comment" style="color: rgb(117, 113, 94);"># This can be anything</span>
-      
-<span class="hljs-attr">    restart:</span> unless-stopped
-<span class="hljs-attr">    logging:</span>
-<span class="hljs-attr">      driver:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'json-file'</span>
-<span class="hljs-attr">      options:</span>
-<span class="hljs-attr">        max-size:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'50m'</span>
-
+			
 <span class="hljs-attr">  frontend:</span>
 <span class="hljs-attr">    image:</span> antoinejaussoin/retro-board-frontend:latest
 <span class="hljs-attr">    depends_on:</span>
 <span class="hljs-bullet" style="color: rgb(166, 226, 46);">      -</span> backend
 <span class="hljs-attr">    ports:</span>
-<span class="hljs-bullet" style="color: rgb(166, 226, 46);">      -</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'1800:80'</span> <span class="hljs-comment" style="color: rgb(117, 113, 94);"># Change the first 80 to whatever port you want to access Retrospected from</span>
+<span class="hljs-bullet" style="color: rgb(166, 226, 46);">      -</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'1800:80'</span> <span class="hljs-comment" style="color: rgb(117, 113, 94);"># Change 1800 to whatever port you want to access Retrospected from</span>
 <span class="hljs-attr">    restart:</span> unless-stopped
 <span class="hljs-attr">    logging:</span>
 <span class="hljs-attr">      driver:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'json-file'</span>
 <span class="hljs-attr">      options:</span>
 <span class="hljs-attr">        max-size:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'50m'</span>
 
+<span class="hljs-attr">  redis:</span>
+<span class="hljs-attr">    image:</span> redis:latest
+<span class="hljs-attr">    depends_on:</span>
+<span class="hljs-bullet" style="color: rgb(166, 226, 46);">      -</span> postgres
+<span class="hljs-attr">    restart:</span> unless-stopped
+<span class="hljs-attr">    logging:</span>
+<span class="hljs-attr">      driver:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'json-file'</span>
+<span class="hljs-attr">      options:</span>
+<span class="hljs-attr">        max-size:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'50m'</span>
+			
 <span class="hljs-attr">volumes:</span>
 <span class="hljs-attr">  database:</span>
 <span class="hljs-attr">  pgadmin:</span></pre>
+
+    <!-- DOCKER COMPOSE FILE END -->
   </body>
 </html>

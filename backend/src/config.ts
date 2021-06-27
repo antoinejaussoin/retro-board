@@ -36,7 +36,7 @@ function defaultsNumber(key: string, defaultValue: number): number {
 
 const config: BackendConfig = {
   LICENCE_KEY: defaults('LICENCE_KEY', ''),
-  SELF_HOSTED: defaultsBool('SELF_HOSTED', false),
+  SELF_HOSTED: defaultsBool('SELF_HOSTED', true),
   SELF_HOSTED_ADMIN: defaults('SELF_HOSTED_ADMIN', 'admin@acme.com'),
   DB_NAME: defaults('DB_NAME', 'retroboard'),
   DB_USER: defaults('DB_USER', 'postgres'),
