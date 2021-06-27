@@ -61,6 +61,14 @@ isLicenced().then((hasLicence) => {
   support@retrospected.com to get a licence.} ⚠️`
     );
     console.log(chalk`{red ----------------------------------------------- }`);
+  } else {
+    console.log(
+      chalk`{green ----------------------------------------------- }`
+    );
+    console.log(chalk`👍  {green This software is licenced.} `);
+    console.log(
+      chalk`{green ----------------------------------------------- }`
+    );
   }
 });
 
