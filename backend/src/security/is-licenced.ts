@@ -18,18 +18,14 @@ export async function isLicenced() {
 }
 
 async function isLicencedBase() {
-  if (
-    config.BASE_URL.endsWith('www.retrospected.com') ||
-    config.BASE_URL === 'http://localhost:3000'
-  ) {
+  if (process.env.NODE_ENV !== 'production') {
     return true;
   }
   const licenceKey = config.LICENCE_KEY;
   const payload: SelfHostedCheckPayload = { key: licenceKey };
   try {
     const response = await fetch(
-      // 'https://www.retrospected.com/api/self-hosted',
-      'https://beta.retrospected.com/api/self-hosted', // TODO: RESTORE THIS TO PROD
+      'https://www.retrospected.com/api/self-hosted',
       {
         method: 'POST',
         body: JSON.stringify(payload),
