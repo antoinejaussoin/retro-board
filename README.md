@@ -94,22 +94,23 @@ You must have `docker` and `docker-compose` installed on your system.
 - `yarn frontend` on the second terminal to run the frontend
 - Open your browser on [http://localhost:3000](http://localhost:3000)
 
-## How to run for Production using Docker 🐳
+## Self-Host Retrospected 🐳
 
 ### Prerequisites 💿
 
 - You must obtain a self-hosting licence, please contact support@retrospected.com to get one.
+- When buying a licence, a ready-to-run `docker-compose.yml` file will be sent to you with installation instructions.
 - You must have [docker](https://www.docker.com) and [docker-compose](https://docs.docker.com/compose/) installed on your system.
 
-### Run 🚀
+### Try it out 🚀
 
-- Copy `docker-compose.example.yml` to `docker-compose.yml`
 - Edit `docker-compose.yml` to change credentials and secrets
 - _Optional: for ARM-based systems, use biarms/pgadmin4 instead_
 - Run `docker-compose up -d`
 - Voilà!
 
-This will run a production-ready version of Retrospected automatically, using Postgres and Redis. You don't need to have anything installed other than Docker. This will install and run:
+This will run a production-ready version of Retrospected automatically, using Postgres and Redis.
+You don't need to have anything installed other than Docker. This will install and run:
 
 - Postgres
 - pgAdmin4 (Web UI for postgres)
@@ -142,6 +143,13 @@ When using the Docker deployment, your database runs from a container. But if yo
 - Highlight posts where the user voted
 
 ## Versions History
+
+### Version 4.5.0
+
+- Adding the ability to self-host Retrospected in a very easy way.
+- Change the default order for new posts. New posts are now (by default) appearing at the top of the column. 👏 Thanks [@konrad44](https://github.com/konrad44) for the idea. ([#272](https://github.com/antoinejaussoin/retro-board/issues/272))
+- Spelling fixes on home page cards
+- ⏫ Upgrading dependencies
 
 ### Version 4.4.0
 
