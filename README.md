@@ -37,6 +37,7 @@ It features the following technologies:
 - [Styled Components](https://www.styled-components.com/)
 - [Multilingual](https://stackoverflow.com/questions/33413880/react-redux-and-multilingual-internationalization-apps-architecture) / Internationalization
 - [Postgres](https://www.postgresql.org/)
+- [Node 16](https://nodejs.org/en/)
 - [Passport](http://www.passportjs.org/) for seamless OAuth authentication with:
   - Google
   - Twitter
@@ -67,8 +68,8 @@ Previous versions, up to v1.0.1 featured the following libraries:
 You must have `docker` and `docker-compose` installed on your system.
 
 - Clone this repository
-- Then run `docker-compose -f ./docker-compose.example.yml up -d`.
-- Open your browser on [http://localhost](http://localhost)
+- Then run `docker-compose up -d`.
+- Open your browser at [http://localhost:1800](http://localhost:1800)
 - _(then please wait a few minutes the first time for the database to initialise)_
 
 ## How to run for development 📝
@@ -148,6 +149,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 - Adding the ability to self-host Retrospected in a very easy way.
 - Change the default order for new posts. New posts are now (by default) appearing at the top of the column. 👏 Thanks [@konrad44](https://github.com/konrad44) for the idea. ([#272](https://github.com/antoinejaussoin/retro-board/issues/272))
+- Upgrade containers from Node 15 to Node 16
 - Spelling fixes on home page cards
 - ⏫ Upgrading dependencies
 
