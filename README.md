@@ -145,6 +145,10 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
+### Version 4.6.0 (not released)
+
+- Support OKTA for authentication
+
 ### Version 4.5.0
 
 - Adding the ability to self-host Retrospected in a very easy way.
