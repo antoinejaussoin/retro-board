@@ -5,7 +5,6 @@ import {
   GoogleLoginButton,
   TwitterLoginButton,
   MicrosoftLoginButton,
-  AmazonLoginButton,
 } from 'react-social-login-buttons';
 import styled from 'styled-components';
 import io from 'socket.io-client';
@@ -14,6 +13,7 @@ import { updateLanguage } from '../../api';
 import { FullUser } from '@retrospected/common';
 import Wrapper from './Wrapper';
 import SlackLoginButton from './social/SlackLoginButton';
+import OktaLoginButton from './social/OktaLoginButton';
 import useOAuthAvailabilities from '../../global/useOAuthAvailabilities';
 
 const API_URL = '/api/auth';
@@ -100,7 +100,7 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
         {details.twitter && (
           <TwitterLoginButton onClick={handleTwitter} text="Twitter" />
         )}
-        {details.okta && <AmazonLoginButton onClick={handleOkta} text="Okta" />}
+        {details.okta && <OktaLoginButton onClick={handleOkta} text="Okta" />}
       </AccountsButtons>
     </Wrapper>
   );
