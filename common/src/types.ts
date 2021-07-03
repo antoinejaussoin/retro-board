@@ -140,6 +140,7 @@ export type AccountType =
   | 'github'
   | 'slack'
   | 'microsoft'
+  | 'okta'
   | 'password';
 
 export interface Vote extends Entity {

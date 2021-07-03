@@ -21,5 +21,6 @@ export const oauthAvailabilitiesState = atom<OAuthAvailabilities>({
     twitter: false,
     microsoft: false,
     slack: false,
+    okta: false,
   },
 });

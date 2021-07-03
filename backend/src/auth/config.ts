@@ -4,7 +4,7 @@ import { StrategyOptions as GitHubStrategy } from 'passport-github2';
 import { MicrosoftStrategyOptions } from 'passport-microsoft';
 import config from '../config';
 
-const providers = ['twitter', 'google', 'github', 'slack', 'microsoft'];
+const providers = ['twitter', 'google', 'github', 'slack', 'microsoft', 'okta'];
 
 const CLIENT_ORIGIN = config.BASE_URL || 'http://localhost:3000';
 
@@ -12,7 +12,8 @@ const callbacks = providers.map((provider) => {
   return `${CLIENT_ORIGIN}/api/auth/${provider}/callback`;
 });
 
-const [twitterURL, googleURL, githubURL, slackURL, microsoftURL] = callbacks;
+const [twitterURL, googleURL, githubURL, slackURL, microsoftURL, oktaURL] =
+  callbacks;
 
 export const TWITTER_CONFIG: IStrategyOption | null =
   config.TWITTER_KEY && config.TWITTER_SECRET
@@ -60,5 +61,27 @@ export const MICROSOFT_CONFIG: MicrosoftStrategyOptions | null =
         clientSecret: config.MICROSOFT_SECRET || '',
         callbackURL: microsoftURL,
         scope: ['user.read'],
+      }
+    : null;
+
+type OktaStrategyOptions = {
+  audience: string;
+  clientID: string;
+  clientSecret: string;
+  idp?: string;
+  scope: string[];
+  response_type: string;
+  callbackURL: string;
+};
+
+export const OKTA_CONFIG: OktaStrategyOptions | null =
+  config.OKTA_AUDIENCE && config.OKTA_KEY && config.OKTA_SECRET
+    ? {
+        audience: config.OKTA_AUDIENCE,
+        clientID: config.OKTA_KEY,
+        clientSecret: config.OKTA_SECRET,
+        scope: ['openid', 'email', 'profile'],
+        response_type: 'code',
+        callbackURL: oktaURL,
       }
     : null;

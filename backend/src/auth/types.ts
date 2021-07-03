@@ -1,6 +1,12 @@
 export interface BaseProfile {
   id: string;
-  provider: 'google' | 'github' | 'twitter' | 'Slack' | 'microsoft';
+  provider:
+    | 'google'
+    | 'github'
+    | 'twitter'
+    | 'Slack'
+    | 'microsoft'
+    | 'okta-social';
 }
 
 interface GoogleProfileEmail {
@@ -172,4 +178,18 @@ export interface MicrosoftProfile extends BaseProfile {
     userPrincipalName: string;
     id: string;
   };
+}
+
+interface OktaEmail {
+  value: string;
+}
+
+export interface OktaProfile extends BaseProfile {
+  provider: 'okta-social';
+  name: {
+    fullName: string;
+    familyName: string;
+    givenName: string;
+  };
+  emails: OktaEmail[];
 }

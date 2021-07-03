@@ -63,4 +63,5 @@ export interface OAuthAvailabilities {
   slack: boolean;
   microsoft: boolean;
   github: boolean;
+  okta: boolean;
 }

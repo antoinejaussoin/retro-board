@@ -62,6 +62,9 @@ const config: BackendConfig = {
   SLACK_SECRET: defaults('SLACK_SECRET', ''),
   MICROSOFT_KEY: defaults('MICROSOFT_KEY', ''),
   MICROSOFT_SECRET: defaults('MICROSOFT_SECRET', ''),
+  OKTA_AUDIENCE: defaults('OKTA_AUDIENCE', ''),
+  OKTA_KEY: defaults('OKTA_KEY', ''),
+  OKTA_SECRET: defaults('OKTA_SECRET', ''),
   SENDGRID_API_KEY: defaults('SENDGRID_API_KEY', ''),
   SENDGRID_SENDER: defaults('SENDGRID_SENDER', ''),
   SENDGRID_VERIFICATION_EMAIL_TID: defaults(

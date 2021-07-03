@@ -22,6 +22,7 @@ router.get('/self-hosting', async (_, res) => {
       microsoft: !!config.MICROSOFT_KEY && !!config.MICROSOFT_SECRET,
       slack: !!config.SLACK_KEY && !!config.SLACK_SECRET,
       twitter: !!config.TWITTER_KEY && !!config.TWITTER_SECRET,
+      okta: !!config.OKTA_AUDIENCE && !!config.OKTA_KEY && !!config.OKTA_SECRET,
     },
   };
   res.status(200).send(payload);

@@ -78,6 +78,9 @@ services:
       SLACK_SECRET:
       MICROSOFT_KEY:
       MICROSOFT_SECRET:
+      OKTA_AUDIENCE:
+      OKTA_KEY:
+      OKTA_SECRET:
 
       # -- Do not change --
       NODE_ENV: production

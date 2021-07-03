@@ -10880,6 +10880,14 @@ passport-oauth2@1.x.x:
     uid2 "0.0.x"
     utils-merge "1.x.x"
 
+passport-oauth@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/passport-oauth/-/passport-oauth-1.0.0.tgz#90aff63387540f02089af28cdad39ea7f80d77df"
+  integrity sha1-kK/2M4dUDwIImvKM2tOep/gNd98=
+  dependencies:
+    passport-oauth1 "1.x.x"
+    passport-oauth2 "1.x.x"
+
 passport-oauth@~0.1.1:
   version "0.1.15"
   resolved "https://registry.yarnpkg.com/passport-oauth/-/passport-oauth-0.1.15.tgz#fb74e0afe84614bfa256c5fc716cc56bbfc8cec0"
@@ -10888,6 +10896,15 @@ passport-oauth@~0.1.1:
     oauth "0.9.x"
     passport "~0.1.1"
     pkginfo "0.2.x"
+
+passport-okta-oauth@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/passport-okta-oauth/-/passport-okta-oauth-0.0.1.tgz#c8bcee02af3d56ca79d3cca776f2df7cf15a5748"
+  integrity sha1-yLzuAq89Vsp508yndvLffPFaV0g=
+  dependencies:
+    passport-oauth "1.0.0"
+    pkginfo "0.2.x"
+    uid2 "0.0.3"
 
 passport-slack@^0.0.7:
   version "0.0.7"

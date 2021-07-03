@@ -5,6 +5,7 @@ import {
   GoogleLoginButton,
   TwitterLoginButton,
   MicrosoftLoginButton,
+  AmazonLoginButton,
 } from 'react-social-login-buttons';
 import styled from 'styled-components';
 import io from 'socket.io-client';
@@ -48,6 +49,7 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
   );
   const handleGitHub = useCallback(() => handleOAuth('github'), [handleOAuth]);
   const handleSlack = useCallback(() => handleOAuth('slack'), [handleOAuth]);
+  const handleOkta = useCallback(() => handleOAuth('okta'), [handleOAuth]);
   const handleMicrosoft = useCallback(
     () => handleOAuth('microsoft'),
     [handleOAuth]
@@ -98,6 +100,7 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
         {details.twitter && (
           <TwitterLoginButton onClick={handleTwitter} text="Twitter" />
         )}
+        {details.okta && <AmazonLoginButton onClick={handleOkta} text="Okta" />}
       </AccountsButtons>
     </Wrapper>
   );

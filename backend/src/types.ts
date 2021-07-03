@@ -26,6 +26,9 @@ export interface BackendConfig {
   SLACK_SECRET: string;
   MICROSOFT_KEY: string;
   MICROSOFT_SECRET: string;
+  OKTA_AUDIENCE: string;
+  OKTA_KEY: string;
+  OKTA_SECRET: string;
   SENDGRID_API_KEY: string;
   SENDGRID_SENDER: string;
   SENDGRID_VERIFICATION_EMAIL_TID: string;

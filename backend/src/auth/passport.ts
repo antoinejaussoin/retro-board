@@ -5,12 +5,15 @@ import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
 import { Strategy as GithubStrategy } from 'passport-github2';
 import { Strategy as SlackStrategy } from 'passport-slack';
 import { Strategy as MicrosoftStrategy } from 'passport-microsoft';
+import { Strategy as OktaStrategy } from 'passport-okta-oauth';
+
 import {
   TWITTER_CONFIG,
   GOOGLE_CONFIG,
   GITHUB_CONFIG,
   MICROSOFT_CONFIG,
   SLACK_CONFIG,
+  OKTA_CONFIG,
 } from './config';
 import { v4 } from 'uuid';
 import { AccountType } from '@retrospected/common';
@@ -25,6 +28,7 @@ import {
   GitHubProfile,
   MicrosoftProfile,
   SlackProfile,
+  OktaProfile,
 } from './types';
 import { getOrSaveUser } from '../db/actions/users';
 
@@ -60,6 +64,9 @@ export default () => {
           break;
         case 'microsoft':
           user = buildFromMicrosoftProfile(profile as MicrosoftProfile);
+          break;
+        case 'okta':
+          user = buildFromOktaProfile(profile as OktaProfile);
           break;
         default:
           throw new Error('Unknown provider: ' + type);
@@ -133,6 +140,17 @@ export default () => {
     return user;
   }
 
+  function buildFromOktaProfile(profile: OktaProfile): UserEntity {
+    console.log('profile', profile);
+    const user: UserEntity = new UserEntity(v4(), profile.name.fullName);
+    const email = profile.emails[0].value;
+    user.accountType = 'okta';
+    user.language = 'en';
+    user.username = email;
+    user.email = email;
+    return user;
+  }
+
   // Adding each OAuth provider's strategy to passport
   if (TWITTER_CONFIG) {
     passport.use(new TwitterStrategy(TWITTER_CONFIG, callback('twitter')));
@@ -159,6 +177,11 @@ export default () => {
       new MicrosoftStrategy(MICROSOFT_CONFIG, callback('microsoft'))
     );
     console.log(chalk`{blue 🔑  {red Microsoft} authentication activated}`);
+  }
+
+  if (OKTA_CONFIG) {
+    passport.use(new OktaStrategy(OKTA_CONFIG, callback('okta')));
+    console.log(chalk`{blue 🔑  {red Okta} authentication activated}`);
   }
 
   passport.use(
