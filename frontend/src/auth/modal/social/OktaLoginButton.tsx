@@ -15,10 +15,9 @@ export default OktaLoginButton;
 interface IconProps {
   width: number | string;
   height: number | string;
-  color: string;
 }
 
-function Icon({ width = 24, height = 24, color }: IconProps) {
+function Icon({ width = 24, height = 24 }: IconProps) {
   return (
     <svg
       version="1.1"
