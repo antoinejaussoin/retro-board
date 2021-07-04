@@ -5,7 +5,7 @@ import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
 import { Strategy as GithubStrategy } from 'passport-github2';
 import { Strategy as SlackStrategy } from 'passport-slack';
 import { Strategy as MicrosoftStrategy } from 'passport-microsoft';
-import { Strategy as OktaStrategy } from 'passport-okta-oauth';
+import { Strategy as OktaStrategy } from 'passport-okta-oauth20';
 
 import {
   TWITTER_CONFIG,
@@ -141,9 +141,8 @@ export default () => {
   }
 
   function buildFromOktaProfile(profile: OktaProfile): UserEntity {
-    console.log('profile', profile);
-    const user: UserEntity = new UserEntity(v4(), profile.name.fullName);
-    const email = profile.emails[0].value;
+    const user: UserEntity = new UserEntity(v4(), profile.fullName);
+    const email = profile.email;
     user.accountType = 'okta';
     user.language = 'en';
     user.username = email;

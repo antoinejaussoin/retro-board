@@ -72,7 +72,7 @@
     "passport-google-oauth": "^2.0.0",
     "passport-local": "^1.0.0",
     "passport-microsoft": "^0.1.0",
-    "passport-okta-oauth": "^0.0.1",
+    "passport-okta-oauth20": "^1.0.1",
     "passport-slack": "^0.0.7",
     "passport-twitter": "^1.0.4",
     "pg": "^8.6.0",

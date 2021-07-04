@@ -2,6 +2,7 @@ import { IStrategyOption } from 'passport-twitter';
 import { IOAuth2StrategyOption } from 'passport-google-oauth';
 import { StrategyOptions as GitHubStrategy } from 'passport-github2';
 import { MicrosoftStrategyOptions } from 'passport-microsoft';
+import { OktaStrategyOptions } from 'passport-okta-oauth20';
 import config from '../config';
 
 const providers = ['twitter', 'google', 'github', 'slack', 'microsoft', 'okta'];
@@ -64,16 +65,6 @@ export const MICROSOFT_CONFIG: MicrosoftStrategyOptions | null =
       }
     : null;
 
-type OktaStrategyOptions = {
-  audience: string;
-  clientID: string;
-  clientSecret: string;
-  idp?: string;
-  scope: string[];
-  response_type: string;
-  callbackURL: string;
-};
-
 export const OKTA_CONFIG: OktaStrategyOptions | null =
   config.OKTA_AUDIENCE && config.OKTA_KEY && config.OKTA_SECRET
     ? {
@@ -81,7 +72,6 @@ export const OKTA_CONFIG: OktaStrategyOptions | null =
         clientID: config.OKTA_KEY,
         clientSecret: config.OKTA_SECRET,
         scope: ['openid', 'email', 'profile'],
-        response_type: 'code',
         callbackURL: oktaURL,
       }
     : null;

@@ -1,3 +1,5 @@
+import { OktaProfile as BaseOktaProfile } from 'passport-okta-oauth20';
+
 export interface BaseProfile {
   id: string;
   provider:
@@ -180,16 +182,4 @@ export interface MicrosoftProfile extends BaseProfile {
   };
 }
 
-interface OktaEmail {
-  value: string;
-}
-
-export interface OktaProfile extends BaseProfile {
-  provider: 'okta-social';
-  name: {
-    fullName: string;
-    familyName: string;
-    givenName: string;
-  };
-  emails: OktaEmail[];
-}
+export interface OktaProfile extends BaseOktaProfile, BaseProfile {}
