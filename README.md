@@ -148,6 +148,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 ### Version 4.6.0 (not released)
 
 - Support OKTA for authentication
+- TODO: beware, create-migration is not working anymore
 
 ### Version 4.5.0
 
