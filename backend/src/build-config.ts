@@ -13,7 +13,7 @@ async function buildOrmConfig() {
   (config as any).migrations = [`${migrations}/*.js`];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (config as any).cli.migrationsDir = migrations;
-  const jsonPath = path.resolve(__dirname, '..', 'ormconfig.json');
+  const jsonPath = path.resolve(__dirname, '..', '..', 'ormconfig.json');
   fs.writeFileSync(jsonPath, JSON.stringify(config, null, 2));
 }
 
