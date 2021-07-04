@@ -24,8 +24,10 @@
     "baseUrl": "."
   },
   "include": ["src", "./package.json"],
-  "exclude" : ["src/**/*.test.ts"], 
-  "references": [{
-    "path": "../common"
-  }]
+  "exclude": ["src/**/*.test.ts"],
+  "references": [
+    {
+      "path": "../common"
+    }
+  ]
 }

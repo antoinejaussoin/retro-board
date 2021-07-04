@@ -2,15 +2,28 @@ import fs from 'fs';
 import path from 'path';
 import { BackendConfig } from './types';
 import dotenv from 'dotenv';
-const confPath = path.resolve(__dirname, '../../.env');
-const defaultConfPath = path.resolve(__dirname, '../../.env.example');
 
-const fileExist = fs.existsSync(confPath);
+function findDotEnvPath(): string | null {
+  let current = path.resolve(__dirname);
+  for (let i = 0; i < 5; i++) {
+    const custom = path.resolve(current, '.env');
+    const example = path.resolve(current, '.env.example');
+    if (fs.existsSync(custom)) {
+      console.log('Found custom .env: ', custom);
+      return custom;
+    }
+    if (fs.existsSync(example)) {
+      console.log('Found example .env: ', example);
+      return example;
+    }
+    current = path.resolve(current, '..');
+  }
+  return null;
+}
 
-if (fileExist) {
-  dotenv.config({ path: confPath });
-} else {
-  dotenv.config({ path: defaultConfPath });
+const dotEnvPath = findDotEnvPath();
+if (dotEnvPath) {
+  dotenv.config({ path: dotEnvPath });
 }
 
 function defaults(key: string, defaultValue: string): string {

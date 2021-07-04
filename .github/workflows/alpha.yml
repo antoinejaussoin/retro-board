@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [alpha]
+    branches: [v460/speed-up-migrate]
 
 jobs:
   build:
