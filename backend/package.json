@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rimraf dist && tsc --build",
     "start": "nodemon --exec 'yarn fix & ts-node' --files ./src/index.ts",
-    "create-migration": "ts-node ../node_modules/typeorm/cli.js migration:generate -n ",
+    "create-migration": "ts-node ./src/init.ts --ts && ts-node ../node_modules/typeorm/cli.js migration:generate -n ",
     "migrate": "node ./dist/src/init.js && node ../node_modules/typeorm/cli.js migration:run",
     "revert": "node ./dist/src/init.js && node ../node_modules/typeorm/cli.js migration:revert",
     "lint": "eslint 'src/**/*.ts'",
@@ -86,9 +86,10 @@
     "socket.io-redis": "6.1.1",
     "stripe": "^8.160.0",
     "ts-jest": "^27.0.3",
-    "ts-node": "^10.0.0",
+    "ts-node": "^9.1.1",
     "typeorm": "^0.2.34",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "yargs": "^17.0.1"
   },
   "resolutions": {
     "@types/connect-redis": "0.0.16",
