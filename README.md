@@ -148,7 +148,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 ### Version 4.6.0 (not released)
 
 - Support OKTA for authentication
-- TODO: beware, create-migration is not working anymore
+- Speeding up the migration on production (using transpiled JavaScript instead of TypeScript via ts-node)
 
 ### Version 4.5.0
 
