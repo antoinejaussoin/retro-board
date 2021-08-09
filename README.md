@@ -149,6 +149,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 - Support OKTA for authentication
 - Speeding up the migration on production (using transpiled JavaScript instead of TypeScript via ts-node)
+- Making email checks for Pro Team subscriptions case-insensitive. 👏 Thanks Nico! ([#287](https://github.com/antoinejaussoin/retro-board/issues/287))
 
 ### Version 4.5.0
 
