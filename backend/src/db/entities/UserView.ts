@@ -23,7 +23,7 @@ select
 from users u 
 
 left join subscriptions s on s."ownerId" = u.id and s.active is true
-left join subscriptions s2 on u.email = ANY(s2.members) and s2.active is true
+left join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true
 left join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true
   `,
 })
