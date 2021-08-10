@@ -32,7 +32,8 @@ function getConfig(extension: 'js' | 'ts') {
   const config = getOrmConfig();
   const rootPath = path.resolve(__dirname);
   const entities = path.resolve(rootPath, 'db', 'entities');
-  const migrations = path.resolve(rootPath, 'db', 'migrations');
+  const migrations =
+    extension === 'ts' ? 'src/db/migrations' : 'dist/src/db/migrations';
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (config as any).entities = [`${entities}/*.${extension}`];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
