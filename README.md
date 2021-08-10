@@ -145,7 +145,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
-### Version 4.6.0 (not released)
+### Version 4.6.0
 
 - Support OKTA for authentication
 - Speeding up the migration on production (using transpiled JavaScript instead of TypeScript via ts-node)
