@@ -17,7 +17,15 @@ import SessionOptionsEntity from './entities/SessionOptions';
 
 const migrationsDirectory = 'src/db/migrations';
 
-export default function (): ConnectionOptions {
+export type ConnectionOptionsCustomisation = {
+  entities: string[];
+  migrations: string[];
+  migrationDir: string;
+};
+
+export default function (
+  customisation?: Partial<ConnectionOptionsCustomisation>
+): ConnectionOptions {
   return {
     type: 'postgres',
     host: config.DB_HOST,
@@ -25,25 +33,34 @@ export default function (): ConnectionOptions {
     username: config.DB_USER,
     password: config.DB_PASSWORD,
     database: config.DB_NAME,
-    entities: [
-      PostEntity,
-      PostGroupEntity,
-      SessionEntity,
-      UserEntity,
-      UserView,
-      ColumnDefinitionEntity,
-      VoteEntity,
-      SessionTemplateEntity,
-      TemplateColumnDefinitionEntity,
-      SubscriptionEntity,
-      LicenceEntity,
-      SessionOptionsEntity,
-    ],
+    entities:
+      customisation && customisation.entities
+        ? customisation.entities
+        : [
+            PostEntity,
+            PostGroupEntity,
+            SessionEntity,
+            UserEntity,
+            UserView,
+            ColumnDefinitionEntity,
+            VoteEntity,
+            SessionTemplateEntity,
+            TemplateColumnDefinitionEntity,
+            SubscriptionEntity,
+            LicenceEntity,
+            SessionOptionsEntity,
+          ],
     synchronize: false,
     logging: config.SQL_LOG ? 'all' : undefined,
-    migrations: [`${migrationsDirectory}/*.ts`],
+    migrations:
+      customisation && customisation.migrations
+        ? customisation.migrations
+        : [`${migrationsDirectory}/*.ts`],
     cli: {
-      migrationsDir: migrationsDirectory,
+      migrationsDir:
+        customisation && customisation.migrationDir
+          ? customisation.migrationDir
+          : migrationsDirectory,
     },
   };
 }

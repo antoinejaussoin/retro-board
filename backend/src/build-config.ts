@@ -29,17 +29,17 @@ async function buildOrmConfigTs() {
 }
 
 function getConfig(extension: 'js' | 'ts') {
-  const config = getOrmConfig();
   const rootPath = path.resolve(__dirname);
   const entities = path.resolve(rootPath, 'db', 'entities');
   const migrations =
     extension === 'ts' ? 'src/db/migrations' : 'dist/src/db/migrations';
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (config as any).entities = [`${entities}/*.${extension}`];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (config as any).migrations = [`${migrations}/*.${extension}`];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (config as any).cli.migrationsDir = migrations;
+
+  const config = getOrmConfig({
+    entities: [`${entities}/*.${extension}`],
+    migrations: [`${migrations}/*.${extension}`],
+    migrationDir: migrations,
+  });
+
   return config;
 }
 
