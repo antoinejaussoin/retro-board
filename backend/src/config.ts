@@ -9,11 +9,9 @@ function findDotEnvPath(): string | null {
     const custom = path.resolve(current, '.env');
     const example = path.resolve(current, '.env.example');
     if (fs.existsSync(custom)) {
-      console.log('Found custom .env: ', custom);
       return custom;
     }
     if (fs.existsSync(example)) {
-      console.log('Found example .env: ', example);
       return example;
     }
     current = path.resolve(current, '..');
@@ -102,7 +100,5 @@ const config: BackendConfig = {
   RATE_LIMIT_WS_DURATION: defaultsNumber('RATE_LIMIT_WS_DURATION', 60),
   WS_MAX_BUFFER_SIZE: defaultsNumber('WS_MAX_BUFFER_SIZE', 10_000),
 };
-
-console.log('Config: ', config);
 
 export default config;
