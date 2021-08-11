@@ -1,5 +1,6 @@
 import grey from '@material-ui/core/colors/grey';
-import Markdown from 'react-markdown/with-html';
+import Markdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 import styled from 'styled-components';
 
 const content = `
@@ -46,7 +47,7 @@ the key will be stored in local storage for the reason explained above.
 export default function EncryptionDoc() {
   return (
     <Container>
-      <Markdown allowDangerousHtml>{content}</Markdown>
+      <Markdown rehypePlugins={[rehypeRaw as any]}>{content}</Markdown>
     </Container>
   );
 }
