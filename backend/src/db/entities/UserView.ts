@@ -13,6 +13,7 @@ select
   u.photo,
   u.language,
   u.email,
+  case when u."accountType" = 'anonymous' and u.password is null then false else true end as "canDeleteSession",
   u.trial,
   s.id as "ownSubscriptionsId",
   s.plan as "ownPlan",
@@ -38,6 +39,8 @@ export default class UserView {
   public username: string | null;
   @ViewColumn()
   public email: string | null;
+  @ViewColumn()
+  public canDeleteSession: boolean;
   @ViewColumn()
   public stripeId: string | null;
   @ViewColumn()
@@ -72,6 +75,7 @@ export default class UserView {
     this.subscriptionsId = null;
     this.pro = false;
     this.email = null;
+    this.canDeleteSession = false;
     this.currency = null;
     this.ownPlan = null;
     this.ownSubscriptionsId = null;
@@ -86,6 +90,7 @@ export default class UserView {
       name: this.name,
       photo: this.photo,
       email: this.email,
+      canDeleteSession: this.canDeleteSession,
       pro: this.pro,
       subscriptionsId: this.subscriptionsId,
       accountType: this.accountType,

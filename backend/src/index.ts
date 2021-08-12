@@ -293,7 +293,7 @@ db().then(() => {
   app.delete('/api/session/:sessionId', heavyLoadLimiter, async (req, res) => {
     const sessionId = req.params.sessionId;
     const user = await getUserFromRequest(req);
-    if (user && user.accountType !== 'anonymous') {
+    if (user) {
       const success = await deleteSessions(user.id, sessionId);
       cache.invalidate(user.id);
       if (success) {

@@ -117,6 +117,7 @@ export interface FullUser extends User {
   accountType: AccountType;
   language: string;
   email: string | null;
+  canDeleteSession: boolean;
   stripeId: string | null;
   pro: boolean;
   subscriptionsId: string | null;

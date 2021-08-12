@@ -56,6 +56,7 @@ const Inner: React.FC = ({ children }) => {
     ownPlan: null,
     ownSubscriptionsId: null,
     trial: null,
+    canDeleteSession: false,
   });
   useEffect(() => {
     receiveBoard(initialSession);
@@ -76,6 +77,7 @@ const Inner: React.FC = ({ children }) => {
       ownPlan: null,
       ownSubscriptionsId: null,
       trial: null,
+      canDeleteSession: false,
     });
   }, [receiveBoard]);
   return (

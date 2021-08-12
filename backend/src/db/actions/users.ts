@@ -37,7 +37,7 @@ export async function getUserView(id: string): Promise<UserView | null> {
   });
 }
 
-async function getUserViewInner(
+export async function getUserViewInner(
   manager: EntityManager,
   id: string
 ): Promise<UserView | null> {

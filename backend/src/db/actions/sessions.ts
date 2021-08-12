@@ -30,7 +30,8 @@ import {
 import { orderBy } from 'lodash';
 import { transaction } from './transaction';
 import { EntityManager } from 'typeorm';
-import { isUserPro } from './users';
+import { getUserViewInner, isUserPro } from './users';
+import { ALL_FIELDS } from '../entities/User';
 
 export async function createSession(
   author: UserEntity,
@@ -186,14 +187,16 @@ export async function deleteSessions(
   return await transaction(async (manager) => {
     const sessionRepository = manager.getCustomRepository(SessionRepository);
     const session = await sessionRepository.findOne(sessionId);
+    const user = await getUserViewInner(manager, userId);
+    if (!user) {
+      console.info('User not found', userId);
+      return false;
+    }
     if (!session) {
       console.info('Session not found', sessionId);
       return false;
     }
-    if (
-      session.createdBy.id !== userId ||
-      session.createdBy.accountType === 'anonymous'
-    ) {
+    if (session.createdBy.id !== userId || !user.canDeleteSession) {
       console.error(
         'The user is not the one who created the session, or is anonymous'
       );
@@ -254,6 +257,7 @@ export async function previousSessions(
     const userRepository = manager.getCustomRepository(UserRepository);
     const loadedUser = await userRepository.findOne(userId, {
       relations: ['sessions', 'sessions.posts', 'sessions.visitors'],
+      select: ALL_FIELDS,
     });
     if (loadedUser && loadedUser.sessions) {
       return orderBy(loadedUser.sessions, (s) => s.updated, 'desc').map(
@@ -276,7 +280,7 @@ export async function previousSessions(
             participants: getParticipants(session.visitors),
             canBeDeleted:
               userId === session.createdBy.id &&
-              session.createdBy.accountType !== 'anonymous',
+              (loadedUser.accountType !== 'anonymous' || !!loadedUser.password),
           } as SessionMetadata)
       );
     }
