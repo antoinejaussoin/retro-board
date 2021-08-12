@@ -15,13 +15,18 @@ interface AnonAuthProps {
 const AnonAuth = ({ onClose, onUser }: AnonAuthProps) => {
   const { AnonymousLogin: loginTranslations } = useTranslations();
   const language = useLanguage();
-
   const [username, setUsername] = useState('');
+  const [error, setError] = useState('');
+
   const handleAnonLogin = useCallback(() => {
     async function login() {
       const trimmedUsername = username.trim();
       if (trimmedUsername.length) {
-        await anonymousLogin(trimmedUsername);
+        const user = await anonymousLogin(trimmedUsername);
+        if (!user) {
+          setError('Your anonymous account is not valid.');
+          return;
+        }
         const updatedUser = await updateLanguage(language.value);
         onUser(updatedUser);
         if (onClose) {
@@ -53,6 +58,11 @@ const AnonAuth = ({ onClose, onUser }: AnonAuthProps) => {
       <Alert severity="info">
         {loginTranslations.anonymousAuthDescription}
       </Alert>
+      {!!error ? (
+        <Alert severity="error" style={{ marginTop: 10 }}>
+          {error}
+        </Alert>
+      ) : null}
       <Input
         value={username}
         onChange={handleUsernameChange}
