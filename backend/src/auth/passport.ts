@@ -18,8 +18,8 @@ import {
 import { v4 } from 'uuid';
 import { AccountType } from '@retrospected/common';
 import chalk from 'chalk';
-import loginAnonymous from './logins/anonymous-user';
 import loginUser from './logins/password-user';
+import loginAnonymous from './logins/anonymous-user';
 import UserEntity from '../db/entities/User';
 import {
   BaseProfile,
@@ -195,12 +195,20 @@ export default () => {
           options?: IVerifyOptions
         ) => void
       ) => {
-        if (password && password !== '<<<<<NONE>>>>>') {
+        if (
+          username.startsWith('ANONUSER__') &&
+          username.endsWith('__ANONUSER')
+        ) {
+          // Anonymouns login
+          const actualUsername = username
+            .replace('ANONUSER__', '')
+            .replace('__ANONUSER', '');
+          const user = await loginAnonymous(actualUsername, password);
+          done(!user ? 'Anonymous account not valid' : null, user?.id);
+        } else {
+          // Regular account login
           const user = await loginUser(username, password);
           done(!user ? 'User cannot log in' : null, user?.id);
-        } else {
-          const user = await loginAnonymous(username);
-          done(null, user.id);
         }
       }
     )

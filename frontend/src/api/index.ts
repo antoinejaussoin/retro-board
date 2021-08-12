@@ -66,10 +66,12 @@ export async function anonymousLogin(
   username: string
 ): Promise<FullUser | null> {
   const anonymousUsername = getAnonymousUsername(username);
-  const success = await fetchPost('/api/auth/anonymous/login', {
-    username: anonymousUsername,
-    password: '<<<<<NONE>>>>>',
+  const password = getAnonUserPassword(anonymousUsername);
+  const success = await fetchPost('/api/auth/login', {
+    username: `ANONUSER__${anonymousUsername}__ANONUSER`,
+    password,
   });
+
   if (success) {
     return me();
   }
@@ -178,6 +180,16 @@ function getAnonymousUsername(username: string): string {
     return generatedUsername;
   }
   return storedUsername;
+}
+
+function getAnonUserPassword(username: string) {
+  const key = `anonymous-password-${username}`;
+  let password = getItem(key);
+  if (!password) {
+    password = v4();
+    setItem(key, password);
+  }
+  return password;
 }
 
 export async function updateLanguage(

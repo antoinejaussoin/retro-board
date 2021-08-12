@@ -96,6 +96,25 @@ export async function getOrSaveUser(user: UserEntity): Promise<UserEntity> {
   });
 }
 
+export async function updateUserPassword(
+  id: string,
+  password: string
+): Promise<UserEntity | null> {
+  return await transaction(async (manager) => {
+    const userRepository = manager.getCustomRepository(UserRepository);
+    const existingUser = await userRepository.findOne({
+      where: { id },
+    });
+    if (existingUser) {
+      return await userRepository.save({
+        ...existingUser,
+        password,
+      });
+    }
+    return null;
+  });
+}
+
 export function isUserPro(user: FullUser) {
   // TODO: deduplicate from same logic in Frontend frontend/src/auth/useIsPro.ts
   if (isSelfHostedAndLicenced()) {
