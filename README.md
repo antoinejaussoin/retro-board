@@ -145,6 +145,10 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
+### Version 4.7.0 (not released)
+
+- Add the ability for anonymous users to delete the boards they created under certain conditions ([#229](https://github.com/antoinejaussoin/retro-board/issues/229)).
+
 ### Version 4.6.0
 
 - Support OKTA for authentication

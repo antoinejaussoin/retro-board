@@ -26,7 +26,6 @@ export default async function loginAnonymous(
 
   if (!existingUser.password) {
     const hashedPassword = await hashPassword(password);
-    existingUser.password = hashedPassword;
     const dbUser = await updateUserPassword(existingUser.id, hashedPassword);
     return dbUser;
   }
