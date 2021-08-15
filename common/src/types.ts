@@ -108,6 +108,11 @@ export interface User extends Entity {
   photo: string | null;
 }
 
+export interface UserIdentity extends Entity {
+  username: string | null;
+  accountType: AccountType;
+}
+
 export interface Participant extends User {
   online: boolean;
 }

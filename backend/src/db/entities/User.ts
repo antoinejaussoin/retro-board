@@ -7,9 +7,11 @@ import {
   UpdateDateColumn,
   ManyToOne,
   ManyToMany,
+  OneToMany,
 } from 'typeorm';
 import { AccountType, User, Currency } from '@retrospected/common';
 import { SessionEntity, SessionTemplateEntity } from '.';
+import UserIdentityEntity from './UserIdentity';
 
 export const ALL_FIELDS: Array<keyof UserEntity> = [
   'id',
@@ -65,6 +67,12 @@ export default class UserEntity {
     eager: false,
   })
   public sessions: SessionEntity[] | undefined;
+  @OneToMany(() => UserIdentityEntity, (identity) => identity.user, {
+    cascade: true,
+    nullable: false,
+    eager: false,
+  })
+  public identities: UserIdentityEntity[] | undefined;
   @Column({ nullable: true, type: 'character varying' })
   public slackUserId: string | null;
   @Column({ nullable: true, type: 'character varying' })

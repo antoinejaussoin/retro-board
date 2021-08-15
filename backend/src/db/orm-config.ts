@@ -14,6 +14,7 @@ import {
 } from './entities';
 import LicenceEntity from './entities/Licence';
 import SessionOptionsEntity from './entities/SessionOptions';
+import UserIdentityEntity from './entities/UserIdentity';
 
 const migrationsDirectory = 'src/db/migrations';
 
@@ -41,6 +42,7 @@ export default function (
             PostGroupEntity,
             SessionEntity,
             UserEntity,
+            UserIdentityEntity,
             UserView,
             ColumnDefinitionEntity,
             VoteEntity,
