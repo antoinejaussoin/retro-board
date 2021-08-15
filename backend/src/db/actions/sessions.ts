@@ -33,6 +33,24 @@ import { EntityManager } from 'typeorm';
 import { getUserViewInner, isUserPro } from './users';
 import { ALL_FIELDS } from '../entities/User';
 
+export async function createSessionFromSlack(
+  slackUserId: string,
+  name: string
+): Promise<Session | null> {
+  return await transaction(async (manager) => {
+    const userRepository = manager.getCustomRepository(UserRepository);
+    const users = await userRepository.find({ where: { slackUserId } });
+    if (!users.length) {
+      return null;
+    }
+    const user = users[0];
+    const session = await createSession(user);
+    session.name = name;
+    await saveSession(user.id, session);
+    return session;
+  });
+}
+
 export async function createSession(
   author: UserEntity,
   encryptionCheck?: string
