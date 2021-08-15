@@ -90,6 +90,8 @@ export async function getOrSaveUser(user: UserEntity): Promise<UserEntity> {
         ...existingUser,
         email: user.email,
         photo: user.photo,
+        slackUserId: user.slackUserId,
+        slackTeamId: user.slackTeamId,
       });
     }
     return await userRepository.save(user);

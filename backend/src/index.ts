@@ -12,6 +12,7 @@ import passportInit from './auth/passport';
 import authRouter from './auth/router';
 import adminRouter from './admin/router';
 import stripeRouter from './stripe/router';
+import slackRouter from './slack/router';
 import session from 'express-session';
 import game from './game';
 import {
@@ -222,6 +223,9 @@ db().then(() => {
 
   // Admin
   app.use('/api/admin', adminRouter);
+
+  // Slack
+  app.use('/api/slack', slackRouter());
 
   // Create session
   app.post('/api/create', heavyLoadLimiter, async (req, res) => {

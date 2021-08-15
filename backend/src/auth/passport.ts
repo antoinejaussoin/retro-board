@@ -121,12 +121,15 @@ export default () => {
 
   function buildFromSlackProfile(profile: SlackProfile): UserEntity {
     const user: UserEntity = new UserEntity(v4(), profile.displayName);
+    console.log('Slack profile: ', profile);
     const email = profile.user.email;
     user.accountType = 'slack';
     user.language = 'en';
     user.photo = profile.user.image_192;
     user.username = email;
     user.email = email;
+    user.slackUserId = profile.id;
+    user.slackTeamId = profile.team ? profile.team.id : null;
     return user;
   }
 

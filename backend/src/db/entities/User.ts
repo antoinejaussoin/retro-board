@@ -65,6 +65,10 @@ export default class UserEntity {
     eager: false,
   })
   public sessions: SessionEntity[] | undefined;
+  @Column({ nullable: true, type: 'character varying' })
+  public slackUserId: string | null;
+  @Column({ nullable: true, type: 'character varying' })
+  public slackTeamId: string | null;
   @CreateDateColumn({ type: 'timestamp with time zone', select: false })
   public created: Date | undefined;
   @UpdateDateColumn({ type: 'timestamp with time zone', select: false })
@@ -83,6 +87,8 @@ export default class UserEntity {
     this.currency = null;
     this.trial = null;
     this.quota = 50;
+    this.slackTeamId = null;
+    this.slackUserId = null;
   }
 
   toJson(): User {
