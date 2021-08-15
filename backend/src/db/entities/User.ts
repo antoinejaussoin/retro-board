@@ -46,6 +46,7 @@ export default class UserEntity {
   @Column({ nullable: true, type: 'character varying', select: false })
   public password: string | null;
   @Column({ nullable: true, type: 'character varying' })
+  @Index({ unique: true })
   public email: string | null;
   @Column({ nullable: true, type: 'character varying' })
   public currency: Currency | null;
