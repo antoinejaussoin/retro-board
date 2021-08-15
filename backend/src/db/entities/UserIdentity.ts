@@ -41,6 +41,8 @@ export default class UserIdentityEntity {
   public password: string | null;
   @Column({ nullable: true, type: 'character varying', select: false })
   public emailVerification: string | null;
+  @Column({ nullable: true, type: 'character varying' })
+  public photo: string | null;
   @CreateDateColumn({ type: 'timestamp with time zone', select: false })
   public created: Date | undefined;
   @UpdateDateColumn({ type: 'timestamp with time zone', select: false })
@@ -52,6 +54,7 @@ export default class UserIdentityEntity {
     this.accountType = 'anonymous';
     this.username = null;
     this.emailVerification = null;
+    this.photo = null;
   }
 
   toJson(): UserIdentity {
