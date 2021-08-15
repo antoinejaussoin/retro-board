@@ -18,6 +18,7 @@ const tables: Table[] = [
   { name: 'templates', col: 'createdById' },
   // { name: 'visitors', col: 'usersId' },
   { name: 'votes', col: 'userId' },
+  { name: 'users_identities', col: 'userId' },
 ];
 
 const importantFields = ['stripeId', 'currency', 'defaultTemplateId', 'trial'];
@@ -26,7 +27,7 @@ export class MigratingIdentities1629045752716 implements MigrationInterface {
   name = 'MigratingIdentities1629045752716';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`delete from users_identities`);
+    // await queryRunner.query(`delete from users_identities`);
     await queryRunner.query(`insert into users_identities
 				select uuid_in(md5(random()::text || clock_timestamp()::text)::cstring), "accountType", "username", "password", "emailVerification", "created", "updated", "id", "photo" from users`);
 
@@ -55,7 +56,7 @@ export class MigratingIdentities1629045752716 implements MigrationInterface {
       const allUsersQuery = `select * from users where id in ('${user.ids.join(
         "', '"
       )}')`;
-      console.log(allUsersQuery);
+      // console.log(allUsersQuery);
       const allUsers = await queryRunner.query(allUsersQuery);
 
       const [mainId, ...otherIds] = user.ids;
@@ -66,13 +67,13 @@ export class MigratingIdentities1629045752716 implements MigrationInterface {
           .map((u: any) => u[field])
           .filter((v: any) => !!v);
         if (usableValues.length) {
-          console.log('Updating main user with prop ', field, usableValues[0]);
-          console.log('type of ', typeof usableValues[0]);
+          // console.log('Updating main user with prop ', field, usableValues[0]);
+          // console.log('type of ', typeof usableValues[0]);
           const query =
             usableValues[0] instanceof Date
               ? `update users set "${field}" = '${usableValues[0].toISOString()}' where id = '${mainId}'`
               : `update users set "${field}" = '${usableValues[0]}' where id = '${mainId}'`;
-          console.log(query);
+          // console.log(query);
           await queryRunner.query(query);
         }
       }
@@ -83,7 +84,7 @@ export class MigratingIdentities1629045752716 implements MigrationInterface {
           try {
             const query = `update ${table.name} set "${table.col}" = '${mainId}' where "${table.col}" = '${id}'`;
             await queryRunner.query(query);
-            console.log(query);
+            // console.log(query);
           } catch (e) {
             console.log('Ignoring error', e);
           }
@@ -103,18 +104,18 @@ export class MigratingIdentities1629045752716 implements MigrationInterface {
         // Add new visitors
         for (const sessionId of sessionIds) {
           const query = `insert into visitors ("sessionsId", "usersId") values ('${sessionId}', '${mainId}') on conflict do nothing`;
-          console.log(query);
+          // console.log(query);
           await queryRunner.query(query);
         }
 
         // Delete visitors
         const query = `delete from visitors where "usersId" = '${id}'`;
-        console.log(query);
+        // console.log(query);
         await queryRunner.query(query);
 
         // Delete old user
         const delQuery = `delete from users where id = '${id}'`;
-        console.log(delQuery);
+        // console.log(delQuery);
         await queryRunner.query(delQuery);
       }
     }
