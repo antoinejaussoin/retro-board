@@ -16,9 +16,11 @@ const tables: Table[] = [
   { name: 'sessions', col: 'createdById' },
   { name: 'subscriptions', col: 'ownerId' },
   { name: 'templates', col: 'createdById' },
-  { name: 'visitors', col: 'usersId' },
+  // { name: 'visitors', col: 'usersId' },
   { name: 'votes', col: 'userId' },
 ];
+
+const importantFields = ['stripeId', 'currency', 'defaultTemplateId', 'trial'];
 
 export class MigratingIdentities1629045752716 implements MigrationInterface {
   name = 'MigratingIdentities1629045752716';
@@ -40,20 +42,82 @@ export class MigratingIdentities1629045752716 implements MigrationInterface {
       ids: e.ids,
     }));
     console.log('Found', emails.length, 'emails');
+    let count = 0;
+    for (const user of emails) {
+      count++;
+      console.log(
+        ' ==> Dealing with ',
+        user.email,
+        count,
+        'out of',
+        emails.length
+      );
+      const allUsersQuery = `select * from users where id in ('${user.ids.join(
+        "', '"
+      )}')`;
+      console.log(allUsersQuery);
+      const allUsers = await queryRunner.query(allUsersQuery);
 
-    emails.forEach((user) => {
-      console.log(' ==> Dealing with ', user.email);
       const [mainId, ...otherIds] = user.ids;
-      otherIds.forEach(async (id) => {
-        tables.forEach(async (table) => {
-          const query = `update ${table.name} set ${table.col} = ${mainId} where ${table.col} = ${id}`;
-          // await queryRunner.query(query);
+
+      // Reset main user with some properties from secondary users
+      for (const field of importantFields) {
+        const usableValues = allUsers
+          .map((u: any) => u[field])
+          .filter((v: any) => !!v);
+        if (usableValues.length) {
+          console.log('Updating main user with prop ', field, usableValues[0]);
+          console.log('type of ', typeof usableValues[0]);
+          const query =
+            usableValues[0] instanceof Date
+              ? `update users set "${field}" = '${usableValues[0].toISOString()}' where id = '${mainId}'`
+              : `update users set "${field}" = '${usableValues[0]}' where id = '${mainId}'`;
           console.log(query);
+          await queryRunner.query(query);
+        }
+      }
+
+      // Re-set all entities to main user
+      for (const id of otherIds) {
+        for (const table of tables) {
+          try {
+            const query = `update ${table.name} set "${table.col}" = '${mainId}' where "${table.col}" = '${id}'`;
+            await queryRunner.query(query);
+            console.log(query);
+          } catch (e) {
+            console.log('Ignoring error', e);
+          }
 
           // TODO: try and copy stripeId, currency, trial etc.
-        });
-      });
-    });
+        }
+
+        // Special case for visitors
+        const result = await queryRunner.query(`
+        select "sessionsId" from visitors where "usersId" = '${id}'
+        `);
+
+        const sessionIds = result.map((s: any) => s.sessionsId);
+
+        // console.log('session ids: ', sessionIds);
+
+        // Add new visitors
+        for (const sessionId of sessionIds) {
+          const query = `insert into visitors ("sessionsId", "usersId") values ('${sessionId}', '${mainId}') on conflict do nothing`;
+          console.log(query);
+          await queryRunner.query(query);
+        }
+
+        // Delete visitors
+        const query = `delete from visitors where "usersId" = '${id}'`;
+        console.log(query);
+        await queryRunner.query(query);
+
+        // Delete old user
+        const delQuery = `delete from users where id = '${id}'`;
+        console.log(delQuery);
+        await queryRunner.query(delQuery);
+      }
+    }
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
