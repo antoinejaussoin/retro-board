@@ -17,7 +17,7 @@ import session from 'express-session';
 import game from './game';
 import {
   hashPassword,
-  getUserFromRequest,
+  getIdentityFromRequest,
   getUserViewFromRequest,
   getUserQuota,
 } from './utils';
@@ -46,7 +46,13 @@ import {
   deleteSessions,
   getDefaultTemplate,
 } from './db/actions/sessions';
-import { updateUser, getUserByUsername, getUserView } from './db/actions/users';
+import {
+  updateUser,
+  getUserByUsername,
+  getUserView,
+  getPasswordIdentity,
+  updateIdentity,
+} from './db/actions/users';
 import { isLicenced } from './security/is-licenced';
 import rateLimit from 'express-rate-limit';
 import { Cache, inMemoryCache, redisCache } from './cache/cache';
@@ -229,13 +235,16 @@ db().then(() => {
 
   // Create session
   app.post('/api/create', heavyLoadLimiter, async (req, res) => {
-    const user = await getUserFromRequest(req);
+    const identity = await getIdentityFromRequest(req);
     const payload: CreateSessionPayload = req.body;
     setScope(async (scope) => {
-      if (user) {
+      if (identity) {
         try {
-          const session = await createSession(user, payload.encryptedCheck);
-          await cache.invalidate(user.id);
+          const session = await createSession(
+            identity.user,
+            payload.encryptedCheck
+          );
+          await cache.invalidate(identity.id);
           res.status(200).send(session);
         } catch (err) {
           reportQueryError(scope, err);
@@ -279,7 +288,7 @@ db().then(() => {
   });
 
   app.get('/api/previous', heavyLoadLimiter, async (req, res) => {
-    const user = await getUserFromRequest(req);
+    const user = await getIdentityFromRequest(req);
     if (user) {
       const cached = await cache.get(user.id);
       if (cached) {
@@ -296,7 +305,7 @@ db().then(() => {
 
   app.delete('/api/session/:sessionId', heavyLoadLimiter, async (req, res) => {
     const sessionId = req.params.sessionId;
-    const user = await getUserFromRequest(req);
+    const user = await getIdentityFromRequest(req);
     if (user) {
       const success = await deleteSessions(user.id, sessionId);
       cache.invalidate(user.id);
@@ -349,29 +358,30 @@ db().then(() => {
       res.status(403).send('User already exists');
       return;
     }
-    const user = await registerUser(registerPayload);
-    if (!user) {
+    const identity = await registerUser(registerPayload);
+    if (!identity) {
       res.status(500).send();
     } else {
-      if (user.emailVerification) {
+      if (identity.emailVerification) {
         await sendVerificationEmail(
           registerPayload.username,
           registerPayload.name,
-          user.emailVerification!
+          identity.emailVerification!
         );
       } else {
-        req.logIn(user.id, (err) => {
+        req.logIn(identity.id, (err) => {
           if (err) {
             console.log('Cannot login Error: ', err);
             res.status(500).send('Cannot login');
           }
         });
       }
-      const userView = await getUserView(user.id);
+      const userView = await getUserView(identity.user.id);
       if (userView) {
-        res
-          .status(200)
-          .send({ loggedIn: !user.emailVerification, user: userView.toJson() });
+        res.status(200).send({
+          loggedIn: !identity.emailVerification,
+          user: userView.toJson(),
+        });
       } else {
         res.status(500).send();
       }
@@ -380,19 +390,19 @@ db().then(() => {
 
   app.post('/api/validate', heavyLoadLimiter, async (req, res) => {
     const validatePayload = req.body as ValidateEmailPayload;
-    const user = await getUserByUsername(validatePayload.email);
-    if (!user) {
+    const identity = await getPasswordIdentity(validatePayload.email);
+    if (!identity) {
       res.status(404).send('Email not found');
       return;
     }
     if (
-      user.emailVerification &&
-      user.emailVerification === validatePayload.code
+      identity.emailVerification &&
+      identity.emailVerification === validatePayload.code
     ) {
-      const updatedUser = await updateUser(user.id, {
+      const updatedUser = await updateIdentity(identity.id, {
         emailVerification: null,
       });
-      req.logIn(user.id, (err) => {
+      req.logIn(identity.id, (err) => {
         if (err) {
           console.log('Cannot login Error: ', err);
           res.status(500).send('Cannot login');
@@ -409,36 +419,36 @@ db().then(() => {
 
   app.post('/api/reset', heavyLoadLimiter, async (req, res) => {
     const resetPayload = req.body as ResetPasswordPayload;
-    const user = await getUserByUsername(resetPayload.email);
-    if (!user) {
+    const identity = await getPasswordIdentity(resetPayload.email);
+    if (!identity) {
       res.status(404).send('Email not found');
       return;
     }
     const code = v4();
-    await updateUser(user.id, {
+    await updateIdentity(identity.id, {
       emailVerification: code,
     });
-    await sendResetPassword(resetPayload.email, user.name, code);
+    await sendResetPassword(resetPayload.email, identity.user.name, code);
     res.status(200).send();
   });
 
   app.post('/api/reset-password', heavyLoadLimiter, async (req, res) => {
-    const validatePayload = req.body as ResetChangePasswordPayload;
-    const user = await getUserByUsername(validatePayload.email);
-    if (!user) {
+    const resetPayload = req.body as ResetChangePasswordPayload;
+    const identity = await getPasswordIdentity(resetPayload.email);
+    if (!identity) {
       res.status(404).send('Email not found');
       return;
     }
     if (
-      user.emailVerification &&
-      user.emailVerification === validatePayload.code
+      identity.emailVerification &&
+      identity.emailVerification === resetPayload.code
     ) {
-      const hashedPassword = await hashPassword(validatePayload.password);
-      const updatedUser = await updateUser(user.id, {
+      const hashedPassword = await hashPassword(resetPayload.password);
+      const updatedUser = await updateIdentity(identity.id, {
         emailVerification: null,
         password: hashedPassword,
       });
-      req.logIn(user.id, (err) => {
+      req.logIn(identity.id, (err) => {
         if (err) {
           console.log('Cannot login Error: ', err);
           res.status(500).send('Cannot login');

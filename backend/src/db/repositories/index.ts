@@ -7,3 +7,4 @@ export { default as UserRepository } from './UserRepository';
 export { default as SessionTemplateRepository } from './SessionTemplateRepository';
 export { default as TemplateColumnRepository } from './TemplateColumnRepository';
 export { default as SubscriptionRepository } from './SubscriptionRepository';
+export { default as UserIdentityRepository } from './UserIdentityRepository';

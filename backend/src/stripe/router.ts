@@ -6,7 +6,7 @@ import {
 } from '@retrospected/common';
 import config from '../config';
 import Stripe from 'stripe';
-import { UserEntity } from '../db/entities';
+import { UserIdentityEntity } from '../db/entities';
 import {
   StripeEvent,
   CheckoutCompletedPayload,
@@ -15,7 +15,7 @@ import {
 import { plans, getProduct } from './products';
 import { updateUser } from '../db/actions/users';
 import { registerLicence } from '../db/actions/licences';
-import { getUserFromRequest } from '../utils';
+import { getIdentityFromRequest } from '../utils';
 import isValidDomain from '../security/is-valid-domain';
 import {
   cancelSubscription,
@@ -33,31 +33,31 @@ function stripeRouter(): Router {
   const router = express.Router();
 
   async function getCustomerId(
-    user: UserEntity,
+    identity: UserIdentityEntity,
     locale: StripeLocales
   ): Promise<string> {
-    if (user.accountType === 'anonymous') {
+    if (identity.accountType === 'anonymous') {
       throw Error('Anonymous account should not be able to pay');
     }
 
-    if (!user.stripeId && user.username) {
+    if (!identity.user.stripeId && identity.username) {
       // Create a new customer object
       const userData = {
-        email: user.email || user.username,
-        name: user.name,
+        email: identity.user.email || identity.username,
+        name: identity.user.name,
         metadata: {
-          userId: user.id,
+          userId: identity.id,
         },
         preferred_locales: [locale],
       };
       const customer = await stripe.customers.create(userData);
 
-      await updateUser(user.id, {
+      await updateUser(identity.id, {
         stripeId: customer.id,
       });
       return customer.id;
-    } else if (user.stripeId) {
-      return user.stripeId;
+    } else if (identity.user.stripeId) {
+      return identity.user.stripeId;
     } else {
       throw Error('Unspecified error');
     }
@@ -179,7 +179,7 @@ function stripeRouter(): Router {
 
   router.post('/create-checkout-session', async (req, res) => {
     const payload = req.body as CreateSubscriptionPayload;
-    const user = await getUserFromRequest(req);
+    const user = await getIdentityFromRequest(req);
     const product = getProduct(payload.plan);
 
     if (payload.domain && !isValidDomain(payload.domain)) {
@@ -233,16 +233,16 @@ function stripeRouter(): Router {
   });
 
   router.get('/portal', async (req, res) => {
-    const user = await getUserFromRequest(req);
-    if (user && user.stripeId) {
+    const identity = await getIdentityFromRequest(req);
+    if (identity && identity.user.stripeId) {
       try {
         const session = await stripe.billingPortal.sessions.create({
-          customer: user.stripeId,
+          customer: identity.user.stripeId,
           return_url: `${config.BASE_URL}/account`,
         });
         res.status(200).send(session);
       } catch (err) {
-        console.error('Cannot find Stripe customer ', user.stripeId);
+        console.error('Cannot find Stripe customer ', identity.user.stripeId);
         res.status(500).send();
       }
     } else {
@@ -251,7 +251,7 @@ function stripeRouter(): Router {
   });
 
   router.get('/members', async (req, res) => {
-    const user = await getUserFromRequest(req);
+    const user = await getIdentityFromRequest(req);
     if (user) {
       const subscription = await getActiveSubscription(user.id);
       if (subscription && subscription.plan === 'team') {
@@ -262,7 +262,7 @@ function stripeRouter(): Router {
   });
 
   router.patch('/members', async (req, res) => {
-    const user = await getUserFromRequest(req);
+    const user = await getIdentityFromRequest(req);
     if (user) {
       const subscription = await getActiveSubscription(user.id);
       if (subscription && subscription.plan === 'team') {
@@ -280,7 +280,7 @@ function stripeRouter(): Router {
   });
 
   router.post('/start-trial', async (req, res) => {
-    const user = await getUserFromRequest(req);
+    const user = await getIdentityFromRequest(req);
     if (user) {
       const updatedUser = await startTrial(user.id);
       if (updatedUser) {

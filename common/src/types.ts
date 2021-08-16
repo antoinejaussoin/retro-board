@@ -105,12 +105,12 @@ export interface Product {
 
 export interface User extends Entity {
   name: string;
-  photo: string | null;
 }
 
 export interface UserIdentity extends Entity {
   username: string | null;
   accountType: AccountType;
+  photo: string | null;
 }
 
 export interface Participant extends User {

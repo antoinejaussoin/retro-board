@@ -9,7 +9,7 @@ import {
   ManyToMany,
   OneToMany,
 } from 'typeorm';
-import { AccountType, User, Currency } from '@retrospected/common';
+import { User, Currency } from '@retrospected/common';
 import { SessionEntity, SessionTemplateEntity } from '.';
 import UserIdentityEntity from './UserIdentity';
 
@@ -17,11 +17,6 @@ export const ALL_FIELDS: Array<keyof UserEntity> = [
   'id',
   'name',
   'email',
-  'accountType',
-  'username',
-  'password',
-  'emailVerification',
-  'photo',
   'language',
   'defaultTemplate',
   'stripeId',
@@ -39,27 +34,17 @@ export default class UserEntity {
   @Column()
   @Index()
   public name: string;
-  @Column({ default: 'anonymous' })
-  public accountType: AccountType;
-  @Column({ nullable: true, type: 'character varying' })
-  public username: string | null;
-  @Column({ nullable: true, type: 'character varying', select: false })
-  public password: string | null;
   @Column({ nullable: true, type: 'character varying' })
   @Index({ unique: true })
   public email: string | null;
   @Column({ nullable: true, type: 'character varying' })
   public currency: Currency | null;
   @Column({ nullable: true, type: 'character varying', select: false })
-  public emailVerification: string | null;
-  @Column({ nullable: true, type: 'character varying', select: false })
   public stripeId: string | null;
   @Column({ type: 'timestamp with time zone', nullable: true })
   public trial: Date | null;
   @Column({ nullable: false, default: 50 })
   public quota: number;
-  @Column({ nullable: true, type: 'character varying' })
-  public photo: string | null;
   @Column({ nullable: false, type: 'character varying', default: 'en' })
   public language: string;
   @ManyToOne(() => SessionTemplateEntity, { nullable: true, eager: false })
@@ -82,16 +67,11 @@ export default class UserEntity {
   public created: Date | undefined;
   @UpdateDateColumn({ type: 'timestamp with time zone', select: false })
   public updated: Date | undefined;
-  constructor(id: string, name: string, password?: string) {
+  constructor(id: string, name: string) {
     this.id = id;
     this.name = name;
-    this.password = password || null;
     this.email = null;
     this.language = 'en';
-    this.accountType = 'anonymous';
-    this.username = null;
-    this.photo = null;
-    this.emailVerification = null;
     this.stripeId = null;
     this.currency = null;
     this.trial = null;
@@ -104,7 +84,6 @@ export default class UserEntity {
     return {
       id: this.id,
       name: this.name,
-      photo: this.photo,
     };
   }
 }

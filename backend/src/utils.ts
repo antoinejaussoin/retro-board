@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { genSalt, hash } from 'bcryptjs';
-import { UserView, UserEntity } from './db/entities';
-import { getUserView, getUser } from './db/actions/users';
+import { UserView, UserIdentityEntity } from './db/entities';
+import { getUserView, getUser, getIdentity } from './db/actions/users';
 import { Quota } from '@retrospected/common';
 import { getNumberOfPosts } from './db/actions/posts';
 
@@ -33,12 +33,12 @@ export async function getUserQuota(request: Request): Promise<Quota | null> {
   return null;
 }
 
-export async function getUserFromRequest(
+export async function getIdentityFromRequest(
   request: Request
-): Promise<UserEntity | null> {
+): Promise<UserIdentityEntity | null> {
   if (request.user) {
-    const user = await getUser(request.user);
-    return user;
+    const identity = await getIdentity(request.user);
+    return identity;
   }
   return null;
 }

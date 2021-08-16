@@ -1,14 +1,27 @@
 import { UserEntity, UserView } from '../entities';
 import { EntityManager } from 'typeorm';
-import { UserRepository } from '../repositories';
+import { UserIdentityRepository, UserRepository } from '../repositories';
 import { ALL_FIELDS } from '../entities/User';
+import { ALL_FIELDS as ALL_FIELDS_IDENTITY } from '../entities/UserIdentity';
 import { transaction } from './transaction';
-import { FullUser } from '@retrospected/common';
+import { AccountType, FullUser } from '@retrospected/common';
 import { isSelfHostedAndLicenced } from '../../security/is-licenced';
+import { v4 } from 'uuid';
+import UserIdentityEntity from '../entities/UserIdentity';
+import { hashPassword } from 'src/utils';
+import { compare } from 'bcryptjs';
 
 export async function getUser(id: string): Promise<UserEntity | null> {
   return await transaction(async (manager) => {
     return getUserInner(manager, id);
+  });
+}
+
+export async function getIdentity(
+  id: string
+): Promise<UserIdentityEntity | null> {
+  return await transaction(async (manager) => {
+    return getIdentityInner(manager, id);
   });
 }
 
@@ -31,9 +44,22 @@ async function getUserInner(
   return user || null;
 }
 
-export async function getUserView(id: string): Promise<UserView | null> {
+async function getIdentityInner(
+  manager: EntityManager,
+  id: string
+): Promise<UserIdentityEntity | null> {
+  const identityRepository = manager.getCustomRepository(
+    UserIdentityRepository
+  );
+  const user = await identityRepository.findOne(id, {
+    select: ALL_FIELDS_IDENTITY,
+  });
+  return user || null;
+}
+
+export async function getUserView(userId: string): Promise<UserView | null> {
   return await transaction(async (manager) => {
-    return getUserViewInner(manager, id);
+    return getUserViewInner(manager, userId);
   });
 }
 
@@ -50,16 +76,66 @@ export async function getUserViewInner(
   return user || null;
 }
 
+export async function getPasswordIdentity(
+  username: string
+): Promise<UserIdentityEntity | null> {
+  return await transaction(async (manager) => {
+    const identityRepository = manager.getCustomRepository(
+      UserIdentityRepository
+    );
+    const identity = await identityRepository.findOne(
+      { username, accountType: 'password' }
+      // { select }
+    );
+    return identity || null;
+  });
+}
+
+export async function getPasswordIdentityByUserId(
+  userId: string
+): Promise<UserIdentityEntity | null> {
+  return await transaction(async (manager) => {
+    const identityRepository = manager.getCustomRepository(
+      UserIdentityRepository
+    );
+    const identity = await identityRepository.findOne(
+      { user: { id: userId }, accountType: 'password' }
+      // { select }
+    );
+    return identity || null;
+  });
+}
+
 export async function getUserByUsername(
   username: string
 ): Promise<UserEntity | null> {
   return await transaction(async (manager) => {
-    const userRepository = manager.getCustomRepository(UserRepository);
-    const user = await userRepository.findOne(
-      { username },
-      { select: ALL_FIELDS }
+    const identityRepository = manager.getCustomRepository(
+      UserIdentityRepository
     );
-    return user || null;
+    const identity = await identityRepository.findOne(
+      { username }
+      // { select }
+    );
+    return identity ? identity.user : null;
+  });
+}
+
+export async function updateIdentity(
+  id: string,
+  updatedIdentity: Partial<UserIdentityEntity>
+): Promise<UserView | null> {
+  return await transaction(async (manager) => {
+    const identityRepository = manager.getCustomRepository(
+      UserIdentityRepository
+    );
+    await identityRepository.update(id, updatedIdentity);
+    const identity = await identityRepository.findOne(id);
+    if (identity) {
+      const newUser = await getUserViewInner(manager, identity.user.id);
+      return newUser || null;
+    }
+    return null;
   });
 }
 
@@ -79,42 +155,194 @@ export async function updateUser(
   });
 }
 
-export async function getOrSaveUser(user: UserEntity): Promise<UserEntity> {
+export async function getIdentityByUsername(
+  accountType: AccountType,
+  username: string
+): Promise<UserIdentityEntity | null> {
   return await transaction(async (manager) => {
-    const userRepository = manager.getCustomRepository(UserRepository);
-    const existingUser = await userRepository.findOne({
-      where: { username: user.username, accountType: user.accountType },
+    const repo = manager.getCustomRepository(UserIdentityRepository);
+    const identity = await repo.findOne({
+      where: { accountType, username },
     });
-    if (existingUser) {
-      return await userRepository.save({
-        ...existingUser,
-        email: user.email,
-        photo: user.photo,
-        slackUserId: user.slackUserId,
-        slackTeamId: user.slackTeamId,
-      });
-    }
-    return await userRepository.save(user);
-  });
-}
-
-export async function updateUserPassword(
-  id: string,
-  password: string
-): Promise<UserEntity | null> {
-  return await transaction(async (manager) => {
-    const userRepository = manager.getCustomRepository(UserRepository);
-    const existingUser = await userRepository.findOne({
-      where: { id },
-    });
-    if (existingUser) {
-      return await userRepository.save({
-        ...existingUser,
-        password,
-      });
+    if (identity) {
+      return identity;
     }
     return null;
   });
+}
+
+// export async function saveIdentity(identity: UserIdentityEntity) {
+
+// }
+
+export type UserRegistration = {
+  type: AccountType;
+  name: string;
+  username: string;
+  email: string;
+  password?: string;
+  emailVerification?: string;
+  language?: string;
+  photo?: string;
+  slackUserId?: string;
+  slackTeamId?: string;
+};
+
+export async function registerUser(
+  registration: UserRegistration
+): Promise<UserIdentityEntity> {
+  return await transaction(async (manager) => {
+    const userRepository = manager.getCustomRepository(UserRepository);
+    const identityRepository = manager.getCustomRepository(
+      UserIdentityRepository
+    );
+    const user = await getOrCreateUser(manager, registration.username);
+    const identity = new UserIdentityEntity(v4(), user, registration.password);
+    identity.username = registration.username;
+    identity.accountType = registration.type;
+    identity.photo = registration.photo || null;
+
+    user.name = registration.name;
+    user.slackUserId = registration.slackUserId || null;
+    user.slackTeamId = registration.slackTeamId || null;
+    if (registration.language) {
+      user.language = registration.language;
+    }
+    user.email = registration.email;
+
+    await userRepository.save(user);
+    await identityRepository.save(identity);
+
+    // // If self-hosted we skip the requirement for email checks
+    // if (!config.SELF_HOSTED) {
+    //   identity.emailVerification = v4();
+    // }
+    // identity.accountType = 'password';
+    // const persistedUser = await getOrSaveUser(user);
+    return identity;
+  });
+}
+
+export async function registerAnonymousUser(
+  username: string,
+  password: string
+): Promise<UserIdentityEntity | null> {
+  return await transaction(async (manager) => {
+    const userRepository = manager.getCustomRepository(UserRepository);
+    const identityRepository = manager.getCustomRepository(
+      UserIdentityRepository
+    );
+
+    const actualUsername = username.split('^')[0];
+    const existingIdentity = await identityRepository.findOne(
+      { username, accountType: 'anonymous' }
+      // { select }
+    );
+
+    if (!existingIdentity) {
+      const hashedPassword = await hashPassword(password);
+      const user = new UserEntity(v4(), actualUsername);
+      const identity = new UserIdentityEntity(v4(), user, hashedPassword);
+
+      identity.username = username;
+      user.name = username;
+      user.language = 'en';
+
+      await userRepository.save(user);
+      await identityRepository.save(identity);
+      return identity;
+    }
+
+    if (!existingIdentity.password) {
+      const hashedPassword = await hashPassword(password);
+      const dbUser = await updateUserPassword(
+        manager,
+        existingIdentity.id,
+        hashedPassword
+      );
+      return dbUser;
+    }
+
+    const isPasswordCorrect = await compare(
+      password,
+      existingIdentity.password
+    );
+
+    return isPasswordCorrect ? existingIdentity : null;
+    // const user = await getOrCreateUser(manager, username);
+    // const identity = new UserIdentityEntity(v4(), user, registration.password);
+    // identity.username = registration.username;
+    // identity.accountType = registration.type;
+    // identity.photo = registration.photo || null;
+
+    // user.name = registration.name;
+    // user.slackUserId = registration.slackUserId || null;
+    // user.slackTeamId = registration.slackTeamId || null;
+    // if (registration.language) {
+    //   user.language = registration.language;
+    // }
+    // user.email = registration.email;
+
+    // await userRepository.save(user);
+    // await identityRepository.save(identity);
+
+    // // // If self-hosted we skip the requirement for email checks
+    // // if (!config.SELF_HOSTED) {
+    // //   identity.emailVerification = v4();
+    // // }
+    // // identity.accountType = 'password';
+    // // const persistedUser = await getOrSaveUser(user);
+    // return identity;
+  });
+}
+
+async function getOrCreateUser(
+  manager: EntityManager,
+  email: string
+): Promise<UserEntity> {
+  const userRepository = manager.getCustomRepository(UserRepository);
+  const existingUser = await userRepository.findOne({
+    where: { email },
+  });
+  if (existingUser) {
+    return existingUser;
+  }
+  return new UserEntity(v4(), '');
+}
+
+// export async function getOrSaveUser(user: UserEntity): Promise<UserEntity> {
+//   return await transaction(async (manager) => {
+//     const userRepository = manager.getCustomRepository(UserRepository);
+//     const existingUser = await userRepository.findOne({
+//       where: { username: user.username, accountType: user.accountType },
+//     });
+//     if (existingUser) {
+//       return await userRepository.save({
+//         ...existingUser,
+//         email: user.email,
+//         photo: user.photo,
+//         slackUserId: user.slackUserId,
+//         slackTeamId: user.slackTeamId,
+//       });
+//     }
+//     return await userRepository.save(user);
+//   });
+// }
+
+async function updateUserPassword(
+  manager: EntityManager,
+  identityId: string,
+  password: string
+): Promise<UserIdentityEntity | null> {
+  const identityRepo = manager.getCustomRepository(UserIdentityRepository);
+  const existingUser = await identityRepo.findOne(identityId);
+  if (existingUser) {
+    return await identityRepo.save({
+      ...existingUser,
+      password,
+    });
+  }
+  return null;
 }
 
 export function isUserPro(user: FullUser) {

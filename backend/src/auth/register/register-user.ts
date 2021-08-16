@@ -1,28 +1,44 @@
 import { RegisterPayload } from '@retrospected/common';
 import { v4 } from 'uuid';
 import { hashPassword } from '../../utils';
-import UserEntity from '../../db/entities/User';
-import { getUserByUsername, getOrSaveUser } from '../../db/actions/users';
+import { UserIdentityEntity } from '../../db/entities';
+import { getIdentityByUsername, registerUser } from '../../db/actions/users';
 import config from '../../config';
 
-export default async function registerUser(
+export default async function registerPasswordUser(
   details: RegisterPayload
-): Promise<UserEntity | null> {
-  const existingUser = await getUserByUsername(details.username);
-  if (existingUser) {
+): Promise<UserIdentityEntity | null> {
+  const existingIdentity = await getIdentityByUsername(
+    'password',
+    details.username
+  );
+  if (existingIdentity) {
     return null;
   }
   const hashedPassword = await hashPassword(details.password);
-  const newUser = new UserEntity(v4(), details.name, hashedPassword);
-  newUser.language = details.language;
-  newUser.username = details.username;
-  newUser.email = details.username;
-  // If self-hosted we skip the requirement for email checks
-  if (!config.SELF_HOSTED) {
-    newUser.emailVerification = v4();
-  }
-  newUser.accountType = 'password';
 
-  const persistedUser = await getOrSaveUser(newUser);
-  return persistedUser;
+  const identity = await registerUser({
+    email: details.username,
+    name: details.name,
+    type: 'password',
+    username: details.username,
+    password: hashedPassword,
+    emailVerification: config.SELF_HOSTED ? v4() : undefined,
+    language: details.language,
+  });
+
+  // const user = await getOrCreateUser(details.username);
+  // const identity = new UserIdentityEntity(v4(), user, hashedPassword);
+  // identity.username = details.username;
+  // user.name = details.name;
+  // user.language = details.language;
+  // user.email = details.username;
+  // // If self-hosted we skip the requirement for email checks
+  // if (!config.SELF_HOSTED) {
+  //   identity.emailVerification = v4();
+  // }
+  // identity.accountType = 'password';
+
+  // const persistedUser = await getOrSaveUser(user);
+  return identity;
 }

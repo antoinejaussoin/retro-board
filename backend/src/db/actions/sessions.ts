@@ -296,9 +296,8 @@ export async function previousSessions(
                 ? !session.visitors.map((v) => v.id).includes(userId)
                 : false,
             participants: getParticipants(session.visitors),
-            canBeDeleted:
-              userId === session.createdBy.id &&
-              (loadedUser.accountType !== 'anonymous' || !!loadedUser.password),
+            canBeDeleted: userId === session.createdBy.id, // &&
+            // (loadedUser.accountType !== 'anonymous' || !!loadedUser.password),
           } as SessionMetadata)
       );
     }

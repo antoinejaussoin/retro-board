@@ -1,12 +1,12 @@
 import { compare } from 'bcryptjs';
-import { UserEntity } from '../../db/entities';
-import { getUserByUsername } from '../../db/actions/users';
+import { UserIdentityEntity } from '../../db/entities';
+import { getIdentityByUsername } from '../../db/actions/users';
 
 export default async function loginUser(
   username: string,
   password: string
-): Promise<UserEntity | null> {
-  const user = await getUserByUsername(username);
+): Promise<UserIdentityEntity | null> {
+  const user = await getIdentityByUsername('password', username);
   if (!user || user.password === null) {
     return null;
   }

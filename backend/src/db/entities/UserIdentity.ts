@@ -32,7 +32,7 @@ export default class UserIdentityEntity {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  public user: UserEntity | null;
+  public user: UserEntity;
   @Column({ default: 'anonymous' })
   public accountType: AccountType;
   @Column({ nullable: true, type: 'character varying' })
@@ -62,6 +62,7 @@ export default class UserIdentityEntity {
       id: this.id,
       username: this.username,
       accountType: this.accountType,
+      photo: this.photo,
     };
   }
 }
