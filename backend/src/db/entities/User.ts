@@ -27,7 +27,6 @@ export const ALL_FIELDS: Array<keyof UserEntity> = [
 ];
 
 @Entity({ name: 'users' })
-@Index(['username', 'accountType'], { unique: true })
 export default class UserEntity {
   @PrimaryColumn({ primary: true, generated: false, unique: true })
   public id: string;

@@ -3,17 +3,18 @@ import { AccountType, FullUser, Currency, Plan } from '@retrospected/common';
 
 @ViewEntity({
   expression: `
-select 
-  u.id,
+  select 
+  i.id,
+  u.id as "userId",
   u.name,
-  u."accountType",
-  u.username,
+  i."accountType",
+  i.username,
   u.currency,
   u."stripeId",
-  u.photo,
+  i.photo,
   u.language,
   u.email,
-  case when u."accountType" = 'anonymous' and u.password is null then false else true end as "canDeleteSession",
+  case when i."accountType" = 'anonymous' and i.password is null then false else true end as "canDeleteSession",
   u.trial,
   s.id as "ownSubscriptionsId",
   s.plan as "ownPlan",
@@ -21,8 +22,9 @@ select
   coalesce(s.active, s2.active, s3.active, false) as "pro",
   coalesce(s.plan, s2.plan, s3.plan) as "plan",
   coalesce(s.domain, s2.domain, s3.domain) as "domain"
-from users u 
+from users_identities i
 
+join users u on u.id = i."userId"
 left join subscriptions s on s."ownerId" = u.id and s.active is true
 left join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true
 left join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true
@@ -31,6 +33,8 @@ left join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.act
 export default class UserView {
   @ViewColumn()
   public id: string;
+  @ViewColumn()
+  public userId: string;
   @ViewColumn()
   public name: string;
   @ViewColumn()
@@ -64,8 +68,9 @@ export default class UserView {
   @ViewColumn()
   public trial: Date | null;
 
-  constructor(id: string, name: string) {
+  constructor(id: string, userId: string, name: string) {
     this.id = id;
+    this.userId = userId;
     this.name = name;
     this.language = 'en';
     this.accountType = 'anonymous';
@@ -86,7 +91,7 @@ export default class UserView {
 
   toJson(): FullUser {
     return {
-      id: this.id,
+      id: this.userId,
       name: this.name,
       // photo: this.photo, // TODO
       email: this.email,
