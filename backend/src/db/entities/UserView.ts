@@ -93,7 +93,7 @@ export default class UserView {
     return {
       id: this.userId,
       name: this.name,
-      // photo: this.photo, // TODO
+      photo: this.photo,
       email: this.email,
       canDeleteSession: this.canDeleteSession,
       pro: this.pro,

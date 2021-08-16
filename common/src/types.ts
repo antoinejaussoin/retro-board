@@ -120,6 +120,7 @@ export interface Participant extends User {
 export interface FullUser extends User {
   username: string | null;
   accountType: AccountType;
+  photo: string | null;
   language: string;
   email: string | null;
   canDeleteSession: boolean;

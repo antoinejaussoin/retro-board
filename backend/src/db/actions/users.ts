@@ -8,7 +8,7 @@ import { AccountType, FullUser } from '@retrospected/common';
 import { isSelfHostedAndLicenced } from '../../security/is-licenced';
 import { v4 } from 'uuid';
 import UserIdentityEntity from '../entities/UserIdentity';
-import { hashPassword } from 'src/utils';
+import { hashPassword } from '../../utils';
 import { compare } from 'bcryptjs';
 
 export async function getUser(id: string): Promise<UserEntity | null> {
