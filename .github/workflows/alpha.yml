@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [v460/speed-up-migrate]
+    branches: [v470/slack-bot]
 
 jobs:
   build:
