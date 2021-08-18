@@ -202,6 +202,7 @@ export async function registerUser(
     const identity = await getOrCreateIdentity(
       manager,
       registration.username,
+      registration.email,
       registration.type
     );
     const user = identity.user;
@@ -327,6 +328,7 @@ export async function registerAnonymousUser(
 async function getOrCreateIdentity(
   manager: EntityManager,
   username: string,
+  email: string,
   accountType: AccountType
 ): Promise<UserIdentityEntity> {
   // const userRepository = manager.getCustomRepository(UserRepository);
@@ -341,10 +343,17 @@ async function getOrCreateIdentity(
     // const foundIdentity = identities[0];
     // const foundUser = foundIdentity.user;
 
-    return identities[0];
+    // In certain conditions, the user attached to the identity could be wrong if the user didn't have an email
+    const identity = identities[0];
+    if (identity.user.email !== email) {
+      const user = await getOrCreateUser(manager, email);
+      identity.user = user;
+    }
+
+    return identity;
   }
 
-  const user = await getOrCreateUser(manager, username);
+  const user = await getOrCreateUser(manager, email);
 
   // user.name = registration.name;
   // user.slackUserId = registration.slackUserId || null;
