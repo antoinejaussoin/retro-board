@@ -58,7 +58,7 @@ export default async function wait(delay = 1000) {
   });
 }
 
-type UserIds = {
+export type UserIds = {
   userId: string;
   identityId: string;
 };

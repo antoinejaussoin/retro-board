@@ -56,7 +56,7 @@ import {
 } from './db/actions/posts';
 import config from './config';
 import { registerVote } from './db/actions/votes';
-import { deserialiseIds } from './utils';
+import { deserialiseIds, UserIds } from './utils';
 // import wait from './utils';
 
 const {
@@ -201,38 +201,58 @@ export default (io: Server) => {
     }
   }
 
+  function checkUser(
+    userIds: UserIds | null,
+    socket: Socket
+  ): userIds is Exclude<UserIds, null> {
+    if (!userIds) {
+      sendToSelf<WsErrorPayload>(socket, RECEIVE_ERROR, {
+        details: 'User not authenticated',
+        type: 'action_unauthorised',
+      });
+      return false;
+    }
+    return true;
+  }
+
   const onAddPost = async (
-    userId: string,
-    _identityId: string,
+    userIds: UserIds | null,
     sessionId: string,
     post: Post,
     socket: Socket
   ) => {
-    const createdPost = await savePost(userId, sessionId, post);
-    sendToAllOrError<Post>(
-      socket,
-      sessionId,
-      RECEIVE_POST,
-      'cannot_save_post',
-      createdPost
-    );
+    if (checkUser(userIds, socket)) {
+      const createdPost = await savePost(userIds.userId, sessionId, post);
+      sendToAllOrError<Post>(
+        socket,
+        sessionId,
+        RECEIVE_POST,
+        'cannot_save_post',
+        createdPost
+      );
+    }
   };
 
   const onAddPostGroup = async (
-    userId: string,
-    _identityId: string,
+    userIds: UserIds | null,
     sessionId: string,
     group: PostGroup,
     socket: Socket
   ) => {
-    const createdGroup = await savePostGroup(userId, sessionId, group);
-    sendToAllOrError<PostGroup>(
-      socket,
-      sessionId,
-      RECEIVE_POST_GROUP,
-      'cannot_save_group',
-      createdGroup
-    );
+    if (checkUser(userIds, socket)) {
+      const createdGroup = await savePostGroup(
+        userIds.userId,
+        sessionId,
+        group
+      );
+      sendToAllOrError<PostGroup>(
+        socket,
+        sessionId,
+        RECEIVE_POST_GROUP,
+        'cannot_save_group',
+        createdGroup
+      );
+    }
   };
 
   const log = (msg: string) => {
@@ -240,8 +260,7 @@ export default (io: Server) => {
   };
 
   const onRequestBoard = async (
-    _userId: string,
-    _identityId: string,
+    _userIds: UserIds | null,
     sessionId: string,
     _payload: undefined,
     socket: Socket
@@ -258,15 +277,14 @@ export default (io: Server) => {
   };
 
   const onJoinSession = async (
-    userId: string,
-    identityId: string,
+    userIds: UserIds | null,
     sessionId: string,
     _: WsUserData,
     socket: Socket
   ) => {
     await socket.join(getRoom(sessionId));
     socket.data.sessionId = sessionId;
-    const user = userId ? await getUserView(identityId) : null;
+    const user = userIds ? await getUserView(userIds.identityId) : null;
     const sessionEntity = await getSessionWithVisitors(sessionId);
 
     if (sessionEntity) {
@@ -310,8 +328,7 @@ export default (io: Server) => {
   };
 
   const onRenameSession = async (
-    _userId: string,
-    _identityId: string,
+    _userIds: UserIds | null,
     sessionId: string,
     data: WsNameData,
     socket: Socket
@@ -327,8 +344,7 @@ export default (io: Server) => {
   };
 
   const onLeaveSession = async (
-    _userId: string,
-    _identityId: string,
+    _userIds: UserIds | null,
     sessionId: string,
     _data: void,
     socket: Socket
@@ -341,65 +357,76 @@ export default (io: Server) => {
   };
 
   const onDeletePost = async (
-    userId: string,
-    _identityId: string,
+    userIds: UserIds | null,
     sessionId: string,
     data: WsDeletePostPayload,
     socket: Socket
   ) => {
-    const success = await deletePost(userId, sessionId, data.postId);
-    sendToAllOrError<WsDeletePostPayload>(
-      socket,
-      sessionId,
-      RECEIVE_DELETE_POST,
-      'cannot_delete_post',
-      success ? data : null
-    );
+    if (checkUser(userIds, socket)) {
+      const success = await deletePost(userIds.userId, sessionId, data.postId);
+      sendToAllOrError<WsDeletePostPayload>(
+        socket,
+        sessionId,
+        RECEIVE_DELETE_POST,
+        'cannot_delete_post',
+        success ? data : null
+      );
+    }
   };
 
   const onDeletePostGroup = async (
-    userId: string,
-    _identityId: string,
+    userIds: UserIds | null,
     sessionId: string,
     data: WsDeleteGroupPayload,
     socket: Socket
   ) => {
-    const success = await deletePostGroup(userId, sessionId, data.groupId);
-    sendToAllOrError<WsDeleteGroupPayload>(
-      socket,
-      sessionId,
-      RECEIVE_DELETE_POST_GROUP,
-      'cannot_delete_group',
-      success ? data : null
-    );
+    if (checkUser(userIds, socket)) {
+      const success = await deletePostGroup(
+        userIds.userId,
+        sessionId,
+        data.groupId
+      );
+      sendToAllOrError<WsDeleteGroupPayload>(
+        socket,
+        sessionId,
+        RECEIVE_DELETE_POST_GROUP,
+        'cannot_delete_group',
+        success ? data : null
+      );
+    }
   };
 
   const onLikePost = async (
-    userId: string,
-    _identityId: string,
+    userIds: UserIds | null,
     sessionId: string,
     data: WsLikeUpdatePayload,
     socket: Socket
   ) => {
-    const vote = await registerVote(userId, sessionId, data.postId, data.type);
+    if (checkUser(userIds, socket)) {
+      const vote = await registerVote(
+        userIds.userId,
+        sessionId,
+        data.postId,
+        data.type
+      );
 
-    sendToAllOrError<WsReceiveLikeUpdatePayload>(
-      socket,
-      sessionId,
-      RECEIVE_LIKE,
-      'cannot_register_vote',
-      vote
-        ? {
-            postId: data.postId,
-            vote,
-          }
-        : null
-    );
+      sendToAllOrError<WsReceiveLikeUpdatePayload>(
+        socket,
+        sessionId,
+        RECEIVE_LIKE,
+        'cannot_register_vote',
+        vote
+          ? {
+              postId: data.postId,
+              vote,
+            }
+          : null
+      );
+    }
   };
 
   const onEditPost = async (
-    _userId: string,
-    _identityId: string,
+    _userIds: UserIds | null,
     sessionId: string,
     data: WsPostUpdatePayload,
     socket: Socket
@@ -415,25 +442,29 @@ export default (io: Server) => {
   };
 
   const onEditPostGroup = async (
-    userId: string,
-    _identityId: string,
+    userIds: UserIds | null,
     sessionId: string,
     data: WsGroupUpdatePayload,
     socket: Socket
   ) => {
-    const group = await updatePostGroup(userId, sessionId, data.group);
-    sendToAllOrError<PostGroup>(
-      socket,
-      sessionId,
-      RECEIVE_EDIT_POST_GROUP,
-      'cannot_edit_group',
-      group
-    );
+    if (checkUser(userIds, socket)) {
+      const group = await updatePostGroup(
+        userIds.userId,
+        sessionId,
+        data.group
+      );
+      sendToAllOrError<PostGroup>(
+        socket,
+        sessionId,
+        RECEIVE_EDIT_POST_GROUP,
+        'cannot_edit_group',
+        group
+      );
+    }
   };
 
   const onEditOptions = async (
-    _userId: string,
-    _identityId: string,
+    _userIds: UserIds | null,
     sessionId: string,
     data: SessionOptions,
     socket: Socket
@@ -449,8 +480,7 @@ export default (io: Server) => {
   };
 
   const onEditColumns = async (
-    _userId: string,
-    _identityId: string,
+    _userIds: UserIds | null,
     sessionId: string,
     data: ColumnDefinition[],
     socket: Socket
@@ -466,18 +496,18 @@ export default (io: Server) => {
   };
 
   const onSaveTemplate = async (
-    userId: string,
-    _identityId: string,
+    userIds: UserIds | null,
     _sessionId: string,
     data: WsSaveTemplatePayload,
-    _socket: Socket
+    socket: Socket
   ) => {
-    await saveTemplate(userId, data.columns, data.options);
+    if (checkUser(userIds, socket)) {
+      await saveTemplate(userIds.userId, data.columns, data.options);
+    }
   };
 
   const onLockSession = async (
-    _userId: string,
-    _identityId: string,
+    userIds: UserIds | null,
     sessionId: string,
     locked: boolean,
     socket: Socket
@@ -495,7 +525,7 @@ export default (io: Server) => {
     const idsAsString: string | undefined = (socket.request as any).session
       ?.passport?.user;
 
-    const ids = idsAsString ? deserialiseIds(idsAsString) : undefined;
+    const ids = idsAsString ? deserialiseIds(idsAsString) : null;
     socket.data.identityId = ids?.identityId;
     //    socket.userId = userId;
     console.log(
@@ -506,8 +536,7 @@ export default (io: Server) => {
     );
 
     type ActionHandler = (
-      userId: string,
-      identityId: string,
+      ids: UserIds | null,
       sessionId: string,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       data: any,
@@ -542,9 +571,9 @@ export default (io: Server) => {
 
     actions.forEach((action) => {
       socket.on(action.type, async (data: WebsocketMessage<unknown>) => {
-        if (!ids) {
-          return;
-        }
+        // if (!ids) {
+        //   return;
+        // }
         const sid =
           action.type === LEAVE_SESSION
             ? socket.data.sessionId
@@ -561,7 +590,7 @@ export default (io: Server) => {
           await rateLimiter.consume(sid);
           setScope(async (scope) => {
             if (scope) {
-              scope.setUser({ id: ids.identityId });
+              scope.setUser({ id: ids?.identityId });
               scope.setExtra('action', action.type);
               scope.setExtra('session', sid);
             }
@@ -570,7 +599,10 @@ export default (io: Server) => {
               if (exists) {
                 try {
                   if (action.onlyAuthor) {
-                    if (!(await wasSessionCreatedBy(sid, ids.identityId))) {
+                    if (
+                      !ids ||
+                      !(await wasSessionCreatedBy(sid, ids.identityId))
+                    ) {
                       sendToSelf<WsErrorPayload>(socket, RECEIVE_ERROR, {
                         type: 'action_unauthorised',
                         details: null,
@@ -578,13 +610,7 @@ export default (io: Server) => {
                       return;
                     }
                   }
-                  await action.handler(
-                    ids.userId,
-                    ids.identityId,
-                    sid,
-                    data.payload,
-                    socket
-                  );
+                  await action.handler(ids, sid, data.payload, socket);
                 } catch (err) {
                   reportQueryError(scope, err);
                   sendToSelf<WsErrorPayload>(socket, RECEIVE_ERROR, {
@@ -604,7 +630,7 @@ export default (io: Server) => {
           // https://stackoverflow.com/questions/22110010/node-socket-io-anything-to-prevent-flooding/23548884
           console.error(
             chalk`${d()} {red Websocket has been rate limited for user {yellow ${
-              ids.identityId
+              ids?.identityId
             }} and SID {yellow ${sid}}}`
           );
           throttledManualReport('websocket is being throttled', undefined);
