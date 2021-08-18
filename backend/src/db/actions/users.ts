@@ -196,8 +196,14 @@ export async function registerUser(
     const identityRepository = manager.getCustomRepository(
       UserIdentityRepository
     );
-    const user = await getOrCreateUser(manager, registration.username);
-    const identity = new UserIdentityEntity(v4(), user, registration.password);
+
+    const identity = await getOrCreateIdentity(
+      manager,
+      registration.username,
+      registration.type
+    );
+    const user = identity.user;
+
     identity.username = registration.username;
     identity.accountType = registration.type;
     identity.photo = registration.photo || null;
@@ -205,21 +211,40 @@ export async function registerUser(
     user.name = registration.name;
     user.slackUserId = registration.slackUserId || null;
     user.slackTeamId = registration.slackTeamId || null;
+    user.photo = registration.photo || user.photo;
+
     if (registration.language) {
       user.language = registration.language;
     }
-    user.email = registration.email;
 
     await userRepository.save(user);
     await identityRepository.save(identity);
 
-    // // If self-hosted we skip the requirement for email checks
-    // if (!config.SELF_HOSTED) {
-    //   identity.emailVerification = v4();
-    // }
-    // identity.accountType = 'password';
-    // const persistedUser = await getOrSaveUser(user);
     return identity;
+    // const userRepository = manager.getCustomRepository(UserRepository);
+    // const identityRepository = manager.getCustomRepository(
+    //   UserIdentityRepository
+    // );
+    // const user = await getOrCreateUser(manager, registration.username);
+    // const identity = new UserIdentityEntity(v4(), user, registration.password);
+    // identity.username = registration.username;
+    // identity.accountType = registration.type;
+    // identity.photo = registration.photo || null;
+
+    // user.name = registration.name;
+    // user.slackUserId = registration.slackUserId || null;
+    // user.slackTeamId = registration.slackTeamId || null;
+    // user.photo = registration.photo || user.photo;
+
+    // if (registration.language) {
+    //   user.language = registration.language;
+    // }
+    // user.email = registration.email; // should not be needed
+
+    // await userRepository.save(user);
+    // await identityRepository.save(identity);
+
+    // return identity;
   });
 }
 
@@ -296,6 +321,45 @@ export async function registerAnonymousUser(
   });
 }
 
+async function getOrCreateIdentity(
+  manager: EntityManager,
+  username: string,
+  accountType: AccountType
+): Promise<UserIdentityEntity> {
+  // const userRepository = manager.getCustomRepository(UserRepository);
+  const identityRepository = manager.getCustomRepository(
+    UserIdentityRepository
+  );
+  const identities = await identityRepository.find({
+    where: { username, accountType },
+  });
+
+  if (identities.length) {
+    // const foundIdentity = identities[0];
+    // const foundUser = foundIdentity.user;
+
+    return identities[0];
+  }
+
+  const user = await getOrCreateUser(manager, username);
+
+  // user.name = registration.name;
+  // user.slackUserId = registration.slackUserId || null;
+  // user.slackTeamId = registration.slackTeamId || null;
+  // user.photo = registration.photo || user.photo;
+
+  // if (registration.language) {
+  //   user.language = registration.language;
+  // }
+
+  const identity = new UserIdentityEntity(v4(), user);
+  // identity.username = registration.username;
+  // identity.accountType = registration.type;
+  // identity.photo = registration.photo || null;
+
+  return identity;
+}
+
 async function getOrCreateUser(
   manager: EntityManager,
   email: string
@@ -307,7 +371,8 @@ async function getOrCreateUser(
   if (existingUser) {
     return existingUser;
   }
-  return new UserEntity(v4(), '');
+  const user = new UserEntity(v4(), '');
+  return await userRepository.save(user);
 }
 
 // export async function getOrSaveUser(user: UserEntity): Promise<UserEntity> {

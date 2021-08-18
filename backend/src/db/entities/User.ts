@@ -38,6 +38,8 @@ export default class UserEntity {
   public email: string | null;
   @Column({ nullable: true, type: 'character varying' })
   public currency: Currency | null;
+  @Column({ nullable: true, type: 'character varying' })
+  public photo: string | null;
   @Column({ nullable: true, type: 'character varying', select: false })
   public stripeId: string | null;
   @Column({ type: 'timestamp with time zone', nullable: true })
@@ -77,12 +79,14 @@ export default class UserEntity {
     this.quota = 50;
     this.slackTeamId = null;
     this.slackUserId = null;
+    this.photo = null;
   }
 
   toJson(): User {
     return {
       id: this.id,
       name: this.name,
+      photo: this.photo,
     };
   }
 }
