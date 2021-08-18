@@ -15,6 +15,7 @@ export default async function registerPasswordUser(
   if (existingIdentity) {
     return null;
   }
+
   const hashedPassword = await hashPassword(details.password);
 
   const identity = await registerUser({
@@ -27,18 +28,5 @@ export default async function registerPasswordUser(
     language: details.language,
   });
 
-  // const user = await getOrCreateUser(details.username);
-  // const identity = new UserIdentityEntity(v4(), user, hashedPassword);
-  // identity.username = details.username;
-  // user.name = details.name;
-  // user.language = details.language;
-  // user.email = details.username;
-  // // If self-hosted we skip the requirement for email checks
-  // if (!config.SELF_HOSTED) {
-  //   identity.emailVerification = v4();
-  // }
-  // identity.accountType = 'password';
-
-  // const persistedUser = await getOrSaveUser(user);
   return identity;
 }

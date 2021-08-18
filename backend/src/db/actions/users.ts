@@ -11,17 +11,17 @@ import UserIdentityEntity from '../entities/UserIdentity';
 import { hashPassword } from '../../utils';
 import { compare } from 'bcryptjs';
 
-export async function getUser(id: string): Promise<UserEntity | null> {
+export async function getUser(userId: string): Promise<UserEntity | null> {
   return await transaction(async (manager) => {
-    return getUserInner(manager, id);
+    return getUserInner(manager, userId);
   });
 }
 
 export async function getIdentity(
-  id: string
+  identityId: string
 ): Promise<UserIdentityEntity | null> {
   return await transaction(async (manager) => {
-    return getIdentityInner(manager, id);
+    return getIdentityInner(manager, identityId);
   });
 }
 
@@ -85,10 +85,10 @@ export async function getPasswordIdentity(
     const identityRepository = manager.getCustomRepository(
       UserIdentityRepository
     );
-    const identity = await identityRepository.findOne(
-      { username, accountType: 'password' }
-      // { select }
-    );
+    const identity = await identityRepository.findOne({
+      username,
+      accountType: 'password',
+    });
     return identity || null;
   });
 }
@@ -100,10 +100,10 @@ export async function getPasswordIdentityByUserId(
     const identityRepository = manager.getCustomRepository(
       UserIdentityRepository
     );
-    const identity = await identityRepository.findOne(
-      { user: { id: userId }, accountType: 'password' }
-      // { select }
-    );
+    const identity = await identityRepository.findOne({
+      user: { id: userId },
+      accountType: 'password',
+    });
     return identity || null;
   });
 }
@@ -115,10 +115,7 @@ export async function getUserByUsername(
     const identityRepository = manager.getCustomRepository(
       UserIdentityRepository
     );
-    const identity = await identityRepository.findOne(
-      { username }
-      // { select }
-    );
+    const identity = await identityRepository.findOne({ username });
     return identity ? identity.user : null;
   });
 }
@@ -173,10 +170,6 @@ export async function getIdentityByUsername(
   });
 }
 
-// export async function saveIdentity(identity: UserIdentityEntity) {
-
-// }
-
 export type UserRegistration = {
   type: AccountType;
   name: string;
@@ -226,30 +219,6 @@ export async function registerUser(
     await identityRepository.save(identity);
 
     return identity;
-    // const userRepository = manager.getCustomRepository(UserRepository);
-    // const identityRepository = manager.getCustomRepository(
-    //   UserIdentityRepository
-    // );
-    // const user = await getOrCreateUser(manager, registration.username);
-    // const identity = new UserIdentityEntity(v4(), user, registration.password);
-    // identity.username = registration.username;
-    // identity.accountType = registration.type;
-    // identity.photo = registration.photo || null;
-
-    // user.name = registration.name;
-    // user.slackUserId = registration.slackUserId || null;
-    // user.slackTeamId = registration.slackTeamId || null;
-    // user.photo = registration.photo || user.photo;
-
-    // if (registration.language) {
-    //   user.language = registration.language;
-    // }
-    // user.email = registration.email; // should not be needed
-
-    // await userRepository.save(user);
-    // await identityRepository.save(identity);
-
-    // return identity;
   });
 }
 
@@ -264,10 +233,10 @@ export async function registerAnonymousUser(
     );
 
     const actualUsername = username.split('^')[0];
-    const existingIdentity = await identityRepository.findOne(
-      { username, accountType: 'anonymous' }
-      // { select }
-    );
+    const existingIdentity = await identityRepository.findOne({
+      username,
+      accountType: 'anonymous',
+    });
 
     if (!existingIdentity) {
       const hashedPassword = await hashPassword(password);
@@ -298,30 +267,6 @@ export async function registerAnonymousUser(
     );
 
     return isPasswordCorrect ? existingIdentity : null;
-    // const user = await getOrCreateUser(manager, username);
-    // const identity = new UserIdentityEntity(v4(), user, registration.password);
-    // identity.username = registration.username;
-    // identity.accountType = registration.type;
-    // identity.photo = registration.photo || null;
-
-    // user.name = registration.name;
-    // user.slackUserId = registration.slackUserId || null;
-    // user.slackTeamId = registration.slackTeamId || null;
-    // if (registration.language) {
-    //   user.language = registration.language;
-    // }
-    // user.email = registration.email;
-
-    // await userRepository.save(user);
-    // await identityRepository.save(identity);
-
-    // // // If self-hosted we skip the requirement for email checks
-    // // if (!config.SELF_HOSTED) {
-    // //   identity.emailVerification = v4();
-    // // }
-    // // identity.accountType = 'password';
-    // // const persistedUser = await getOrSaveUser(user);
-    // return identity;
   });
 }
 
@@ -331,7 +276,6 @@ async function getOrCreateIdentity(
   email: string,
   accountType: AccountType
 ): Promise<UserIdentityEntity> {
-  // const userRepository = manager.getCustomRepository(UserRepository);
   const identityRepository = manager.getCustomRepository(
     UserIdentityRepository
   );
@@ -340,9 +284,6 @@ async function getOrCreateIdentity(
   });
 
   if (identities.length) {
-    // const foundIdentity = identities[0];
-    // const foundUser = foundIdentity.user;
-
     // In certain conditions, the user attached to the identity could be wrong if the user didn't have an email
     const identity = identities[0];
     if (identity.user.email !== email) {
@@ -354,20 +295,7 @@ async function getOrCreateIdentity(
   }
 
   const user = await getOrCreateUser(manager, email);
-
-  // user.name = registration.name;
-  // user.slackUserId = registration.slackUserId || null;
-  // user.slackTeamId = registration.slackTeamId || null;
-  // user.photo = registration.photo || user.photo;
-
-  // if (registration.language) {
-  //   user.language = registration.language;
-  // }
-
   const identity = new UserIdentityEntity(v4(), user);
-  // identity.username = registration.username;
-  // identity.accountType = registration.type;
-  // identity.photo = registration.photo || null;
 
   return identity;
 }
@@ -386,25 +314,6 @@ async function getOrCreateUser(
   const user = new UserEntity(v4(), '');
   return await userRepository.save(user);
 }
-
-// export async function getOrSaveUser(user: UserEntity): Promise<UserEntity> {
-//   return await transaction(async (manager) => {
-//     const userRepository = manager.getCustomRepository(UserRepository);
-//     const existingUser = await userRepository.findOne({
-//       where: { username: user.username, accountType: user.accountType },
-//     });
-//     if (existingUser) {
-//       return await userRepository.save({
-//         ...existingUser,
-//         email: user.email,
-//         photo: user.photo,
-//         slackUserId: user.slackUserId,
-//         slackTeamId: user.slackTeamId,
-//       });
-//     }
-//     return await userRepository.save(user);
-//   });
-// }
 
 async function updateUserPassword(
   manager: EntityManager,

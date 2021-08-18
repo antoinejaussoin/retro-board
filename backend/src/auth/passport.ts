@@ -105,13 +105,6 @@ export default () => {
       username: profile.username,
       email,
     };
-    // const user: UserEntity = new UserEntity(v4(), profile.displayName);
-    // user.type = 'twitter';
-    // user.language = 'en';
-    // user.photo = profile.photos?.length ? profile.photos[0].value : null;
-    // user.username = profile.username;
-    // user.email = profile.emails.length ? profile.emails[0].value : null;
-    // return user;
   }
 
   function buildFromGitHubProfile(
@@ -136,16 +129,6 @@ export default () => {
       username: profile.username,
       email: email.value,
     };
-
-    // const user: UserEntity = new UserEntity(v4(), displayName);
-    // const email =
-    //   profile.emails && profile.emails.length ? profile.emails[0] : null;
-    // user.accountType = 'github';
-    // user.language = 'en';
-    // user.photo = profile.photos?.length ? profile.photos[0].value : null;
-    // user.username = profile.username;
-    // user.email = email ? email.value : null;
-    // return user;
   }
 
   function buildFromGoogleProfile(
@@ -163,13 +146,6 @@ export default () => {
       username: email,
       email,
     };
-
-    // user.accountType = 'google';
-    // user.language = 'en';
-    // user.photo = profile.photos?.length ? profile.photos[0].value : null;
-    // user.username = email;
-    // user.email = email;
-    // return user;
   }
 
   function buildFromSlackProfile(
