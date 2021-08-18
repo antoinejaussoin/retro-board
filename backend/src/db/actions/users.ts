@@ -57,18 +57,20 @@ async function getIdentityInner(
   return user || null;
 }
 
-export async function getUserView(userId: string): Promise<UserView | null> {
+export async function getUserView(
+  identityId: string
+): Promise<UserView | null> {
   return await transaction(async (manager) => {
-    return getUserViewInner(manager, userId);
+    return getUserViewInner(manager, identityId);
   });
 }
 
 export async function getUserViewInner(
   manager: EntityManager,
-  id: string
+  identityId: string
 ): Promise<UserView | null> {
   const userViewRepository = manager.getRepository(UserView);
-  const user = await userViewRepository.findOne({ id });
+  const user = await userViewRepository.findOne({ identityId });
   // All users are pro if self-hosted and licenced
   if (user && isSelfHostedAndLicenced()) {
     user.pro = true;
@@ -207,6 +209,8 @@ export async function registerUser(
     identity.username = registration.username;
     identity.accountType = registration.type;
     identity.photo = registration.photo || null;
+    identity.password = registration.password || null;
+    identity.emailVerification = registration.emailVerification || null;
 
     user.name = registration.name;
     user.slackUserId = registration.slackUserId || null;
@@ -270,7 +274,6 @@ export async function registerAnonymousUser(
       const identity = new UserIdentityEntity(v4(), user, hashedPassword);
 
       identity.username = username;
-      user.name = username;
       user.language = 'en';
 
       await userRepository.save(user);

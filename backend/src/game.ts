@@ -56,6 +56,7 @@ import {
 } from './db/actions/posts';
 import config from './config';
 import { registerVote } from './db/actions/votes';
+import { deserialiseIds } from './utils';
 // import wait from './utils';
 
 const {
@@ -202,6 +203,7 @@ export default (io: Server) => {
 
   const onAddPost = async (
     userId: string,
+    _identityId: string,
     sessionId: string,
     post: Post,
     socket: Socket
@@ -218,6 +220,7 @@ export default (io: Server) => {
 
   const onAddPostGroup = async (
     userId: string,
+    _identityId: string,
     sessionId: string,
     group: PostGroup,
     socket: Socket
@@ -238,6 +241,7 @@ export default (io: Server) => {
 
   const onRequestBoard = async (
     _userId: string,
+    _identityId: string,
     sessionId: string,
     _payload: undefined,
     socket: Socket
@@ -255,13 +259,14 @@ export default (io: Server) => {
 
   const onJoinSession = async (
     userId: string,
+    identityId: string,
     sessionId: string,
     _: WsUserData,
     socket: Socket
   ) => {
     await socket.join(getRoom(sessionId));
     socket.data.sessionId = sessionId;
-    const user = userId ? await getUserView(userId) : null;
+    const user = userId ? await getUserView(identityId) : null;
     const sessionEntity = await getSessionWithVisitors(sessionId);
 
     if (sessionEntity) {
@@ -306,6 +311,7 @@ export default (io: Server) => {
 
   const onRenameSession = async (
     _userId: string,
+    _identityId: string,
     sessionId: string,
     data: WsNameData,
     socket: Socket
@@ -322,6 +328,7 @@ export default (io: Server) => {
 
   const onLeaveSession = async (
     _userId: string,
+    _identityId: string,
     sessionId: string,
     _data: void,
     socket: Socket
@@ -335,6 +342,7 @@ export default (io: Server) => {
 
   const onDeletePost = async (
     userId: string,
+    _identityId: string,
     sessionId: string,
     data: WsDeletePostPayload,
     socket: Socket
@@ -351,6 +359,7 @@ export default (io: Server) => {
 
   const onDeletePostGroup = async (
     userId: string,
+    _identityId: string,
     sessionId: string,
     data: WsDeleteGroupPayload,
     socket: Socket
@@ -367,6 +376,7 @@ export default (io: Server) => {
 
   const onLikePost = async (
     userId: string,
+    _identityId: string,
     sessionId: string,
     data: WsLikeUpdatePayload,
     socket: Socket
@@ -389,6 +399,7 @@ export default (io: Server) => {
 
   const onEditPost = async (
     _userId: string,
+    _identityId: string,
     sessionId: string,
     data: WsPostUpdatePayload,
     socket: Socket
@@ -405,6 +416,7 @@ export default (io: Server) => {
 
   const onEditPostGroup = async (
     userId: string,
+    _identityId: string,
     sessionId: string,
     data: WsGroupUpdatePayload,
     socket: Socket
@@ -421,6 +433,7 @@ export default (io: Server) => {
 
   const onEditOptions = async (
     _userId: string,
+    _identityId: string,
     sessionId: string,
     data: SessionOptions,
     socket: Socket
@@ -437,6 +450,7 @@ export default (io: Server) => {
 
   const onEditColumns = async (
     _userId: string,
+    _identityId: string,
     sessionId: string,
     data: ColumnDefinition[],
     socket: Socket
@@ -453,6 +467,7 @@ export default (io: Server) => {
 
   const onSaveTemplate = async (
     userId: string,
+    _identityId: string,
     _sessionId: string,
     data: WsSaveTemplatePayload,
     _socket: Socket
@@ -461,7 +476,8 @@ export default (io: Server) => {
   };
 
   const onLockSession = async (
-    _: string,
+    _userId: string,
+    _identityId: string,
     sessionId: string,
     locked: boolean,
     socket: Socket
@@ -476,18 +492,22 @@ export default (io: Server) => {
       (socket.handshake as any).headers['x-forwarded-for'] ||
       socket.handshake.address;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const userId: string = (socket.request as any).session?.passport?.user;
-    socket.data.userId = userId;
+    const idsAsString: string | undefined = (socket.request as any).session
+      ?.passport?.user;
+
+    const ids = idsAsString ? deserialiseIds(idsAsString) : undefined;
+    socket.data.identityId = ids?.identityId;
     //    socket.userId = userId;
     console.log(
       d() +
         chalk`{blue Connection: {red New user connected} {grey ${
           socket.id
-        } ${ip} ${userId ? userId : 'anon'}}}`
+        } ${ip} ${ids?.identityId ? ids?.identityId : 'anon'}}}`
     );
 
     type ActionHandler = (
       userId: string,
+      identityId: string,
       sessionId: string,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       data: any,
@@ -522,8 +542,8 @@ export default (io: Server) => {
 
     actions.forEach((action) => {
       socket.on(action.type, async (data: WebsocketMessage<unknown>) => {
-        if (action.type === LIKE_SUCCESS) {
-          // await wait(10000); // REMOVE
+        if (!ids) {
+          return;
         }
         const sid =
           action.type === LEAVE_SESSION
@@ -541,7 +561,7 @@ export default (io: Server) => {
           await rateLimiter.consume(sid);
           setScope(async (scope) => {
             if (scope) {
-              scope.setUser({ id: userId });
+              scope.setUser({ id: ids.identityId });
               scope.setExtra('action', action.type);
               scope.setExtra('session', sid);
             }
@@ -550,7 +570,7 @@ export default (io: Server) => {
               if (exists) {
                 try {
                   if (action.onlyAuthor) {
-                    if (!(await wasSessionCreatedBy(sid, userId))) {
+                    if (!(await wasSessionCreatedBy(sid, ids.identityId))) {
                       sendToSelf<WsErrorPayload>(socket, RECEIVE_ERROR, {
                         type: 'action_unauthorised',
                         details: null,
@@ -558,7 +578,13 @@ export default (io: Server) => {
                       return;
                     }
                   }
-                  await action.handler(userId, sid, data.payload, socket);
+                  await action.handler(
+                    ids.userId,
+                    ids.identityId,
+                    sid,
+                    data.payload,
+                    socket
+                  );
                 } catch (err) {
                   reportQueryError(scope, err);
                   sendToSelf<WsErrorPayload>(socket, RECEIVE_ERROR, {
@@ -577,7 +603,9 @@ export default (io: Server) => {
         } catch (rejection) {
           // https://stackoverflow.com/questions/22110010/node-socket-io-anything-to-prevent-flooding/23548884
           console.error(
-            chalk`${d()} {red Websocket has been rate limited for user {yellow ${userId}} and SID {yellow ${sid}}}`
+            chalk`${d()} {red Websocket has been rate limited for user {yellow ${
+              ids.identityId
+            }} and SID {yellow ${sid}}}`
           );
           throttledManualReport('websocket is being throttled', undefined);
           socket.emit(RECEIVE_RATE_LIMITED);

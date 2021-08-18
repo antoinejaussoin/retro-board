@@ -119,6 +119,7 @@ export interface Participant extends User {
 }
 
 export interface FullUser extends User {
+  identityId: string;
   username: string | null;
   accountType: AccountType;
   photo: string | null;

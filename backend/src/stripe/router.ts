@@ -46,13 +46,13 @@ function stripeRouter(): Router {
         email: identity.user.email || identity.username,
         name: identity.user.name,
         metadata: {
-          userId: identity.id,
+          userId: identity.user.id,
         },
         preferred_locales: [locale],
       };
       const customer = await stripe.customers.create(userData);
 
-      await updateUser(identity.id, {
+      await updateUser(identity.user.id, {
         stripeId: customer.id,
       });
       return customer.id;
@@ -179,19 +179,19 @@ function stripeRouter(): Router {
 
   router.post('/create-checkout-session', async (req, res) => {
     const payload = req.body as CreateSubscriptionPayload;
-    const user = await getIdentityFromRequest(req);
+    const identity = await getIdentityFromRequest(req);
     const product = getProduct(payload.plan);
 
     if (payload.domain && !isValidDomain(payload.domain)) {
       return res.status(403).send();
     }
 
-    if (user) {
-      const customerId = await getCustomerId(user, payload.locale);
+    if (identity) {
+      const customerId = await getCustomerId(identity, payload.locale);
       try {
         const session = await stripe.checkout.sessions.create({
           payment_method_types: ['card'],
-          client_reference_id: user.id,
+          client_reference_id: identity.user.id,
           customer: customerId,
           metadata: {
             ...payload,
@@ -251,9 +251,9 @@ function stripeRouter(): Router {
   });
 
   router.get('/members', async (req, res) => {
-    const user = await getIdentityFromRequest(req);
-    if (user) {
-      const subscription = await getActiveSubscription(user.id);
+    const identity = await getIdentityFromRequest(req);
+    if (identity) {
+      const subscription = await getActiveSubscription(identity.user.id);
       if (subscription && subscription.plan === 'team') {
         return res.status(200).send(subscription.members);
       }
@@ -262,9 +262,9 @@ function stripeRouter(): Router {
   });
 
   router.patch('/members', async (req, res) => {
-    const user = await getIdentityFromRequest(req);
-    if (user) {
-      const subscription = await getActiveSubscription(user.id);
+    const identity = await getIdentityFromRequest(req);
+    if (identity) {
+      const subscription = await getActiveSubscription(identity.user.id);
       if (subscription && subscription.plan === 'team') {
         subscription.members = req.body as string[];
         await saveSubscription(subscription);
@@ -280,9 +280,9 @@ function stripeRouter(): Router {
   });
 
   router.post('/start-trial', async (req, res) => {
-    const user = await getIdentityFromRequest(req);
-    if (user) {
-      const updatedUser = await startTrial(user.id);
+    const identity = await getIdentityFromRequest(req);
+    if (identity) {
+      const updatedUser = await startTrial(identity.user.id);
       if (updatedUser) {
         return res.status(200).send();
       }

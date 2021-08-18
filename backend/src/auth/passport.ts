@@ -29,6 +29,7 @@ import {
   OktaProfile,
 } from './types';
 import { registerUser, UserRegistration } from '../db/actions/users';
+import { serialiseIds } from '../utils';
 
 export default () => {
   passport.serializeUser((user: string, cb) => {
@@ -82,7 +83,10 @@ export default () => {
 
       const dbIdentity = await registerUser(user);
 
-      callback(null, dbIdentity.id);
+      callback(
+        null,
+        serialiseIds({ userId: dbIdentity.user.id, identityId: dbIdentity.id })
+      );
     };
   }
 
@@ -264,11 +268,27 @@ export default () => {
             .replace('ANONUSER__', '')
             .replace('__ANONUSER', '');
           const identity = await loginAnonymous(actualUsername, password);
-          done(!identity ? 'Anonymous account not valid' : null, identity?.id);
+          done(
+            !identity ? 'Anonymous account not valid' : null,
+            identity
+              ? serialiseIds({
+                  userId: identity.user.id,
+                  identityId: identity.id,
+                })
+              : undefined
+          );
         } else {
           // Regular account login
-          const user = await loginUser(username, password);
-          done(!user ? 'User cannot log in' : null, user?.id);
+          const identity = await loginUser(username, password);
+          done(
+            !identity ? 'User cannot log in' : null,
+            identity
+              ? serialiseIds({
+                  userId: identity.user.id,
+                  identityId: identity.id,
+                })
+              : undefined
+          );
         }
       }
     )

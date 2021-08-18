@@ -37,9 +37,9 @@ export default class UserIdentityEntity {
   public accountType: AccountType;
   @Column({ nullable: true, type: 'character varying' })
   public username: string | null;
-  @Column({ nullable: true, type: 'character varying', select: false })
+  @Column({ nullable: true, type: 'character varying' })
   public password: string | null;
-  @Column({ nullable: true, type: 'character varying', select: false })
+  @Column({ nullable: true, type: 'character varying' })
   public emailVerification: string | null;
   @Column({ nullable: true, type: 'character varying' })
   public photo: string | null;

@@ -37,7 +37,7 @@ import {
   CreateSessionPayload,
   SelfHostedCheckPayload,
 } from '@retrospected/common';
-import registerUser from './auth/register/register-user';
+import registerPasswordUser from './auth/register/register-user';
 import { sendVerificationEmail, sendResetPassword } from './email/emailSender';
 import { v4 } from 'uuid';
 import {
@@ -48,10 +48,10 @@ import {
 } from './db/actions/sessions';
 import {
   updateUser,
-  getUserByUsername,
   getUserView,
   getPasswordIdentity,
   updateIdentity,
+  getIdentityByUsername,
 } from './db/actions/users';
 import { isLicenced } from './security/is-licenced';
 import rateLimit from 'express-rate-limit';
@@ -153,7 +153,7 @@ if (config.REDIS_ENABLED) {
   });
 
   sessionMiddleware = session({
-    secret: `${config.SESSION_SECRET!}-2`, // Increment to force re-auth
+    secret: `${config.SESSION_SECRET!}-6`, // Increment to force re-auth
     resave: true,
     saveUninitialized: true,
     store: new RedisStore({ client: redisClient }),
@@ -176,7 +176,7 @@ if (config.REDIS_ENABLED) {
   );
 } else {
   sessionMiddleware = session({
-    secret: `${config.SESSION_SECRET!}-2`, // Increment to force re-auth
+    secret: `${config.SESSION_SECRET!}-9`, // Increment to force re-auth
     resave: true,
     saveUninitialized: true,
     cookie: {
@@ -244,7 +244,7 @@ db().then(() => {
             identity.user,
             payload.encryptedCheck
           );
-          await cache.invalidate(identity.id);
+          await cache.invalidate(identity.user.id);
           res.status(200).send(session);
         } catch (err) {
           reportQueryError(scope, err);
@@ -288,15 +288,15 @@ db().then(() => {
   });
 
   app.get('/api/previous', heavyLoadLimiter, async (req, res) => {
-    const user = await getIdentityFromRequest(req);
-    if (user) {
-      const cached = await cache.get(user.id);
+    const identity = await getIdentityFromRequest(req);
+    if (identity) {
+      const cached = await cache.get(identity.user.id);
       if (cached) {
         return res.status(200).send(cached);
       }
 
-      const sessions = await previousSessions(user.id);
-      await cache.set(user.id, sessions, 60 * 1000);
+      const sessions = await previousSessions(identity.user.id);
+      await cache.set(identity.user.id, sessions, 60 * 1000);
       res.status(200).send(sessions);
     } else {
       res.status(200).send([]);
@@ -305,10 +305,10 @@ db().then(() => {
 
   app.delete('/api/session/:sessionId', heavyLoadLimiter, async (req, res) => {
     const sessionId = req.params.sessionId;
-    const user = await getIdentityFromRequest(req);
-    if (user) {
-      const success = await deleteSessions(user.id, sessionId);
-      cache.invalidate(user.id);
+    const identity = await getIdentityFromRequest(req);
+    if (identity) {
+      const success = await deleteSessions(identity.user.id, sessionId);
+      cache.invalidate(identity.user.id);
       if (success) {
         res.status(200).send();
       } else {
@@ -354,11 +354,14 @@ db().then(() => {
       return;
     }
     const registerPayload = req.body as RegisterPayload;
-    if ((await getUserByUsername(registerPayload.username)) !== null) {
+    if (
+      (await getIdentityByUsername('password', registerPayload.username)) !==
+      null
+    ) {
       res.status(403).send('User already exists');
       return;
     }
-    const identity = await registerUser(registerPayload);
+    const identity = await registerPasswordUser(registerPayload);
     if (!identity) {
       res.status(500).send();
     } else {
@@ -376,7 +379,7 @@ db().then(() => {
           }
         });
       }
-      const userView = await getUserView(identity.user.id);
+      const userView = await getUserView(identity.id);
       if (userView) {
         res.status(200).send({
           loggedIn: !identity.emailVerification,

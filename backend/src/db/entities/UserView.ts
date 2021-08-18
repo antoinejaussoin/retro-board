@@ -4,8 +4,8 @@ import { AccountType, FullUser, Currency, Plan } from '@retrospected/common';
 @ViewEntity({
   expression: `
   select 
-  i.id,
-  u.id as "userId",
+  u.id,
+  i.id as "identityId",
   u.name,
   i."accountType",
   i.username,
@@ -34,7 +34,7 @@ export default class UserView {
   @ViewColumn()
   public id: string;
   @ViewColumn()
-  public userId: string;
+  public identityId: string;
   @ViewColumn()
   public name: string;
   @ViewColumn()
@@ -68,9 +68,9 @@ export default class UserView {
   @ViewColumn()
   public trial: Date | null;
 
-  constructor(id: string, userId: string, name: string) {
+  constructor(id: string, identityId: string, name: string) {
     this.id = id;
-    this.userId = userId;
+    this.identityId = identityId;
     this.name = name;
     this.language = 'en';
     this.accountType = 'anonymous';
@@ -91,7 +91,8 @@ export default class UserView {
 
   toJson(): FullUser {
     return {
-      id: this.userId,
+      id: this.id,
+      identityId: this.identityId,
       name: this.name,
       photo: this.photo,
       email: this.email,
