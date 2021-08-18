@@ -507,7 +507,7 @@ export default (io: Server) => {
   };
 
   const onLockSession = async (
-    userIds: UserIds | null,
+    _userIds: UserIds | null,
     sessionId: string,
     locked: boolean,
     socket: Socket
@@ -527,7 +527,7 @@ export default (io: Server) => {
 
     const ids = idsAsString ? deserialiseIds(idsAsString) : null;
     socket.data.identityId = ids?.identityId;
-    //    socket.userId = userId;
+
     console.log(
       d() +
         chalk`{blue Connection: {red New user connected} {grey ${
@@ -571,9 +571,6 @@ export default (io: Server) => {
 
     actions.forEach((action) => {
       socket.on(action.type, async (data: WebsocketMessage<unknown>) => {
-        // if (!ids) {
-        //   return;
-        // }
         const sid =
           action.type === LEAVE_SESSION
             ? socket.data.sessionId

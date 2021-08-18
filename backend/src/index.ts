@@ -57,6 +57,8 @@ import { isLicenced } from './security/is-licenced';
 import rateLimit from 'express-rate-limit';
 import { Cache, inMemoryCache, redisCache } from './cache/cache';
 import { validateLicence } from './db/actions/licences';
+import { hasField } from './security/payload-checker';
+import mung from 'express-mung';
 
 const realIpHeader = 'X-Forwarded-For';
 
@@ -190,16 +192,16 @@ app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 
-// app.use(
-//   mung.json((body, req, res) => {
-//     if (body) {
-//       const hasPassword = hasField('password', body);
-//       if (hasPassword) {
-//         console.error('The following object has a password property: ', body);
-//       }
-//     }
-//   })
-// );
+app.use(
+  mung.json((body) => {
+    if (body) {
+      const hasPassword = hasField('password', body);
+      if (hasPassword) {
+        console.error('The following object has a password property: ', body);
+      }
+    }
+  })
+);
 
 app.get('/api/ping', (req, res) => {
   res.send('pong');
