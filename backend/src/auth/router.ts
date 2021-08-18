@@ -1,8 +1,6 @@
 import express, { Request, Response } from 'express';
 import passport from 'passport';
 
-type Request2 = Request;
-
 const router = express.Router();
 // Setting up the passport middleware for each of the OAuth providers
 const twitterAuth = passport.authenticate('twitter');
@@ -16,7 +14,7 @@ const microsoftAuth = passport.authenticate('microsoft');
 const oktaAuth = passport.authenticate('okta');
 const anonAuth = passport.authenticate('local');
 
-export const endOAuthHandler = (req: Request2, res: Response) => {
+export const endOAuthHandler = (req: Request, res: Response) => {
   const io = req.app.get('io');
   io.in(req.session!.socketId).emit('auth', req.user);
   req.logIn(req.user!, (err: unknown) => {

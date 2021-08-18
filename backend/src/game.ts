@@ -590,7 +590,7 @@ export default (io: Server) => {
           await rateLimiter.consume(sid);
           setScope(async (scope) => {
             if (scope) {
-              scope.setUser({ id: ids?.identityId });
+              scope.setUser({ id: ids?.userId });
               scope.setExtra('action', action.type);
               scope.setExtra('session', sid);
             }
@@ -599,10 +599,7 @@ export default (io: Server) => {
               if (exists) {
                 try {
                   if (action.onlyAuthor) {
-                    if (
-                      !ids ||
-                      !(await wasSessionCreatedBy(sid, ids.identityId))
-                    ) {
+                    if (!ids || !(await wasSessionCreatedBy(sid, ids.userId))) {
                       sendToSelf<WsErrorPayload>(socket, RECEIVE_ERROR, {
                         type: 'action_unauthorised',
                         details: null,

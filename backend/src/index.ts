@@ -320,11 +320,13 @@ db().then(() => {
   });
 
   app.post('/api/me/language', async (req, res) => {
-    if (req.user) {
-      await updateUser(req.user, {
+    const user = await getUserViewFromRequest(req);
+    if (user) {
+      await updateUser(user.id, {
         language: req.body.language,
       });
       const updatedUser = await getUserViewFromRequest(req);
+
       if (updatedUser) {
         res.status(200).send(updatedUser.toJson());
       } else {
@@ -336,8 +338,9 @@ db().then(() => {
   });
 
   app.get('/api/me/default-template', async (req, res) => {
-    if (req.user) {
-      const defaultTemplate = await getDefaultTemplate(req.user);
+    const user = await getUserViewFromRequest(req);
+    if (user) {
+      const defaultTemplate = await getDefaultTemplate(user.id);
       if (defaultTemplate) {
         res.status(200).send(defaultTemplate);
       } else {
