@@ -47,7 +47,6 @@ function ModifyOptions({
         trackEvent('game/session/edit-columns');
       }
       if (saveAsTemplate) {
-        console.log('save as template');
         onSaveTemplate(updatedOptions, toColumnDefinitions(updatedColumns));
         trackEvent('custom-modal/template/set-defaut');
       }

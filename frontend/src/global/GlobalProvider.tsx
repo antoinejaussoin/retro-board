@@ -17,7 +17,6 @@ const GlobalProvider: React.FC = ({ children }) => {
   useEffect(() => {
     async function loadGlobal() {
       const infos = await fetchSelfHostingInfo();
-      console.log('infos: ', infos);
       if (infos) {
         setEmail(infos.adminEmail);
         setLicenced(infos.licenced);

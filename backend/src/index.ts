@@ -193,20 +193,25 @@ app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(
-  mung.json((body) => {
-    if (body) {
-      const hasPassword = hasField('password', body);
-      if (hasPassword) {
-        console.error('The following object has a password property: ', body);
+if (process.env.NODE_ENV !== 'production') {
+  app.use(
+    mung.json((body) => {
+      if (body) {
+        const hasPassword = hasField('password', body);
+        if (hasPassword) {
+          console.error('The following object has a password property: ', body);
+        }
+        const hasStripeId = hasField('stripeId', body);
+        if (hasStripeId) {
+          console.error(
+            'The following object has a stripe ID property: ',
+            body
+          );
+        }
       }
-      const hasStripeId = hasField('stripeId', body);
-      if (hasStripeId) {
-        console.error('The following object has a stripe ID property: ', body);
-      }
-    }
-  })
-);
+    })
+  );
+}
 
 app.get('/api/ping', (req, res) => {
   res.send('pong');
