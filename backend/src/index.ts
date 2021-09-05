@@ -312,7 +312,7 @@ db().then(() => {
     const sessionId = req.params.sessionId;
     const identity = await getIdentityFromRequest(req);
     if (identity) {
-      const success = await deleteSessions(identity.user.id, sessionId);
+      const success = await deleteSessions(identity.id, sessionId);
       cache.invalidate(identity.user.id);
       if (success) {
         res.status(200).send();

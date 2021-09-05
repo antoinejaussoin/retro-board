@@ -199,22 +199,22 @@ export async function saveSession(
 }
 
 export async function deleteSessions(
-  userId: string,
+  identityId: string,
   sessionId: string
 ): Promise<boolean> {
   return await transaction(async (manager) => {
     const sessionRepository = manager.getCustomRepository(SessionRepository);
     const session = await sessionRepository.findOne(sessionId);
-    const user = await getUserViewInner(manager, userId);
+    const user = await getUserViewInner(manager, identityId);
     if (!user) {
-      console.info('User not found', userId);
+      console.info('Identity not found', identityId);
       return false;
     }
     if (!session) {
       console.info('Session not found', sessionId);
       return false;
     }
-    if (session.createdBy.id !== userId || !user.canDeleteSession) {
+    if (session.createdBy.id !== user.id || !user.canDeleteSession) {
       console.error(
         'The user is not the one who created the session, or is anonymous'
       );
