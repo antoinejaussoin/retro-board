@@ -200,6 +200,10 @@ app.use(
       if (hasPassword) {
         console.error('The following object has a password property: ', body);
       }
+      const hasStripeId = hasField('stripeId', body);
+      if (hasStripeId) {
+        console.error('The following object has a stripe ID property: ', body);
+      }
     }
   })
 );

@@ -240,7 +240,7 @@ function stripeRouter(): Router {
           customer: identity.user.stripeId,
           return_url: `${config.BASE_URL}/account`,
         });
-        res.status(200).send(session);
+        res.status(200).send({ url: session.url });
       } catch (err) {
         console.error('Cannot find Stripe customer ', identity.user.stripeId);
         res.status(500).send();

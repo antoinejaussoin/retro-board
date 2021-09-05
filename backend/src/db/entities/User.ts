@@ -40,7 +40,7 @@ export default class UserEntity {
   public currency: Currency | null;
   @Column({ nullable: true, type: 'character varying' })
   public photo: string | null;
-  @Column({ nullable: true, type: 'character varying', select: false })
+  @Column({ nullable: true, type: 'character varying' })
   public stripeId: string | null;
   @Column({ type: 'timestamp with time zone', nullable: true })
   public trial: Date | null;
