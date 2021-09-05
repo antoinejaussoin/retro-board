@@ -57,7 +57,7 @@ import {
 import config from './config';
 import { registerVote } from './db/actions/votes';
 import { deserialiseIds, UserIds } from './utils';
-// import wait from './utils';
+import { QueryFailedError } from 'typeorm';
 
 const {
   ACK,
@@ -606,7 +606,9 @@ export default (io: Server) => {
                   }
                   await action.handler(ids, sid, data.payload, socket);
                 } catch (err) {
-                  reportQueryError(scope, err);
+                  if (err instanceof QueryFailedError) {
+                    reportQueryError(scope, err);
+                  }
                   sendToSelf<WsErrorPayload>(socket, RECEIVE_ERROR, {
                     type: 'unknown_error',
                     details: null,

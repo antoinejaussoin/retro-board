@@ -9,16 +9,15 @@ export async function getUserViewFromRequest(
   request: Request
 ): Promise<UserView | null> {
   if (request.user) {
-    const ids = deserialiseIds(request.user);
-    const user = await getUserView(ids.identityId);
-    return user;
+    const userView = await getUserView(request.user.identityId);
+    return userView;
   }
   return null;
 }
 
 export async function getUserQuota(request: Request): Promise<Quota | null> {
   if (request.user) {
-    const ids = deserialiseIds(request.user);
+    const ids = request.user;
     const user = await getUser(ids.userId);
     const posts = await getNumberOfPosts(ids.userId);
     if (user) {
@@ -39,7 +38,7 @@ export async function getIdentityFromRequest(
   request: Request
 ): Promise<UserIdentityEntity | null> {
   if (request.user) {
-    const ids = deserialiseIds(request.user);
+    const ids = request.user;
     const identity = await getIdentity(ids.identityId);
     return identity;
   }

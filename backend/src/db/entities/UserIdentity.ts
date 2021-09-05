@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { AccountType, UserIdentity } from '@retrospected/common';
 import UserEntity from './User';
+import { UserIds } from 'src/utils';
 
 export const ALL_FIELDS: Array<keyof UserIdentityEntity> = [
   'id',
@@ -63,6 +64,13 @@ export default class UserIdentityEntity {
       username: this.username,
       accountType: this.accountType,
       photo: this.photo,
+    };
+  }
+
+  toIds(): UserIds {
+    return {
+      identityId: this.id,
+      userId: this.user.id,
     };
   }
 }

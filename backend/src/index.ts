@@ -59,6 +59,7 @@ import { Cache, inMemoryCache, redisCache } from './cache/cache';
 import { validateLicence } from './db/actions/licences';
 import { hasField } from './security/payload-checker';
 import mung from 'express-mung';
+import { QueryFailedError } from 'typeorm';
 
 const realIpHeader = 'X-Forwarded-For';
 
@@ -248,8 +249,10 @@ db().then(() => {
           );
           await cache.invalidate(identity.user.id);
           res.status(200).send(session);
-        } catch (err) {
-          reportQueryError(scope, err);
+        } catch (err: unknown) {
+          if (err instanceof QueryFailedError) {
+            reportQueryError(scope, err);
+          }
           res.status(500).send();
           throw err;
         }
@@ -377,7 +380,7 @@ db().then(() => {
           identity.emailVerification!
         );
       } else {
-        req.logIn(identity.id, (err) => {
+        req.logIn(identity.toIds(), (err) => {
           if (err) {
             console.log('Cannot login Error: ', err);
             res.status(500).send('Cannot login');
@@ -410,7 +413,7 @@ db().then(() => {
       const updatedUser = await updateIdentity(identity.id, {
         emailVerification: null,
       });
-      req.logIn(identity.id, (err) => {
+      req.logIn(identity.toIds(), (err) => {
         if (err) {
           console.log('Cannot login Error: ', err);
           res.status(500).send('Cannot login');
@@ -456,7 +459,7 @@ db().then(() => {
         emailVerification: null,
         password: hashedPassword,
       });
-      req.logIn(identity.id, (err) => {
+      req.logIn(identity.toIds(), (err) => {
         if (err) {
           console.log('Cannot login Error: ', err);
           res.status(500).send('Cannot login');

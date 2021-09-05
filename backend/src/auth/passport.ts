@@ -29,14 +29,16 @@ import {
   OktaProfile,
 } from './types';
 import { registerUser, UserRegistration } from '../db/actions/users';
-import { serialiseIds } from '../utils';
+import { serialiseIds, UserIds, deserialiseIds } from '../utils';
 
 export default () => {
-  passport.serializeUser((user: string, cb) => {
-    cb(null, user);
+  passport.serializeUser<string>((user, cb) => {
+    // Typings are wrong
+    const actualUser = user as unknown as UserIds;
+    cb(null, serialiseIds(actualUser));
   });
-  passport.deserializeUser(async (userId: string, cb) => {
-    cb(null, userId);
+  passport.deserializeUser<string>(async (userId: string, cb) => {
+    cb(null, deserialiseIds(userId) as unknown as string);
   });
 
   function callback<TProfile, TCallback>(type: AccountType) {
@@ -73,20 +75,17 @@ export default () => {
 
       const callback = cb as unknown as (
         error: string | null,
-        user: string
+        user: UserIds | null
       ) => void;
 
       if (!user) {
-        callback('Cannot build a user profile', '');
+        callback('Cannot build a user profile', null);
         return;
       }
 
       const dbIdentity = await registerUser(user);
 
-      callback(
-        null,
-        serialiseIds({ userId: dbIdentity.user.id, identityId: dbIdentity.id })
-      );
+      callback(null, dbIdentity.toIds());
     };
   }
 

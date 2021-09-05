@@ -64,14 +64,9 @@ export function setScope(fn: ConfigureScopeFn) {
   }
 }
 
-type QueryFailedErrorType = {
-  query: string;
-  parameters: string[];
-};
-
 export function reportQueryError(
   scope: Sentry.Scope | null,
-  err: QueryFailedErrorType
+  err: QueryFailedError
 ) {
   if (err instanceof QueryFailedError && scope) {
     const queryError = err;
