@@ -11,8 +11,10 @@ import {
   SelfHostingPayload,
 } from '@retrospected/common';
 import { getIdentityFromRequest, hashPassword } from '../utils';
+import csurf from 'csurf';
 
 const router = express.Router();
+const csrfProtection = csurf();
 
 router.get('/self-hosting', async (_, res) => {
   const licenced = await isLicenced();
@@ -41,7 +43,7 @@ router.get('/users', async (req, res) => {
   res.send(users.map((u) => u.toJson()));
 });
 
-router.patch('/user', async (req, res) => {
+router.patch('/user', csrfProtection, async (req, res) => {
   const authIdentity = await getIdentityFromRequest(req);
   if (!authIdentity || authIdentity.user.email !== config.SELF_HOSTED_ADMIN) {
     return res.status(403).send('You are not allowed to do this');

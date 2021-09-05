@@ -113,7 +113,7 @@ export async function register(
   try {
     const response = await fetch(`/api/register`, {
       method: 'POST',
-      ...requestConfig,
+      ...requestConfig(),
       body: JSON.stringify(payload),
     });
     if (response.ok) {

@@ -1,20 +1,33 @@
 import * as Sentry from '@sentry/browser';
 
-export const requestConfig: Partial<RequestInit> = {
-  mode: 'same-origin',
-  cache: 'no-cache',
-  credentials: 'same-origin',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  redirect: 'follow',
-  referrer: 'same-origin',
-};
+export let csrf = '';
+
+export async function loadCsrfToken() {
+  const data = await fetchGet<{ token: string } | null>('/api/csrf', null);
+  const token = data ? data.token : null;
+  if (token) {
+    csrf = token;
+  }
+}
+
+export function requestConfig(): Partial<RequestInit> {
+  return {
+    mode: 'same-origin',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+      'CSRF-Token': csrf,
+    },
+    redirect: 'follow',
+    referrer: 'same-origin',
+  };
+}
 
 export async function fetchGet<T>(url: string, defaultValue: T): Promise<T> {
   try {
     const response = await fetch(url, {
-      ...requestConfig,
+      ...requestConfig(),
     });
     if (response.ok) {
       return (await response.json()) as T;
@@ -29,7 +42,7 @@ export async function fetchGet<T>(url: string, defaultValue: T): Promise<T> {
 export async function fetchGetText(url: string): Promise<string | null> {
   try {
     const response = await fetch(url, {
-      ...requestConfig,
+      ...requestConfig(),
     });
     if (response.ok) {
       return await response.text();
@@ -50,7 +63,7 @@ async function fetchPostPatchDelete<T>(
     const response = await fetch(url, {
       method: verb,
       body: payload ? JSON.stringify(payload) : undefined,
-      ...requestConfig,
+      ...requestConfig(),
     });
     if (response.ok) {
       return true;
@@ -88,7 +101,7 @@ export async function fetchPostGet<T, R>(
     const response = await fetch(url, {
       method: 'POST',
       body: payload ? JSON.stringify(payload) : undefined,
-      ...requestConfig,
+      ...requestConfig(),
     });
     if (response.ok) {
       return (await response.json()) as R;

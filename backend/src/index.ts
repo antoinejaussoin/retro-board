@@ -3,6 +3,7 @@ import * as socketIo from 'socket.io';
 import { createAdapter } from 'socket.io-redis';
 import redis from 'redis';
 import connectRedis from 'connect-redis';
+import csurf from 'csurf';
 import http from 'http';
 import chalk from 'chalk';
 import db from './db';
@@ -123,6 +124,9 @@ const heavyLoadLimiter = rateLimit({
   },
 });
 
+// CSRF Protection
+const csrfProtection = csurf();
+
 // Sentry
 setupSentryRequestHandler(app);
 
@@ -213,6 +217,10 @@ if (process.env.NODE_ENV !== 'production') {
   );
 }
 
+app.get('/api/csrf', csrfProtection, (req, res) => {
+  res.json({ token: req.csrfToken() });
+});
+
 app.get('/api/ping', (req, res) => {
   res.send('pong');
 });
@@ -246,32 +254,37 @@ db().then(() => {
   app.use('/api/slack', slackRouter());
 
   // Create session
-  app.post('/api/create', heavyLoadLimiter, async (req, res) => {
-    const identity = await getIdentityFromRequest(req);
-    const payload: CreateSessionPayload = req.body;
-    setScope(async (scope) => {
-      if (identity) {
-        try {
-          const session = await createSession(
-            identity.user,
-            payload.encryptedCheck
-          );
-          await cache.invalidate(identity.user.id);
-          res.status(200).send(session);
-        } catch (err: unknown) {
-          if (err instanceof QueryFailedError) {
-            reportQueryError(scope, err);
+  app.post(
+    '/api/create',
+    csrfProtection,
+    heavyLoadLimiter,
+    async (req, res) => {
+      const identity = await getIdentityFromRequest(req);
+      const payload: CreateSessionPayload = req.body;
+      setScope(async (scope) => {
+        if (identity) {
+          try {
+            const session = await createSession(
+              identity.user,
+              payload.encryptedCheck
+            );
+            await cache.invalidate(identity.user.id);
+            res.status(200).send(session);
+          } catch (err: unknown) {
+            if (err instanceof QueryFailedError) {
+              reportQueryError(scope, err);
+            }
+            res.status(500).send();
+            throw err;
           }
-          res.status(500).send();
-          throw err;
+        } else {
+          res
+            .status(401)
+            .send('You must be logged in in order to create a session');
         }
-      } else {
-        res
-          .status(401)
-          .send('You must be logged in in order to create a session');
-      }
-    });
-  });
+      });
+    }
+  );
 
   app.post('/api/logout', async (req, res, next) => {
     req.logout();
@@ -317,23 +330,28 @@ db().then(() => {
     }
   });
 
-  app.delete('/api/session/:sessionId', heavyLoadLimiter, async (req, res) => {
-    const sessionId = req.params.sessionId;
-    const identity = await getIdentityFromRequest(req);
-    if (identity) {
-      const success = await deleteSessions(identity.id, sessionId);
-      cache.invalidate(identity.user.id);
-      if (success) {
-        res.status(200).send();
+  app.delete(
+    '/api/session/:sessionId',
+    csrfProtection,
+    heavyLoadLimiter,
+    async (req, res) => {
+      const sessionId = req.params.sessionId;
+      const identity = await getIdentityFromRequest(req);
+      if (identity) {
+        const success = await deleteSessions(identity.id, sessionId);
+        cache.invalidate(identity.user.id);
+        if (success) {
+          res.status(200).send();
+        } else {
+          res.status(403).send();
+        }
       } else {
         res.status(403).send();
       }
-    } else {
-      res.status(403).send();
     }
-  });
+  );
 
-  app.post('/api/me/language', async (req, res) => {
+  app.post('/api/me/language', csrfProtection, async (req, res) => {
     const user = await getUserViewFromRequest(req);
     if (user) {
       await updateUser(user.id, {
