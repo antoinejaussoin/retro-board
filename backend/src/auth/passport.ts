@@ -230,7 +230,7 @@ export default () => {
         password: string,
         done: (
           error: string | null,
-          user?: string,
+          user?: UserIds,
           options?: IVerifyOptions
         ) => void
       ) => {
@@ -245,24 +245,14 @@ export default () => {
           const identity = await loginAnonymous(actualUsername, password);
           done(
             !identity ? 'Anonymous account not valid' : null,
-            identity
-              ? serialiseIds({
-                  userId: identity.user.id,
-                  identityId: identity.id,
-                })
-              : undefined
+            identity ? identity.toIds() : undefined
           );
         } else {
           // Regular account login
           const identity = await loginUser(username, password);
           done(
             !identity ? 'User cannot log in' : null,
-            identity
-              ? serialiseIds({
-                  userId: identity.user.id,
-                  identityId: identity.id,
-                })
-              : undefined
+            identity ? identity.toIds() : undefined
           );
         }
       }
