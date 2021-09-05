@@ -210,6 +210,7 @@ export async function registerUser(
     user.slackUserId = registration.slackUserId || null;
     user.slackTeamId = registration.slackTeamId || null;
     user.photo = registration.photo || user.photo;
+    user.email = registration.email;
 
     if (registration.language) {
       user.language = registration.language;
@@ -312,6 +313,7 @@ async function getOrCreateUser(
     return existingUser;
   }
   const user = new UserEntity(v4(), '');
+  user.email = email;
   return await userRepository.save(user);
 }
 
