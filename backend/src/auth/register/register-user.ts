@@ -24,7 +24,7 @@ export default async function registerPasswordUser(
     type: 'password',
     username: details.username,
     password: hashedPassword,
-    emailVerification: config.SELF_HOSTED ? v4() : undefined,
+    emailVerification: config.SELF_HOSTED ? undefined : v4(),
     language: details.language,
   });
 
