@@ -19,6 +19,7 @@ export default class PostGroupEntity {
   @PrimaryColumn({ primary: true, generated: false, unique: true })
   public id: string;
   @ManyToOne(() => SessionEntity, { nullable: false })
+  @Index()
   public session: SessionEntity;
   @Column({ default: 0 })
   public column: number;
@@ -28,6 +29,7 @@ export default class PostGroupEntity {
   @Column()
   public label: string;
   @ManyToOne(() => UserEntity, { eager: true, cascade: true, nullable: false })
+  @Index()
   public user: UserEntity;
   @OneToMany(() => PostEntity, (post) => post.session, {
     cascade: true,

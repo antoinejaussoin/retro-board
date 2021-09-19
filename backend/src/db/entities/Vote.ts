@@ -5,6 +5,7 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
+  Index,
 } from 'typeorm';
 import { VoteType, Vote, VoteExtract } from '@retrospected/common';
 import UserEntity from './User';
@@ -15,6 +16,7 @@ export default class VoteEntity {
   @PrimaryColumn({ primary: true, generated: false, unique: true })
   public id: string;
   @ManyToOne(() => UserEntity, { eager: true, nullable: false })
+  @Index()
   public user: UserEntity;
   @ManyToOne(() => PostEntity, {
     eager: false,
@@ -22,6 +24,7 @@ export default class VoteEntity {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
+  @Index()
   public post: PostEntity;
   @Column({ type: 'character varying' })
   public type: VoteType;

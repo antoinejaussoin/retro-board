@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  Index,
 } from 'typeorm';
 import UserEntity from './User';
 import { Plan } from '@retrospected/common';
@@ -18,6 +19,7 @@ export default class SubscriptionEntity {
   @Column({ nullable: false, type: 'character varying' })
   public plan: Plan;
   @ManyToOne(() => UserEntity, { eager: true, cascade: true, nullable: false })
+  @Index()
   public owner: UserEntity;
   @Column({ nullable: true, type: 'character varying' })
   public domain: string | null;

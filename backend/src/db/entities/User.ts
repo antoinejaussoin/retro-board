@@ -49,6 +49,7 @@ export default class UserEntity {
   @Column({ nullable: false, type: 'character varying', default: 'en' })
   public language: string;
   @ManyToOne(() => SessionTemplateEntity, { nullable: true, eager: false })
+  @Index()
   public defaultTemplate: SessionTemplateEntity | null | undefined;
   @ManyToMany(() => SessionEntity, (session) => session.visitors, {
     eager: false,

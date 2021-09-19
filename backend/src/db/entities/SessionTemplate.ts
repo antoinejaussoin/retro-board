@@ -24,6 +24,7 @@ export default class SessionTemplateEntity {
   @Index()
   public name: string | null;
   @ManyToOne(() => UserEntity, { eager: true, cascade: true, nullable: false })
+  @Index()
   public createdBy: UserEntity;
   @OneToMany(
     () => TemplateColumnDefinitionEntity,

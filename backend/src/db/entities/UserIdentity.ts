@@ -33,6 +33,7 @@ export default class UserIdentityEntity {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
+  @Index()
   public user: UserEntity;
   @Column({ default: 'anonymous' })
   public accountType: AccountType;

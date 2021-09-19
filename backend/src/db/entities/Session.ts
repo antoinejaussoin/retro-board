@@ -28,6 +28,7 @@ export default class SessionEntity {
   @Index()
   public name: string | null;
   @ManyToOne(() => UserEntity, { eager: true, cascade: true, nullable: false })
+  @Index()
   public createdBy: UserEntity;
   @OneToMany(() => PostEntity, (post) => post.session, {
     cascade: true,

@@ -20,6 +20,7 @@ export default class PostEntity {
   @PrimaryColumn({ primary: true, generated: false, unique: true })
   public id: string;
   @ManyToOne(() => SessionEntity, { nullable: false })
+  @Index()
   public session: SessionEntity;
   @ManyToOne(() => PostGroupEntity, {
     nullable: true,
@@ -28,6 +29,7 @@ export default class PostEntity {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   })
+  @Index()
   public group: PostGroupEntity | null;
   @Column({ default: 0 })
   public column: number;
@@ -41,6 +43,7 @@ export default class PostEntity {
   @Column({ nullable: true, type: 'character varying' })
   public giphy: null | string;
   @ManyToOne(() => UserEntity, { eager: true, cascade: true, nullable: false })
+  @Index()
   public user: UserEntity;
   @OneToMany(() => VoteEntity, (vote) => vote.post, {
     cascade: true,
