@@ -56,7 +56,6 @@ import {
 } from './db/actions/users';
 import { isLicenced } from './security/is-licenced';
 import rateLimit from 'express-rate-limit';
-import { Cache, inMemoryCache, redisCache } from './cache/cache';
 import { validateLicence } from './db/actions/licences';
 import { hasField } from './security/payload-checker';
 import mung from 'express-mung';
@@ -150,7 +149,6 @@ const httpServer = new http.Server(app);
 const io = new socketIo.Server(httpServer, {
   maxHttpBufferSize: config.WS_MAX_BUFFER_SIZE,
 });
-let cache: Cache;
 
 if (config.REDIS_ENABLED) {
   const RedisStore = connectRedis(session);
@@ -177,7 +175,7 @@ if (config.REDIS_ENABLED) {
     );
   }
 
-  cache = redisCache(redisClient);
+  // cache = redisCache(redisClient);
   console.log(
     chalk`💾  {red Redis} for {yellow Express} was properly activated`
   );
@@ -190,7 +188,7 @@ if (config.REDIS_ENABLED) {
       secure: false,
     },
   });
-  cache = inMemoryCache();
+  // cache = inMemoryCache();
 }
 
 app.use(sessionMiddleware);
@@ -268,7 +266,6 @@ db().then(() => {
               identity.user,
               payload.encryptedCheck
             );
-            await cache.invalidate(identity.user.id);
             res.status(200).send(session);
           } catch (err: unknown) {
             if (err instanceof QueryFailedError) {
@@ -317,13 +314,7 @@ db().then(() => {
   app.get('/api/previous', heavyLoadLimiter, async (req, res) => {
     const identity = await getIdentityFromRequest(req);
     if (identity) {
-      const cached = await cache.get(identity.user.id);
-      if (cached) {
-        return res.status(200).send(cached);
-      }
-
       const sessions = await previousSessions(identity.user.id);
-      await cache.set(identity.user.id, sessions, 60 * 1000);
       res.status(200).send(sessions);
     } else {
       res.status(200).send([]);
@@ -339,7 +330,6 @@ db().then(() => {
       const identity = await getIdentityFromRequest(req);
       if (identity) {
         const success = await deleteSessions(identity.id, sessionId);
-        cache.invalidate(identity.user.id);
         if (success) {
           res.status(200).send();
         } else {

@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [v470/slack-bot]
+    branches: [v470/prev-sessions-view]
 
 jobs:
   build:
