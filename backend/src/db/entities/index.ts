@@ -1,6 +1,7 @@
 export { default as PostEntity } from './Post';
 export { default as PostGroupEntity } from './PostGroup';
 export { default as SessionEntity } from './Session';
+export { default as SessionView } from './SessionView';
 export { default as UserEntity } from './User';
 export {
   ColumnDefinitionEntity,

@@ -111,12 +111,8 @@ const PreviousGameItem = ({
               color={indigo[500]}
             />
             <ItemStat
-              value={
-                session.numberOfNegativeVotes + session.numberOfPositiveVotes
-              }
-              label={translations.votes!(
-                session.numberOfNegativeVotes + session.numberOfPositiveVotes
-              )}
+              value={session.numberOfVotes}
+              label={translations.votes!(session.numberOfVotes)}
               color={red[500]}
             />
             <ItemStat

@@ -11,6 +11,7 @@ import {
   TemplateColumnDefinitionEntity,
   SubscriptionEntity,
   UserView,
+  SessionView,
 } from './entities';
 import LicenceEntity from './entities/Licence';
 import SessionOptionsEntity from './entities/SessionOptions';
@@ -41,6 +42,7 @@ export default function (
             PostEntity,
             PostGroupEntity,
             SessionEntity,
+            SessionView,
             UserEntity,
             UserIdentityEntity,
             UserView,

@@ -5,6 +5,7 @@ import {
   ColumnDefinitionEntity,
   SessionEntity,
   SessionTemplateEntity,
+  SessionView,
 } from '../entities';
 import {
   Session,
@@ -12,8 +13,6 @@ import {
   ColumnDefinition,
   SessionOptions,
   SessionMetadata,
-  VoteType,
-  User,
   AccessErrorType,
   FullUser,
 } from '@retrospected/common';
@@ -27,11 +26,10 @@ import {
   PostGroupRepository,
   ColumnRepository,
 } from '../repositories';
-import { orderBy } from 'lodash';
 import { transaction } from './transaction';
-import { EntityManager } from 'typeorm';
+import { EntityManager, In } from 'typeorm';
 import { getUserViewInner, isUserPro } from './users';
-import { ALL_FIELDS } from '../entities/User';
+import { uniq } from 'lodash';
 
 export async function createSessionFromSlack(
   slackUserId: string,
@@ -243,65 +241,36 @@ export async function deleteSessions(
   });
 }
 
-function numberOfVotes(type: VoteType, session: SessionEntity) {
-  if (!session.posts) {
-    return 0;
-  }
-  return session.posts.reduce<number>((prev, cur) => {
-    return cur.votes
-      ? prev + cur.votes.filter((v) => v.type === type).length
-      : prev;
-  }, 0);
-}
-
-function numberOfActions(posts: PostEntity[] | undefined) {
-  if (!posts) {
-    return 0;
-  }
-  return posts.filter((p) => p.action !== null).length;
-}
-
-function getParticipants(visitors: UserEntity[] | undefined): User[] {
-  if (!visitors) {
-    return [];
-  }
-  return visitors.map((u) => u.toJson());
-}
-
 export async function previousSessions(
   userId: string
 ): Promise<SessionMetadata[]> {
   return await transaction(async (manager) => {
-    const userRepository = manager.getCustomRepository(UserRepository);
-    const loadedUser = await userRepository.findOne(userId, {
-      relations: ['sessions', 'sessions.posts', 'sessions.visitors'],
-      select: ALL_FIELDS,
-    });
-    if (loadedUser && loadedUser.sessions) {
-      return orderBy(loadedUser.sessions, (s) => s.updated, 'desc').map(
-        (session) =>
-          ({
-            created: session.created,
-            createdBy: session.createdBy.toJson(),
-            encrypted: session.encrypted,
-            id: session.id,
-            name: session.name,
-            numberOfNegativeVotes: numberOfVotes('dislike', session),
-            numberOfPositiveVotes: numberOfVotes('like', session),
-            numberOfPosts: session.posts?.length,
-            numberOfActions: numberOfActions(session.posts),
-            locked: session.locked,
-            lockedForUser:
-              session.locked && session.visitors
-                ? !session.visitors.map((v) => v.id).includes(userId)
-                : false,
-            participants: getParticipants(session.visitors),
-            canBeDeleted: userId === session.createdBy.id,
-          } as SessionMetadata)
-      );
-    }
+    const sessionsAsVisitors: { sessionsId: string }[] = await manager.query(
+      `
+      select distinct v."sessionsId" from visitors v
+      where v."usersId" = $1
+    `,
+      [userId]
+    );
 
-    return [];
+    const sessionsAsOwner: { id: string }[] = await manager.query(
+      `
+      select s.id from sessions s
+      where s."createdById" = $1
+    `,
+      [userId]
+    );
+
+    const ids = uniq([
+      ...sessionsAsVisitors.map((s) => s.sessionsId),
+      ...sessionsAsOwner.map((s) => s.id),
+    ]);
+
+    const sessionViewRepository = manager.getRepository(SessionView);
+    const sessions = await sessionViewRepository.find({
+      where: { id: In(ids) },
+    });
+    return sessions.map((s) => s.toJson(userId));
   });
 }
 

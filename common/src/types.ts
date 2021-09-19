@@ -13,13 +13,12 @@ export interface SessionMetadata extends Entity {
   name: string | null;
   participants: User[];
   numberOfPosts: number;
-  numberOfPositiveVotes: number;
-  numberOfNegativeVotes: number;
+  numberOfVotes: number;
   numberOfActions: number;
   created: Date;
   createdBy: User;
   canBeDeleted: boolean;
-  encrypted: string;
+  encrypted: string | null;
   locked: boolean;
   lockedForUser: boolean;
 }
