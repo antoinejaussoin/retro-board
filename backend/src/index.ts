@@ -175,7 +175,6 @@ if (config.REDIS_ENABLED) {
     );
   }
 
-  // cache = redisCache(redisClient);
   console.log(
     chalk`💾  {red Redis} for {yellow Express} was properly activated`
   );
@@ -188,7 +187,6 @@ if (config.REDIS_ENABLED) {
       secure: false,
     },
   });
-  // cache = inMemoryCache();
 }
 
 app.use(sessionMiddleware);
