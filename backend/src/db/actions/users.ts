@@ -121,20 +121,21 @@ export async function getUserByUsername(
 }
 
 export async function updateIdentity(
-  id: string,
+  identityId: string,
   updatedIdentity: Partial<UserIdentityEntity>
 ): Promise<UserView | null> {
   return await transaction(async (manager) => {
-    const identityRepository = manager.getCustomRepository(
-      UserIdentityRepository
-    );
-    await identityRepository.update(id, updatedIdentity);
-    const identity = await identityRepository.findOne(id);
-    if (identity) {
-      const newUser = await getUserViewInner(manager, identity.user.id);
+    try {
+      const identityRepository = manager.getCustomRepository(
+        UserIdentityRepository
+      );
+      await identityRepository.update(identityId, updatedIdentity);
+      const newUser = await getUserViewInner(manager, identityId);
       return newUser || null;
+    } catch (err) {
+      console.error('Error :', err);
+      return null;
     }
-    return null;
   });
 }
 
