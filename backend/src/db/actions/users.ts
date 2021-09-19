@@ -37,21 +37,21 @@ export async function getAllPasswordUsers(): Promise<UserView[]> {
 
 async function getUserInner(
   manager: EntityManager,
-  id: string
+  userId: string
 ): Promise<UserEntity | null> {
   const userRepository = manager.getCustomRepository(UserRepository);
-  const user = await userRepository.findOne(id, { select: ALL_FIELDS });
+  const user = await userRepository.findOne(userId, { select: ALL_FIELDS });
   return user || null;
 }
 
 async function getIdentityInner(
   manager: EntityManager,
-  id: string
+  identityId: string
 ): Promise<UserIdentityEntity | null> {
   const identityRepository = manager.getCustomRepository(
     UserIdentityRepository
   );
-  const user = await identityRepository.findOne(id, {
+  const user = await identityRepository.findOne(identityId, {
     select: ALL_FIELDS_IDENTITY,
   });
   return user || null;
@@ -140,18 +140,17 @@ export async function updateIdentity(
 }
 
 export async function updateUser(
-  id: string,
+  userId: string,
   updatedUser: Partial<UserEntity>
-): Promise<UserView | null> {
+): Promise<boolean> {
   return await transaction(async (manager) => {
     const userRepository = manager.getCustomRepository(UserRepository);
-    const user = await getUserInner(manager, id);
+    const user = await getUserInner(manager, userId);
     if (user) {
-      await userRepository.update(id, updatedUser);
-      const newUser = await getUserViewInner(manager, id);
-      return newUser || null;
+      const result = await userRepository.update(userId, updatedUser);
+      return !!result.affected;
     }
-    return null;
+    return false;
   });
 }
 
