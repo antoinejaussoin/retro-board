@@ -145,6 +145,10 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
+### Version 4.6.1
+
+- Fixing a typo. 👏 Thanks Chad S.! ([#296](https://github.com/antoinejaussoin/retro-board/issues/296))
+
 ### Version 4.6.0
 
 - Support OKTA for authentication
