@@ -24,7 +24,6 @@ export default function slackRouter(): Router {
 
   router.post('/create', async (req, res) => {
     const msg: SlackSlashCommand = req.body;
-    console.log('Request: ', msg);
     const session = await createSessionFromSlack(msg.user_id, msg.text);
     try {
       if (session) {
@@ -35,7 +34,7 @@ export default function slackRouter(): Router {
       } else {
         await sendToSlack(
           msg.response_url,
-          `Unfortunately, we could not identify you on Retrospected. Try logging in with your Slack account at least once on Retrospected.`
+          `Unfortunately, we could not identify you on Retrospected. Try logging in with your Slack account at least once on Retrospected, so we can link your Retrospected account with your Slack account.`
         );
       }
     } catch (err) {
@@ -57,27 +56,6 @@ export default function slackRouter(): Router {
     const result = await response.text();
     console.log('response: ', result);
   }
-
-  router.post('/shortcut', async (req, res) => {
-    const msg: SlackSlashCommand = req.body;
-    console.log('Request: ', msg);
-    // try {
-    //   const response = await fetch(msg.response_url, {
-    //     method: 'POST',
-    //     body: JSON.stringify({
-    //       response_type: 'in_channel',
-    //       text: `Hey great! let's create a new retrospective: https://localhost:3000/game/${shortid()}`,
-    //     }),
-    //     headers: { 'Content-Type': 'application/json' },
-    //   });
-    //   const result = await response.text();
-    //   console.log('response: ', result);
-    // } catch (err) {
-    //   console.error(err);
-    // }
-
-    return res.status(200).send();
-  });
 
   return router;
 }
