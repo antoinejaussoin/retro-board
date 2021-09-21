@@ -2299,10 +2299,17 @@
     "@types/qs" "*"
     "@types/range-parser" "*"
 
-"@types/express-session@*", "@types/express-session@1.17.3", "@types/express-session@^1.17.4":
+"@types/express-session@*":
   version "1.17.3"
   resolved "https://registry.yarnpkg.com/@types/express-session/-/express-session-1.17.3.tgz#4a37c5c4428b8f922ac8ac1cb4bd9190a4d2b097"
   integrity sha512-57DnyxiqClXOIjoCgeKCUYfKxBPOlOY/k+l1TPK+7bSwyiPTrS5FIk1Ycql7twk4wO7P5lfOVy6akDGiaMSLfw==
+  dependencies:
+    "@types/express" "*"
+
+"@types/express-session@^1.17.4":
+  version "1.17.4"
+  resolved "https://registry.yarnpkg.com/@types/express-session/-/express-session-1.17.4.tgz#97a30a35e853a61bdd26e727453b8ed314d6166b"
+  integrity sha512-7cNlSI8+oOBUHTfPXMwDxF/Lchx5aJ3ho7+p9jJZYVg9dVDJFh3qdMXmJtRsysnvS+C6x46k9DRYmrmCkE+MVg==
   dependencies:
     "@types/express" "*"
 
@@ -14432,9 +14439,9 @@ tldjs@^1.5.2:
     punycode "^1.4.1"
 
 tmpl@1.0.x:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/tmpl/-/tmpl-1.0.4.tgz#23640dd7b42d00433911140820e5cf440e521dd1"
-  integrity sha1-I2QN17QtAEM5ERQIIOXPRA5SHdE=
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/tmpl/-/tmpl-1.0.5.tgz#8683e0b902bb9c20c4f726e3c0b69f36518c07cc"
+  integrity sha512-3f0uOEAQwIqGuWW2MVzYg8fV/QNnc/IpuJNG837rLuczAaLVHslWHZQj4IGiEl5Hs3kkbhwL9Ab7Hrsmuj+Smw==
 
 to-arraybuffer@^1.0.0:
   version "1.0.1"
