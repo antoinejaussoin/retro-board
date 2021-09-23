@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [v472/deps]
+    branches: [v470/material-ui]
 
 jobs:
   build:
