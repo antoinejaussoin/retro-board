@@ -1,12 +1,12 @@
 import { useState, useCallback, Suspense, lazy } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { resetChangePassword } from '../api';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/material';
 import { useContext } from 'react';
 import UserContext from '../auth/Context';
 import Input from '../components/Input';
-import { VpnKey } from '@material-ui/icons';
-import Button from '@material-ui/core/Button';
+import { VpnKey } from '@mui/icons-material';
+import Button from '@mui/material/Button';
 import useTranslations from '../translations';
 
 const PasswordStrength = lazy(

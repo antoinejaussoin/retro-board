@@ -1,15 +1,12 @@
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import red from '@material-ui/core/colors/red';
-import orange from '@material-ui/core/colors/orange';
-import green from '@material-ui/core/colors/green';
-import deepPurple from '@material-ui/core/colors/deepPurple';
-import { AllInclusive, Lock, VerifiedUser } from '@material-ui/icons';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { colors } from '@mui/material';
+import { AllInclusive, Lock, VerifiedUser } from '@mui/icons-material';
 import { useCallback, cloneElement } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -110,19 +107,19 @@ function ProButton({ children, quota }: ProButtonProps) {
           <Features>
             <Feature
               icon={<Lock />}
-              color={red[700]}
+              color={colors.red[700]}
               title={translations.features.encryptedSession.title!}
               description={translations.features.encryptedSession.description!}
             />
             <Feature
               icon={<VerifiedUser />}
-              color={green[700]}
+              color={colors.green[700]}
               title={translations.features.privateSessions.title!}
               description={translations.features.privateSessions.description!}
             />
             <Feature
               icon={<AllInclusive />}
-              color={orange[700]}
+              color={colors.orange[700]}
               title={translations.features.unlimitedPosts.title!}
               description={translations.features.unlimitedPosts.description!}
             />
@@ -162,11 +159,11 @@ const Container = styled.span`
 `;
 
 const Header = styled.div`
-  background-color: ${deepPurple[300]};
+  background-color: ${colors.deepPurple[300]};
   background: ${`linear-gradient(
     171deg,
-    ${deepPurple[300]} 35%,
-    ${deepPurple[600]} 100%
+    ${colors.deepPurple[300]} 35%,
+    ${colors.deepPurple[600]} 100%
   )`};
   color: white;
   min-width: 60hw;

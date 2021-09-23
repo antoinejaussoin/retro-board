@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
-import Button from '@material-ui/core/Button';
-import Input from '@material-ui/core/Input';
-import { Alert } from '@material-ui/lab';
+import Button from '@mui/material/Button';
+import Input from '@mui/material/Input';
+import { Alert } from '@mui/material';
 import useTranslations, { useLanguage } from '../../translations';
 import { anonymousLogin, updateLanguage } from '../../api';
 import { FullUser } from '@retrospected/common';

@@ -1,5 +1,5 @@
-import { colors } from '@material-ui/core';
-import { Info } from '@material-ui/icons';
+import { colors } from '@mui/material';
+import { Info } from '@mui/icons-material';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
 

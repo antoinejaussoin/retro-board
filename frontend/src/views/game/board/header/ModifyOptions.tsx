@@ -1,11 +1,11 @@
 import { useState, useCallback } from 'react';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import SessionEditor from '../../../session-editor/SessionEditor';
 import { ColumnSettings } from '../../../../state/types';
 import { SessionOptions, ColumnDefinition } from '@retrospected/common';
 import { toColumnDefinitions } from '../../../../state/columns';
 import { trackEvent } from '../../../../track';
-import { Settings } from '@material-ui/icons';
+import { Settings } from '@mui/icons-material';
 import useTranslations from '../../../../translations';
 import useSession from '../../useSession';
 

@@ -1,9 +1,9 @@
 import { useCallback, useState, useRef, useContext } from 'react';
 import styled from 'styled-components';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
-import AccountIcon from '@material-ui/icons/AccountCircle';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
+import AccountIcon from '@mui/icons-material/AccountCircle';
 import useUser from './useUser';
 import LoginModal from './modal/LoginModal';
 import useTranslation from '../translations/useTranslations';
@@ -11,8 +11,8 @@ import { logout } from '../api';
 import UserContext from './Context';
 import Avatar from '../components/Avatar';
 import { useHistory } from 'react-router-dom';
-import { Star } from '@material-ui/icons';
-import yellow from '@material-ui/core/colors/yellow';
+import { Star } from '@mui/icons-material';
+import { colors } from '@mui/material';
 
 const AccountMenu = () => {
   const translations = useTranslation();
@@ -78,7 +78,7 @@ const AccountMenu = () => {
               <MenuItem onClick={handleSubscribe}>
                 <Star
                   style={{
-                    color: yellow[700],
+                    color: colors.yellow[700],
                     position: 'relative',
                     top: -2,
                     left: -5,

@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
-import SliderBase, { Mark } from '@material-ui/core/Slider';
+import SliderBase, { Mark } from '@mui/material/Slider';
 
 interface SliderProps {
   from: number;

@@ -2,8 +2,8 @@ import { useCallback, useState } from 'react';
 import { Template } from '../../../../state/types';
 import { getAllTemplates } from '../../../../state/templates';
 import useTranslations from '../../../../translations';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 interface TemplatePickerProps {
   onSelect: (value: Template) => void;

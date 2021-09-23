@@ -17,7 +17,7 @@ import {
   DirectionsBoat,
   Gesture,
   FitnessCenter,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import { IconName } from '@retrospected/common';
 
 export function getIcon(name: IconName | null): React.ComponentType | null {

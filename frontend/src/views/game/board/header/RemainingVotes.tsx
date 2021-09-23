@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { Palette } from '../../../../Theme';
-import Badge from '@material-ui/core/Badge';
-import Tooltip from '@material-ui/core/Tooltip';
-import { ThumbUpOutlined, ThumbDownOutlined } from '@material-ui/icons';
+import Badge from '@mui/material/Badge';
+import Tooltip from '@mui/material/Tooltip';
+import { ThumbUpOutlined, ThumbDownOutlined } from '@mui/icons-material';
 import useTranslations, { Translation } from '../../../../translations';
 import useSession from '../../useSession';
 

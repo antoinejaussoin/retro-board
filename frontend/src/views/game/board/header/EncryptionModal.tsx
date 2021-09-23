@@ -1,15 +1,15 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import styled from 'styled-components';
 import { CHECK_PREFIX, decrypt } from '../../../../crypto/crypto';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/material';
 import { useEncryptionKey } from '../../../../crypto/useEncryptionKey';
 import { useHistory, useLocation } from 'react-router-dom';
-import deepPurple from '@material-ui/core/colors/deepPurple';
+import { colors } from '@mui/material';
 import useTranslation from '../../../../translations/useTranslations';
 import useSession from '../../useSession';
 
@@ -60,7 +60,7 @@ function EncryptionModal() {
 
 const Input = styled.input`
   text-align: center;
-  border: 1px solid ${deepPurple[900]};
+  border: 1px solid ${colors.deepPurple[900]};
   font-size: 2em;
 `;
 

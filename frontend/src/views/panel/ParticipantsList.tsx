@@ -1,11 +1,11 @@
-import List from '@material-ui/core/List';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
+import List from '@mui/material/List';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListSubheader from '@mui/material/ListSubheader';
 import Avatar from '../../components/Avatar';
 import useTranslations from '../../translations';
-import grey from '@material-ui/core/colors/grey';
+import { colors } from '@mui/material';
 import useParticipants from '../game/useParticipants';
 
 function ParticipantsList() {
@@ -26,7 +26,7 @@ function ParticipantsList() {
             <ListItemText
               primary={player.name}
               style={{
-                color: player.online ? grey[900] : grey[500],
+                color: player.online ? colors.grey[900] : colors.grey[500],
               }}
             />
           </ListItem>

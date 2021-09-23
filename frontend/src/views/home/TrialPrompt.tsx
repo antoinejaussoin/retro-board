@@ -1,4 +1,5 @@
-import { Alert, AlertTitle, Color } from '@material-ui/lab';
+import { Alert, AlertTitle } from '@mui/material';
+import { Color } from '@mui/lab';
 import { differenceInDays } from 'date-fns';
 import { Link } from 'react-router-dom';
 import useIsTrial from '../../auth/useIsTrial';
@@ -6,7 +7,7 @@ import useUser from '../../auth/useUser';
 import useFormatDate from '../../hooks/useFormatDate';
 import useTranslations from '../../translations';
 import useQuota from '../../hooks/useQuota';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import ProButton from '../../components/ProButton';
 
 export default function TrialPrompt() {

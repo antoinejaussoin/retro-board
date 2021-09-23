@@ -1,12 +1,12 @@
 import { useState, useCallback } from 'react';
-import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
-import Button from '@material-ui/core/Button';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import Button from '@mui/material/Button';
+import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
 import Clipboard from 'react-copy-to-clipboard';
 import useTranslations from '../../translations';
 

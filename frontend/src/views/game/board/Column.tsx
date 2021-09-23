@@ -1,11 +1,11 @@
 import { useState, useCallback } from 'react';
 import styled from 'styled-components';
-import Input from '@material-ui/core/Input';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import grey from '@material-ui/core/colors/grey';
-import { CreateNewFolder, SubdirectoryArrowLeft } from '@material-ui/icons';
+import Input from '@mui/material/Input';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import { colors } from '@mui/material';
+import { CreateNewFolder, SubdirectoryArrowLeft } from '@mui/icons-material';
 import PostItem from './post/Post';
 import { Post, PostGroup } from '@retrospected/common';
 import useTranslations from '../../../translations';
@@ -18,7 +18,7 @@ import {
 import { ColumnContent } from '../types';
 import useCrypto from '../../../crypto/useCrypto';
 import useQuota from '../../../hooks/useQuota';
-import { deepPurple } from '@material-ui/core/colors';
+import { deepPurple } from '@mui/material/colors';
 import useSessionUserPermissions from './useSessionUserPermissions';
 
 interface ColumnProps {
@@ -99,7 +99,7 @@ const Column: React.FC<ColumnProps> = ({
           startAdornment={
             Icon ? (
               <InputAdornment position="start">
-                <Icon style={{ color: grey[500] }} />
+                <Icon style={{ color: colors.grey[500] }} />
               </InputAdornment>
             ) : null
           }
@@ -114,7 +114,7 @@ const Column: React.FC<ColumnProps> = ({
         {permissions.canCreateGroup ? (
           <AddGroup>
             <Tooltip title={columnTranslations.createGroupTooltip!}>
-              <IconButton onClick={onAddGroup} tabIndex={-1}>
+              <IconButton onClick={onAddGroup} tabIndex={-1} size="large">
                 <CreateNewFolder />
               </IconButton>
             </Tooltip>
@@ -256,7 +256,7 @@ const Add = styled.div`
 const AddGroup = styled.div`
   position: relative;
   top: 3px;
-  border-left: 1px solid ${grey[300]};
+  border-left: 1px solid ${colors.grey[300]};
   margin-left: 12px;
   height: 25px;
   display: flex;
@@ -272,11 +272,11 @@ const EnterIcon = styled.div`
   align-items: center;
   cursor: pointer;
   > * {
-    color: ${grey[500]};
+    color: ${colors.grey[500]};
   }
   :hover {
     > * {
-      color: ${deepPurple[500]};
+      color: ${colors.deepPurple[500]};
     }
   }
 

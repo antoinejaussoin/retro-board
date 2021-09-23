@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import CardActions from '@material-ui/core/CardActions';
+import CardActions from '@mui/material/CardActions';
 
 interface ActionsBarProps {
   color: string;

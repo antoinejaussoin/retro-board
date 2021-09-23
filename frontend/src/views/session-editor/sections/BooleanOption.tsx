@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import Switch from '@material-ui/core/Switch';
+import Switch from '@mui/material/Switch';
 
 interface BooleanOptionProps {
   value: boolean;

@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react';
-import Button from '@material-ui/core/Button';
-import { Alert } from '@material-ui/lab';
+import Button from '@mui/material/Button';
+import { Alert } from '@mui/material';
 import useTranslations from '../../../translations';
 import Wrapper from './../Wrapper';
 import Input from '../../../components/Input';
-import { Email } from '@material-ui/icons';
+import { Email } from '@mui/icons-material';
 import { resetPassword } from '../../../api';
 import { Link } from 'react-router-dom';
 import useAdminEmail from '../../../global/useAdminEmail';

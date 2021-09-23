@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import Typography from '@material-ui/core/Typography';
-import { Alert } from '@material-ui/lab';
-import grey from '@material-ui/core/colors/grey';
+import Typography from '@mui/material/Typography';
+import { Alert } from '@mui/material';
+import { colors } from '@mui/material';
 
 interface OptionItemProps {
   children: JSX.Element;
@@ -40,7 +40,7 @@ const OptionItem = ({
 };
 
 const Container = styled.div`
-  border: 1px solid ${grey[200]};
+  border: 1px solid ${colors.grey[200]};
   background-color: ${grey[50]};
   padding: 0px 15px;
   margin: 15px 0;

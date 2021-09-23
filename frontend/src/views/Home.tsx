@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import Fab from '@material-ui/core/Fab';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import grey from '@material-ui/core/colors/grey';
-import { Lock, ThumbUpAlt } from '@material-ui/icons';
+import Fab from '@mui/material/Fab';
+import makeStyles from '@mui/styles/makeStyles';
+import { colors } from '@mui/material';
+import { Lock, ThumbUpAlt } from '@mui/icons-material';
 import useTranslations from '../translations';
 import PreviousGames from './home/PreviousGames';
 import { SessionMetadata } from '@retrospected/common';
@@ -23,7 +23,7 @@ import HowDoesItWorkButton from '../components/HowDoesItWorkButton';
 const useStyles = makeStyles({
   media: {
     objectFit: 'cover',
-    backgroundColor: grey[200],
+    backgroundColor: colors.grey[200],
   },
   actions: {
     justifyContent: 'center',

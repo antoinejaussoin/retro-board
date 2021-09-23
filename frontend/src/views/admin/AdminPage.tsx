@@ -1,4 +1,4 @@
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/material';
 import { DataGrid, GridColDef } from '@material-ui/data-grid';
 import { FullUser } from '@retrospected/common';
 import useUser from '../../auth/useUser';

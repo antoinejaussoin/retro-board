@@ -1,15 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
 import { SessionOptions } from '@retrospected/common';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import DialogActions from '@material-ui/core/DialogActions';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Button from '@material-ui/core/Button';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import DialogActions from '@mui/material/DialogActions';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Button from '@mui/material/Button';
+import AppBar from '@mui/material/AppBar';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 import useTranslations from '../../translations';
 import useToggle from '../../hooks/useToggle';
 import { ColumnSettings } from '../../state/types';
@@ -120,7 +120,7 @@ function SessionEditor({
           }
           label={Customize.makeDefaultTemplate}
         />
-        <Button onClick={onClose} color="default" variant="text">
+        <Button onClick={onClose} variant="text">
           {Generic.cancel}
         </Button>
         <Button onClick={handleCreate} color="primary" variant="contained">

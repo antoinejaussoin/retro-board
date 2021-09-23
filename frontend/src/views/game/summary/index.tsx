@@ -1,9 +1,9 @@
 import { useState, useCallback } from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import PhoneIcon from '@material-ui/icons/Phone';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import AppBar from '@mui/material/AppBar';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import PhoneIcon from '@mui/icons-material/Phone';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { ColumnContent } from '../types';
 import { Page } from '../../../components/Page';
 import SummaryMode from './SummaryMode';
@@ -16,27 +16,25 @@ interface SummaryModeProps {
 const SummaryHome = ({ columns, search }: SummaryModeProps) => {
   const [tab, setTab] = useState(0);
   const handleChange = useCallback((_, v) => setTab(v), []);
-  return (
-    <>
-      <AppBar position="static" color="default">
-        <Tabs
-          value={tab}
-          onChange={handleChange}
-          variant="scrollable"
-          scrollButtons="on"
-          indicatorColor="primary"
-          textColor="primary"
-          aria-label="summary tabs"
-        >
-          <Tab label="Summary" icon={<PhoneIcon />} />
-          <Tab label="Markdown" icon={<FavoriteIcon />} />
-        </Tabs>
-      </AppBar>
-      <Page>
-        <SummaryMode columns={columns} search={search} />
-      </Page>
-    </>
-  );
+  return <>
+    <AppBar position="static" color="default">
+      <Tabs
+        value={tab}
+        onChange={handleChange}
+        variant="scrollable"
+        scrollButtons
+        indicatorColor="primary"
+        textColor="primary"
+        aria-label="summary tabs"
+        allowScrollButtonsMobile>
+        <Tab label="Summary" icon={<PhoneIcon />} />
+        <Tab label="Markdown" icon={<FavoriteIcon />} />
+      </Tabs>
+    </AppBar>
+    <Page>
+      <SummaryMode columns={columns} search={search} />
+    </Page>
+  </>;
 };
 
 export default SummaryHome;

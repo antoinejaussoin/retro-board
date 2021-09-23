@@ -1,16 +1,12 @@
 import { useState, useCallback, useMemo, useRef } from 'react';
 import styled from 'styled-components';
-import Typography from '@material-ui/core/Typography';
-import Popover from '@material-ui/core/Popover';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Tooltip from '@material-ui/core/Tooltip';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import blue from '@material-ui/core/colors/blue';
-import yellow from '@material-ui/core/colors/yellow';
-import green from '@material-ui/core/colors/green';
-import red from '@material-ui/core/colors/red';
-import grey from '@material-ui/core/colors/grey';
+import Typography from '@mui/material/Typography';
+import Popover from '@mui/material/Popover';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Tooltip from '@mui/material/Tooltip';
+import makeStyles from '@mui/styles/makeStyles';
+import { colors } from '@mui/material';
 import {
   ThumbUpOutlined,
   ThumbDownOutlined,
@@ -21,7 +17,7 @@ import {
   Assignment,
   AssignmentOutlined,
   EmojiEmotionsOutlined,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
 import useTranslations from '../../../../translations';
 import EditableLabel from '../../../../components/EditableLabel';
@@ -57,13 +53,13 @@ interface PostItemProps {
 
 const useStyles = makeStyles((theme) => ({
   actionContainer: {
-    backgroundColor: theme.palette.grey[100],
+    backgroundColor: theme.palette.colors.grey[100],
   },
   actionIcon: {
-    color: blue[400],
+    color: colors.blue[400],
   },
   ghipyIcon: {
-    color: yellow[700],
+    color: colors.yellow[700],
   },
 }));
 
@@ -224,7 +220,7 @@ const PostItem = ({
               </CardContent>
             )}
             <ActionsBar
-              color={faded ? grey[100] : color}
+              color={faded ? colors.grey[100] : color}
               rightActions={
                 <>
                   {giphyImageUrl && (
@@ -234,7 +230,9 @@ const PostItem = ({
                       icon={
                         <InsertPhotoTwoTone
                           style={{
-                            color: !showGiphyImage ? green[200] : red[200],
+                            color: !showGiphyImage
+                              ? colors.green[200]
+                              : colors.red[200],
                           }}
                         />
                       }
@@ -345,7 +343,7 @@ const DragHandle = styled.div`
   top: 3px;
   right: 3px;
   visibility: hidden;
-  color: ${grey[500]};
+  color: ${colors.grey[500]};
 `;
 
 const PostCard = styled(Card)`
@@ -393,7 +391,7 @@ const CloseButtonContainer = styled.div`
   border-radius: 15px;
   color: white;
   font-size: 0.5em;
-  background-color: ${red[400]};
+  background-color: ${colors.red[400]};
   cursor: pointer;
 `;
 

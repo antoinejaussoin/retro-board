@@ -6,19 +6,19 @@ import {
   DroppableProvided,
   DroppableStateSnapshot,
 } from 'react-beautiful-dnd';
-import grey from '@material-ui/core/colors/grey';
-import IconButton from '@material-ui/core/IconButton';
+import { colors } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 import {
   Delete,
   KeyboardArrowDown,
   KeyboardArrowRight,
   Message,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import EditableLabel from '../../../components/EditableLabel';
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { Alert, AlertTitle } from '@mui/material';
 import useTranslations from '../../../translations';
 import useCrypto from '../../../crypto/useCrypto';
-import { Badge } from '@material-ui/core';
+import { Badge } from '@mui/material';
 
 interface GroupProps {
   group: PostGroup;
@@ -79,11 +79,11 @@ const Group: React.FC<GroupProps> = ({
                 </Badge>
               ) : null}
               {!collapsed ? (
-                <IconButton onClick={handleDelete}>
+                <IconButton onClick={handleDelete} size="large">
                   <Delete />
                 </IconButton>
               ) : null}
-              <IconButton onClick={toggleCollapse}>
+              <IconButton onClick={toggleCollapse} size="large">
                 {collapsed ? <KeyboardArrowRight /> : <KeyboardArrowDown />}
               </IconButton>
             </ActionsContainer>
@@ -114,15 +114,17 @@ const GroupContainer = styled.div<{ draggingOver: boolean }>`
   border: 1px dashed lightgray;
   border-radius: 10px;
   margin: 10px 0;
-  background-color: ${(props) => (props.draggingOver ? grey[200] : 'unset')};
+  background-color: ${(props) =>
+    props.draggingOver ? colors.grey[200] : 'unset'};
 `;
 
 const Header = styled.div<{ collapsed: boolean }>`
   display: flex;
   align-items: center;
-  background-color: ${(props) => (props.collapsed ? grey[50] : grey[100])};
+  background-color: ${(props) =>
+    props.collapsed ? colors.grey[50] : colors.grey[100]};
   padding: ${(props) => (props.collapsed ? '3px 10px' : '10px')};
-  color: ${(props) => (props.collapsed ? grey[500] : 'inherit')};
+  color: ${(props) => (props.collapsed ? colors.grey[500] : 'inherit')};
 `;
 
 const Content = styled.div`

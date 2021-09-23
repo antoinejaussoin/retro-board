@@ -1,27 +1,26 @@
-import { createTheme } from '@material-ui/core/styles';
-import deepPurple from '@material-ui/core/colors/deepPurple';
-import pink from '@material-ui/core/colors/pink';
-import red from '@material-ui/core/colors/red';
-import green from '@material-ui/core/colors/green';
+import { createTheme, adaptV4Theme } from '@mui/material/styles';
+import { colors } from '@mui/material';
 
-const theme = createTheme({
-  palette: {
-    primary: deepPurple,
-    secondary: pink,
-  },
-  overrides: {
-    MuiDrawer: {
-      paper: {
-        width: '250px',
+const theme = createTheme(
+  adaptV4Theme({
+    palette: {
+      primary: colors.deepPurple,
+      secondary: colors.pink,
+    },
+    overrides: {
+      MuiDrawer: {
+        paper: {
+          width: '250px',
+        },
       },
     },
-  },
-  typography: {},
-});
+    typography: {},
+  })
+);
 
 export const Palette = {
-  positive: green['800'],
-  negative: red['400'],
+  positive: colors.green['800'],
+  negative: colors.red['400'],
 };
 
 export default theme;

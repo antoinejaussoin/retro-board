@@ -1,9 +1,9 @@
 import { useState, useCallback, useRef } from 'react';
 import styled from 'styled-components';
-import SpeedDial from '@material-ui/lab/SpeedDial';
-import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
-import { AssignmentReturned, SaveAlt } from '@material-ui/icons';
-import SvgIcon from '@material-ui/core/SvgIcon';
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
+import { AssignmentReturned, SaveAlt } from '@mui/icons-material';
+import SvgIcon from '@mui/material/SvgIcon';
 import useMarkdown from './useMarkdown';
 import ReactMarkdown from 'react-markdown';
 import Message from '../../../components/Message';

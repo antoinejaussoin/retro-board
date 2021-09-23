@@ -21,12 +21,12 @@ export default function useFormatDate() {
       const locale = await language.dateLocale();
       setFormat(
         () =>
-          function formatLocale(date: Date | number, addSuffix = false) {
+          (function formatLocale(date: Date | number, addSuffix = false) {
             return formatDistanceToNowBase(date, {
               locale: locale.default,
               addSuffix,
             });
-          }
+          })
       );
     }
     load();

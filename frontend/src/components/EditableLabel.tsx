@@ -1,8 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import grey from '@material-ui/core/colors/grey';
-import purple from '@material-ui/core/colors/purple';
-import { Edit } from '@material-ui/icons';
+import { colors } from '@mui/material';
+import { Edit } from '@mui/icons-material';
 import TextareaAutosize from 'react-autosize-textarea';
 
 interface EditableLabelProps extends CenteredProp {
@@ -124,7 +123,7 @@ const ViewMode = styled.span`
 
   &:hover {
     > svg {
-      color: ${purple[500]};
+      color: ${colors.purple[500]};
     }
   }
 `;
@@ -155,7 +154,7 @@ const EditMode = styled.span<CenteredProp>`
 const EditIcon = styled(Edit)`
   position: relative;
   top: 2px;
-  color: ${grey[500]};
+  color: ${colors.grey[500]};
 `;
 
 const InvisibleEditIcon = styled(EditIcon)`

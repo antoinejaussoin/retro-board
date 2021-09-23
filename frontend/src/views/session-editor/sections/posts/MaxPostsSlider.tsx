@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import styled from 'styled-components';
-import Slider, { Mark } from '@material-ui/core/Slider';
+import Slider, { Mark } from '@mui/material/Slider';
 
 interface MaxPostsSliderProps {
   value: number | null;

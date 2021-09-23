@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import grey from '@material-ui/core/colors/grey';
+import { colors } from '@mui/material';
 
 interface NoContentProps {
   title: string;
@@ -25,13 +25,13 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
-  color: ${grey[500]};
+  color: ${colors.grey[500]};
   font-weight: 300;
   padding: 0 40px;
 `;
 
 const Subtitle = styled.h2`
-  color: ${grey[500]};
+  color: ${colors.grey[500]};
   font-weight: 100;
   font-size: 1em;
   padding: 0 40px;

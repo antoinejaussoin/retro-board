@@ -1,9 +1,9 @@
 import { User } from '@retrospected/common';
-import Avatar, { AvatarTypeMap } from '@material-ui/core/Avatar';
-import Badge from '@material-ui/core/Badge';
+import Avatar, { AvatarTypeMap } from '@mui/material/Avatar';
+import Badge from '@mui/material/Badge';
 import md5 from 'md5';
-import { DefaultComponentProps } from '@material-ui/core/OverridableComponent';
-import { createStyles, withStyles } from '@material-ui/styles';
+import { DefaultComponentProps } from '@mui/material/OverridableComponent';
+import { createStyles, withStyles } from '@mui/styles';
 
 interface AvatarProps extends DefaultComponentProps<AvatarTypeMap<{}, 'div'>> {
   user: User | null;

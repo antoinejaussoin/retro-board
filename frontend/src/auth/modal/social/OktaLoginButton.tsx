@@ -1,8 +1,8 @@
 import { createButton, createSvgIcon } from 'react-social-login-buttons';
-import grey from '@material-ui/core/colors/grey';
+import { colors } from '@mui/material';
 
 const config = {
-  activeStyle: { background: grey[100] },
+  activeStyle: { background: colors.grey[100] },
   icon: createSvgIcon(Icon),
   style: { background: 'white', color: 'black' },
   text: 'Login with Okta',

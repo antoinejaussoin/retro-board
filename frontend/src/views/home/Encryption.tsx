@@ -1,4 +1,4 @@
-import grey from '@material-ui/core/colors/grey';
+import { colors } from '@mui/material';
 import Markdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import styled from 'styled-components';
@@ -57,7 +57,7 @@ const Container = styled.div`
 
   h1 {
     font-weight: 100;
-    border-bottom: 1px solid ${grey[300]};
+    border-bottom: 1px solid ${colors.grey[300]};
     padding-bottom: 10px;
   }
 

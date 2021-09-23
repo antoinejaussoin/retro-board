@@ -1,7 +1,7 @@
-import BaseLink, { LinkTypeMap } from '@material-ui/core/Link';
-import deepPurple from '@material-ui/core/colors/deepPurple';
+import BaseLink, { LinkTypeMap } from '@mui/material/Link';
+import { colors } from '@mui/material';
 import styled from 'styled-components';
-import { DefaultComponentProps } from '@material-ui/core/OverridableComponent';
+import { DefaultComponentProps } from '@mui/material/OverridableComponent';
 
 interface LinkProps extends DefaultComponentProps<LinkTypeMap<{}, 'div'>> {}
 
@@ -16,7 +16,7 @@ function Link({ ...props }: LinkProps) {
 const Container = styled.span`
   cursor: pointer;
   a {
-    color: ${deepPurple[500]} !important;
+    color: ${colors.deepPurple[500]} !important;
   }
 `;
 

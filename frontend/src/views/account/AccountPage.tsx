@@ -1,10 +1,10 @@
 import usePortalUrl from './usePortalUrl';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import { Page } from '../../components/Page';
 import useUser from '../../auth/useUser';
 import styled from 'styled-components';
 import ProPill from '../../components/ProPill';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/material';
 import Section from './Section';
 import MembersEditor from './MembersEditor';
 import useTranslations from '../../translations';

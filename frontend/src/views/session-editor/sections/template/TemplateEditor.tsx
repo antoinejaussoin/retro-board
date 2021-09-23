@@ -3,9 +3,9 @@ import { ColumnSettings } from '../../../../state/types';
 import ColumnEditor from './ColumnEditor';
 import useTranslation from '../../../../translations/useTranslations';
 import { getTemplateColumnByType } from '../../../../state/columns';
-import IconButton from '@material-ui/core/IconButton';
+import IconButton from '@mui/material/IconButton';
 import { trackEvent } from '../../../../track';
-import { Add } from '@material-ui/icons';
+import { Add } from '@mui/icons-material';
 
 const MAX_NUMBER_OF_COLUMNS = 5;
 
@@ -35,24 +35,22 @@ function TemplateEditor({ columns, onChange }: TemplateEditorProps) {
     },
     [onChange, columns]
   );
-  return (
-    <>
-      {columns.map((def, index) => (
-        <ColumnEditor
-          key={index}
-          value={def}
-          canDelete={columns.length > 1}
-          onChange={(value) => handleColumnChange(value, index)}
-          onRemove={handleRemoveColumn}
-        />
-      ))}
-      {columns.length < MAX_NUMBER_OF_COLUMNS ? (
-        <IconButton onClick={handleAddColumn}>
-          <Add />
-        </IconButton>
-      ) : null}
-    </>
-  );
+  return <>
+    {columns.map((def, index) => (
+      <ColumnEditor
+        key={index}
+        value={def}
+        canDelete={columns.length > 1}
+        onChange={(value) => handleColumnChange(value, index)}
+        onRemove={handleRemoveColumn}
+      />
+    ))}
+    {columns.length < MAX_NUMBER_OF_COLUMNS ? (
+      <IconButton onClick={handleAddColumn} size="large">
+        <Add />
+      </IconButton>
+    ) : null}
+  </>;
 }
 
 export default TemplateEditor;

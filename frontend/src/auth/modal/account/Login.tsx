@@ -1,13 +1,13 @@
 import { useCallback, useState } from 'react';
-import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { Alert } from '@material-ui/lab';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
+import { Alert } from '@mui/material';
 import useTranslations from '../../../translations';
 import { FullUser } from '@retrospected/common';
 import Wrapper from './../Wrapper';
 import Input from '../../../components/Input';
 import Link from '../../../components/Link';
-import { Email, VpnKey } from '@material-ui/icons';
+import { Email, VpnKey } from '@mui/icons-material';
 import { accountLogin } from '../../../api';
 import styled from 'styled-components';
 

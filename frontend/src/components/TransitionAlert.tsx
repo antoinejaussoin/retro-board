@@ -1,9 +1,9 @@
 import { PropsWithChildren, useState } from 'react';
-import Alert from '@material-ui/lab/Alert';
-import IconButton from '@material-ui/core/IconButton';
-import Collapse from '@material-ui/core/Collapse';
-import CloseIcon from '@material-ui/icons/Close';
-import { AlertTitle } from '@material-ui/lab';
+import Alert from '@mui/material/Alert';
+import IconButton from '@mui/material/IconButton';
+import Collapse from '@mui/material/Collapse';
+import CloseIcon from '@mui/icons-material/Close';
+import { AlertTitle } from '@mui/material';
 
 interface TransitionAlertProps {
   title?: string;

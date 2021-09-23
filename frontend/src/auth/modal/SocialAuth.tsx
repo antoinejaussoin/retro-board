@@ -1,5 +1,5 @@
 import { useCallback, useState, useEffect, useRef } from 'react';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/material';
 import {
   GithubLoginButton,
   GoogleLoginButton,

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 import { verifyEmail } from '../api';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/material';
 import { useContext } from 'react';
 import UserContext from '../auth/Context';
 import useTranslations from '../translations';

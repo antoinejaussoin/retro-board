@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/material';
 
 interface SettingCategoryProps {
   title: string;

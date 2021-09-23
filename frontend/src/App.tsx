@@ -1,5 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
-import ThemeProvider from '@material-ui/styles/ThemeProvider';
+import ThemeProvider from '@mui/styles/ThemeProvider';
 import { Helmet } from 'react-helmet';
 import GlobalStyles from './GlobalStyles';
 import AuthProvider from './auth/AuthProvider';
@@ -32,24 +32,26 @@ function App() {
           horizontal: 'center',
         }}
       >
-        <ThemeProvider theme={theme}>
-          <BrowserRouter>
-            <GlobalProvider>
-              <AuthProvider>
-                <LanguageProvider>
-                  <QuotaManager>
-                    <GlobalStyles />
-                    <ErrorBoundary>
-                      <Suspense fallback={<CodeSplitLoader />}>
-                        <Layout />
-                      </Suspense>
-                    </ErrorBoundary>
-                  </QuotaManager>
-                </LanguageProvider>
-              </AuthProvider>
-            </GlobalProvider>
-          </BrowserRouter>
-        </ThemeProvider>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={theme}>
+            <BrowserRouter>
+              <GlobalProvider>
+                <AuthProvider>
+                  <LanguageProvider>
+                    <QuotaManager>
+                      <GlobalStyles />
+                      <ErrorBoundary>
+                        <Suspense fallback={<CodeSplitLoader />}>
+                          <Layout />
+                        </Suspense>
+                      </ErrorBoundary>
+                    </QuotaManager>
+                  </LanguageProvider>
+                </AuthProvider>
+              </GlobalProvider>
+            </BrowserRouter>
+          </ThemeProvider>
+        </StyledEngineProvider>
       </SnackbarProvider>
     </RecoilRoot>
   );

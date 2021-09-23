@@ -1,4 +1,4 @@
-import { AvatarGroup } from '@material-ui/lab';
+import { AvatarGroup } from '@mui/material';
 import CustomAvatar from '../../components/Avatar';
 import useParticipants from './useParticipants';
 

@@ -1,14 +1,14 @@
-import Button from '@material-ui/core/Button';
-import Alert from '@material-ui/lab/Alert';
-import AlertTitle from '@material-ui/lab/AlertTitle';
+import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 import { useEffect, useState } from 'react';
 import throttle from 'lodash/throttle';
 import { AckItem } from './types';
 import { recordManualError, trackEvent } from '../../track';
 import { useCallback } from 'react';
 import styled from 'styled-components';
-import { Autorenew, Check } from '@material-ui/icons';
-import { green, orange } from '@material-ui/core/colors';
+import { Autorenew, Check } from '@mui/icons-material';
+import { green, orange } from '@mui/material/colors';
 
 interface AckWarningProps {
   acks: AckItem[];
@@ -44,7 +44,7 @@ export default function AckWarning({ acks, onRefresh }: AckWarningProps) {
   if (!acks.length) {
     return (
       <Container>
-        <Check htmlColor={green[100]} />
+        <Check htmlColor={colors.green[100]} />
       </Container>
     );
   }
@@ -52,7 +52,7 @@ export default function AckWarning({ acks, onRefresh }: AckWarningProps) {
   if (!lateAcks.length) {
     return (
       <Container>
-        <LoopIcon htmlColor={orange[300]} />
+        <LoopIcon htmlColor={colors.orange[300]} />
       </Container>
     );
   }

@@ -6,12 +6,12 @@ import {
   lazy,
   useContext,
 } from 'react';
-import Button from '@material-ui/core/Button';
-import { Alert } from '@material-ui/lab';
+import Button from '@mui/material/Button';
+import { Alert } from '@mui/material';
 import useTranslations, { useLanguage } from '../../../translations';
 import Wrapper from './../Wrapper';
 import Input from '../../../components/Input';
-import { Person, Email, VpnKey } from '@material-ui/icons';
+import { Person, Email, VpnKey } from '@mui/icons-material';
 import { register } from '../../../api';
 import { validate } from 'isemail';
 import UserContext from '../../Context';

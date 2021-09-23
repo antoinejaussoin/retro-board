@@ -1,16 +1,17 @@
 import { useState, SyntheticEvent, useEffect } from 'react';
 import clsx from 'clsx';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import ErrorIcon from '@material-ui/icons/Error';
-import InfoIcon from '@material-ui/icons/Info';
-import CloseIcon from '@material-ui/icons/Close';
-import green from '@material-ui/core/colors/green';
-import amber from '@material-ui/core/colors/amber';
-import IconButton from '@material-ui/core/IconButton';
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-import WarningIcon from '@material-ui/icons/Warning';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ErrorIcon from '@mui/icons-material/Error';
+import InfoIcon from '@mui/icons-material/Info';
+import CloseIcon from '@mui/icons-material/Close';
+import { colors } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import Snackbar from '@mui/material/Snackbar';
+import SnackbarContent from '@mui/material/SnackbarContent';
+import WarningIcon from '@mui/icons-material/Warning';
+import { Theme } from '@mui/material/styles';
+
+import makeStyles from '@mui/styles/makeStyles';
 
 const variantIcon = {
   success: CheckCircleIcon,
@@ -21,7 +22,7 @@ const variantIcon = {
 
 const useStyles = makeStyles((theme: Theme) => ({
   success: {
-    backgroundColor: green[400],
+    backgroundColor: colors.green[400],
   },
   error: {
     backgroundColor: theme.palette.error.dark,
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: theme.palette.primary.main,
   },
   warning: {
-    backgroundColor: amber[700],
+    backgroundColor: colors.amber[700],
   },
   icon: {
     fontSize: 20,
@@ -73,7 +74,7 @@ function MessageContent(props: MessageProps) {
           aria-label="close"
           color="inherit"
           onClick={onClose}
-        >
+          size="large">
           <CloseIcon className={classes.icon} />
         </IconButton>,
       ]}

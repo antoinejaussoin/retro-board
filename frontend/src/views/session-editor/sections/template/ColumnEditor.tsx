@@ -1,16 +1,16 @@
 import { useCallback, useState } from 'react';
 import styled from 'styled-components';
-import Typography from '@material-ui/core/Typography';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Typography from '@mui/material/Typography';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 import EditableLabel from '../../../../components/EditableLabel';
 import { ColumnSettings } from '../../../../state/types';
 import { IconName } from '@retrospected/common';
 import { TwitterPicker, ColorResult } from 'react-color';
 import IconPicker from './IconPicker';
-import IconButton from '@material-ui/core/IconButton';
-import red from '@material-ui/core/colors/red';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { DeleteForeverOutlined } from '@material-ui/icons';
+import IconButton from '@mui/material/IconButton';
+import { colors } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { DeleteForeverOutlined } from '@mui/icons-material';
 
 interface ColumnEditorProps {
   value: ColumnSettings;
@@ -98,7 +98,7 @@ const ColumnEditor = ({
         </IconContainer>
         {fullScreen && canDelete ? (
           <DeleteContainer>
-            <IconButton onClick={handleRemove}>
+            <IconButton onClick={handleRemove} size="large">
               <DeleteForeverOutlined />
             </IconButton>
           </DeleteContainer>
@@ -115,7 +115,7 @@ const ColumnEditor = ({
       </LabelContainer>
       {!fullScreen && canDelete ? (
         <DeleteContainer>
-          <IconButton onClick={handleRemove}>
+          <IconButton onClick={handleRemove} size="large">
             <DeleteForeverOutlined />
           </IconButton>
         </DeleteContainer>
@@ -137,7 +137,7 @@ const Container = styled.div`
 
 const DeleteContainer = styled.div`
   svg {
-    color: ${red[500]};
+    color: ${colors.red[500]};
   }
 `;
 

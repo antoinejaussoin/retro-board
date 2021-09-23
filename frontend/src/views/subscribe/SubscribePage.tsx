@@ -5,15 +5,14 @@ import { createCheckoutSession, isValidDomain } from './api';
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import Step from './components/Step';
-import Button from '@material-ui/core/Button';
-import deepPurple from '@material-ui/core/colors/deepPurple';
-import grey from '@material-ui/core/colors/grey';
+import Button from '@mui/material/Button';
+import { colors } from '@mui/material';
 import { Currency, FullUser, Plan } from '@retrospected/common';
 import CurrencyPicker from './components/CurrencyPicker';
 import ProductPicker from './components/ProductPicker';
 import Input from '../../components/Input';
 import useUser from '../../auth/useUser';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/material';
 import { useEffect } from 'react';
 import useTranslations, { useLanguage } from '../../translations';
 import useProducts from './components/useProducts';
@@ -187,13 +186,13 @@ function SubscriberPage() {
 
 const Container = styled.div``;
 const Header = styled.div`
-  border: 1px solid ${grey[200]};
+  border: 1px solid ${colors.grey[200]};
   border-radius: 10px;
   margin: 10px;
   padding: 20px;
   display: flex;
-  background-color: ${deepPurple[50]};
-  color: ${deepPurple[700]};
+  background-color: ${colors.deepPurple[50]};
+  color: ${colors.deepPurple[700]};
   font-size: 3rem;
   font-weight: 100;
   justify-content: center;

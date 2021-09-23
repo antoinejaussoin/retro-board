@@ -1,8 +1,8 @@
 import { Component } from 'react';
 import styled from 'styled-components';
 import * as Sentry from '@sentry/browser';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 interface ErrorBoundaryState {
