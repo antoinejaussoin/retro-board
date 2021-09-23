@@ -32,6 +32,12 @@ export async function sendVerificationEmail(
   }
 }
 
+type SendGridError = {
+  response: {
+    body: unknown;
+  };
+};
+
 export async function sendResetPassword(
   email: string,
   name: string,
@@ -53,9 +59,8 @@ export async function sendResetPassword(
   };
   try {
     await sendGrid.send(msg);
-  } catch (e) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    console.error('Send grid error: ', e, (e as any).response.body);
+  } catch (e: unknown) {
+    console.error('Send grid error: ', e, (e as SendGridError).response.body);
   }
 }
 
@@ -91,8 +96,7 @@ export async function sendSelfHostWelcome(
   };
   try {
     await sendGrid.send(msg);
-  } catch (e) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    console.error('Send grid error: ', e, (e as any).response.body);
+  } catch (e: unknown) {
+    console.error('Send grid error: ', e, (e as SendGridError).response.body);
   }
 }
