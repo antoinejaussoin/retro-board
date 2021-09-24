@@ -41,7 +41,7 @@ const OptionItem = ({
 
 const Container = styled.div`
   border: 1px solid ${colors.grey[200]};
-  background-color: ${grey[50]};
+  background-color: ${colors.grey[50]};
   padding: 0px 15px;
   margin: 15px 0;
   border-radius: 10px;

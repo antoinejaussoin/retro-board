@@ -12,8 +12,10 @@
     "@mui/icons-material": "^5.0.1",
     "@mui/lab": "^5.0.0-alpha.48",
     "@mui/material": "^5.0.1",
+    "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest",
     "@mui/styled-engine-sc": "^5.0.0",
     "@mui/styles": "^5.0.1",
+    "@mui/x-data-grid": "^4.0.0",
     "@retrospected/common": "*",
     "@sentry/browser": "^6.13.2",
     "@stripe/react-stripe-js": "^1.5.0",
@@ -40,6 +42,7 @@
     "bowser": "^2.11.0",
     "core-js": "^3.18.1",
     "crypto-js": "^4.1.1",
+    "customize-cra": "^1.0.0",
     "date-fns": "^2.24.0",
     "flag-icon-css": "^3.5.0",
     "http-proxy-middleware": "^2.0.1",
@@ -52,6 +55,7 @@
     "prop-types": "^15.7.2",
     "query-string": "^7.0.1",
     "react": "^17.0.2",
+    "react-app-rewired": "^2.1.8",
     "react-autosize-textarea": "^7.1.0",
     "react-beautiful-dnd": "^13.1.0",
     "react-color": "^2.19.3",
@@ -75,8 +79,11 @@
     "uuid": "^8.3.2",
     "whatwg-fetch": "^3.6.2"
   },
+  "resolutions": {
+    "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
+  },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-app-rewired start",
     "build": "NODE_ENV=production && react-scripts build",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "test": "react-scripts test",

@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import styled from 'styled-components';
 import { SessionOptions, ColumnDefinition } from '@retrospected/common';
 import Typography from '@mui/material/Typography';
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from '@mui/styles';
 import useTranslations from '../../../../translations';
 import useRemainingVotes from './useRemainingVotes';
 import useCanReveal from './useCanReveal';

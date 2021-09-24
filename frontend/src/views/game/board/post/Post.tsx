@@ -5,8 +5,8 @@ import Popover from '@mui/material/Popover';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Tooltip from '@mui/material/Tooltip';
-import makeStyles from '@mui/styles/makeStyles';
 import { colors } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import {
   ThumbUpOutlined,
   ThumbDownOutlined,
@@ -51,7 +51,8 @@ interface PostItemProps {
   onDelete: () => void;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: any) => ({
+  // TODO: this is insane
   actionContainer: {
     backgroundColor: theme.palette.colors.grey[100],
   },
@@ -314,7 +315,6 @@ const PostItem = ({
         open={showGiphyEditor}
         anchorEl={postElement.current}
         onClose={handleHideGiphyEditor}
-        onEscapeKeyDown={handleHideGiphyEditor}
         anchorOrigin={{
           vertical: 'top',
           horizontal: 'left',

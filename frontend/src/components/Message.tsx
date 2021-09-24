@@ -10,8 +10,7 @@ import Snackbar from '@mui/material/Snackbar';
 import SnackbarContent from '@mui/material/SnackbarContent';
 import WarningIcon from '@mui/icons-material/Warning';
 import { Theme } from '@mui/material/styles';
-
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from '@mui/styles';
 
 const variantIcon = {
   success: CheckCircleIcon,
@@ -74,7 +73,8 @@ function MessageContent(props: MessageProps) {
           aria-label="close"
           color="inherit"
           onClick={onClose}
-          size="large">
+          size="large"
+        >
           <CloseIcon className={classes.icon} />
         </IconButton>,
       ]}

@@ -1,5 +1,5 @@
 import { Alert } from '@mui/material';
-import { DataGrid, GridColDef } from '@material-ui/data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { FullUser } from '@retrospected/common';
 import useUser from '../../auth/useUser';
 import useAdminEmail from '../../global/useAdminEmail';

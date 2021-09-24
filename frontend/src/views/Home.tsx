@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import Fab from '@mui/material/Fab';
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from '@mui/styles';
 import { colors } from '@mui/material';
 import { Lock, ThumbUpAlt } from '@mui/icons-material';
 import useTranslations from '../translations';

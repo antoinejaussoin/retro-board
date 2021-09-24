@@ -1,5 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
-import ThemeProvider from '@mui/styles/ThemeProvider';
+// import ThemeProvider from '@mui/styles/ThemeProvider';
 import { Helmet } from 'react-helmet';
 import GlobalStyles from './GlobalStyles';
 import AuthProvider from './auth/AuthProvider';
@@ -13,6 +13,8 @@ import { Suspense } from 'react';
 import { CodeSplitLoader } from './CodeSplitLoader';
 import QuotaManager from './auth/QuotaManager';
 import GlobalProvider from './global/GlobalProvider';
+import { ThemeProvider } from '@mui/material';
+import { StyledEngineProvider } from '@mui/styled-engine-sc';
 
 function App() {
   return (

@@ -4,9 +4,9 @@ import Snackbar from '@mui/material/Snackbar';
 import SnackbarContent from '@mui/material/SnackbarContent';
 import ErrorIcon from '@mui/icons-material/Error';
 import { Theme } from '@mui/material/styles';
-import makeStyles from '@mui/styles/makeStyles';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
+import { makeStyles } from '@mui/styles';
 
 interface OutdatedBrowserProps {
   show: boolean;
@@ -63,7 +63,8 @@ const OutdatedBrowser = ({ show }: OutdatedBrowserProps) => {
             aria-label="close"
             color="inherit"
             onClick={handleClose}
-            size="large">
+            size="large"
+          >
             <CloseIcon className={classes.icon} />
           </IconButton>,
         ]}
