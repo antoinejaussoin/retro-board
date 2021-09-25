@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [v470/slack]
+    branches: [v470/release]
 
 jobs:
   build:
