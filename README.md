@@ -145,11 +145,13 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
-### Version 4.7.0 (not released)
+### Version 4.7.0
 
+- Account Federation: all accounts with the same email address are now a unique account (sharing sessions, etc.). If you owned multiple accounts with the same email address (for instance one via Google OAuth and another via GitHub), they will be merged into a single account.
 - CSRF protection
-- Account federation
+- Significant performance improvements on retrieving past sessions (10x to 100x)
 - Add the ability for anonymous users to delete the boards they created under certain conditions ([#229](https://github.com/antoinejaussoin/retro-board/issues/229)).
+- ⏫ Upgrading dependencies
 
 ### Version 4.6.1
 
