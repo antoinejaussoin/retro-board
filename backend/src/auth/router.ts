@@ -19,9 +19,9 @@ export const endOAuthHandler = (req: Request, res: Response) => {
   io.in(req.session!.socketId).emit('auth', req.user);
   req.logIn(req.user!, (err: unknown) => {
     if (err) {
-      res.status(403).end();
+      res.status(403).send().end();
     } else {
-      res.status(200).end();
+      res.status(200).send().end();
     }
   });
 };
