@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [v470/release]
+    branches: [v471/bugfix]
 
 jobs:
   build:
