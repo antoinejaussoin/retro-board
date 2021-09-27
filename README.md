@@ -145,6 +145,10 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
+### Version 4.7.1 (hotfix)
+
+- 🐛 Fixed a bug highlighted by Sentry, where anonymous account without a password would trigger an exception.
+
 ### Version 4.7.0
 
 - Account Federation: all accounts with the same email address are now a unique account (sharing sessions, etc.). If you owned multiple accounts with the same email address (for instance one via Google OAuth and another via GitHub), they will be merged into a single account.
