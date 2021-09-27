@@ -314,7 +314,7 @@ async function getOrCreateUser(
   }
   const user = new UserEntity(v4(), '');
   user.email = email;
-  return await userRepository.save(user);
+  return await userRepository.saveAndReload(user);
 }
 
 async function updateUserPassword(
@@ -325,7 +325,7 @@ async function updateUserPassword(
   const identityRepo = manager.getCustomRepository(UserIdentityRepository);
   const existingUser = await identityRepo.findOne(identityId);
   if (existingUser) {
-    return await identityRepo.save({
+    return await identityRepo.saveAndReload({
       ...existingUser,
       password,
     });

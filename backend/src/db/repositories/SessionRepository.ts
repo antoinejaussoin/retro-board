@@ -1,10 +1,11 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository } from 'typeorm';
 import { SessionEntity } from '../entities';
 import ColumnRepository from './ColumnRepository';
 import { Session as JsonSession, SessionOptions } from '@retrospected/common';
+import BaseRepository from './BaseRepository';
 
 @EntityRepository(SessionEntity)
-export default class SessionRepository extends Repository<SessionEntity> {
+export default class SessionRepository extends BaseRepository<SessionEntity> {
   async updateOptions(
     sessionId: string,
     options: SessionOptions
@@ -40,8 +41,7 @@ export default class SessionRepository extends Repository<SessionEntity> {
     delete sessionWithoutPosts.columns;
 
     const columnsRepo = this.manager.getCustomRepository(ColumnRepository);
-    await this.save(sessionWithoutPosts);
-    const createdSession = (await this.findOne(sessionWithoutPosts.id))!;
+    const createdSession = await this.saveAndReload(sessionWithoutPosts);
     for (let i = 0; i < session.columns.length; i++) {
       await columnsRepo.saveFromJson(session.columns[i], session.id);
     }

@@ -1,9 +1,10 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository } from 'typeorm';
 import { VoteEntity } from '../entities';
 import { Vote as JsonVote } from '@retrospected/common';
+import BaseRepository from './BaseRepository';
 
 @EntityRepository(VoteEntity)
-export default class VoteRepository extends Repository<VoteEntity> {
+export default class VoteRepository extends BaseRepository<VoteEntity> {
   async saveFromJson(
     postId: string,
     userId: string,

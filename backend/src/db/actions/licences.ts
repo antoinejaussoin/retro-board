@@ -2,6 +2,7 @@ import { transaction } from './transaction';
 import LicenceEntity from '../entities/Licence';
 import { v4 } from 'uuid';
 import { sendSelfHostWelcome } from '../../email/emailSender';
+import { LicenceRepository } from '../repositories';
 
 export async function registerLicence(
   email: string | null,
@@ -10,11 +11,11 @@ export async function registerLicence(
   sessionId: string
 ): Promise<boolean> {
   return await transaction(async (manager) => {
-    const repository = manager.getRepository(LicenceEntity);
+    const repository = manager.getCustomRepository(LicenceRepository);
     const key = v4();
     const licence = new LicenceEntity(v4(), email, key, customerId, sessionId);
     try {
-      const savedLicence = await repository.save(licence);
+      const savedLicence = await repository.saveAndReload(licence);
       if (savedLicence) {
         if (email) {
           await sendSelfHostWelcome(email, name || '', key);

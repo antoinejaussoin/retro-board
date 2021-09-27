@@ -1,16 +1,17 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository } from 'typeorm';
 import { SessionEntity, PostEntity } from '../entities';
 import SessionRepository from './SessionRepository';
 import { Post as JsonPost, defaultSession } from '@retrospected/common';
 import { cloneDeep } from 'lodash';
+import BaseRepository from './BaseRepository';
 
 @EntityRepository(PostEntity)
-export default class PostRepository extends Repository<PostEntity> {
+export default class PostRepository extends BaseRepository<PostEntity> {
   async updateFromJson(
     sessionId: string,
     post: JsonPost
   ): Promise<PostEntity | undefined> {
-    await this.save({
+    return await this.saveAndReload({
       ...cloneDeep(post),
       session: {
         id: sessionId,
@@ -25,7 +26,6 @@ export default class PostRepository extends Repository<PostEntity> {
           }
         : null,
     });
-    return await this.findOne(post.id);
   }
   async saveFromJson(
     sessionId: string,
@@ -34,7 +34,7 @@ export default class PostRepository extends Repository<PostEntity> {
   ): Promise<PostEntity | undefined> {
     const session = await this.manager.findOne(SessionEntity, sessionId);
     if (session) {
-      await this.save({
+      return await this.saveAndReload({
         ...cloneDeep(post),
         user: {
           id: userId,
@@ -48,7 +48,6 @@ export default class PostRepository extends Repository<PostEntity> {
             }
           : null,
       });
-      return await this.findOne(post.id);
     } else {
       const sessionRepository =
         this.manager.getCustomRepository(SessionRepository);

@@ -1,10 +1,11 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository } from 'typeorm';
 import { PostGroupEntity } from '../entities';
 import { PostGroup as JsonPostGroup } from '@retrospected/common';
 import { cloneDeep } from 'lodash';
+import BaseRepository from './BaseRepository';
 
 @EntityRepository(PostGroupEntity)
-export default class PostGroupRepository extends Repository<PostGroupEntity> {
+export default class PostGroupRepository extends BaseRepository<PostGroupEntity> {
   async saveFromJson(
     sessionId: string,
     authorId: string,
@@ -18,7 +19,6 @@ export default class PostGroupRepository extends Repository<PostGroupEntity> {
     };
     delete groupWithoutPosts.posts;
 
-    await this.save(groupWithoutPosts);
-    return this.findOne(groupWithoutPosts.id);
+    return await this.saveAndReload(groupWithoutPosts);
   }
 }

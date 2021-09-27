@@ -244,7 +244,7 @@ export default () => {
             .replace('__ANONUSER', '');
           const identity = await loginAnonymous(actualUsername, password);
           done(
-            !identity ? 'Anonymous account not valid' : null,
+            identity ? null : 'Anonymous account not valid',
             identity ? identity.toIds() : undefined
           );
         } else {

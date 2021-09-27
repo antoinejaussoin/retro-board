@@ -1,8 +1,9 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository } from 'typeorm';
 import { UserEntity, SubscriptionEntity } from '../entities';
 import { Plan } from '@retrospected/common';
+import BaseRepository from './BaseRepository';
 @EntityRepository(SubscriptionEntity)
-export default class SubscriptionRepository extends Repository<SubscriptionEntity> {
+export default class SubscriptionRepository extends BaseRepository<SubscriptionEntity> {
   async activate(
     stripeSubscriptionId: string,
     owner: UserEntity,
@@ -19,11 +20,11 @@ export default class SubscriptionRepository extends Repository<SubscriptionEntit
       );
       newSubscription.domain = domain;
       newSubscription.active = true;
-      return await this.save(newSubscription);
+      return await this.saveAndReload(newSubscription);
     }
     existingSub.active = true;
     existingSub.domain = domain;
-    return await this.save(existingSub);
+    return await this.saveAndReload(existingSub);
   }
 
   async cancel(stripeSubscriptionId: string): Promise<SubscriptionEntity> {
@@ -32,6 +33,6 @@ export default class SubscriptionRepository extends Repository<SubscriptionEntit
       throw Error('Cannot cancel a subscription that does not exist');
     }
     existingSub.active = false;
-    return await this.save(existingSub);
+    return await this.saveAndReload(existingSub);
   }
 }

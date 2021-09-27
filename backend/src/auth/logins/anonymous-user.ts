@@ -5,6 +5,6 @@ export default async function loginAnonymous(
   username: string,
   password: string
 ): Promise<UserIdentityEntity | null> {
-  const identity = registerAnonymousUser(username, password);
+  const identity = await registerAnonymousUser(username, password);
   return identity;
 }

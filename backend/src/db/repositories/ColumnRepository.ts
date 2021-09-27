@@ -1,10 +1,11 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository } from 'typeorm';
 import { ColumnDefinitionEntity } from '../entities';
 import { ColumnDefinition as JsonColumnDefinition } from '@retrospected/common';
 import { v4 } from 'uuid';
+import BaseRepository from './BaseRepository';
 
 @EntityRepository(ColumnDefinitionEntity)
-export default class ColumnDefinitionRepository extends Repository<ColumnDefinitionEntity> {
+export default class ColumnDefinitionRepository extends BaseRepository<ColumnDefinitionEntity> {
   async saveFromJson(
     colDef: JsonColumnDefinition,
     sessionId: string
