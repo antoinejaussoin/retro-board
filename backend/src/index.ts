@@ -1,27 +1,27 @@
-import express from "express";
-import * as socketIo from "socket.io";
-import { createAdapter } from "socket.io-redis";
-import redis from "redis";
-import connectRedis from "connect-redis";
-import csurf from "csurf";
-import http from "http";
-import chalk from "chalk";
-import db from "./db";
-import config from "./config";
-import passport from "passport";
-import passportInit from "./auth/passport";
-import authRouter from "./auth/router";
-import adminRouter from "./admin/router";
-import stripeRouter from "./stripe/router";
-import slackRouter from "./slack/router";
-import session from "express-session";
-import game from "./game";
+import express from 'express';
+import * as socketIo from 'socket.io';
+import { createAdapter } from 'socket.io-redis';
+import redis from 'redis';
+import connectRedis from 'connect-redis';
+import csurf from 'csurf';
+import http from 'http';
+import chalk from 'chalk';
+import db from './db';
+import config from './config';
+import passport from 'passport';
+import passportInit from './auth/passport';
+import authRouter from './auth/router';
+import adminRouter from './admin/router';
+import stripeRouter from './stripe/router';
+import slackRouter from './slack/router';
+import session from 'express-session';
+import game from './game';
 import {
   hashPassword,
   getIdentityFromRequest,
   getUserViewFromRequest,
   getUserQuota,
-} from "./utils";
+} from './utils';
 import {
   initSentry,
   setupSentryErrorHandler,
@@ -29,7 +29,7 @@ import {
   setScope,
   reportQueryError,
   throttledManualReport,
-} from "./sentry";
+} from './sentry';
 import {
   RegisterPayload,
   ValidateEmailPayload,
@@ -37,31 +37,31 @@ import {
   ResetChangePasswordPayload,
   CreateSessionPayload,
   SelfHostedCheckPayload,
-} from "@retrospected/common";
-import registerPasswordUser from "./auth/register/register-user";
-import { sendVerificationEmail, sendResetPassword } from "./email/emailSender";
-import { v4 } from "uuid";
+} from '@retrospected/common';
+import registerPasswordUser from './auth/register/register-user';
+import { sendVerificationEmail, sendResetPassword } from './email/emailSender';
+import { v4 } from 'uuid';
 import {
   createSession,
   previousSessions,
   deleteSessions,
   getDefaultTemplate,
-} from "./db/actions/sessions";
+} from './db/actions/sessions';
 import {
   updateUser,
   getUserView,
   getPasswordIdentity,
   updateIdentity,
   getIdentityByUsername,
-} from "./db/actions/users";
-import { isLicenced } from "./security/is-licenced";
-import rateLimit from "express-rate-limit";
-import { validateLicence } from "./db/actions/licences";
-import { hasField } from "./security/payload-checker";
-import mung from "express-mung";
-import { QueryFailedError } from "typeorm";
+} from './db/actions/users';
+import { isLicenced } from './security/is-licenced';
+import rateLimit from 'express-rate-limit';
+import { validateLicence } from './db/actions/licences';
+import { hasField } from './security/payload-checker';
+import mung from 'express-mung';
+import { QueryFailedError } from 'typeorm';
 
-const realIpHeader = "X-Forwarded-For";
+const realIpHeader = 'X-Forwarded-For';
 
 isLicenced().then((hasLicence) => {
   if (!hasLicence) {
@@ -100,18 +100,18 @@ const app = express();
 function getActualIp(req: express.Request): string {
   const headerValue = req.header(realIpHeader);
   if (headerValue) {
-    return headerValue.split(",")[0];
+    return headerValue.split(',')[0];
   }
   return req.ip;
 }
 
 // Rate Limiter
-app.set("trust proxy", 1);
+app.set('trust proxy', 1);
 const heavyLoadLimiter = rateLimit({
   windowMs: config.RATE_LIMIT_WINDOW,
   max: config.RATE_LIMIT_MAX,
   message:
-    "Your request has been rate-limited. Please try again in a few seconds.",
+    'Your request has been rate-limited. Please try again in a few seconds.',
   keyGenerator: getActualIp,
   onLimitReached: (req, _, options) => {
     console.error(
@@ -119,7 +119,7 @@ const heavyLoadLimiter = rateLimit({
         req
       )}} with options {yellow ${options.windowMs}/${options.max}}}`
     );
-    throttledManualReport("A heavy load request has been rate limited", req);
+    throttledManualReport('A heavy load request has been rate limited', req);
   },
 });
 
@@ -193,19 +193,19 @@ app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== 'production') {
   app.use(
     mung.json((body) => {
       if (body) {
-        const hasPassword = hasField("password", body);
+        const hasPassword = hasField('password', body);
         if (hasPassword) {
-          console.error("The following object has a password property: ", body);
+          console.error('The following object has a password property: ', body);
         }
         const hasStripeId =
-          hasField("stripeId", body) && !hasField("identityId", body);
+          hasField('stripeId', body) && !hasField('identityId', body);
         if (hasStripeId) {
           console.error(
-            "The following object has a stripe ID property and should not have: ",
+            'The following object has a stripe ID property and should not have: ',
             body
           );
         }
@@ -214,27 +214,27 @@ if (process.env.NODE_ENV !== "production") {
   );
 }
 
-app.get("/api/csrf", csrfProtection, (req, res) => {
+app.get('/api/csrf', csrfProtection, (req, res) => {
   res.json({ token: req.csrfToken() });
 });
 
-app.get("/api/ping", (req, res) => {
-  res.send("pong");
+app.get('/api/ping', (req, res) => {
+  res.send('pong');
 });
 
 // Liveliness Probe
-app.get("/healthz", async (_, res) => {
+app.get('/healthz', async (_, res) => {
   res.status(200).send();
 });
 
-app.use("/api/auth", heavyLoadLimiter, authRouter);
+app.use('/api/auth', heavyLoadLimiter, authRouter);
 
 io.use(function (socket, next) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   sessionMiddleware(socket.request as any, {} as any, next as any);
 });
 
-app.set("io", io);
+app.set('io', io);
 const port = config.BACKEND_PORT || 8081;
 
 db().then(() => {
@@ -242,17 +242,17 @@ db().then(() => {
   game(io);
 
   // Stripe
-  app.use("/api/stripe", stripeRouter());
+  app.use('/api/stripe', stripeRouter());
 
   // Admin
-  app.use("/api/admin", adminRouter);
+  app.use('/api/admin', adminRouter);
 
   // Slack
-  app.use("/api/slack", slackRouter());
+  app.use('/api/slack', slackRouter());
 
   // Create session
   app.post(
-    "/api/create",
+    '/api/create',
     csrfProtection,
     heavyLoadLimiter,
     async (req, res) => {
@@ -276,13 +276,13 @@ db().then(() => {
         } else {
           res
             .status(401)
-            .send("You must be logged in in order to create a session");
+            .send('You must be logged in in order to create a session');
         }
       });
     }
   );
 
-  app.post("/api/logout", async (req, res, next) => {
+  app.post('/api/logout', async (req, res, next) => {
     req.logout();
     req.session?.destroy((err: string) => {
       if (err) {
@@ -292,25 +292,25 @@ db().then(() => {
     });
   });
 
-  app.get("/api/me", async (req, res) => {
+  app.get('/api/me', async (req, res) => {
     const user = await getUserViewFromRequest(req);
     if (user) {
       res.status(200).send(user.toJson());
     } else {
-      res.status(401).send("Not logged in");
+      res.status(401).send('Not logged in');
     }
   });
 
-  app.get("/api/quota", async (req, res) => {
+  app.get('/api/quota', async (req, res) => {
     const quota = await getUserQuota(req);
     if (quota) {
       res.status(200).send(quota);
     } else {
-      res.status(401).send("Not logged in");
+      res.status(401).send('Not logged in');
     }
   });
 
-  app.get("/api/previous", heavyLoadLimiter, async (req, res) => {
+  app.get('/api/previous', heavyLoadLimiter, async (req, res) => {
     const identity = await getIdentityFromRequest(req);
     if (identity) {
       const sessions = await previousSessions(identity.user.id);
@@ -321,7 +321,7 @@ db().then(() => {
   });
 
   app.delete(
-    "/api/session/:sessionId",
+    '/api/session/:sessionId',
     csrfProtection,
     heavyLoadLimiter,
     async (req, res) => {
@@ -340,7 +340,7 @@ db().then(() => {
     }
   );
 
-  app.post("/api/me/language", csrfProtection, async (req, res) => {
+  app.post('/api/me/language', csrfProtection, async (req, res) => {
     const user = await getUserViewFromRequest(req);
     if (user) {
       await updateUser(user.id, {
@@ -358,7 +358,7 @@ db().then(() => {
     }
   });
 
-  app.get("/api/me/default-template", async (req, res) => {
+  app.get('/api/me/default-template', async (req, res) => {
     const user = await getUserViewFromRequest(req);
     if (user) {
       const defaultTemplate = await getDefaultTemplate(user.id);
@@ -372,17 +372,17 @@ db().then(() => {
     }
   });
 
-  app.post("/api/register", heavyLoadLimiter, async (req, res) => {
+  app.post('/api/register', heavyLoadLimiter, async (req, res) => {
     if (req.user) {
-      res.status(500).send("You are already logged in");
+      res.status(500).send('You are already logged in');
       return;
     }
     const registerPayload = req.body as RegisterPayload;
     if (
-      (await getIdentityByUsername("password", registerPayload.username)) !==
+      (await getIdentityByUsername('password', registerPayload.username)) !==
       null
     ) {
-      res.status(403).send("User already exists");
+      res.status(403).send('User already exists');
       return;
     }
     const identity = await registerPasswordUser(registerPayload);
@@ -398,8 +398,8 @@ db().then(() => {
       } else {
         req.logIn(identity.toIds(), (err) => {
           if (err) {
-            console.log("Cannot login Error: ", err);
-            res.status(500).send("Cannot login");
+            console.log('Cannot login Error: ', err);
+            res.status(500).send('Cannot login');
           }
         });
       }
@@ -415,11 +415,11 @@ db().then(() => {
     }
   });
 
-  app.post("/api/validate", heavyLoadLimiter, async (req, res) => {
+  app.post('/api/validate', heavyLoadLimiter, async (req, res) => {
     const validatePayload = req.body as ValidateEmailPayload;
     const identity = await getPasswordIdentity(validatePayload.email);
     if (!identity) {
-      res.status(404).send("Email not found");
+      res.status(404).send('Email not found');
       return;
     }
     if (
@@ -431,24 +431,24 @@ db().then(() => {
       });
       req.logIn(identity.toIds(), (err) => {
         if (err) {
-          console.log("Cannot login Error: ", err);
-          res.status(500).send("Cannot login");
+          console.log('Cannot login Error: ', err);
+          res.status(500).send('Cannot login');
         } else if (updatedUser) {
           res.status(200).send(updatedUser.toJson());
         } else {
-          res.status(500).send("Unspecified error");
+          res.status(500).send('Unspecified error');
         }
       });
     } else {
-      res.status(403).send("Code not valid");
+      res.status(403).send('Code not valid');
     }
   });
 
-  app.post("/api/reset", heavyLoadLimiter, async (req, res) => {
+  app.post('/api/reset', heavyLoadLimiter, async (req, res) => {
     const resetPayload = req.body as ResetPasswordPayload;
     const identity = await getPasswordIdentity(resetPayload.email);
     if (!identity) {
-      res.status(404).send("Email not found");
+      res.status(404).send('Email not found');
       return;
     }
     const code = v4();
@@ -459,11 +459,11 @@ db().then(() => {
     res.status(200).send();
   });
 
-  app.post("/api/reset-password", heavyLoadLimiter, async (req, res) => {
+  app.post('/api/reset-password', heavyLoadLimiter, async (req, res) => {
     const resetPayload = req.body as ResetChangePasswordPayload;
     const identity = await getPasswordIdentity(resetPayload.email);
     if (!identity) {
-      res.status(404).send("Email not found");
+      res.status(404).send('Email not found');
       return;
     }
     if (
@@ -477,34 +477,34 @@ db().then(() => {
       });
       req.logIn(identity.toIds(), (err) => {
         if (err) {
-          console.log("Cannot login Error: ", err);
-          res.status(500).send("Cannot login");
+          console.log('Cannot login Error: ', err);
+          res.status(500).send('Cannot login');
         } else if (updatedUser) {
           res.status(200).send(updatedUser.toJson());
         } else {
-          res.status(500).send("Unspecified error");
+          res.status(500).send('Unspecified error');
         }
       });
     } else {
-      res.status(403).send("Code not valid");
+      res.status(403).send('Code not valid');
     }
   });
 
-  app.post("/api/self-hosted", heavyLoadLimiter, async (req, res) => {
+  app.post('/api/self-hosted', heavyLoadLimiter, async (req, res) => {
     const payload = req.body as SelfHostedCheckPayload;
-    console.log("Attempting to verify self-hosted licence for ", payload.key);
+    console.log('Attempting to verify self-hosted licence for ', payload.key);
     try {
       const isValid = await validateLicence(payload.key);
       if (isValid) {
-        console.log(" ==> Self hosted licence granted.");
+        console.log(' ==> Self hosted licence granted.');
         res.status(200).send(true);
       } else {
-        console.log(" ==> Self hosted licence INVALID.");
+        console.log(' ==> Self hosted licence INVALID.');
         res.status(200).send(false);
       }
     } catch {
-      console.log(" ==> Could not check for self-hosted licence.");
-      res.status(500).send("Something went wrong");
+      console.log(' ==> Could not check for self-hosted licence.');
+      res.status(500).send('Something went wrong');
     }
   });
 
@@ -512,7 +512,7 @@ db().then(() => {
 });
 
 httpServer.listen(port);
-const env = process.env.NODE_ENV || "dev";
+const env = process.env.NODE_ENV || 'dev';
 console.log(
   chalk`Server started on port {red ${port.toString()}}, environment: {blue ${env}}`
 );
