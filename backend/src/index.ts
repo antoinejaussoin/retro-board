@@ -205,7 +205,7 @@ if (process.env.NODE_ENV !== 'production') {
           hasField('stripeId', body) && !hasField('identityId', body);
         if (hasStripeId) {
           console.error(
-            'The following object has a stripe ID property and should not have: ',
+            'The following object has a stripe ID property: ',
             body
           );
         }
