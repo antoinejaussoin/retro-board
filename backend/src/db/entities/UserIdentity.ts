@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { AccountType, UserIdentity } from '@retrospected/common';
 import UserEntity from './User';
-import { UserIds } from 'src/utils';
+import { UserIds } from '../../utils';
 
 export const ALL_FIELDS: Array<keyof UserIdentityEntity> = [
   'id',

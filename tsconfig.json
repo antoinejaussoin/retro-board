@@ -1,0 +1,8 @@
+{
+  "ts-node": {
+    "compilerOptions": {
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true
+    }
+  }
+}
