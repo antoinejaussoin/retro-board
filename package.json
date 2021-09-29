@@ -24,7 +24,8 @@
     "start": "yarn build-common && yarn backend & yarn frontend",
     "migrate": "cd backend && yarn migrate && cd ..",
     "stripe-login": "stripe login",
-    "stripe-listen": "stripe listen --forward-to localhost:3000/api/stripe/webhook"
+    "stripe-listen": "stripe listen --forward-to localhost:3000/api/stripe/webhook",
+    "bump": "cd scripts && . ./bump.sh && cd .."
   },
   "repository": {
     "type": "git",
