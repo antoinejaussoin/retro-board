@@ -13,12 +13,12 @@ jobs:
 
       - name: Read VERSION
         id: package
-        uses: juliangruber/read-file-action@v1
+        uses: martinbeentjes/npm-get-version-action@master
         with:
           path: ./VERSION
 
       - name: Echo VERSION
-        run: echo ${{ steps.package.outputs.content }}
+        run: echo ${{ steps.package.outputs.current-version }}
 
       - name: Setup QEMU
         uses: docker/setup-qemu-action@master

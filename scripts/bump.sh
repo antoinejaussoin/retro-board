@@ -3,6 +3,11 @@ ORIG_DIR=$(pwd)
 
 declare -a arr=("frontend" "backend" "common")
 
+npm config set git-tag-version false
+npm config set commit-hooks false
+
+git stash
+
 for dir in "${arr[@]}"
 do
 	cd ../${dir}
@@ -13,5 +18,8 @@ done
 cd ../
 echo npm version ${VERSION_TYPE}
 npm version ${VERSION_TYPE}
+
+
+git stash pop
 
 cd ${ORIG_DIR}

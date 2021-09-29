@@ -13,12 +13,12 @@ jobs:
 
       - name: Read VERSION
         id: package
-        uses: juliangruber/read-file-action@v1
+        uses: martinbeentjes/npm-get-version-action@master
         with:
           path: ./VERSION
 
       - name: Echo VERSION
-        run: echo ${{ steps.package.outputs.content }}
+        run: echo ${{ steps.package.outputs.current-version }}
 
       - name: Setup QEMU
         uses: docker/setup-qemu-action@master
@@ -43,7 +43,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: backend/Dockerfile
           context: .
-          tags: antoinejaussoin/retro-board-backend:latest,antoinejaussoin/retro-board-backend:${{ steps.package.outputs.content }}
+          tags: antoinejaussoin/retro-board-backend:latest,antoinejaussoin/retro-board-backend:${{ steps.package.outputs.current-version }}
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
 
@@ -53,7 +53,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: frontend/Dockerfile
           context: .
-          tags: antoinejaussoin/retro-board-frontend:latest,antoinejaussoin/retro-board-frontend:${{ steps.package.outputs.content }}
+          tags: antoinejaussoin/retro-board-frontend:latest,antoinejaussoin/retro-board-frontend:${{ steps.package.outputs.current-version }}
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
 
@@ -63,6 +63,6 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: maintenance/Dockerfile
           context: maintenance
-          tags: antoinejaussoin/maintenance:latest,antoinejaussoin/maintenance:${{ steps.package.outputs.content }}
+          tags: antoinejaussoin/maintenance:latest,antoinejaussoin/maintenance:${{ steps.package.outputs.current-version }}
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
