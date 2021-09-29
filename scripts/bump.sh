@@ -8,6 +8,8 @@ npm config set commit-hooks false
 
 git stash
 
+cd ./scripts
+
 for dir in "${arr[@]}"
 do
 	cd ./${dir}
