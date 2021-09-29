@@ -6,7 +6,7 @@ declare -a arr=("frontend" "backend" "common")
 npm config set git-tag-version false
 npm config set commit-hooks false
 
-git stash
+# git stash
 
 cd ./scripts
 
@@ -22,6 +22,6 @@ echo npm version ${VERSION_TYPE}
 npm version ${VERSION_TYPE}
 
 
-git stash pop
+# git stash pop
 
 cd ${ORIG_DIR}
