@@ -12,7 +12,7 @@ cd ./scripts
 
 for dir in "${arr[@]}"
 do
-	cd ./${dir}
+	cd ../${dir}
 	echo npm version ${VERSION_TYPE}
 	npm version ${VERSION_TYPE}
 done
