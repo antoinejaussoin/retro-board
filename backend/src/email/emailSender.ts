@@ -54,7 +54,8 @@ export async function sendResetPassword(
   try {
     await sendGrid.send(msg);
   } catch (e) {
-    console.error('Send grid error: ', e, e.response.body);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    console.error('Send grid error: ', e, (e as any).response.body);
   }
 }
 
@@ -91,6 +92,7 @@ export async function sendSelfHostWelcome(
   try {
     await sendGrid.send(msg);
   } catch (e) {
-    console.error('Send grid error: ', e, e.response.body);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    console.error('Send grid error: ', e, (e as any).response.body);
   }
 }
