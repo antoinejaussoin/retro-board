@@ -189,37 +189,41 @@ export default () => {
     };
   }
 
+  function logSuccess(provider: string) {
+    console.log(chalk`{blue 🔑  {red ${provider}} authentication activated}`);
+  }
+
   // Adding each OAuth provider's strategy to passport
   if (TWITTER_CONFIG) {
     passport.use(new TwitterStrategy(TWITTER_CONFIG, callback('twitter')));
-    console.log(chalk`{blue 🔑  {red Twitter} authentication activated}`);
+    logSuccess('Twitter');
   }
 
   if (GOOGLE_CONFIG) {
     passport.use(new GoogleStrategy(GOOGLE_CONFIG, callback('google')));
-    console.log(chalk`{blue 🔑  {red Google} authentication activated}`);
+    logSuccess('Google');
   }
 
   if (GITHUB_CONFIG) {
     passport.use(new GithubStrategy(GITHUB_CONFIG, callback('github')));
-    console.log(chalk`{blue 🔑  {red GitHub} authentication activated}`);
+    logSuccess('GitHub');
   }
 
   if (SLACK_CONFIG) {
     passport.use(new SlackStrategy(SLACK_CONFIG, callback('slack')));
-    console.log(chalk`{blue 🔑  {red Slack} authentication activated}`);
+    logSuccess('Slack');
   }
 
   if (MICROSOFT_CONFIG) {
     passport.use(
       new MicrosoftStrategy(MICROSOFT_CONFIG, callback('microsoft'))
     );
-    console.log(chalk`{blue 🔑  {red Microsoft} authentication activated}`);
+    logSuccess('Microsoft');
   }
 
   if (OKTA_CONFIG) {
     passport.use(new OktaStrategy(OKTA_CONFIG, callback('okta')));
-    console.log(chalk`{blue 🔑  {red Okta} authentication activated}`);
+    logSuccess('Okta');
   }
 
   passport.use(
