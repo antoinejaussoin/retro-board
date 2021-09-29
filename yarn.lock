@@ -2357,6 +2357,13 @@
   dependencies:
     "@types/express" "*"
 
+"@types/express-session@^1.17.4":
+  version "1.17.4"
+  resolved "https://registry.yarnpkg.com/@types/express-session/-/express-session-1.17.4.tgz#97a30a35e853a61bdd26e727453b8ed314d6166b"
+  integrity sha512-7cNlSI8+oOBUHTfPXMwDxF/Lchx5aJ3ho7+p9jJZYVg9dVDJFh3qdMXmJtRsysnvS+C6x46k9DRYmrmCkE+MVg==
+  dependencies:
+    "@types/express" "*"
+
 "@types/express@*", "@types/express@^4.17.13":
   version "4.17.13"
   resolved "https://registry.yarnpkg.com/@types/express/-/express-4.17.13.tgz#a76e2995728999bab51a33fabce1d705a3709034"
@@ -2546,13 +2553,14 @@
     "@types/passport" "*"
     "@types/passport-oauth2" "*"
 
-"@types/passport-google-oauth@^1.0.42":
-  version "1.0.42"
-  resolved "https://registry.yarnpkg.com/@types/passport-google-oauth/-/passport-google-oauth-1.0.42.tgz#27aa2df9e838e69e702cfc759f860cdb8d2c59d7"
-  integrity sha512-0M9Wezbbkgn4VZtHdtEbQru5Kl3qeb2CHoKYvAD2svJDAg8nK1bLG4uBQPudOUuux56igXkFfNGR3gBlsSlTCg==
+"@types/passport-google-oauth20@^2.0.10":
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/@types/passport-google-oauth20/-/passport-google-oauth20-2.0.10.tgz#6aac4eec5ecdd305bd23565969550f63832ba553"
+  integrity sha512-oOYXZLDN4XSPzDtnGo4hSHPpdalxgoY+wzaS8Aty2t9Hropr1Cua2UcddOIMBnCt9L8HfKkbPTgOZquOmV8J6g==
   dependencies:
     "@types/express" "*"
     "@types/passport" "*"
+    "@types/passport-oauth2" "*"
 
 "@types/passport-local@^1.0.34":
   version "1.0.34"
@@ -11249,27 +11257,12 @@ passport-google-auth@^1.0.2:
     googleapis "^16.0.0"
     passport-strategy "1.x"
 
-passport-google-oauth1@1.x.x:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/passport-google-oauth1/-/passport-google-oauth1-1.0.0.tgz#af74a803df51ec646f66a44d82282be6f108e0cc"
-  integrity sha1-r3SoA99R7GRvZqRNgigr5vEI4Mw=
-  dependencies:
-    passport-oauth1 "1.x.x"
-
-passport-google-oauth20@2.x.x:
+passport-google-oauth20@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/passport-google-oauth20/-/passport-google-oauth20-2.0.0.tgz#0d241b2d21ebd3dc7f2b60669ec4d587e3a674ef"
   integrity sha512-KSk6IJ15RoxuGq7D1UKK/8qKhNfzbLeLrG3gkLZ7p4A6DBCcv7xpyQwuXtWdpyR0+E0mwkpjY1VfPOhxQrKzdQ==
   dependencies:
     passport-oauth2 "1.x.x"
-
-passport-google-oauth@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/passport-google-oauth/-/passport-google-oauth-2.0.0.tgz#f6eb4bc96dd6c16ec0ecfdf4e05ec48ca54d4dae"
-  integrity sha512-JKxZpBx6wBQXX1/a1s7VmdBgwOugohH+IxCy84aPTZNq/iIPX6u7Mqov1zY7MKRz3niFPol0KJz8zPLBoHKtYA==
-  dependencies:
-    passport-google-oauth1 "1.x.x"
-    passport-google-oauth20 "2.x.x"
 
 passport-local@^1.0.0:
   version "1.0.0"

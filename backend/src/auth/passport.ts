@@ -1,7 +1,7 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy, IVerifyOptions } from 'passport-local';
 import { Strategy as TwitterStrategy } from 'passport-twitter';
-import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as GithubStrategy } from 'passport-github2';
 import { Strategy as SlackStrategy } from 'passport-slack';
 import { Strategy as MicrosoftStrategy } from 'passport-microsoft';
