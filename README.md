@@ -148,6 +148,8 @@ When using the Docker deployment, your database runs from a container. But if yo
 ### Version 4.7.2
 
 - Replacing Google OAuth passport library, to try and reduce Google OAuth errors on production
+- Added a script to make bumping versions easier
+- ⏫ Upgrading dependencies
 
 ### Version 4.7.1 (hotfix)
 
