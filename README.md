@@ -145,6 +145,10 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
+### Version 4.7.2
+
+- Replacing Google OAuth passport library, to try and reduce Google OAuth errors on production
+
 ### Version 4.7.1 (hotfix)
 
 - 🐛 Fixed a bug highlighted by Sentry, where anonymous account without a password would trigger an exception.
