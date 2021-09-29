@@ -21,7 +21,7 @@
     "@types/lodash": "^4.14.175",
     "@types/md5": "^2.3.1",
     "@types/node": "^16.10.2",
-    "@types/react": "^17.0.24",
+    "@types/react": "^17.0.25",
     "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-color": "^3.0.5",
     "@types/react-copy-to-clipboard": "^5.0.1",
@@ -79,6 +79,11 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(.*))"
+    ]
   },
   "browserslist": [
     ">0.2%",
