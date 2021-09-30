@@ -1,6 +1,7 @@
 import { SelfHostedCheckPayload } from '@retrospected/common';
 import config from '../config';
 import fetch from 'node-fetch';
+import wait from '../utils';
 
 let licenced: boolean | null = null;
 
@@ -12,6 +13,7 @@ export async function isLicenced() {
   if (licenced !== null) {
     return licenced;
   }
+  await wait(3000);
   const result = await isLicencedBase();
   licenced = result;
   return result;
