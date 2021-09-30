@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import passport from 'passport';
 
 const router = express.Router();
@@ -12,7 +12,23 @@ const githubAuth = passport.authenticate('github', { scope: ['user:email'] });
 const slackAuth = passport.authenticate('slack');
 const microsoftAuth = passport.authenticate('microsoft');
 const oktaAuth = passport.authenticate('okta');
-const anonAuth = passport.authenticate('local');
+
+function anonAuth(req: Request, res: Response, next: NextFunction) {
+  passport.authenticate('local', function (err, user) {
+    if (err) {
+      return res.status(403).send().end();
+    }
+    if (!user) {
+      return res.status(403).send().end();
+    }
+    req.logIn(user, function (err) {
+      if (err) {
+        return next(err);
+      }
+      return res.status(200).send().end();
+    });
+  })(req, res, next);
+}
 
 export const endOAuthHandler = (req: Request, res: Response) => {
   const io = req.app.get('io');
