@@ -14,7 +14,7 @@ import { CodeSplitLoader } from './CodeSplitLoader';
 import QuotaManager from './auth/QuotaManager';
 import GlobalProvider from './global/GlobalProvider';
 import { ThemeProvider } from '@mui/material';
-import { StyledEngineProvider } from '@mui/styled-engine-sc';
+// import { StyledEngineProvider } from '@mui/styled-engine-sc';
 
 function App() {
   return (
@@ -34,26 +34,24 @@ function App() {
           horizontal: 'center',
         }}
       >
-        <StyledEngineProvider injectFirst>
-          <ThemeProvider theme={theme}>
-            <BrowserRouter>
-              <GlobalProvider>
-                <AuthProvider>
-                  <LanguageProvider>
-                    <QuotaManager>
-                      <GlobalStyles />
-                      <ErrorBoundary>
-                        <Suspense fallback={<CodeSplitLoader />}>
-                          <Layout />
-                        </Suspense>
-                      </ErrorBoundary>
-                    </QuotaManager>
-                  </LanguageProvider>
-                </AuthProvider>
-              </GlobalProvider>
-            </BrowserRouter>
-          </ThemeProvider>
-        </StyledEngineProvider>
+        <ThemeProvider theme={theme}>
+          <BrowserRouter>
+            <GlobalProvider>
+              <AuthProvider>
+                <LanguageProvider>
+                  <QuotaManager>
+                    <GlobalStyles />
+                    <ErrorBoundary>
+                      <Suspense fallback={<CodeSplitLoader />}>
+                        <Layout />
+                      </Suspense>
+                    </ErrorBoundary>
+                  </QuotaManager>
+                </LanguageProvider>
+              </AuthProvider>
+            </GlobalProvider>
+          </BrowserRouter>
+        </ThemeProvider>
       </SnackbarProvider>
     </RecoilRoot>
   );
