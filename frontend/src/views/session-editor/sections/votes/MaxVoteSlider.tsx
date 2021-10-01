@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import styled from 'styled-components';
-import Slider, { Mark } from '@mui/material/Slider';
+import Slider from '@mui/material/Slider';
+import { Mark } from '@mui/core';
 
 interface MaxVoteSliderProps {
   value: number | null;
@@ -21,7 +22,7 @@ const marks: Mark[] = [
 
 const MaxVoteSlider = ({ value, onChange }: MaxVoteSliderProps) => {
   const handleChange = useCallback(
-    (_event: React.ChangeEvent<{}>, value: number | number[]) =>
+    (_event: Event, value: number | number[]) =>
       onChange(value === UNLIMITED ? null : (value as number)),
     [onChange]
   );

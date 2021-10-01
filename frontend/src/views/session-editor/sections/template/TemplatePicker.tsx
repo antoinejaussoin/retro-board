@@ -4,6 +4,7 @@ import { getAllTemplates } from '../../../../state/templates';
 import useTranslations from '../../../../translations';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import { SelectChangeEvent } from '@mui/material';
 
 interface TemplatePickerProps {
   onSelect: (value: Template) => void;
@@ -14,12 +15,7 @@ const TemplatePicker = ({ onSelect }: TemplatePickerProps) => {
   const [template, setTemplate] = useState<Template>('default');
   const templates = getAllTemplates(translations);
   const handleChange = useCallback(
-    (
-      event: React.ChangeEvent<{
-        name?: string | undefined;
-        value: unknown;
-      }>
-    ) => {
+    (event: SelectChangeEvent<Template>) => {
       const selected = event.target.value as Template;
       setTemplate(selected);
       onSelect(selected);

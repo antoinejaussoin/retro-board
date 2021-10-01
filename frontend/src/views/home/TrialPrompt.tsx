@@ -1,5 +1,4 @@
-import { Alert, AlertTitle } from '@mui/material';
-import { Color } from '@mui/lab';
+import { Alert, AlertColor, AlertTitle } from '@mui/material';
 import { differenceInDays } from 'date-fns';
 import { Link } from 'react-router-dom';
 import useIsTrial from '../../auth/useIsTrial';
@@ -89,7 +88,7 @@ export default function TrialPrompt() {
   );
 }
 
-function getAlertType(remainingDays: number): Color {
+function getAlertType(remainingDays: number): AlertColor {
   if (remainingDays < 0) {
     return 'error';
   }

@@ -3,7 +3,7 @@ import { colors } from '@mui/material';
 import styled from 'styled-components';
 import { DefaultComponentProps } from '@mui/material/OverridableComponent';
 
-interface LinkProps extends DefaultComponentProps<LinkTypeMap<{}, 'div'>> {}
+interface LinkProps extends DefaultComponentProps<LinkTypeMap<{}, 'a'>> {}
 
 function Link({ ...props }: LinkProps) {
   return (

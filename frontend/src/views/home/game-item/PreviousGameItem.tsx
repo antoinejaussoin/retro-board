@@ -42,7 +42,7 @@ const PreviousGameItem = ({
   } = useTranslations();
   const [encryptionKey] = useEncryptionKey(session.id);
   const { formatDistanceToNow } = useFormatDate();
-  const [hover, hoverRef] = useOnHover();
+  const [hover, hoverRef] = useOnHover<HTMLDivElement>();
   const handleClick = useCallback(() => {
     onClick(session, encryptionKey);
   }, [onClick, session, encryptionKey]);
@@ -62,97 +62,99 @@ const PreviousGameItem = ({
     setDeleteDialogOpen(false);
   }, []);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  return <>
-    <Card onClick={handleClick} raised={hover} ref={hoverRef}>
-      <CardContent>
-        <Typography color="textSecondary" gutterBottom component="div">
-          <Top>
-            <LastUpdated>
-              {formatDistanceToNow(
-                Date.parse(session.created as unknown as string),
-                true
-              )}
-              &nbsp;
-              <SessionId>{session.id}</SessionId>
-            </LastUpdated>
-            <Delete>
-              {session.canBeDeleted ? (
-                <IconButton onClick={handleOpenDialog} size="large">
-                  <DeleteForever />
-                </IconButton>
-              ) : null}
-            </Delete>
-          </Top>
-        </Typography>
-        <NameContainer>
-          <Typography variant="h5" component="h2">
-            {decrypt(session.name, encryptionKey) || defaultSessionName}&nbsp;
+  return (
+    <>
+      <Card onClick={handleClick} raised={hover} ref={hoverRef}>
+        <CardContent>
+          <Typography color="textSecondary" gutterBottom component="div">
+            <Top>
+              <LastUpdated>
+                {formatDistanceToNow(
+                  Date.parse(session.created as unknown as string),
+                  true
+                )}
+                &nbsp;
+                <SessionId>{session.id}</SessionId>
+              </LastUpdated>
+              <Delete>
+                {session.canBeDeleted ? (
+                  <IconButton onClick={handleOpenDialog} size="large">
+                    <DeleteForever />
+                  </IconButton>
+                ) : null}
+              </Delete>
+            </Top>
           </Typography>
-          <EncryptedLock session={session} />
-          <PrivateSessionIcon session={session} />
-        </NameContainer>
-        <Typography color="textSecondary" style={{ marginBottom: 20 }}>
-          {translations.createdBy} <em>{session.createdBy.name}</em>
-        </Typography>
-        <Stats>
-          <ItemStat
-            value={session.numberOfPosts}
-            label={translations.posts!(session.numberOfPosts)}
-            color={colors.green[500]}
-          />
-          <ItemStat
-            value={session.participants.length}
-            label={translations.participants!(session.participants.length)}
-            color={colors.indigo[500]}
-          />
-          <ItemStat
-            value={session.numberOfVotes}
-            label={translations.votes!(session.numberOfVotes)}
-            color={colors.red[500]}
-          />
-          <ItemStat
-            value={session.numberOfActions}
-            label={translations.actions!(session.numberOfActions)}
-            color={colors.amber[500]}
-          />
-        </Stats>
-        <AvatarGroup
-          max={10}
-          title={translations.participants!(session.participants.length)}
-        >
-          {session.participants.map((user) => {
-            return <CustomAvatar user={user} key={user.id} />;
-          })}
-        </AvatarGroup>
-      </CardContent>
-    </Card>
-    <Dialog
-      onClose={handleCloseDialog}
-      aria-labelledby="delete-session-dialog"
-      open={deleteDialogOpen}
-    >
-      <DialogTitle id="delete-session-dialog">
-        {DeleteSession.header!(
-          decrypt(session.name, encryptionKey) || defaultSessionName!
-        )}
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText>{DeleteSession.firstLine}</DialogContentText>
-        <DialogContentText>{DeleteSession.secondLine}</DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleCloseDialog}>{DeleteSession.cancel}</Button>
-        <Button
-          variant="contained"
-          color="inherit"
-          style={{ backgroundColor: colors.red[500], color: 'white' }}
-          onClick={handleDelete}
-        >
-          {DeleteSession.yesImSure}
-        </Button>
-      </DialogActions>
-    </Dialog>
-  </>;
+          <NameContainer>
+            <Typography variant="h5" component="h2">
+              {decrypt(session.name, encryptionKey) || defaultSessionName}&nbsp;
+            </Typography>
+            <EncryptedLock session={session} />
+            <PrivateSessionIcon session={session} />
+          </NameContainer>
+          <Typography color="textSecondary" style={{ marginBottom: 20 }}>
+            {translations.createdBy} <em>{session.createdBy.name}</em>
+          </Typography>
+          <Stats>
+            <ItemStat
+              value={session.numberOfPosts}
+              label={translations.posts!(session.numberOfPosts)}
+              color={colors.green[500]}
+            />
+            <ItemStat
+              value={session.participants.length}
+              label={translations.participants!(session.participants.length)}
+              color={colors.indigo[500]}
+            />
+            <ItemStat
+              value={session.numberOfVotes}
+              label={translations.votes!(session.numberOfVotes)}
+              color={colors.red[500]}
+            />
+            <ItemStat
+              value={session.numberOfActions}
+              label={translations.actions!(session.numberOfActions)}
+              color={colors.amber[500]}
+            />
+          </Stats>
+          <AvatarGroup
+            max={10}
+            title={translations.participants!(session.participants.length)}
+          >
+            {session.participants.map((user) => {
+              return <CustomAvatar user={user} key={user.id} />;
+            })}
+          </AvatarGroup>
+        </CardContent>
+      </Card>
+      <Dialog
+        onClose={handleCloseDialog}
+        aria-labelledby="delete-session-dialog"
+        open={deleteDialogOpen}
+      >
+        <DialogTitle id="delete-session-dialog">
+          {DeleteSession.header!(
+            decrypt(session.name, encryptionKey) || defaultSessionName!
+          )}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>{DeleteSession.firstLine}</DialogContentText>
+          <DialogContentText>{DeleteSession.secondLine}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>{DeleteSession.cancel}</Button>
+          <Button
+            variant="contained"
+            color="inherit"
+            style={{ backgroundColor: colors.red[500], color: 'white' }}
+            onClick={handleDelete}
+          >
+            {DeleteSession.yesImSure}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
 };
 
 const Card = styled(CardBase)`

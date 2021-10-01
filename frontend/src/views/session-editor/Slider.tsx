@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
-import SliderBase, { Mark } from '@mui/material/Slider';
+import SliderBase from '@mui/material/Slider';
+import { Mark } from '@mui/core';
 
 interface SliderProps {
   from: number;
@@ -11,8 +12,7 @@ interface SliderProps {
 
 const Slider = ({ from, to, value, onChange }: SliderProps) => {
   const handleChange = useCallback(
-    (_event: React.ChangeEvent<{}>, value: number | number[]) =>
-      onChange(value as number),
+    (_event: Event, value: number | number[]) => onChange(value as number),
     [onChange]
   );
   const marks: Mark[] = useMemo(() => {

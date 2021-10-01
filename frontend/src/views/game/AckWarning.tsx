@@ -8,7 +8,7 @@ import { recordManualError, trackEvent } from '../../track';
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import { Autorenew, Check } from '@mui/icons-material';
-import { green, orange } from '@mui/material/colors';
+import { colors } from '@mui/material';
 
 interface AckWarningProps {
   acks: AckItem[];

@@ -18,7 +18,6 @@ import {
 import { ColumnContent } from '../types';
 import useCrypto from '../../../crypto/useCrypto';
 import useQuota from '../../../hooks/useQuota';
-import { deepPurple } from '@mui/material/colors';
 import useSessionUserPermissions from './useSessionUserPermissions';
 
 interface ColumnProps {

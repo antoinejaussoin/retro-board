@@ -3,6 +3,7 @@ import { getIcon, getAllIcons } from '../../../../state/icons';
 import { IconName } from '@retrospected/common';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import { SelectChangeEvent } from '@mui/material';
 
 interface IconPickerProps {
   value: IconName | null;
@@ -12,12 +13,7 @@ interface IconPickerProps {
 const IconPicker = ({ value, onChange }: IconPickerProps) => {
   const icons = getAllIcons();
   const handleChange = useCallback(
-    (
-      event: React.ChangeEvent<{
-        name?: string | undefined;
-        value: unknown;
-      }>
-    ) => {
+    (event: SelectChangeEvent<IconName>) => {
       onChange(event.target.value as IconName);
     },
     [onChange]

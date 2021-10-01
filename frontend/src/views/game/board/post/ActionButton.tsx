@@ -34,7 +34,7 @@ const ActionButton: React.FC<ActionButtonProps> = ({
           disabled={!!disabled}
           aria-label={ariaLabel}
           tabIndex={-1}
-          innerRef={innerRef}
+          ref={innerRef}
           style={{
             position: 'relative',
             paddingLeft: 0,
