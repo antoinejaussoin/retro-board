@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo, useRef } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import Typography from '@mui/material/Typography';
 import Popover from '@mui/material/Popover';
 import Card from '@mui/material/Card';
@@ -351,14 +351,12 @@ const PostCard = styled(Card)`
   margin: 10px 5px;
   margin-bottom: 20px;
   position: relative;
-
-  :hover {
+`;
+/* :hover {
     ${DragHandle} {
       visibility: visible;
     }
-  }
-`;
-
+  } */
 const AuthorContainer = styled.div`
   display: flex;
   justify-content: flex-end;
