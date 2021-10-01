@@ -1,16 +1,16 @@
-import { createGlobalStyle } from 'styled-components';
+import { css } from '@emotion/react';
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyle = css`
   html {
     touch-action: manipulation;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   }
 
   body {
     margin: 0;
     padding: 0;
     background-color: white;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   }
 
   #content {
