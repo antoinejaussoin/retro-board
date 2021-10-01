@@ -51,18 +51,19 @@ interface PostItemProps {
   onDelete: () => void;
 }
 
-const useStyles = makeStyles((theme: any) => ({
-  // TODO: this is insane
-  actionContainer: {
-    backgroundColor: theme.palette.colors.grey[100],
-  },
-  actionIcon: {
-    color: colors.blue[400],
-  },
-  ghipyIcon: {
-    color: colors.yellow[700],
-  },
-}));
+const useStyles = makeStyles((theme: any) => {
+  return {
+    actionContainer: {
+      backgroundColor: theme.palette.grey[100],
+    },
+    actionIcon: {
+      color: colors.blue[400],
+    },
+    ghipyIcon: {
+      color: colors.yellow[700],
+    },
+  };
+});
 
 const PostItem = ({
   index,
