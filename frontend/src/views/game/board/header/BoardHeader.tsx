@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { SessionOptions, ColumnDefinition } from '@retrospected/common';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from '@mui/styles';

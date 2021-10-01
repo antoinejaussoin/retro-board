@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { useHistory } from 'react-router';
 import PreviousGameItem from './game-item/PreviousGameItem';
 import { SessionMetadata } from '@retrospected/common';

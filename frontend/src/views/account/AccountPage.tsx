@@ -2,7 +2,7 @@ import usePortalUrl from './usePortalUrl';
 import Button from '@mui/material/Button';
 import { Page } from '../../components/Page';
 import useUser from '../../auth/useUser';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import ProPill from '../../components/ProPill';
 import { Alert } from '@mui/material';
 import Section from './Section';
@@ -19,10 +19,8 @@ function AccountPage() {
   const isTrial = useIsTrial();
   const { formatDistanceToNow } = useFormatDate();
   const history = useHistory();
-  const {
-    AccountPage: translations,
-    SubscribePage: subscribeTranslations,
-  } = useTranslations();
+  const { AccountPage: translations, SubscribePage: subscribeTranslations } =
+    useTranslations();
 
   const ownsThePlan =
     user &&

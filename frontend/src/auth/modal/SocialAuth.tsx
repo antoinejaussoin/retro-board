@@ -6,7 +6,7 @@ import {
   TwitterLoginButton,
   MicrosoftLoginButton,
 } from 'react-social-login-buttons';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import io from 'socket.io-client';
 import useTranslations, { useLanguage } from '../../translations';
 import { updateLanguage } from '../../api';

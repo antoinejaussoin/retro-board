@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { Palette } from '../../../../Theme';
 import Badge from '@mui/material/Badge';
 import Tooltip from '@mui/material/Tooltip';

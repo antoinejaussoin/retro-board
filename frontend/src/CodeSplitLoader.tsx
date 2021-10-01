@@ -1,5 +1,5 @@
 import CircularProgress from '@mui/material/CircularProgress';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 export function CodeSplitLoader() {
   return (

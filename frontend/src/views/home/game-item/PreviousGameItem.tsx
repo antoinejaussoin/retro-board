@@ -14,7 +14,7 @@ import { SessionMetadata } from '@retrospected/common';
 import { AvatarGroup } from '@mui/material';
 import CustomAvatar from '../../../components/Avatar';
 import ItemStat from '../ItemStat';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import useOnHover from '../../../hooks/useOnHover';
 import useTranslations from '../../../translations';
 import { DeleteForever } from '@mui/icons-material';

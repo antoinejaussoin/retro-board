@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import {
   useParams,
   Route,
@@ -133,7 +133,8 @@ function GamePage() {
             indicatorColor="primary"
             textColor="primary"
             aria-label="Game mode tabs"
-            allowScrollButtonsMobile>
+            allowScrollButtonsMobile
+          >
             <Tab label={GameMenu.board} icon={<Dashboard />} value={rootUrl} />
             {!session.options.blurCards ? (
               <Tab

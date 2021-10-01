@@ -1,7 +1,7 @@
 import { colors } from '@mui/material';
 import { Info } from '@mui/icons-material';
 import { useHistory } from 'react-router';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 interface HowDoesItWorkButtonProps {
   children: React.ReactElement;

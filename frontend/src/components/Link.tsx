@@ -1,6 +1,6 @@
 import BaseLink, { LinkTypeMap } from '@mui/material/Link';
 import { colors } from '@mui/material';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { DefaultComponentProps } from '@mui/material/OverridableComponent';
 
 interface LinkProps extends DefaultComponentProps<LinkTypeMap<{}, 'a'>> {}

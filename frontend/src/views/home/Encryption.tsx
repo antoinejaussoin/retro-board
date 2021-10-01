@@ -1,7 +1,7 @@
 import { colors } from '@mui/material';
 import Markdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 const content = `
 # 🔐  How does the encryption work?

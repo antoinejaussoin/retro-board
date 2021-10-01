@@ -3,7 +3,7 @@ import { useStripe } from '@stripe/react-stripe-js';
 import queryString from 'query-string';
 import { createCheckoutSession, isValidDomain } from './api';
 import { useCallback } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import Step from './components/Step';
 import Button from '@mui/material/Button';
 import { colors } from '@mui/material';

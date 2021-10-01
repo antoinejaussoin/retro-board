@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import Slider from '@mui/material/Slider';
 import { Mark } from '@mui/core';
 

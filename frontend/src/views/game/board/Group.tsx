@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { PostGroup } from '@retrospected/common';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import {
   Droppable,
   DroppableProvided,

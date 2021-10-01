@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import Select from '@mui/material/Select';
 import { SelectChangeEvent } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';

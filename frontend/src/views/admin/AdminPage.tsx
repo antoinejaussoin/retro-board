@@ -5,7 +5,7 @@ import useUser from '../../auth/useUser';
 import useAdminEmail from '../../global/useAdminEmail';
 import useStateFetch from '../../hooks/useStateFetch';
 import { useMemo } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import ChangePassword from './ChangePassword';
 import useIsSelfHosted from '../../global/useIsSelfHosted';
 

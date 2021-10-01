@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import * as Sentry from '@sentry/browser';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';

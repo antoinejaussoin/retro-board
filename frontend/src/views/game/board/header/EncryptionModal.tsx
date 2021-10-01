@@ -4,7 +4,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { CHECK_PREFIX, decrypt } from '../../../../crypto/crypto';
 import { Alert } from '@mui/material';
 import { useEncryptionKey } from '../../../../crypto/useEncryptionKey';

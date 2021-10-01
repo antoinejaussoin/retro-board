@@ -9,7 +9,7 @@ import Input from '../../../components/Input';
 import Link from '../../../components/Link';
 import { Email, VpnKey } from '@mui/icons-material';
 import { accountLogin } from '../../../api';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 interface LoginProps {
   onClose: () => void;
@@ -24,10 +24,8 @@ const Login = ({
   onAskRegistration,
   onAskPasswordReset,
 }: LoginProps) => {
-  const {
-    AccountLogin: translations,
-    AuthCommon: authTranslations,
-  } = useTranslations();
+  const { AccountLogin: translations, AuthCommon: authTranslations } =
+    useTranslations();
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [error, setError] = useState('');

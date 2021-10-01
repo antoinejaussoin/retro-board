@@ -3,7 +3,7 @@ import ChipInput from 'material-ui-chip-input';
 import useStateFetch from '../../hooks/useStateFetch';
 import { updateMembers } from './api';
 import { validate } from 'isemail';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { Alert } from '@mui/material';
 import useTranslations from '../../translations';
 import { useSnackbar } from 'notistack';

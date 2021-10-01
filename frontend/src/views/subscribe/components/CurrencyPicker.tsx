@@ -2,7 +2,7 @@ import noop from 'lodash/noop';
 import { Currency } from '@retrospected/common';
 import 'flag-icon-css/css/flag-icon.min.css';
 import { currencies } from './types';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { colors } from '@mui/material';
 
 interface CurrencyPickerProps {

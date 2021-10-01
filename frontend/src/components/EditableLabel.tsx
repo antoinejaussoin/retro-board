@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { colors } from '@mui/material';
 import { Edit } from '@mui/icons-material';
 import TextareaAutosize from 'react-autosize-textarea';

@@ -9,7 +9,7 @@ import { colors } from '@mui/material';
 import { AllInclusive, Lock, VerifiedUser } from '@mui/icons-material';
 import { useCallback, cloneElement } from 'react';
 import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import useIsPro from '../../auth/useIsPro';
 import useIsDisabled from '../../hooks/useIsDisabled';
 import useModal from '../../hooks/useModal';

@@ -1,7 +1,7 @@
 import { useEffect, useCallback, lazy, Suspense } from 'react';
 import { useHistory, Redirect, Switch, Route } from 'react-router-dom';
 import { trackPageView } from './track';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -120,11 +120,21 @@ function App() {
       ) : null}
       <AppBar position="sticky">
         <Toolbar>
-          <IconButton color="inherit" aria-label="Menu" onClick={togglePanel} size="large">
+          <IconButton
+            color="inherit"
+            aria-label="Menu"
+            onClick={togglePanel}
+            size="large"
+          >
             <MenuIcon />
           </IconButton>
           <HomeButton>
-            <IconButton color="inherit" aria-label="Home" onClick={goToHome} size="large">
+            <IconButton
+              color="inherit"
+              aria-label="Home"
+              onClick={goToHome}
+              size="large"
+            >
               <HomeOutlined />
             </IconButton>
           </HomeButton>

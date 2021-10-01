@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { colors } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import { useCallback } from 'react';

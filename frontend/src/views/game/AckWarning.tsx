@@ -6,7 +6,7 @@ import throttle from 'lodash/throttle';
 import { AckItem } from './types';
 import { recordManualError, trackEvent } from '../../track';
 import { useCallback } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { Autorenew, Check } from '@mui/icons-material';
 import { colors } from '@mui/material';
 

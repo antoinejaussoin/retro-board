@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import CardActions from '@mui/material/CardActions';
 
 interface ActionsBarProps {

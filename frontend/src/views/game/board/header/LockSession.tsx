@@ -8,7 +8,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { colors } from '@mui/material';
 import { Lock, VerifiedUser } from '@mui/icons-material';
 import { useCallback, useState } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import CustomAvatar from '../../../../components/Avatar';
 import { useSnackbar } from 'notistack';
 import useTranslations from '../../../../translations';
