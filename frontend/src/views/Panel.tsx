@@ -47,6 +47,10 @@ function Panel() {
               {policies.map((policy) => (
                 <Link
                   component={RouterLink}
+                  sx={{
+                    textDecoration: 'none',
+                    ':hover': { textDecoration: 'underline' },
+                  }}
                   to={policy.url}
                   color="inherit"
                   key={policy.name}
