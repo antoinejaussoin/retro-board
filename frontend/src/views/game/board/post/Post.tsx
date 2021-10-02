@@ -164,7 +164,7 @@ const PostItem = ({
               </Tooltip>
             ) : null}
             {canReorder ? (
-              <DragHandle {...provided.dragHandleProps}>
+              <DragHandle {...provided.dragHandleProps} className="drag-handle">
                 <DragIndicator />
               </DragHandle>
             ) : null}
@@ -351,12 +351,14 @@ const PostCard = styled(Card)`
   margin: 10px 5px;
   margin-bottom: 20px;
   position: relative;
-`;
-/* :hover {
-    ${DragHandle} {
+
+  :hover {
+    & .drag-handle {
       visibility: visible;
     }
-  } */
+  }
+`;
+
 const AuthorContainer = styled.div`
   display: flex;
   justify-content: flex-end;
