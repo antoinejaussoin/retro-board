@@ -88,7 +88,7 @@ function MembersEditor() {
         </Alert>
       )}
       <TagInput
-        placeholder="Email address"
+        placeholder="Email"
         values={members}
         onAdd={handleAdd}
         onRemove={handleRemove}
