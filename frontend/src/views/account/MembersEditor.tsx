@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import ChipInput from 'material-ui-chip-input';
 import useStateFetch from '../../hooks/useStateFetch';
 import { updateMembers } from './api';
 import { validate } from 'isemail';
@@ -7,6 +6,7 @@ import styled from '@emotion/styled';
 import { Alert } from '@mui/material';
 import useTranslations from '../../translations';
 import { useSnackbar } from 'notistack';
+import TagInput from '../../components/TagInput';
 
 const MAX_MEMBERS = 19;
 
@@ -59,8 +59,8 @@ function MembersEditor() {
     },
     [members, setMembers, enqueueSnackbar]
   );
-  const handleBeforeAdd = useCallback(
-    (value: string) => {
+  const handleValidate = useCallback(
+    async (value: string) => {
       return (
         isNotFull(members) &&
         isValidEmail(value) &&
@@ -87,13 +87,12 @@ function MembersEditor() {
           {translations.subscription!.membersEditor!.info!(MAX_MEMBERS)}
         </Alert>
       )}
-      <ChipInput
-        placeholder="(enter emails here)"
-        value={members}
+      <TagInput
+        placeholder="Email address"
+        values={members}
         onAdd={handleAdd}
-        onDelete={handleRemove}
-        onBeforeAdd={handleBeforeAdd}
-        fullWidth
+        onRemove={handleRemove}
+        onValidate={handleValidate}
       />
     </Container>
   );
