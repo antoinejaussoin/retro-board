@@ -111,6 +111,7 @@ const Register = ({ onClose }: RegisterProps) => {
             onChangeValue={setRegisterName}
             title={authTranslations.nameField}
             placeholder={authTranslations.nameField}
+            variant="standard"
             fullWidth
             style={{ marginTop: 20 }}
             leftIcon={<Person />}
@@ -121,6 +122,7 @@ const Register = ({ onClose }: RegisterProps) => {
             onChangeValue={setRegisterEmail}
             title={authTranslations.emailField}
             placeholder={authTranslations.emailField}
+            variant="standard"
             fullWidth
             style={{ marginTop: 20 }}
             leftIcon={<Email />}
@@ -137,6 +139,7 @@ const Register = ({ onClose }: RegisterProps) => {
             onChangeValue={setRegisterPassword}
             title={authTranslations.passwordField}
             placeholder={authTranslations.passwordField}
+            variant="standard"
             type="password"
             fullWidth
             style={{ marginTop: 20 }}

@@ -76,6 +76,7 @@ const Login = ({
         title={authTranslations.emailField}
         placeholder={authTranslations.emailField}
         type="email"
+        variant="standard"
         fullWidth
         style={{ marginTop: 20 }}
         leftIcon={<Email />}
@@ -86,6 +87,7 @@ const Login = ({
         title={authTranslations.passwordField}
         placeholder={authTranslations.passwordField}
         type="password"
+        variant="standard"
         fullWidth
         style={{ marginTop: 20 }}
         leftIcon={<VpnKey />}

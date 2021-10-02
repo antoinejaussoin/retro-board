@@ -60,6 +60,7 @@ const LostPassword = () => {
         title={authTranslations.emailField}
         placeholder={authTranslations.emailField}
         type="email"
+        variant="standard"
         fullWidth
         style={{ marginTop: 20 }}
         leftIcon={<Email />}
