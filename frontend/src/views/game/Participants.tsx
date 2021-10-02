@@ -6,7 +6,12 @@ function Participants() {
   const { participants } = useParticipants();
   return (
     <div>
-      <AvatarGroup max={20}>
+      <AvatarGroup
+        max={20}
+        sx={{
+          flexDirection: 'row',
+        }}
+      >
         {participants
           .filter((u) => u.online)
           .map((user) => {
