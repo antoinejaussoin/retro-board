@@ -4,12 +4,19 @@ import SummaryMode from '../SummaryMode';
 import { ColumnContent } from '../../types';
 import { Post } from '@retrospected/common';
 import { Route, MemoryRouter } from 'react-router-dom';
+import { SnackbarProvider } from 'notistack';
+import { ThemeProvider } from '@emotion/react';
+import theme from '../../../../Theme';
 
 const renderWithRouter = (children: React.ReactNode) =>
   render(
-    <MemoryRouter initialEntries={['/']}>
-      <Route path="/">{children}</Route>
-    </MemoryRouter>
+    <SnackbarProvider>
+      <ThemeProvider theme={theme}>
+        <MemoryRouter initialEntries={['/']}>
+          <Route path="/">{children}</Route>
+        </MemoryRouter>
+      </ThemeProvider>
+    </SnackbarProvider>
   );
 
 const buildPost = (likes: number, dislikes: number): Post => {

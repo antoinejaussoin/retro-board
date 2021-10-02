@@ -3,8 +3,11 @@ import groupBy from 'lodash/groupBy';
 import values from 'lodash/values';
 import { render, fireEvent } from '../../../../../testing';
 import PostItem from '../Post';
-import { Post, User, Vote, VoteType } from '@retrospected/common';
+import { Post, User, VoteExtract, VoteType } from '@retrospected/common';
 import { MemoryRouter, Route } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material';
+import theme from '../../../../../Theme';
+import { SnackbarProvider } from 'notistack';
 
 const u = (name: string): User => ({
   name,
@@ -14,22 +17,25 @@ const u = (name: string): User => ({
 
 const renderWithRouter = (children: React.ReactNode) =>
   render(
-    <MemoryRouter initialEntries={['/']}>
-      <Route path="/">{children}</Route>
-    </MemoryRouter>
+    <SnackbarProvider>
+      <ThemeProvider theme={theme}>
+        <MemoryRouter initialEntries={['/']}>
+          <Route path="/">{children}</Route>
+        </MemoryRouter>
+      </ThemeProvider>
+    </SnackbarProvider>
   );
 
-function buildVotes(type: VoteType, users: User[], post: Post): Vote[] {
+function buildVotes(type: VoteType, users: User[], post: Post): VoteExtract[] {
   const grouped = groupBy(users, (u) => u.id);
   return values(grouped).map(
     (group) =>
       ({
         id: 'whatever',
-        count: group.length,
-        post,
         type,
-        user: group[0],
-      } as Vote)
+        userId: group[0].id,
+        userName: group[0].name,
+      } as VoteExtract)
   );
 }
 
@@ -129,7 +135,7 @@ describe('Post', () => {
         search=""
       />
     );
-    const deleteButton = getByLabelText(/delete/i);
+    const deleteButton = getByLabelText(/delete/i, { selector: 'button' });
     const likeButton = getByLabelText(/^like/i);
     const dislikeButton = getByLabelText(/dislike/i);
 
