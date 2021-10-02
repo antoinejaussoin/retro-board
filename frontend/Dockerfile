@@ -21,7 +21,6 @@ RUN yarn --network-timeout 1000000 install
 
 COPY --chown=node:node ./frontend/src ./frontend/src
 COPY --chown=node:node ./frontend/public ./frontend/public
-# COPY --chown=node:node ./frontend/config-overrides.js ./frontend/config-overrides.js
 COPY --chown=node:node ./frontend/tsconfig.json ./frontend/tsconfig.json
 COPY --chown=node:node ./frontend/.env ./frontend/.env
 COPY --chown=node:node ./common ./common

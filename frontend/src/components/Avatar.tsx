@@ -39,7 +39,7 @@ const StyledBadge = withStyles((theme) =>
       },
     },
   })
-)(Badge); // TODO REINSTATE
+)(Badge);
 
 const getGravatar = (user: User | null) => {
   if (user && user.photo) {
