@@ -24,6 +24,7 @@ const IconPicker = ({ value, onChange }: IconPickerProps) => {
       value={actualValue}
       renderValue={renderIcon}
       onChange={handleChange}
+      variant="standard"
     >
       {icons.map((icon) => {
         const AnIcon = getIcon(icon)!;

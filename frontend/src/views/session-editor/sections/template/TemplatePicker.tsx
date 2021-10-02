@@ -23,7 +23,7 @@ const TemplatePicker = ({ onSelect }: TemplatePickerProps) => {
     [onSelect]
   );
   return (
-    <Select value={template} onChange={handleChange}>
+    <Select value={template} onChange={handleChange} variant="standard">
       {templates.map((template) => {
         return (
           <MenuItem value={template.type} key={template.type}>

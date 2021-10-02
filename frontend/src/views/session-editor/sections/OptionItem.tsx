@@ -49,6 +49,7 @@ const Container = styled.div`
 
 const ComponentContainer = styled.div<{ wide: boolean }>`
   flex: ${(props) => (props.wide ? '1' : 'unset')};
+  ${(props) => (props.wide ? 'width: 100%;' : '')}
 `;
 
 const Label = styled.div<{ wide: boolean }>`
@@ -75,9 +76,6 @@ const HeaderContainer = styled.div<{ wide: boolean }>`
     align-items: flex-start;
     `
         : ''}
-    ${ComponentContainer} {
-      ${(props) => (props.wide ? 'width: 100%;' : '')}
-    }
   }
 `;
 

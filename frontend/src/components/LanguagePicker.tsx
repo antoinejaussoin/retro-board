@@ -20,7 +20,7 @@ const LanguagePicker = ({ value, onChange }: LanguagePickerProps) => {
     [onChange]
   );
   return (
-    <StyledSelect value={value} onChange={handleSelect}>
+    <StyledSelect value={value} onChange={handleSelect} variant="standard">
       {languages.map((language) => (
         <MenuItem value={language.value} key={language.value}>
           <LanguageItem>
