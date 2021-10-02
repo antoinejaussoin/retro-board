@@ -6,19 +6,16 @@ import { AssignmentReturned, SaveAlt } from '@mui/icons-material';
 import SvgIcon from '@mui/material/SvgIcon';
 import useMarkdown from './useMarkdown';
 import ReactMarkdown from 'react-markdown';
-import Message from '../../../components/Message';
 import useTranslations from '../../../translations';
+import { useSnackbar } from 'notistack';
 
 const CopySpeedDial = () => {
   const isSupported = !!window.getSelection;
   const { SummaryBoard } = useTranslations();
   const [open, setOpen] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
   const handleOpen = useCallback(() => setOpen(true), []);
   const handleClose = useCallback(() => setOpen(false), []);
-  const [message, setMessage] = useState('');
-  const handleCloseMessage = useCallback(() => {
-    setMessage('');
-  }, []);
   const mdElement = useRef<HTMLDivElement>(null);
   const md = useMarkdown();
 
@@ -27,14 +24,14 @@ const CopySpeedDial = () => {
     p.innerText = md;
     copyToClipboard(p);
     setOpen(false);
-    setMessage(SummaryBoard.copySuccessful!);
-  }, [md, SummaryBoard.copySuccessful]);
+    enqueueSnackbar(SummaryBoard.copySuccessful, { variant: 'success' });
+  }, [md, SummaryBoard.copySuccessful, enqueueSnackbar]);
 
   const handleCopyRichText = useCallback(() => {
     copyToClipboard(mdElement.current!);
     setOpen(false);
-    setMessage(SummaryBoard.copySuccessful!);
-  }, [SummaryBoard.copySuccessful]);
+    enqueueSnackbar(SummaryBoard.copySuccessful, { variant: 'success' });
+  }, [SummaryBoard.copySuccessful, enqueueSnackbar]);
 
   return isSupported ? (
     <>
@@ -59,11 +56,6 @@ const CopySpeedDial = () => {
           onClick={handleCopyToMarkdown}
         />
       </SpeedDial>
-      <Message
-        message={message}
-        variant="success"
-        onClose={handleCloseMessage}
-      />
       <MdContainer>
         <div ref={mdElement}>
           <ReactMarkdown>{md}</ReactMarkdown>
@@ -94,12 +86,6 @@ function copyToClipboard(content: HTMLElement) {
 const MdContainer = styled.div`
   display: none;
   visibility: hidden;
-  /* position: fixed;
-  top: 100px;
-  left: 0px;
-  width: 1000px;
-  border: 1px solid red;
-  background-color: white; */
 `;
 
 const MarkdownIcon = () => {
