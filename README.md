@@ -145,6 +145,12 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
+### Version 4.8.0 (in progress)
+
+- Upgrade to MUI 5.0 (ex Material UI)
+- Migration from Styled Components to Emotion (for compatibility reasons with MUI)
+- ⏫ Upgrading dependencies
+
 ### Version 4.7.2
 
 - Replacing Google OAuth passport library, to try and reduce Google OAuth errors on production
