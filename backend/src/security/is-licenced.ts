@@ -59,10 +59,6 @@ async function checkHardcodedLicence(
 // }
 
 async function isLicencedBase(): Promise<LicenceMetadata | null> {
-  if (process.env.NODE_ENV !== 'production') {
-    return { licence: 'dev', owner: 'dev' };
-  }
-
   const licenceKey = config.LICENCE_KEY;
 
   const payload: SelfHostedCheckPayload = { key: licenceKey };

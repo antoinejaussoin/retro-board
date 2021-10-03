@@ -33,8 +33,9 @@ It features the following technologies:
 - [Recoil.js](https://recoiljs.org), as the global state management library
 - [Socket IO](http://socket.io)
 - [Webpack 4](https://github.com/webpack/webpack) (See older versions for Webpack 1, 2 and 3)
+- [MUI 5](https://mui.com) for our components (previously known as Material-UI)
 - [Material UI design](https://www.google.com/design/spec/material-design/introduction.html)
-- [Styled Components](https://www.styled-components.com/)
+- [Emotion](https://emotion.sh/docs/introduction)
 - [Multilingual](https://stackoverflow.com/questions/33413880/react-redux-and-multilingual-internationalization-apps-architecture) / Internationalization
 - [Postgres](https://www.postgresql.org/)
 - [Node 16](https://nodejs.org/en/)
@@ -44,6 +45,7 @@ It features the following technologies:
   - GitHub
   - Slack
   - Microsoft
+  - Okta
 - [Giphy](https://giphy.com/) because adding a bit of fun to your retro can't hurt!
 - [React Beautiful DND](https://github.com/atlassian/react-beautiful-dnd) to allow re-ordering and grouping by drag-and-drop
 - [Jest](https://facebook.github.io/jest) for Unit Testing
@@ -145,7 +147,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
-### Version 4.8.0 (in progress)
+### Version 4.8.0
 
 - Upgrade to MUI 5.0 (ex Material UI)
 - Migration from Styled Components to Emotion (for compatibility reasons with MUI)
