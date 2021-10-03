@@ -35,6 +35,7 @@ const ActionButton: React.FC<ActionButtonProps> = ({
           aria-label={ariaLabel}
           tabIndex={-1}
           ref={innerRef}
+          color="inherit"
           style={{
             position: 'relative',
             paddingLeft: 0,

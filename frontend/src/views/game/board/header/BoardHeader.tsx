@@ -215,7 +215,7 @@ const LeftOptions = styled.div`
   justify-self: start;
 
   > * {
-    margin-right: 10px;
+    margin-right: 10px !important;
   }
 
   @media (max-width: 500px) {
