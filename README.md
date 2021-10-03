@@ -149,6 +149,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 - Upgrade to MUI 5.0 (ex Material UI)
 - Migration from Styled Components to Emotion (for compatibility reasons with MUI)
+- Add hard-coded self-hosting licence mechanism for companies with restricted internet access
 - ⏫ Upgrading dependencies
 
 ### Version 4.7.2
