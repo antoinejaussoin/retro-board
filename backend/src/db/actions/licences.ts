@@ -3,6 +3,7 @@ import LicenceEntity from '../entities/Licence';
 import { v4 } from 'uuid';
 import { sendSelfHostWelcome } from '../../email/emailSender';
 import { LicenceRepository } from '../repositories';
+import { LicenceMetadata } from 'src/types';
 
 export async function registerLicence(
   email: string | null,
@@ -42,5 +43,28 @@ export async function validateLicence(key: string): Promise<boolean> {
       console.log('Error while retriving the licence: ', err);
       return false;
     }
+  });
+}
+
+export async function fetchLicence(
+  key: string
+): Promise<LicenceMetadata | null> {
+  return await transaction(async (manager) => {
+    const repository = manager.getRepository(LicenceEntity);
+    try {
+      const found = await repository.findOne({
+        where: { key },
+      });
+      if (found) {
+        return {
+          licence: key,
+          owner: found.email!,
+        };
+      }
+    } catch (err) {
+      console.log('Error while retriving the licence: ', err);
+      return null;
+    }
+    return null;
   });
 }

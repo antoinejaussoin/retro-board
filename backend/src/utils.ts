@@ -1,5 +1,7 @@
 import { Request } from 'express';
-import { genSalt, hash } from 'bcryptjs';
+import { compare, genSalt, hash } from 'bcryptjs';
+import aes from 'crypto-js/aes';
+import { stringify } from 'crypto-js/enc-utf8';
 import { UserView, UserIdentityEntity } from './db/entities';
 import { getUserView, getUser, getIdentity } from './db/actions/users';
 import { Quota } from '@retrospected/common';
@@ -49,6 +51,25 @@ export async function hashPassword(clearTextPassword: string): Promise<string> {
   const salt = await genSalt();
   const hashedPassword = await hash(clearTextPassword, salt);
   return hashedPassword;
+}
+
+export async function comparePassword(
+  clearTextPassword: string,
+  hashedPassword: string
+): Promise<boolean> {
+  const match = await compare(clearTextPassword, hashedPassword);
+  return match;
+}
+
+export function encrypt(clear: string, key: string): string {
+  const encrypted = aes.encrypt(clear, key).toString();
+  return encrypted;
+}
+
+export function decrypt(encrypted: string, key: string): string {
+  const bytes = aes.decrypt(encrypted, key);
+  const clear = stringify(bytes);
+  return clear;
 }
 
 export default async function wait(delay = 1000) {

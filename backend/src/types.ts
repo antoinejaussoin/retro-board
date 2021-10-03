@@ -50,3 +50,8 @@ export interface BackendConfig {
   RATE_LIMIT_WS_DURATION: number;
   WS_MAX_BUFFER_SIZE: number;
 }
+
+export type LicenceMetadata = {
+  licence: string;
+  owner: string;
+};

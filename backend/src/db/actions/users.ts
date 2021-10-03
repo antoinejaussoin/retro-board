@@ -8,8 +8,7 @@ import { AccountType, FullUser } from '@retrospected/common';
 import { isSelfHostedAndLicenced } from '../../security/is-licenced';
 import { v4 } from 'uuid';
 import UserIdentityEntity from '../entities/UserIdentity';
-import { hashPassword } from '../../utils';
-import { compare } from 'bcryptjs';
+import { comparePassword, hashPassword } from '../../utils';
 
 export async function getUser(userId: string): Promise<UserEntity | null> {
   return await transaction(async (manager) => {
@@ -262,7 +261,7 @@ export async function registerAnonymousUser(
       return dbUser;
     }
 
-    const isPasswordCorrect = await compare(
+    const isPasswordCorrect = await comparePassword(
       password,
       existingIdentity.password
     );

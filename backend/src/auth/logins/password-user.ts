@@ -1,6 +1,6 @@
-import { compare } from 'bcryptjs';
 import { UserIdentityEntity } from '../../db/entities';
 import { getIdentityByUsername } from '../../db/actions/users';
+import { comparePassword } from '../../utils';
 
 export default async function loginUser(
   username: string,
@@ -10,6 +10,6 @@ export default async function loginUser(
   if (!user || user.password === null) {
     return null;
   }
-  const isPasswordCorrect = await compare(password, user.password);
+  const isPasswordCorrect = await comparePassword(password, user.password);
   return isPasswordCorrect ? user : null;
 }

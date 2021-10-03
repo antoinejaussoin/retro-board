@@ -56,7 +56,7 @@ import {
 } from './db/actions/users';
 import { isLicenced } from './security/is-licenced';
 import rateLimit from 'express-rate-limit';
-import { validateLicence } from './db/actions/licences';
+import { fetchLicence, validateLicence } from './db/actions/licences';
 import { hasField } from './security/payload-checker';
 import mung from 'express-mung';
 import { QueryFailedError } from 'typeorm';
@@ -81,6 +81,9 @@ isLicenced().then((hasLicence) => {
       chalk`{green ----------------------------------------------- }`
     );
     console.log(chalk`👍  {green This software is licenced.} `);
+    console.log(
+      chalk`🔑  {green This licence belongs to ${hasLicence.owner}.} `
+    );
     console.log(
       chalk`{green ----------------------------------------------- }`
     );
@@ -490,6 +493,7 @@ db().then(() => {
     }
   });
 
+  // Keep this for backward compatibility
   app.post('/api/self-hosted', heavyLoadLimiter, async (req, res) => {
     const payload = req.body as SelfHostedCheckPayload;
     console.log('Attempting to verify self-hosted licence for ', payload.key);
@@ -501,6 +505,24 @@ db().then(() => {
       } else {
         console.log(' ==> Self hosted licence INVALID.');
         res.status(200).send(false);
+      }
+    } catch {
+      console.log(' ==> Could not check for self-hosted licence.');
+      res.status(500).send('Something went wrong');
+    }
+  });
+
+  app.post('/api/self-hosted-licence', heavyLoadLimiter, async (req, res) => {
+    const payload = req.body as SelfHostedCheckPayload;
+    console.log('Attempting to verify self-hosted licence for ', payload.key);
+    try {
+      const licence = await fetchLicence(payload.key);
+      if (licence) {
+        console.log(' ==> Self hosted licence granted.');
+        res.status(200).send(licence);
+      } else {
+        console.log(' ==> Self hosted licence INVALID.');
+        res.status(403).send(null);
       }
     } catch {
       console.log(' ==> Could not check for self-hosted licence.');

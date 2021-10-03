@@ -17,11 +17,11 @@ const router = express.Router();
 const csrfProtection = csurf();
 
 router.get('/self-hosting', async (_, res) => {
-  const licenced = await isLicenced();
+  const licence = await isLicenced();
   const payload: SelfHostingPayload = {
     adminEmail: config.SELF_HOSTED_ADMIN,
     selfHosted: config.SELF_HOSTED,
-    licenced,
+    licenced: !!licence,
     oAuth: {
       google: !!config.GOOGLE_KEY && !!config.GOOGLE_SECRET,
       github: !!config.GITHUB_KEY && !!config.GITHUB_SECRET,
