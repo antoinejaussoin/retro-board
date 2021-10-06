@@ -1,0 +1,53 @@
+---
+sidebar_position: 0
+---
+
+import Editor from './quick-start/Editor';
+
+
+# 🚀 Quick Start & Trial
+
+Whether you have a licence or want to trial Retrospected, you will be running in no time.
+
+:::info No licence yet?
+If you'd like to purchase one, [click here](https://www.retrospected.com/subscribe).
+:::
+
+This will guide you through a local (a.k.a **self hosted**) installation of Retrospected.
+
+:::info Prior knowledge
+This quick start guide assumes you have a basic knowledge of Docker and Docker-Compose, and that they are both installed in your system.
+If you need more detailed instructions, please [read this guide](prerequisites).
+:::
+
+
+## 1 - Create a Docker-Compose file
+
+Create your own customised docker-compose file, using the editor below.
+
+:::tip Is it safe?
+All passwords in this page are generated, **randomly**, on your **browser**. None of them are known to anyone except you.
+You are of course welcome to change them.
+
+Passwords (and other fields) are restricted to **alphanumeric characters** (plus "-", "@", "_", "."), to avoid issues with environement variables and escaping.
+:::
+
+<Editor />
+
+:::info Might not be localhost...
+If you installed and ran your Retrospected docker-compose file on a
+different machine than localhost, you'll need to replace "localhost" by
+your machine name of course.
+:::
+
+:::danger About passwords....
+Once you have run your docker-compose file for the first time, some of
+the passwords will be set in stone. Please refrain from changing them
+going forward, or if you must, read the
+[following guide](passwords).
+:::
+      
+
+Retrospected & PGAdmin are now running!
+
+![Retrospected running smoothly](/img/self-hosting/installation-completed.png)
