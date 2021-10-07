@@ -35,6 +35,16 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Build and push Documentation
+        uses: docker/build-push-action@v2
+        with:
+          builder: ${{ steps.buildx.outputs.name }}
+          file: docs/Dockerfile
+          context: docs
+          tags: antoinejaussoin/retro-board-docs:latest,antoinejaussoin/retro-board-docs:${{ steps.package.outputs.current-version }}
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          push: true
+
       - name: Build and push Backend
         uses: docker/build-push-action@v2
         with:
