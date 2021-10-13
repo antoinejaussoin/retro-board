@@ -49,3 +49,4 @@ configuration.json
 /db
 
 *.rest
+.docusaurus
