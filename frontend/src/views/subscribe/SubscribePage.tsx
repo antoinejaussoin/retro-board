@@ -59,7 +59,7 @@ function SubscriberPage() {
   useEffect(() => {
     setValidDomain(false);
     const domainRegex =
-      /^[a-zA-Z0-9][a-zA-Z0-9-_]{0,61}[a-zA-Z0-9]{0,1}\.([a-zA-Z]{1,6}|[a-zA-Z0-9-]{1,30}\.[a-zA-Z]{2,3})$/g;
+      /^[a-zA-Z0-9][a-zA-Z0-9-_]{0,61}[a-zA-Z0-9]{0,1}\.([a-zA-Z]{1,20}|[a-zA-Z0-9-]{1,30}\.[a-zA-Z]{2,3})$/g;
     if (!domainRegex.test(domain)) {
       return;
     }
