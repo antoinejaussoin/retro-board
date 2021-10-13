@@ -5,6 +5,8 @@
 
 This is a Retrospective Idea board, powering [retrospected.com](http://www.retrospected.com).
 
+Documentation [available here](https://docs.retrospected.com).
+
 &nbsp;
 
 <p align="center">
@@ -147,9 +149,10 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
-### Version 4.8.1 (hotfix)
+### Version 4.9.0
 
-- The Unlimited subscription domain check was not accepting valid domains such as `.ventures` or `.agency`.
+- Brand new [documentation website](https://docs.retrospected.com).
+- 🐛 The Unlimited subscription domain check was not accepting valid domains such as `.ventures` or `.agency`.
 
 ### Version 4.8.0
 
