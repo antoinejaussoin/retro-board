@@ -46,7 +46,7 @@ services:
         max-size: '50m'
 
   backend:
-    image: antoinejaussoin/retro-board-backend:latest
+    image: retrospected/backend:latest
     depends_on:
       - redis
     environment:
@@ -79,7 +79,7 @@ services:
         max-size: '50m'
 
   frontend:
-    image: antoinejaussoin/retro-board-frontend:latest
+    image: retrospected/frontend:latest
     depends_on:
       - backend
     ports:

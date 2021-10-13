@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [v490/docs]
+    branches: [v490/docker-change]
 
 jobs:
   build:
@@ -32,8 +32,8 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ secrets.DOCKER_NEW_USERNAME }}
+          password: ${{ secrets.DOCKER_NEW_PASSWORD }}
 
       - name: Build and push Documentation
         uses: docker/build-push-action@v2
@@ -41,7 +41,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: docs/Dockerfile
           context: docs
-          tags: antoinejaussoin/retro-board-docs:alpha
+          tags: retrospected/docs:alpha
           platforms: linux/amd64
           push: true
 
@@ -51,7 +51,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: backend/Dockerfile
           context: .
-          tags: antoinejaussoin/retro-board-backend:alpha
+          tags: retrospected/backend:alpha
           platforms: linux/amd64
           push: true
 
@@ -61,7 +61,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: frontend/Dockerfile
           context: .
-          tags: antoinejaussoin/retro-board-frontend:alpha
+          tags: retrospected/frontend:alpha
           platforms: linux/amd64
           push: true
 
@@ -71,6 +71,6 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: maintenance/Dockerfile
           context: maintenance
-          tags: antoinejaussoin/maintenance:alpha
+          tags: retrospected/maintenance:alpha
           platforms: linux/amd64
           push: true

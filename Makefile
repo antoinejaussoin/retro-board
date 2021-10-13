@@ -11,10 +11,10 @@ setup:
 build:
 	docker buildx inspect --bootstrap
 	docker buildx build --cache-from=antoinejaussoin/maintenance:${PACKAGE_VERSION} --pull --platform ${TARGET_ARCHS} -f ./maintenance/Dockerfile -t antoinejaussoin/maintenance:${PACKAGE_VERSION} ./maintenance
-	docker buildx build --cache-from=antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} --pull --platform ${TARGET_ARCHS} -f ./backend/Dockerfile -t antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} .
-	docker buildx build --cache-from=antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} --pull --platform ${TARGET_ARCHS} -f ./frontend/Dockerfile -t antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} .
+	docker buildx build --cache-from=retrospected/backend:${PACKAGE_VERSION} --pull --platform ${TARGET_ARCHS} -f ./backend/Dockerfile -t retrospected/backend:${PACKAGE_VERSION} .
+	docker buildx build --cache-from=retrospected/frontend:${PACKAGE_VERSION} --pull --platform ${TARGET_ARCHS} -f ./frontend/Dockerfile -t retrospected/frontend:${PACKAGE_VERSION} .
 
 single-build:
 	docker build -f ./maintenance/Dockerfile -t antoinejaussoin/maintenance:${PACKAGE_VERSION} ./maintenance
-	docker build -f ./backend/Dockerfile -t antoinejaussoin/retro-board-backend:${PACKAGE_VERSION} .
-	docker build -f ./frontend/Dockerfile -t antoinejaussoin/retro-board-frontend:${PACKAGE_VERSION} .
+	docker build -f ./backend/Dockerfile -t retrospected/backend:${PACKAGE_VERSION} .
+	docker build -f ./frontend/Dockerfile -t retrospected/frontend:${PACKAGE_VERSION} .

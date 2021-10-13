@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: rb-frontend
-          image: antoinejaussoin/retro-board-frontend:3.0.0
+          image: retrospected/frontend:3.0.0
           ports:
             - containerPort: 80
           env:

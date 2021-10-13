@@ -272,7 +272,7 @@
 <span class="hljs-attr">        max-size:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'50m'</span>
 
 <span class="hljs-attr">  backend:</span>
-<span class="hljs-attr">    image:</span> antoinejaussoin/retro-board-backend:latest
+<span class="hljs-attr">    image:</span> retrospected/backend:latest
 <span class="hljs-attr">    depends_on:</span>
 <span class="hljs-bullet" style="color: rgb(166, 226, 46);">      -</span> redis
 <span class="hljs-attr">    environment:</span>
@@ -305,7 +305,7 @@
 <span class="hljs-attr">        max-size:</span> <span class="hljs-string" style="color: rgb(166, 226, 46);">'50m'</span>
 
 <span class="hljs-attr">  frontend:</span>
-<span class="hljs-attr">    image:</span> antoinejaussoin/retro-board-frontend:latest
+<span class="hljs-attr">    image:</span> retrospected/frontend:latest
 <span class="hljs-attr">    depends_on:</span>
 <span class="hljs-bullet" style="color: rgb(166, 226, 46);">      -</span> backend
 <span class="hljs-attr">    ports:</span>

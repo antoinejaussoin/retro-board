@@ -41,7 +41,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: docs/Dockerfile
           context: docs
-          tags: antoinejaussoin/retro-board-docs:canary
+          tags: retrospected/docs:canary
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
 
@@ -51,7 +51,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: backend/Dockerfile
           context: .
-          tags: antoinejaussoin/retro-board-backend:canary
+          tags: retrospected/backend:canary
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
 
@@ -61,7 +61,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: frontend/Dockerfile
           context: .
-          tags: antoinejaussoin/retro-board-frontend:canary
+          tags: retrospected/frontend:canary
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
 

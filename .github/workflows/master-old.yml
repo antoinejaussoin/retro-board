@@ -1,4 +1,4 @@
-name: 'Master Build'
+name: 'Master Build (Old Docker)'
 
 on:
   push:
@@ -41,7 +41,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: docs/Dockerfile
           context: docs
-          tags: retrospected/docs:latest,retrospected/docs:${{ steps.package.outputs.current-version }}
+          tags: antoinejaussoin/retro-board-docs:latest,antoinejaussoin/retro-board-docs:${{ steps.package.outputs.current-version }}
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
 
@@ -51,7 +51,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: backend/Dockerfile
           context: .
-          tags: retrospected/backend:latest,retrospected/backend:${{ steps.package.outputs.current-version }}
+          tags: antoinejaussoin/retro-board-backend:latest,antoinejaussoin/retro-board-backend:${{ steps.package.outputs.current-version }}
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
 
@@ -61,7 +61,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: frontend/Dockerfile
           context: .
-          tags: retrospected/frontend:latest,retrospected/frontend:${{ steps.package.outputs.current-version }}
+          tags: antoinejaussoin/retro-board-frontend:latest,antoinejaussoin/retro-board-frontend:${{ steps.package.outputs.current-version }}
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
 

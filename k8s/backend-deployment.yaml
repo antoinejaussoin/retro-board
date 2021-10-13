@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: rb-backend
-          image: antoinejaussoin/retro-board-backend:3.0.0
+          image: retrospected/backend:3.0.0
           ports:
             - containerPort: 3201
               name: backend-port
