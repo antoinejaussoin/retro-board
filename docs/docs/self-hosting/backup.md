@@ -22,8 +22,8 @@ This should return a list of containers running, looking like this:
 
 ```shell
 CONTAINER ID   IMAGE                                         COMMAND                  CREATED         STATUS       PORTS                                                                                      NAMES
-6556474a1b19   retrospected/frontend:latest   "/frontend-entrypoin…"   2 days ago      Up 2 days    0.0.0.0:3000->80/tcp, :::3000->80/tcp                                                      prod_frontend_1
-beb4fa7d3bd3   retrospected/backend:latest    "docker-entrypoint.s…"   2 days ago      Up 2 days                                                                                               prod_backend_1
+6556474a1b19   retrospected/frontend:latest                  "/frontend-entrypoin…"   2 days ago      Up 2 days    0.0.0.0:3000->80/tcp, :::3000->80/tcp                                                      prod_frontend_1
+beb4fa7d3bd3   retrospected/backend:latest                   "docker-entrypoint.s…"   2 days ago      Up 2 days                                                                                               prod_backend_1
 223f6cd73aaf   redis:latest                                  "docker-entrypoint.s…"   6 days ago      Up 6 days    6379/tcp                                                                                   beta_redis_1
 6aa8d4e70ed0   dpage/pgadmin4:latest                         "/entrypoint.sh"         2 weeks ago     Up 2 weeks   80/tcp, 443/tcp, 0.0.0.0:3001->3001/tcp, :::3001->3001/tcp                                 prod_pgadmin_1
 dc629da8fb41   postgres:11.6                                 "docker-entrypoint.s…"   7 months ago    Up 4 weeks   5432/tcp                                                                                   prod_postgres_1
