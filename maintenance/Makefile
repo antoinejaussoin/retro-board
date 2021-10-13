@@ -1,8 +1,8 @@
 PORT?=4000
 
 publish:
-	docker build . -t antoinejaussoin/maintenance:latest
-	docker push antoinejaussoin/maintenance:latest
+	docker build . -t retrospected/maintenance:latest
+	docker push retrospected/maintenance:latest
 
 run:
-	docker run -p ${PORT}:80 antoinejaussoin/maintenance:latest
+	docker run -p ${PORT}:80 retrospected/maintenance:latest
