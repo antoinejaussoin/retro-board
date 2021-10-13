@@ -4,3 +4,9 @@ div.settings {
   flex-wrap: wrap;
   margin-bottom: 30px;
 }
+
+div.toggle {
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+}

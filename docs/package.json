@@ -21,6 +21,7 @@
     "@svgr/webpack": "^5.5.0",
     "@types/random-words": "^1.1.2",
     "@types/react-syntax-highlighter": "^13.5.2",
+    "@types/react-toggle": "^4.0.3",
     "clsx": "^1.1.1",
     "file-loader": "^6.2.0",
     "prism-react-renderer": "^1.2.1",
@@ -29,6 +30,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-syntax-highlighter": "^15.4.4",
+    "react-toggle": "^4.1.2",
     "url-loader": "^4.1.1"
   },
   "devDependencies": {

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import ComposeView from './ComposeView';
-import Field from './Field';
+import { InputField, Field } from './Field';
 import styles from './Editor.module.css';
 import randomWords from 'random-words';
 import queryString from 'query-string';
 import RunDetails from './RunDetails';
 import useIsBrowser from '@docusaurus/useIsBrowser';
+import Toggle from 'react-toggle';
 
 function getRandomPassword() {
   return randomWords(4).join('-');
@@ -20,6 +21,7 @@ export default function Editor() {
   const [email, setEmail] = useState('your@email.com');
   const [port, setPort] = useState('1800');
   const [pgPort, setPgPort] = useState('1801');
+  const [isArm, setIsArm] = useState(false);
 
   useEffect(() => {
     if (isBrowser) {
@@ -36,50 +38,65 @@ export default function Editor() {
   return (
     <span>
       <div className={styles.settings}>
-        <Field
+        <InputField
           label="Email"
           description="Your email. It will be used as the admin account for both PGAdmin and Retrospected."
           value={email}
           onChange={setEmail}
         />
-        <Field
+        <InputField
           label="Licence Key"
           description="The licence key you received by email after purchase. If you want to try Retrospected, leave the default value"
           value={licence}
           onChange={setLicence}
         />
-        <Field
+        <InputField
           label="Retrospected UI Port"
           description="Defines on which port the UI is going to run."
           value={port}
           number
           onChange={setPort}
         />
-        <Field
+        <InputField
           label="PGAdmin UI Port"
           description="Defines on which port PGAdmin is going to run."
           value={pgPort}
           number
           onChange={setPgPort}
         />
-        <Field
+        <InputField
           label="Database Password"
           description="Postgres database password"
           value={dbPassword}
           onChange={setDbPassword}
         />
-        <Field
+        <InputField
           label="Session Secret"
           description="Web server session secret. This can be anything."
           value={sessionSecret}
           onChange={setSessionSecret}
         />
-        <Field
+        <InputField
           label="PGAdmin Password"
           description="PGAdmin administrator password, to be used with the email set above."
           value={pgPassword}
           onChange={setPgPassword}
         />
+        <Field
+          label="Deploying on ARM?"
+          description="Only check this if you are deploying on an ARM-based server."
+        >
+          <div className={styles.toggle}>
+            <Toggle
+              id="arm-toggle"
+              defaultChecked={isArm}
+              onChange={(e) => setIsArm(e.target.checked)}
+            />
+            <label htmlFor="arm-toggle" style={{ marginLeft: 10 }}>
+              ARM server
+            </label>
+          </div>
+        </Field>
       </div>
       <ComposeView
         dbPassword={dbPassword}
@@ -89,6 +106,7 @@ export default function Editor() {
         email={email}
         port={port}
         pgPort={pgPort}
+        arm={isArm}
       />
       <h1>2 - Run Docker</h1>
       <ul>

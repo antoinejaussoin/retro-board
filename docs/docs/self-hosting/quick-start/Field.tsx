@@ -2,9 +2,12 @@ import React from 'react';
 import styles from './Field.module.css';
 
 type FieldProps = {
-  value: string;
   label: string;
   description?: string;
+};
+
+type InputFieldProps = FieldProps & {
+  value: string;
   number?: boolean;
   onChange: (value: string) => void;
 };
@@ -23,25 +26,37 @@ function onlyNumbers(e: React.KeyboardEvent<HTMLInputElement>) {
   }
 }
 
-export default function Field({
+export function InputField({
   value,
   label,
   description,
   number,
   onChange,
-}: FieldProps) {
+}: InputFieldProps) {
   return (
-    <div className={styles.container}>
-      <div className={styles.label}>{label}</div>
-      {description ? (
-        <div className={styles.description}>{description}</div>
-      ) : null}
+    <Field label={label} description={description}>
       <input
         className={styles.input}
         value={value}
         onKeyPress={number ? onlyNumbers : onlyAlpha}
         onChange={(e) => onChange(e.target.value)}
       />
+    </Field>
+  );
+}
+
+export function Field({
+  label,
+  description,
+  children,
+}: React.PropsWithChildren<FieldProps>) {
+  return (
+    <div className={styles.container}>
+      <div className={styles.label}>{label}</div>
+      {description ? (
+        <div className={styles.description}>{description}</div>
+      ) : null}
+      {children}
     </div>
   );
 }
