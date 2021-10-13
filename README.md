@@ -147,6 +147,10 @@ When using the Docker deployment, your database runs from a container. But if yo
 
 ## Versions History
 
+### Version 4.8.1 (hotfix)
+
+- The Unlimited subscription domain check was not accepting valid domains such as `.ventures` or `.agency`.
+
 ### Version 4.8.0
 
 - Upgrade to MUI 5.0 (ex Material UI)
