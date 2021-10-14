@@ -5,8 +5,6 @@
 
 This is a Retrospective Idea board, powering [retrospected.com](http://www.retrospected.com).
 
-Documentation [available here](https://docs.retrospected.com).
-
 &nbsp;
 
 <p align="center">
@@ -67,85 +65,22 @@ Previous versions, up to v1.0.1 featured the following libraries:
 - ~~[reselect](https://github.com/reactjs/reselect)~~
 - ~~[ESLint](http://eslint.org/) for JS and JSX~~
 
-## How to try it out 🚀
+## Documentation 📖
 
-You must have `docker` and `docker-compose` installed on your system.
+You can browse the documentation [here](https://docs.retrospected.com).
 
-- Clone this repository
-- Then run `docker-compose up -d`.
-- Open your browser at [http://localhost:1800](http://localhost:1800)
-- _(then please wait a few minutes the first time for the database to initialise)_
+## Using Retrospected 🚀
 
-## How to run for development 📝
+You have two ways of running Retrospected:
 
-### Prerequisites 💿
+- Using the public version, at [www.retrospected.com](https://www.retrospected.com)
+- Host Retrospected [on your premises](https://docs.retrospected.com/docs/self-hosting/quick-start)
 
-- You must have [docker](https://www.docker.com) and [docker-compose](https://docs.docker.com/compose/) installed on your system.
-- You must also have [Node.js](https://nodejs.org/en/), version 15 (other recent versions will probably work too).
-- `Yarn`: Please install [Yarn](https://yarnpkg.com/en/), as this mono-repo uses **Yarn Workspaces** which won't work with NPM.
+## Want to host Retrospected on your premises? 🖥
 
-### Run 🚀
+You can start an instance of Retrospected in 5 minutes by following the [quick-start guide](https://docs.retrospected.com/docs/self-hosting/quick-start).
 
-- Clone this repository
-- Run Postgres, Redis, PGAdmin locally:
-  - `cd ./retro-board` (that is the `retro-board` directory **within** the repository)
-  - `docker-compose up -d`
-  - `cd ..`
-- `yarn` to install the dependencies (_not_ `npm i`!)
-- `yarn build-common` to build the shared module
-- `yarn migrate` to run the database migrations
-- `yarn backend` to start the backend
-- Open another terminal
-- `yarn frontend` on the second terminal to run the frontend
-- Open your browser on [http://localhost:3000](http://localhost:3000)
-
-## Self-Host Retrospected 🐳
-
-### Prerequisites 💿
-
-- You must obtain a self-hosting licence. You can obtain one [here](https://www.retrospected.com/subscribe?product=self-hosted).
-- When buying a licence, a ready-to-run `docker-compose.yml` file will be sent to you by email with installation instructions.
-- You must have [docker](https://www.docker.com) and [docker-compose](https://docs.docker.com/compose/) installed on your system.
-
-### Try it out 🚀
-
-- Edit `docker-compose.yml` to change credentials and secrets
-- _Optional: for ARM-based systems, use biarms/pgadmin4 instead_
-- Run `docker-compose up -d`
-- Voilà!
-
-This will run a production-ready version of Retrospected automatically, using Postgres and Redis.
-You don't need to have anything installed other than Docker. This will install and run:
-
-- Postgres
-- pgAdmin4 (Web UI for postgres)
-- Redis
-- The Retrospected Node.js Backend
-- The Retrospected React Frontend, served by `nginx`.
-
-## How to run for Production using Kubernetes ☸
-
-Please read the [readme](/k8s/readme.md) file in the `k8s` folder. Please note: Kubernetes
-example configs are not maintained, and are only provided as an example.
-
-## Backups 💾
-
-When using the Docker deployment, your database runs from a container. But if you still need to make some backup of your data, you can do the following:
-
-- Get the docker database container ID by doing: `docker ps`
-- Run `` docker exec -t <docker_container_id> pg_dumpall -c -U postgres > dump_`date +%d-%m-%Y"_"%H_%M\_%S`.sql ``
-- To restore your databases: `cat dump_1234.sql | docker exec -i <docker_container_id> psql -U postgres`
-
-## How to run the tests ✅
-
-- Clone this repository
-- `yarn` to install the dependencies (_not_ `npm i`!)
-- `yarn test` to run the tests in watch mode
-- **or** `yarn ci-test` to run the tests once
-
-## Road-Map and ideas 🚗 💡
-
-- Highlight posts where the user voted
+This will run a demo version, which you can turn into a fully licenced version by purchasing a [Self Hosted licence](https://www.retrospected.com/subscribe?product=self-hosted).
 
 ## Versions History
 
