@@ -77,10 +77,16 @@ async function isLicencedBase(): Promise<LicenceMetadata | null> {
       const result = (await response.json()) as LicenceMetadata;
       return result;
     } else {
-      console.error(
-        'Could not contact the licence server. If you have a valid licence, please contact support@retrospected.com for support.'
-      );
-      console.log(response.status, response.statusText);
+      if (response.status === 403) {
+        console.error(
+          'The licence key is not recognised. If you have a valid licence, please contact support@retrospected.com for support.'
+        );
+      } else {
+        console.error(
+          'Could not contact the licence server. If you have a valid licence, please contact support@retrospected.com for support.'
+        );
+        console.log(response.status, response.statusText);
+      }
     }
   } catch (err) {
     console.error(

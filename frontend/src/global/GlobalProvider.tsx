@@ -4,6 +4,7 @@ import { useSetRecoilState } from 'recoil';
 import {
   adminEmailState,
   isLicencedState,
+  isSendGridAvailableState,
   oauthAvailabilitiesState,
   selfHostedState,
 } from './state';
@@ -14,6 +15,7 @@ const GlobalProvider: React.FC = ({ children }) => {
   const setLicenced = useSetRecoilState(isLicencedState);
   const setSelfHosted = useSetRecoilState(selfHostedState);
   const setOAuth = useSetRecoilState(oauthAvailabilitiesState);
+  const setSendGridAvailable = useSetRecoilState(isSendGridAvailableState);
 
   useEffect(() => {
     async function loadGlobal() {
@@ -24,10 +26,11 @@ const GlobalProvider: React.FC = ({ children }) => {
         setLicenced(infos.licenced);
         setSelfHosted(infos.selfHosted);
         setOAuth(infos.oAuth);
+        setSendGridAvailable(infos.sendGridAvailable);
       }
     }
     loadGlobal();
-  }, [setEmail, setLicenced, setSelfHosted, setOAuth]);
+  }, [setEmail, setLicenced, setSelfHosted, setOAuth, setSendGridAvailable]);
 
   return <>{children}</>;
 };
