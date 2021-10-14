@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { fetchSelfHostingInfo } from '../api';
+import { fetchBackendCapabilities } from '../api';
 import { useSetRecoilState } from 'recoil';
 import { backendCapabilitiesState } from './state';
 import { loadCsrfToken } from '../api/fetch';
@@ -10,7 +10,7 @@ const GlobalProvider: React.FC = ({ children }) => {
   useEffect(() => {
     async function loadGlobal() {
       await loadCsrfToken(); // Make sure the CSRF token is loaded before anything else
-      const infos = await fetchSelfHostingInfo();
+      const infos = await fetchBackendCapabilities();
       if (infos) {
         setBackendCapabilities(infos);
       }

@@ -223,7 +223,7 @@ export async function getGiphyUrl(giphyId: string): Promise<string | null> {
   }
 }
 
-export async function fetchSelfHostingInfo(): Promise<BackendCapabilities | null> {
+export async function fetchBackendCapabilities(): Promise<BackendCapabilities | null> {
   return await fetchGet<BackendCapabilities | null>(
     '/api/admin/self-hosting',
     null
