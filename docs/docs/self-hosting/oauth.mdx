@@ -16,6 +16,7 @@ We will help you set up OAuth for **Google** and **Github**, but the process is 
 providers we support: **Okta**, **Microsoft**, **Twitter** and **Slack**.
 :::
 
+
 ## Github
 
 If you are working in tech, chances are your users will have a GitHub account.
@@ -43,3 +44,29 @@ To setup OAuth for GitHub, follow the guide:
 - Copy both the `Client ID` and the `Client Secret` from the form above
 - In your `docker-compose.yml` file, set them up respectively as `GITHUB_KEY` and `GITHUB_SECRET` in the backend section. [Look here](optionals) if you are not sure where these should be.
 - Restart your containers (`docker-compose up -d`) and you should now be able to use GitHub to login 🎉.
+
+
+## Google
+
+### Create the keys
+
+- Connect to the [Google Cloud Platform](https://console.cloud.google.com/home/dashboard) dashboard
+- Create a new Project (if you don't have one already)<br />
+<img src="/img/self-hosting/oa-gcp-1.png" width="600" /><br />
+<img src="/img/self-hosting/oa-gcp-2.png" width="300" />
+- Then select this new project (in the page header), and go to `APIs and services` and `Credentials`<br />
+<img src="/img/self-hosting/oa-gcp-3.png" width="400" />
+- Fill the `OAuth Consent Screen` information<br />
+<img src="/img/self-hosting/oa-gcp-4.png" width="400" />
+- Then go back to `Credentials`, click on `Create Credentials` then `OAuth client ID`.<br />
+<img src="/img/self-hosting/oa-gcp-5.png" width="400" />
+- Fill the relevant information, the important bit here will be the `Authorised Redirect URL`. It is composed of the domain followed by `/api/auth/google/callback`.<br />
+<img src="/img/self-hosting/oa-gcp-6.png" width="400" />
+- You will then finally given two keys:<br />
+<img src="/img/self-hosting/oa-gcp-7.png" width="400" />
+
+### Install the keys
+
+- Copy both the `Your Client ID` and the `Your Client Secret` from the form above
+- In your `docker-compose.yml` file, set them up respectively as `GOOGLE_KEY` and `GOOGLE_SECRET` in the backend section. [Look here](optionals) if you are not sure where these should be.
+- Restart your containers (`docker-compose up -d`) and you should now be able to use Google to login 🎉.
