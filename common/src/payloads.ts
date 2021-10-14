@@ -52,6 +52,7 @@ export interface SelfHostedCheckPayload {
 
 export interface SelfHostingPayload {
   selfHosted: boolean;
+  sendGridAvailable: boolean;
   adminEmail: string;
   licenced: boolean;
   oAuth: OAuthAvailabilities;

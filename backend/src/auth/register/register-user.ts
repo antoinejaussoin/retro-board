@@ -24,7 +24,10 @@ export default async function registerPasswordUser(
     type: 'password',
     username: details.username,
     password: hashedPassword,
-    emailVerification: config.SELF_HOSTED ? undefined : v4(),
+    emailVerification:
+      config.SENDGRID_API_KEY && config.SENDGRID_VERIFICATION_EMAIL_TID
+        ? v4()
+        : undefined,
     language: details.language,
   });
 

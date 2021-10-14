@@ -24,3 +24,7 @@ export const oauthAvailabilitiesState = atom<OAuthAvailabilities>({
     okta: false,
   },
 });
+export const isSendGridAvailableState = atom<boolean>({
+  key: 'SENDGRID_AVAILABLE',
+  default: false,
+});

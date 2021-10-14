@@ -22,6 +22,11 @@ router.get('/self-hosting', async (_, res) => {
     adminEmail: config.SELF_HOSTED_ADMIN,
     selfHosted: config.SELF_HOSTED,
     licenced: !!licence,
+    sendGridAvailable:
+      !!config.SENDGRID_API_KEY &&
+      !!config.SENDGRID_RESET_PASSWORD_TID &&
+      !!config.SENDGRID_VERIFICATION_EMAIL_TID &&
+      !!config.SENDGRID_SENDER,
     oAuth: {
       google: !!config.GOOGLE_KEY && !!config.GOOGLE_SECRET,
       github: !!config.GITHUB_KEY && !!config.GITHUB_SECRET,

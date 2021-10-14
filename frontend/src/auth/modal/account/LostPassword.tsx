@@ -8,7 +8,7 @@ import { Email } from '@mui/icons-material';
 import { resetPassword } from '../../../api';
 import { Link } from 'react-router-dom';
 import useAdminEmail from '../../../global/useAdminEmail';
-import useIsSelfHosted from '../../../global/useIsSelfHosted';
+import useIsSendGridAvailable from '../../../global/useIsSendGridAvailable';
 
 const LostPassword = () => {
   const { ResetPassword: translations, AuthCommon: authTranslations } =
@@ -16,7 +16,7 @@ const LostPassword = () => {
   const [email, setEmail] = useState('');
   const [done, setDone] = useState(false);
   const adminEmail = useAdminEmail();
-  const isSelfHosted = useIsSelfHosted();
+  const canUseSendgrid = useIsSendGridAvailable();
   const handleForgotPassword = useCallback(() => {
     async function reset() {
       await resetPassword(email);
@@ -25,7 +25,7 @@ const LostPassword = () => {
     reset();
   }, [email]);
 
-  if (isSelfHosted) {
+  if (!canUseSendgrid) {
     return (
       <Alert severity="info">
         You are using a Self-Hosted version of Retrospected. In order to reset
