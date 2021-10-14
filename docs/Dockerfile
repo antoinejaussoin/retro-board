@@ -1,8 +1,8 @@
 # This must be run with the Docker context set to the root folder of the repository
 # (the one with the yarn.lock file)
 
-# FROM --platform=$BUILDPLATFORM node:16-alpine as Node
-FROM node:16-alpine as Node
+FROM --platform=$BUILDPLATFORM node:16-alpine as Node
+## FROM node:16-alpine as Node
 
 ENV NODE_ENV=production
 
