@@ -4,7 +4,8 @@ In addition to the basic `docker-compose.yml` file you can [build here](quick-st
 
 These will allow you to add:
 
-- OAuth authentication (logging via Google, GitHub, etc.)
+- [OAuth authentication](oauth) (logging via Google, GitHub, etc.)
+- [SendGrid](sendgrid) (emails)
 - Sentry (error reporting)
 - Google Analytics
 - Change the default language (for new users)

@@ -1,6 +1,7 @@
 # 🔐 OAuth
 
-On the public [Retrospected](https://www.retrospected.com) website, you will have noticed that people can register and login in one click using an OAuth provider:
+On the public [Retrospected](https://www.retrospected.com) website, 
+you will have noticed that people can register and login in one click using an OAuth provider:
 
 <img src="/img/self-hosting/oa-1.png" width="300" />
 
@@ -15,6 +16,13 @@ be reachable over the internet.
 We will help you set up OAuth for **Google** and **Github**, but the process is similar for the other 
 providers we support: **Okta**, **Microsoft**, **Twitter** and **Slack**.
 :::
+
+## Common setup
+
+In order for OAuth to work, you need to setup the `BASE_URL` environement variable on your docker-compose file:
+this is the URL to your self-hosted Retrospected (for example: `http://retro.mycompany.com`).
+
+Look [here](optionals) in the full docker-compose file to get an example.
 
 
 ## Github
