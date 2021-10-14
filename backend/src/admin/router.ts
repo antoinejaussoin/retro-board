@@ -8,7 +8,7 @@ import config from '../config';
 import { isLicenced } from '../security/is-licenced';
 import {
   AdminChangePasswordPayload,
-  SelfHostingPayload,
+  BackendCapabilities,
 } from '@retrospected/common';
 import { getIdentityFromRequest, hashPassword } from '../utils';
 import csurf from 'csurf';
@@ -18,7 +18,7 @@ const csrfProtection = csurf();
 
 router.get('/self-hosting', async (_, res) => {
   const licence = await isLicenced();
-  const payload: SelfHostingPayload = {
+  const payload: BackendCapabilities = {
     adminEmail: config.SELF_HOSTED_ADMIN,
     selfHosted: config.SELF_HOSTED,
     licenced: !!licence,

@@ -16,8 +16,8 @@ import { HomeOutlined } from '@mui/icons-material';
 import ProPill from './components/ProPill';
 import { CodeSplitLoader } from './CodeSplitLoader';
 import useSidePanel from './views/panel/useSidePanel';
-import useIsLicenced from './global/useIsLicenced';
 import { Alert, AlertTitle } from '@mui/material';
+import useBackendCapabilities from './global/useBackendCapabilities';
 
 const Home = lazy(() => import('./views/Home' /* webpackChunkName: "home" */));
 const Game = lazy(() => import('./views/Game' /* webpackChunkName: "game" */));
@@ -85,7 +85,7 @@ const Title = styled(Typography)`
 
 function App() {
   const history = useHistory();
-  const licenced = useIsLicenced();
+  const backend = useBackendCapabilities();
   const isCompatible = useIsCompatibleBrowser();
   const { toggle: togglePanel } = useSidePanel();
   const isInitialised = useIsInitialised();
@@ -102,7 +102,7 @@ function App() {
   }, [history]);
   return (
     <div>
-      {!licenced ? (
+      {!backend.licenced ? (
         <Alert title="Unlicenced" severity="error">
           <AlertTitle>Retrospected is Unlicenced</AlertTitle>
           This software is unlicenced. You can obtain a licence{' '}

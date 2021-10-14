@@ -7,16 +7,14 @@ import Input from '../../../components/Input';
 import { Email } from '@mui/icons-material';
 import { resetPassword } from '../../../api';
 import { Link } from 'react-router-dom';
-import useAdminEmail from '../../../global/useAdminEmail';
-import useIsSendGridAvailable from '../../../global/useIsSendGridAvailable';
+import useBackendCapabilities from '../../../global/useBackendCapabilities';
 
 const LostPassword = () => {
   const { ResetPassword: translations, AuthCommon: authTranslations } =
     useTranslations();
   const [email, setEmail] = useState('');
   const [done, setDone] = useState(false);
-  const adminEmail = useAdminEmail();
-  const canUseSendgrid = useIsSendGridAvailable();
+  const backend = useBackendCapabilities();
   const handleForgotPassword = useCallback(() => {
     async function reset() {
       await resetPassword(email);
@@ -25,12 +23,12 @@ const LostPassword = () => {
     reset();
   }, [email]);
 
-  if (!canUseSendgrid) {
+  if (!backend.sendGridAvailable) {
     return (
       <Alert severity="info">
-        You are using a Self-Hosted version of Retrospected. In order to reset
-        your password, ask your admin ({adminEmail}) to access the admin page to
-        do that:&nbsp;
+        You are using a Self-Hosted version of Retrospected, without email
+        support. In order to reset your password, ask your admin (
+        {backend.adminEmail}) to access the admin page to do that:&nbsp;
         <Link to="/admin">Admin Panel</Link>
       </Alert>
     );

@@ -2,17 +2,15 @@ import { Alert } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { FullUser } from '@retrospected/common';
 import useUser from '../../auth/useUser';
-import useAdminEmail from '../../global/useAdminEmail';
 import useStateFetch from '../../hooks/useStateFetch';
 import { useMemo } from 'react';
 import styled from '@emotion/styled';
 import ChangePassword from './ChangePassword';
-import useIsSelfHosted from '../../global/useIsSelfHosted';
+import useBackendCapabilities from '../../global/useBackendCapabilities';
 
 export default function AdminPage() {
   const user = useUser();
-  const adminEmail = useAdminEmail();
-  const isSelfHosted = useIsSelfHosted();
+  const backend = useBackendCapabilities();
   const [users] = useStateFetch<FullUser[]>('/api/admin/users', []);
 
   const columns: GridColDef[] = useMemo(() => {
@@ -28,16 +26,16 @@ export default function AdminPage() {
     ] as GridColDef[];
   }, []);
 
-  if (!isSelfHosted) {
+  if (!backend.selfHosted) {
     <Alert severity="error">
       This page is only accessible for self-hosted instances.
     </Alert>;
   }
-  if (!user || user.email !== adminEmail) {
+  if (!user || user.email !== backend.adminEmail) {
     return (
       <Alert severity="error">
         This page is only accessible for the Self-Hosted Administrator (
-        {adminEmail}).
+        {backend.adminEmail}).
       </Alert>
     );
   }

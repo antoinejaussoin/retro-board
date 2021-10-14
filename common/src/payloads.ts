@@ -50,7 +50,7 @@ export interface SelfHostedCheckPayload {
   key: string;
 }
 
-export interface SelfHostingPayload {
+export interface BackendCapabilities {
   selfHosted: boolean;
   sendGridAvailable: boolean;
   adminEmail: string;

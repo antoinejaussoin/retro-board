@@ -1,9 +1,9 @@
 import { some, values } from 'lodash';
-import { useRecoilValue } from 'recoil';
-import { oauthAvailabilitiesState } from './state';
+import useBackendCapabilities from './useBackendCapabilities';
 
 export default function useOAuthAvailabilities() {
-  const details = useRecoilValue(oauthAvailabilitiesState);
+  const backend = useBackendCapabilities();
+  const details = backend.oAuth;
   return {
     any: some(values(details)),
     details,

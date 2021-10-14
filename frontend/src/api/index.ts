@@ -8,7 +8,7 @@ import {
   ResetChangePasswordPayload,
   FullUser,
   Product,
-  SelfHostingPayload,
+  BackendCapabilities,
 } from '@retrospected/common';
 import config from '../utils/getConfig';
 import { v4 } from 'uuid';
@@ -223,8 +223,8 @@ export async function getGiphyUrl(giphyId: string): Promise<string | null> {
   }
 }
 
-export async function fetchSelfHostingInfo(): Promise<SelfHostingPayload | null> {
-  return await fetchGet<SelfHostingPayload | null>(
+export async function fetchSelfHostingInfo(): Promise<BackendCapabilities | null> {
+  return await fetchGet<BackendCapabilities | null>(
     '/api/admin/self-hosting',
     null
   );

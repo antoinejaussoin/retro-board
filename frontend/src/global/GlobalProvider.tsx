@@ -1,36 +1,22 @@
 import { useEffect } from 'react';
 import { fetchSelfHostingInfo } from '../api';
 import { useSetRecoilState } from 'recoil';
-import {
-  adminEmailState,
-  isLicencedState,
-  isSendGridAvailableState,
-  oauthAvailabilitiesState,
-  selfHostedState,
-} from './state';
+import { backendCapabilitiesState } from './state';
 import { loadCsrfToken } from '../api/fetch';
 
 const GlobalProvider: React.FC = ({ children }) => {
-  const setEmail = useSetRecoilState(adminEmailState);
-  const setLicenced = useSetRecoilState(isLicencedState);
-  const setSelfHosted = useSetRecoilState(selfHostedState);
-  const setOAuth = useSetRecoilState(oauthAvailabilitiesState);
-  const setSendGridAvailable = useSetRecoilState(isSendGridAvailableState);
+  const setBackendCapabilities = useSetRecoilState(backendCapabilitiesState);
 
   useEffect(() => {
     async function loadGlobal() {
       await loadCsrfToken(); // Make sure the CSRF token is loaded before anything else
       const infos = await fetchSelfHostingInfo();
       if (infos) {
-        setEmail(infos.adminEmail);
-        setLicenced(infos.licenced);
-        setSelfHosted(infos.selfHosted);
-        setOAuth(infos.oAuth);
-        setSendGridAvailable(infos.sendGridAvailable);
+        setBackendCapabilities(infos);
       }
     }
     loadGlobal();
-  }, [setEmail, setLicenced, setSelfHosted, setOAuth, setSendGridAvailable]);
+  }, [setBackendCapabilities]);
 
   return <>{children}</>;
 };
