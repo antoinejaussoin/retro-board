@@ -152,6 +152,7 @@ When using the Docker deployment, your database runs from a container. But if yo
 ### Version 4.9.0
 
 - Brand new [documentation website](https://docs.retrospected.com).
+- Migrate all docker images from `antoinejaussoin/retro-board-*` to `retrospected/*`.
 - 🐛 The Unlimited subscription domain check was not accepting valid domains such as `.ventures` or `.agency`.
 
 ### Version 4.8.0
