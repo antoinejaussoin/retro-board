@@ -53,9 +53,10 @@ It features the following technologies:
 - [Yarn](https://yarnpkg.com/en/), replacing NPM
 - [Docker](https://docker.com), for easy deployment
 - [Kubernetes](https://kubernetes.io/), to scale Retrospected for its 10M+ users (not)
-- [Travis](http://travis-ci.org/), for Continuous Integration and Deployment (CI/CD)
+- [GitHub Actions](https://github.com/features/actions), for Continuous Integration and Deployment (CI/CD)
 - [Multi-Architecture](https://github.com/docker/buildx/), for automatic compatibility with ARM-based servers
 - [Stripe](https://stripe.com/), for our payment solution
+- [Docusaurus](http://docusaurus.io/), for our documentation
 
 Previous versions, up to v1.0.1 featured the following libraries:
 
