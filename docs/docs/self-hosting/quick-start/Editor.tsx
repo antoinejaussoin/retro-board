@@ -7,6 +7,7 @@ import queryString from 'query-string';
 import RunDetails from './RunDetails';
 import useIsBrowser from '@docusaurus/useIsBrowser';
 import Toggle from 'react-toggle';
+import usePersistedState from './usePersistedState';
 
 function getRandomPassword() {
   return randomWords(4).join('-');
@@ -14,14 +15,23 @@ function getRandomPassword() {
 
 export default function Editor() {
   const isBrowser = useIsBrowser();
-  const [dbPassword, setDbPassword] = useState(getRandomPassword());
-  const [pgPassword, setPgPassword] = useState(getRandomPassword());
-  const [sessionSecret, setSessionSecret] = useState(getRandomPassword());
-  const [licence, setLicence] = useState('demo');
-  const [email, setEmail] = useState('your@email.com');
-  const [port, setPort] = useState('80');
-  const [pgPort, setPgPort] = useState('81');
-  const [isArm, setIsArm] = useState(false);
+  const [dbPassword, setDbPassword] = usePersistedState(
+    'db-password',
+    getRandomPassword()
+  );
+  const [pgPassword, setPgPassword] = usePersistedState(
+    'pg-password',
+    getRandomPassword()
+  );
+  const [sessionSecret, setSessionSecret] = usePersistedState(
+    'session-secret',
+    getRandomPassword()
+  );
+  const [licence, setLicence] = usePersistedState('licence-key', 'demo');
+  const [email, setEmail] = usePersistedState('email', 'your@email.com');
+  const [port, setPort] = usePersistedState('port', '80');
+  const [pgPort, setPgPort] = usePersistedState('pg-port', '81');
+  const [isArm, setIsArm] = usePersistedState('is-arm', false);
 
   useEffect(() => {
     if (isBrowser) {
