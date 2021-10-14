@@ -1,0 +1,45 @@
+# OAuth
+
+On the public [Retrospected](https://www.retrospected.com) website, you will have noticed that people can register and login in one click using an OAuth provider:
+
+<img src="/img/self-hosting/oa-1.png" width="300" />
+
+You can provide the same seamless experience on your Self-Hosted instance by following the guide below.
+
+:::tip Local Network
+The following works even if you are self-hosting on a local or corporate network. Your instance doesn't have to
+be reachable over the internet.
+:::
+
+:::info What about other providers?
+We will help you set up OAuth for **Google** and **Github**, but the process is similar for the other 
+providers we support: **Okta**, **Microsoft**, **Twitter** and **Slack**.
+:::
+
+## Github
+
+If you are working in tech, chances are your users will have a GitHub account.
+
+To setup OAuth for GitHub, follow the guide:
+
+### Create the keys
+
+- Go to your [GitHub profile](https://github.com/settings/profile) (you need to be logged in)
+- On the left-hand-side, find the `Developer settings` menu:<br />
+<img src="/img/self-hosting/oa-github-1.png" width="200" />
+- Select `OAuth Apps`<br />
+<img src="/img/self-hosting/oa-github-2.png" width="200" />
+- Fill the following information:
+  - **Application name**: A name that you choose
+  - **Home page URL**: the publicly reachable URL for your instance of Retrospected
+  - **Description**: Some description of your choosing
+  - **Authorization callback URL**: This is the most important: it is composed of the domain followed by `/api/auth/github/callback`.<br />
+<img src="/img/self-hosting/oa-github-3.png" width="400" />
+- Click `Register Application`
+- Your app is now created, and you need to now click on `Generate a new client secret`. The page should now look like this:<br />
+<img src="/img/self-hosting/oa-github-4.png" width="400" />
+
+### Install the keys
+- Copy both the `Client ID` and the `Client Secret` from the form above
+- In your `docker-compose.yml` file, set them up respectively as `GITHUB_KEY` and `GITHUB_SECRET` in the backend section. [Look here](optionals) if you are not sure where these should be.
+- Restart your containers (`docker-compose up -d`) and you should now be able to use GitHub to login 🎉.
