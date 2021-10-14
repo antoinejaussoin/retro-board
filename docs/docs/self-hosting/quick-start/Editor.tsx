@@ -19,8 +19,8 @@ export default function Editor() {
   const [sessionSecret, setSessionSecret] = useState(getRandomPassword());
   const [licence, setLicence] = useState('demo');
   const [email, setEmail] = useState('your@email.com');
-  const [port, setPort] = useState('1800');
-  const [pgPort, setPgPort] = useState('1801');
+  const [port, setPort] = useState('80');
+  const [pgPort, setPgPort] = useState('81');
   const [isArm, setIsArm] = useState(false);
 
   useEffect(() => {
@@ -37,6 +37,8 @@ export default function Editor() {
 
   return (
     <span>
+      <h3>Settings</h3>
+
       <div className={styles.settings}>
         <InputField
           label="Email"
@@ -98,6 +100,8 @@ export default function Editor() {
           </div>
         </Field>
       </div>
+      <h3>Your customised docker-compose file:</h3>
+
       <ComposeView
         dbPassword={dbPassword}
         pgPassword={pgPassword}

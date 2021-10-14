@@ -20,7 +20,10 @@ export default function RunDetails({
       <ul>
         <li>
           Retrospected:{' '}
-          <a href={`http://localhost:${port}`}>http://localhost:{port}</a>.
+          <a href={`http://localhost${port === '80' ? '' : `:${port}`}`}>
+            http://localhost{port === '80' ? '' : `:${port}`}
+          </a>
+          .
         </li>
         <li>
           PGAdmin:{' '}

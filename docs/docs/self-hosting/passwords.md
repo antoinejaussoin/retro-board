@@ -2,18 +2,16 @@
 sidebar_position: 5
 ---
 
-# Passwords
+# 🔑 Passwords
 
-If you followed the installation instructions, you will have noticed the following paragraph:
+If you followed the [installation instructions](quick-start), you will have noticed the following paragraph:
 
 :::danger Passwords
 
-When you get your email and your customised `docker-compose.yml` file, the file will be already set with custom (and random) passwords that are unique to you, in addition to other details, like email and licence key.
-
-You are perfectly welcome to change these default passwords, but you **must** do so before running docker-compose for the first time.
-
-Indeed, after the first run, the passwords are set at the database level and PGAdmin configuration, so changing on your `docker-compose.yml` file will break things.
-
+Once you have run your docker-compose file for the first time, some of
+the passwords will be set in stone. Please refrain from changing them
+going forward, or if you must, read the
+[following guide](passwords).
 :::
 
 If you still want to go ahead with changing the passwords, this is still possible but with a bit of work.

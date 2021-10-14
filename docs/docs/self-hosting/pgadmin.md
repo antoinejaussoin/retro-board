@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# PGAdmin
+# 👨🏻‍💼 PGAdmin
 
 [PGAdmin](https://www.pgadmin.org) allows you to have access to your database.
 

@@ -1,6 +1,8 @@
 import React from 'react';
+import CopyToClipboard from 'react-copy-to-clipboard';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { xonokai } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import styles from './ComposeView.module.css';
 
 type ComposeViewProps = {
   dbPassword: string;
@@ -23,9 +25,7 @@ export default function ComposeView({
   pgPort,
   arm,
 }: ComposeViewProps) {
-  return (
-    <SyntaxHighlighter language="yaml" style={xonokai}>
-      {`version: '3'
+  const text = `version: '3'
 services:
   frontend:
     image: retrospected/frontend:latest
@@ -99,7 +99,18 @@ services:
 volumes:
   database:
   pgadmin:
-`}
-    </SyntaxHighlighter>
+`;
+  return (
+    <>
+      <CopyToClipboard text={text}>
+        <button className={styles.download} style={{ marginBottom: 10 }}>
+          Copy to clipboard
+        </button>
+      </CopyToClipboard>
+
+      <SyntaxHighlighter language="yaml" style={xonokai}>
+        {text}
+      </SyntaxHighlighter>
+    </>
   );
 }

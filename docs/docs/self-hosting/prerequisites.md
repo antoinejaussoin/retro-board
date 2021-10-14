@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Prerequisites
+# 💿 Prerequisites
 
 Whether you have purchased a self-hosted licence, or whether you'd like to install a trial version of Retrospected locally, you will need to have the following prerequisites before doing the actual [installation](quick-start).
 

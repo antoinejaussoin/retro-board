@@ -2,7 +2,7 @@
 sidebar_position: 4
 ---
 
-# Admin Panel
+# 🙋‍♂️ Managing Users
 
 When self-hosting, you will not have access to the ability to confirm and reset passwords by email (unless you setup [Sendgrid](sendgrid)).
 

@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Backup your data
+# 💾 Backup your data
 
 Making sure your data is safe is **important**.
 

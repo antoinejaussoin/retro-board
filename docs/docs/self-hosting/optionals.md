@@ -1,4 +1,4 @@
-# Optional Settings
+# 🎚 Optional Settings
 
 In addition to the basic `docker-compose.yml` file you can [build here](quick-start), you can also add optional configuration options.
 
@@ -160,5 +160,4 @@ services:
 volumes:
   database:
   pgadmin:
-
 ```
