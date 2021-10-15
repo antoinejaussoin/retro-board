@@ -42,6 +42,13 @@ function usePersistedState<T>(
   );
 
   useEffect(() => {
+    if (isBrowser) {
+      const storedDefault = getFromLocalStorage(key, defaultValue, isBrowser);
+      setState(storedDefault);
+    }
+  }, [isBrowser]);
+
+  useEffect(() => {
     storeInLocalStorage(key, state, isBrowser);
   }, [state, key]);
 
