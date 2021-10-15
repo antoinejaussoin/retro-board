@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [v490/docker-change]
+    branches: [v490/release2]
 
 jobs:
   build:

@@ -43,20 +43,34 @@ function Panel() {
         <Bottom>
           <Typography component="div">
             <Policies>
+              <Typography variant="h6">Documentation</Typography>
+              <ExternalLink
+                href="https://docs.retrospected.com/docs/self-hosting/quick-start"
+                target="_blank"
+              >
+                Self Hosting
+              </ExternalLink>
+              <ExternalLink
+                href="https://docs.retrospected.com/docs/features/encryption"
+                target="_blank"
+              >
+                Encrypted Sessions
+              </ExternalLink>
+              <ExternalLink
+                href="https://docs.retrospected.com/docs/features/private-sessions"
+                target="_blank"
+              >
+                Private Sessions
+              </ExternalLink>
+            </Policies>
+            <Policies>
               <Typography variant="h6">Legal Stuff</Typography>
               {policies.map((policy) => (
-                <Link
-                  component={RouterLink}
-                  sx={{
-                    textDecoration: 'none',
-                    ':hover': { textDecoration: 'underline' },
-                  }}
-                  to={policy.url}
-                  color="inherit"
+                <PanelLink
+                  url={policy.url}
+                  name={policy.name}
                   key={policy.name}
-                >
-                  {policy.name}
-                </Link>
+                />
               ))}
             </Policies>
           </Typography>
@@ -71,6 +85,34 @@ function Panel() {
     </Drawer>
   );
 }
+
+type PanelLinkProps = {
+  url: string;
+  name: string;
+};
+
+function PanelLink({ url, name }: PanelLinkProps) {
+  return (
+    <Link
+      component={RouterLink}
+      sx={{
+        textDecoration: 'none',
+        ':hover': { textDecoration: 'underline' },
+      }}
+      to={url}
+      color="inherit"
+    >
+      {name}
+    </Link>
+  );
+}
+
+const ExternalLink = styled.a`
+  text-decoration: none;
+  :hover {
+    text-decoration: underline;
+  }
+`;
 
 const Content = styled.div`
   padding: 10px;

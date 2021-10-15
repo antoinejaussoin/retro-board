@@ -89,6 +89,7 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 - Brand new [documentation website](https://docs.retrospected.com).
 - Migrate all docker images from `antoinejaussoin/retro-board-*` to `retrospected/*`.
+- Allowing Self-Hosted instances to use SendGrid for email recovery
 - 🐛 The Unlimited subscription domain check was not accepting valid domains such as `.ventures` or `.agency`.
 
 ### Version 4.8.0

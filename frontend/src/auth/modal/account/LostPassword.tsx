@@ -23,7 +23,7 @@ const LostPassword = () => {
     reset();
   }, [email]);
 
-  if (!backend.sendGridAvailable) {
+  if (!backend.sendGridAvailable && backend.selfHosted) {
     return (
       <Alert severity="info">
         You are using a Self-Hosted version of Retrospected, without email
