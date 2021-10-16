@@ -85,6 +85,10 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 4.9.1 (unreleased)
+
+- ⏫ Upgrading dependencies
+
 ### Version 4.9.0
 
 - Brand new [documentation website](https://docs.retrospected.com).
