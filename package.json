@@ -54,7 +54,7 @@
   },
   "homepage": "http://www.retrospected.com",
   "dependencies": {
-    "del-cli": "^3.0.1",
-    "typescript": "^4.2.4"
+    "del-cli": "^4.0.1",
+    "typescript": "^4.4.4"
   }
 }
