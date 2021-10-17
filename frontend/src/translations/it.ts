@@ -118,6 +118,8 @@ export default {
     notLoggedIn:
       'Non sei autenticato. Puoi assistere a questa sessione come spettatore ma non puoi partecipare',
     maxPostsReached: undefined,
+    iAmDone: undefined,
+    iAmNotDoneYet: undefined,
   },
   GameMenu: {
     board: 'Board',

@@ -114,6 +114,8 @@ export default {
     notLoggedIn: undefined,
     error: undefined,
     maxPostsReached: undefined,
+    iAmDone: undefined,
+    iAmNotDoneYet: undefined,
   },
   GameMenu: {
     board: undefined,

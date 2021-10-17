@@ -5,6 +5,7 @@ import useParticipants from './useParticipants';
 import useSession from './useSession';
 import styled from '@emotion/styled';
 import useUser from '../../auth/useUser';
+import useTranslation from '../../translations/useTranslations';
 
 type ParticipantsProps = {
   onReady: () => void;
@@ -14,6 +15,7 @@ function Participants({ onReady }: ParticipantsProps) {
   const { participants } = useParticipants();
   const { session } = useSession();
   const user = useUser();
+  const { PostBoard: translations } = useTranslation();
   const isUserReady = !!user && !!session && session.ready.includes(user.id);
   return (
     <Container>
@@ -55,7 +57,7 @@ function Participants({ onReady }: ParticipantsProps) {
           )
         }
       >
-        {isUserReady ? "I'm not done yet" : "I'm done!"}
+        {isUserReady ? translations.iAmNotDoneYet : translations.iAmDone}
       </Button>
     </Container>
   );

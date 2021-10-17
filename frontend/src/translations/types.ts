@@ -112,6 +112,8 @@ export interface Translation {
     notLoggedIn?: string;
     error?: (error: WsErrorType) => string;
     maxPostsReached?: string;
+    iAmDone?: string;
+    iAmNotDoneYet?: string;
   };
   GameMenu: {
     board?: string;
