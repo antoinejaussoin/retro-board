@@ -7,6 +7,7 @@ export interface Session extends PostContainer, Entity {
   encrypted: string | null;
   locked: boolean;
   createdBy: User;
+  ready: string[];
 }
 
 export interface SessionMetadata extends Entity {

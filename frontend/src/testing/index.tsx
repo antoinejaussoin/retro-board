@@ -27,6 +27,7 @@ export const initialSession: Session = {
   options: {
     ...defaultOptions,
   },
+  ready: [],
 };
 
 export const AllTheProviders: React.FC = ({ children }) => {
