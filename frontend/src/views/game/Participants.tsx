@@ -1,9 +1,10 @@
-import { AvatarGroup, Button } from '@mui/material';
-import { useCallback } from 'react';
-import useUser from '../../auth/useUser';
+import { Cancel, Check, CheckCircle } from '@mui/icons-material';
+import { AvatarGroup, Badge, Button, colors } from '@mui/material';
 import CustomAvatar from '../../components/Avatar';
 import useParticipants from './useParticipants';
 import useSession from './useSession';
+import styled from '@emotion/styled';
+import useUser from '../../auth/useUser';
 
 type ParticipantsProps = {
   onReady: () => void;
@@ -12,17 +13,12 @@ type ParticipantsProps = {
 function Participants({ onReady }: ParticipantsProps) {
   const { participants } = useParticipants();
   const { session } = useSession();
-  // const user = useUser();
-  // const handleReady = useCallback(() => {
-  //   console.log('handle ready,', user, session);
-  //   if (user && session) {
-  //     userReady(user.id, !session.ready.includes(user.id));
-  //   }
-  // }, [user, session, userReady]);
+  const user = useUser();
+  const isUserReady = !!user && !!session && session.ready.includes(user.id);
   return (
-    <div>
+    <Container>
       <AvatarGroup
-        max={20}
+        max={50}
         sx={{
           flexDirection: 'row',
         }}
@@ -31,18 +27,45 @@ function Participants({ onReady }: ParticipantsProps) {
           .filter((u) => u.online)
           .map((user) => {
             return (
-              <>
+              <Badge
+                overlap="circular"
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                }}
+                badgeContent={
+                  session?.ready.includes(user.id) ? (
+                    <CheckCircle htmlColor={colors.green[500]} />
+                  ) : undefined
+                }
+              >
                 <CustomAvatar user={user} key={user.id} title={user.name} />
-                <span>
-                  {session?.ready.includes(user.id) ? 'ready!!' : 'not ready'}
-                </span>
-              </>
+              </Badge>
             );
           })}
       </AvatarGroup>
-      <Button onClick={onReady}>Ready?</Button>
-    </div>
+      <Button
+        onClick={onReady}
+        variant="outlined"
+        endIcon={
+          isUserReady ? (
+            <Cancel htmlColor={colors.red[500]} />
+          ) : (
+            <Check htmlColor={colors.green[500]} />
+          )
+        }
+      >
+        {isUserReady ? "I'm not done yet" : "I'm done!"}
+      </Button>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  display: flex;
+  > :first-child {
+    flex: 1;
+  }
+`;
 
 export default Participants;
