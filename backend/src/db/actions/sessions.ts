@@ -437,3 +437,21 @@ export function isAllowed(
 
   return { allowed: true };
 }
+
+export async function toggleReady(
+  sessionId: string,
+  userId: string
+): Promise<boolean> {
+  return await transaction(async (manager) => {
+    const sessionRepository = manager.getCustomRepository(SessionRepository);
+    const session = await sessionRepository.findOne(sessionId);
+    if (!session) {
+      return false;
+    }
+    session.ready = session.ready.includes(userId)
+      ? session.ready.filter((id) => id !== userId)
+      : [...session.ready, userId];
+    await sessionRepository.save(session);
+    return session.ready.includes(userId);
+  });
+}

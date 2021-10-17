@@ -20,6 +20,7 @@ import {
   WebsocketMessage,
   Session,
   WsGroupUpdatePayload,
+  WsUserReadyPayload,
 } from '@retrospected/common';
 import { v4 } from 'uuid';
 import find from 'lodash/find';
@@ -120,6 +121,7 @@ const useGame = (sessionId: string) => {
     editOptions,
     editColumns,
     lockSession,
+    userReady,
   } = useSession();
 
   const allowMultipleVotes = session
@@ -370,6 +372,16 @@ const useGame = (sessionId: string) => {
         { variant: 'error', title: 'Rate Limit Error' }
       );
     });
+
+    socket.on(
+      Actions.RECEIVE_USER_READY,
+      ({ userId, ready }: WsUserReadyPayload) => {
+        if (debug) {
+          console.log('Receive user ready: ', userId);
+        }
+        userReady(userId, ready);
+      }
+    );
   }, [
     socket,
     status,
@@ -392,6 +404,7 @@ const useGame = (sessionId: string) => {
     lockSession,
     enqueueSnackbar,
     setUnauthorised,
+    userReady,
   ]);
 
   const [previousParticipans, setPreviousParticipants] = useState(participants);
@@ -682,6 +695,14 @@ const useGame = (sessionId: string) => {
     [send, lockSession]
   );
 
+  const onUserReady = useCallback(() => {
+    if (send && userId) {
+      userReady(userId);
+      send<void>(Actions.USER_READY);
+      trackAction(Actions.USER_READY);
+    }
+  }, [send, userReady, userId]);
+
   return {
     status,
     acks,
@@ -700,6 +721,7 @@ const useGame = (sessionId: string) => {
     onSaveTemplate,
     onLockSession,
     reconnect,
+    onUserReady,
   };
 };
 

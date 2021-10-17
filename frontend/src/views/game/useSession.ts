@@ -26,6 +26,7 @@ interface UseSession {
   editOptions: (options: SessionOptions) => void;
   editColumns: (columns: ColumnDefinition[]) => void;
   lockSession: (locked: boolean) => void;
+  userReady: (userId: string, ready?: boolean) => void;
 }
 
 export default function useSession(): UseSession {
@@ -169,6 +170,7 @@ export default function useSession(): UseSession {
     },
     [setSession]
   );
+
   const deletePostGroup = useCallback(
     (groupId: string) => {
       setSession((session) =>
@@ -216,6 +218,7 @@ export default function useSession(): UseSession {
     },
     [setSession]
   );
+
   const lockSession = useCallback(
     (locked: boolean) => {
       setSession((session) =>
@@ -224,6 +227,24 @@ export default function useSession(): UseSession {
           : {
               ...session,
               locked,
+            }
+      );
+    },
+    [setSession]
+  );
+
+  const userReady = useCallback(
+    (userId: string, ready?: boolean) => {
+      setSession((session) =>
+        !session
+          ? session
+          : {
+              ...session,
+              ready: (
+                ready === undefined ? !session.ready.includes(userId) : ready
+              )
+                ? [...session.ready, userId]
+                : session.ready.filter((id) => id !== userId),
             }
       );
     },
@@ -245,5 +266,6 @@ export default function useSession(): UseSession {
     editColumns,
     editOptions,
     lockSession,
+    userReady,
   };
 }

@@ -19,6 +19,7 @@ import {
   WsErrorPayload,
   WebsocketMessage,
   WsGroupUpdatePayload,
+  WsUserReadyPayload,
 } from '@retrospected/common';
 import { RateLimiterMemory } from 'rate-limiter-flexible';
 import chalk from 'chalk';
@@ -44,6 +45,7 @@ import {
   saveTemplate,
   doesSessionExists,
   wasSessionCreatedBy,
+  toggleReady,
 } from './db/actions/sessions';
 import { getUser, getUserView } from './db/actions/users';
 import {
@@ -69,6 +71,8 @@ const {
   RECEIVE_EDIT_POST,
   RECEIVE_DELETE_POST_GROUP,
   RECEIVE_EDIT_POST_GROUP,
+  RECEIVE_USER_READY,
+  USER_READY,
   ADD_POST_SUCCESS,
   ADD_POST_GROUP_SUCCESS,
   DELETE_POST,
@@ -201,6 +205,12 @@ export default (io: Server) => {
     }
   }
 
+  /**
+   * Check that UserIds is not null
+   * @param userIds User IDs
+   * @param socket Socket
+   * @returns Whether User is not null
+   */
   function checkUser(
     userIds: UserIds | null,
     socket: Socket
@@ -353,6 +363,21 @@ export default (io: Server) => {
     const sessionEntity = await getSessionWithVisitors(sessionId);
     if (sessionEntity) {
       sendClientList(sessionEntity, socket);
+    }
+  };
+
+  const onUserReady = async (
+    userIds: UserIds | null,
+    sessionId: string,
+    _data: void,
+    socket: Socket
+  ) => {
+    if (checkUser(userIds, socket)) {
+      const ready = await toggleReady(sessionId, userIds.userId);
+      sendToAll<WsUserReadyPayload>(socket, sessionId, RECEIVE_USER_READY, {
+        userId: userIds.userId,
+        ready,
+      });
     }
   };
 
@@ -563,6 +588,7 @@ export default (io: Server) => {
       { type: REQUEST_BOARD, handler: onRequestBoard },
       { type: RENAME_SESSION, handler: onRenameSession },
       { type: LEAVE_SESSION, handler: onLeaveSession },
+      { type: USER_READY, handler: onUserReady },
       { type: EDIT_OPTIONS, handler: onEditOptions, onlyAuthor: true },
       { type: EDIT_COLUMNS, handler: onEditColumns, onlyAuthor: true },
       { type: SAVE_TEMPLATE, handler: onSaveTemplate, onlyAuthor: true },

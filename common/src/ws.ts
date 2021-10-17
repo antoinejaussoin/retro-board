@@ -54,6 +54,11 @@ export interface WsSaveTemplatePayload {
   options: SessionOptions;
 }
 
+export interface WsUserReadyPayload {
+  userId: string;
+  ready: boolean;
+}
+
 export type WsErrorType =
   | 'cannot_save_post'
   | 'cannot_save_group'

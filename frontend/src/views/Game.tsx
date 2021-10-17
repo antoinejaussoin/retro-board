@@ -68,6 +68,7 @@ function GamePage() {
     onEditColumns,
     onSaveTemplate,
     onLockSession,
+    onUserReady,
     reconnect,
   } = useGame(gameId);
 
@@ -182,7 +183,7 @@ function GamePage() {
         />
       ) : null}
       <ParticipantContainer>
-        <Participants />
+        <Participants onReady={onUserReady} />
       </ParticipantContainer>
     </div>
   );
