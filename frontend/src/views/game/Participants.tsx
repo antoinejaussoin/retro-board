@@ -1,5 +1,12 @@
-import { Cancel, Check, CheckCircle } from '@mui/icons-material';
-import { AvatarGroup, Badge, Button, colors } from '@mui/material';
+import { Check, CheckCircle, Create } from '@mui/icons-material';
+import {
+  AvatarGroup,
+  Badge,
+  Button,
+  colors,
+  IconButton,
+  useMediaQuery,
+} from '@mui/material';
 import CustomAvatar from '../../components/Avatar';
 import useParticipants from './useParticipants';
 import useSession from './useSession';
@@ -17,6 +24,7 @@ function Participants({ onReady }: ParticipantsProps) {
   const user = useUser();
   const { PostBoard: translations } = useTranslation();
   const isUserReady = !!user && !!session && session.ready.includes(user.id);
+  const fullScreen = useMediaQuery('(min-width:600px)');
   return (
     <Container>
       <AvatarGroup
@@ -46,19 +54,30 @@ function Participants({ onReady }: ParticipantsProps) {
             );
           })}
       </AvatarGroup>
-      <Button
-        onClick={onReady}
-        variant="outlined"
-        endIcon={
-          isUserReady ? (
-            <Cancel htmlColor={colors.red[500]} />
+      {user && !fullScreen ? (
+        <IconButton onClick={onReady}>
+          {isUserReady ? (
+            <Create htmlColor={colors.orange[500]} />
           ) : (
             <Check htmlColor={colors.green[500]} />
-          )
-        }
-      >
-        {isUserReady ? translations.iAmNotDoneYet : translations.iAmDone}
-      </Button>
+          )}
+        </IconButton>
+      ) : null}
+      {user && fullScreen ? (
+        <Button
+          onClick={onReady}
+          variant="outlined"
+          endIcon={
+            isUserReady ? (
+              <Create htmlColor={colors.orange[500]} />
+            ) : (
+              <Check htmlColor={colors.green[500]} />
+            )
+          }
+        >
+          {isUserReady ? translations.iAmNotDoneYet : translations.iAmDone}
+        </Button>
+      ) : null}
     </Container>
   );
 }
