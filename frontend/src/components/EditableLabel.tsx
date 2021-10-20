@@ -124,6 +124,7 @@ const ViewMode = styled.span`
   &:hover {
     > svg {
       color: ${colors.purple[500]};
+      cursor: pointer;
     }
   }
 `;
