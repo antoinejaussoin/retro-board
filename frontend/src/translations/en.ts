@@ -151,6 +151,7 @@ export default {
     maxPostsReached: `You have reached the maximum number of posts set by the moderator.`,
     iAmDone: "I'm done!",
     iAmNotDoneYet: "I'm not done yet...",
+    userIsReady: (user) => `${user} is ready!`,
   },
   GameMenu: {
     board: 'Board',

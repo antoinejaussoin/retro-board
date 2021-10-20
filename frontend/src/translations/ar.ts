@@ -111,6 +111,7 @@ export default {
     maxPostsReached: undefined,
     iAmDone: undefined,
     iAmNotDoneYet: undefined,
+    userIsReady: undefined,
   },
   GameMenu: {
     board: undefined,

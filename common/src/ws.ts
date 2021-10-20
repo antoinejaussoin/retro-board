@@ -57,6 +57,7 @@ export interface WsSaveTemplatePayload {
 export interface WsUserReadyPayload {
   userId: string;
   ready: boolean;
+  name: string;
 }
 
 export type WsErrorType =

@@ -114,6 +114,7 @@ export interface Translation {
     maxPostsReached?: string;
     iAmDone?: string;
     iAmNotDoneYet?: string;
+    userIsReady?: (userName: string) => string;
   };
   GameMenu: {
     board?: string;

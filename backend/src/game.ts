@@ -374,8 +374,10 @@ export default (io: Server) => {
   ) => {
     if (checkUser(userIds, socket)) {
       const ready = await toggleReady(sessionId, userIds.userId);
+      const user = await getUser(userIds.userId);
       sendToAll<WsUserReadyPayload>(socket, sessionId, RECEIVE_USER_READY, {
         userId: userIds.userId,
+        name: user ? user.name : 'Somebody',
         ready,
       });
     }

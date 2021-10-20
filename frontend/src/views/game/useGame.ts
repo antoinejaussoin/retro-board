@@ -375,11 +375,16 @@ const useGame = (sessionId: string) => {
 
     socket.on(
       Actions.RECEIVE_USER_READY,
-      ({ userId, ready }: WsUserReadyPayload) => {
+      ({ userId: readyUserId, ready, name }: WsUserReadyPayload) => {
         if (debug) {
-          console.log('Receive user ready: ', userId);
+          console.log('Receive user ready: ', readyUserId);
         }
-        userReady(userId, ready);
+        userReady(readyUserId, ready);
+        if (userId !== readyUserId && ready) {
+          enqueueSnackbar(translations.PostBoard.userIsReady!(name), {
+            variant: 'success',
+          });
+        }
       }
     );
   }, [
@@ -405,6 +410,7 @@ const useGame = (sessionId: string) => {
     enqueueSnackbar,
     setUnauthorised,
     userReady,
+    userId,
   ]);
 
   const [previousParticipans, setPreviousParticipants] = useState(participants);
