@@ -404,8 +404,9 @@ const BlurOverlay = styled.div`
   height: 100%;
   background-color: rgba(255, 255, 255, 0.9);
   z-index: 2;
-  @supports (backdrop-filter: blur(3px)) {
+  @supports (backdrop-filter: blur(3px)) or (-webkit-backdrop-filter: blur(3px)) {
     background-color: rgba(255, 255, 255, 0.3);
+    -webkit-backdrop-filter: blur(3px);
     backdrop-filter: blur(3px);
   }
 `;
@@ -422,7 +423,7 @@ const LabelContainer = styled.div<{ blurred: boolean }>`
     content: '(hidden for now)';
   }
 
-  @supports (backdrop-filter: blur(3px)) {
+  @supports (backdrop-filter: blur(3px)) or (-webkit-backdrop-filter: blur(3px)) {
     > * {
       display: block;
     }
