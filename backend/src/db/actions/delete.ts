@@ -3,7 +3,6 @@ import { EntityManager } from 'typeorm';
 import { v4 } from 'uuid';
 import { UserIdentityEntity, UserView } from '../entities';
 import {
-  ColumnRepository,
   PostGroupRepository,
   PostRepository,
   SessionRepository,
@@ -31,6 +30,7 @@ export async function deleteAccount(
       user,
       anonymousAccount
     );
+    await deleteUserAccount(manager, user);
     return true;
   });
 }
@@ -84,7 +84,7 @@ async function deletePosts(
     );
     await manager.query(
       `
-			delete from votes where "postId" in (select id from groups where "userId" = $1)
+			update posts set "groupId" = null where "groupId" in (select id from groups where "userId" = $1)
 			`,
       [user.id]
     );
@@ -120,6 +120,12 @@ async function deleteSessions(
     );
     await manager.query(
       `
+			delete from groups where "sessionId" in (select id from sessions where "createdById" = $1)
+			`,
+      [user.id]
+    );
+    await manager.query(
+      `
 			delete from columns where "sessionId" in (select id from sessions where "createdById" = $1)
 			`,
       [user.id]
@@ -130,6 +136,26 @@ async function deleteSessions(
     await repo.update({ createdBy: { id: user.id } }, { createdBy: anon.user });
     return true;
   }
+}
+
+async function deleteUserAccount(manager: EntityManager, user: UserView) {
+  await manager.query(
+    `
+		update users set "defaultTemplateId" = null where "defaultTemplateId" in (select id from templates where "createdById" = $1)
+		`,
+    [user.id]
+  );
+  await manager.query(
+    'delete from "templates-columns" where "templateId" in (select id from templates where "createdById" = $1)',
+    [user.id]
+  );
+  await manager.query('delete from templates where "createdById" = $1', [
+    user.id,
+  ]);
+  await manager.query('delete from users_identities where "userId" = $1', [
+    user.id,
+  ]);
+  await manager.query('delete from users where id = $1', [user.id]);
 }
 
 async function createAnonymousAccount() {
