@@ -152,6 +152,9 @@ async function deleteUserAccount(manager: EntityManager, user: UserView) {
   await manager.query('delete from templates where "createdById" = $1', [
     user.id,
   ]);
+  await manager.query('delete from subscriptions where "ownerId" = $1', [
+    user.id,
+  ]);
   await manager.query('delete from users_identities where "userId" = $1', [
     user.id,
   ]);
