@@ -9,6 +9,7 @@ import {
   FullUser,
   Product,
   BackendCapabilities,
+  DeleteAccountPayload,
 } from '@retrospected/common';
 import config from '../utils/getConfig';
 import { v4 } from 'uuid';
@@ -204,6 +205,13 @@ export async function updateLanguage(
 
 export async function deleteSession(sessionId: string): Promise<boolean> {
   return await fetchDelete(`/api/session/${sessionId}`);
+}
+
+export async function deleteAccount(
+  userId: string,
+  options: DeleteAccountPayload
+): Promise<boolean> {
+  return true;
 }
 
 export async function getGiphyUrl(giphyId: string): Promise<string | null> {

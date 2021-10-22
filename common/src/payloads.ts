@@ -66,3 +66,9 @@ export interface OAuthAvailabilities {
   github: boolean;
   okta: boolean;
 }
+
+export interface DeleteAccountPayload {
+  deleteSessions: boolean;
+  deletePosts: boolean;
+  deleteVotes: boolean;
+}
