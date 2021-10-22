@@ -3,19 +3,21 @@ import styled from '@emotion/styled';
 
 interface SectionProps {
   title?: string;
+  danger?: boolean;
 }
 
-const Section: React.FC<SectionProps> = ({ title, children }) => {
+const Section: React.FC<SectionProps> = ({ title, danger, children }) => {
   return (
-    <Container>
+    <Container danger={!!danger}>
       <Title>{title}</Title>
       <Content>{children}</Content>
     </Container>
   );
 };
 
-const Container = styled.section`
-  border: 1px solid ${colors.grey[200]};
+const Container = styled.section<{ danger: boolean }>`
+  border: 1px solid
+    ${(props) => (props.danger ? colors.red[500] : colors.grey[200])};
   border-radius: 10px;
   margin: 10px;
   padding: 20px;
@@ -24,6 +26,10 @@ const Container = styled.section`
 
   @media screen and (max-width: 450px) {
     padding: 5px;
+  }
+
+  header {
+    color: ${(props) => (props.danger ? colors.red[500] : 'inherit')};
   }
 `;
 

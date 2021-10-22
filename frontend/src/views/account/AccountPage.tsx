@@ -12,6 +12,8 @@ import { useHistory } from 'react-router-dom';
 import useIsTrial from '../../auth/useIsTrial';
 import TrialPrompt from '../home/TrialPrompt';
 import useFormatDate from '../../hooks/useFormatDate';
+import { DeleteModal } from './delete/DeleteModal';
+import useModal from '../../hooks/useModal';
 
 function AccountPage() {
   const url = usePortalUrl();
@@ -21,6 +23,8 @@ function AccountPage() {
   const history = useHistory();
   const { AccountPage: translations, SubscribePage: subscribeTranslations } =
     useTranslations();
+  const [deleteModalOpen, handleDeleteModalOpen, handleDeleteModalClose] =
+    useModal();
 
   const ownsThePlan =
     user &&
@@ -125,6 +129,25 @@ function AccountPage() {
             </Button>
           </Section>
         ) : null}
+
+        <Section title="GPDR" danger>
+          <Alert severity="error">
+            Be careful when deleting your account. This cannot be undone.
+          </Alert>
+
+          <Button
+            color="error"
+            variant="contained"
+            onClick={handleDeleteModalOpen}
+            style={{ marginTop: 20 }}
+          >
+            Delete my data
+          </Button>
+
+          {deleteModalOpen ? (
+            <DeleteModal onClose={handleDeleteModalClose} />
+          ) : null}
+        </Section>
       </Page>
     </>
   );
