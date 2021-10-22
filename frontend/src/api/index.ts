@@ -208,10 +208,9 @@ export async function deleteSession(sessionId: string): Promise<boolean> {
 }
 
 export async function deleteAccount(
-  userId: string,
   options: DeleteAccountPayload
 ): Promise<boolean> {
-  return true;
+  return await fetchDelete(`/api/me`, options);
 }
 
 export async function getGiphyUrl(giphyId: string): Promise<string | null> {

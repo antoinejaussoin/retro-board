@@ -37,6 +37,7 @@ import {
   ResetChangePasswordPayload,
   CreateSessionPayload,
   SelfHostedCheckPayload,
+  DeleteAccountPayload,
 } from '@retrospected/common';
 import registerPasswordUser from './auth/register/register-user';
 import { sendVerificationEmail, sendResetPassword } from './email/emailSender';
@@ -60,6 +61,7 @@ import { fetchLicence, validateLicence } from './db/actions/licences';
 import { hasField } from './security/payload-checker';
 import mung from 'express-mung';
 import { QueryFailedError } from 'typeorm';
+import { deleteAccount } from './db/actions/delete';
 
 const realIpHeader = 'X-Forwarded-For';
 
@@ -299,6 +301,19 @@ db().then(() => {
     const user = await getUserViewFromRequest(req);
     if (user) {
       res.status(200).send(user.toJson());
+    } else {
+      res.status(401).send('Not logged in');
+    }
+  });
+
+  app.delete('/api/me', async (req, res) => {
+    const user = await getUserViewFromRequest(req);
+    if (user) {
+      const result = await deleteAccount(
+        user,
+        req.body as DeleteAccountPayload
+      );
+      res.status(200).send(result);
     } else {
       res.status(401).send('Not logged in');
     }

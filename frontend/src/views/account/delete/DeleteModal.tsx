@@ -45,10 +45,11 @@ export function DeleteModal({ onClose }: DeleteModalProps) {
       deleteSessions,
       deleteVotes,
     };
-    await deleteAccount(user.id, payload);
-    logout();
-    setUser(null);
-    push('/');
+    await deleteAccount(payload);
+    onClose();
+    // logout();
+    // setUser(null);
+    // push('/');
   }, [user, deletePosts, deleteSessions, deleteVotes, push, setUser]);
 
   if (!user) {
