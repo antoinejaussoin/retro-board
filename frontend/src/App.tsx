@@ -14,6 +14,7 @@ import { Suspense } from 'react';
 import { CodeSplitLoader } from './CodeSplitLoader';
 import QuotaManager from './auth/QuotaManager';
 import GlobalProvider from './global/GlobalProvider';
+import { ConfirmProvider } from 'material-ui-confirm';
 
 function App() {
   return (
@@ -35,22 +36,24 @@ function App() {
         }}
       >
         <ThemeProvider theme={theme}>
-          <BrowserRouter>
-            <GlobalProvider>
-              <AuthProvider>
-                <LanguageProvider>
-                  <QuotaManager>
-                    <Global styles={globalCss} />
-                    <ErrorBoundary>
-                      <Suspense fallback={<CodeSplitLoader />}>
-                        <Layout />
-                      </Suspense>
-                    </ErrorBoundary>
-                  </QuotaManager>
-                </LanguageProvider>
-              </AuthProvider>
-            </GlobalProvider>
-          </BrowserRouter>
+          <ConfirmProvider>
+            <BrowserRouter>
+              <GlobalProvider>
+                <AuthProvider>
+                  <LanguageProvider>
+                    <QuotaManager>
+                      <Global styles={globalCss} />
+                      <ErrorBoundary>
+                        <Suspense fallback={<CodeSplitLoader />}>
+                          <Layout />
+                        </Suspense>
+                      </ErrorBoundary>
+                    </QuotaManager>
+                  </LanguageProvider>
+                </AuthProvider>
+              </GlobalProvider>
+            </BrowserRouter>
+          </ConfirmProvider>
         </ThemeProvider>
       </SnackbarProvider>
     </RecoilRoot>

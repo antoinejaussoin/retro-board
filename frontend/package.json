@@ -42,6 +42,7 @@
     "isemail": "^3.2.0",
     "lexorank": "^1.0.4",
     "lodash": "^4.17.21",
+    "material-ui-confirm": "^3.0.2",
     "md5": "^2.3.0",
     "notistack": "^2.0.2",
     "prop-types": "^15.7.2",

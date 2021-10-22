@@ -22,6 +22,7 @@ import { DeleteAccountPayload } from '@retrospected/common';
 import { deleteAccount, logout } from '../../../api';
 import UserContext from '../../../auth/Context';
 import { useHistory } from 'react-router';
+import { useConfirm } from 'material-ui-confirm';
 
 type DeleteModalProps = {
   onClose: () => void;
@@ -35,6 +36,7 @@ export function DeleteModal({ onClose }: DeleteModalProps) {
   const { setUser } = useContext(UserContext);
   const user = useUser();
   const { push } = useHistory();
+  const confirm = useConfirm();
 
   const handleDelete = useCallback(async () => {
     if (!user) {
@@ -45,11 +47,32 @@ export function DeleteModal({ onClose }: DeleteModalProps) {
       deleteSessions,
       deleteVotes,
     };
-    await deleteAccount(payload);
-    logout();
-    setUser(null);
-    push('/');
-  }, [user, deletePosts, deleteSessions, deleteVotes, push, setUser]);
+    confirm({
+      title: 'Are you absolutely sure?',
+      description: 'There is no going back on this.',
+      confirmationText: 'Yes I want to delete all my data',
+      cancellationText: 'Get me out of here',
+      confirmationButtonProps: { color: 'error', variant: 'contained' },
+    })
+      .then(async () => {
+        await deleteAccount(payload);
+        logout();
+        setUser(null);
+        push('/');
+      })
+      .catch(() => {
+        onClose();
+      });
+  }, [
+    user,
+    deletePosts,
+    deleteSessions,
+    deleteVotes,
+    push,
+    setUser,
+    confirm,
+    onClose,
+  ]);
 
   if (!user) {
     return null;
