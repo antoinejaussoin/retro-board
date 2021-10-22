@@ -130,7 +130,7 @@ function AccountPage() {
           </Section>
         ) : null}
 
-        <Section title="GPDR" danger>
+        <Section title="GDPR" danger>
           <Alert severity="error">
             You have the{' '}
             <a href="https://gdpr-info.eu/art-17-gdpr/">
