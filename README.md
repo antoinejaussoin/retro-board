@@ -87,6 +87,7 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ### Version 4.9.1 (unreleased)
 
+- Add better GDPR compliance, with the right to be forgotten: allows a user to delete all of their data
 - Add the ability for users to signal if they are done with their posts, to help the moderator
 - ⏫ Upgrading dependencies
 

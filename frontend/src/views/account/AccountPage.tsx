@@ -132,7 +132,12 @@ function AccountPage() {
 
         <Section title="GPDR" danger>
           <Alert severity="error">
-            Be careful when deleting your account. This cannot be undone.
+            You have the{' '}
+            <a href="https://gdpr-info.eu/art-17-gdpr/">
+              right to be forgotten
+            </a>
+            . That being said, be careful when deleting your account. This
+            cannot be undone.
           </Alert>
 
           <Button
