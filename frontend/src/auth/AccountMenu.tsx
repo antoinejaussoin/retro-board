@@ -11,8 +11,9 @@ import { logout } from '../api';
 import UserContext from './Context';
 import Avatar from '../components/Avatar';
 import { useHistory } from 'react-router-dom';
-import { Star } from '@mui/icons-material';
-import { colors } from '@mui/material';
+import { Logout, Star } from '@mui/icons-material';
+import { colors, Divider, ListItemIcon, ListItemText } from '@mui/material';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 
 const AccountMenu = () => {
   const translations = useTranslation();
@@ -66,27 +67,35 @@ const AccountMenu = () => {
             open={menuOpen}
             onClose={closeMenu}
           >
-            <MenuItem onClick={handleLogout}>
-              {translations.Header.logout}
-            </MenuItem>
-            {user && user.accountType !== 'anonymous' ? (
-              <MenuItem onClick={handleAccount}>
-                {translations.Header.account}
-              </MenuItem>
-            ) : null}
             {user && !user.pro && user.accountType !== 'anonymous' ? (
               <MenuItem onClick={handleSubscribe}>
-                <Star
-                  style={{
-                    color: colors.yellow[700],
-                    position: 'relative',
-                    top: -2,
-                    left: -5,
-                  }}
-                />{' '}
-                Go Pro!
+                <ListItemIcon>
+                  <Star
+                    style={{
+                      color: colors.yellow[700],
+                      position: 'relative',
+                      top: -1,
+                    }}
+                  />
+                </ListItemIcon>
+                <ListItemText>Go Pro!</ListItemText>
               </MenuItem>
             ) : null}
+            {user && user.accountType !== 'anonymous' ? (
+              <MenuItem onClick={handleAccount}>
+                <ListItemIcon>
+                  <AccountCircle />
+                </ListItemIcon>
+                <ListItemText>{translations.Header.account}</ListItemText>
+              </MenuItem>
+            ) : null}
+            <Divider />
+            <MenuItem onClick={handleLogout}>
+              <ListItemIcon>
+                <Logout />
+              </ListItemIcon>
+              <ListItemText>{translations.Header.logout}</ListItemText>
+            </MenuItem>
           </Menu>
         ) : null}
       </div>
