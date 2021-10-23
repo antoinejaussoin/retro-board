@@ -336,31 +336,31 @@ export default {
       deleteData: 'Effacer mes données',
       modal: {
         confirm: {
-          title: 'Êtes-vous absolument certain(e)?',
-          description: "Cette opération n'est pas réversible!",
+          title: 'Êtes-vous absolument certain(e) ?',
+          description: "Cette opération n'est pas réversible !",
           confirmation: 'Oui, je veux effaçer toutes mes données',
-          cancellation: "J'ai changé d'avis!",
+          cancellation: "J'ai changé d'avis !",
         },
         subheader: 'Choisir quoi effacer',
         deleteAccount:
           'Effacer votre compte ainsi que toutes les identités liées à votre email.',
         recommended: 'Recommandé',
         deleteSessions: {
-          main: 'Effacer les sessions (les rétrospectives) que vous avez créées?',
+          main: 'Effacer les sessions (les rétrospectives) que vous avez créées ?',
           selected:
             "Vos sessions, and toutes les données associées (incluant les posts et votes d'autres personnes) seront éffacées de manière permanente et irréversible.",
           unselected:
             'Vos sessions seront conservées, et leur auteur deviendra un auteur anonyme.',
         },
         deletePosts: {
-          main: 'Effacer les posts que vous avez écris?',
+          main: 'Effacer les posts que vous avez écris ?',
           selected:
             "Vos posts, dans n'importe quelle session, ainsi que les votes associés, seront effacés de manière permanente et irreversible.",
           unselected:
             'Vos posts seront conservés, mais leur auteur deviendra un compte anonyme.',
         },
         deleteVotes: {
-          main: 'Effacer vos votes?',
+          main: 'Effacer vos votes ?',
           selected: "Vos votes, dans n'importe quelle session, seront effacés.",
           unselected: 'Vos votes seront conservés, et deviendront anonymes.',
         },

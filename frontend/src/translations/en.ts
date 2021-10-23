@@ -326,7 +326,7 @@ export default {
     deleteAccount: {
       title: 'GDPR',
       warning:
-        'You have the right to be forgotten. That being said, be careful when deleting your account. This cannot be undone',
+        'You have the right to be forgotten. That being said, be careful when deleting your account. This cannot be undone.',
       deleteData: 'Delete my data',
       modal: {
         confirm: {
@@ -344,7 +344,7 @@ export default {
           selected:
             "Your sessions and all their data, including other people's posts and votes, will be permanently deleted.",
           unselected:
-            'Your sessions will be kept and their author will become an anonymous account.',
+            'Your sessions will be kept and their author will become an anonymous user.',
         },
         deletePosts: {
           main: 'Should we delete all the posts you wrote?',
