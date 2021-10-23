@@ -306,7 +306,7 @@ db().then(() => {
     }
   });
 
-  app.delete('/api/me', async (req, res) => {
+  app.delete('/api/me', csrfProtection, heavyLoadLimiter, async (req, res) => {
     const user = await getUserViewFromRequest(req);
     if (user) {
       const result = await deleteAccount(
