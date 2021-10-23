@@ -306,7 +306,7 @@ export default {
           unselected: undefined,
         },
         deleteAccountButton: undefined,
-        cancelButton: 'Annuler',
+        cancelButton: undefined,
       },
     },
   },
