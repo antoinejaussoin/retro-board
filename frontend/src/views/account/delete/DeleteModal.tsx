@@ -23,6 +23,7 @@ import { deleteAccount, logout } from '../../../api';
 import UserContext from '../../../auth/Context';
 import { useHistory } from 'react-router';
 import { useConfirm } from 'material-ui-confirm';
+import useTranslations from '../../../translations';
 
 type DeleteModalProps = {
   onClose: () => void;
@@ -37,6 +38,11 @@ export function DeleteModal({ onClose }: DeleteModalProps) {
   const user = useUser();
   const { push } = useHistory();
   const confirm = useConfirm();
+  const {
+    AccountPage: {
+      deleteAccount: { modal: translations },
+    },
+  } = useTranslations();
 
   const handleDelete = useCallback(async () => {
     if (!user) {
@@ -48,10 +54,10 @@ export function DeleteModal({ onClose }: DeleteModalProps) {
       deleteVotes,
     };
     confirm({
-      title: 'Are you absolutely sure?',
-      description: 'There is no going back on this.',
-      confirmationText: 'Yes I want to delete all my data',
-      cancellationText: 'Get me out of here',
+      title: translations.confirm.title,
+      description: translations.confirm.description,
+      confirmationText: translations.confirm.confirmation,
+      cancellationText: translations.confirm.cancellation,
       confirmationButtonProps: { color: 'error', variant: 'contained' },
     })
       .then(async () => {
@@ -72,6 +78,7 @@ export function DeleteModal({ onClose }: DeleteModalProps) {
     setUser,
     confirm,
     onClose,
+    translations,
   ]);
 
   if (!user) {
@@ -87,28 +94,24 @@ export function DeleteModal({ onClose }: DeleteModalProps) {
       onClose={onClose}
     >
       <DialogContent>
-        <List subheader={<ListSubheader>Choose what to delete</ListSubheader>}>
+        <List
+          subheader={<ListSubheader>{translations.subheader}</ListSubheader>}
+        >
           <DeleteItem checked disabled icon={<Person />}>
-            Delete your account and any identities linked to your email (
-            {user.email}).
+            {translations.deleteAccount} ({user.email})
           </DeleteItem>
           <DeleteItem
             checked={deleteSessions}
             onToggle={setDeleteSessions}
             icon={<Dashboard />}
           >
-            <p>
-              Should we delete the sessions (retrospectives) you have created?
-            </p>
+            <p>{translations.deleteSessions.main}</p>
             {deleteSessions ? (
-              <Red>
-                Your sessions and all their data, including other people's posts
-                and votes, will be permanently deleted.
-              </Red>
+              <Red>{translations.deleteSessions.selected}</Red>
             ) : (
               <Green>
-                <b>Recommended</b>: Your sessions will be kept and their author
-                will become an anonymous account.
+                <b>{translations.recommended}</b> -{' '}
+                {translations.deleteSessions.unselected}
               </Green>
             )}
           </DeleteItem>
@@ -117,16 +120,13 @@ export function DeleteModal({ onClose }: DeleteModalProps) {
             onToggle={setDeletePosts}
             icon={<Note />}
           >
-            <p>Should we delete all the posts you wrote?</p>
+            <p>{translations.deletePosts.main}</p>
             {deletePosts ? (
-              <Red>
-                Your posts, in any session, and their associated votes and
-                actions will be permanently deleted.
-              </Red>
+              <Red>{translations.deletePosts.selected}</Red>
             ) : (
               <Green>
-                <b>Recommended</b>: Your posts will be kept, but they will
-                become associated with an anonymous user.
+                <b>{translations.recommended}</b> -{' '}
+                {translations.deletePosts.unselected}
               </Green>
             )}
           </DeleteItem>
@@ -135,15 +135,13 @@ export function DeleteModal({ onClose }: DeleteModalProps) {
             onToggle={setDeleteVotes}
             icon={<ThumbUpOutlined />}
           >
-            <p>Should we also delete all your votes?</p>
+            <p>{translations.deleteVotes.main}</p>
             {deleteVotes ? (
-              <Red>
-                Your votes, in all sessions will be permanently deleted.
-              </Red>
+              <Red>{translations.deleteVotes.selected}</Red>
             ) : (
               <Green>
-                <b>Recommended</b>: Your votes will be kept, but they will
-                become associated with an anonymous user.
+                <b>{translations.recommended}</b> -{' '}
+                {translations.deleteVotes.unselected}
               </Green>
             )}
           </DeleteItem>
@@ -151,9 +149,9 @@ export function DeleteModal({ onClose }: DeleteModalProps) {
       </DialogContent>
       <DialogActions>
         <Button color="error" variant="contained" onClick={handleDelete}>
-          DELETE YOUR ACCOUNT
+          {translations.deleteAccountButton}
         </Button>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={onClose}>{translations.cancelButton}</Button>
       </DialogActions>
     </Dialog>
   );

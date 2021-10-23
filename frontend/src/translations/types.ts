@@ -272,6 +272,39 @@ export interface Translation {
       yourTrialWillExpireIn?: (date: string) => string;
       subscribe?: string;
     };
+    deleteAccount: {
+      title?: string;
+      warning?: string;
+      deleteData?: string;
+      modal: {
+        confirm: {
+          title?: string;
+          description?: string;
+          confirmation?: string;
+          cancellation?: string;
+        };
+        subheader?: string;
+        deleteAccount?: string;
+        recommended?: string;
+        deleteSessions: {
+          main?: string;
+          selected?: string;
+          unselected?: string;
+        };
+        deletePosts: {
+          main?: string;
+          selected?: string;
+          unselected?: string;
+        };
+        deleteVotes: {
+          main?: string;
+          selected?: string;
+          unselected?: string;
+        };
+        deleteAccountButton?: string;
+        cancelButton?: string;
+      };
+    };
   };
   SubscribePage: {
     alertAlreadyPro?: string;

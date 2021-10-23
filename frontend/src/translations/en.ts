@@ -323,6 +323,46 @@ export default {
         `Your trial will end in ${date}.`,
       subscribe: `Subscribe now`,
     },
+    deleteAccount: {
+      title: 'GDPR',
+      warning:
+        'You have the right to be forgotten. That being said, be careful when deleting your account. This cannot be undone',
+      deleteData: 'Delete my data',
+      modal: {
+        confirm: {
+          title: 'Are you absolutely sure?',
+          description: 'There is no going back on this.',
+          confirmation: 'Yes I want to delete all my data',
+          cancellation: 'Get me out of here',
+        },
+        subheader: 'Choose what to delete',
+        deleteAccount:
+          'Delete your account and any identities linked to your email.',
+        recommended: 'Recommended',
+        deleteSessions: {
+          main: 'Should we delete the sessions (retrospectives) you have created?',
+          selected:
+            "Your sessions and all their data, including other people's posts and votes, will be permanently deleted.",
+          unselected:
+            'Your sessions will be kept and their author will become an anonymous account.',
+        },
+        deletePosts: {
+          main: 'Should we delete all the posts you wrote?',
+          selected:
+            'Your posts, in any session, and their associated votes and actions will be permanently deleted.',
+          unselected:
+            'Your posts will be kept, but they will become associated with an anonymous user.',
+        },
+        deleteVotes: {
+          main: 'Should we also delete all your votes?',
+          selected: 'Your votes, in all sessions will be permanently deleted.',
+          unselected:
+            'Your votes will be kept, but they will become associated with an anonymous user.',
+        },
+        deleteAccountButton: 'DELETE YOUR ACCOUNT',
+        cancelButton: 'Cancel',
+      },
+    },
   },
   SubscribePage: {
     alertAlreadyPro: `You already are a Pro user, so you might not need another subscription.`,

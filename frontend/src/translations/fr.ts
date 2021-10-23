@@ -329,6 +329,45 @@ export default {
         `Votre période d'essai va se terminer dans ${date}.`,
       subscribe: `S'abonner`,
     },
+    deleteAccount: {
+      title: 'GDPR',
+      warning:
+        "Vous avez le droit à l'oubli. Cela étant dit, effacer vos données est définitif.",
+      deleteData: 'Effacer mes données',
+      modal: {
+        confirm: {
+          title: 'Êtes-vous absolument certain(e)?',
+          description: "Cette opération n'est pas réversible!",
+          confirmation: 'Oui, je veux effaçer toutes mes données',
+          cancellation: "J'ai changé d'avis!",
+        },
+        subheader: 'Choisir quoi effacer',
+        deleteAccount:
+          'Effacer votre compte ainsi que toutes les identités liées à votre email.',
+        recommended: 'Recommandé',
+        deleteSessions: {
+          main: 'Effacer les sessions (les rétrospectives) que vous avez créées?',
+          selected:
+            "Vos sessions, and toutes les données associées (incluant les posts et votes d'autres personnes) seront éffacées de manière permanente et irréversible.",
+          unselected:
+            'Vos sessions seront conservées, et leur auteur deviendra un auteur anonyme.',
+        },
+        deletePosts: {
+          main: 'Effacer les posts que vous avez écris?',
+          selected:
+            "Vos posts, dans n'importe quelle session, ainsi que les votes associés, seront effacés de manière permanente et irreversible.",
+          unselected:
+            'Vos posts seront conservés, mais leur auteur deviendra un compte anonyme.',
+        },
+        deleteVotes: {
+          main: 'Effacer vos votes?',
+          selected: "Vos votes, dans n'importe quelle session, seront effacés.",
+          unselected: 'Vos votes seront conservés, et deviendront anonymes.',
+        },
+        deleteAccountButton: 'SUPPRIMER VOTRE COMPTE',
+        cancelButton: 'Annuler',
+      },
+    },
   },
   SubscribePage: {
     alertAlreadyPro: `Vous avez déjà un compte Pro, vous n'avez peut-être donc pas besoin d'un abonnement supplémentaire.`,

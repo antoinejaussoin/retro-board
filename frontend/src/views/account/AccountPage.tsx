@@ -130,15 +130,8 @@ function AccountPage() {
           </Section>
         ) : null}
 
-        <Section title="GDPR" danger>
-          <Alert severity="error">
-            You have the{' '}
-            <a href="https://gdpr-info.eu/art-17-gdpr/">
-              right to be forgotten
-            </a>
-            . That being said, be careful when deleting your account. This
-            cannot be undone.
-          </Alert>
+        <Section title={translations.deleteAccount.title} danger>
+          <Alert severity="error">{translations.deleteAccount.warning}</Alert>
 
           <Button
             color="error"
@@ -146,7 +139,7 @@ function AccountPage() {
             onClick={handleDeleteModalOpen}
             style={{ marginTop: 20 }}
           >
-            Delete my data
+            {translations.deleteAccount.deleteData}
           </Button>
 
           {deleteModalOpen ? (

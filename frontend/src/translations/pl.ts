@@ -272,6 +272,39 @@ export default {
       yourTrialWillExpireIn: undefined,
       subscribe: undefined,
     },
+    deleteAccount: {
+      title: undefined,
+      warning: undefined,
+      deleteData: undefined,
+      modal: {
+        confirm: {
+          title: undefined,
+          description: undefined,
+          confirmation: undefined,
+          cancellation: undefined,
+        },
+        subheader: undefined,
+        deleteAccount: undefined,
+        recommended: undefined,
+        deleteSessions: {
+          main: undefined,
+          selected: undefined,
+          unselected: undefined,
+        },
+        deletePosts: {
+          main: undefined,
+          selected: undefined,
+          unselected: undefined,
+        },
+        deleteVotes: {
+          main: undefined,
+          selected: undefined,
+          unselected: undefined,
+        },
+        deleteAccountButton: undefined,
+        cancelButton: 'Annuler',
+      },
+    },
   },
   SubscribePage: {
     alertAlreadyPro: undefined,
