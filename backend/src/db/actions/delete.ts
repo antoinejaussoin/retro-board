@@ -44,10 +44,10 @@ async function deleteVisits(
   if (hardDelete) {
     await manager.query('delete from visitors where "usersId" = $1', [user.id]);
   } else {
-    await manager.query('update visitors set usersId = $1 where usersId = $2', [
-      anon.user.id,
-      user.id,
-    ]);
+    await manager.query(
+      'update visitors set "usersId" = $1 where "usersId" = $2',
+      [anon.user.id, user.id]
+    );
   }
 }
 

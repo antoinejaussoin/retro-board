@@ -210,7 +210,11 @@ export async function deleteSession(sessionId: string): Promise<boolean> {
 export async function deleteAccount(
   options: DeleteAccountPayload
 ): Promise<boolean> {
-  return await fetchDelete(`/api/me`, options);
+  try {
+    return await fetchDelete(`/api/me`, options);
+  } catch (err) {
+    return false;
+  }
 }
 
 export async function getGiphyUrl(giphyId: string): Promise<string | null> {

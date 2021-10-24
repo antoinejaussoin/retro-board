@@ -23,6 +23,7 @@ import { deleteAccount, logout } from '../../../api';
 import UserContext from '../../../auth/Context';
 import { useHistory } from 'react-router';
 import { useConfirm } from 'material-ui-confirm';
+import { useSnackbar } from 'notistack';
 import useTranslations from '../../../translations';
 
 type DeleteModalProps = {
@@ -35,6 +36,7 @@ export function DeleteModal({ onClose }: DeleteModalProps) {
   const [deletePosts, setDeletePosts] = useState(false);
   const [deleteVotes, setDeleteVotes] = useState(false);
   const { setUser } = useContext(UserContext);
+  const { enqueueSnackbar } = useSnackbar();
   const user = useUser();
   const { push } = useHistory();
   const confirm = useConfirm();
@@ -61,10 +63,18 @@ export function DeleteModal({ onClose }: DeleteModalProps) {
       confirmationButtonProps: { color: 'error', variant: 'contained' },
     })
       .then(async () => {
-        await deleteAccount(payload);
-        logout();
-        setUser(null);
-        push('/');
+        const success = await deleteAccount(payload);
+        if (success) {
+          logout();
+          setUser(null);
+          push('/');
+        } else {
+          enqueueSnackbar(
+            'Deleting your account failed. Please contact support: support@retrospected.com',
+            { variant: 'error' }
+          );
+          onClose();
+        }
       })
       .catch(() => {
         onClose();
@@ -79,6 +89,7 @@ export function DeleteModal({ onClose }: DeleteModalProps) {
     confirm,
     onClose,
     translations,
+    enqueueSnackbar,
   ]);
 
   if (!user) {
