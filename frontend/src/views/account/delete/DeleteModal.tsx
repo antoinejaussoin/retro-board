@@ -25,6 +25,7 @@ import { useHistory } from 'react-router';
 import { useConfirm } from 'material-ui-confirm';
 import { useSnackbar } from 'notistack';
 import useTranslations from '../../../translations';
+import { trackEvent } from '../../../track';
 
 type DeleteModalProps = {
   onClose: () => void;
@@ -63,6 +64,7 @@ export function DeleteModal({ onClose }: DeleteModalProps) {
       confirmationButtonProps: { color: 'error', variant: 'contained' },
     })
       .then(async () => {
+        trackEvent('account/gdpr/delete-account');
         const success = await deleteAccount(payload);
         if (success) {
           logout();

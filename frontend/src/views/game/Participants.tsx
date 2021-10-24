@@ -13,6 +13,8 @@ import useSession from './useSession';
 import styled from '@emotion/styled';
 import useUser from '../../auth/useUser';
 import useTranslation from '../../translations/useTranslations';
+import { useCallback } from 'react';
+import { trackEvent } from '../../track';
 
 type ParticipantsProps = {
   onReady: () => void;
@@ -25,6 +27,10 @@ function Participants({ onReady }: ParticipantsProps) {
   const { PostBoard: translations } = useTranslation();
   const isUserReady = !!user && !!session && session.ready.includes(user.id);
   const fullScreen = useMediaQuery('(min-width:600px)');
+  const handleReady = useCallback(() => {
+    trackEvent('game/session/user-ready');
+    onReady();
+  }, [onReady]);
   return (
     <Container>
       <AvatarGroup
@@ -55,7 +61,7 @@ function Participants({ onReady }: ParticipantsProps) {
           })}
       </AvatarGroup>
       {user && !fullScreen ? (
-        <IconButton onClick={onReady}>
+        <IconButton onClick={handleReady}>
           {isUserReady ? (
             <Create htmlColor={colors.orange[500]} />
           ) : (
@@ -65,7 +71,7 @@ function Participants({ onReady }: ParticipantsProps) {
       ) : null}
       {user && fullScreen ? (
         <Button
-          onClick={onReady}
+          onClick={handleReady}
           variant="outlined"
           endIcon={
             isUserReady ? (
