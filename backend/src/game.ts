@@ -20,6 +20,7 @@ import {
   WebsocketMessage,
   WsGroupUpdatePayload,
   WsUserReadyPayload,
+  Message,
 } from '@retrospected/common';
 import { RateLimiterMemory } from 'rate-limiter-flexible';
 import chalk from 'chalk';
@@ -60,6 +61,7 @@ import config from './config';
 import { registerVote } from './db/actions/votes';
 import { deserialiseIds, UserIds } from './utils';
 import { QueryFailedError } from 'typeorm';
+import { saveChatMessage } from './db/actions/chat';
 
 const {
   ACK,
@@ -96,6 +98,8 @@ const {
   RECEIVE_RATE_LIMITED,
   RECEIVE_ERROR,
   REQUEST_BOARD,
+  CHAT_MESSAGE,
+  RECEIVE_CHAT_MESSAGE,
 } = Actions;
 
 interface Users {
@@ -239,6 +243,28 @@ export default (io: Server) => {
         RECEIVE_POST,
         'cannot_save_post',
         createdPost
+      );
+    }
+  };
+
+  const onChatMessage = async (
+    userIds: UserIds | null,
+    sessionId: string,
+    message: Message,
+    socket: Socket
+  ) => {
+    if (checkUser(userIds, socket)) {
+      const createdMessage = await saveChatMessage(
+        userIds.userId,
+        sessionId,
+        message
+      );
+      sendToAllOrError<Message>(
+        socket,
+        sessionId,
+        RECEIVE_CHAT_MESSAGE,
+        'cannot_record_chat_message',
+        createdMessage
       );
     }
   };
@@ -585,6 +611,8 @@ export default (io: Server) => {
       { type: ADD_POST_GROUP_SUCCESS, handler: onAddPostGroup },
       { type: EDIT_POST_GROUP, handler: onEditPostGroup },
       { type: DELETE_POST_GROUP, handler: onDeletePostGroup },
+
+      { type: CHAT_MESSAGE, handler: onChatMessage },
 
       { type: JOIN_SESSION, handler: onJoinSession },
       { type: REQUEST_BOARD, handler: onRequestBoard },

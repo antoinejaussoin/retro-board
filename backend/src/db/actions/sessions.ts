@@ -30,6 +30,8 @@ import { transaction } from './transaction';
 import { EntityManager, In } from 'typeorm';
 import { getUserViewInner, isUserPro } from './users';
 import { uniq } from 'lodash';
+import MessageRepository from '../repositories/MessageRepository';
+import MessageEntity from '../entities/Message';
 
 export async function createSessionFromSlack(
   slackUserId: string,
@@ -159,6 +161,7 @@ export async function getSession(sessionId: string): Promise<Session | null> {
       manager.getCustomRepository(PostGroupRepository);
     const sessionRepository = manager.getCustomRepository(SessionRepository);
     const columnRepository = manager.getCustomRepository(ColumnRepository);
+    const messageRepository = manager.getCustomRepository(MessageRepository);
 
     const session = await sessionRepository.findOne({ id: sessionId });
     if (session) {
@@ -174,11 +177,16 @@ export async function getSession(sessionId: string): Promise<Session | null> {
         where: { session },
         order: { index: 'ASC' },
       })) as ColumnDefinitionEntity[];
+      const messages = (await messageRepository.find({
+        where: { session },
+        order: { created: 'DESC' },
+      })) as MessageEntity[];
       return {
         ...session.toJson(),
         columns: columns.map((c) => c.toJson()),
         posts: posts.map((p) => p.toJson()),
         groups: groups.map((g) => g.toJson()),
+        messages: messages.map((m) => m.toJson()),
       };
     } else {
       return null;

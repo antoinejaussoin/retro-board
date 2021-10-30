@@ -9,3 +9,4 @@ export { default as TemplateColumnRepository } from './TemplateColumnRepository'
 export { default as SubscriptionRepository } from './SubscriptionRepository';
 export { default as UserIdentityRepository } from './UserIdentityRepository';
 export { default as LicenceRepository } from './LicenceRepository';
+export { default as MessageRepository } from './MessageRepository';

@@ -10,6 +10,7 @@ import {
   SessionTemplateEntity,
   TemplateColumnDefinitionEntity,
   SubscriptionEntity,
+  MessageEntity,
   UserView,
   SessionView,
 } from './entities';
@@ -53,6 +54,7 @@ export default function (
             SubscriptionEntity,
             LicenceEntity,
             SessionOptionsEntity,
+            MessageEntity,
           ],
     synchronize: false,
     logging: config.SQL_LOG ? 'all' : undefined,

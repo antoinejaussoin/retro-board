@@ -72,6 +72,7 @@ export type WsErrorType =
   | 'cannot_delete_post'
   | 'cannot_delete_group'
   | 'cannot_rename_session'
+  | 'cannot_record_chat_message'
   | 'unknown_error'
   | 'action_unauthorised';
 

@@ -17,6 +17,7 @@ export const initialSession: Session = {
   posts: [],
   groups: [],
   columns: [],
+  messages: [],
   encrypted: null,
   locked: false,
   createdBy: {

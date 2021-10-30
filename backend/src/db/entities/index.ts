@@ -12,3 +12,4 @@ export { default as SessionTemplateEntity } from './SessionTemplate';
 export { default as SubscriptionEntity } from './Subscription';
 export { default as UserView } from './UserView';
 export { default as UserIdentityEntity } from './UserIdentity';
+export { default as MessageEntity } from './Message';
