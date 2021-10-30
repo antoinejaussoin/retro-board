@@ -3,6 +3,7 @@ export interface Session extends PostContainer, Entity {
   posts: Post[];
   groups: PostGroup[];
   columns: ColumnDefinition[];
+  messages: Message[];
   options: SessionOptions;
   encrypted: string | null;
   locked: boolean;
@@ -22,6 +23,12 @@ export interface SessionMetadata extends Entity {
   encrypted: string | null;
   locked: boolean;
   lockedForUser: boolean;
+}
+
+export interface Message extends Entity {
+  content: string;
+  user: User;
+  created: Date;
 }
 
 export interface SessionTemplate extends Entity {

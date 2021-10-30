@@ -25,6 +25,7 @@ export const defaultSession: Omit<Session, 'createdBy'> = {
   name: null,
   posts: [],
   groups: [],
+  messages: [],
   options: { ...defaultOptions },
   encrypted: null,
   locked: false,

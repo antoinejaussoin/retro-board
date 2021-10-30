@@ -17,6 +17,7 @@ export default {
   LOCK_SESSION: 'retrospected/session/lock',
   REQUEST_BOARD: 'retrospected/session/request',
   USER_READY: 'retrospected/user-ready',
+  CHAT_MESSAGE: 'retrospected/session/chat',
 
   RECEIVE_POST: 'retrospected/posts/receive/add',
   RECEIVE_DELETE_POST: 'retrospected/posts/receive/delete',
@@ -36,4 +37,5 @@ export default {
   RECEIVE_RATE_LIMITED: 'retrospected/rate-limited-error',
   RECEIVE_ERROR: 'retrospected/receive/error',
   RECEIVE_USER_READY: 'retrospected/receive/user-ready',
+  RECEIVE_CHAT_MESSAGE: 'retrospected/session/chat/receive',
 };

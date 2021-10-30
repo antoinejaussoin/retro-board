@@ -19,6 +19,7 @@ import {
 import UserEntity from './User';
 import SessionOptionsEntity from './SessionOptions';
 import PostGroupEntity from './PostGroup';
+import MessageEntity from './Message';
 
 @Entity({ name: 'sessions' })
 export default class SessionEntity {
@@ -48,6 +49,12 @@ export default class SessionEntity {
     eager: false,
   })
   public columns: ColumnDefinitionEntity[] | undefined;
+  @OneToMany(() => MessageEntity, (post) => post.session, {
+    cascade: true,
+    nullable: false,
+    eager: false,
+  })
+  public messages: MessageEntity[] | undefined;
   @Column(() => SessionOptionsEntity)
   public options: SessionOptionsEntity;
   @Column({ nullable: true, type: 'character varying' })
@@ -75,6 +82,8 @@ export default class SessionEntity {
       name: this.name,
       options: this.options.toJson(),
       posts: this.posts === undefined ? [] : this.posts.map((p) => p.toJson()),
+      messages:
+        this.messages === undefined ? [] : this.messages.map((m) => m.toJson()),
       encrypted: this.encrypted,
       locked: this.locked,
       ready: this.ready,
