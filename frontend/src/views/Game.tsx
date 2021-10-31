@@ -28,6 +28,7 @@ import Participants from './game/Participants';
 import AckWarning from './game/AckWarning';
 import useUnauthorised from './game/useUnauthorised';
 import useSession from './game/useSession';
+import Chat from './game/chat/Chat';
 
 interface RouteParams {
   gameId: string;
@@ -55,6 +56,7 @@ function GamePage() {
     status,
     acks,
     onAddPost,
+    onChatMessage,
     onMovePost,
     onCombinePost,
     onAddGroup,
@@ -182,6 +184,7 @@ function GamePage() {
           render={() => <SummaryMode columns={columns} search={search} />}
         />
       ) : null}
+      <Chat messages={session.messages} onMessage={onChatMessage} />
       <ParticipantContainer>
         <Participants onReady={onUserReady} />
       </ParticipantContainer>
