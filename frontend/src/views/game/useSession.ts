@@ -5,6 +5,7 @@ import {
   Session,
   VoteExtract,
   SessionOptions,
+  Message,
 } from '@retrospected/common';
 import { findIndex } from 'lodash';
 import { useCallback } from 'react';
@@ -17,6 +18,7 @@ interface UseSession {
   resetSession: () => void;
   receivePost: (post: Post) => void;
   receivePostGroup: (postGroup: PostGroup) => void;
+  receiveChatMessage: (message: Message) => void;
   receiveBoard: (session: Session) => void;
   updatePost: (post: Post) => void;
   updatePostGroup: (group: PostGroup) => void;
@@ -63,6 +65,7 @@ export default function useSession(): UseSession {
     },
     [setSession]
   );
+
   const receivePostGroup = useCallback(
     (postGroup: PostGroup) => {
       setSession((session) =>
@@ -71,6 +74,20 @@ export default function useSession(): UseSession {
           : {
               ...session,
               groups: [...session.groups, postGroup],
+            }
+      );
+    },
+    [setSession]
+  );
+
+  const receiveChatMessage = useCallback(
+    (message: Message) => {
+      setSession((session) =>
+        !session
+          ? session
+          : {
+              ...session,
+              messages: [...session.messages, message],
             }
       );
     },
@@ -258,6 +275,7 @@ export default function useSession(): UseSession {
     receiveBoard,
     receivePost,
     receivePostGroup,
+    receiveChatMessage,
     receiveVote,
     updatePost,
     updatePostGroup,

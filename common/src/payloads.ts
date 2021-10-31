@@ -72,3 +72,7 @@ export interface DeleteAccountPayload {
   deletePosts: boolean;
   deleteVotes: boolean;
 }
+
+export interface ChatMessagePayload {
+  content: string;
+}

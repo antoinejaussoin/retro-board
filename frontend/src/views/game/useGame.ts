@@ -21,6 +21,8 @@ import {
   Session,
   WsGroupUpdatePayload,
   WsUserReadyPayload,
+  ChatMessagePayload,
+  Message,
 } from '@retrospected/common';
 import { v4 } from 'uuid';
 import find from 'lodash/find';
@@ -110,6 +112,7 @@ const useGame = (sessionId: string) => {
     session,
     receivePost,
     receivePostGroup,
+    receiveChatMessage,
     receiveBoard,
     deletePost,
     updatePost,
@@ -256,6 +259,13 @@ const useGame = (sessionId: string) => {
       receivePostGroup(group);
     });
 
+    socket.on(Actions.RECEIVE_CHAT_MESSAGE, (message: Message) => {
+      if (debug) {
+        console.log('Receive new chat message: ', message);
+      }
+      receiveChatMessage(message);
+    });
+
     socket.on(Actions.RECEIVE_BOARD, (session: Session) => {
       if (debug) {
         console.log('Receive entire board: ', session);
@@ -395,6 +405,7 @@ const useGame = (sessionId: string) => {
     statusValue,
     resetSession,
     receivePost,
+    receiveChatMessage,
     receiveVote,
     receiveBoard,
     updateParticipants,
@@ -471,14 +482,32 @@ const useGame = (sessionId: string) => {
     [receivePost, send, user]
   );
 
+  const onChatMessage = useCallback(
+    (content: string) => {
+      if (send && user) {
+        const message: Message = {
+          content,
+          created: new Date(),
+          id: v4(),
+          user,
+        };
+
+        receiveChatMessage(message);
+        send<ChatMessagePayload>(Actions.CHAT_MESSAGE, message);
+        trackAction(Actions.CHAT_MESSAGE);
+      }
+    },
+    [user, receiveChatMessage, send]
+  );
+
   const onAddGroup = useCallback(
     (columnIndex: number, rank: string) => {
-      if (send) {
+      if (send && user) {
         const group: PostGroup = {
           id: v4(),
           label: 'My Group',
           column: columnIndex,
-          user: user!,
+          user,
           posts: [],
           rank,
         };
@@ -714,6 +743,7 @@ const useGame = (sessionId: string) => {
     acks,
     onAddPost,
     onAddGroup,
+    onChatMessage,
     onEditPost,
     onEditPostGroup,
     onMovePost,
