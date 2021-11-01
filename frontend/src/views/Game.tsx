@@ -184,9 +184,12 @@ function GamePage() {
           render={() => <SummaryMode columns={columns} search={search} />}
         />
       ) : null}
-      <Chat messages={session.messages} onMessage={onChatMessage} />
       <ParticipantContainer>
-        <Participants onReady={onUserReady} />
+        <Participants
+          onReady={onUserReady}
+          messages={session.messages}
+          onMessage={onChatMessage}
+        />
       </ParticipantContainer>
     </div>
   );

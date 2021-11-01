@@ -1,4 +1,4 @@
-import { Check, CheckCircle, Create } from '@mui/icons-material';
+import { Chat, Check, CheckCircle, Create } from '@mui/icons-material';
 import {
   AvatarGroup,
   Badge,
@@ -13,20 +13,26 @@ import useSession from './useSession';
 import styled from '@emotion/styled';
 import useUser from '../../auth/useUser';
 import useTranslation from '../../translations/useTranslations';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { trackEvent } from '../../track';
+import { Message } from '@retrospected/common';
+import useModal from '../../hooks/useModal';
+import ChatModal from './chat/ChatModal';
 
 type ParticipantsProps = {
   onReady: () => void;
+  messages: Message[];
+  onMessage: (content: string) => void;
 };
 
-function Participants({ onReady }: ParticipantsProps) {
+function Participants({ onReady, onMessage, messages }: ParticipantsProps) {
   const { participants } = useParticipants();
   const { session } = useSession();
   const user = useUser();
   const { PostBoard: translations } = useTranslation();
   const isUserReady = !!user && !!session && session.ready.includes(user.id);
   const fullScreen = useMediaQuery('(min-width:600px)');
+  const [chatOpen, openChat, closeChat] = useModal();
   const handleReady = useCallback(() => {
     trackEvent('game/session/user-ready');
     onReady();
@@ -83,6 +89,14 @@ function Participants({ onReady }: ParticipantsProps) {
         >
           {isUserReady ? translations.iAmNotDoneYet : translations.iAmDone}
         </Button>
+      ) : null}
+      {user ? (
+        <IconButton onClick={chatOpen ? closeChat : openChat}>
+          <Chat htmlColor={colors.orange[500]} />
+        </IconButton>
+      ) : null}
+      {chatOpen ? (
+        <ChatModal messages={messages} onMessage={onMessage} />
       ) : null}
     </Container>
   );
