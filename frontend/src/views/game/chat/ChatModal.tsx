@@ -27,4 +27,10 @@ const Container = styled.div`
   max-width: 400px;
   display: flex;
   flex-flow: column;
+
+  @media (max-width: 800px) {
+    max-width: unset;
+    width: calc(100% - 30px);
+    left: 15px;
+  }
 `;

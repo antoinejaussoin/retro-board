@@ -52,6 +52,7 @@ export default function Input({
       placeholder={placeholder}
       onChange={handleChange}
       onKeyPress={handleKeyPress}
+      style={{ border: 'none', outline: 'none', margin: 10 }}
       endAdornment={
         <InputAdornment position="end">
           <IconButton

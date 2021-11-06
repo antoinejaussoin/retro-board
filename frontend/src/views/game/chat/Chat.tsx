@@ -5,7 +5,6 @@ import Input from './Input';
 import ChatMessage from './Message';
 import { useMemo } from 'react';
 import { sortBy } from 'lodash';
-import { css } from '@mui/styled-engine';
 
 type ChatProps = {
   messages: Message[];
@@ -36,11 +35,9 @@ const ScrollContainer = styled(ScrollToBottom)`
 `;
 
 const Container = styled.div`
-  // height: calc(100vh - 200px);
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  border: 2px solid green;
 `;
 
 const Messages = styled.div`
@@ -49,5 +46,4 @@ const Messages = styled.div`
   > * {
     margin: 10px;
   }
-  border: 2px solid purple;
 `;
