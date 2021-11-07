@@ -13,7 +13,7 @@ import useSession from './useSession';
 import styled from '@emotion/styled';
 import useUser from '../../auth/useUser';
 import useTranslation from '../../translations/useTranslations';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { trackEvent } from '../../track';
 import { Message } from '@retrospected/common';
 import useModal from '../../hooks/useModal';

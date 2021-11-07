@@ -28,7 +28,6 @@ import Participants from './game/Participants';
 import AckWarning from './game/AckWarning';
 import useUnauthorised from './game/useUnauthorised';
 import useSession from './game/useSession';
-import Chat from './game/chat/Chat';
 
 interface RouteParams {
   gameId: string;
