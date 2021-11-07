@@ -61,4 +61,8 @@ const Time = styled.span`
   color: ${colors.grey[500]};
 `;
 
-const Content = styled.div``;
+const Content = styled.div`
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+`;
