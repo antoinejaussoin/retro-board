@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [v491/gdpr]
+    branches: [hotfix/vulns]
 
 jobs:
   build:
