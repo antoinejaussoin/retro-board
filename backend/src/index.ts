@@ -414,7 +414,7 @@ db().then(() => {
           identity.emailVerification!
         );
       } else {
-        req.logIn(identity.toIds() as unknown as string, (err: unknown) => {
+        req.logIn(identity.toIds(), (err: unknown) => {
           if (err) {
             console.log('Cannot login Error: ', err);
             res.status(500).send('Cannot login');
@@ -447,7 +447,7 @@ db().then(() => {
       const updatedUser = await updateIdentity(identity.id, {
         emailVerification: null,
       });
-      req.logIn(identity.toIds() as unknown as string, (err: unknown) => {
+      req.logIn(identity.toIds(), (err: unknown) => {
         if (err) {
           console.log('Cannot login Error: ', err);
           res.status(500).send('Cannot login');
@@ -493,7 +493,7 @@ db().then(() => {
         emailVerification: null,
         password: hashedPassword,
       });
-      req.logIn(identity.toIds() as unknown as string, (err: unknown) => {
+      req.logIn(identity.toIds(), (err: unknown) => {
         if (err) {
           console.log('Cannot login Error: ', err);
           res.status(500).send('Cannot login');

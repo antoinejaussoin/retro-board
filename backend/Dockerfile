@@ -8,22 +8,29 @@ WORKDIR /usr/src/backend
 
 ENV NODE_ENV production
 
+RUN npm i -g yalc
+
 COPY ./yarn.lock ./
 COPY ./package.json ./
 COPY ./backend/package.json ./backend/
-COPY ./common/package.json ./common/
+COPY ./backend/yarn.lock ./backend/
+COPY ./backend/tsconfig.json ./backend/
+COPY ./common ./common
 
+WORKDIR /usr/src/backend/common
+RUN yarn --network-timeout 1000000 install
+RUN yarn build
+RUN yalc publish --private
+# RUN yarn link
+WORKDIR /usr/src/backend/backend
+RUN yalc add @retrospected/common
+# COPY ./.yalc ./.yalc
+# RUN yarn link @retrospected/common
+RUN yarn --network-timeout 1000000 install
+WORKDIR /usr/src/backend
 RUN yarn --network-timeout 1000000 install
 
-# Delete problematic frontend dependencies
-RUN rm -rf ./node_modules/webpack-dev-server
-RUN rm -rf ./node_modules/renderkid
-RUN rm -rf ./node_modules/mocha
-RUN rm -rf ./node_modules/wide-align
-RUN rm -rf ./node_modules/yargs-unparser
-
 COPY ./backend ./backend
-COPY ./common ./common
 
 RUN yarn build-backend
 
