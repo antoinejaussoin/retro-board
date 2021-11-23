@@ -15,6 +15,13 @@ COPY ./common/package.json ./common/
 
 RUN yarn --network-timeout 1000000 install
 
+# Delete problematic frontend dependencies
+RUN rm -rf ./node_modules/webpack-dev-server
+RUN rm -rf ./node_modules/renderkid
+RUN rm -rf ./node_modules/mocha
+RUN rm -rf ./node_modules/wide-align
+RUN rm -rf ./node_modules/yargs-unparser
+
 COPY ./backend ./backend
 COPY ./common ./common
 
