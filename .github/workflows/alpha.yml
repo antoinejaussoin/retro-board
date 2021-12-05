@@ -35,16 +35,6 @@ jobs:
           username: ${{ secrets.DOCKER_NEW_USERNAME }}
           password: ${{ secrets.DOCKER_NEW_PASSWORD }}
 
-      - name: Build and push Documentation
-        uses: docker/build-push-action@v2
-        with:
-          builder: ${{ steps.buildx.outputs.name }}
-          file: docs/Dockerfile
-          context: docs
-          tags: retrospected/docs:alpha
-          platforms: linux/amd64
-          push: true
-
       - name: Build and push Backend
         uses: docker/build-push-action@v2
         with:
@@ -62,15 +52,5 @@ jobs:
           file: frontend/Dockerfile
           context: .
           tags: retrospected/frontend:alpha
-          platforms: linux/amd64
-          push: true
-
-      - name: Build and push Maintenance
-        uses: docker/build-push-action@v2
-        with:
-          builder: ${{ steps.buildx.outputs.name }}
-          file: maintenance/Dockerfile
-          context: maintenance
-          tags: retrospected/maintenance:alpha
           platforms: linux/amd64
           push: true
