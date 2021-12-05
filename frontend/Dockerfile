@@ -10,7 +10,6 @@ RUN npm i -g yalc
 WORKDIR /home/node/app
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
-COPY ./yarn.lock ./
 COPY ./package.json ./
 COPY ./frontend/package.json ./frontend/
 COPY ./frontend/yarn.lock ./frontend/
@@ -24,7 +23,6 @@ WORKDIR /home/node/app/common
 RUN yarn --network-timeout 1000000 install
 RUN yarn build
 RUN yalc publish --private
-# RUN yarn link
 WORKDIR /home/node/app/frontend
 RUN yalc add @retrospected/common
 

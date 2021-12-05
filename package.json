@@ -4,6 +4,7 @@
   "description": "An agile retrospective board - Powering www.retrospected.com",
   "private": true,
   "scripts": {
+    "init": ". ./init.sh",
     "test": "yarn build-common && cd frontend && yarn test",
     "ci-test": "CI=true yarn test",
     "lint": "cd frontend && yarn lint && cd ../backend && yarn lint",

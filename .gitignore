@@ -51,3 +51,4 @@ configuration.json
 *.rest
 .docusaurus
 .yalc
+yalc.lock

@@ -21,7 +21,6 @@ WORKDIR /usr/src/backend/common
 RUN yarn --network-timeout 1000000 install
 RUN yarn build
 RUN yalc publish --private
-# RUN yarn link
 WORKDIR /usr/src/backend/backend
 RUN yalc add @retrospected/common
 
