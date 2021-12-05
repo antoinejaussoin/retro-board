@@ -50,5 +50,4 @@ configuration.json
 
 *.rest
 .docusaurus
-
 .yalc

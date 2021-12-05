@@ -118,7 +118,7 @@ function SessionEditor({
               onChange={toggleIsDefaultTemplate}
             />
           }
-          label={Customize.makeDefaultTemplate}
+          label={Customize.makeDefaultTemplate!}
         />
         <Button onClick={onClose} variant="text">
           {Generic.cancel}
