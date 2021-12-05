@@ -5,19 +5,33 @@ FROM --platform=$BUILDPLATFORM node:16-alpine as Node
 
 ENV NODE_ENV=production
 
+RUN npm i -g yalc
+
 WORKDIR /home/node/app
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
-COPY ./package.json ./
 COPY ./yarn.lock ./
+COPY ./package.json ./
 COPY ./frontend/package.json ./frontend/
-COPY ./common/package.json ./common/
+COPY ./frontend/yarn.lock ./frontend/
+COPY ./common ./common
 
 RUN chown -R node:node /home/node/app
 
 USER node
 
+WORKDIR /home/node/app/common
 RUN yarn --network-timeout 1000000 install
+RUN yarn build
+RUN yalc publish --private
+# RUN yarn link
+WORKDIR /home/node/app/frontend
+RUN yalc add @retrospected/common
+
+RUN yarn --network-timeout 1000000 install
+WORKDIR /home/node/app
+RUN yarn --network-timeout 1000000 install
+
 
 COPY --chown=node:node ./frontend/src ./frontend/src
 COPY --chown=node:node ./frontend/public ./frontend/public

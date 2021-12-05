@@ -24,8 +24,7 @@ RUN yalc publish --private
 # RUN yarn link
 WORKDIR /usr/src/backend/backend
 RUN yalc add @retrospected/common
-# COPY ./.yalc ./.yalc
-# RUN yarn link @retrospected/common
+
 RUN yarn --network-timeout 1000000 install
 WORKDIR /usr/src/backend
 RUN yarn --network-timeout 1000000 install
