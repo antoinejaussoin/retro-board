@@ -1,7 +1,7 @@
 import express from 'express';
 import * as socketIo from 'socket.io';
 import { createAdapter } from 'socket.io-redis';
-import redis from 'redis';
+import { createClient } from 'redis';
 import connectRedis from 'connect-redis';
 import csurf from 'csurf';
 import http from 'http';
@@ -157,9 +157,8 @@ const io = new socketIo.Server(httpServer, {
 
 if (config.REDIS_ENABLED) {
   const RedisStore = connectRedis(session);
-  const redisClient = redis.createClient({
-    host: config.REDIS_HOST,
-    port: config.REDIS_PORT,
+  const redisClient = createClient({
+    url: `redis://${config.REDIS_HOST}:${config.REDIS_PORT}`,
   });
 
   sessionMiddleware = session({
