@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [v491/gdpr]
+    branches: [hotfix/vulnerabilities]
 
 jobs:
   build:
@@ -50,7 +50,7 @@ jobs:
         with:
           builder: ${{ steps.buildx.outputs.name }}
           file: backend/Dockerfile
-          context: .
+          context: backend
           tags: retrospected/backend:alpha
           platforms: linux/amd64
           push: true
@@ -60,7 +60,7 @@ jobs:
         with:
           builder: ${{ steps.buildx.outputs.name }}
           file: frontend/Dockerfile
-          context: .
+          context: frontend
           tags: retrospected/frontend:alpha
           platforms: linux/amd64
           push: true
