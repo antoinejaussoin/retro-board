@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { render, RenderOptions, RenderResult } from '@testing-library/react';
-import { FullUser, Session, defaultOptions } from '@retrospected/common';
+import { FullUser, Session, defaultOptions } from 'common';
 import {
   DragDropContext,
   Droppable,

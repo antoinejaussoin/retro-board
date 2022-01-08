@@ -7,7 +7,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { colors } from '@mui/material';
 import { CreateNewFolder, SubdirectoryArrowLeft } from '@mui/icons-material';
 import PostItem from './post/Post';
-import { Post, PostGroup } from '@retrospected/common';
+import { Post, PostGroup } from 'common';
 import useTranslations from '../../../translations';
 import Group from './Group';
 import {

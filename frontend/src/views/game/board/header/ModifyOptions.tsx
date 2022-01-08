@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import Button from '@mui/material/Button';
 import SessionEditor from '../../../session-editor/SessionEditor';
 import { ColumnSettings } from '../../../../state/types';
-import { SessionOptions, ColumnDefinition } from '@retrospected/common';
+import { SessionOptions, ColumnDefinition } from 'common';
 import { toColumnDefinitions } from '../../../../state/columns';
 import { trackEvent } from '../../../../track';
 import { Settings } from '@mui/icons-material';

@@ -1,4 +1,4 @@
-import { Post, Session, User, VoteType } from '@retrospected/common';
+import { Post, Session, User, VoteType } from 'common';
 import some from 'lodash/some';
 
 export interface SessionUserPermissions {

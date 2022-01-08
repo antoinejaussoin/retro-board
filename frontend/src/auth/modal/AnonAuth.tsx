@@ -4,7 +4,7 @@ import Input from '@mui/material/Input';
 import { Alert } from '@mui/material';
 import useTranslations, { useLanguage } from '../../translations';
 import { anonymousLogin, updateLanguage } from '../../api';
-import { FullUser } from '@retrospected/common';
+import { FullUser } from 'common';
 import Wrapper from './Wrapper';
 import { loadCsrfToken } from '../../api/fetch';
 

@@ -1,7 +1,7 @@
 import { colors } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import { VerifiedUser, VerifiedUserOutlined } from '@mui/icons-material';
-import { SessionMetadata } from '@retrospected/common';
+import { SessionMetadata } from 'common';
 import useTranslation from '../../../translations/useTranslations';
 import ProButton from '../../../components/ProButton';
 

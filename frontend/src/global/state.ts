@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { BackendCapabilities } from '@retrospected/common';
+import { BackendCapabilities } from 'common';
 
 export const backendCapabilitiesState = atom<BackendCapabilities>({
   key: 'BACKEND_CAPABILITIES',

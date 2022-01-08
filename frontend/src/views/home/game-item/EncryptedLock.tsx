@@ -1,7 +1,7 @@
 import { colors } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import { Lock, LockOpenOutlined, LockOutlined } from '@mui/icons-material';
-import { SessionMetadata } from '@retrospected/common';
+import { SessionMetadata } from 'common';
 import { CHECK_PREFIX, decrypt } from '../../../crypto/crypto';
 import { useEncryptionKey } from '../../../crypto/useEncryptionKey';
 import useTranslation from '../../../translations/useTranslations';

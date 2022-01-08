@@ -18,7 +18,7 @@ import {
   Gesture,
   FitnessCenter,
 } from '@mui/icons-material';
-import { IconName } from '@retrospected/common';
+import { IconName } from 'common';
 
 export function getIcon(name: IconName | null): React.ComponentType | null {
   switch (name) {

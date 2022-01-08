@@ -10,7 +10,7 @@ import styled from '@emotion/styled';
 import io from 'socket.io-client';
 import useTranslations, { useLanguage } from '../../translations';
 import { updateLanguage } from '../../api';
-import { FullUser } from '@retrospected/common';
+import { FullUser } from 'common';
 import Wrapper from './Wrapper';
 import SlackLoginButton from './social/SlackLoginButton';
 import OktaLoginButton from './social/OktaLoginButton';

@@ -1,4 +1,4 @@
-import { Quota } from '@retrospected/common';
+import { Quota } from 'common';
 import { useCallback, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
 import {

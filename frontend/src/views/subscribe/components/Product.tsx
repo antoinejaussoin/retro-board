@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { colors } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import { useCallback } from 'react';
-import { Product, Currency } from '@retrospected/common';
+import { Product, Currency } from 'common';
 import useTranslations from '../../../translations';
 
 interface ProductDisplayProps {

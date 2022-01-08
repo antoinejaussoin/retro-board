@@ -1,11 +1,6 @@
 import { useCallback } from 'react';
 import styled from '@emotion/styled';
-import {
-  Post,
-  PostGroup,
-  SessionOptions,
-  ColumnDefinition,
-} from '@retrospected/common';
+import { Post, PostGroup, SessionOptions, ColumnDefinition } from 'common';
 import {
   DragDropContext,
   DropResult,

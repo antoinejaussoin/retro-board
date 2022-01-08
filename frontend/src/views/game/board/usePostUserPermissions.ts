@@ -1,4 +1,4 @@
-import { Post } from '@retrospected/common';
+import { Post } from 'common';
 import { postPermissionLogic, PostUserPermissions } from './permissions-logic';
 import useUser from '../../../auth/useUser';
 import useSession from '../useSession';

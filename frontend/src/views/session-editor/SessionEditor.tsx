@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { SessionOptions } from '@retrospected/common';
+import { SessionOptions } from 'common';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import useMediaQuery from '@mui/material/useMediaQuery';

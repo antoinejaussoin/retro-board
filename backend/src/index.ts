@@ -38,7 +38,7 @@ import {
   CreateSessionPayload,
   SelfHostedCheckPayload,
   DeleteAccountPayload,
-} from '@retrospected/common';
+} from 'common';
 import registerPasswordUser from './auth/register/register-user';
 import { sendVerificationEmail, sendResetPassword } from './email/emailSender';
 import { v4 } from 'uuid';

@@ -1,4 +1,4 @@
-import { WsErrorType } from '@retrospected/common';
+import { WsErrorType } from 'common';
 
 export type PluralWord = (numberOfItems: number) => string;
 

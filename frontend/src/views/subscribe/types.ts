@@ -1,4 +1,4 @@
-import { Plan, Currency } from '@retrospected/common';
+import { Plan, Currency } from 'common';
 
 export interface Order {
   plan: Plan;

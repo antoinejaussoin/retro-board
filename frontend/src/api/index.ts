@@ -10,7 +10,7 @@ import {
   Product,
   BackendCapabilities,
   DeleteAccountPayload,
-} from '@retrospected/common';
+} from 'common';
 import config from '../utils/getConfig';
 import { v4 } from 'uuid';
 import { CHECK_PREFIX, encrypt } from '../crypto/crypto';

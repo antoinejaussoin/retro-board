@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { PostGroup } from '@retrospected/common';
+import { PostGroup } from 'common';
 import styled from '@emotion/styled';
 import {
   Droppable,

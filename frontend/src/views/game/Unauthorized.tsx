@@ -1,4 +1,4 @@
-import { AccessErrorType } from '@retrospected/common';
+import { AccessErrorType } from 'common';
 import NoContent from '../../components/NoContent';
 import useTranslations from '../../translations';
 

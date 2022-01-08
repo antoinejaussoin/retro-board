@@ -1,8 +1,4 @@
-import {
-  ColumnDefinition,
-  IconName,
-  ColumnDefinitionType,
-} from '@retrospected/common';
+import { ColumnDefinition, IconName, ColumnDefinitionType } from 'common';
 import { Translation } from '../translations';
 import { v4 } from 'uuid';
 import keyBy from 'lodash/keyBy';

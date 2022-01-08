@@ -1,4 +1,4 @@
-import { Quota } from '@retrospected/common';
+import { Quota } from 'common';
 import React, { useEffect } from 'react';
 import { atom, useRecoilState } from 'recoil';
 import { getQuota } from '../views/account/api';

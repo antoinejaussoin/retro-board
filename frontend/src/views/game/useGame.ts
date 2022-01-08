@@ -21,7 +21,7 @@ import {
   Session,
   WsGroupUpdatePayload,
   WsUserReadyPayload,
-} from '@retrospected/common';
+} from 'common';
 import { v4 } from 'uuid';
 import find from 'lodash/find';
 import { setScope, trackAction, trackEvent } from '../../track';

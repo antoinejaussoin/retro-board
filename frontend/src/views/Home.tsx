@@ -7,7 +7,7 @@ import { colors } from '@mui/material';
 import { Lock, ThumbUpAlt } from '@mui/icons-material';
 import useTranslations from '../translations';
 import PreviousGames from './home/PreviousGames';
-import { SessionMetadata } from '@retrospected/common';
+import { SessionMetadata } from 'common';
 import { trackEvent } from './../track';
 import { createGame, createEncryptedGame, deleteSession } from '../api';
 import { Page } from '../components/Page';

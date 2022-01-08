@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { FullUser } from '@retrospected/common';
+import { FullUser } from 'common';
 
 interface UserContextProps {
   user: FullUser | null;

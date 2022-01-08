@@ -9,10 +9,7 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { TemplateColumnDefinitionEntity } from './ColumnDefinition';
-import {
-  SessionOptions as JsonSessionOptions,
-  SessionTemplate,
-} from '@retrospected/common';
+import { SessionOptions as JsonSessionOptions, SessionTemplate } from 'common';
 import UserEntity from './User';
 import SessionOptionsEntity from './SessionOptions';
 

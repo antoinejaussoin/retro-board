@@ -3,7 +3,7 @@ import groupBy from 'lodash/groupBy';
 import values from 'lodash/values';
 import { render, fireEvent } from '../../../../../testing';
 import PostItem from '../Post';
-import { Post, User, VoteExtract, VoteType } from '@retrospected/common';
+import { Post, User, VoteExtract, VoteType } from 'common';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import theme from '../../../../../Theme';

@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import UserContext from './Context';
-import { FullUser } from '@retrospected/common';
+import { FullUser } from 'common';
 
 function useUser(): FullUser | null {
   const { user } = useContext(UserContext);

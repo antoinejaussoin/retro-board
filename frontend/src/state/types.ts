@@ -1,4 +1,4 @@
-import { IconName, ColumnDefinitionType } from '@retrospected/common';
+import { IconName, ColumnDefinitionType } from 'common';
 
 export interface ColumnSettings {
   color: string;

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useContext } from 'react';
 import Context from './Context';
 import UserContext from '../auth/Context';
-import { TrackingEvent } from '@retrospected/common';
+import { TrackingEvent } from 'common';
 import { updateLanguage } from '../api';
 import { getItem, setItem } from '../utils/localStorage';
 import { trackEvent } from '../track';

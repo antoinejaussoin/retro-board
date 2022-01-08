@@ -13,7 +13,6 @@
     "fix": "eslint 'src/**/*.ts' --fix"
   },
   "dependencies": {
-    "@retrospected/common": "*",
     "@sendgrid/mail": "^7.4.7",
     "@sentry/node": "^6.13.3",
     "@types/bcryptjs": "^2.4.2",

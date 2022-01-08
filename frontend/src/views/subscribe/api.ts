@@ -3,7 +3,7 @@ import {
   Plan,
   Currency,
   StripeLocales,
-} from '@retrospected/common';
+} from 'common';
 import { fetchGet, fetchPostGet } from '../../api/fetch';
 
 interface SessionIdResponse {
