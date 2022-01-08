@@ -1,7 +1,7 @@
 import { EntityRepository } from 'typeorm';
 import { SessionEntity } from '../entities';
 import ColumnRepository from './ColumnRepository';
-import { Session as JsonSession, SessionOptions } from '@retrospected/common';
+import { Session as JsonSession, SessionOptions } from '../../common';
 import BaseRepository from './BaseRepository';
 
 @EntityRepository(SessionEntity)

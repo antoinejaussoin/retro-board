@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { getIcon, getAllIcons } from '../../../../state/icons';
-import { IconName } from '@retrospected/common';
+import { IconName } from 'common';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { SelectChangeEvent } from '@mui/material';

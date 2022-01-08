@@ -1,6 +1,6 @@
 import { EntityRepository } from 'typeorm';
 import { PostGroupEntity } from '../entities';
-import { PostGroup as JsonPostGroup } from '@retrospected/common';
+import { PostGroup as JsonPostGroup } from '../../common';
 import { cloneDeep } from 'lodash';
 import BaseRepository from './BaseRepository';
 

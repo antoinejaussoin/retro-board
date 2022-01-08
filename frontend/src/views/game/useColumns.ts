@@ -3,7 +3,7 @@ import sortBy from 'lodash/sortBy';
 import useTranslations from '../../translations';
 import { ColumnContent } from './types';
 import { extrapolate } from '../../state/columns';
-import { ColumnDefinition, Post, PostGroup } from '@retrospected/common';
+import { ColumnDefinition, Post, PostGroup } from 'common';
 import useSession from './useSession';
 
 const emptyPosts: Post[] = [];

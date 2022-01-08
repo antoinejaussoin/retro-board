@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import EditableLabel from '../../../../components/EditableLabel';
 import { ColumnSettings } from '../../../../state/types';
-import { IconName } from '@retrospected/common';
+import { IconName } from 'common';
 import { TwitterPicker, ColorResult } from 'react-color';
 import IconPicker from './IconPicker';
 import IconButton from '@mui/material/IconButton';

@@ -1,4 +1,4 @@
-import { SessionMetadata } from '@retrospected/common';
+import { SessionMetadata } from 'common';
 import useUser from '../auth/useUser';
 import { fetchPreviousSessions } from '../api';
 import { useState, useEffect, useCallback } from 'react';

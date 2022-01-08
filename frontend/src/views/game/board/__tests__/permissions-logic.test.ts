@@ -10,7 +10,7 @@ import {
   VoteType,
   defaultOptions,
   VoteExtract,
-} from '@retrospected/common';
+} from 'common';
 import { v4 } from 'uuid';
 
 const userBase: User = {

@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import { colors } from '@mui/material';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogContent from '@mui/material/DialogContent';
-import { SessionMetadata } from '@retrospected/common';
+import { SessionMetadata } from 'common';
 import { AvatarGroup } from '@mui/material';
 import CustomAvatar from '../../../components/Avatar';
 import ItemStat from '../ItemStat';

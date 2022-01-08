@@ -1,5 +1,5 @@
 import { Locale } from 'date-fns';
-import { StripeLocales } from '@retrospected/common';
+import { StripeLocales } from 'common';
 const arDZ = () =>
   import('date-fns/locale/ar-DZ' /* webpackChunkName: "date-fns-ar-DZ" */);
 const zhCN = () =>

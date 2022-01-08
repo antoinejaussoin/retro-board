@@ -6,10 +6,7 @@ import {
 } from '../db/actions/users';
 import config from '../config';
 import { isLicenced } from '../security/is-licenced';
-import {
-  AdminChangePasswordPayload,
-  BackendCapabilities,
-} from '@retrospected/common';
+import { AdminChangePasswordPayload, BackendCapabilities } from '../common';
 import { getIdentityFromRequest, hashPassword } from '../utils';
 import csurf from 'csurf';
 

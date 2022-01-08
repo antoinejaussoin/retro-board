@@ -18,7 +18,7 @@ import { noop } from 'lodash';
 import { useCallback, useContext, useState } from 'react';
 import styled from '@emotion/styled';
 import useUser from '../../../auth/useUser';
-import { DeleteAccountPayload } from '@retrospected/common';
+import { DeleteAccountPayload } from 'common';
 import { deleteAccount, logout } from '../../../api';
 import UserContext from '../../../auth/Context';
 import { useHistory } from 'react-router';

@@ -6,7 +6,7 @@ import {
   VoteExtract,
   SessionOptions,
   Message,
-} from '@retrospected/common';
+} from 'common';
 import { findIndex } from 'lodash';
 import { useCallback } from 'react';
 import { useRecoilState } from 'recoil';

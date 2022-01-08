@@ -1,4 +1,4 @@
-import { Participant } from '@retrospected/common';
+import { Participant } from 'common';
 
 import {
   getAddedParticipants,

@@ -1,4 +1,4 @@
-import { Post, PostGroup } from '@retrospected/common';
+import { Post, PostGroup } from 'common';
 import { ColumnSettings } from '../../state/types';
 
 export interface ColumnContent extends ColumnSettings {

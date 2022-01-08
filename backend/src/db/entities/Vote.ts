@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
   Index,
 } from 'typeorm';
-import { VoteType, Vote, VoteExtract } from '@retrospected/common';
+import { VoteType, Vote, VoteExtract } from '../../common';
 import UserEntity from './User';
 import PostEntity from './Post';
 

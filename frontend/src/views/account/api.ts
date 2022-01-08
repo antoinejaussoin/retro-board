@@ -1,4 +1,4 @@
-import { Quota } from '@retrospected/common';
+import { Quota } from 'common';
 import { fetchGet, fetchPatch } from '../../api/fetch';
 
 export async function getPortalUrl(): Promise<string | null> {

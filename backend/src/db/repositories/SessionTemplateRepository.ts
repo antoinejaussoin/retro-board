@@ -4,7 +4,7 @@ import {
   SessionTemplate as JsonSessionTemplate,
   ColumnDefinition as JsonColumnDefinition,
   SessionOptions as JsonSessionOptions,
-} from '@retrospected/common';
+} from '../../common';
 import { v4 } from 'uuid';
 import { TemplateColumnRepository } from '.';
 import BaseRepository from './BaseRepository';

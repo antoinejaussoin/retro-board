@@ -9,7 +9,7 @@ import {
 import { Alert } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import { useCallback, useState } from 'react';
-import { FullUser } from '@retrospected/common';
+import { FullUser } from 'common';
 import Input from '../../components/Input';
 import { changePassword } from './api';
 

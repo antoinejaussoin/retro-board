@@ -6,11 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import {
-  IconName,
-  ColumnDefinition,
-  ColumnDefinitionType,
-} from '@retrospected/common';
+import { IconName, ColumnDefinition, ColumnDefinitionType } from '../../common';
 import SessionEntity from './Session';
 import SessionTemplateEntity from './SessionTemplate';
 

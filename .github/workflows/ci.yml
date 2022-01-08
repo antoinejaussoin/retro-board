@@ -7,8 +7,25 @@ on:
     branches: []
 
 jobs:
-  test:
+  test-frontend:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - run: yarn
+      - run: yarn ci-test
+      - run: yarn lint
+      - run: yarn build
+  test-backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1

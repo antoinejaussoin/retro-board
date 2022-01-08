@@ -15,7 +15,7 @@ import {
   SLACK_CONFIG,
   OKTA_CONFIG,
 } from './config';
-import { AccountType } from '@retrospected/common';
+import { AccountType } from '../common';
 import chalk from 'chalk';
 import loginUser from './logins/password-user';
 import loginAnonymous from './logins/anonymous-user';

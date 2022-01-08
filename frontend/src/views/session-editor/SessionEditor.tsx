@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { SessionOptions } from '@retrospected/common';
+import { SessionOptions } from 'common';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -118,7 +118,7 @@ function SessionEditor({
               onChange={toggleIsDefaultTemplate}
             />
           }
-          label={Customize.makeDefaultTemplate}
+          label={Customize.makeDefaultTemplate!}
         />
         <Button onClick={onClose} variant="text">
           {Generic.cancel}

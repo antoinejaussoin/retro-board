@@ -28,7 +28,6 @@ It features the following technologies:
 - [React 17](https://github.com/facebook/react)
 - [React Hooks](https://reactjs.org/docs/hooks-intro.html)
 - [React Router 4](https://github.com/ReactTraining/react-router)
-- [Mono Repo / Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces)
 - [TypeScript 4](https://www.typescriptlang.org/)
 - [Recoil.js](https://recoiljs.org), as the global state management library
 - [Socket IO](http://socket.io)
@@ -84,6 +83,13 @@ You can start an instance of Retrospected in 5 minutes by following the [quick-s
 This will run a demo version, which you can turn into a fully licenced version by purchasing a [Self Hosted licence](https://www.retrospected.com/subscribe?product=self-hosted).
 
 ## Versions History
+
+### Version 4.11.0
+
+- Remove Yarn Workspaces to limit dependency sharing
+- Upgrade most dependencies for security reasons
+- Upgrade Nginx image to fix security issues
+- Force secure cookies
 
 ### Version 4.10.0
 

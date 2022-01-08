@@ -12,10 +12,7 @@ import {
 } from 'typeorm';
 import PostEntity from './Post';
 import { ColumnDefinitionEntity } from './ColumnDefinition';
-import {
-  SessionOptions as JsonSessionOptions,
-  Session,
-} from '@retrospected/common';
+import { SessionOptions as JsonSessionOptions, Session } from '../../common';
 import UserEntity from './User';
 import SessionOptionsEntity from './SessionOptions';
 import PostGroupEntity from './PostGroup';

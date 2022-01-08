@@ -22,7 +22,7 @@ import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
 import useTranslations from '../../../../translations';
 import EditableLabel from '../../../../components/EditableLabel';
 import { Palette } from '../../../../Theme';
-import { Post } from '@retrospected/common';
+import { Post } from 'common';
 import { usePostUserPermissions } from '../usePostUserPermissions';
 import { countVotes, enumerateVotes } from '../../utils';
 import GiphySearchBox from 'react-giphy-searchbox';

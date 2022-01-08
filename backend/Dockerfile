@@ -10,15 +10,12 @@ ENV NODE_ENV production
 
 COPY ./yarn.lock ./
 COPY ./package.json ./
-COPY ./backend/package.json ./backend/
-COPY ./common/package.json ./common/
 
 RUN yarn --network-timeout 1000000 install
 
-COPY ./backend ./backend
-COPY ./common ./common
+COPY ./ ./
 
-RUN yarn build-backend
+RUN yarn build
 
 EXPOSE ${BACKEND_PORT}
 CMD [ "yarn", "backend-production" ]

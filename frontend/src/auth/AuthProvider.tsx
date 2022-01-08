@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import Context from './Context';
-import { FullUser } from '@retrospected/common';
+import { FullUser } from 'common';
 import { me } from '../api';
 import { useLocation } from 'react-router-dom';
 import { setScope } from '../track';

@@ -1,5 +1,5 @@
 import ReactGA from 'react-ga';
-import { TrackingEvent } from '@retrospected/common';
+import { TrackingEvent } from 'common';
 import * as Sentry from '@sentry/browser';
 import config from './utils/getConfig';
 

@@ -1,6 +1,6 @@
 import { EntityRepository } from 'typeorm';
 import { VoteEntity } from '../entities';
-import { Vote as JsonVote } from '@retrospected/common';
+import { Vote as JsonVote } from '../../common';
 import BaseRepository from './BaseRepository';
 
 @EntityRepository(VoteEntity)

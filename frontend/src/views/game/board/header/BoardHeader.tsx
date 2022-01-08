@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import styled from '@emotion/styled';
-import { SessionOptions, ColumnDefinition } from '@retrospected/common';
+import { SessionOptions, ColumnDefinition } from 'common';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from '@mui/styles';
 import useTranslations from '../../../../translations';

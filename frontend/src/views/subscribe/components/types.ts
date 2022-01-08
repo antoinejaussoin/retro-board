@@ -1,4 +1,4 @@
-import { Currency } from '@retrospected/common';
+import { Currency } from 'common';
 
 export interface CurrencyMetadata {
   value: Currency;

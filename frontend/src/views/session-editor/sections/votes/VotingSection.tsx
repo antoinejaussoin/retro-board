@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { SessionOptions } from '@retrospected/common';
+import { SessionOptions } from 'common';
 import SettingCategory from '../SettingCategory';
 import OptionItem from '../OptionItem';
 import useTranslations from '../../../../translations';

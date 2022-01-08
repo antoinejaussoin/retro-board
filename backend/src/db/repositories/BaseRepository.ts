@@ -1,5 +1,5 @@
 import { DeepPartial, Repository, SaveOptions } from 'typeorm';
-import { Entity } from '@retrospected/common';
+import { Entity } from '../../common';
 
 export default class BaseRepository<T extends Entity> extends Repository<T> {
   async saveAndReload(

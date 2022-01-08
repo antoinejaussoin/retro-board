@@ -4,14 +4,16 @@ import aes from 'crypto-js/aes';
 import { stringify } from 'crypto-js/enc-utf8';
 import { UserView, UserIdentityEntity } from './db/entities';
 import { getUserView, getUser, getIdentity } from './db/actions/users';
-import { Quota } from '@retrospected/common';
+import { Quota } from './common';
 import { getNumberOfPosts } from './db/actions/posts';
 
 export async function getUserViewFromRequest(
   request: Request
 ): Promise<UserView | null> {
   if (request.user) {
-    const userView = await getUserView(request.user.identityId);
+    const userView = await getUserView(
+      (request.user as unknown as UserIds).identityId
+    );
     return userView;
   }
   return null;

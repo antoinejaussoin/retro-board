@@ -21,7 +21,7 @@ import {
   WsGroupUpdatePayload,
   WsUserReadyPayload,
   Message,
-} from '@retrospected/common';
+} from './common';
 import { RateLimiterMemory } from 'rate-limiter-flexible';
 import chalk from 'chalk';
 import moment from 'moment';

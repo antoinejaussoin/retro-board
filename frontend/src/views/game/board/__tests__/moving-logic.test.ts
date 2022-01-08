@@ -1,6 +1,6 @@
 import { getMovingEntities, calculateRank } from '../moving-logic';
 import { ColumnContent } from '../../types';
-import { Post, User, PostGroup } from '@retrospected/common';
+import { Post, User, PostGroup } from 'common';
 import { getMiddle, getNext, getPrevious } from '../../lexorank';
 
 function p(
@@ -14,7 +14,7 @@ function p(
     action: '',
     column,
     content: '',
-    user: ({} as unknown) as User,
+    user: {} as unknown as User,
     votes: [],
     giphy: null,
     rank,
@@ -34,7 +34,7 @@ function g(
     rank,
     label: '',
     posts,
-    user: ({} as unknown) as User,
+    user: {} as unknown as User,
   };
 }
 

@@ -7,10 +7,10 @@ import {
   MicrosoftLoginButton,
 } from 'react-social-login-buttons';
 import styled from '@emotion/styled';
-import io from 'socket.io-client';
+import io, { Socket } from 'socket.io-client';
 import useTranslations, { useLanguage } from '../../translations';
 import { updateLanguage } from '../../api';
-import { FullUser } from '@retrospected/common';
+import { FullUser } from 'common';
 import Wrapper from './Wrapper';
 import SlackLoginButton from './social/SlackLoginButton';
 import OktaLoginButton from './social/OktaLoginButton';
@@ -25,7 +25,7 @@ interface SocialAuthProps {
 }
 
 function SocialAuth({ onClose, onUser }: SocialAuthProps) {
-  const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null);
+  const [socket, setSocket] = useState<Socket | null>(null);
   const windowRef = useRef<Window | null>(null);
   const { SocialMediaLogin: translations } = useTranslations();
   const { details } = useOAuthAvailabilities();

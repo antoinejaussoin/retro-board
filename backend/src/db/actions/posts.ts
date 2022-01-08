@@ -1,4 +1,4 @@
-import { Post, PostGroup, Vote } from '@retrospected/common';
+import { Post, PostGroup, Vote } from '../../common';
 import {
   PostRepository,
   PostGroupRepository,

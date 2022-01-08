@@ -1,4 +1,4 @@
-import { AccessErrorType, Participant, Session } from '@retrospected/common';
+import { AccessErrorType, Participant, Session } from 'common';
 import { atom } from 'recoil';
 
 export const ParticipantsState = atom<Participant[]>({

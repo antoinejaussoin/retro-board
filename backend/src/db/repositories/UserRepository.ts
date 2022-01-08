@@ -1,6 +1,6 @@
 import { EntityRepository } from 'typeorm';
 import { UserEntity } from '../entities';
-import { FullUser, User as JsonUser } from '@retrospected/common';
+import { FullUser, User as JsonUser } from '../../common';
 import { addDays } from 'date-fns';
 import BaseRepository from './BaseRepository';
 

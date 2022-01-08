@@ -9,7 +9,7 @@ import {
   ManyToMany,
   OneToMany,
 } from 'typeorm';
-import { User, Currency } from '@retrospected/common';
+import { User, Currency } from '../../common';
 import { SessionEntity, SessionTemplateEntity } from '.';
 import UserIdentityEntity from './UserIdentity';
 

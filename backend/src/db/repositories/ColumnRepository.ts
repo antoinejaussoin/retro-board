@@ -1,6 +1,6 @@
 import { EntityRepository } from 'typeorm';
 import { ColumnDefinitionEntity } from '../entities';
-import { ColumnDefinition as JsonColumnDefinition } from '@retrospected/common';
+import { ColumnDefinition as JsonColumnDefinition } from '../../common';
 import { v4 } from 'uuid';
 import BaseRepository from './BaseRepository';
 

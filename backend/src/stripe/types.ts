@@ -1,4 +1,4 @@
-import { Product, CreateSubscriptionPayload } from '@retrospected/common';
+import { Product, CreateSubscriptionPayload } from '../common';
 
 export interface InternalProduct extends Product {
   productId: string;

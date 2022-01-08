@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
 } from 'typeorm';
-import { AccountType, UserIdentity } from '@retrospected/common';
+import { AccountType, UserIdentity } from '../../common';
 import UserEntity from './User';
 import { UserIds } from '../../utils';
 

@@ -1,8 +1,8 @@
-import { SelfHostedCheckPayload } from '@retrospected/common';
+import { SelfHostedCheckPayload } from '../common';
 import config from '../config';
 import fetch from 'node-fetch';
 import wait, { comparePassword, decrypt } from '../utils';
-import { LicenceMetadata } from 'src/types';
+import { LicenceMetadata } from './../types';
 
 let licenced: LicenceMetadata | null = null;
 

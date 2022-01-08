@@ -8,7 +8,7 @@ import {
   Index,
 } from 'typeorm';
 import UserEntity from './User';
-import { Plan } from '@retrospected/common';
+import { Plan } from '../../common';
 
 @Entity({ name: 'subscriptions' })
 export default class SubscriptionEntity {

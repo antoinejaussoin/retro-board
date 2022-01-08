@@ -1,7 +1,7 @@
 import useSession from '../useSession';
 import { AllTheProviders, initialSession } from '../../../testing/index';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { Post, Session } from '@retrospected/common';
+import { Post, Session } from 'common';
 import { cloneDeep } from 'lodash';
 
 function post(id: string): Post {

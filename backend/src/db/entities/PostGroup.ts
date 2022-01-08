@@ -12,7 +12,7 @@ import { LexoRank } from 'lexorank';
 import SessionEntity from './Session';
 import UserEntity from './User';
 import PostEntity from './Post';
-import { PostGroup } from '@retrospected/common';
+import { PostGroup } from '../../common';
 
 @Entity({ name: 'groups' })
 export default class PostGroupEntity {

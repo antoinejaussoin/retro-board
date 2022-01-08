@@ -1,4 +1,4 @@
-import { WsErrorType } from '@retrospected/common';
+import { WsErrorType } from 'common';
 import { Translation } from './types';
 import { plural } from './utils';
 export default {

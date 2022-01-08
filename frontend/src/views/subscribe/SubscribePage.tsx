@@ -7,7 +7,7 @@ import styled from '@emotion/styled';
 import Step from './components/Step';
 import Button from '@mui/material/Button';
 import { colors } from '@mui/material';
-import { Currency, FullUser, Plan } from '@retrospected/common';
+import { Currency, FullUser, Plan } from 'common';
 import CurrencyPicker from './components/CurrencyPicker';
 import ProductPicker from './components/ProductPicker';
 import Input from '../../components/Input';

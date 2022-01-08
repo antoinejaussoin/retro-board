@@ -1,4 +1,4 @@
-import { User } from '@retrospected/common';
+import { User } from 'common';
 import Avatar, { AvatarTypeMap } from '@mui/material/Avatar';
 import Badge from '@mui/material/Badge';
 import md5 from 'md5';

@@ -1,4 +1,4 @@
-import { Post, VoteType, PostGroup } from '@retrospected/common';
+import { Post, VoteType, PostGroup } from 'common';
 import groupBy from 'lodash/groupBy';
 import toPairs from 'lodash/toPairs';
 import sum from 'lodash/sum';

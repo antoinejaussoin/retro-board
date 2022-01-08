@@ -1,5 +1,5 @@
 import { ViewEntity, ViewColumn } from 'typeorm';
-import { User, SessionMetadata } from '@retrospected/common';
+import { User, SessionMetadata } from '../../common';
 
 @ViewEntity({
   expression: `

@@ -3,26 +3,11 @@
   "version": "4.10.0",
   "description": "An agile retrospective board - Powering www.retrospected.com",
   "private": true,
-  "workspaces": [
-    "frontend",
-    "backend",
-    "common"
-  ],
   "scripts": {
-    "test": "yarn build-common && cd frontend && yarn test",
-    "ci-test": "CI=true yarn test",
     "lint": "cd frontend && yarn lint && cd ../backend && yarn lint",
     "clean": "del ./{frontend,backend,common,maintenance}/yarn.lock && del ./yarn.lock && del ./{frontend,backend,common,maintenance}/node_modules && del ./node_modules",
-    "clean-install": "del ./{frontend,backend,common,maintenance}/node_modules && del ./node_modules && yarn",
     "frontend": "cd frontend && yarn start && cd ..",
-    "backend": "yarn build-common && cd backend && yarn start && cd ..",
-    "backend-production": "yarn migrate && cd ./backend/dist/src && node index.js",
-    "build-common": "cd common && yarn build && cd ..",
-    "build-frontend": "yarn build-common && cd frontend && yarn build && cd ..",
-    "build-backend": "cd backend && yarn build && cd ..",
-    "build": "yarn build-frontend && yarn build-backend",
-    "start": "yarn build-common && yarn backend & yarn frontend",
-    "migrate": "cd backend && yarn migrate && cd ..",
+    "backend": "cd backend && yarn start && cd ..",
     "stripe-login": "stripe login",
     "stripe-listen": "stripe listen --forward-to localhost:3000/api/stripe/webhook",
     "bump": ". ./scripts/bump.sh"
@@ -54,7 +39,7 @@
   },
   "homepage": "http://www.retrospected.com",
   "dependencies": {
-    "del-cli": "^4.0.1",
-    "typescript": "^4.4.4"
+    "del-cli": "4.0.1",
+    "typescript": "4.4.4"
   }
 }

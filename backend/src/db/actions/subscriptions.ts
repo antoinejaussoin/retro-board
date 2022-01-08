@@ -1,5 +1,5 @@
 import { SubscriptionRepository, UserRepository } from '../repositories';
-import { Plan, Currency } from '@retrospected/common';
+import { Plan, Currency } from '../../common';
 import { SubscriptionEntity, UserEntity, UserView } from '../entities';
 import { transaction } from './transaction';
 

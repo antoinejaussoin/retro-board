@@ -2,6 +2,7 @@
 # (the one with the yarn.lock file)
 
 FROM --platform=$BUILDPLATFORM node:16-alpine as Node
+#FROM  node:16-alpine as Node
 
 ENV NODE_ENV=production
 
@@ -10,8 +11,6 @@ RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
 COPY ./package.json ./
 COPY ./yarn.lock ./
-COPY ./frontend/package.json ./frontend/
-COPY ./common/package.json ./common/
 
 RUN chown -R node:node /home/node/app
 
@@ -19,19 +18,18 @@ USER node
 
 RUN yarn --network-timeout 1000000 install
 
-COPY --chown=node:node ./frontend/src ./frontend/src
-COPY --chown=node:node ./frontend/public ./frontend/public
-COPY --chown=node:node ./frontend/tsconfig.json ./frontend/tsconfig.json
-COPY --chown=node:node ./frontend/.env ./frontend/.env
-COPY --chown=node:node ./common ./common
+COPY --chown=node:node ./src ./src
+COPY --chown=node:node ./public ./public
+COPY --chown=node:node ./tsconfig.json ./tsconfig.json
+COPY --chown=node:node ./.env ./.env
 
-RUN yarn build-frontend
+RUN yarn build
 
 FROM nginx:alpine
 
-COPY --from=Node /home/node/app/frontend/build /usr/share/nginx/html
-COPY ./frontend/docker/nginx.conf.template /etc/nginx/conf.d/default.conf.template
-COPY ./frontend/docker/frontend-entrypoint.sh /
+COPY --from=Node /home/node/app/build /usr/share/nginx/html
+COPY ./docker/nginx.conf.template /etc/nginx/conf.d/default.conf.template
+COPY ./docker/frontend-entrypoint.sh /
 
 RUN ["chmod", "+x", "/frontend-entrypoint.sh"]
 ENTRYPOINT ["/frontend-entrypoint.sh"]

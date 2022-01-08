@@ -1,4 +1,4 @@
-import { Vote, VoteExtract, VoteType } from '@retrospected/common';
+import { Vote, VoteExtract, VoteType } from '../../common';
 import { find } from 'lodash';
 import { v4 } from 'uuid';
 import {

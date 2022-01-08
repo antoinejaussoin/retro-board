@@ -1,7 +1,7 @@
 import { EntityRepository } from 'typeorm';
 import { SessionEntity, PostEntity } from '../entities';
 import SessionRepository from './SessionRepository';
-import { Post as JsonPost, defaultSession } from '@retrospected/common';
+import { Post as JsonPost, defaultSession } from '../../common';
 import { cloneDeep } from 'lodash';
 import BaseRepository from './BaseRepository';
 

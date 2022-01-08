@@ -1,6 +1,6 @@
 import { Alert } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { FullUser } from '@retrospected/common';
+import { FullUser } from 'common';
 import useUser from '../../auth/useUser';
 import useStateFetch from '../../hooks/useStateFetch';
 import { useMemo } from 'react';

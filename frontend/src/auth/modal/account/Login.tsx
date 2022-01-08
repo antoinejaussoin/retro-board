@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Alert } from '@mui/material';
 import useTranslations from '../../../translations';
-import { FullUser } from '@retrospected/common';
+import { FullUser } from 'common';
 import Wrapper from './../Wrapper';
 import Input from '../../../components/Input';
 import Link from '../../../components/Link';

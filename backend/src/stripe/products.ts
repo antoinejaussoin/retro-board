@@ -1,5 +1,5 @@
 import { InternalProduct } from './types';
-import { Plan } from '@retrospected/common';
+import { Plan } from '../common';
 import config from '../config';
 
 export const teamPlan: InternalProduct = {

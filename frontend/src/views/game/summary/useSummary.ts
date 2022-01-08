@@ -1,4 +1,4 @@
-import { Post, PostGroup, Session, User } from '@retrospected/common';
+import { Post, PostGroup, Session, User } from 'common';
 import sortBy from 'lodash/sortBy';
 import flattenDeep from 'lodash/flattenDeep';
 import { ColumnContent } from '../types';

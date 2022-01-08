@@ -1,4 +1,4 @@
-import { Product, Currency, Plan } from '@retrospected/common';
+import { Product, Currency, Plan } from 'common';
 import 'flag-icon-css/css/flag-icon.min.css';
 import { useCallback } from 'react';
 import styled from '@emotion/styled';

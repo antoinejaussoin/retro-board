@@ -11,10 +11,19 @@ setup:
 build:
 	docker buildx inspect --bootstrap
 	docker buildx build --cache-from=retrospected/maintenance:${PACKAGE_VERSION} --pull --platform ${TARGET_ARCHS} -f ./maintenance/Dockerfile -t retrospected/maintenance:${PACKAGE_VERSION} ./maintenance
-	docker buildx build --cache-from=retrospected/backend:${PACKAGE_VERSION} --pull --platform ${TARGET_ARCHS} -f ./backend/Dockerfile -t retrospected/backend:${PACKAGE_VERSION} .
-	docker buildx build --cache-from=retrospected/frontend:${PACKAGE_VERSION} --pull --platform ${TARGET_ARCHS} -f ./frontend/Dockerfile -t retrospected/frontend:${PACKAGE_VERSION} .
+	docker buildx build --cache-from=retrospected/backend:${PACKAGE_VERSION} --pull --platform ${TARGET_ARCHS} -f ./backend/Dockerfile -t retrospected/backend:${PACKAGE_VERSION} ./backend
+	docker buildx build --cache-from=retrospected/frontend:${PACKAGE_VERSION} --pull --platform ${TARGET_ARCHS} -f ./frontend/Dockerfile -t retrospected/frontend:${PACKAGE_VERSION} ./frontend
 
 single-build:
 	docker build -f ./maintenance/Dockerfile -t retrospected/maintenance:${PACKAGE_VERSION} ./maintenance
-	docker build -f ./backend/Dockerfile -t retrospected/backend:${PACKAGE_VERSION} .
-	docker build -f ./frontend/Dockerfile -t retrospected/frontend:${PACKAGE_VERSION} .
+	docker build -f ./backend/Dockerfile -t retrospected/backend:${PACKAGE_VERSION} ./backend
+	docker build -f ./frontend/Dockerfile -t retrospected/frontend:${PACKAGE_VERSION} ./frontend
+
+install-trivy:
+	brew install trivy
+
+trivy:
+	docker build -f ./backend/Dockerfile -t retrospected/backend:trivy ./backend
+	docker build -f ./frontend/Dockerfile -t retrospected/frontend:trivy ./frontend
+	trivy retrospected/backend:trivy
+	trivy retrospected/frontend:trivy
