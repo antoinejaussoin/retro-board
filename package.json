@@ -3,11 +3,6 @@
   "version": "4.10.0",
   "description": "An agile retrospective board - Powering www.retrospected.com",
   "private": true,
-  "workspaces": [
-    "frontend",
-    "backend",
-    "common"
-  ],
   "scripts": {
     "test": "yarn build-common && cd frontend && yarn test",
     "ci-test": "CI=true yarn test",
