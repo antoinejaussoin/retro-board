@@ -1,4 +1,4 @@
-export default {
+const actions = {
   ACK: 'retrospected/ack',
   ADD_POST_SUCCESS: 'retrospected/posts/add/success',
   DELETE_POST: 'retrospected/posts/delete',
@@ -37,3 +37,5 @@ export default {
   RECEIVE_ERROR: 'retrospected/receive/error',
   RECEIVE_USER_READY: 'retrospected/receive/user-ready',
 };
+
+export default actions;
