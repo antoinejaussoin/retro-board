@@ -1,6 +1,6 @@
 import noop from 'lodash/noop';
 import { Currency } from 'common';
-import 'flag-icon-css/css/flag-icon.min.css';
+import 'flag-icon-css/css/flag-icons.min.css';
 import { currencies } from './types';
 import styled from '@emotion/styled';
 import { colors } from '@mui/material';
