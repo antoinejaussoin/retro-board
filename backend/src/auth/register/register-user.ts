@@ -1,4 +1,4 @@
-import { RegisterPayload } from 'common';
+import { RegisterPayload } from '../../common';
 import { v4 } from 'uuid';
 import { hashPassword } from '../../utils';
 import { UserIdentityEntity } from '../../db/entities';

@@ -15,7 +15,7 @@ import {
   SessionMetadata,
   AccessErrorType,
   FullUser,
-} from 'common';
+} from '../../common';
 import shortId from 'shortid';
 import { v4 } from 'uuid';
 import {

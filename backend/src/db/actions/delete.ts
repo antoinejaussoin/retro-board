@@ -1,4 +1,4 @@
-import { DeleteAccountPayload } from 'common';
+import { DeleteAccountPayload } from '../../common';
 import { EntityManager } from 'typeorm';
 import { v4 } from 'uuid';
 import { UserIdentityEntity, UserView } from '../entities';

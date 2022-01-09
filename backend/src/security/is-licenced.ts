@@ -1,4 +1,4 @@
-import { SelfHostedCheckPayload } from 'common';
+import { SelfHostedCheckPayload } from '../common';
 import config from '../config';
 import fetch from 'node-fetch';
 import wait, { comparePassword, decrypt } from '../utils';

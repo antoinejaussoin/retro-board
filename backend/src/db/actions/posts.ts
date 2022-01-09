@@ -1,4 +1,4 @@
-import { Post, PostGroup, Vote } from 'common';
+import { Post, PostGroup, Vote } from '../../common';
 import {
   PostRepository,
   PostGroupRepository,

@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import { CreateSubscriptionPayload, Product, StripeLocales } from 'common';
+import { CreateSubscriptionPayload, Product, StripeLocales } from '../common';
 import config from '../config';
 import Stripe from 'stripe';
 import { UserIdentityEntity } from '../db/entities';

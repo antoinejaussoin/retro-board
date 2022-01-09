@@ -4,12 +4,11 @@
   "license": "GNU GPLv3",
   "private": true,
   "scripts": {
-    "build": "rimraf dist && NODE_PATH=src/ tsc --build",
-    "start": "NODE_PATH=src/ nodemon --exec 'yarn fix & ts-node' --files ./src/index.ts",
-    "xbackend-production": "yarn migrate && cd ./dist/src && NODE_PATH=/ node index.js",
-    "backend-production": "yarn migrate && NODE_PATH=dist/src/ node ./dist/src/index.js",
-    "create-migration": "NODE_PATH=src/ ts-node ./src/init.ts --ts && NODE_PATH=src/ ts-node ./node_modules/typeorm/cli.js migration:generate -n ",
-    "migrate": "NODE_PATH=dist/src/ node ./dist/src/init.js && NODE_PATH=dist/src/ node ./node_modules/typeorm/cli.js migration:run",
+    "build": "rimraf dist && tsc --build",
+    "start": "nodemon --exec 'yarn fix & ts-node' --files ./src/index.ts",
+    "backend-production": "yarn migrate && cd ./dist/src && node index.js",
+    "create-migration": "ts-node ./src/init.ts --ts && ts-node ./node_modules/typeorm/cli.js migration:generate -n ",
+    "migrate": "node ./dist/src/init.js && node ./node_modules/typeorm/cli.js migration:run",
     "revert": "node ./dist/src/init.js && node ./node_modules/typeorm/cli.js migration:revert",
     "lint": "eslint 'src/**/*.ts'",
     "fix": "eslint 'src/**/*.ts' --fix"

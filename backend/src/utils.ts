@@ -4,7 +4,7 @@ import aes from 'crypto-js/aes';
 import { stringify } from 'crypto-js/enc-utf8';
 import { UserView, UserIdentityEntity } from './db/entities';
 import { getUserView, getUser, getIdentity } from './db/actions/users';
-import { Quota } from 'common';
+import { Quota } from './common';
 import { getNumberOfPosts } from './db/actions/posts';
 
 export async function getUserViewFromRequest(

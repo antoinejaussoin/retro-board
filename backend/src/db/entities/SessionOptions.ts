@@ -3,7 +3,7 @@ import {
   SessionOptions as JsonSessionOptions,
   defaultOptions,
   SessionOptions,
-} from 'common';
+} from '../../common';
 
 export default class SessionOptionsEntity {
   @Column({ nullable: true, type: 'numeric' })
