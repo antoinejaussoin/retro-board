@@ -50,7 +50,7 @@ jobs:
         with:
           builder: ${{ steps.buildx.outputs.name }}
           file: backend/Dockerfile
-          context: .
+          context: backend
           tags: retrospected/backend:canary
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
@@ -60,7 +60,7 @@ jobs:
         with:
           builder: ${{ steps.buildx.outputs.name }}
           file: frontend/Dockerfile
-          context: .
+          context: frontend
           tags: retrospected/frontend:canary
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
