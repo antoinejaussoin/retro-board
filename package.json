@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "test": "cd frontend && yarn test",
-    "ci-test": "CI=true yarn test",
+    "ci-test": "CI=true yarn run test && cd ./backend && CI=true yarn jest",
     "lint": "cd frontend && yarn lint && cd ../backend && yarn lint",
     "clean": "del ./{frontend,backend,common,maintenance}/yarn.lock && del ./yarn.lock && del ./{frontend,backend,common,maintenance}/node_modules && del ./node_modules",
     "clean-install": "del ./{frontend,backend,maintenance}/node_modules && del ./node_modules && yarn",
