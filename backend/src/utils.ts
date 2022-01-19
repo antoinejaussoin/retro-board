@@ -22,8 +22,8 @@ export async function getUserViewFromRequest(
 export async function getUserQuota(request: Request): Promise<Quota | null> {
   if (request.user) {
     const ids = request.user;
-    const user = await getUser((ids as unknown as UserIds).userId);
-    const posts = await getNumberOfPosts((ids as unknown as UserIds).userId);
+    const user = await getUser(ids.userId);
+    const posts = await getNumberOfPosts(ids.userId);
     if (user) {
       return {
         posts,
@@ -43,7 +43,7 @@ export async function getIdentityFromRequest(
 ): Promise<UserIdentityEntity | null> {
   if (request.user) {
     const ids = request.user;
-    const identity = await getIdentity((ids as unknown as UserIds).identityId);
+    const identity = await getIdentity(ids.identityId);
     return identity;
   }
   return null;

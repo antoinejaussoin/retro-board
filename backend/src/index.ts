@@ -1,7 +1,7 @@
 import express from 'express';
 import * as socketIo from 'socket.io';
 import { createAdapter } from 'socket.io-redis';
-import redis from 'redis';
+import { createClient } from 'redis';
 import connectRedis from 'connect-redis';
 import csurf from 'csurf';
 import http from 'http';
@@ -157,7 +157,7 @@ const io = new socketIo.Server(httpServer, {
 
 if (config.REDIS_ENABLED) {
   const RedisStore = connectRedis(session);
-  const redisClient = redis.createClient({
+  const redisClient = createClient({
     host: config.REDIS_HOST,
     port: config.REDIS_PORT,
   });
@@ -166,7 +166,8 @@ if (config.REDIS_ENABLED) {
     secret: `${config.SESSION_SECRET!}-6`, // Increment to force re-auth
     resave: true,
     saveUninitialized: true,
-    store: new RedisStore({ client: redisClient }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    store: new RedisStore({ client: redisClient as unknown as any }),
     cookie: {
       secure: false,
     },
@@ -415,7 +416,7 @@ db().then(() => {
         );
       } else {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        req.logIn(identity.toIds() as unknown as string, (err: any) => {
+        req.logIn(identity.toIds(), (err: any) => {
           if (err) {
             console.log('Cannot login Error: ', err);
             res.status(500).send('Cannot login');
@@ -449,7 +450,7 @@ db().then(() => {
         emailVerification: null,
       });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      req.logIn(identity.toIds() as unknown as string, (err: any) => {
+      req.logIn(identity.toIds(), (err: any) => {
         if (err) {
           console.log('Cannot login Error: ', err);
           res.status(500).send('Cannot login');
@@ -496,7 +497,7 @@ db().then(() => {
         password: hashedPassword,
       });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      req.logIn(identity.toIds() as unknown as string, (err: any) => {
+      req.logIn(identity.toIds(), (err: any) => {
         if (err) {
           console.log('Cannot login Error: ', err);
           res.status(500).send('Cannot login');
