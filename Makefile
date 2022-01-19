@@ -18,3 +18,12 @@ single-build:
 	docker build -f ./maintenance/Dockerfile -t retrospected/maintenance:${PACKAGE_VERSION} ./maintenance
 	docker build -f ./backend/Dockerfile -t retrospected/backend:${PACKAGE_VERSION} ./backend
 	docker build -f ./frontend/Dockerfile -t retrospected/frontend:${PACKAGE_VERSION} ./frontend
+
+install-trivy:
+	brew install trivy
+
+trivy:
+	docker build -f ./backend/Dockerfile -t retrospected/backend:trivy ./backend
+	docker build -f ./frontend/Dockerfile -t retrospected/frontend:trivy ./frontend
+	trivy retrospected/backend:trivy
+	trivy retrospected/frontend:trivy

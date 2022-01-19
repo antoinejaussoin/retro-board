@@ -86,7 +86,9 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ### Version 4.11.0
 
-- Remove Yarn Workspaces, and fix security issues
+- Remove Yarn Workspaces to limit dependency sharing
+- Upgrade most dependencies for security reasons
+- Upgrade Nginx image to fix security issues
 
 ### Version 4.10.0
 
