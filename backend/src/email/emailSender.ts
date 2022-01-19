@@ -1,6 +1,6 @@
 import sendGrid, { MailDataRequired } from '@sendgrid/mail';
 import config from '../config';
-import randomWords from 'random-words';
+import randomWords from './random-words';
 
 if (config.SENDGRID_API_KEY) {
   sendGrid.setApiKey(config.SENDGRID_API_KEY);
@@ -65,7 +65,7 @@ export async function sendResetPassword(
 }
 
 function generatePassword(): string {
-  return randomWords(4).join('-');
+  return randomWords({ exactly: 4 }).join('-');
 }
 
 export async function sendSelfHostWelcome(
