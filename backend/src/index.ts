@@ -169,7 +169,7 @@ if (config.REDIS_ENABLED) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     store: new RedisStore({ client: redisClient as unknown as any }),
     cookie: {
-      secure: false,
+      secure: true,
     },
   });
 
@@ -190,7 +190,7 @@ if (config.REDIS_ENABLED) {
     resave: true,
     saveUninitialized: true,
     cookie: {
-      secure: false,
+      secure: true,
     },
   });
 }
