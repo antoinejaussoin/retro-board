@@ -414,7 +414,8 @@ db().then(() => {
           identity.emailVerification!
         );
       } else {
-        req.logIn(identity.toIds(), (err) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        req.logIn(identity.toIds() as unknown as string, (err: any) => {
           if (err) {
             console.log('Cannot login Error: ', err);
             res.status(500).send('Cannot login');
@@ -447,7 +448,8 @@ db().then(() => {
       const updatedUser = await updateIdentity(identity.id, {
         emailVerification: null,
       });
-      req.logIn(identity.toIds(), (err) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      req.logIn(identity.toIds() as unknown as string, (err: any) => {
         if (err) {
           console.log('Cannot login Error: ', err);
           res.status(500).send('Cannot login');
@@ -493,7 +495,8 @@ db().then(() => {
         emailVerification: null,
         password: hashedPassword,
       });
-      req.logIn(identity.toIds(), (err) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      req.logIn(identity.toIds() as unknown as string, (err: any) => {
         if (err) {
           console.log('Cannot login Error: ', err);
           res.status(500).send('Cannot login');
