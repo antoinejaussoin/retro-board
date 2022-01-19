@@ -19,7 +19,8 @@
     "migrate": "cd backend && yarn migrate && cd ..",
     "stripe-login": "stripe login",
     "stripe-listen": "stripe listen --forward-to localhost:3000/api/stripe/webhook",
-    "bump": ". ./scripts/bump.sh"
+    "bump": ". ./scripts/bump.sh",
+    "initialise": "ln -s $PWD/frontend/src/common/ $PWD/backend/src/common"
   },
   "repository": {
     "type": "git",

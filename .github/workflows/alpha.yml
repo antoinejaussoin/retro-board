@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [hotfix/vulnerabilities]
+    branches: [hotfix/vulnerabilities-3]
 
 jobs:
   build:
