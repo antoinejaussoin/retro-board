@@ -64,6 +64,7 @@ import { QueryFailedError } from 'typeorm';
 import { deleteAccount } from './db/actions/delete';
 
 const realIpHeader = 'X-Forwarded-For';
+const isProduction = process.env.NODE_ENV === 'production';
 
 isLicenced().then((hasLicence) => {
   if (!hasLicence) {
@@ -166,10 +167,9 @@ if (config.REDIS_ENABLED) {
     secret: `${config.SESSION_SECRET!}-6`, // Increment to force re-auth
     resave: true,
     saveUninitialized: true,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    store: new RedisStore({ client: redisClient as unknown as any }),
+    store: new RedisStore({ client: redisClient }),
     cookie: {
-      secure: true,
+      secure: isProduction,
     },
   });
 
@@ -190,7 +190,7 @@ if (config.REDIS_ENABLED) {
     resave: true,
     saveUninitialized: true,
     cookie: {
-      secure: true,
+      secure: isProduction,
     },
   });
 }
