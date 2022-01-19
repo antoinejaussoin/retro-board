@@ -15,7 +15,7 @@ import useUser from '../../auth/useUser';
 import useTranslation from '../../translations/useTranslations';
 import { useCallback } from 'react';
 import { trackEvent } from '../../track';
-import { Message } from '@retrospected/common';
+import { Message } from 'common';
 import useModal from '../../hooks/useModal';
 import ChatModal from './chat/ChatModal';
 

@@ -1,4 +1,4 @@
-import { Message } from '@retrospected/common';
+import { Message } from '../../common';
 import MessageRepository from '../repositories/MessageRepository';
 import { transaction } from './transaction';
 

@@ -1,4 +1,4 @@
-import { Message } from '@retrospected/common';
+import { Message } from 'common';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import styled from '@emotion/styled';
 import Input from './Input';

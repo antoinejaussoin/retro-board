@@ -1,4 +1,4 @@
-import { Message } from '@retrospected/common';
+import { Message } from 'common';
 import styled from '@emotion/styled';
 import Chat from './Chat';
 import { colors } from '@mui/material';

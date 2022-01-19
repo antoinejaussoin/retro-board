@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import SessionEntity from './Session';
 import UserEntity from './User';
-import { Message } from '@retrospected/common';
+import { Message } from '../../common';
 
 @Entity({ name: 'messages' })
 export default class MessageEntity {

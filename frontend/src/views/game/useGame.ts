@@ -20,8 +20,9 @@ import {
   WebsocketMessage,
   Session,
   WsGroupUpdatePayload,
-  ChatMessagePayload,
   Message,
+  WsUserReadyPayload,
+  ChatMessagePayload,
 } from 'common';
 import { v4 } from 'uuid';
 import find from 'lodash/find';
