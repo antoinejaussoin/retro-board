@@ -40,6 +40,8 @@ export default function Input({
   const handleKeyPress = useCallback(
     (event: React.KeyboardEvent<unknown>) => {
       if (isEnter(event.nativeEvent.code) && !event.nativeEvent.shiftKey) {
+        event.stopPropagation();
+        event.preventDefault();
         handleAdd();
       }
     },

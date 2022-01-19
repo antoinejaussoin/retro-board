@@ -104,6 +104,7 @@ function Participants({ onReady, onMessage, messages }: ParticipantsProps) {
 
 const Container = styled.div`
   display: flex;
+  gap: 10px;
   > :first-child {
     flex: 1;
   }
