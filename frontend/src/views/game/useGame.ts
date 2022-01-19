@@ -25,7 +25,7 @@ import {
 import { v4 } from 'uuid';
 import find from 'lodash/find';
 import { setScope, trackAction, trackEvent } from '../../track';
-import io from 'socket.io-client';
+import io, { Socket } from 'socket.io-client';
 import { useUserMetadata } from '../../auth/useUser';
 import { getMiddle, getNext } from './lexorank';
 import { useSnackbar } from 'notistack';
@@ -67,7 +67,7 @@ export type Status =
 const debug = process.env.NODE_ENV === 'development';
 
 function sendFactory(
-  socket: SocketIOClient.Socket,
+  socket: Socket,
   sessionId: string,
   setAcks?: React.Dispatch<React.SetStateAction<AckItem[]>>
 ) {
@@ -101,7 +101,7 @@ const useGame = (sessionId: string) => {
     user === undefined ? 'disconnected' : 'not-connected'
   );
   const statusValue = useMutableRead(status);
-  const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null);
+  const [socket, setSocket] = useState<Socket | null>(null);
   const { participants, updateParticipants } = useParticipants();
   const { setUnauthorised, resetUnauthorised } = useUnauthorised();
   const [acks, setAcks] = useState<AckItem[]>([]);
@@ -141,7 +141,7 @@ const useGame = (sessionId: string) => {
 
   // Creating the socket
   useEffect(() => {
-    let newSocket: SocketIOClient.Socket | null = null;
+    let newSocket: Socket | null = null;
     if (status === 'not-connected' && userInitialised) {
       newSocket = io();
       setSocket(newSocket);
