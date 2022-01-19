@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [hotfix/vuln-5]
+    branches: [v4110/force-dep]
 
 jobs:
   build:
@@ -54,3 +54,23 @@ jobs:
           tags: retrospected/frontend:alpha
           platforms: linux/amd64
           push: true
+
+      - name: Trivy - Backend
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: retrospected/backend:alpha
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+      
+      - name: Trivy - Frontend
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: retrospected/frontend:alpha
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
