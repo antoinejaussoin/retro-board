@@ -55,16 +55,6 @@ jobs:
           platforms: linux/amd64
           push: true
 
-      - name: Trivy - Backend
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: retrospected/backend:alpha
-          format: 'table'
-          exit-code: '1'
-          ignore-unfixed: true
-          vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH'
-      
       - name: Trivy - Frontend
         uses: aquasecurity/trivy-action@master
         with:
@@ -74,3 +64,14 @@ jobs:
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
+
+      - name: Trivy - Backend
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: retrospected/backend:alpha
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'library'
+          severity: 'CRITICAL,HIGH'
+      
