@@ -1,3 +1,6 @@
+// This is directly lifted from https://github.com/apostrophecms/random-words/blob/master/index.js
+// The reason is the package is stale and has dependencies with vulnerabilities
+
 const wordList = [
   // Borrowed from xkcd password generator which borrowed it from wherever
   'ability',
