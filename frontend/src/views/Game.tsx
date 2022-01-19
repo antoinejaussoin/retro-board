@@ -24,7 +24,7 @@ import NoContent from '../components/NoContent';
 import useCrypto from '../crypto/useCrypto';
 import Unauthorized from './game/Unauthorized';
 import SearchBar from './game/SearchBar';
-import Participants from './game/Participants';
+import GameFooter from './game/GameFooter';
 import AckWarning from './game/AckWarning';
 import useUnauthorised from './game/useUnauthorised';
 import useSession from './game/useSession';
@@ -184,7 +184,7 @@ function GamePage() {
         />
       ) : null}
       <ParticipantContainer>
-        <Participants
+        <GameFooter
           onReady={onUserReady}
           messages={session.messages}
           onMessage={onChatMessage}

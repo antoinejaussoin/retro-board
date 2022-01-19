@@ -19,13 +19,13 @@ import { Message } from 'common';
 import useModal from '../../hooks/useModal';
 import ChatModal from './chat/ChatModal';
 
-type ParticipantsProps = {
+type GameFooterProps = {
   onReady: () => void;
   messages: Message[];
   onMessage: (content: string) => void;
 };
 
-function Participants({ onReady, onMessage, messages }: ParticipantsProps) {
+function GameFooter({ onReady, onMessage, messages }: GameFooterProps) {
   const { participants } = useParticipants();
   const { session } = useSession();
   const user = useUser();
@@ -110,4 +110,4 @@ const Container = styled.div`
   }
 `;
 
-export default Participants;
+export default GameFooter;
