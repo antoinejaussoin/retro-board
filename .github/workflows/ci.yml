@@ -7,13 +7,26 @@ on:
     branches: []
 
 jobs:
-  test:
+  test-frontend:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
           node-version: 16
+      - run: cd frontend
+      - run: yarn
+      - run: yarn ci-test
+      - run: yarn lint
+      - run: yarn build
+  test-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - run: cd backend
       - run: yarn
       - run: yarn ci-test
       - run: yarn lint

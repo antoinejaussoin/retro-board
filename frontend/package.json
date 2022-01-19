@@ -76,6 +76,7 @@
     "build": "NODE_ENV=production && react-scripts build",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "test": "react-scripts test",
+    "ci-test": "CI=true yarn test",
     "analyze": "source-map-explorer build/static/js/*"
   },
   "eslintConfig": {

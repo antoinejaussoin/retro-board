@@ -11,6 +11,8 @@
     "migrate": "node ./dist/src/init.js && node ./node_modules/typeorm/cli.js migration:run",
     "revert": "node ./dist/src/init.js && node ./node_modules/typeorm/cli.js migration:revert",
     "lint": "eslint 'src/**/*.ts'",
+    "test": "yarn jest",
+    "ci-test": "CI=true yarn test",
     "fix": "eslint 'src/**/*.ts' --fix"
   },
   "dependencies": {
