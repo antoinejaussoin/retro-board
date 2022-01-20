@@ -399,4 +399,7 @@ export interface Translation {
     trialEndedSentence?: string;
     subscribeNow?: string;
   };
+  Chat: {
+    writeAMessage?: string;
+  };
 }

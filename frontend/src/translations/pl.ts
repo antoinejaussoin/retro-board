@@ -399,4 +399,5 @@ export default {
     trialEndedSentence: undefined,
     subscribeNow: undefined,
   },
+  Chat: { writeAMessage: undefined },
 } as Translation;

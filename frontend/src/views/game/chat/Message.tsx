@@ -2,12 +2,14 @@ import { Message } from 'common';
 import styled from '@emotion/styled';
 import { colors } from '@mui/material';
 import { formatRelative } from 'date-fns';
+import { useDateLocale } from 'hooks/useFormatDate';
 
 type ChatMessageProps = {
   message: Message;
 };
 
 export default function ChatMessage({ message }: ChatMessageProps) {
+  const locale = useDateLocale();
   return (
     <Container>
       <Photo>
@@ -18,7 +20,9 @@ export default function ChatMessage({ message }: ChatMessageProps) {
       <Inner>
         <Header>
           <Name>{message.user.name}</Name>
-          <Time>{formatRelative(new Date(message.created), new Date())}</Time>
+          <Time>
+            {formatRelative(new Date(message.created), new Date(), { locale })}
+          </Time>
         </Header>
         <Content>{message.content}</Content>
       </Inner>

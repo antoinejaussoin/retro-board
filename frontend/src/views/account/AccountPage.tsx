@@ -19,7 +19,7 @@ function AccountPage() {
   const url = usePortalUrl();
   const user = useUser();
   const isTrial = useIsTrial();
-  const { formatDistanceToNow } = useFormatDate();
+  const formatDistanceToNow = useFormatDate();
   const history = useHistory();
   const { AccountPage: translations, SubscribePage: subscribeTranslations } =
     useTranslations();

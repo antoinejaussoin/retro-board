@@ -12,7 +12,7 @@ import ProButton from '../../components/ProButton';
 export default function TrialPrompt() {
   const user = useUser();
   const isInTrial = useIsTrial();
-  const { formatDistanceToNow } = useFormatDate();
+  const formatDistanceToNow = useFormatDate();
   const { TrialPrompt: translations } = useTranslations();
   const { quota } = useQuota();
   const quotaLeft = !!quota ? quota.quota - quota.posts : null;

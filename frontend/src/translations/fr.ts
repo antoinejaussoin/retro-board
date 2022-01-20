@@ -473,4 +473,5 @@ export default {
     trialEndedSentence: `Abonnez-vous aujourd'hui pour continuer à bénéficier des avantages de la version Pro.`,
     subscribeNow: `Je m'abonne`,
   },
+  Chat: { writeAMessage: 'Écrivez un message ici...' },
 } as Translation;

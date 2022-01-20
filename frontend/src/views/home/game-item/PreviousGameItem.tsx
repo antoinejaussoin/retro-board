@@ -41,7 +41,7 @@ const PreviousGameItem = ({
     DeleteSession,
   } = useTranslations();
   const [encryptionKey] = useEncryptionKey(session.id);
-  const { formatDistanceToNow } = useFormatDate();
+  const formatDistanceToNow = useFormatDate();
   const [hover, hoverRef] = useOnHover<HTMLDivElement>();
   const handleClick = useCallback(() => {
     onClick(session, encryptionKey);

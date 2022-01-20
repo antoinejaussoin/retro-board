@@ -1,36 +1,33 @@
-import { formatDistanceToNow as formatDistanceToNowBase } from 'date-fns';
+import {
+  formatDistanceToNow as formatDistanceToNowBase,
+  Locale,
+} from 'date-fns';
+import englishLocale from 'date-fns/locale/en-GB';
 import { useEffect, useState } from 'react';
 import { useLanguage } from '../translations';
 
-type FormatFunction = (date: Date | number, addSuffix?: boolean) => string;
+export default function useFormatDate() {
+  const locale = useDateLocale();
 
-function formatEnglish(date: Date | number, addSuffix = false) {
-  return formatDistanceToNowBase(date, {
-    addSuffix,
-  });
+  return function formatLocale(date: Date | number, addSuffix = false) {
+    return formatDistanceToNowBase(date, {
+      locale: locale,
+      addSuffix,
+    });
+  };
 }
 
-export default function useFormatDate() {
+export function useDateLocale() {
   const language = useLanguage();
-  const [formatDistanceToNow, setFormat] = useState<FormatFunction>(
-    () => formatEnglish
-  );
+  const [locale, setLocale] = useState<Locale>(() => englishLocale);
 
   useEffect(() => {
     async function load() {
       const locale = await language.dateLocale();
-      setFormat(
-        () =>
-          (function formatLocale(date: Date | number, addSuffix = false) {
-            return formatDistanceToNowBase(date, {
-              locale: locale.default,
-              addSuffix,
-            });
-          })
-      );
+      setLocale(locale.default);
     }
     load();
   }, [language]);
 
-  return { formatDistanceToNow };
+  return locale;
 }

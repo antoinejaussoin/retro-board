@@ -5,6 +5,7 @@ import Input from './Input';
 import ChatMessage from './Message';
 import { useMemo } from 'react';
 import { sortBy } from 'lodash';
+import useTranslations from 'translations';
 
 type ChatProps = {
   messages: Message[];
@@ -12,6 +13,7 @@ type ChatProps = {
 };
 
 export default function Chat({ messages, onMessage }: ChatProps) {
+  const { Chat: translations } = useTranslations();
   const sortedMessages = useMemo(() => {
     return sortBy(messages, (m) => m.created);
   }, [messages]);
@@ -24,7 +26,10 @@ export default function Chat({ messages, onMessage }: ChatProps) {
           ))}
         </Messages>
       </ScrollContainer>
-      <Input placeholder="Write a message here..." onNewMessage={onMessage} />
+      <Input
+        placeholder={translations.writeAMessage}
+        onNewMessage={onMessage}
+      />
     </Container>
   );
 }
