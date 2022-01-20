@@ -51,6 +51,7 @@ function postToItem(
     children: [],
     likes: countVotes(post, 'like'),
     dislikes: countVotes(post, 'dislike'),
+    post,
   };
 }
 
@@ -70,6 +71,7 @@ function groupToItem(
     ),
     likes: countVotesForGroup(group, 'like'),
     dislikes: countVotesForGroup(group, 'dislike'),
+    group,
   };
 }
 

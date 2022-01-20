@@ -8,3 +8,15 @@ export function usePostUserPermissions(post: Post): PostUserPermissions {
   const user = useUser();
   return postPermissionLogic(post, session, user);
 }
+
+export function usePostUserPermissionsNullable(
+  post?: Post
+): PostUserPermissions | undefined {
+  const { session } = useSession();
+  const user = useUser();
+  if (!post) {
+    return undefined;
+  }
+
+  return postPermissionLogic(post, session, user);
+}

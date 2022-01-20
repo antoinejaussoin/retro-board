@@ -23,6 +23,7 @@ import useTranslation from '../../../translations';
 import useCrypto from '../../../crypto/useCrypto';
 import isSearchMatch from '../is-search-match';
 import { Box } from '@mui/system';
+import { usePostUserPermissionsNullable } from '../board/usePostUserPermissions';
 
 interface SummaryModeProps {
   columns: ColumnContent[];
@@ -120,6 +121,8 @@ interface PostLineProps {
 
 const PostLine = ({ item, search }: PostLineProps) => {
   const { decrypt } = useCrypto();
+  const permissions = usePostUserPermissionsNullable(item.post);
+  const canShowAuthor = permissions && permissions.canShowAuthor;
   const higlighted =
     search &&
     isSearchMatch(
@@ -129,22 +132,39 @@ const PostLine = ({ item, search }: PostLineProps) => {
       false
     );
   return (
-    <Typography component="div">
-      <PostContainer role="listitem">
-        <Score>
-          <PositiveNumber>+{item.likes}</PositiveNumber>&nbsp;
-          <NegativeNumber>-{item.dislikes}</NegativeNumber>
-        </Score>
-        <PostContent
-          aria-label="post content"
-          style={{ fontWeight: higlighted ? 'bold' : 'normal' }}
-        >
-          {decrypt(item.content)}
-        </PostContent>
-      </PostContainer>
-    </Typography>
+    <PostLineContainer>
+      <Typography component="div">
+        <PostContainer role="listitem">
+          <Score>
+            <PositiveNumber>+{item.likes}</PositiveNumber>&nbsp;
+            <NegativeNumber>-{item.dislikes}</NegativeNumber>
+          </Score>
+          <PostContent
+            aria-label="post content"
+            style={{ fontWeight: higlighted ? 'bold' : 'normal' }}
+          >
+            {decrypt(item.content)}
+          </PostContent>
+          {canShowAuthor ? <Author>(by {item.post?.user.name})</Author> : null}
+        </PostContainer>
+      </Typography>
+    </PostLineContainer>
   );
 };
+
+const PostLineContainer = styled.div`
+  :hover {
+    background-color: ${colors.grey[50]};
+  }
+`;
+
+const Author = styled.div`
+  color: ${colors.grey[500]};
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+`;
 
 const PostContainer = styled.div`
   display: flex;
