@@ -240,9 +240,9 @@ const SummaryMode = ({ columns, search }: SummaryModeProps) => {
 
 const SpeedDialContainer = styled.div`
   position: fixed;
-  bottom: 20px;
+  bottom: 85px;
   right: 20px;
-  z-index: 4;
+  z-index: 3;
 `;
 
 export default SummaryMode;
