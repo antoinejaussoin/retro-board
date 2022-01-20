@@ -13,7 +13,7 @@ import useSession from './useSession';
 import styled from '@emotion/styled';
 import useUser from '../../auth/useUser';
 import useTranslation from '../../translations/useTranslations';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { trackEvent } from '../../track';
 import { Message } from 'common';
 import useModal from '../../hooks/useModal';
@@ -33,10 +33,17 @@ function GameFooter({ onReady, onMessage, messages }: GameFooterProps) {
   const isUserReady = !!user && !!session && session.ready.includes(user.id);
   const fullScreen = useMediaQuery('(min-width:600px)');
   const [chatOpen, openChat, closeChat] = useModal();
+  const [readCount, setReadCount] = useState(0);
   const handleReady = useCallback(() => {
     trackEvent('game/session/user-ready');
     onReady();
   }, [onReady]);
+  useEffect(() => {
+    if (chatOpen) {
+      setReadCount(messages.length);
+    }
+  }, [chatOpen, messages.length]);
+  const unreadCount = messages.length - readCount;
   return (
     <Container>
       <AvatarGroup
@@ -92,7 +99,7 @@ function GameFooter({ onReady, onMessage, messages }: GameFooterProps) {
       ) : null}
       {user ? (
         <IconButton onClick={chatOpen ? closeChat : openChat}>
-          <Badge color="secondary" badgeContent={messages.length}>
+          <Badge color="secondary" badgeContent={unreadCount ?? undefined}>
             <Chat htmlColor={colors.orange[500]} />
           </Badge>
         </IconButton>
