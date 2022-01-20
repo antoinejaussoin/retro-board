@@ -92,7 +92,9 @@ function GameFooter({ onReady, onMessage, messages }: GameFooterProps) {
       ) : null}
       {user ? (
         <IconButton onClick={chatOpen ? closeChat : openChat}>
-          <Chat htmlColor={colors.orange[500]} />
+          <Badge color="secondary" badgeContent={messages.length}>
+            <Chat htmlColor={colors.orange[500]} />
+          </Badge>
         </IconButton>
       ) : null}
       {chatOpen ? (
