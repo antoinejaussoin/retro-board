@@ -86,10 +86,13 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ### Version 4.11.0
 
-- Remove Yarn Workspaces to limit dependency sharing
-- Upgrade most dependencies for security reasons
+- Adding a chat functionality. Send messages to your colleagues without having to use Slack or any other external tool!
+- Add the author (when the "Show Author" option is enabled) in the summary panel.  👏 Thanks [@hmlkao](https://github.com/hmlkao) for the idea. ([#336](https://github.com/antoinejaussoin/retro-board/issues/336)).
+- Deprecate Yarn Workspaces to limit dependency sharing
+- ⏫ Upgrade most dependencies for security reasons
 - Upgrade Nginx image to fix security issues
-- Force secure cookies
+- Force secure cookies on production
+- Add Trivy vulnerability scanner on CI
 
 ### Version 4.10.0
 
