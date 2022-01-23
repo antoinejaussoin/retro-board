@@ -84,6 +84,10 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 4.11.1 (hotfix)
+
+- Reverting the migration from react-scripts (create-react-app) 5.0.0 to 4.0.3. The new version includes Webpack 5, which causes issues with polyfills. The issue should be fixed in 5.0.1 which is not available yet.
+
 ### Version 4.11.0
 
 - Adding a chat functionality. Send messages to your colleagues without having to use Slack or any other external tool!
