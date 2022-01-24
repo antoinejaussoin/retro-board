@@ -537,268 +537,290 @@ export class BigRenaming1643049742051 implements MigrationInterface {
       `ALTER TABLE "visitors" DROP CONSTRAINT "PK_96af66c2594330cf6578ef210c2"`
     );
     await queryRunner.query(
-      `ALTER TABLE "visitors" ADD CONSTRAINT "PK_93910938d4f16f57a137da768b3" PRIMARY KEY ("sessions_id")`
+      `ALTER TABLE "visitors" RENAME COLUMN "users_id" to "usersId"`
     );
-    await queryRunner.query(`ALTER TABLE "visitors" DROP COLUMN "users_id"`);
     await queryRunner.query(
-      `ALTER TABLE "visitors" DROP CONSTRAINT "PK_93910938d4f16f57a137da768b3"`
+      `ALTER TABLE "visitors" RENAME COLUMN "sessions_id" to "sessionsId"`
     );
-    await queryRunner.query(`ALTER TABLE "visitors" DROP COLUMN "sessions_id"`);
     await queryRunner.query(
-      `ALTER TABLE "licences" DROP COLUMN "stripe_session_id"`
+      `ALTER TABLE "licences" RENAME COLUMN "stripe_session_id" to "stripeSessionId"`
     );
     await queryRunner.query(
-      `ALTER TABLE "licences" DROP COLUMN "stripe_customer_id"`
+      `ALTER TABLE "licences" RENAME COLUMN "stripe_customer_id" to "stripeCustomerId"`
     );
-    await queryRunner.query(`ALTER TABLE "posts" DROP COLUMN "user_id"`);
-    await queryRunner.query(`ALTER TABLE "posts" DROP COLUMN "group_id"`);
-    await queryRunner.query(`ALTER TABLE "posts" DROP COLUMN "session_id"`);
-    await queryRunner.query(`ALTER TABLE "votes" DROP COLUMN "post_id"`);
-    await queryRunner.query(`ALTER TABLE "votes" DROP COLUMN "user_id"`);
     await queryRunner.query(
-      `ALTER TABLE "sessions" DROP COLUMN "options_new_posts_first"`
+      `ALTER TABLE "posts" RENAME COLUMN "user_id" to "userId"`
     );
     await queryRunner.query(
-      `ALTER TABLE "sessions" DROP COLUMN "options_blur_cards"`
+      `ALTER TABLE "posts" RENAME COLUMN "group_id" to "groupId"`
     );
     await queryRunner.query(
-      `ALTER TABLE "sessions" DROP COLUMN "options_allow_reordering"`
+      `ALTER TABLE "posts" RENAME COLUMN "session_id" to "sessionId"`
     );
     await queryRunner.query(
-      `ALTER TABLE "sessions" DROP COLUMN "options_allow_grouping"`
+      `ALTER TABLE "votes" RENAME COLUMN "post_id" to "postId"`
     );
     await queryRunner.query(
-      `ALTER TABLE "sessions" DROP COLUMN "options_allow_giphy"`
+      `ALTER TABLE "votes" RENAME COLUMN "user_id" to "userId"`
     );
     await queryRunner.query(
-      `ALTER TABLE "sessions" DROP COLUMN "options_allow_author_visible"`
+      `ALTER TABLE "sessions" RENAME COLUMN "options_new_posts_first" to "optionsNewpostsfirst"`
     );
     await queryRunner.query(
-      `ALTER TABLE "sessions" DROP COLUMN "options_allow_multiple_votes"`
+      `ALTER TABLE "sessions" RENAME COLUMN "options_blur_cards" to "optionsBlurcards"`
     );
     await queryRunner.query(
-      `ALTER TABLE "sessions" DROP COLUMN "options_allow_self_voting"`
+      `ALTER TABLE "sessions" RENAME COLUMN "options_allow_reordering" to "optionsAllowreordering"`
     );
     await queryRunner.query(
-      `ALTER TABLE "sessions" DROP COLUMN "options_allow_actions"`
+      `ALTER TABLE "sessions" RENAME COLUMN "options_allow_grouping" to "optionsAllowgrouping"`
     );
     await queryRunner.query(
-      `ALTER TABLE "sessions" DROP COLUMN "options_max_posts"`
+      `ALTER TABLE "sessions" RENAME COLUMN "options_allow_giphy" to "optionsAllowgiphy"`
     );
     await queryRunner.query(
-      `ALTER TABLE "sessions" DROP COLUMN "options_max_down_votes"`
+      `ALTER TABLE "sessions" RENAME COLUMN "options_allow_author_visible" to "optionsAllowauthorvisible"`
     );
     await queryRunner.query(
-      `ALTER TABLE "sessions" DROP COLUMN "options_max_up_votes"`
+      `ALTER TABLE "sessions" RENAME COLUMN "options_allow_multiple_votes" to "optionsAllowmultiplevotes"`
     );
     await queryRunner.query(
-      `ALTER TABLE "sessions" DROP COLUMN "created_by_id"`
+      `ALTER TABLE "sessions" RENAME COLUMN "options_allow_self_voting" to "optionsAllowselfvoting"`
     );
-    await queryRunner.query(`ALTER TABLE "messages" DROP COLUMN "user_id"`);
-    await queryRunner.query(`ALTER TABLE "messages" DROP COLUMN "session_id"`);
-    await queryRunner.query(`ALTER TABLE "groups" DROP COLUMN "user_id"`);
-    await queryRunner.query(`ALTER TABLE "groups" DROP COLUMN "session_id"`);
     await queryRunner.query(
-      `ALTER TABLE "templates" DROP COLUMN "options_new_posts_first"`
+      `ALTER TABLE "sessions" RENAME COLUMN "options_allow_actions" to "optionsAllowactions"`
     );
     await queryRunner.query(
-      `ALTER TABLE "templates" DROP COLUMN "options_blur_cards"`
+      `ALTER TABLE "sessions" RENAME COLUMN "options_max_posts" to "optionsMaxposts"`
     );
     await queryRunner.query(
-      `ALTER TABLE "templates" DROP COLUMN "options_allow_reordering"`
+      `ALTER TABLE "sessions" RENAME COLUMN "options_max_down_votes" to "optionsMaxdownvotes"`
     );
     await queryRunner.query(
-      `ALTER TABLE "templates" DROP COLUMN "options_allow_grouping"`
+      `ALTER TABLE "sessions" RENAME COLUMN "options_max_up_votes" to "optionsMaxupvotes"`
     );
     await queryRunner.query(
-      `ALTER TABLE "templates" DROP COLUMN "options_allow_giphy"`
+      `ALTER TABLE "sessions" RENAME COLUMN "created_by_id" to "createdById"`
     );
     await queryRunner.query(
-      `ALTER TABLE "templates" DROP COLUMN "options_allow_author_visible"`
+      `ALTER TABLE "messages" RENAME COLUMN "user_id" to "userId"`
     );
     await queryRunner.query(
-      `ALTER TABLE "templates" DROP COLUMN "options_allow_multiple_votes"`
+      `ALTER TABLE "messages" RENAME COLUMN "session_id" to "sessionId"`
     );
     await queryRunner.query(
-      `ALTER TABLE "templates" DROP COLUMN "options_allow_self_voting"`
+      `ALTER TABLE "groups" RENAME COLUMN "user_id" to "userId"`
     );
     await queryRunner.query(
-      `ALTER TABLE "templates" DROP COLUMN "options_allow_actions"`
+      `ALTER TABLE "groups" RENAME COLUMN "session_id" to "sessionId"`
     );
     await queryRunner.query(
-      `ALTER TABLE "templates" DROP COLUMN "options_max_posts"`
+      `ALTER TABLE "templates" RENAME COLUMN "options_new_posts_first" to "optionsNewpostsfirst"`
     );
     await queryRunner.query(
-      `ALTER TABLE "templates" DROP COLUMN "options_max_down_votes"`
+      `ALTER TABLE "templates" RENAME COLUMN "options_blur_cards" to "optionsBlurcards"`
     );
     await queryRunner.query(
-      `ALTER TABLE "templates" DROP COLUMN "options_max_up_votes"`
+      `ALTER TABLE "templates" RENAME COLUMN "options_allow_reordering" to "optionsAllowreordering"`
     );
     await queryRunner.query(
-      `ALTER TABLE "templates" DROP COLUMN "created_by_id"`
+      `ALTER TABLE "templates" RENAME COLUMN "options_allow_grouping" to "optionsAllowgrouping"`
     );
     await queryRunner.query(
-      `ALTER TABLE "users" DROP COLUMN "default_template_id"`
+      `ALTER TABLE "templates" RENAME COLUMN "options_allow_giphy" to "optionsAllowgiphy"`
     );
-    await queryRunner.query(`ALTER TABLE "users" DROP COLUMN "slack_team_id"`);
-    await queryRunner.query(`ALTER TABLE "users" DROP COLUMN "slack_user_id"`);
-    await queryRunner.query(`ALTER TABLE "users" DROP COLUMN "stripe_id"`);
     await queryRunner.query(
-      `ALTER TABLE "users_identities" DROP COLUMN "user_id"`
+      `ALTER TABLE "templates" RENAME COLUMN "options_allow_author_visible" to "optionsAllowauthorvisible"`
     );
     await queryRunner.query(
-      `ALTER TABLE "users_identities" DROP COLUMN "email_verification"`
+      `ALTER TABLE "templates" RENAME COLUMN "options_allow_multiple_votes" to "optionsAllowmultiplevotes"`
     );
     await queryRunner.query(
-      `ALTER TABLE "users_identities" DROP COLUMN "account_type"`
+      `ALTER TABLE "templates" RENAME COLUMN "options_allow_self_voting" to "optionsAllowselfvoting"`
     );
     await queryRunner.query(
-      `ALTER TABLE "visitors" ADD "usersId" character varying NOT NULL`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "visitors" ADD CONSTRAINT "PK_d50229c10adbf294a228c35cb19" PRIMARY KEY ("usersId")`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "visitors" ADD "sessionsId" character varying NOT NULL`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "visitors" DROP CONSTRAINT "PK_d50229c10adbf294a228c35cb19"`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "visitors" ADD CONSTRAINT "PK_c16501c34b8530a425739e400bd" PRIMARY KEY ("sessionsId", "usersId")`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "licences" ADD "stripeSessionId" character varying NOT NULL`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "licences" ADD "stripeCustomerId" character varying NOT NULL`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "posts" ADD "groupId" character varying`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "posts" ADD "userId" character varying NOT NULL`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "posts" ADD "sessionId" character varying NOT NULL`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "votes" ADD "postId" character varying NOT NULL`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "votes" ADD "userId" character varying NOT NULL`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "sessions" ADD "optionsNewpostsfirst" boolean NOT NULL DEFAULT true`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "sessions" ADD "optionsMaxposts" numeric`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "sessions" ADD "optionsBlurcards" boolean NOT NULL DEFAULT false`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "sessions" ADD "optionsAllowreordering" boolean NOT NULL DEFAULT true`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "sessions" ADD "optionsAllowgrouping" boolean NOT NULL DEFAULT true`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "sessions" ADD "optionsAllowgiphy" boolean NOT NULL DEFAULT true`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "sessions" ADD "optionsAllowauthorvisible" boolean NOT NULL DEFAULT false`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "sessions" ADD "optionsAllowmultiplevotes" boolean NOT NULL DEFAULT false`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "sessions" ADD "optionsAllowselfvoting" boolean NOT NULL DEFAULT false`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "sessions" ADD "optionsAllowactions" boolean NOT NULL DEFAULT true`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "sessions" ADD "optionsMaxdownvotes" numeric`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "sessions" ADD "optionsMaxupvotes" numeric`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "sessions" ADD "createdById" character varying NOT NULL`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "messages" ADD "userId" character varying NOT NULL`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "messages" ADD "sessionId" character varying NOT NULL`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "groups" ADD "userId" character varying NOT NULL`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "groups" ADD "sessionId" character varying NOT NULL`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "templates" ADD "optionsNewpostsfirst" boolean NOT NULL DEFAULT true`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "templates" ADD "optionsMaxposts" numeric`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "templates" ADD "optionsBlurcards" boolean NOT NULL DEFAULT false`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "templates" ADD "optionsAllowreordering" boolean NOT NULL DEFAULT true`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "templates" ADD "optionsAllowgrouping" boolean NOT NULL DEFAULT true`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "templates" ADD "optionsAllowgiphy" boolean NOT NULL DEFAULT true`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "templates" ADD "optionsAllowauthorvisible" boolean NOT NULL DEFAULT false`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "templates" ADD "optionsAllowmultiplevotes" boolean NOT NULL DEFAULT false`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "templates" ADD "optionsAllowselfvoting" boolean NOT NULL DEFAULT false`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "templates" ADD "optionsAllowactions" boolean NOT NULL DEFAULT true`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "templates" ADD "optionsMaxdownvotes" numeric`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "templates" ADD "optionsMaxupvotes" numeric`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "templates" ADD "createdById" character varying NOT NULL`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "users" ADD "slackTeamId" character varying`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "users" ADD "slackUserId" character varying`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "users" ADD "stripeId" character varying`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "users" ADD "defaultTemplateId" character varying`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "users_identities" ADD "userId" character varying`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "users_identities" ADD "emailVerification" character varying`
-    );
-    await queryRunner.query(
-      `ALTER TABLE "users_identities" ADD "accountType" character varying NOT NULL DEFAULT 'anonymous'`
-    );
+      `ALTER TABLE "templates" RENAME COLUMN "options_allow_actions" to "optionsAllowactions"`
+    );
+    await queryRunner.query(
+      `ALTER TABLE "templates" RENAME COLUMN "options_max_posts" to "optionsMaxposts"`
+    );
+    await queryRunner.query(
+      `ALTER TABLE "templates" RENAME COLUMN "options_max_down_votes" to "optionsMaxdownvotes"`
+    );
+    await queryRunner.query(
+      `ALTER TABLE "templates" RENAME COLUMN "options_max_up_votes" to "optionsMaxupvotes"`
+    );
+    await queryRunner.query(
+      `ALTER TABLE "templates" RENAME COLUMN "created_by_id" to "createdById"`
+    );
+    await queryRunner.query(
+      `ALTER TABLE "users" RENAME COLUMN "default_template_id" to "defaultTemplateId"`
+    );
+    await queryRunner.query(
+      `ALTER TABLE "users" RENAME COLUMN "slack_team_id" to "slackTeamId"`
+    );
+    await queryRunner.query(
+      `ALTER TABLE "users" RENAME COLUMN "slack_user_id" to "slackUserId"`
+    );
+    await queryRunner.query(
+      `ALTER TABLE "users" RENAME COLUMN "stripe_id" to "stripeId"`
+    );
+    await queryRunner.query(
+      `ALTER TABLE "users_identities" RENAME COLUMN "user_id" to "userId"`
+    );
+    await queryRunner.query(
+      `ALTER TABLE "users_identities" RENAME COLUMN "email_verification" to "emailVerification"`
+    );
+    await queryRunner.query(
+      `ALTER TABLE "users_identities" RENAME COLUMN "account_type" to "accountType"`
+    );
+    // await queryRunner.query(
+    //   `ALTER TABLE "visitors" ADD "usersId" character varying NOT NULL`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "visitors" ADD CONSTRAINT "PK_d50229c10adbf294a228c35cb19" PRIMARY KEY ("usersId")`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "visitors" ADD "sessionsId" character varying NOT NULL`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "visitors" DROP CONSTRAINT "PK_d50229c10adbf294a228c35cb19"`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "visitors" ADD CONSTRAINT "PK_c16501c34b8530a425739e400bd" PRIMARY KEY ("sessionsId", "usersId")`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "licences" ADD "stripeSessionId" character varying NOT NULL`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "licences" ADD "stripeCustomerId" character varying NOT NULL`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "posts" ADD "groupId" character varying`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "posts" ADD "userId" character varying NOT NULL`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "posts" ADD "sessionId" character varying NOT NULL`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "votes" ADD "postId" character varying NOT NULL`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "votes" ADD "userId" character varying NOT NULL`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "sessions" ADD "optionsNewpostsfirst" boolean NOT NULL DEFAULT true`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "sessions" ADD "optionsMaxposts" numeric`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "sessions" ADD "optionsBlurcards" boolean NOT NULL DEFAULT false`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "sessions" ADD "optionsAllowreordering" boolean NOT NULL DEFAULT true`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "sessions" ADD "optionsAllowgrouping" boolean NOT NULL DEFAULT true`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "sessions" ADD "optionsAllowgiphy" boolean NOT NULL DEFAULT true`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "sessions" ADD "optionsAllowauthorvisible" boolean NOT NULL DEFAULT false`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "sessions" ADD "optionsAllowmultiplevotes" boolean NOT NULL DEFAULT false`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "sessions" ADD "optionsAllowselfvoting" boolean NOT NULL DEFAULT false`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "sessions" ADD "optionsAllowactions" boolean NOT NULL DEFAULT true`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "sessions" ADD "optionsMaxdownvotes" numeric`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "sessions" ADD "optionsMaxupvotes" numeric`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "sessions" ADD "createdById" character varying NOT NULL`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "messages" ADD "userId" character varying NOT NULL`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "messages" ADD "sessionId" character varying NOT NULL`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "groups" ADD "userId" character varying NOT NULL`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "groups" ADD "sessionId" character varying NOT NULL`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "templates" ADD "optionsNewpostsfirst" boolean NOT NULL DEFAULT true`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "templates" ADD "optionsMaxposts" numeric`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "templates" ADD "optionsBlurcards" boolean NOT NULL DEFAULT false`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "templates" ADD "optionsAllowreordering" boolean NOT NULL DEFAULT true`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "templates" ADD "optionsAllowgrouping" boolean NOT NULL DEFAULT true`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "templates" ADD "optionsAllowgiphy" boolean NOT NULL DEFAULT true`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "templates" ADD "optionsAllowauthorvisible" boolean NOT NULL DEFAULT false`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "templates" ADD "optionsAllowmultiplevotes" boolean NOT NULL DEFAULT false`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "templates" ADD "optionsAllowselfvoting" boolean NOT NULL DEFAULT false`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "templates" ADD "optionsAllowactions" boolean NOT NULL DEFAULT true`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "templates" ADD "optionsMaxdownvotes" numeric`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "templates" ADD "optionsMaxupvotes" numeric`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "templates" ADD "createdById" character varying NOT NULL`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "users" ADD "slackTeamId" character varying`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "users" ADD "slackUserId" character varying`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "users" ADD "stripeId" character varying`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "users" ADD "defaultTemplateId" character varying`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "users_identities" ADD "userId" character varying`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "users_identities" ADD "emailVerification" character varying`
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE "users_identities" ADD "accountType" character varying NOT NULL DEFAULT 'anonymous'`
+    // );
     await queryRunner.query(
       `ALTER TABLE "subscriptions" RENAME COLUMN "owner_id" TO "ownerId"`
     );
