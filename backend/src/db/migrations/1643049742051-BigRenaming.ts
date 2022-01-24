@@ -4,6 +4,9 @@ export class BigRenaming1643049742051 implements MigrationInterface {
   name = 'BigRenaming1643049742051';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
+    /**
+     * RENAMING COLUMNS
+     */
     await queryRunner.query(
       `ALTER TABLE "users_identities" DROP CONSTRAINT "FK_a10dca6aa6bda5865287bf2792a"`
     );
@@ -251,72 +254,14 @@ export class BigRenaming1643049742051 implements MigrationInterface {
       `ALTER TABLE "licences" RENAME COLUMN "stripeSessionId" TO "stripe_session_id"`
     );
     await queryRunner.query(
-      `ALTER TABLE "visitors" DROP CONSTRAINT "PK_c16501c34b8530a425739e400bd"`
+      `ALTER TABLE "visitors" DROP CONSTRAINT IF EXISTS "PK_c16501c34b8530a425739e400bd"`
     );
-    // await queryRunner.query(
-    //   `ALTER TABLE "visitors" ADD CONSTRAINT "PK_d50229c10adbf294a228c35cb19" PRIMARY KEY ("usersId")`
-    // );
     await queryRunner.query(
       `ALTER TABLE "visitors" RENAME COLUMN "sessionsId" to "sessions_id"`
     );
-    // await queryRunner.query(
-    //   `ALTER TABLE "visitors" DROP CONSTRAINT "PK_d50229c10adbf294a228c35cb19"`
-    // );
     await queryRunner.query(
       `ALTER TABLE "visitors" RENAME COLUMN "usersId" to "users_id"`
     );
-    // await queryRunner.query(`ALTER TABLE "users_identities" ADD "account_type" character varying NOT NULL DEFAULT 'anonymous'`);
-    // await queryRunner.query(`ALTER TABLE "users_identities" ADD "email_verification" character varying`);
-    // await queryRunner.query(`ALTER TABLE "users_identities" ADD "user_id" character varying`);
-    // await queryRunner.query(`ALTER TABLE "users" ADD "stripe_id" character varying`);
-    // await queryRunner.query(`ALTER TABLE "users" ADD "slack_user_id" character varying`);
-    // await queryRunner.query(`ALTER TABLE "users" ADD "slack_team_id" character varying`);
-    // await queryRunner.query(`ALTER TABLE "users" ADD "default_template_id" character varying`);
-    // await queryRunner.query(`ALTER TABLE "templates" ADD "created_by_id" character varying NOT NULL`);
-    // await queryRunner.query(`ALTER TABLE "templates" ADD "options_max_up_votes" numeric`);
-    // await queryRunner.query(`ALTER TABLE "templates" ADD "options_max_down_votes" numeric`);
-    // await queryRunner.query(`ALTER TABLE "templates" ADD "options_max_posts" numeric`);
-    // await queryRunner.query(`ALTER TABLE "templates" ADD "options_allow_actions" boolean NOT NULL DEFAULT true`);
-    // await queryRunner.query(`ALTER TABLE "templates" ADD "options_allow_self_voting" boolean NOT NULL DEFAULT false`);
-    // await queryRunner.query(`ALTER TABLE "templates" ADD "options_allow_multiple_votes" boolean NOT NULL DEFAULT false`);
-    // await queryRunner.query(`ALTER TABLE "templates" ADD "options_allow_author_visible" boolean NOT NULL DEFAULT false`);
-    // await queryRunner.query(`ALTER TABLE "templates" ADD "options_allow_giphy" boolean NOT NULL DEFAULT true`);
-    // await queryRunner.query(`ALTER TABLE "templates" ADD "options_allow_grouping" boolean NOT NULL DEFAULT true`);
-    // await queryRunner.query(`ALTER TABLE "templates" ADD "options_allow_reordering" boolean NOT NULL DEFAULT true`);
-    // await queryRunner.query(`ALTER TABLE "templates" ADD "options_blur_cards" boolean NOT NULL DEFAULT false`);
-    // await queryRunner.query(`ALTER TABLE "templates" ADD "options_new_posts_first" boolean NOT NULL DEFAULT true`);
-    // await queryRunner.query(`ALTER TABLE "groups" ADD "session_id" character varying NOT NULL`);
-    // await queryRunner.query(`ALTER TABLE "groups" ADD "user_id" character varying NOT NULL`);
-    // await queryRunner.query(`ALTER TABLE "messages" ADD "session_id" character varying NOT NULL`);
-    // await queryRunner.query(`ALTER TABLE "messages" ADD "user_id" character varying NOT NULL`);
-    // await queryRunner.query(`ALTER TABLE "sessions" ADD "created_by_id" character varying NOT NULL`);
-    // await queryRunner.query(`ALTER TABLE "sessions" ADD "options_max_up_votes" numeric`);
-    // await queryRunner.query(`ALTER TABLE "sessions" ADD "options_max_down_votes" numeric`);
-    // await queryRunner.query(`ALTER TABLE "sessions" ADD "options_max_posts" numeric`);
-    // await queryRunner.query(`ALTER TABLE "sessions" ADD "options_allow_actions" boolean NOT NULL DEFAULT true`);
-    // await queryRunner.query(`ALTER TABLE "sessions" ADD "options_allow_self_voting" boolean NOT NULL DEFAULT false`);
-    // await queryRunner.query(`ALTER TABLE "sessions" ADD "options_allow_multiple_votes" boolean NOT NULL DEFAULT false`);
-    // await queryRunner.query(`ALTER TABLE "sessions" ADD "options_allow_author_visible" boolean NOT NULL DEFAULT false`);
-    // await queryRunner.query(`ALTER TABLE "sessions" ADD "options_allow_giphy" boolean NOT NULL DEFAULT true`);
-    // await queryRunner.query(`ALTER TABLE "sessions" ADD "options_allow_grouping" boolean NOT NULL DEFAULT true`);
-    // await queryRunner.query(`ALTER TABLE "sessions" ADD "options_allow_reordering" boolean NOT NULL DEFAULT true`);
-    // await queryRunner.query(`ALTER TABLE "sessions" ADD "options_blur_cards" boolean NOT NULL DEFAULT false`);
-    // await queryRunner.query(`ALTER TABLE "sessions" ADD "options_new_posts_first" boolean NOT NULL DEFAULT true`);
-    // await queryRunner.query(`ALTER TABLE "votes" ADD "user_id" character varying NOT NULL`);
-    // await queryRunner.query(`ALTER TABLE "votes" ADD "post_id" character varying NOT NULL`);
-    // await queryRunner.query(`ALTER TABLE "posts" ADD "session_id" character varying NOT NULL`);
-    // await queryRunner.query(`ALTER TABLE "posts" ADD "group_id" character varying`);
-    // await queryRunner.query(`ALTER TABLE "posts" ADD "user_id" character varying NOT NULL`);
-    // await queryRunner.query(`ALTER TABLE "licences" ADD "stripe_customer_id" character varying NOT NULL`);
-    // await queryRunner.query(`ALTER TABLE "licences" ADD "stripe_session_id" character varying NOT NULL`);
-    // await queryRunner.query(`ALTER TABLE "visitors" ADD "sessions_id" character varying NOT NULL`);
-    // await queryRunner.query(
-    //   `ALTER TABLE "visitors" ADD CONSTRAINT "PK_93910938d4f16f57a137da768b3" PRIMARY KEY ("sessions_id")`
-    // );
-    // await queryRunner.query(`ALTER TABLE "visitors" ADD "users_id" character varying NOT NULL`);
-    // await queryRunner.query(
-    //   `ALTER TABLE "visitors" DROP CONSTRAINT "PK_93910938d4f16f57a137da768b3"`
-    // );
     await queryRunner.query(
       `ALTER TABLE "visitors" ADD CONSTRAINT "PK_96af66c2594330cf6578ef210c2" PRIMARY KEY ("sessions_id", "users_id")`
     );
@@ -424,6 +369,99 @@ export class BigRenaming1643049742051 implements MigrationInterface {
     );
     await queryRunner.query(
       `ALTER TABLE "visitors" ADD CONSTRAINT "FK_44b69e6f1b8c5328046a6f6a2c0" FOREIGN KEY ("users_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`
+    );
+
+    /**
+     * VIEWS UPDATE
+     */
+    await queryRunner.query(
+      `DELETE FROM "typeorm_metadata" WHERE "type" = $1 AND "name" = $2 AND "schema" = $3`,
+      ['VIEW', 'user_view', 'public']
+    );
+    await queryRunner.query(`DROP VIEW "user_view"`);
+    await queryRunner.query(`CREATE VIEW "user_view" AS 
+select 
+  u.id,
+  i.id as identity_id,
+  u.name,
+  i.account_type,
+  i.username,
+  u.currency,
+  u.stripe_id,
+  i.photo,
+  u.language,
+  u.email,
+  case when i.account_type = 'anonymous' and i.password is null then false else true end as "can_delete_session",
+  u.trial,
+  s.id as "own_subscriptions_id",
+  s.plan as "own_plan",
+  coalesce(s.id, s2.id, s3.id) as "subscriptions_id",
+  coalesce(s.active, s2.active, s3.active, false) as "pro",
+  coalesce(s.plan, s2.plan, s3.plan) as "plan",
+  coalesce(s.domain, s2.domain, s3.domain) as "domain"
+from users_identities i
+
+join users u on u.id = i.user_id
+left join subscriptions s on s.owner_id = u.id and s.active is true
+left join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true
+left join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true
+  `);
+    await queryRunner.query(
+      `INSERT INTO "typeorm_metadata"("database", "schema", "table", "type", "name", "value") VALUES (DEFAULT, $1, DEFAULT, $2, $3, $4)`,
+      [
+        'public',
+        'VIEW',
+        'user_view',
+        'select \n  u.id,\n  i.id as identity_id,\n  u.name,\n  i.account_type,\n  i.username,\n  u.currency,\n  u.stripe_id,\n  i.photo,\n  u.language,\n  u.email,\n  case when i.account_type = \'anonymous\' and i.password is null then false else true end as "can_delete_session",\n  u.trial,\n  s.id as "own_subscriptions_id",\n  s.plan as "own_plan",\n  coalesce(s.id, s2.id, s3.id) as "subscriptions_id",\n  coalesce(s.active, s2.active, s3.active, false) as "pro",\n  coalesce(s.plan, s2.plan, s3.plan) as "plan",\n  coalesce(s.domain, s2.domain, s3.domain) as "domain"\nfrom users_identities i\n\njoin users u on u.id = i.user_id\nleft join subscriptions s on s.owner_id = u.id and s.active is true\nleft join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, \'@\', 2) and s3.active is true',
+      ]
+    );
+
+    await queryRunner.query(
+      `DELETE FROM "typeorm_metadata" WHERE "type" = $1 AND "name" = $2 AND "schema" = $3`,
+      ['VIEW', 'session_view', 'public']
+    );
+    await queryRunner.query(`DROP VIEW "session_view"`);
+    await queryRunner.query(`CREATE VIEW "session_view" AS 
+select 
+	s.id,
+	s.name,
+	s.created,
+	(
+		select to_jsonb(cb) from (
+			select cbu.id, cbu.name, cbu.photo from users cbu
+			where cbu.id = s.created_by_id
+		) as cb
+	) as created_by,
+	s.encrypted,
+	s.locked,
+	(select count(*) from posts p where p.session_id = s.id and p.action is not null) as "number_of_actions",	
+	(select count(*) from posts p where p.session_id = s.id) as "number_of_posts",
+	(
+		select count(*) from votes vv
+		left join posts vp on vp.id = vv.post_id
+		where vp.session_id = s.id
+	) as "number_of_votes",
+	(
+		select json_agg(vis) from (
+			select vu.id, vu.name, vu.photo from visitors v
+			join users vu on vu.id = v.users_id
+			where v.sessions_id = s.id
+		) as vis
+	) as participants
+
+from sessions s
+left join users u on s.created_by_id = u.id
+
+order by s.updated desc
+  `);
+    await queryRunner.query(
+      `INSERT INTO "typeorm_metadata"("database", "schema", "table", "type", "name", "value") VALUES (DEFAULT, $1, DEFAULT, $2, $3, $4)`,
+      [
+        'public',
+        'VIEW',
+        'session_view',
+        'select \n\ts.id,\n\ts.name,\n\ts.created,\n\t(\n\t\tselect to_jsonb(cb) from (\n\t\t\tselect cbu.id, cbu.name, cbu.photo from users cbu\n\t\t\twhere cbu.id = s.created_by_id\n\t\t) as cb\n\t) as created_by,\n\ts.encrypted,\n\ts.locked,\n\t(select count(*) from posts p where p.session_id = s.id and p.action is not null) as "number_of_actions",\t\n\t(select count(*) from posts p where p.session_id = s.id) as "number_of_posts",\n\t(\n\t\tselect count(*) from votes vv\n\t\tleft join posts vp on vp.id = vv.post_id\n\t\twhere vp.session_id = s.id\n\t) as "number_of_votes",\n\t(\n\t\tselect json_agg(vis) from (\n\t\t\tselect vu.id, vu.name, vu.photo from visitors v\n\t\t\tjoin users vu on vu.id = v.users_id\n\t\t\twhere v.sessions_id = s.id\n\t\t) as vis\n\t) as participants\n\nfrom sessions s\nleft join users u on s.created_by_id = u.id\n\norder by s.updated desc',
+      ]
     );
   }
 
@@ -674,153 +712,6 @@ export class BigRenaming1643049742051 implements MigrationInterface {
     await queryRunner.query(
       `ALTER TABLE "users_identities" RENAME COLUMN "account_type" to "accountType"`
     );
-    // await queryRunner.query(
-    //   `ALTER TABLE "visitors" ADD "usersId" character varying NOT NULL`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "visitors" ADD CONSTRAINT "PK_d50229c10adbf294a228c35cb19" PRIMARY KEY ("usersId")`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "visitors" ADD "sessionsId" character varying NOT NULL`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "visitors" DROP CONSTRAINT "PK_d50229c10adbf294a228c35cb19"`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "visitors" ADD CONSTRAINT "PK_c16501c34b8530a425739e400bd" PRIMARY KEY ("sessionsId", "usersId")`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "licences" ADD "stripeSessionId" character varying NOT NULL`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "licences" ADD "stripeCustomerId" character varying NOT NULL`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "posts" ADD "groupId" character varying`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "posts" ADD "userId" character varying NOT NULL`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "posts" ADD "sessionId" character varying NOT NULL`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "votes" ADD "postId" character varying NOT NULL`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "votes" ADD "userId" character varying NOT NULL`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "sessions" ADD "optionsNewpostsfirst" boolean NOT NULL DEFAULT true`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "sessions" ADD "optionsMaxposts" numeric`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "sessions" ADD "optionsBlurcards" boolean NOT NULL DEFAULT false`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "sessions" ADD "optionsAllowreordering" boolean NOT NULL DEFAULT true`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "sessions" ADD "optionsAllowgrouping" boolean NOT NULL DEFAULT true`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "sessions" ADD "optionsAllowgiphy" boolean NOT NULL DEFAULT true`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "sessions" ADD "optionsAllowauthorvisible" boolean NOT NULL DEFAULT false`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "sessions" ADD "optionsAllowmultiplevotes" boolean NOT NULL DEFAULT false`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "sessions" ADD "optionsAllowselfvoting" boolean NOT NULL DEFAULT false`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "sessions" ADD "optionsAllowactions" boolean NOT NULL DEFAULT true`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "sessions" ADD "optionsMaxdownvotes" numeric`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "sessions" ADD "optionsMaxupvotes" numeric`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "sessions" ADD "createdById" character varying NOT NULL`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "messages" ADD "userId" character varying NOT NULL`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "messages" ADD "sessionId" character varying NOT NULL`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "groups" ADD "userId" character varying NOT NULL`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "groups" ADD "sessionId" character varying NOT NULL`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "templates" ADD "optionsNewpostsfirst" boolean NOT NULL DEFAULT true`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "templates" ADD "optionsMaxposts" numeric`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "templates" ADD "optionsBlurcards" boolean NOT NULL DEFAULT false`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "templates" ADD "optionsAllowreordering" boolean NOT NULL DEFAULT true`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "templates" ADD "optionsAllowgrouping" boolean NOT NULL DEFAULT true`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "templates" ADD "optionsAllowgiphy" boolean NOT NULL DEFAULT true`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "templates" ADD "optionsAllowauthorvisible" boolean NOT NULL DEFAULT false`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "templates" ADD "optionsAllowmultiplevotes" boolean NOT NULL DEFAULT false`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "templates" ADD "optionsAllowselfvoting" boolean NOT NULL DEFAULT false`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "templates" ADD "optionsAllowactions" boolean NOT NULL DEFAULT true`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "templates" ADD "optionsMaxdownvotes" numeric`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "templates" ADD "optionsMaxupvotes" numeric`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "templates" ADD "createdById" character varying NOT NULL`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "users" ADD "slackTeamId" character varying`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "users" ADD "slackUserId" character varying`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "users" ADD "stripeId" character varying`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "users" ADD "defaultTemplateId" character varying`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "users_identities" ADD "userId" character varying`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "users_identities" ADD "emailVerification" character varying`
-    // );
-    // await queryRunner.query(
-    //   `ALTER TABLE "users_identities" ADD "accountType" character varying NOT NULL DEFAULT 'anonymous'`
-    // );
     await queryRunner.query(
       `ALTER TABLE "subscriptions" RENAME COLUMN "owner_id" TO "ownerId"`
     );
@@ -934,6 +825,96 @@ export class BigRenaming1643049742051 implements MigrationInterface {
     );
     await queryRunner.query(
       `ALTER TABLE "users_identities" ADD CONSTRAINT "FK_a10dca6aa6bda5865287bf2792a" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE`
+    );
+
+    /**
+     * VIEWS
+     */
+
+    await queryRunner.query(
+      `DELETE FROM "typeorm_metadata" WHERE "type" = $1 AND "name" = $2 AND "schema" = $3`,
+      ['VIEW', 'user_view', 'public']
+    );
+    await queryRunner.query(`DROP VIEW "user_view"`);
+    await queryRunner.query(`CREATE VIEW "user_view" AS select 
+  u.id,
+  i.id as "identityId",
+  u.name,
+  i."accountType",
+  i.username,
+  u.currency,
+  u."stripeId",
+  i.photo,
+  u.language,
+  u.email,
+  case when i."accountType" = 'anonymous' and i.password is null then false else true end as "canDeleteSession",
+  u.trial,
+  s.id as "ownSubscriptionsId",
+  s.plan as "ownPlan",
+  coalesce(s.id, s2.id, s3.id) as "subscriptionsId",
+  coalesce(s.active, s2.active, s3.active, false) as "pro",
+  coalesce(s.plan, s2.plan, s3.plan) as "plan",
+  coalesce(s.domain, s2.domain, s3.domain) as "domain"
+from users_identities i
+
+join users u on u.id = i."userId"
+left join subscriptions s on s."ownerId" = u.id and s.active is true
+left join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true
+left join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true`);
+    await queryRunner.query(
+      `INSERT INTO "typeorm_metadata"("database", "schema", "table", "type", "name", "value") VALUES (DEFAULT, $1, DEFAULT, $2, $3, $4)`,
+      [
+        'public',
+        'VIEW',
+        'user_view',
+        'select \n  u.id,\n  i.id as "identityId",\n  u.name,\n  i."accountType",\n  i.username,\n  u.currency,\n  u."stripeId",\n  i.photo,\n  u.language,\n  u.email,\n  case when i."accountType" = \'anonymous\' and i.password is null then false else true end as "canDeleteSession",\n  u.trial,\n  s.id as "ownSubscriptionsId",\n  s.plan as "ownPlan",\n  coalesce(s.id, s2.id, s3.id) as "subscriptionsId",\n  coalesce(s.active, s2.active, s3.active, false) as "pro",\n  coalesce(s.plan, s2.plan, s3.plan) as "plan",\n  coalesce(s.domain, s2.domain, s3.domain) as "domain"\nfrom users_identities i\n\njoin users u on u.id = i."userId"\nleft join subscriptions s on s."ownerId" = u.id and s.active is true\nleft join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, \'@\', 2) and s3.active is true',
+      ]
+    );
+
+    await queryRunner.query(
+      `DELETE FROM "typeorm_metadata" WHERE "type" = $1 AND "name" = $2 AND "schema" = $3`,
+      ['VIEW', 'session_view', 'public']
+    );
+    await queryRunner.query(`DROP VIEW "session_view"`);
+    await queryRunner.query(`CREATE VIEW "session_view" AS select 
+	s.id,
+	s.name,
+	s.created,
+	(
+		select to_jsonb(cb) from (
+			select cbu.id, cbu.name, cbu.photo from users cbu
+			where cbu.id = s."createdById"
+		) as cb
+	) as "createdBy",
+	s.encrypted,
+	s.locked,
+	(select count(*) from posts p where p."sessionId" = s.id and p.action is not null) as "numberOfActions",	
+	(select count(*) from posts p where p."sessionId" = s.id) as "numberOfPosts",
+	(
+		select count(*) from votes vv
+		left join posts vp on vp.id = vv."postId"
+		where vp."sessionId" = s.id
+	) as "numberOfVotes",
+	(
+		select json_agg(vis) from (
+			select vu.id, vu.name, vu.photo from visitors v
+			join users vu on vu.id = v."usersId"
+			where v."sessionsId" = s.id
+		) as vis
+	) as participants
+
+from sessions s
+left join users u on s."createdById" = u.id
+
+order by s.updated desc`);
+    await queryRunner.query(
+      `INSERT INTO "typeorm_metadata"("database", "schema", "table", "type", "name", "value") VALUES (DEFAULT, $1, DEFAULT, $2, $3, $4)`,
+      [
+        'public',
+        'VIEW',
+        'session_view',
+        'select \n\ts.id,\n\ts.name,\n\ts.created,\n\t(\n\t\tselect to_jsonb(cb) from (\n\t\t\tselect cbu.id, cbu.name, cbu.photo from users cbu\n\t\t\twhere cbu.id = s."createdById"\n\t\t) as cb\n\t) as "createdBy",\n\ts.encrypted,\n\ts.locked,\n\t(select count(*) from posts p where p."sessionId" = s.id and p.action is not null) as "numberOfActions",\t\n\t(select count(*) from posts p where p."sessionId" = s.id) as "numberOfPosts",\n\t(\n\t\tselect count(*) from votes vv\n\t\tleft join posts vp on vp.id = vv."postId"\n\t\twhere vp."sessionId" = s.id\n\t) as "numberOfVotes",\n\t(\n\t\tselect json_agg(vis) from (\n\t\t\tselect vu.id, vu.name, vu.photo from visitors v\n\t\t\tjoin users vu on vu.id = v."usersId"\n\t\t\twhere v."sessionsId" = s.id\n\t\t) as vis\n\t) as participants\n\nfrom sessions s\nleft join users u on s."createdById" = u.id\n\norder by s.updated desc',
+      ]
     );
   }
 }
