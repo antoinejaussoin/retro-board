@@ -45,6 +45,7 @@ const Inner = styled.div`
 
 const Photo = styled.div`
   width: 30px;
+  padding-top: 3px;
   > img {
     width: 30px;
     height: 30px;
@@ -55,7 +56,8 @@ const Photo = styled.div`
 
 const Header = styled.div`
   display: flex;
-  align-items: center;
+  align-items: baseline;
+  padding-bottom: 4px;
 `;
 
 const Name = styled.span`
@@ -65,6 +67,7 @@ const Name = styled.span`
 
 const Time = styled.span`
   color: ${colors.grey[500]};
+  font-size: 0.8rem;
 `;
 
 const Content = styled.div`
