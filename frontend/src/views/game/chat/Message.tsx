@@ -70,5 +70,5 @@ const Time = styled.span`
 const Content = styled.div`
   margin: 0;
   padding: 0;
-  white-space: pre;
+  white-space: pre-wrap;
 `;
