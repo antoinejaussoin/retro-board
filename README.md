@@ -84,9 +84,10 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
-### Version 4.12.0 (not released)
+### Version 4.11.2 (hotfix)
 
-- Encrypt chat
+- Encrypt chat messages on encrypted sessions
+- Ensure long chat messages are displayed across multiple lines
 
 ### Version 4.11.1 (hotfix)
 
