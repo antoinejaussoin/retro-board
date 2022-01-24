@@ -227,7 +227,7 @@ export async function deleteSessions(
       return false;
     }
     await sessionRepository.query(
-      `delete from visitors where "sessionsId" = $1;`,
+      `delete from visitors where sessions_id = $1;`,
       [sessionId]
     );
     await sessionRepository.query(`delete from posts where "sessionId" = $1;`, [
@@ -255,8 +255,8 @@ export async function previousSessions(
   return await transaction(async (manager) => {
     const sessionsAsVisitors: { sessionsId: string }[] = await manager.query(
       `
-      select distinct v."sessionsId" from visitors v
-      where v."usersId" = $1
+      select distinct v.sessions_Id from visitors v
+      where v.users_id = $1
     `,
       [userId]
     );
@@ -264,7 +264,7 @@ export async function previousSessions(
     const sessionsAsOwner: { id: string }[] = await manager.query(
       `
       select s.id from sessions s
-      where s."createdById" = $1
+      where s.created_by_id = $1
     `,
       [userId]
     );

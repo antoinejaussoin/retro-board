@@ -17,6 +17,7 @@ import {
 import LicenceEntity from './entities/Licence';
 import SessionOptionsEntity from './entities/SessionOptions';
 import UserIdentityEntity from './entities/UserIdentity';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 const migrationsDirectory = 'src/db/migrations';
 
@@ -26,7 +27,11 @@ export type ConnectionOptionsCustomisation = {
   migrationDir: string;
 };
 
-export default function (
+export default (function defaultOrmConfig() {
+  return customOrmConfig();
+})();
+
+export function customOrmConfig(
   customisation?: Partial<ConnectionOptionsCustomisation>
 ): ConnectionOptions {
   return {
@@ -36,6 +41,7 @@ export default function (
     username: config.DB_USER,
     password: config.DB_PASSWORD,
     database: config.DB_NAME,
+    namingStrategy: new SnakeNamingStrategy(),
     entities:
       customisation && customisation.entities
         ? customisation.entities

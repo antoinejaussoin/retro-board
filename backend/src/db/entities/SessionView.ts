@@ -10,28 +10,28 @@ select
 	(
 		select to_jsonb(cb) from (
 			select cbu.id, cbu.name, cbu.photo from users cbu
-			where cbu.id = s."createdById"
+			where cbu.id = s.created_by_id
 		) as cb
-	) as "createdBy",
+	) as created_by,
 	s.encrypted,
 	s.locked,
-	(select count(*) from posts p where p."sessionId" = s.id and p.action is not null) as "numberOfActions",	
-	(select count(*) from posts p where p."sessionId" = s.id) as "numberOfPosts",
+	(select count(*) from posts p where p.session_id = s.id and p.action is not null) as "number_of_actions",	
+	(select count(*) from posts p where p.session_id = s.id) as "number_of_posts",
 	(
 		select count(*) from votes vv
-		left join posts vp on vp.id = vv."postId"
-		where vp."sessionId" = s.id
-	) as "numberOfVotes",
+		left join posts vp on vp.id = vv.post_id
+		where vp.session_id = s.id
+	) as "number_of_votes",
 	(
 		select json_agg(vis) from (
 			select vu.id, vu.name, vu.photo from visitors v
-			join users vu on vu.id = v."usersId"
-			where v."sessionsId" = s.id
+			join users vu on vu.id = v.users_id
+			where v.sessions_id = s.id
 		) as vis
 	) as participants
 
 from sessions s
-left join users u on s."createdById" = u.id
+left join users u on s.created_by_id = u.id
 
 order by s.updated desc
   `,

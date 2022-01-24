@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
   OneToMany,
   Index,
+  JoinColumn,
 } from 'typeorm';
 import { LexoRank } from 'lexorank';
 import SessionEntity from './Session';
@@ -21,6 +22,7 @@ export default class PostEntity {
   public id: string;
   @ManyToOne(() => SessionEntity, { nullable: false })
   @Index()
+  @JoinColumn({ name: 'session_id' })
   public session: SessionEntity;
   @ManyToOne(() => PostGroupEntity, {
     nullable: true,

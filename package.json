@@ -10,7 +10,8 @@
     "backend": "cd backend && yarn start && cd ..",
     "stripe-login": "stripe login",
     "stripe-listen": "stripe listen --forward-to localhost:3000/api/stripe/webhook",
-    "bump": ". ./scripts/bump.sh"
+    "bump": ". ./scripts/bump.sh",
+    "mig": "cd backend && yarn mig"
   },
   "repository": {
     "type": "git",
