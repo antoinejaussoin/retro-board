@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { colors } from '@mui/material';
 import { formatRelative } from 'date-fns';
 import { useDateLocale } from 'hooks/useFormatDate';
+import useCrypto from 'crypto/useCrypto';
 
 type ChatMessageProps = {
   message: Message;
@@ -10,6 +11,7 @@ type ChatMessageProps = {
 
 export default function ChatMessage({ message }: ChatMessageProps) {
   const locale = useDateLocale();
+  const { decrypt } = useCrypto();
   return (
     <Container>
       <Photo>
@@ -24,7 +26,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
             {formatRelative(new Date(message.created), new Date(), { locale })}
           </Time>
         </Header>
-        <Content>{message.content}</Content>
+        <Content>{decrypt(message.content)}</Content>
       </Inner>
     </Container>
   );

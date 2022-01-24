@@ -3,9 +3,10 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 import styled from '@emotion/styled';
 import Input from './Input';
 import ChatMessage from './Message';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { sortBy } from 'lodash';
 import useTranslations from 'translations';
+import useCrypto from 'crypto/useCrypto';
 
 type ChatProps = {
   messages: Message[];
@@ -14,9 +15,16 @@ type ChatProps = {
 
 export default function Chat({ messages, onMessage }: ChatProps) {
   const { Chat: translations } = useTranslations();
+  const { encrypt } = useCrypto();
   const sortedMessages = useMemo(() => {
     return sortBy(messages, (m) => m.created);
   }, [messages]);
+  const handleInput = useCallback(
+    (msg: string) => {
+      onMessage(encrypt(msg));
+    },
+    [encrypt, onMessage]
+  );
   return (
     <Container>
       <ScrollContainer>
@@ -28,7 +36,7 @@ export default function Chat({ messages, onMessage }: ChatProps) {
       </ScrollContainer>
       <Input
         placeholder={translations.writeAMessage}
-        onNewMessage={onMessage}
+        onNewMessage={handleInput}
       />
     </Container>
   );
