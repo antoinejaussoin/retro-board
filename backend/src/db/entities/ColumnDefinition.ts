@@ -74,7 +74,7 @@ export class ColumnDefinitionEntity extends ColumnDefinitionEntityBase {
   }
 }
 
-@Entity({ name: 'templates-columns' })
+@Entity({ name: 'templates_columns' })
 export class TemplateColumnDefinitionEntity extends ColumnDefinitionEntityBase {
   @ManyToOne(() => SessionTemplateEntity, { nullable: false })
   public template: SessionTemplateEntity;
