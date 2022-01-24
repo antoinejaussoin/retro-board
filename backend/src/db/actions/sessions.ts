@@ -230,17 +230,16 @@ export async function deleteSessions(
       `delete from visitors where sessions_id = $1;`,
       [sessionId]
     );
-    await sessionRepository.query(`delete from posts where "sessionId" = $1;`, [
+    await sessionRepository.query(`delete from posts where session_id = $1;`, [
       sessionId,
     ]);
     await sessionRepository.query(
-      `delete from columns where "sessionId" = $1;`,
+      `delete from columns where session_id = $1;`,
       [sessionId]
     );
-    await sessionRepository.query(
-      `delete from groups where "sessionId" = $1;`,
-      [sessionId]
-    );
+    await sessionRepository.query(`delete from groups where session_id = $1;`, [
+      sessionId,
+    ]);
     await sessionRepository.query(`delete from sessions where id = $1;`, [
       sessionId,
     ]);
@@ -255,7 +254,7 @@ export async function previousSessions(
   return await transaction(async (manager) => {
     const sessionsAsVisitors: { sessionsId: string }[] = await manager.query(
       `
-      select distinct v.sessions_Id from visitors v
+      select distinct v.sessions_id from visitors v
       where v.users_id = $1
     `,
       [userId]

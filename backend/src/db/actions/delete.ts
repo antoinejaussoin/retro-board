@@ -42,10 +42,10 @@ async function deleteVisits(
   anon: UserIdentityEntity
 ) {
   if (hardDelete) {
-    await manager.query('delete from visitors where "usersId" = $1', [user.id]);
+    await manager.query('delete from visitors where users_id = $1', [user.id]);
   } else {
     await manager.query(
-      'update visitors set "usersId" = $1 where "usersId" = $2',
+      'update visitors set users_id = $1 where users_id = $2',
       [anon.user.id, user.id]
     );
   }
@@ -78,13 +78,13 @@ async function deletePosts(
   if (hardDelete) {
     await manager.query(
       `
-			delete from votes where "postId" in (select id from posts where "userId" = $1)
+			delete from votes where post_id in (select id from posts where user_id = $1)
 			`,
       [user.id]
     );
     await manager.query(
       `
-			update posts set "groupId" = null where "groupId" in (select id from groups where "userId" = $1)
+			update posts set group_id = null where group_id in (select id from groups where user_id = $1)
 			`,
       [user.id]
     );
@@ -108,25 +108,25 @@ async function deleteSessions(
   if (hardDelete) {
     await manager.query(
       `
-			delete from votes where "postId" in (select id from posts where "sessionId" in (select id from sessions where "createdById" = $1))
+			delete from votes where post_id in (select id from posts where session_id in (select id from sessions where created_by_id = $1))
 			`,
       [user.id]
     );
     await manager.query(
       `
-			delete from posts where "sessionId" in (select id from sessions where "createdById" = $1)
+			delete from posts where session_id in (select id from sessions where created_by_id = $1)
 			`,
       [user.id]
     );
     await manager.query(
       `
-			delete from groups where "sessionId" in (select id from sessions where "createdById" = $1)
+			delete from groups where session_id in (select id from sessions where created_by_id = $1)
 			`,
       [user.id]
     );
     await manager.query(
       `
-			delete from columns where "sessionId" in (select id from sessions where "createdById" = $1)
+			delete from columns where session_id in (select id from sessions where created_by_id = $1)
 			`,
       [user.id]
     );
@@ -141,21 +141,21 @@ async function deleteSessions(
 async function deleteUserAccount(manager: EntityManager, user: UserView) {
   await manager.query(
     `
-		update users set "defaultTemplateId" = null where "defaultTemplateId" in (select id from templates where "createdById" = $1)
+		update users set default_template_id = null where default_template_id in (select id from templates where created_by_id = $1)
 		`,
     [user.id]
   );
   await manager.query(
-    'delete from "templates-columns" where "templateId" in (select id from templates where "createdById" = $1)',
+    'delete from templates_columns where template_id in (select id from templates where created_by_id = $1)',
     [user.id]
   );
-  await manager.query('delete from templates where "createdById" = $1', [
+  await manager.query('delete from templates where created_by_id = $1', [
     user.id,
   ]);
-  await manager.query('delete from subscriptions where "ownerId" = $1', [
+  await manager.query('delete from subscriptions where owner_id = $1', [
     user.id,
   ]);
-  await manager.query('delete from users_identities where "userId" = $1', [
+  await manager.query('delete from users_identities where user_id = $1', [
     user.id,
   ]);
   await manager.query('delete from users where id = $1', [user.id]);
