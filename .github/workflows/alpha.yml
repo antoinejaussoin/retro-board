@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [v4110/force-dep]
+    branches: [v4120/db_conventions]
 
 jobs:
   build:
