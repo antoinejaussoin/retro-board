@@ -6,15 +6,15 @@
   "scripts": {
     "build": "rimraf dist && tsc --build",
     "start": "nodemon --exec 'yarn fix & ts-node' --files ./src/index.ts",
-    "backend-production": "yarn migrate && cd ./dist/src && node index.js",
     "create-migration": "ts-node ./node_modules/typeorm/cli.js --config src/db/orm-config.ts migration:generate -n ",
     "migrate": "ts-node ./node_modules/typeorm/cli.js --config src/db/orm-config.ts migration:run",
-    "mig": "ts-node ./node_modules/typeorm/cli.js --config src/db/orm-config.ts migration:generate -n Test",
     "revert": "ts-node ./node_modules/typeorm/cli.js --config src/db/orm-config.ts migration:revert",
     "lint": "eslint 'src/**/*.ts'",
     "test": "yarn jest",
     "ci-test": "CI=true yarn test",
-    "fix": "eslint 'src/**/*.ts' --fix"
+    "fix": "eslint 'src/**/*.ts' --fix",
+    "backend-production": "yarn migrate-production && cd ./dist/src && node index.js",
+    "migrate-production": "node ./node_modules/typeorm/cli.js --config dist/src/db/orm-config.js migration:run"
   },
   "dependencies": {
     "@sendgrid/mail": "7.6.0",
@@ -90,8 +90,7 @@
     "typeorm": "0.2.41",
     "typeorm-naming-strategies": "^2.0.0",
     "typescript": "4.5.4",
-    "uuid": "8.3.2",
-    "yargs": "17.3.1"
+    "uuid": "8.3.2"
   },
   "resolutions": {
     "@types/connect-redis": "0.0.18",
