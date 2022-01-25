@@ -84,6 +84,11 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 4.12.0 (unreleased)
+
+- Changing naming convention for the database. All fields and tables are now `snake_case`.
+- Simplified the configuration of TypeORM, removed the generation of `ormconfig.json`.
+
 ### Version 4.11.2 (hotfix)
 
 - Encrypt chat messages on encrypted sessions

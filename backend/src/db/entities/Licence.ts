@@ -4,6 +4,7 @@ import {
   PrimaryColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  Index,
 } from 'typeorm';
 
 @Entity({ name: 'licences' })
@@ -11,6 +12,7 @@ export default class LicenceEntity {
   @PrimaryColumn({ primary: true, generated: false, unique: true })
   public id: string;
   @Column({ nullable: true, type: 'character varying' })
+  @Index()
   public email: string | null;
   @Column({ nullable: false })
   public key: string;

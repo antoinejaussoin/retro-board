@@ -227,20 +227,19 @@ export async function deleteSessions(
       return false;
     }
     await sessionRepository.query(
-      `delete from visitors where "sessionsId" = $1;`,
+      `delete from visitors where sessions_id = $1;`,
       [sessionId]
     );
-    await sessionRepository.query(`delete from posts where "sessionId" = $1;`, [
+    await sessionRepository.query(`delete from posts where session_id = $1;`, [
       sessionId,
     ]);
     await sessionRepository.query(
-      `delete from columns where "sessionId" = $1;`,
+      `delete from columns where session_id = $1;`,
       [sessionId]
     );
-    await sessionRepository.query(
-      `delete from groups where "sessionId" = $1;`,
-      [sessionId]
-    );
+    await sessionRepository.query(`delete from groups where session_id = $1;`, [
+      sessionId,
+    ]);
     await sessionRepository.query(`delete from sessions where id = $1;`, [
       sessionId,
     ]);
@@ -255,8 +254,8 @@ export async function previousSessions(
   return await transaction(async (manager) => {
     const sessionsAsVisitors: { sessionsId: string }[] = await manager.query(
       `
-      select distinct v."sessionsId" from visitors v
-      where v."usersId" = $1
+      select distinct v.sessions_id from visitors v
+      where v.users_id = $1
     `,
       [userId]
     );
@@ -264,7 +263,7 @@ export async function previousSessions(
     const sessionsAsOwner: { id: string }[] = await manager.query(
       `
       select s.id from sessions s
-      where s."createdById" = $1
+      where s.created_by_id = $1
     `,
       [userId]
     );

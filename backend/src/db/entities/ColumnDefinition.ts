@@ -5,6 +5,7 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
+  Index,
 } from 'typeorm';
 import { IconName, ColumnDefinition, ColumnDefinitionType } from '../../common';
 import SessionEntity from './Session';
@@ -59,6 +60,7 @@ class ColumnDefinitionEntityBase {
 @Entity({ name: 'columns' })
 export class ColumnDefinitionEntity extends ColumnDefinitionEntityBase {
   @ManyToOne(() => SessionEntity, { nullable: false })
+  @Index()
   public session: SessionEntity;
   constructor(
     id: string,
@@ -74,9 +76,10 @@ export class ColumnDefinitionEntity extends ColumnDefinitionEntityBase {
   }
 }
 
-@Entity({ name: 'templates-columns' })
+@Entity({ name: 'templates_columns' })
 export class TemplateColumnDefinitionEntity extends ColumnDefinitionEntityBase {
   @ManyToOne(() => SessionTemplateEntity, { nullable: false })
+  @Index()
   public template: SessionTemplateEntity;
   constructor(
     id: string,

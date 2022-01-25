@@ -3,29 +3,29 @@ import { AccountType, FullUser, Currency, Plan } from '../../common';
 
 @ViewEntity({
   expression: `
-  select 
+select 
   u.id,
-  i.id as "identityId",
+  i.id as identity_id,
   u.name,
-  i."accountType",
+  i.account_type,
   i.username,
   u.currency,
-  u."stripeId",
+  u.stripe_id,
   i.photo,
   u.language,
   u.email,
-  case when i."accountType" = 'anonymous' and i.password is null then false else true end as "canDeleteSession",
+  case when i.account_type = 'anonymous' and i.password is null then false else true end as "can_delete_session",
   u.trial,
-  s.id as "ownSubscriptionsId",
-  s.plan as "ownPlan",
-  coalesce(s.id, s2.id, s3.id) as "subscriptionsId",
+  s.id as "own_subscriptions_id",
+  s.plan as "own_plan",
+  coalesce(s.id, s2.id, s3.id) as "subscriptions_id",
   coalesce(s.active, s2.active, s3.active, false) as "pro",
   coalesce(s.plan, s2.plan, s3.plan) as "plan",
   coalesce(s.domain, s2.domain, s3.domain) as "domain"
 from users_identities i
 
-join users u on u.id = i."userId"
-left join subscriptions s on s."ownerId" = u.id and s.active is true
+join users u on u.id = i.user_id
+left join subscriptions s on s.owner_id = u.id and s.active is true
 left join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true
 left join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true
   `,
