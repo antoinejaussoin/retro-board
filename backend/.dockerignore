@@ -3,3 +3,4 @@ npm-debug.log
 persist
 Dockerfile*
 dist
+yarn-error.log
