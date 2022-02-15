@@ -16,6 +16,12 @@ const hardcodedLicences: HardcodedLicence[] = [
     hash: '$2a$10$kt4DnxKZEwvoh052JFygru7iLiIrTzSJngcJlaYkWm.tlNzRJx/Di',
     encryptedOwner: 'U2FsdGVkX18/e8sfZ3bpjz3pLQkCxloH8nuniFdU+vo=',
   },
+  {
+    // Pear
+    hash: '$2a$10$33O/3uuETs0hKNIRWQzH5uQ8LgvZKhZumDcfy.izLLIzwqXmHRFu2',
+    encryptedOwner:
+      'U2FsdGVkX1/weIyFN+TJEPkM0YF08D5CSD0vgrDOnouEveyXG2K/TurX63pBrhuR',
+  },
 ];
 
 export function isSelfHostedAndLicenced() {
@@ -47,16 +53,6 @@ async function checkHardcodedLicence(
   }
   return null;
 }
-
-// async function buildHardcodedLicence(
-//   licenceKey: string,
-//   company: string
-// ): Promise<void> {
-//   console.log('Building hardcoded licence for: ', licenceKey);
-//   const hash = await hashPassword(licenceKey);
-//   console.log('Hash: ', hash);
-//   console.log('Encrypted company name: ', encrypt(company, licenceKey));
-// }
 
 async function isLicencedBase(): Promise<LicenceMetadata | null> {
   const licenceKey = config.LICENCE_KEY;
