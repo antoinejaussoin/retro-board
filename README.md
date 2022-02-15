@@ -84,6 +84,10 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 4.11.3 (hotfix)
+
+- Adding hardcoded licence for a specific self-hosted client.
+
 ### Version 4.11.2 (hotfix)
 
 - Encrypt chat messages on encrypted sessions
