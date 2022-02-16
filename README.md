@@ -84,6 +84,10 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 4.11.4 (hotfix)
+
+- Fixing a migration issue when installing from scratch
+
 ### Version 4.11.3 (hotfix)
 
 - Adding hardcoded licence for a specific self-hosted client.
