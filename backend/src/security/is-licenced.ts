@@ -17,10 +17,15 @@ const hardcodedLicences: HardcodedLicence[] = [
     encryptedOwner: 'U2FsdGVkX18/e8sfZ3bpjz3pLQkCxloH8nuniFdU+vo=',
   },
   {
-    // Pear
+    // Parson
     hash: '$2a$10$33O/3uuETs0hKNIRWQzH5uQ8LgvZKhZumDcfy.izLLIzwqXmHRFu2',
     encryptedOwner:
       'U2FsdGVkX1/weIyFN+TJEPkM0YF08D5CSD0vgrDOnouEveyXG2K/TurX63pBrhuR',
+  },
+  {
+    // Retrospected.com
+    hash: '$2a$10$hLlxhJ8yDp1lQJtTLePJr.SDuWFHSX4Kat8NHUgqPoKgRGLbZWy26',
+    encryptedOwner: 'U2FsdGVkX19b7JIgy/QrMncC1JjoVmBJ5EUo4AcGIkA=',
   },
 ];
 
@@ -57,6 +62,9 @@ async function checkHardcodedLicence(
 async function isLicencedBase(): Promise<LicenceMetadata | null> {
   const licenceKey = config.LICENCE_KEY;
 
+  // Checking hardcoded licence as a last resort
+  const hardcodedLicence = await checkHardcodedLicence(licenceKey);
+
   const payload: SelfHostedCheckPayload = { key: licenceKey };
   try {
     const response = await fetch(
@@ -73,6 +81,9 @@ async function isLicencedBase(): Promise<LicenceMetadata | null> {
       const result = (await response.json()) as LicenceMetadata;
       return result;
     } else {
+      if (hardcodedLicence) {
+        return hardcodedLicence;
+      }
       if (response.status === 403) {
         console.error(
           'The licence key is not recognised. If you have a valid licence, please contact support@retrospected.com for support.'
@@ -85,16 +96,17 @@ async function isLicencedBase(): Promise<LicenceMetadata | null> {
       }
     }
   } catch (err) {
+    if (hardcodedLicence) {
+      return hardcodedLicence;
+    }
     console.error(
       'Could not contact the licence server. If you have a valid licence, please contact support@retrospected.com for support.'
     );
     console.log(err);
   }
 
-  // Checking hardcoded licence as a last resort
-  const hardcoded = await checkHardcodedLicence(licenceKey);
-  if (hardcoded) {
-    return hardcoded;
+  if (hardcodedLicence) {
+    return hardcodedLicence;
   }
 
   return null;
