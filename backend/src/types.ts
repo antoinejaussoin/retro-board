@@ -15,6 +15,7 @@ export interface BackendConfig {
   BACKEND_PORT: number;
   SQL_LOG: boolean;
   BASE_URL: string;
+  SECURE_COOKIES: boolean;
   SENTRY_URL: string;
   TWITTER_KEY: string;
   TWITTER_SECRET: string;

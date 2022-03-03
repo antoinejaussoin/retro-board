@@ -19,6 +19,10 @@ single-build:
 	docker build -f ./backend/Dockerfile -t retrospected/backend:${PACKAGE_VERSION} ./backend
 	docker build -f ./frontend/Dockerfile -t retrospected/frontend:${PACKAGE_VERSION} ./frontend
 
+local:
+	docker build -f ./backend/Dockerfile -t retrospected/backend:local ./backend
+	docker build -f ./frontend/Dockerfile -t retrospected/frontend:local ./frontend
+
 install-trivy:
 	brew install trivy
 

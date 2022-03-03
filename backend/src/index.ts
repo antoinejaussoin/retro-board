@@ -64,7 +64,7 @@ import { QueryFailedError } from 'typeorm';
 import { deleteAccount } from './db/actions/delete';
 
 const realIpHeader = 'X-Forwarded-For';
-const isProduction = process.env.NODE_ENV === 'production';
+const sessionSecret = `${config.SESSION_SECRET!}-4.11.5`; // Increment to force re-auth
 
 isLicenced().then((hasLicence) => {
   if (!hasLicence) {
@@ -164,12 +164,12 @@ if (config.REDIS_ENABLED) {
   });
 
   sessionMiddleware = session({
-    secret: `${config.SESSION_SECRET!}-6`, // Increment to force re-auth
+    secret: sessionSecret,
     resave: true,
     saveUninitialized: true,
     store: new RedisStore({ client: redisClient }),
     cookie: {
-      secure: isProduction,
+      secure: config.SECURE_COOKIES,
     },
   });
 
@@ -186,11 +186,11 @@ if (config.REDIS_ENABLED) {
   );
 } else {
   sessionMiddleware = session({
-    secret: `${config.SESSION_SECRET!}-9`, // Increment to force re-auth
+    secret: sessionSecret,
     resave: true,
     saveUninitialized: true,
     cookie: {
-      secure: isProduction,
+      secure: config.SECURE_COOKIES,
     },
   });
 }

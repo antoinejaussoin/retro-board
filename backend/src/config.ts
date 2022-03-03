@@ -63,6 +63,7 @@ const config: BackendConfig = {
   SQL_LOG: defaultsBool('SQL_LOG', false),
   SENTRY_URL: defaults('SENTRY_URL', ''),
   BASE_URL: defaults('BASE_URL', 'http://localhost:80'),
+  SECURE_COOKIES: defaultsBool('SECURE_COOKIES', false),
   TWITTER_KEY: defaults('TWITTER_KEY', ''),
   TWITTER_SECRET: defaults('TWITTER_SECRET', ''),
   GOOGLE_KEY: defaults('GOOGLE_KEY', ''),
