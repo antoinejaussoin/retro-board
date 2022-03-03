@@ -84,6 +84,10 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 4.11.5 (hotfix)
+
+- Making secure cookies an optional setting, as they won't work unless it is hosted on HTTPS.
+
 ### Version 4.11.4 (hotfix)
 
 - Fixing a migration issue when installing from scratch
