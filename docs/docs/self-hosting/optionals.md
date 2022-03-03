@@ -38,6 +38,7 @@ services:
       REDIS_HOST: redis # Must be the name of the Redis service above
       SENTRY_URL: '' # Optional, Sentry URL (https://1234567890abcdef12345@sentry.io/1234567)
       BASE_URL: http://localhost:80 # This must be the URL of the frontend app once deployed. Only useful if you need OAuth, SendGrid or Stripe
+      SECURE_COOKIES: 'false' # You can set this to true if you are using HTTPS. This is more secure.
 
       # -- OAuth: Set these to enable OAuth authentication for one or more provider. This is optional. --
       TWITTER_KEY:
