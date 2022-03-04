@@ -1,0 +1,15 @@
+name: 'Integration Tests'
+
+on:
+  push:
+    branches: [v4120/integration]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Cypress
+         run: docker-compose -f ./integration/docker-compose.yml up --exit-code-from cypress
+      
