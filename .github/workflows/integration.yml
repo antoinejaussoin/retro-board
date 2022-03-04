@@ -11,5 +11,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run Cypress
-         run: docker-compose -f ./integration/docker-compose.yml up --exit-code-from cypress
+        run: docker-compose -f ./integration/docker-compose.yml up --exit-code-from cypress
       
