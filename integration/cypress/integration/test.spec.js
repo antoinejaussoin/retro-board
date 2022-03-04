@@ -1,6 +1,6 @@
 describe('Home Page', () => {
   it('Should load correctly', () => {
-    cy.visit('http://localhost:1800')
+    cy.visit('/')
   
     cy.get('div.marketing-content')
       .should('contain', 'Real-time Retrospectives')
