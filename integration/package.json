@@ -1,0 +1,18 @@
+{
+  "name": "retro-board-integration",
+  "version": "4.12.0",
+  "description": "Integrations tests",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "open": "cypress open ."
+  },
+  "author": "Antoine Jaussoin",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^9.5.1"
+  }
+}
