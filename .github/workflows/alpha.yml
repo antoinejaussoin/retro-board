@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [v4120/integrationxxx]
+    branches: [v4120/deps]
 
 jobs:
   build:
