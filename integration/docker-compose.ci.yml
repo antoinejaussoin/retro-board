@@ -2,7 +2,7 @@ version: '3'
 services:
   cypress:
     image: "cypress/included:4.4.0"
-    entrypoint: cypress open --project /e2e --browser firefox
+    # entrypoint: cypress open --project /e2e
     depends_on:
       - frontend
     environment:
