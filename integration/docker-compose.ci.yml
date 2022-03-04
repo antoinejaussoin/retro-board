@@ -7,7 +7,6 @@ services:
       - frontend
     environment:
       - CYPRESS_baseUrl=http://frontend:1800
-      - DISPLAY
     working_dir: /e2e
     volumes:
       - ./:/e2e
