@@ -75,6 +75,9 @@ jobs:
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
 
+      - name: Run Integration Tests
+        run: docker-compose -f ./integration/docker-compose.ci.canary.yml up --exit-code-from cypress
+
       - name: Trivy - Frontend
         uses: aquasecurity/trivy-action@master
         with:

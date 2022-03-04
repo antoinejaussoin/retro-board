@@ -74,3 +74,6 @@ jobs:
           tags: retrospected/maintenance:latest,retrospected/maintenance:${{ steps.package.outputs.current-version }}
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
+
+      - name: Run Integration Tests
+        run: docker-compose -f ./integration/docker-compose.ci.master.yml up --exit-code-from cypress
