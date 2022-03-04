@@ -26,6 +26,9 @@ describe('Home Page', () => {
 
     // The post should still be there
     cy.get('#content').should('contain', 'Slava Ukraini!');
+
+    // Breaking the test on purpose
+    cy.get('#content').should('contain', 'Fuck Putin');
   });
 
   // it('Should create a session ok', () => {
