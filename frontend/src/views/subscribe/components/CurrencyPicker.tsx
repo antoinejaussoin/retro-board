@@ -1,6 +1,6 @@
 import noop from 'lodash/noop';
 import { Currency } from 'common';
-import 'flag-icon-css/css/flag-icon.min.css';
+import 'flag-icons/css/flag-icons.min.css';
 import { currencies } from './types';
 import styled from '@emotion/styled';
 import { colors } from '@mui/material';
@@ -20,7 +20,7 @@ function CurrencyPicker({ value, disabled, onChange }: CurrencyPickerProps) {
           selected={currency.value === value}
           onClick={() => (!disabled ? onChange(currency.value) : noop)}
         >
-          <Flag className={`flag-icon flag-icon-${currency.iso}`}>
+          <Flag className={`fi fi-${currency.iso}`}>
             <FlagOverlay />
           </Flag>
           <CurrencyValue>{currency.value.toUpperCase()}</CurrencyValue>

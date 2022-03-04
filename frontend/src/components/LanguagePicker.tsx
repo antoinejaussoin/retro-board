@@ -4,7 +4,7 @@ import Select from '@mui/material/Select';
 import { SelectChangeEvent } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import { languages } from '../translations';
-import 'flag-icon-css/css/flag-icon.min.css';
+import 'flag-icons/css/flag-icons.min.css';
 
 interface LanguagePickerProps {
   value: string;
@@ -24,7 +24,7 @@ const LanguagePicker = ({ value, onChange }: LanguagePickerProps) => {
       {languages.map((language) => (
         <MenuItem value={language.value} key={language.value}>
           <LanguageItem>
-            <Flag className={`flag-icon flag-icon-${language.iso}`}>
+            <Flag className={`fi fi-${language.iso}`}>
               <FlagOverlay />
             </Flag>
             <Names>

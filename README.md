@@ -635,7 +635,7 @@ Many thanks to the following contributors who helped translating the app:
 
 If you are a native speaker of another language, please don't hesitate to make a pull request to add a translation.
 
-Special thanks to [@andresin87](https://github.com/andresin87) for pointing the `flag-icon-css` package to me, it replaces the PNG flags in a neater way.
+Special thanks to [@andresin87](https://github.com/andresin87) for pointing the `flag-icons` package to me, it replaces the PNG flags in a neater way.
 
 Another special thanks to Browserstack, as they allow me to test this project in other browsers.
 

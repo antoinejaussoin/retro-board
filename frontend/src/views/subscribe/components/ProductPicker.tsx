@@ -1,5 +1,5 @@
 import { Product, Currency, Plan } from 'common';
-import 'flag-icon-css/css/flag-icon.min.css';
+import 'flag-icons/css/flag-icons.min.css';
 import { useCallback } from 'react';
 import styled from '@emotion/styled';
 import ProductDisplay from './Product';

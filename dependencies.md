@@ -12,6 +12,5 @@
 
 ### Frontend
 
-- flag-icon-css (3.5.0)
 - react-markdown (6.0.3)
 - react-router-dom (5.3.0)
