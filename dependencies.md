@@ -12,5 +12,4 @@
 
 ### Frontend
 
-- react-markdown (6.0.3)
 - react-router-dom (5.3.0)

@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import styled from '@emotion/styled';
 import SliderBase from '@mui/material/Slider';
-import { Mark } from '@mui/core';
+import { Mark } from '@mui/base';
 
 interface SliderProps {
   from: number;
