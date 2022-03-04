@@ -1932,10 +1932,10 @@ dot-prop@^5.2.0:
   dependencies:
     is-obj "^2.0.0"
 
-dotenv@14.2.0:
-  version "14.2.0"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-14.2.0.tgz#7e77fd5dd6cff5942c4496e1acf2d0f37a9e67aa"
-  integrity sha512-05POuPJyPpO6jqzTNweQFfAyMSD4qa4lvsMOWyTRTdpHKy6nnnN+IYWaXF+lHivhBH/ufDKlR4IWCAN3oPnHuw==
+dotenv@16.0.0:
+  version "16.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.0.tgz#c619001253be89ebb638d027b609c75c26e47411"
+  integrity sha512-qD9WU0MPM4SWLPJy/r2Be+2WgQj8plChsyrCNQzW/0WjvcJQiKQJ9mH3ZgB3fxbUUxgc/11ZJ0Fi5KiimWGz2Q==
 
 dotenv@^8.2.0:
   version "8.6.0"
@@ -4839,10 +4839,10 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-typeorm-naming-strategies@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/typeorm-naming-strategies/-/typeorm-naming-strategies-2.0.0.tgz#c7c10bc768ddce2592ef9ad4d2dca55fd5fa6ad6"
-  integrity sha512-nsJ5jDjhBBEG6olFmxojkO4yrW7hEv38sH7ZXWWx9wnDoo9uaoH/mo2mBYAh/VKgwoFHBLu+CYxGmzXz2GUMcA==
+typeorm-naming-strategies@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/typeorm-naming-strategies/-/typeorm-naming-strategies-3.0.0.tgz#d709110a24bea464ce983a0b3e6e728e59ed88c1"
+  integrity sha512-N8unfoNa+TYzmH2G5hA2Uh2ZHDACRRshHv8GsB7l/oakcoA9cUTtdeNp24pjpb9HY96sBub2pb8wxXX1afT5RA==
 
 typeorm@0.2.45:
   version "0.2.45"
