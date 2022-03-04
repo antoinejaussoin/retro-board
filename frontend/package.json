@@ -54,7 +54,7 @@
     "react-ga": "3.3.0",
     "react-giphy-searchbox": "1.5.4",
     "react-helmet": "6.1.0",
-    "react-markdown": "8.0.0",
+    "react-markdown": "6.0.3",
     "react-password-strength-bar": "0.4.0",
     "react-router-dom": "5.3.0",
     "react-scripts": "5.0.0",

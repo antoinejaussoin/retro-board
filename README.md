@@ -89,6 +89,7 @@ This will run a demo version, which you can turn into a fully licenced version b
 - Changing naming convention for the database. All fields and tables are now `snake_case`.
 - Simplified the configuration of TypeORM, removed the generation of `ormconfig.json`.
 - Added Integration tests using Cypress to catch Docker-specific errors and have some basic smoke tests.
+- Upgrade to `react-scripts` (Create React App) 5.0.0
 - ⏫ Upgrading dependencies
 
 ### Version 4.11.5 (hotfix)
