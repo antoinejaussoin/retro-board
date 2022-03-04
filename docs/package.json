@@ -25,7 +25,9 @@
     "@types/react-toggle": "4.0.3",
     "clsx": "1.1.1",
     "file-loader": "6.2.0",
+    "node-fetch": "2.6.7",
     "prism-react-renderer": "1.2.1",
+    "prismjs": "1.27.0",
     "query-string": "7.1.1",
     "random-words": "1.1.2",
     "react": "17.0.2",
@@ -42,6 +44,10 @@
     "@types/react-helmet": "6.1.5",
     "@types/react-router-dom": "5.3.3",
     "typescript": "4.6.2"
+  },
+  "resolutions": {
+    "node-fetch": "2.6.7",
+    "prismjs": "1.27.0"
   },
   "browserslist": {
     "production": [

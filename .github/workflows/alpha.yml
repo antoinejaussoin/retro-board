@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [v4120/deps]
+    branches: [v4120/node-fetch]
 
 jobs:
   build:
