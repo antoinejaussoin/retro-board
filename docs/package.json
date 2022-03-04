@@ -47,7 +47,7 @@
     "typescript": "4.6.2"
   },
   "resolutions": {
-    "@docusaurus/preset-classic/**/node-fetch": "2.6.7",
+    "node-fetch": "2.6.7",
     "prismjs": "1.27.0",
     "trim": "0.0.3"
   },
