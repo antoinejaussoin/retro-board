@@ -90,6 +90,7 @@ This will run a demo version, which you can turn into a fully licenced version b
 - Simplified the configuration of TypeORM, removed the generation of `ormconfig.json`.
 - Added Integration tests using Cypress to catch Docker-specific errors and have some basic smoke tests.
 - Upgrade to `react-scripts` (Create React App) 5.0.0
+- Upgrade jQuery (for the marketing / home page), to 3.6.0 for security reasons
 - ⏫ Upgrading dependencies
 
 ### Version 4.11.5 (hotfix)
