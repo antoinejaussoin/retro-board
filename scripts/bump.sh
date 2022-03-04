@@ -1,7 +1,7 @@
 VERSION_TYPE="${1:-patch}"
 ORIG_DIR=$(pwd)
 
-declare -a arr=("frontend" "backend" "docs")
+declare -a arr=("frontend" "backend" "docs" "integration")
 
 npm config set git-tag-version false
 npm config set commit-hooks false
