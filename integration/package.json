@@ -7,8 +7,8 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "open": "cypress open ."
+    "test": "cypress run",
+    "open": "cypress open"
   },
   "author": "Antoine Jaussoin",
   "license": "ISC",

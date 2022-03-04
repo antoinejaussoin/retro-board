@@ -7,5 +7,5 @@ local:
 	docker-compose down
 	docker-compose up -d
 	yarn
-	yarn open
+	yarn test
 	docker-compose down
