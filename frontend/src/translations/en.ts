@@ -427,7 +427,8 @@ export default {
     unlimited_seats: 'Unlimited',
     month: 'month',
     year: 'year',
-    wantToPayYearly: 'I want to pay yearly, and get one month free per year!',
+    wantToPayYearly:
+      'I want to pay annually (every 12 months), and get one month free per year!',
   },
   Encryption: {
     createEncryptedSession: 'Encrypted Session',

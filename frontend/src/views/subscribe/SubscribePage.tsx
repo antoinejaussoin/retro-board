@@ -108,18 +108,10 @@ function SubscriberPage() {
 
   const validForm = (!needDomain || validDomain) && !!product && !needLogin;
 
-  return (
-    <Container>
-      <Header>Retrospected Pro</Header>
-      {user && user.pro && !user.subscriptionsId ? (
-        <Alert severity="info">{translations.alertAlreadyPro}</Alert>
-      ) : null}
-      {user && user.subscriptionsId && !user.trial ? (
-        <Alert severity="info">{translations.alertAlreadySubscribed}</Alert>
-      ) : null}
-
+  const steps = [
+    (index: number) => (
       <Step
-        index={1}
+        index={index}
         title={translations.plan.title}
         description={translations.plan.description}
       >
@@ -132,33 +124,41 @@ function SubscriberPage() {
         />
 
         <FormControlLabel
+          style={{ marginLeft: 16 }}
           control={
             <Switch
               checked={yearly}
               onChange={(evt) => setYearly(evt.target.checked)}
               name="yearly"
+              size="medium"
             />
           }
-          label={productsTranslations.wantToPayYearly!}
+          label={`🎁  ${productsTranslations.wantToPayYearly!}`}
         />
       </Step>
-      {needDomain ? (
-        <Step
-          index={2}
-          title={translations.domain.title}
-          description={translations.domain.description}
-        >
-          <Input
-            value={domain}
-            onChangeValue={setDomain}
-            error={!validDomain}
-            helperText={!validDomain ? translations.domain.invalidDomain : null}
-            required
-          />
-        </Step>
-      ) : null}
+    ),
+    needDomain
+      ? (index: number) => (
+          <Step
+            index={index}
+            title={translations.domain.title}
+            description={translations.domain.description}
+          >
+            <Input
+              value={domain}
+              onChangeValue={setDomain}
+              error={!validDomain}
+              helperText={
+                !validDomain ? translations.domain.invalidDomain : null
+              }
+              required
+            />
+          </Step>
+        )
+      : null,
+    (index: number) => (
       <Step
-        index={needDomain ? 3 : 2}
+        index={index}
         title={translations.currency.title}
         description={translations.currency.description}
       >
@@ -173,9 +173,10 @@ function SubscriberPage() {
           onChange={setCurrency}
         />
       </Step>
-
+    ),
+    (index: number) => (
       <Step
-        index={needDomain ? 4 : 3}
+        index={index}
         title={`${translations.subscribe.title} ${
           product ? ` - ${product.name}` : ''
         }`}
@@ -195,6 +196,22 @@ function SubscriberPage() {
           {translations.subscribe.checkout}
         </Button>
       </Step>
+    ),
+  ].filter(Boolean) as Array<(index: number) => JSX.Element>;
+
+  return (
+    <Container>
+      <Header>Retrospected Pro</Header>
+      {user && user.pro && !user.subscriptionsId ? (
+        <Alert severity="info">{translations.alertAlreadyPro}</Alert>
+      ) : null}
+      {user && user.subscriptionsId && !user.trial ? (
+        <Alert severity="info">{translations.alertAlreadySubscribed}</Alert>
+      ) : null}
+
+      {steps.map((step, index) => {
+        return step(index + 1);
+      })}
     </Container>
   );
 }
