@@ -9,9 +9,9 @@ export const teamPlan: InternalProduct = {
   priceId: config.STRIPE_TEAM_PRICE,
   recurring: true,
   seats: 20,
-  eur: 995,
-  gbp: 895,
-  usd: 995,
+  eur: 1190,
+  gbp: 990,
+  usd: 1290,
 };
 
 export const companyPlan: InternalProduct = {
@@ -35,7 +35,7 @@ export const selfHostedPlan: InternalProduct = {
   seats: null,
   eur: 59900,
   gbp: 49900,
-  usd: 59900,
+  usd: 64900,
   paymentsUrls: {
     eur: config.STRIPE_SELF_HOSTED_URL_EUR,
     gbp: config.STRIPE_SELF_HOSTED_URL_GBP,
