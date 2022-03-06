@@ -179,6 +179,7 @@ function stripeRouter(): Router {
 
   router.post('/create-checkout-session', csrfProtection, async (req, res) => {
     const payload = req.body as CreateSubscriptionPayload;
+    const { yearly, ...actualPayload } = payload;
     const identity = await getIdentityFromRequest(req);
     const product = getProduct(payload.plan);
 
@@ -194,7 +195,7 @@ function stripeRouter(): Router {
           client_reference_id: identity.user.id,
           customer: customerId,
           metadata: {
-            ...payload,
+            ...actualPayload,
           },
           line_items: [
             {
@@ -203,10 +204,10 @@ function stripeRouter(): Router {
                 product: product.productId,
                 currency: payload.currency,
                 recurring: {
-                  interval: 'month',
+                  interval: yearly ? 'year' : 'month',
                   interval_count: 1,
                 },
-                unit_amount: product[payload.currency],
+                unit_amount: product[payload.currency] * (yearly ? 11 : 1),
               },
             },
           ],

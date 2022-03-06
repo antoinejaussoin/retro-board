@@ -6,7 +6,7 @@ import { useCallback } from 'react';
 import styled from '@emotion/styled';
 import Step from './components/Step';
 import Button from '@mui/material/Button';
-import { colors } from '@mui/material';
+import { colors, FormControlLabel, Switch } from '@mui/material';
 import { Currency, FullUser, Plan } from 'common';
 import CurrencyPicker from './components/CurrencyPicker';
 import ProductPicker from './components/ProductPicker';
@@ -39,6 +39,7 @@ function SubscriberPage() {
     : 'team';
   const [currency, setCurrency] = useState<Currency>('eur');
   const [plan, setPlan] = useState<Plan | null>(defaultProduct);
+  const [yearly, setYearly] = useState(false);
   const product = useMemo(() => {
     if (!plan || !products) {
       return null;
@@ -47,7 +48,8 @@ function SubscriberPage() {
   }, [plan, products]);
   const [domain, setDomain] = useState<string>(DEFAULT_DOMAIN);
   const stripe = useStripe();
-  const { SubscribePage: translations } = useTranslations();
+  const { SubscribePage: translations, Products: productsTranslations } =
+    useTranslations();
   const language = useLanguage();
   const needDomain = product && product.plan === 'unlimited';
   const needLogin =
@@ -91,7 +93,8 @@ function SubscriberPage() {
           product.plan,
           currency,
           language.stripeLocale,
-          !product.seats ? domain : null
+          !product.seats ? domain : null,
+          yearly
         );
 
         if (session && stripe) {
@@ -101,7 +104,7 @@ function SubscriberPage() {
         }
       }
     }
-  }, [stripe, product, currency, domain, language]);
+  }, [stripe, product, currency, domain, language, yearly]);
 
   const validForm = (!needDomain || validDomain) && !!product && !needLogin;
 
@@ -124,7 +127,19 @@ function SubscriberPage() {
           value={plan}
           products={products}
           currency={currency}
+          yearly={yearly}
           onChange={setPlan}
+        />
+
+        <FormControlLabel
+          control={
+            <Switch
+              checked={yearly}
+              onChange={(evt) => setYearly(evt.target.checked)}
+              name="yearly"
+            />
+          }
+          label={productsTranslations.wantToPayYearly!}
         />
       </Step>
       {needDomain ? (

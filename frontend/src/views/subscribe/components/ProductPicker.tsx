@@ -8,6 +8,7 @@ interface ProductPickerProps {
   value: Plan | null;
   currency: Currency;
   products: Product[];
+  yearly: boolean;
   onChange: (value: Plan) => void;
 }
 
@@ -15,6 +16,7 @@ function ProductPicker({
   value,
   currency,
   products,
+  yearly,
   onChange,
 }: ProductPickerProps) {
   const handleChange = useCallback(
@@ -30,6 +32,7 @@ function ProductPicker({
           key={product.plan}
           product={product}
           currency={currency}
+          yearly={yearly}
           onSelect={handleChange}
           selected={value === product.plan}
         />

@@ -9,6 +9,7 @@ interface ProductDisplayProps {
   product: Product;
   currency: Currency;
   selected: boolean;
+  yearly: boolean;
   onSelect: (product: Product) => void;
 }
 
@@ -16,13 +17,20 @@ function ProductDisplay({
   product,
   selected,
   currency,
+  yearly,
   onSelect,
 }: ProductDisplayProps) {
   const { Products: translations, SubscribeModal: subscribeTranslations } =
     useTranslations();
+
   const handleOrder = useCallback(() => {
     onSelect(product);
   }, [onSelect, product]);
+
+  const price =
+    yearly && product.recurring
+      ? (product[currency] / 100) * 11
+      : product[currency] / 100;
 
   return (
     <Container onClick={handleOrder} selected={selected}>
@@ -36,9 +44,11 @@ function ProductDisplay({
         </Seats>
 
         <Total>
-          {(product[currency] / 100).toFixed(2)} {currency.toUpperCase()}
+          {price.toFixed(2)} {currency.toUpperCase()}
           {product.recurring ? (
-            <PerMonth>/ {translations.month}</PerMonth>
+            <PerMonth>
+              / {yearly ? translations.year : translations.month}
+            </PerMonth>
           ) : null}
         </Total>
         <PickMe>
