@@ -88,6 +88,7 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 - Adding the option of paying for Retrospected Pro annually, getting one month free in the process
 - Update prices, especially for USD
+- Make the integration tests less brittle by using specific attributes
 
 ### Version 4.12.0
 
