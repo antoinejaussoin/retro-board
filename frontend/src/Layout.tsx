@@ -128,6 +128,7 @@ function App() {
             aria-label="Menu"
             onClick={togglePanel}
             size="large"
+            data-cy="side-panel-toggle"
           >
             <MenuIcon />
           </IconButton>

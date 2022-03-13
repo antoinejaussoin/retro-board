@@ -29,7 +29,7 @@ function Panel() {
   const { opened, toggle } = useSidePanel();
 
   return (
-    <Drawer open={opened} onClose={toggle}>
+    <Drawer open={opened} onClose={toggle} data-cy="side-panel">
       <DrawerContent>
         <Top>
           <LanguagePicker

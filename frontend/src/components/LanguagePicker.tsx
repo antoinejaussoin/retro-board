@@ -20,9 +20,18 @@ const LanguagePicker = ({ value, onChange }: LanguagePickerProps) => {
     [onChange]
   );
   return (
-    <StyledSelect value={value} onChange={handleSelect} variant="standard">
+    <StyledSelect
+      value={value}
+      onChange={handleSelect}
+      variant="standard"
+      data-cy="language-picker"
+    >
       {languages.map((language) => (
-        <MenuItem value={language.value} key={language.value}>
+        <MenuItem
+          value={language.value}
+          key={language.value}
+          data-cy={`language-picker-item-${language.value}`}
+        >
           <LanguageItem>
             <Flag className={`fi fi-${language.iso}`}>
               <FlagOverlay />
