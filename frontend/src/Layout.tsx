@@ -19,6 +19,7 @@ import useSidePanel from './views/panel/useSidePanel';
 import { Alert, AlertTitle, Button, Hidden } from '@mui/material';
 import useBackendCapabilities from './global/useBackendCapabilities';
 import useIsPro from 'auth/useIsPro';
+import ProButton from 'components/ProButton';
 
 const Home = lazy(() => import('./views/Home' /* webpackChunkName: "home" */));
 const Game = lazy(() => import('./views/Game' /* webpackChunkName: "game" */));
@@ -149,13 +150,11 @@ function App() {
           {!isPro ? (
             <Hidden mdDown>
               <GoProContainer>
-                <Button
-                  onClick={() => history.push('/subscribe')}
-                  variant="contained"
-                  color="secondary"
-                >
-                  ⭐️ Go Pro!
-                </Button>
+                <ProButton>
+                  <Button variant="contained" color="secondary">
+                    ⭐️ Go Pro!
+                  </Button>
+                </ProButton>
               </GoProContainer>
             </Hidden>
           ) : null}

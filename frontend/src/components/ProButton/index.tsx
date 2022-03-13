@@ -47,8 +47,9 @@ function ProButton({ children, quota }: ProButtonProps) {
       e.preventDefault();
       trackEvent('trial/modal/subscribe');
       history.push('/subscribe');
+      close();
     },
-    [history]
+    [history, close]
   );
 
   const handleStartTrial = useCallback(
