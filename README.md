@@ -84,6 +84,11 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 4.13.0 (unreleased)
+
+- Adding the option of paying for Retrospected Pro annually, getting one month free in the process
+- Update prices, especially for USD
+
 ### Version 4.12.0
 
 - Changing naming convention for the database. All fields and tables are now `snake_case`.

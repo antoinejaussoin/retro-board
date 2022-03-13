@@ -16,8 +16,10 @@ import { HomeOutlined } from '@mui/icons-material';
 import ProPill from './components/ProPill';
 import { CodeSplitLoader } from './CodeSplitLoader';
 import useSidePanel from './views/panel/useSidePanel';
-import { Alert, AlertTitle } from '@mui/material';
+import { Alert, AlertTitle, Button, Hidden } from '@mui/material';
 import useBackendCapabilities from './global/useBackendCapabilities';
+import useIsPro from 'auth/useIsPro';
+import ProButton from 'components/ProButton';
 
 const Home = lazy(() => import('./views/Home' /* webpackChunkName: "home" */));
 const Game = lazy(() => import('./views/Game' /* webpackChunkName: "game" */));
@@ -90,6 +92,7 @@ function App() {
   const { toggle: togglePanel } = useSidePanel();
   const isInitialised = useIsInitialised();
   const user = useUser();
+  const isPro = useIsPro();
   const goToHome = useCallback(() => history.push('/'), [history]);
   useEffect(() => {
     trackPageView(window.location.pathname);
@@ -144,6 +147,18 @@ function App() {
           <ProPillContainer>
             <ProPill small />
           </ProPillContainer>
+          {!isPro ? (
+            <Hidden mdDown>
+              <GoProContainer>
+                <ProButton>
+                  <Button variant="contained" color="secondary">
+                    ⭐️ Go Pro!
+                  </Button>
+                </ProButton>
+              </GoProContainer>
+            </Hidden>
+          ) : null}
+          <Spacer />
           <Route path="/game/:gameId" component={Invite} />
           {isInitialised ? (
             <AccountMenu />
@@ -193,10 +208,16 @@ const HomeButton = styled.div`
   margin-right: 10px;
 `;
 
-const ProPillContainer = styled.div`
-  flex: 1;
+const ProPillContainer = styled.div``;
+
+const GoProContainer = styled.div`
+  margin-left: 20px;
 `;
 
 const Initialising = styled.div``;
+
+const Spacer = styled.div`
+  flex: 1;
+`;
 
 export default App;

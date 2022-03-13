@@ -360,6 +360,8 @@ export interface Translation {
     users?: (users: number) => string;
     unlimited_seats?: string;
     month?: string;
+    year?: string;
+    wantToPayYearly?: string;
   };
   Encryption: {
     createEncryptedSession?: string;

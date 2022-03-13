@@ -370,6 +370,8 @@ export default {
     users: undefined,
     unlimited_seats: undefined,
     month: undefined,
+    year: undefined,
+    wantToPayYearly: undefined,
   },
   Encryption: {
     createEncryptedSession: undefined,

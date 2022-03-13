@@ -36,6 +36,7 @@ export interface CreateSubscriptionPayload {
   currency: Currency;
   locale: StripeLocales;
   domain: string | null;
+  yearly: boolean;
 }
 
 export interface CreateSessionPayload {

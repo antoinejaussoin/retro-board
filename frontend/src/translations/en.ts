@@ -426,6 +426,9 @@ export default {
     users: (users: number) => `${users} users`,
     unlimited_seats: 'Unlimited',
     month: 'month',
+    year: 'year',
+    wantToPayYearly:
+      'I want to pay annually (every 12 months), and get one month free per year!',
   },
   Encryption: {
     createEncryptedSession: 'Encrypted Session',
