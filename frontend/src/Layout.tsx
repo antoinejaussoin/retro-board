@@ -93,6 +93,7 @@ function App() {
   const isInitialised = useIsInitialised();
   const user = useUser();
   const isPro = useIsPro();
+  const displayGoPro = !isPro && user && user.accountType !== 'anonymous';
   const goToHome = useCallback(() => history.push('/'), [history]);
   useEffect(() => {
     trackPageView(window.location.pathname);
@@ -148,7 +149,7 @@ function App() {
           <ProPillContainer>
             <ProPill small />
           </ProPillContainer>
-          {!isPro ? (
+          {displayGoPro ? (
             <Hidden mdDown>
               <GoProContainer>
                 <ProButton>

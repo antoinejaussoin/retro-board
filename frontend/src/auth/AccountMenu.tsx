@@ -89,7 +89,7 @@ const AccountMenu = () => {
                 <ListItemText>{translations.Header.account}</ListItemText>
               </MenuItem>
             ) : null}
-            <Divider />
+            {user && user.accountType !== 'anonymous' ? <Divider /> : null}
             <MenuItem onClick={handleLogout}>
               <ListItemIcon>
                 <Logout />
