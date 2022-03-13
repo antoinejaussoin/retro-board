@@ -93,6 +93,7 @@ function Home() {
               size="large"
               color="secondary"
               disabled={!isLoggedIn}
+              data-cy="new-session-button"
             >
               <ThumbUpAlt className={classes.buttonIcon} />
               {translations.Join.standardTab.button}

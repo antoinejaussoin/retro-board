@@ -52,6 +52,7 @@ const AnonAuth = ({ onClose, onUser }: AnonAuthProps) => {
           color="primary"
           autoFocus
           disabled={!username.trim().length}
+          data-cy="anon-login-button"
         >
           {loginTranslations.buttonLabel}
         </Button>
@@ -72,6 +73,7 @@ const AnonAuth = ({ onClose, onUser }: AnonAuthProps) => {
         placeholder={loginTranslations.namePlaceholder}
         fullWidth
         style={{ marginTop: 20 }}
+        data-cy="anon-input"
       />
     </Wrapper>
   );

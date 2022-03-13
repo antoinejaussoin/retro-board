@@ -53,12 +53,21 @@ const Login = ({ onClose }: LoginModalProps) => {
           aria-label="Login types"
         >
           {!hasNoSocialMediaAuth ? (
-            <Tab label={translations.SocialMediaLogin.header} value="social" />
+            <Tab
+              label={translations.SocialMediaLogin.header}
+              value="social"
+              data-cy="social-tab"
+            />
           ) : null}
-          <Tab label={translations.AccountLogin.header} value="account" />
+          <Tab
+            label={translations.AccountLogin.header}
+            value="account"
+            data-cy="account-tab"
+          />
           <Tab
             label={translations.AnonymousLogin.anonymousAuthHeader}
             value="anon"
+            data-cy="anon-tab"
           />
         </Tabs>
       </AppBar>
