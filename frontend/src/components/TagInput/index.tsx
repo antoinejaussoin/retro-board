@@ -23,8 +23,8 @@ export default function TagInput({
 }: TagInputProps) {
   return (
     <Container>
-      {values.map((v) => (
-        <Tag value={v} onDelete={onRemove} />
+      {values.map((v, i) => (
+        <Tag key={i} value={v} onDelete={onRemove} />
       ))}
       <NewTag
         onAdd={onAdd}

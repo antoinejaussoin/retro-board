@@ -5,6 +5,10 @@ import App from './App';
 import { initialiseAnalytics, initialiseSentry } from './track';
 import * as serviceWorker from './serviceWorker';
 
+(window as any).global = window;
+// @ts-ignore
+window.Buffer = window.Buffer || require('buffer').Buffer;
+
 initialiseSentry();
 initialiseAnalytics();
 ReactDOM.render(<App />, document.getElementById('content'));
