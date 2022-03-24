@@ -179,7 +179,6 @@ function App() {
           <Route path="/" exact>
             {user ? <Home /> : null}
           </Route>
-          <Redirect from="/session/:gameId" to="/game/:gameId" />
           <Route path="/game/:gameId">
             <Game />
           </Route>
