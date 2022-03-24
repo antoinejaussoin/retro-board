@@ -6,6 +6,7 @@ import {
   useRouteMatch,
   useLocation,
   useHistory,
+  Switch,
 } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -152,10 +153,8 @@ function GamePage() {
         </AppBarContent>
       </AppBar>
       <AckWarning acks={acks} onRefresh={reconnect} />
-      <Route
-        path={`${match.url}`}
-        exact
-        render={() => (
+      <Switch>
+        <Route path={`${match.url}`} exact>
           <Board
             columns={columns}
             options={session.options}
@@ -175,14 +174,13 @@ function GamePage() {
             onSaveTemplate={onSaveTemplate}
             onLockSession={onLockSession}
           />
-        )}
-      />
-      {!session.options.blurCards ? (
-        <Route
-          path={`${match.url}/summary`}
-          render={() => <SummaryMode columns={columns} search={search} />}
-        />
-      ) : null}
+        </Route>
+        {!session.options.blurCards ? (
+          <Route path={`${match.url}/summary`}>
+            <SummaryMode columns={columns} search={search} />
+          </Route>
+        ) : null}
+      </Switch>
       <ParticipantContainer>
         <GameFooter
           onReady={onUserReady}

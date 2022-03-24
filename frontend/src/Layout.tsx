@@ -161,7 +161,12 @@ function App() {
             </Hidden>
           ) : null}
           <Spacer />
-          <Route path="/game/:gameId" component={Invite} />
+          <Switch>
+            <Route path="/game/:gameId">
+              <Invite />
+            </Route>
+          </Switch>
+
           {isInitialised ? (
             <AccountMenu />
           ) : (
@@ -175,21 +180,51 @@ function App() {
             {user ? <Home /> : null}
           </Route>
           <Redirect from="/session/:gameId" to="/game/:gameId" />
-          <Route path="/game/:gameId" component={Game} />
-          <Route path="/validate" component={ValidatePage} />
-          <Route path="/reset" component={ResetPasswordPage} />
-          <Route path="/account" component={AccountPage} />
-          <Route path="/login" component={LoginPage} />
-          <Route path="/subscribe" component={SubscribePageOuter} exact />
-          <Route path="/subscribe/success" component={SuccessPage} exact />
-          <Route path="/subscribe/cancel" component={CancelPage} exact />
-          <Route path="/admin" component={AdminPage} />
-          <Route path="/privacy" component={PrivacyPolicyPage} />
-          <Route path="/terms" component={TermsAndConditionsPage} />
-          <Route path="/cookies" component={CookiesPolicyPage} />
-          <Route path="/acceptable-use" component={AcceptableUsePolicyPage} />
-          <Route path="/disclaimer" component={DisclaimerPage} />
-          <Route path="/how-does-encryption-work" component={EncryptionDoc} />
+          <Route path="/game/:gameId">
+            <Game />
+          </Route>
+          <Route path="/validate">
+            <ValidatePage />
+          </Route>
+          <Route path="/reset">
+            <ResetPasswordPage />
+          </Route>
+          <Route path="/account">
+            <AccountPage />
+          </Route>
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+          <Route path="/subscribe" exact>
+            <SubscribePageOuter />
+          </Route>
+          <Route path="/subscribe/success" exact>
+            <SuccessPage />
+          </Route>
+          <Route path="/subscribe/cancel" exact>
+            <CancelPage />
+          </Route>
+          <Route path="/admin">
+            <AdminPage />
+          </Route>
+          <Route path="/privacy">
+            <PrivacyPolicyPage />
+          </Route>
+          <Route path="/terms">
+            <TermsAndConditionsPage />
+          </Route>
+          <Route path="/cookies">
+            <CookiesPolicyPage />
+          </Route>
+          <Route path="/acceptable-use">
+            <AcceptableUsePolicyPage />
+          </Route>
+          <Route path="/disclaimer">
+            <DisclaimerPage />
+          </Route>
+          <Route path="/how-does-encryption-work">
+            <EncryptionDoc />
+          </Route>
         </Switch>
       </Suspense>
       <Panel />
