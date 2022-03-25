@@ -11,7 +11,7 @@ import SocialAuth from './SocialAuth';
 import AnonAuth from './AnonAuth';
 import AccountAuth from './AccountAuth';
 import useOAuthAvailabilities from '../../global/useOAuthAvailabilities';
-import useBackendCapabilities from 'global/useBackendCapabilities';
+import useBackendCapabilities from '../../global/useBackendCapabilities';
 
 interface LoginModalProps {
   onClose: () => void;
