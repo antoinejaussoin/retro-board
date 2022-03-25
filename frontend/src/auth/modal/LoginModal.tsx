@@ -11,6 +11,7 @@ import SocialAuth from './SocialAuth';
 import AnonAuth from './AnonAuth';
 import AccountAuth from './AccountAuth';
 import useOAuthAvailabilities from '../../global/useOAuthAvailabilities';
+import useBackendCapabilities from 'global/useBackendCapabilities';
 
 interface LoginModalProps {
   onClose: () => void;
@@ -18,6 +19,7 @@ interface LoginModalProps {
 
 const Login = ({ onClose }: LoginModalProps) => {
   const { any } = useOAuthAvailabilities();
+  const { disableAnonymous } = useBackendCapabilities();
   const hasNoSocialMediaAuth = !any;
   const translations = useTranslations();
   const fullScreen = useMediaQuery('(max-width:600px)');
@@ -64,11 +66,13 @@ const Login = ({ onClose }: LoginModalProps) => {
             value="account"
             data-cy="account-tab"
           />
-          <Tab
-            label={translations.AnonymousLogin.anonymousAuthHeader}
-            value="anon"
-            data-cy="anon-tab"
-          />
+          {!disableAnonymous ? (
+            <Tab
+              label={translations.AnonymousLogin.anonymousAuthHeader}
+              value="anon"
+              data-cy="anon-tab"
+            />
+          ) : null}
         </Tabs>
       </AppBar>
       <DialogContent>
