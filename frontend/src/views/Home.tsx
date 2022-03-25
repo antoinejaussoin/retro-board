@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 import Fab from '@mui/material/Fab';
 import { makeStyles } from '@mui/styles';
-import { Button, colors } from '@mui/material';
+import { colors } from '@mui/material';
 import { Lock, ThumbUpAlt } from '@mui/icons-material';
 import useTranslations from '../translations';
 import PreviousGames from './home/PreviousGames';
@@ -114,13 +114,6 @@ function Home() {
               </Fab>
             </ProButton>
           </HowDoesItWorkButton>
-          <Button
-            onClick={() => {
-              throw Error('Aie aie aie');
-            }}
-          >
-            Crash
-          </Button>
         </LaunchButtons>
 
         {hasPreviousSessions ? (

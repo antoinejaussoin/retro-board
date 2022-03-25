@@ -245,7 +245,7 @@ const Add = styled.div`
   align-items: center;
   margin-bottom: 20px;
 
-  > :first-child {
+  > :first-of-type {
     flex: 1;
     input {
       width: 100%;

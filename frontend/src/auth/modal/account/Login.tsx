@@ -105,13 +105,13 @@ const Login = ({
 
 const Links = styled.div`
   display: flex;
-  > :first-child {
+  > :first-of-type {
     margin-right: 20px;
   }
 
   @media (max-width: 400px) {
     flex-direction: column;
-    > :first-child {
+    > :first-of-type {
       margin-right: 0px;
       margin-bottom: 5px;
     }

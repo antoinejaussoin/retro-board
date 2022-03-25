@@ -57,6 +57,7 @@ function GameFooter({ onReady, onMessage, messages }: GameFooterProps) {
           .map((user) => {
             return (
               <Badge
+                key={user.id}
                 overlap="circular"
                 anchorOrigin={{
                   vertical: 'bottom',
@@ -114,7 +115,7 @@ function GameFooter({ onReady, onMessage, messages }: GameFooterProps) {
 const Container = styled.div`
   display: flex;
   gap: 10px;
-  > :first-child {
+  > div:first-of-type {
     flex: 1;
   }
 `;

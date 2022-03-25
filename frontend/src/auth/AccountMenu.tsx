@@ -122,7 +122,7 @@ const AvatarContainer = styled.div`
   align-items: center;
   cursor: pointer;
 
-  > *:first-child {
+  > :first-of-type {
     margin-right: 10px;
   }
 `;
