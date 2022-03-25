@@ -12,14 +12,14 @@ export default function HowDoesItWorkButton({
   children,
   url,
 }: HowDoesItWorkButtonProps) {
-  const history = useNavigate();
+  const navigate = useNavigate();
   return (
     <Container>
       {children}
 
       <LinkContainer>
         <Info />
-        <GoLink onClick={() => history(url)}>How does that work?</GoLink>
+        <GoLink onClick={() => navigate(url)}>How does that work?</GoLink>
       </LinkContainer>
     </Container>
   );

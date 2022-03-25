@@ -9,7 +9,7 @@ import useTranslations from '../translations';
 
 function ValidatePage() {
   const { setUser } = useContext(UserContext);
-  const history = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const { ValidateAccount: translations } = useTranslations();
   const params = new URLSearchParams(location.search);
@@ -28,7 +28,7 @@ function ValidatePage() {
         if (result) {
           setTimeout(() => {
             setUser(result);
-            history('/');
+            navigate('/');
           }, 2000);
         }
       } else {
@@ -37,7 +37,7 @@ function ValidatePage() {
       }
     }
     verify();
-  }, [email, code, history, setUser]);
+  }, [email, code, navigate, setUser]);
 
   return (
     <div style={{ margin: 50 }}>

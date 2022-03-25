@@ -1,5 +1,5 @@
 import { useEffect, useCallback, lazy, Suspense } from 'react';
-import { useNavigate, Routes, Route } from 'react-router-dom';
+import { useNavigate, Routes, Route, useLocation } from 'react-router-dom';
 import { trackPageView } from './track';
 import styled from '@emotion/styled';
 import AppBar from '@mui/material/AppBar';
@@ -86,7 +86,7 @@ const Title = styled(Typography)`
 `;
 
 function App() {
-  const history = useNavigate();
+  const navigate = useNavigate();
   const backend = useBackendCapabilities();
   const isCompatible = useIsCompatibleBrowser();
   const { toggle: togglePanel } = useSidePanel();
@@ -94,17 +94,14 @@ function App() {
   const user = useUser();
   const isPro = useIsPro();
   const displayGoPro = !isPro && user && user.accountType !== 'anonymous';
-  const goToHome = useCallback(() => history('/'), [history]);
+  const goToHome = useCallback(() => navigate('/'), [navigate]);
+  const location = useLocation();
+
+  // Tracks page views on every location change
   useEffect(() => {
-    trackPageView(window.location.pathname);
-    // TODO REIMPLEMENT
-    // const unregister = history.listen((location) => {
-    //   trackPageView(location.pathname);
-    // });
-    // return () => {
-    //   unregister();
-    // };
-  }, [history]);
+    trackPageView(location.pathname);
+  }, [location.pathname]);
+
   return (
     <div>
       {!backend.licenced ? (
@@ -163,7 +160,7 @@ function App() {
           ) : null}
           <Spacer />
           <Routes>
-            <Route path="game/:gameId" element={<Invite />} />
+            <Route path="game/:gameId/*" element={<Invite />} />
           </Routes>
 
           {isInitialised ? (
@@ -175,7 +172,7 @@ function App() {
       </AppBar>
       <Suspense fallback={<CodeSplitLoader />}>
         <Routes>
-          <Route index element={<Home />} />
+          <Route path="/" element={user ? <Home /> : null} />
           <Route path="game/:gameId/*" element={<Game />} />
           <Route path="validate" element={<ValidatePage />} />
           <Route path="reset" element={<ResetPasswordPage />} />

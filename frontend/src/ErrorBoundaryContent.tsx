@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 type ErrorBoundaryContentProps = {
   onHistoryChange: () => void;
@@ -11,19 +11,15 @@ type ErrorBoundaryContentProps = {
 export default function ErrorBoundaryContent({
   onHistoryChange,
 }: ErrorBoundaryContentProps) {
-  const history = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [initialLocation] = useState(location.pathname);
 
   useEffect(() => {
-    // TODO : REIMPLEMENT
-    // const unregisterHistoryListener = history.listen(() => {
-    //   onHistoryChange();
-    // });
-    // return () => {
-    //   if (unregisterHistoryListener) {
-    //     unregisterHistoryListener();
-    //   }
-    // };
-  }, [onHistoryChange, history]);
+    if (location.pathname !== initialLocation) {
+      onHistoryChange();
+    }
+  }, [location.pathname, initialLocation, onHistoryChange]);
 
   return (
     <Container>
@@ -34,7 +30,7 @@ export default function ErrorBoundaryContent({
           ASAP.
         </Typography>
         <Buttons>
-          <Button onClick={() => history('/')} color="primary">
+          <Button onClick={() => navigate('/')} color="primary">
             Home Page
           </Button>
           <Button onClick={() => window.location.reload()} color="secondary">

@@ -37,6 +37,7 @@ interface SectionProps {
 
 const Section = ({ stats, search }: SectionProps) => {
   const { SummaryBoard: translations } = useTranslation();
+
   return (
     <Box marginBottom={2} role="list">
       <Card>

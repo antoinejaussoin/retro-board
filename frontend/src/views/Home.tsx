@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 import Fab from '@mui/material/Fab';
 import { makeStyles } from '@mui/styles';
-import { colors } from '@mui/material';
+import { Button, colors } from '@mui/material';
 import { Lock, ThumbUpAlt } from '@mui/icons-material';
 import useTranslations from '../translations';
 import PreviousGames from './home/PreviousGames';
@@ -35,7 +35,7 @@ const useStyles = makeStyles({
 });
 
 function Home() {
-  const history = useNavigate();
+  const navigate = useNavigate();
   const user = useUser();
   const isLoggedIn = !!user;
   const translations = useTranslations();
@@ -48,13 +48,13 @@ function Home() {
     const session = await createGame();
     if (session) {
       trackEvent('home/create/default');
-      history('/game/' + session.id);
+      navigate('/game/' + session.id);
     } else {
       enqueueSnackbar('Something went wrong when creating the session', {
         variant: 'error',
       });
     }
-  }, [history, enqueueSnackbar]);
+  }, [navigate, enqueueSnackbar]);
 
   const createEncryptedSession = useCallback(async () => {
     const key = shortid();
@@ -62,14 +62,14 @@ function Home() {
     if (session) {
       storeEncryptionKeyLocally(session.id, key);
       trackEvent('home/create/encrypted');
-      history(`/game/${session.id}#${key}`);
+      navigate(`/game/${session.id}#${key}`);
     } else {
       enqueueSnackbar(
         'Something went wrong when creating the encrypted session',
         { variant: 'error' }
       );
     }
-  }, [history, enqueueSnackbar]);
+  }, [navigate, enqueueSnackbar]);
 
   const handleDeleteSession = useCallback(
     async (session: SessionMetadata) => {
@@ -114,6 +114,13 @@ function Home() {
               </Fab>
             </ProButton>
           </HowDoesItWorkButton>
+          <Button
+            onClick={() => {
+              throw Error('Aie aie aie');
+            }}
+          >
+            Crash
+          </Button>
         </LaunchButtons>
 
         {hasPreviousSessions ? (

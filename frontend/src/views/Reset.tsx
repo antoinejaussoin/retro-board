@@ -18,7 +18,7 @@ const PasswordStrength = lazy(
 
 function ResetPasswordPage() {
   const { setUser } = useContext(UserContext);
-  const history = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const { ResetPassword: translations, AuthCommon: authTranslations } =
     useTranslations();
@@ -41,14 +41,14 @@ function ResetPasswordPage() {
       if (user) {
         setTimeout(() => {
           setUser(user);
-          history('/');
+          navigate('/');
         }, 2000);
       }
     } else {
       setLoading(false);
       setSuccess(false);
     }
-  }, [email, code, history, password, setUser]);
+  }, [email, code, navigate, password, setUser]);
 
   return (
     <div style={{ margin: 50 }}>

@@ -17,7 +17,7 @@ function EncryptionModal() {
   const [password, setPassword] = useState('');
   const { session } = useSession();
   const storeKey = useEncryptionKey()[1];
-  const history = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const { Encryption: translations } = useTranslation();
   const isCorrectPassword = useMemo(() => {
@@ -35,9 +35,9 @@ function EncryptionModal() {
   useEffect(() => {
     if (isCorrectPassword) {
       storeKey(password);
-      history(location.pathname + '#' + password);
+      navigate(location.pathname + '#' + password);
     }
-  }, [isCorrectPassword, password, storeKey, location, history]);
+  }, [isCorrectPassword, password, storeKey, location, navigate]);
   return (
     <Dialog open>
       <DialogTitle>{translations.passwordModalTitle}</DialogTitle>

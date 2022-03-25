@@ -21,7 +21,7 @@ const AccountMenu = () => {
   const [modalOpened, setModalOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuAnchor = useRef<HTMLDivElement>(null);
-  const history = useNavigate();
+  const navigate = useNavigate();
   const closeMenu = useCallback(() => setMenuOpen(false), []);
   const openMenu = useCallback(() => setMenuOpen(true), []);
 
@@ -44,14 +44,14 @@ const AccountMenu = () => {
   }, [setUser]);
 
   const handleAccount = useCallback(() => {
-    history('/account');
+    navigate('/account');
     setMenuOpen(false);
-  }, [history]);
+  }, [navigate]);
 
   const handleSubscribe = useCallback(() => {
-    history('/subscribe');
+    navigate('/subscribe');
     setMenuOpen(false);
-  }, [history]);
+  }, [navigate]);
 
   const user = useUser();
   if (user) {

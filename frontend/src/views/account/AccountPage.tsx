@@ -20,7 +20,7 @@ function AccountPage() {
   const user = useUser();
   const isTrial = useIsTrial();
   const formatDistanceToNow = useFormatDate();
-  const history = useNavigate();
+  const navigate = useNavigate();
   const { AccountPage: translations, SubscribePage: subscribeTranslations } =
     useTranslations();
   const [deleteModalOpen, handleDeleteModalOpen, handleDeleteModalClose] =
@@ -123,7 +123,7 @@ function AccountPage() {
               variant="contained"
               color="secondary"
               style={{ marginTop: 20 }}
-              onClick={() => history('/subscribe')}
+              onClick={() => navigate('/subscribe')}
             >
               {translations.trial.subscribe}
             </Button>

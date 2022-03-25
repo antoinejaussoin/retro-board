@@ -11,13 +11,15 @@ interface PreviousGamesProps {
 }
 
 const PreviousGames = ({ games, onDelete }: PreviousGamesProps) => {
-  const history = useNavigate();
+  const navigate = useNavigate();
   const redirectToGame = useCallback(
     (session: SessionMetadata, encryptionKey: string | null) => {
       trackEvent('home/load-previous');
-      history(`/game/${session.id}${encryptionKey ? '#' + encryptionKey : ''}`);
+      navigate(
+        `/game/${session.id}${encryptionKey ? '#' + encryptionKey : ''}`
+      );
     },
-    [history]
+    [navigate]
   );
 
   return (

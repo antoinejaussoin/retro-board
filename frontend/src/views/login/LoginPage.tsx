@@ -4,10 +4,10 @@ import styled from '@emotion/styled';
 import Login from '../../auth/modal/LoginModal';
 
 export default function LoginPage() {
-  const history = useNavigate();
+  const navigate = useNavigate();
   const handleClose = useCallback(() => {
-    history('/');
-  }, [history]);
+    navigate('/');
+  }, [navigate]);
   return (
     <Container>
       <Login onClose={handleClose} />
