@@ -30,6 +30,7 @@ import {
 } from './types';
 import { registerUser, UserRegistration } from '../db/actions/users';
 import { serialiseIds, UserIds, deserialiseIds } from '../utils';
+import config from '../config';
 
 export default () => {
   passport.serializeUser<string>((user, cb) => {
@@ -242,7 +243,13 @@ export default () => {
           username.startsWith('ANONUSER__') &&
           username.endsWith('__ANONUSER')
         ) {
-          // Anonymouns login
+          // Anonymous login
+
+          // Checking if they are allowed in the first place
+          if (config.DISABLE_ANONYMOUS_LOGIN) {
+            return done('Anonymous accounts are disabled', undefined);
+          }
+
           const actualUsername = username
             .replace('ANONUSER__', '')
             .replace('__ANONUSER', '');
