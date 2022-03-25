@@ -4,7 +4,7 @@ import values from 'lodash/values';
 import { render, fireEvent } from '../../../../../testing';
 import PostItem from '../Post';
 import { Post, User, VoteExtract, VoteType } from 'common';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import theme from '../../../../../Theme';
 import { SnackbarProvider } from 'notistack';
@@ -20,7 +20,9 @@ const renderWithRouter = (children: React.ReactNode) =>
     <SnackbarProvider>
       <ThemeProvider theme={theme}>
         <MemoryRouter initialEntries={['/']}>
-          <Route path="/">{children}</Route>
+          <Routes>
+            <Route path="/" element={children} />
+          </Routes>
         </MemoryRouter>
       </ThemeProvider>
     </SnackbarProvider>

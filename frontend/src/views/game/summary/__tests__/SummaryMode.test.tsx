@@ -3,7 +3,7 @@ import { render, getAllByRole } from '../../../../testing';
 import SummaryMode from '../SummaryMode';
 import { ColumnContent } from '../../types';
 import { Post } from 'common';
-import { Route, MemoryRouter } from 'react-router-dom';
+import { Route, MemoryRouter, Routes } from 'react-router-dom';
 import { SnackbarProvider } from 'notistack';
 import { ThemeProvider } from '@emotion/react';
 import theme from '../../../../Theme';
@@ -13,7 +13,9 @@ const renderWithRouter = (children: React.ReactNode) =>
     <SnackbarProvider>
       <ThemeProvider theme={theme}>
         <MemoryRouter initialEntries={['/']}>
-          <Route path="/">{children}</Route>
+          <Routes>
+            <Route path="/" element={children} />
+          </Routes>
         </MemoryRouter>
       </ThemeProvider>
     </SnackbarProvider>
