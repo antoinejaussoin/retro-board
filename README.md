@@ -32,6 +32,7 @@ It features the following technologies:
 - [Recoil.js](https://recoiljs.org), as the global state management library
 - [Socket IO](http://socket.io)
 - [Webpack 5](https://github.com/webpack/webpack) (See older versions for Webpack 1, 2 and 3)
+- [Create React App 5](https://create-react-app.dev/docs/getting-started/)
 - [MUI 5](https://mui.com) for our components (previously known as Material-UI)
 - [Material UI design](https://www.google.com/design/spec/material-design/introduction.html)
 - [Emotion](https://emotion.sh/docs/introduction)
@@ -84,7 +85,7 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
-### Version 4.13.0 (unreleased)
+### Version 4.13.0
 
 - Adding the option of paying for Retrospected Pro annually, getting one month free in the process
 - Update prices, especially for USD
