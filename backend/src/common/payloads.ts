@@ -57,6 +57,7 @@ export interface BackendCapabilities {
   adminEmail: string;
   licenced: boolean;
   oAuth: OAuthAvailabilities;
+  disableAnonymous: boolean;
 }
 
 export interface OAuthAvailabilities {

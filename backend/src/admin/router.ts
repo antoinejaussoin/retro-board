@@ -24,6 +24,7 @@ router.get('/self-hosting', async (_, res) => {
       !!config.SENDGRID_RESET_PASSWORD_TID &&
       !!config.SENDGRID_VERIFICATION_EMAIL_TID &&
       !!config.SENDGRID_SENDER,
+    disableAnonymous: config.DISABLE_ANONYMOUS_LOGIN,
     oAuth: {
       google: !!config.GOOGLE_KEY && !!config.GOOGLE_SECRET,
       github: !!config.GITHUB_KEY && !!config.GITHUB_SECRET,
