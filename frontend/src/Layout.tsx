@@ -1,5 +1,11 @@
 import { useEffect, useCallback, lazy, Suspense } from 'react';
-import { useNavigate, Routes, Route, useLocation } from 'react-router-dom';
+import {
+  useNavigate,
+  Routes,
+  Route,
+  useLocation,
+  useMatch,
+} from 'react-router-dom';
 import { trackPageView } from './track';
 import styled from '@emotion/styled';
 import AppBar from '@mui/material/AppBar';
@@ -96,6 +102,7 @@ function App() {
   const displayGoPro = !isPro && user && user.accountType !== 'anonymous';
   const goToHome = useCallback(() => navigate('/'), [navigate]);
   const location = useLocation();
+  const isOnGamePage = !!useMatch('game/:gameId/*');
 
   // Tracks page views on every location change
   useEffect(() => {
@@ -159,10 +166,7 @@ function App() {
             </Hidden>
           ) : null}
           <Spacer />
-          <Routes>
-            <Route path="game/:gameId/*" element={<Invite />} />
-          </Routes>
-
+          {isOnGamePage ? <Invite /> : null}
           {isInitialised ? (
             <AccountMenu />
           ) : (
