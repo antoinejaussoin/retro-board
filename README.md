@@ -90,6 +90,7 @@ This will run a demo version, which you can turn into a fully licenced version b
 - Update prices, especially for USD
 - Make the integration tests less brittle by using specific attributes
 - Upgrade (finally!) to React-Router v6.
+- Self-Hosting: Allow an administrator to disable Anonymous Logins (to force users to use regular accounts).
 
 ### Version 4.12.1 (hotfix)
 
