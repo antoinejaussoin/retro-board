@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import styled from '@emotion/styled';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Fab from '@mui/material/Fab';
 import { makeStyles } from '@mui/styles';
 import { colors } from '@mui/material';
@@ -35,7 +35,7 @@ const useStyles = makeStyles({
 });
 
 function Home() {
-  const history = useHistory();
+  const history = useNavigate();
   const user = useUser();
   const isLoggedIn = !!user;
   const translations = useTranslations();
@@ -48,7 +48,7 @@ function Home() {
     const session = await createGame();
     if (session) {
       trackEvent('home/create/default');
-      history.push('/game/' + session.id);
+      history('/game/' + session.id);
     } else {
       enqueueSnackbar('Something went wrong when creating the session', {
         variant: 'error',
@@ -62,7 +62,7 @@ function Home() {
     if (session) {
       storeEncryptionKeyLocally(session.id, key);
       trackEvent('home/create/encrypted');
-      history.push(`/game/${session.id}#${key}`);
+      history(`/game/${session.id}#${key}`);
     } else {
       enqueueSnackbar(
         'Something went wrong when creating the encrypted session',

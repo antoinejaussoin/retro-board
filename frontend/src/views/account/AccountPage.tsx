@@ -8,7 +8,7 @@ import { Alert } from '@mui/material';
 import Section from './Section';
 import MembersEditor from './MembersEditor';
 import useTranslations from '../../translations';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useIsTrial from '../../auth/useIsTrial';
 import TrialPrompt from '../home/TrialPrompt';
 import useFormatDate from '../../hooks/useFormatDate';
@@ -20,7 +20,7 @@ function AccountPage() {
   const user = useUser();
   const isTrial = useIsTrial();
   const formatDistanceToNow = useFormatDate();
-  const history = useHistory();
+  const history = useNavigate();
   const { AccountPage: translations, SubscribePage: subscribeTranslations } =
     useTranslations();
   const [deleteModalOpen, handleDeleteModalOpen, handleDeleteModalClose] =
@@ -123,7 +123,7 @@ function AccountPage() {
               variant="contained"
               color="secondary"
               style={{ marginTop: 20 }}
-              onClick={() => history.push('/subscribe')}
+              onClick={() => history('/subscribe')}
             >
               {translations.trial.subscribe}
             </Button>

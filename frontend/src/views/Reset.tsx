@@ -1,5 +1,5 @@
 import { useState, useCallback, Suspense, lazy } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { resetChangePassword } from '../api';
 import { Alert } from '@mui/material';
 import { useContext } from 'react';
@@ -18,12 +18,10 @@ const PasswordStrength = lazy(
 
 function ResetPasswordPage() {
   const { setUser } = useContext(UserContext);
-  const history = useHistory();
+  const history = useNavigate();
   const location = useLocation();
-  const {
-    ResetPassword: translations,
-    AuthCommon: authTranslations,
-  } = useTranslations();
+  const { ResetPassword: translations, AuthCommon: authTranslations } =
+    useTranslations();
   const params = new URLSearchParams(location.search);
   const email = params.get('email');
   const code = params.get('code');
@@ -43,7 +41,7 @@ function ResetPasswordPage() {
       if (user) {
         setTimeout(() => {
           setUser(user);
-          history.push('/');
+          history('/');
         }, 2000);
       }
     } else {

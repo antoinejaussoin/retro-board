@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import styled from '@emotion/styled';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import PreviousGameItem from './game-item/PreviousGameItem';
 import { SessionMetadata } from 'common';
 import { trackEvent } from '../../track';
@@ -11,13 +11,11 @@ interface PreviousGamesProps {
 }
 
 const PreviousGames = ({ games, onDelete }: PreviousGamesProps) => {
-  const history = useHistory();
+  const history = useNavigate();
   const redirectToGame = useCallback(
     (session: SessionMetadata, encryptionKey: string | null) => {
       trackEvent('home/load-previous');
-      history.push(
-        `/game/${session.id}${encryptionKey ? '#' + encryptionKey : ''}`
-      );
+      history(`/game/${session.id}${encryptionKey ? '#' + encryptionKey : ''}`);
     },
     [history]
   );

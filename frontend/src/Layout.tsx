@@ -1,5 +1,5 @@
 import { useEffect, useCallback, lazy, Suspense } from 'react';
-import { useHistory, Redirect, Switch, Route } from 'react-router-dom';
+import { useNavigate, Routes, Route } from 'react-router-dom';
 import { trackPageView } from './track';
 import styled from '@emotion/styled';
 import AppBar from '@mui/material/AppBar';
@@ -86,7 +86,7 @@ const Title = styled(Typography)`
 `;
 
 function App() {
-  const history = useHistory();
+  const history = useNavigate();
   const backend = useBackendCapabilities();
   const isCompatible = useIsCompatibleBrowser();
   const { toggle: togglePanel } = useSidePanel();
@@ -94,15 +94,16 @@ function App() {
   const user = useUser();
   const isPro = useIsPro();
   const displayGoPro = !isPro && user && user.accountType !== 'anonymous';
-  const goToHome = useCallback(() => history.push('/'), [history]);
+  const goToHome = useCallback(() => history('/'), [history]);
   useEffect(() => {
     trackPageView(window.location.pathname);
-    const unregister = history.listen((location) => {
-      trackPageView(location.pathname);
-    });
-    return () => {
-      unregister();
-    };
+    // TODO REIMPLEMENT
+    // const unregister = history.listen((location) => {
+    //   trackPageView(location.pathname);
+    // });
+    // return () => {
+    //   unregister();
+    // };
   }, [history]);
   return (
     <div>
@@ -161,11 +162,9 @@ function App() {
             </Hidden>
           ) : null}
           <Spacer />
-          <Switch>
-            <Route path="/game/:gameId">
-              <Invite />
-            </Route>
-          </Switch>
+          <Routes>
+            <Route path="game/:gameId" element={<Invite />} />
+          </Routes>
 
           {isInitialised ? (
             <AccountMenu />
@@ -175,56 +174,25 @@ function App() {
         </Toolbar>
       </AppBar>
       <Suspense fallback={<CodeSplitLoader />}>
-        <Switch>
-          <Route path="/" exact>
-            {user ? <Home /> : null}
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="game/:gameId/*" element={<Game />} />
+          <Route path="validate" element={<ValidatePage />} />
+          <Route path="reset" element={<ResetPasswordPage />} />
+          <Route path="account" element={<AccountPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="subscribe" element={<SubscribePageOuter />}>
+            <Route path="success" element={<SuccessPage />} />
+            <Route path="cancel" element={<CancelPage />} />
           </Route>
-          <Route path="/game/:gameId">
-            <Game />
-          </Route>
-          <Route path="/validate">
-            <ValidatePage />
-          </Route>
-          <Route path="/reset">
-            <ResetPasswordPage />
-          </Route>
-          <Route path="/account">
-            <AccountPage />
-          </Route>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
-          <Route path="/subscribe" exact>
-            <SubscribePageOuter />
-          </Route>
-          <Route path="/subscribe/success" exact>
-            <SuccessPage />
-          </Route>
-          <Route path="/subscribe/cancel" exact>
-            <CancelPage />
-          </Route>
-          <Route path="/admin">
-            <AdminPage />
-          </Route>
-          <Route path="/privacy">
-            <PrivacyPolicyPage />
-          </Route>
-          <Route path="/terms">
-            <TermsAndConditionsPage />
-          </Route>
-          <Route path="/cookies">
-            <CookiesPolicyPage />
-          </Route>
-          <Route path="/acceptable-use">
-            <AcceptableUsePolicyPage />
-          </Route>
-          <Route path="/disclaimer">
-            <DisclaimerPage />
-          </Route>
-          <Route path="/how-does-encryption-work">
-            <EncryptionDoc />
-          </Route>
-        </Switch>
+          <Route path="admin" element={<AdminPage />} />
+          <Route path="privacy" element={<PrivacyPolicyPage />} />
+          <Route path="terms" element={<TermsAndConditionsPage />} />
+          <Route path="cookies" element={<CookiesPolicyPage />} />
+          <Route path="acceptable-use" element={<AcceptableUsePolicyPage />} />
+          <Route path="disclaimer" element={<DisclaimerPage />} />
+          <Route path="how-does-encryption-work" element={<EncryptionDoc />} />
+        </Routes>
       </Suspense>
       <Panel />
       <OutdatedBrowser show={!isCompatible} />

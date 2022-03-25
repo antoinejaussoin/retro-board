@@ -8,7 +8,7 @@ import styled from '@emotion/styled';
 import { CHECK_PREFIX, decrypt } from '../../../../crypto/crypto';
 import { Alert } from '@mui/material';
 import { useEncryptionKey } from '../../../../crypto/useEncryptionKey';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { colors } from '@mui/material';
 import useTranslation from '../../../../translations/useTranslations';
 import useSession from '../../useSession';
@@ -17,7 +17,7 @@ function EncryptionModal() {
   const [password, setPassword] = useState('');
   const { session } = useSession();
   const storeKey = useEncryptionKey()[1];
-  const history = useHistory();
+  const history = useNavigate();
   const location = useLocation();
   const { Encryption: translations } = useTranslation();
   const isCorrectPassword = useMemo(() => {
@@ -35,7 +35,7 @@ function EncryptionModal() {
   useEffect(() => {
     if (isCorrectPassword) {
       storeKey(password);
-      history.push(location.pathname + '#' + password);
+      history(location.pathname + '#' + password);
     }
   }, [isCorrectPassword, password, storeKey, location, history]);
   return (

@@ -1,12 +1,12 @@
 import { useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Login from '../../auth/modal/LoginModal';
 
 export default function LoginPage() {
-  const history = useHistory();
+  const history = useNavigate();
   const handleClose = useCallback(() => {
-    history.push('/');
+    history('/');
   }, [history]);
   return (
     <Container>

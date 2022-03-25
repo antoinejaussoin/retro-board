@@ -3,10 +3,9 @@ import styled from '@emotion/styled';
 import {
   useParams,
   Route,
-  useRouteMatch,
   useLocation,
-  useHistory,
-  Switch,
+  useNavigate,
+  Routes,
 } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -36,19 +35,18 @@ interface RouteParams {
 
 function GamePage() {
   const { GameMenu, PostBoard } = useTranslations();
-  const match = useRouteMatch();
   const { pathname, hash } = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const translations = useTranslations();
-  const { gameId } = useParams<RouteParams>();
+  const { gameId } = useParams<keyof RouteParams>();
   const { session } = useSession();
-  const handleChange = useCallback((_, v) => history.push(v), [history]);
+  const handleChange = useCallback((_, v) => navigate(v), [navigate]);
   const columns = useColumns();
   const { decrypt } = useCrypto();
   const [search, setSearch] = useState('');
   const { unauthorised, unauthorisedReason } = useUnauthorised();
-  const rootUrl = `${match.url}${hash}`;
-  const summaryUrl = `${match.url}/summary${hash}`;
+  const rootUrl = `/game/${gameId}${hash}`;
+  const summaryUrl = `/game/${gameId}/summary${hash}`;
 
   const path = pathname + hash;
 
@@ -72,7 +70,7 @@ function GamePage() {
     onLockSession,
     onUserReady,
     reconnect,
-  } = useGame(gameId);
+  } = useGame(gameId || '');
 
   if (status === 'not-connected' || status === 'connecting') {
     return (
@@ -153,34 +151,40 @@ function GamePage() {
         </AppBarContent>
       </AppBar>
       <AckWarning acks={acks} onRefresh={reconnect} />
-      <Switch>
-        <Route path={`${match.url}`} exact>
-          <Board
-            columns={columns}
-            options={session.options}
-            search={search}
-            onEdit={onEditPost}
-            onAddPost={onAddPost}
-            onMovePost={onMovePost}
-            onCombinePost={onCombinePost}
-            onAddGroup={onAddGroup}
-            onDeletePost={onDeletePost}
-            onLike={onLike}
-            onDeleteGroup={onDeletePostGroup}
-            onEditGroup={onEditPostGroup}
-            onRenameSession={onRenameSession}
-            onEditOptions={onEditOptions}
-            onEditColumns={onEditColumns}
-            onSaveTemplate={onSaveTemplate}
-            onLockSession={onLockSession}
-          />
-        </Route>
-        {!session.options.blurCards ? (
-          <Route path={`${match.url}/summary`}>
-            <SummaryMode columns={columns} search={search} />
-          </Route>
-        ) : null}
-      </Switch>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Board
+              columns={columns}
+              options={session.options}
+              search={search}
+              onEdit={onEditPost}
+              onAddPost={onAddPost}
+              onMovePost={onMovePost}
+              onCombinePost={onCombinePost}
+              onAddGroup={onAddGroup}
+              onDeletePost={onDeletePost}
+              onLike={onLike}
+              onDeleteGroup={onDeletePostGroup}
+              onEditGroup={onEditPostGroup}
+              onRenameSession={onRenameSession}
+              onEditOptions={onEditOptions}
+              onEditColumns={onEditColumns}
+              onSaveTemplate={onSaveTemplate}
+              onLockSession={onLockSession}
+            />
+          }
+        />
+        <Route
+          path="/summary"
+          element={
+            !session.options.blurCards ? (
+              <SummaryMode columns={columns} search={search} />
+            ) : null
+          }
+        />
+      </Routes>
       <ParticipantContainer>
         <GameFooter
           onReady={onUserReady}

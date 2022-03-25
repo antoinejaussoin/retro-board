@@ -21,7 +21,7 @@ import useUser from '../../../auth/useUser';
 import { DeleteAccountPayload } from 'common';
 import { deleteAccount, logout } from '../../../api';
 import UserContext from '../../../auth/Context';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { useConfirm } from 'material-ui-confirm';
 import { useSnackbar } from 'notistack';
 import useTranslations from '../../../translations';
@@ -39,7 +39,7 @@ export function DeleteModal({ onClose }: DeleteModalProps) {
   const { setUser } = useContext(UserContext);
   const { enqueueSnackbar } = useSnackbar();
   const user = useUser();
-  const { push } = useHistory();
+  const push = useNavigate();
   const confirm = useConfirm();
   const {
     AccountPage: {
