@@ -12,5 +12,4 @@
 
 ### Frontend
 
-- react-router-dom (5.3.0)
 - react-markdown (6.0.3): Jest won't work with ESM. I hate ESM.
