@@ -7,6 +7,7 @@ export const backendCapabilitiesState = atom<BackendCapabilities>({
     adminEmail: '',
     licenced: true,
     selfHosted: false,
+    disableAnonymous: false,
     oAuth: {
       google: false,
       github: false,
