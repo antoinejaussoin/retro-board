@@ -27,11 +27,11 @@ It features the following technologies:
 
 - [React 17](https://github.com/facebook/react)
 - [React Hooks](https://reactjs.org/docs/hooks-intro.html)
-- [React Router 4](https://github.com/ReactTraining/react-router)
-- [TypeScript 4](https://www.typescriptlang.org/)
+- [React Router 6](https://reactrouter.com/)
+- [TypeScript 4.6](https://www.typescriptlang.org/)
 - [Recoil.js](https://recoiljs.org), as the global state management library
 - [Socket IO](http://socket.io)
-- [Webpack 4](https://github.com/webpack/webpack) (See older versions for Webpack 1, 2 and 3)
+- [Webpack 5](https://github.com/webpack/webpack) (See older versions for Webpack 1, 2 and 3)
 - [MUI 5](https://mui.com) for our components (previously known as Material-UI)
 - [Material UI design](https://www.google.com/design/spec/material-design/introduction.html)
 - [Emotion](https://emotion.sh/docs/introduction)
@@ -89,6 +89,7 @@ This will run a demo version, which you can turn into a fully licenced version b
 - Adding the option of paying for Retrospected Pro annually, getting one month free in the process
 - Update prices, especially for USD
 - Make the integration tests less brittle by using specific attributes
+- Upgrade (finally!) to React-Router v6.
 
 ### Version 4.12.1 (hotfix)
 
