@@ -23,7 +23,7 @@ class ColumnDefinitionEntityBase {
   @Column()
   public color: string;
   @Column({ nullable: true, type: 'character varying' })
-  public icon: IconName | null;
+  public icon: IconName | string | null;
   @CreateDateColumn({ type: 'timestamp with time zone' })
   public created: Date | undefined;
   @UpdateDateColumn({ type: 'timestamp with time zone' })

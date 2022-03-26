@@ -6,19 +6,19 @@ import MenuItem from '@mui/material/MenuItem';
 import { SelectChangeEvent } from '@mui/material';
 
 interface IconPickerProps {
-  value: IconName | null;
+  value: IconName | string | null;
   onChange: (value: IconName) => void;
 }
 
 const IconPicker = ({ value, onChange }: IconPickerProps) => {
   const icons = getAllIcons();
   const handleChange = useCallback(
-    (event: SelectChangeEvent<IconName>) => {
+    (event: SelectChangeEvent<IconName | string>) => {
       onChange(event.target.value as IconName);
     },
     [onChange]
   );
-  const actualValue: IconName = value || 'help';
+  const actualValue: IconName | string = value || 'help';
   return (
     <Select
       value={actualValue}
@@ -27,10 +27,9 @@ const IconPicker = ({ value, onChange }: IconPickerProps) => {
       variant="standard"
     >
       {icons.map((icon) => {
-        const AnIcon = getIcon(icon)!;
         return (
           <MenuItem value={icon} key={icon}>
-            <AnIcon />
+            {getIcon(icon as IconName)}
           </MenuItem>
         );
       })}
@@ -39,8 +38,7 @@ const IconPicker = ({ value, onChange }: IconPickerProps) => {
 };
 
 function renderIcon(icon: unknown): React.ReactNode {
-  const Icon = getIcon(icon as IconName);
-  return Icon ? <Icon /> : null;
+  return icon ? getIcon(icon as IconName) : null;
 }
 
 export default IconPicker;

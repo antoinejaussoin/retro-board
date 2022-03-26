@@ -24,7 +24,7 @@ interface ColumnProps {
   column: ColumnContent;
   posts: Post[];
   groups: PostGroup[];
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>> | null;
+  icon: React.ReactElement | null;
   question: string;
   color: string;
   search: string;
@@ -42,7 +42,7 @@ const Column: React.FC<ColumnProps> = ({
   column,
   posts,
   groups,
-  icon: Icon,
+  icon,
   question,
   color,
   search,
@@ -96,9 +96,10 @@ const Column: React.FC<ColumnProps> = ({
           onKeyDown={handleAddKeyboard}
           readOnly={!permissions.canCreatePost}
           startAdornment={
-            Icon ? (
+            icon ? (
               <InputAdornment position="start">
-                <Icon style={{ color: colors.grey[500] }} />
+                {icon}
+                {/* <Icon style={{ color: colors.grey[500] }} /> */}
               </InputAdornment>
             ) : null
           }

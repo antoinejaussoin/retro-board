@@ -20,46 +20,48 @@ import {
 } from '@mui/icons-material';
 import { IconName } from 'common';
 
-export function getIcon(name: IconName | null): React.ComponentType | null {
+export function getIcon(
+  name: IconName | string | null
+): React.ReactElement | null {
   switch (name) {
     case 'satisfied':
-      return SentimentSatisfied;
+      return <SentimentSatisfied />;
     case 'disatisfied':
-      return SentimentVeryDissatisfied;
+      return <SentimentVeryDissatisfied />;
     case 'sunny':
-      return WbSunny;
+      return <WbSunny />;
     case 'announcement':
-      return Announcement;
+      return <Announcement />;
     case 'file':
-      return AttachFile;
+      return <AttachFile />;
     case 'money':
-      return AttachMoney;
+      return <AttachMoney />;
     case 'renew':
-      return Autorenew;
+      return <Autorenew />;
     case 'play':
-      return PlayArrow;
+      return <PlayArrow />;
     case 'pause':
-      return Pause;
+      return <Pause />;
     case 'fast-forward':
-      return FastForward;
+      return <FastForward />;
     case 'liked':
-      return ThumbUpAlt;
+      return <ThumbUpAlt />;
     case 'books':
-      return LocalLibrary;
+      return <LocalLibrary />;
     case 'help':
-      return LiveHelp;
+      return <LiveHelp />;
     case 'cocktail':
-      return LocalBar;
+      return <LocalBar />;
     case 'boat':
-      return DirectionsBoat;
+      return <DirectionsBoat />;
     case 'link':
-      return Link;
+      return <Link />;
     case 'gesture':
-      return Gesture;
+      return <Gesture />;
     case 'fitness':
-      return FitnessCenter;
+      return <FitnessCenter />;
     default:
-      return null;
+      return <span>{name}</span>;
   }
 }
 

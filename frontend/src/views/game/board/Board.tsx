@@ -175,8 +175,7 @@ const Columns = styled.div<{ numberOfColumns: number }>`
   display: flex;
   margin-top: 30px;
 
-  @media screen and (max-width: ${(props) =>
-      props.numberOfColumns * 320 + 100}px) {
+  @media screen and (max-width: ${(props) => props.numberOfColumns * 320 + 100}px) {
     margin-top: 10px;
     flex-direction: column;
 

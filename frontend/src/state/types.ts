@@ -3,7 +3,7 @@ import { IconName, ColumnDefinitionType } from 'common';
 export interface ColumnSettings {
   color: string;
   label: string;
-  icon: IconName | null;
+  icon: IconName | string | null;
   type: ColumnDefinitionType;
 }
 

@@ -43,7 +43,7 @@ export interface ColumnDefinition extends Entity {
   index: number;
   label: string;
   color: string;
-  icon: IconName | null;
+  icon: IconName | string | null;
 }
 
 export interface SessionOptions {
