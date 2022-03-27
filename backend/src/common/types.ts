@@ -43,7 +43,7 @@ export interface ColumnDefinition extends Entity {
   index: number;
   label: string;
   color: string;
-  icon: IconName | string | null;
+  icon: string | null;
 }
 
 export interface SessionOptions {
@@ -221,26 +221,6 @@ export type ColumnDefinitionType =
   | 'island'
   | 'wind'
   | 'rock';
-
-export type IconName =
-  | 'satisfied'
-  | 'disatisfied'
-  | 'sunny'
-  | 'announcement'
-  | 'file'
-  | 'money'
-  | 'renew'
-  | 'play'
-  | 'pause'
-  | 'fast-forward'
-  | 'liked'
-  | 'books'
-  | 'help'
-  | 'cocktail'
-  | 'link'
-  | 'boat'
-  | 'fitness'
-  | 'gesture';
 
 export type StripeLocales =
   | 'ar-AR'

@@ -61,7 +61,7 @@ const data: ColumnContent[] = [
     label: 'First column',
     index: 0,
     color: 'red',
-    icon: 'satisfied',
+    icon: 'grinning',
     type: 'well',
     posts: [
       buildPost(4, 0),
@@ -76,7 +76,7 @@ const data: ColumnContent[] = [
     label: 'Second column',
     index: 1,
     color: 'green',
-    icon: 'disatisfied',
+    icon: 'unamused',
     type: 'notWell',
     posts: [],
     groups: [],

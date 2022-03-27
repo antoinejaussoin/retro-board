@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
   Index,
 } from 'typeorm';
-import { IconName, ColumnDefinition, ColumnDefinitionType } from '../../common';
+import { ColumnDefinition, ColumnDefinitionType } from '../../common';
 import SessionEntity from './Session';
 import SessionTemplateEntity from './SessionTemplate';
 
@@ -23,7 +23,7 @@ class ColumnDefinitionEntityBase {
   @Column()
   public color: string;
   @Column({ nullable: true, type: 'character varying' })
-  public icon: IconName | string | null;
+  public icon: string | null;
   @CreateDateColumn({ type: 'timestamp with time zone' })
   public created: Date | undefined;
   @UpdateDateColumn({ type: 'timestamp with time zone' })
@@ -46,7 +46,7 @@ class ColumnDefinitionEntityBase {
     index: number,
     label: string,
     color: string,
-    icon?: IconName | null
+    icon?: string | null
   ) {
     this.id = id;
     this.type = type;
@@ -69,7 +69,7 @@ export class ColumnDefinitionEntity extends ColumnDefinitionEntityBase {
     index: number,
     label: string,
     color: string,
-    icon?: IconName | null
+    icon?: string | null
   ) {
     super(id, type, index, label, color, icon);
     this.session = session;
@@ -88,7 +88,7 @@ export class TemplateColumnDefinitionEntity extends ColumnDefinitionEntityBase {
     index: number,
     label: string,
     color: string,
-    icon?: IconName | null
+    icon?: string | null
   ) {
     super(id, type, index, label, color, icon);
     this.template = template;
