@@ -6,5 +6,5 @@ type IconProps = {
 };
 
 export default function IconInner({ icon, size }: IconProps) {
-  return <Emoji emoji={icon || 'spy'} size={size || 24} />;
+  return <Emoji emoji={icon || 'grey_question'} size={size || 24} />;
 }

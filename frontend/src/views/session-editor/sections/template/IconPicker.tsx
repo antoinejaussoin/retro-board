@@ -30,7 +30,7 @@ const IconPicker = ({ value, onChange }: IconPickerProps) => {
         size="small"
         style={{ padding: 5, minWidth: 40 }}
       >
-        <Icon icon={value || 'spy'} />
+        <Icon icon={value || 'grey_question'} />
       </Button>
       <Popover
         open={opened}
