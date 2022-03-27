@@ -98,8 +98,7 @@ const Column: React.FC<ColumnProps> = ({
           startAdornment={
             icon ? (
               <InputAdornment position="start">
-                {icon}
-                {/* <Icon style={{ color: colors.grey[500] }} /> */}
+                <IconContainer>{icon}</IconContainer>
               </InputAdornment>
             ) : null
           }
@@ -285,6 +284,11 @@ const EnterIcon = styled.div`
     display: none;
     visibility: hidden;
   }
+`;
+
+const IconContainer = styled.div`
+  position: relative;
+  top: 4px;
 `;
 
 export default Column;

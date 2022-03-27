@@ -1,15 +1,18 @@
-import { useCallback, useState } from 'react';
+import { lazy, Suspense, useCallback, useState } from 'react';
 import styled from '@emotion/styled';
 import Typography from '@mui/material/Typography';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import EditableLabel from '../../../../components/EditableLabel';
 import { ColumnSettings } from '../../../../state/types';
 import { TwitterPicker, ColorResult } from 'react-color';
-import IconPicker from './IconPicker';
 import IconButton from '@mui/material/IconButton';
 import { colors } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { DeleteForeverOutlined } from '@mui/icons-material';
+
+const IconPicker = lazy(
+  () => import('./IconPicker' /* webpackChunkName: "icon-picker" */)
+);
 
 interface ColumnEditorProps {
   value: ColumnSettings;
@@ -93,7 +96,9 @@ const ColumnEditor = ({
           )}
         </ColorContainer>
         <IconContainer>
-          <IconPicker value={value.icon} onChange={handleIconChange} />
+          <Suspense fallback={<span />}>
+            <IconPicker value={value.icon} onChange={handleIconChange} />
+          </Suspense>
         </IconContainer>
         {fullScreen && canDelete ? (
           <DeleteContainer>

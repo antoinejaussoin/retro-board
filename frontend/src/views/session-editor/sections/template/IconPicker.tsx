@@ -1,8 +1,9 @@
 import { useCallback, useRef } from 'react';
 import { Button, Popover } from '@mui/material';
 import styled from '@emotion/styled';
-import { Picker, EmojiData, Emoji } from 'emoji-mart';
+import { Picker, EmojiData } from 'emoji-mart';
 import useModal from 'hooks/useModal';
+import Icon from 'components/Icon/Icon';
 
 interface IconPickerProps {
   value: string | null;
@@ -14,7 +15,6 @@ const IconPicker = ({ value, onChange }: IconPickerProps) => {
   const [opened, open, close] = useModal();
   const handleChange = useCallback(
     (emoji: EmojiData) => {
-      console.log('Picked: ', emoji);
       if (emoji.id) {
         onChange(emoji.id);
         close();
@@ -24,8 +24,13 @@ const IconPicker = ({ value, onChange }: IconPickerProps) => {
   );
   return (
     <Container>
-      <Button ref={ref} onClick={open}>
-        <Emoji emoji={value || 'spy'} size={24} />
+      <Button
+        ref={ref}
+        onClick={open}
+        size="small"
+        style={{ padding: 5, minWidth: 40 }}
+      >
+        <Icon icon={value || 'spy'} />
       </Button>
       <Popover
         open={opened}

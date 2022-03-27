@@ -6,7 +6,6 @@ import {
   DropResult,
   ResponderProvided,
 } from 'react-beautiful-dnd';
-import { getIcon } from '../../../state/icons';
 import Column from './Column';
 import { Page } from '../../../components/Page';
 import { ColumnContent } from '../types';
@@ -18,6 +17,7 @@ import {
 import { getNext, getMiddle, getPrevious } from '../lexorank';
 import BoardHeader from './header/BoardHeader';
 import useSession from '../useSession';
+import Icon from 'components/Icon/Icon';
 
 interface GameModeProps {
   columns: ColumnContent[];
@@ -145,7 +145,7 @@ function GameMode({
               posts={column.posts}
               groups={column.groups}
               question={column.label}
-              icon={getIcon(column.icon)}
+              icon={<Icon icon={column.icon} size={24} />}
               color={column.color}
               onAdd={(content) =>
                 onAddPost(
