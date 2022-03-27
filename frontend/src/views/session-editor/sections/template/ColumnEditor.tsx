@@ -4,7 +4,6 @@ import Typography from '@mui/material/Typography';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import EditableLabel from '../../../../components/EditableLabel';
 import { ColumnSettings } from '../../../../state/types';
-import { IconName } from 'common';
 import { TwitterPicker, ColorResult } from 'react-color';
 import IconPicker from './IconPicker';
 import IconButton from '@mui/material/IconButton';
@@ -50,7 +49,7 @@ const ColumnEditor = ({
   );
 
   const handleIconChange = useCallback(
-    (icon: IconName) => {
+    (icon: string) => {
       onChange({
         ...value,
         icon,

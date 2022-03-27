@@ -7,6 +7,7 @@
     "build": "rimraf dist && tsc --build",
     "start": "nodemon --exec 'yarn fix & ts-node' --files ./src/index.ts",
     "create-migration": "ts-node ./node_modules/typeorm/cli.js --config src/db/orm-config.ts migration:generate -n ",
+    "create-empty-migration": "ts-node ./node_modules/typeorm/cli.js --config src/db/orm-config.ts migration:create -n ",
     "migrate": "ts-node ./node_modules/typeorm/cli.js --config src/db/orm-config.ts migration:run",
     "revert": "ts-node ./node_modules/typeorm/cli.js --config src/db/orm-config.ts migration:revert",
     "lint": "eslint 'src/**/*.ts'",

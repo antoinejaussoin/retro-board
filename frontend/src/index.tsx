@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { initialiseAnalytics, initialiseSentry } from './track';
 import * as serviceWorker from './serviceWorker';
+import 'emoji-mart/css/emoji-mart.css';
 
 (window as any).global = window;
 // @ts-ignore

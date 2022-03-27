@@ -1,4 +1,4 @@
-import { ColumnDefinition, IconName, ColumnDefinitionType } from 'common';
+import { ColumnDefinition, ColumnDefinitionType } from 'common';
 import { Translation } from '../translations';
 import { v4 } from 'uuid';
 import keyBy from 'lodash/keyBy';
@@ -39,7 +39,7 @@ export function extrapolate(
   return {
     color: colDef.color || defaultDef.color,
     label: colDef.label || defaultDef.label,
-    icon: (colDef.icon as IconName | null) || defaultDef.icon,
+    icon: (colDef.icon as string | null) || defaultDef.icon,
     type: colDef.type,
   };
 }

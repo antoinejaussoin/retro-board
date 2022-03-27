@@ -1,9 +1,9 @@
-import { IconName, ColumnDefinitionType } from 'common';
+import { ColumnDefinitionType } from 'common';
 
 export interface ColumnSettings {
   color: string;
   label: string;
-  icon: IconName | string | null;
+  icon: string | null;
   type: ColumnDefinitionType;
 }
 
