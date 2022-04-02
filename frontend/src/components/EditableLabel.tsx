@@ -78,6 +78,7 @@ const EditableLabel = ({
             <TextareaAutosize
               ref={inputRef as React.RefObject<HTMLTextAreaElement>}
               aria-label={`${label} input`}
+              data-testid={`${label} input`}
               value={current}
               onBlur={enableViewMode}
               onKeyPress={handleKeyPress}
@@ -87,6 +88,7 @@ const EditableLabel = ({
             <input
               ref={inputRef as React.RefObject<HTMLInputElement>}
               aria-label={`${label} input`}
+              data-testid={`${label} input`}
               value={current}
               onBlur={enableViewMode}
               onKeyPress={handleKeyPress}
@@ -101,7 +103,9 @@ const EditableLabel = ({
         </ViewMode>
       ) : (
         <ViewMode onClick={enableEditMode}>
-          <span aria-label={label}>{current || placeholder}</span>
+          <span aria-label={label} data-testid={label}>
+            {current || placeholder}
+          </span>
           &nbsp;
           <EditIcon fontSize="inherit" style={{ fontSize: '0.8em' }} />
         </ViewMode>

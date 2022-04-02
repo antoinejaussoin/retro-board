@@ -8,6 +8,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import theme from '../../../../../Theme';
 import { SnackbarProvider } from 'notistack';
+import { act } from '@testing-library/react';
 
 const u = (name: string): User => ({
   name,
@@ -104,11 +105,14 @@ describe('Post', () => {
 
     expect(likeButton).toHaveTextContent('3');
     expect(dislikeButton).toHaveTextContent('2');
-    likeButton.click();
+    act(() => {
+      likeButton.click();
+    });
     expect(likeHandler).toHaveBeenCalledTimes(1);
     expect(dislikeHandler).not.toHaveBeenCalled();
-
-    dislikeButton.click();
+    act(() => {
+      dislikeButton.click();
+    });
     expect(dislikeHandler).toHaveBeenCalledTimes(1);
 
     expect(deleteHandler).not.toHaveBeenCalled();
@@ -140,14 +144,18 @@ describe('Post', () => {
     const deleteButton = getByLabelText(/delete/i, { selector: 'button' });
     const likeButton = getByLabelText(/^like/i);
     const dislikeButton = getByLabelText(/dislike/i);
+    act(() => {
+      deleteButton.click();
+    });
 
-    deleteButton.click();
     expect(deleteHandler).toHaveBeenCalledTimes(1);
 
     expect(likeButton).toBeDisabled();
     expect(dislikeButton).toBeDisabled();
-    likeButton.click();
-    dislikeButton.click();
+    act(() => {
+      likeButton.click();
+      dislikeButton.click();
+    });
     expect(likeHandler).not.toHaveBeenCalled();
     expect(dislikeHandler).not.toHaveBeenCalled();
   });
@@ -173,8 +181,11 @@ describe('Post', () => {
         search=""
       />
     );
-    const editableLabel = getByLabelText(/post content/i);
-    editableLabel.click();
+    const editableLabel = getByLabelText(/Post content/i);
+    act(() => {
+      editableLabel.click();
+    });
+
     expect(editHandler).not.toHaveBeenCalled();
     const editableInput = getByLabelText(/post content input/i);
     fireEvent.change(editableInput, { target: { value: 'Bar' } });
@@ -205,7 +216,9 @@ describe('Post', () => {
       />
     );
     const editableLabel = getByLabelText(/post content/i);
-    editableLabel.click();
+    act(() => {
+      editableLabel.click();
+    });
     const editableInput = queryByLabelText(/post content input/i);
     expect(editableInput).toBeNull();
     expect(editHandler).not.toHaveBeenCalled();
