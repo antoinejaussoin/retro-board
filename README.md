@@ -25,7 +25,7 @@ This project is both an actual product, and also a technology demo using the lat
 
 It features the following technologies:
 
-- [React 17](https://github.com/facebook/react)
+- [React 18](https://github.com/facebook/react)
 - [React Hooks](https://reactjs.org/docs/hooks-intro.html)
 - [React Router 6](https://reactrouter.com/)
 - [TypeScript 4.6](https://www.typescriptlang.org/)
@@ -84,6 +84,11 @@ You can start an instance of Retrospected in 5 minutes by following the [quick-s
 This will run a demo version, which you can turn into a fully licenced version by purchasing a [Self Hosted licence](https://www.retrospected.com/subscribe?product=self-hosted).
 
 ## Versions History
+
+### Version 4.14.0
+
+- Upgrade to React 18
+- Replace icons by emoji for columns headers (fully customisable)
 
 ### Version 4.13.0
 
