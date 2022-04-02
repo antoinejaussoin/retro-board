@@ -65,6 +65,7 @@ const config: BackendConfig = {
   BASE_URL: defaults('BASE_URL', 'http://localhost:80'),
   SECURE_COOKIES: defaultsBool('SECURE_COOKIES', false),
   DISABLE_ANONYMOUS_LOGIN: defaultsBool('DISABLE_ANONYMOUS_LOGIN', false),
+  DISABLE_PASSWORD_LOGIN: defaultsBool('DISABLE_PASSWORD_LOGIN', false),
   TWITTER_KEY: defaults('TWITTER_KEY', ''),
   TWITTER_SECRET: defaults('TWITTER_SECRET', ''),
   GOOGLE_KEY: defaults('GOOGLE_KEY', ''),

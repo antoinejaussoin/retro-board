@@ -260,6 +260,12 @@ export default () => {
           );
         } else {
           // Regular account login
+
+          // Checking if they are allowed in the first place
+          if (config.DISABLE_PASSWORD_LOGIN) {
+            return done('Password accounts are disabled', undefined);
+          }
+
           const identity = await loginUser(username, password);
           done(
             !identity ? 'User cannot log in' : null,

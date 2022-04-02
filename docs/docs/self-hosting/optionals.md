@@ -40,6 +40,7 @@ services:
       BASE_URL: http://localhost:80 # This must be the URL of the frontend app once deployed. Only useful if you need OAuth, SendGrid or Stripe
       SECURE_COOKIES: 'false' # You can set this to true if you are using HTTPS. This is more secure.
       DISABLE_ANONYMOUS_LOGIN: 'false' # Set to true to disable anonymous accounts
+      DISABLE_PASSWORD_LOGIN: 'false' # Set to true to disable password accounts (email accounts).
 
       # -- OAuth: Set these to enable OAuth authentication for one or more provider. This is optional. --
       TWITTER_KEY:
