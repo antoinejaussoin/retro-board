@@ -19,6 +19,7 @@ export interface BackendConfig {
   SENTRY_URL: string;
   DISABLE_ANONYMOUS_LOGIN: boolean;
   DISABLE_PASSWORD_LOGIN: boolean;
+  DISABLE_PASSWORD_REGISTRATION: boolean;
   TWITTER_KEY: string;
   TWITTER_SECRET: string;
   GOOGLE_KEY: string;

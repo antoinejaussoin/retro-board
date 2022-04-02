@@ -396,6 +396,10 @@ db().then(() => {
       res.status(500).send('You are already logged in');
       return;
     }
+    if (config.DISABLE_PASSWORD_REGISTRATION) {
+      res.status(403).send('Password accounts registration is disabled.');
+      return;
+    }
     const registerPayload = req.body as RegisterPayload;
     if (
       (await getIdentityByUsername('password', registerPayload.username)) !==

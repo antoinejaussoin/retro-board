@@ -15,6 +15,7 @@ import { Person, Email, VpnKey } from '@mui/icons-material';
 import { register } from '../../../api';
 import { validate } from 'isemail';
 import UserContext from '../../Context';
+import useBackendCapabilities from 'global/useBackendCapabilities';
 
 type RegisterProps = {
   onClose: () => void;
@@ -38,6 +39,7 @@ const Register = ({ onClose }: RegisterProps) => {
   const [generalError, setGeneralError] = useState<string | null>(null);
   const [isSuccessful, setIsSuccessful] = useState(false);
   const { setUser } = useContext(UserContext);
+  const { disablePasswordRegistration } = useBackendCapabilities();
 
   const validEmail = useMemo(() => {
     return validate(registerEmail);
@@ -77,6 +79,15 @@ const Register = ({ onClose }: RegisterProps) => {
     setUser,
     onClose,
   ]);
+
+  if (disablePasswordRegistration) {
+    return (
+      <Alert severity="error">
+        Registration is disabled by your administrator. Ask your administrator
+        to create an account for you.
+      </Alert>
+    );
+  }
 
   return (
     <Wrapper

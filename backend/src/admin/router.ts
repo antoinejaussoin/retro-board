@@ -26,6 +26,7 @@ router.get('/self-hosting', async (_, res) => {
       !!config.SENDGRID_SENDER,
     disableAnonymous: config.DISABLE_ANONYMOUS_LOGIN,
     disablePasswords: config.DISABLE_PASSWORD_LOGIN,
+    disablePasswordRegistration: config.DISABLE_PASSWORD_REGISTRATION,
     oAuth: {
       google: !!config.GOOGLE_KEY && !!config.GOOGLE_SECRET,
       github: !!config.GITHUB_KEY && !!config.GITHUB_SECRET,

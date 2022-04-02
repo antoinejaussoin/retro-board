@@ -59,6 +59,7 @@ export interface BackendCapabilities {
   oAuth: OAuthAvailabilities;
   disableAnonymous: boolean;
   disablePasswords: boolean;
+  disablePasswordRegistration: boolean;
 }
 
 export interface OAuthAvailabilities {

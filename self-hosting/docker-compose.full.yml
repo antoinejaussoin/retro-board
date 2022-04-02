@@ -69,6 +69,7 @@ services:
       SECURE_COOKIES: 'false' # You can set this to true if you are using HTTPS. This is more secure.
       DISABLE_ANONYMOUS_LOGIN: 'false' # Set to true to disable anonymous accounts
       DISABLE_PASSWORD_LOGIN: 'false' # Set to true to disable password accounts (email accounts).
+      DISABLE_PASSWORD_REGISTRATION: 'false' # Set to true to disable password accounts registration (but not login!)
 
       # -- OAuth: Set these to enable OAuth authentication for one or more provider. This is optional. --
       TWITTER_KEY:
