@@ -40,11 +40,7 @@ import {
   DeleteAccountPayload,
 } from './common';
 import registerPasswordUser from './auth/register/register-user';
-import {
-  sendVerificationEmail,
-  sendResetPassword,
-  sendTestEmail,
-} from './email/emailSender';
+import { sendVerificationEmail, sendResetPassword } from './email/emailSender';
 import { v4 } from 'uuid';
 import {
   createSession,
@@ -393,12 +389,6 @@ db().then(() => {
     } else {
       res.status(401).send();
     }
-  });
-
-  app.post('/api/mail/test', async (req, res) => {
-    const success = await sendTestEmail('antoine@jaussoin.com', 'Hello');
-    console.log('Success: ', success);
-    res.send(200);
   });
 
   app.post('/api/register', heavyLoadLimiter, async (req, res) => {

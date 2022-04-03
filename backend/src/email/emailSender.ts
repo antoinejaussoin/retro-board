@@ -29,21 +29,6 @@ function getSender(): EmailSender | null {
 
 const send = getSender();
 
-export async function sendTestEmail(email: string, name: string) {
-  if (!send) {
-    return;
-  }
-  console.log(email, name);
-  const template = await getRegisterTemplate(
-    email,
-    'Bob Dylan',
-    'AZEERTY',
-    'dylan.com'
-  );
-  const res = await send('antoine@jaussoin.com', 'Test', template);
-  console.log('success: ', res);
-}
-
 export async function sendVerificationEmail(
   email: string,
   name: string,
