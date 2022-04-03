@@ -106,6 +106,12 @@ const config: BackendConfig = {
   RATE_LIMIT_WS_POINTS: defaultsNumber('RATE_LIMIT_WS_POINTS', 600),
   RATE_LIMIT_WS_DURATION: defaultsNumber('RATE_LIMIT_WS_DURATION', 60),
   WS_MAX_BUFFER_SIZE: defaultsNumber('WS_MAX_BUFFER_SIZE', 10_000),
+  MAIL_SMTP_HOST: defaults('MAIL_SMTP_HOST', ''),
+  MAIL_PORT: defaultsNumber('MAIL_PORT', 465),
+  MAIL_SECURE: defaultsBool('MAIL_SECURE', true),
+  MAIL_SENDER: defaults('MAIL_SENDER', ''),
+  MAIL_USER: defaults('MAIL_USER', ''),
+  MAIL_PASSWORD: defaults('MAIL_PASSWORD', ''),
 };
 
 export default config;

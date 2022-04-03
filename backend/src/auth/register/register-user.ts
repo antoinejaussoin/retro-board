@@ -3,7 +3,7 @@ import { v4 } from 'uuid';
 import { hashPassword } from '../../utils';
 import { UserIdentityEntity } from '../../db/entities';
 import { getIdentityByUsername, registerUser } from '../../db/actions/users';
-import config from '../../config';
+import { canSendEmails } from '../../email/utils';
 
 export default async function registerPasswordUser(
   details: RegisterPayload
@@ -24,10 +24,7 @@ export default async function registerPasswordUser(
     type: 'password',
     username: details.username,
     password: hashedPassword,
-    emailVerification:
-      config.SENDGRID_API_KEY && config.SENDGRID_VERIFICATION_EMAIL_TID
-        ? v4()
-        : undefined,
+    emailVerification: canSendEmails() ? v4() : undefined,
     language: details.language,
   });
 

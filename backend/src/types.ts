@@ -53,6 +53,12 @@ export interface BackendConfig {
   RATE_LIMIT_WS_POINTS: number;
   RATE_LIMIT_WS_DURATION: number;
   WS_MAX_BUFFER_SIZE: number;
+  MAIL_SMTP_HOST: string;
+  MAIL_PORT: number;
+  MAIL_SECURE: boolean;
+  MAIL_USER: string;
+  MAIL_PASSWORD: string;
+  MAIL_SENDER: string;
 }
 
 export type LicenceMetadata = {
