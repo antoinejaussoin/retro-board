@@ -67,9 +67,12 @@ services:
       SQL_LOG: 'false' # Whether to log SQL queries in the console
       SENDGRID_API_KEY: # Used for Sendgrid email reminders
       SENDGRID_SENDER: # Email to be used as the sender for emails
-      SENDGRID_VERIFICATION_EMAIL_TID: # Verification email template ID
-      SENDGRID_RESET_PASSWORD_TID: # Reset password email template ID
-      SENDGRID_SELF_HOST_EMAIL_TID: # Self host welcome email template ID
+      MAIL_SMTP_HOST: # SMTP server host for sending emails via SMTP (instead of SendGrid)
+      MAIL_PORT: 465 # SMTP port (usually 465 for secure SMTP)
+      MAIL_SECURE: true # If SMTP is using encryption, usually via port 465, set this to true
+      MAIL_USER: # SMTP username (or email)
+      MAIL_PASSWORD: # SMTP user password
+      MAIL_SENDER: # SMTP sender email (usually matches MAIL_USER)
       STRIPE_SECRET: # Stripe payment account secret
       STRIPE_WEBHOOK_SECRET: # Stripe webhook secret
       STRIPE_TEAM_PRODUCT: # Stripe product information

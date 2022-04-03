@@ -35,9 +35,6 @@ export interface BackendConfig {
   OKTA_SECRET: string;
   SENDGRID_API_KEY: string;
   SENDGRID_SENDER: string;
-  SENDGRID_VERIFICATION_EMAIL_TID: string;
-  SENDGRID_RESET_PASSWORD_TID: string;
-  SENDGRID_SELF_HOST_EMAIL_TID: string;
   STRIPE_SECRET: string;
   STRIPE_WEBHOOK_SECRET: string;
   STRIPE_TEAM_PRODUCT: string;

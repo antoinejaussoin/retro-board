@@ -9,6 +9,7 @@ import { isLicenced } from '../security/is-licenced';
 import { AdminChangePasswordPayload, BackendCapabilities } from '../common';
 import { getIdentityFromRequest, hashPassword } from '../utils';
 import csurf from 'csurf';
+import { canSendEmails } from '../email/utils';
 
 const router = express.Router();
 const csrfProtection = csurf();
@@ -19,11 +20,7 @@ router.get('/self-hosting', async (_, res) => {
     adminEmail: config.SELF_HOSTED_ADMIN,
     selfHosted: config.SELF_HOSTED,
     licenced: !!licence,
-    sendGridAvailable:
-      !!config.SENDGRID_API_KEY &&
-      !!config.SENDGRID_RESET_PASSWORD_TID &&
-      !!config.SENDGRID_VERIFICATION_EMAIL_TID &&
-      !!config.SENDGRID_SENDER,
+    emailAvailable: canSendEmails(),
     disableAnonymous: config.DISABLE_ANONYMOUS_LOGIN,
     disablePasswords: config.DISABLE_PASSWORD_LOGIN,
     disablePasswordRegistration: config.DISABLE_PASSWORD_REGISTRATION,
