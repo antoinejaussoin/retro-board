@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [v4140/emoji]
+    branches: [v4140/integration]
 
 jobs:
   build:
