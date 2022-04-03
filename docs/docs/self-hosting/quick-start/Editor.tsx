@@ -8,6 +8,7 @@ import RunDetails from './RunDetails';
 import useIsBrowser from '@docusaurus/useIsBrowser';
 import Toggle from 'react-toggle';
 import usePersistedState from './usePersistedState';
+import { FieldToggle } from './Toggle';
 
 function getRandomPassword() {
   return randomWords(4).join('-');
@@ -32,6 +33,14 @@ export default function Editor() {
   const [port, setPort] = usePersistedState('port', '80');
   const [pgPort, setPgPort] = usePersistedState('pg-port', '81');
   const [isArm, setIsArm] = usePersistedState('is-arm', false);
+  const [disableAnon, setDisableAnon] = usePersistedState(
+    'disable-anon',
+    false
+  );
+  const [disablePasswordAccounts, setDisablePasswordAccounts] =
+    usePersistedState('disable-password-accounts', false);
+  const [disablePasswordRegistration, setDisablePasswordRegistration] =
+    usePersistedState('disable-password-reg', false);
 
   useEffect(() => {
     if (isBrowser) {
@@ -94,21 +103,38 @@ export default function Editor() {
           value={pgPassword}
           onChange={setPgPassword}
         />
-        <Field
+        <FieldToggle
+          id="arm-toggle"
           label="Deploying on ARM?"
           description="Only check this if you are deploying on an ARM-based server."
-        >
-          <div className={styles.toggle}>
-            <Toggle
-              id="arm-toggle"
-              defaultChecked={isArm}
-              onChange={(e) => setIsArm(e.target.checked)}
-            />
-            <label htmlFor="arm-toggle" style={{ marginLeft: 10 }}>
-              ARM server
-            </label>
-          </div>
-        </Field>
+          toggleLabel="ARM server"
+          value={isArm}
+          onChange={setIsArm}
+        />
+        <FieldToggle
+          id="disable-anon-toggle"
+          label="Disable Anonymous accounts?"
+          description="Users won't be able to use anonymous accounts if checked"
+          toggleLabel="Disable Anonymous Accounts"
+          value={disableAnon}
+          onChange={setDisableAnon}
+        />
+        <FieldToggle
+          id="disable-pass-accounts"
+          label="Disable Password / Email accounts?"
+          description="Users won't be able to use email / password accounts if checked"
+          toggleLabel="Disable Password Accounts"
+          value={disablePasswordAccounts}
+          onChange={setDisablePasswordAccounts}
+        />
+        <FieldToggle
+          id="disable-pass-reg"
+          label="Disable Password / Email registration?"
+          description="Users won't be able to register a new email/password account, but will be able to login."
+          toggleLabel="Disable Password Registration"
+          value={disablePasswordRegistration || disablePasswordAccounts}
+          onChange={setDisablePasswordRegistration}
+        />
       </div>
       <h3>Your customised docker-compose file:</h3>
 
@@ -121,6 +147,9 @@ export default function Editor() {
         port={port}
         pgPort={pgPort}
         arm={isArm}
+        disableAnon={disableAnon}
+        disablePassword={disablePasswordAccounts}
+        disableRegistration={disablePasswordRegistration}
       />
       <h1>2 - Run Docker</h1>
       <ul>

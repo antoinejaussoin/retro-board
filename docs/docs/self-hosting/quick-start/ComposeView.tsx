@@ -13,6 +13,9 @@ type ComposeViewProps = {
   port: string;
   pgPort: string;
   arm: boolean;
+  disableAnon: boolean;
+  disablePassword: boolean;
+  disableRegistration: boolean;
 };
 
 export default function ComposeView({
@@ -24,6 +27,9 @@ export default function ComposeView({
   port,
   pgPort,
   arm,
+  disableAnon,
+  disablePassword,
+  disableRegistration,
 }: ComposeViewProps) {
   const text = `version: '3'
 services:
@@ -48,6 +54,9 @@ services:
       SELF_HOSTED_ADMIN: '${email}'
       DB_PASSWORD: '${dbPassword}'
       SESSION_SECRET: '${sessionSecret}'
+${disableAnon ? "      DISABLE_ANONYMOUS_LOGIN: 'true'\n" : ''}${
+    disablePassword ? "      DISABLE_PASSWORD_LOGIN: 'true'\n" : ''
+  }${disableRegistration ? "      DISABLE_PASSWORD_REGISTRATION: 'true'\n" : ''}
     restart: unless-stopped
     logging:
       driver: 'json-file'

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Field.module.css';
 
-type FieldProps = {
+export type FieldProps = {
   label: string;
   description?: string;
 };
