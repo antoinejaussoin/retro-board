@@ -89,6 +89,8 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 - Upgrade to React 18
 - Replace icons by emoji for columns headers (fully customisable)
+- Adding SMTP support for self-hosting, in addition to SendGrid
+- Simplification of SendGrid setup, by removing the need of creating email templates. They are now hardcoded.
 
 ### Version 4.13.0
 
