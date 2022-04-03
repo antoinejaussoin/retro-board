@@ -1,15 +1,29 @@
-# 📧 Sendgrid
+---
+sidebar_position: 6
+---
 
-By default, and when using the basic configuration in the [quick-start](quick-start) page, 
-your users will be able to register using an email without having to verify that email.
+# 📧 Emails
 
+A Retrospected instance sometimes need to send email to its users, when they register or want to change their password.
+
+You have three mechanism for sending emails (or not) you can choose from:
+
+- [Sendgrid](https://sendgrid.com)
+- SMTP
+- Nothing: no emails are sent
+
+## Nothing (not recommended)
+
+If you don't specify any mechanism (neither Sendgrid nor SMTP), verification emails won't be sent and users will be able to register any email.
 It also means they **won't be able to change their password if they forget it**.
 
 You have two ways of solving this problem:
 - Use the [Admin Panel](admin), if you are the admin, to manually change someone else's password
-- Setup Sendgrid so that emails are verified, and recovery emails are sent if a user forgets their password
+- Setup Sendgrid or SMTP so that emails are verified, and recovery emails are sent if a user forgets their password
 
 The latter is what we are going to setup in this guide.
+
+## SendGrid (recommended)
 
 :::info Is it free?
 Sendgrid is completely free up to a certain amount of emails per day. For a self-hosted instance, you are very
@@ -25,48 +39,27 @@ unlikely to have to pay for it.
 - Click create, and then copy the key that you've created somewhere safe (we'll need it later)
 <img src="/img/self-hosting/sendgrid-2.png" width="400" />
 
-### Create the templates
-
-We will need to create two templates, one for the verification email (the one sent after registration), 
-and the other one for the password reset email.
-
-- Go to `Email API` and `Dynamic Templates`
-- Click on `Create a Dynamic Template`, and name it `Verification Email`
-- On the created template, click on `Add Version`
-- Select the blank template, and then the `Design Editor`
-- Add a Text field, and add the following content:
-```
-Hello {{name}}!
-
-Please click on the email below to validate your email and start using Retrospected right away.
-
-{{domain}}/validate?email={{email}}&code={{code}}
-```
-- Then save
-- Create another dynamic template, this time named `Reset Password Email`, create a new version, blank template and Design Editor
-- Add a Text field and add the following content:
-```
-Hi {{name}},
-
-To reset your password, follow the link:
-
-{{domain}}/reset?email={{email}}&code={{code}}
-```
-- Click save. You should now have two templates, with one version each, like this:
-<img src="/img/self-hosting/sendgrid-3.png" width="600" />
-- Within each template, you have a `Template ID`: copy the two of them (one for each template), we'll need them later.
-
-
 ### Set the environement variables
 
 We should now have all the information we need.
 In the `backend` section of your `docker-compose.yml` file, add the following variables:
 - `SENDGRID_API_KEY`: this is the API key you got in the first section of this guide
 - `SENDGRID_SENDER`: enter the email you used to create your Sendgrid account
-- `SENDGRID_VERIFICATION_EMAIL_TID`: this is the **Template ID** you created in the second section of this guide, for the **verification email**.
-- `SENDGRID_RESET_PASSWORD_TID`: this is the **Template ID** you created in the second section of this guide, for the **password reset email**.
 - `BASE_URL`: this is the URL to your self-hosted Retrospected (for example: `http://retro.mycompany.com`)
 
 ### Done!
 
 Now that it is setup, your users should now need to verify their email and will be able to reset their passwords themselves.
+
+## SMTP
+
+### Setting up SMTP
+
+In the `backend` section of your `docker-compose.yml` file, add the following variables:
+ - `MAIL_SMTP_HOST`: SMTP server host (example: `smtp.myemail.com`)
+ - `MAIL_PORT`: SMTP port (usually `465` for secure SMTP)
+ - `MAIL_SECURE`: If SMTP is using encryption, usually via port 465, set this to `true`
+ - `MAIL_USER`: SMTP username (or email)
+ - `MAIL_PASSWORD`: SMTP user password
+ - `MAIL_SENDER`: SMTP sender email (usually matches `MAIL_USER`)
+
