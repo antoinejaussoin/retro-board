@@ -74,9 +74,14 @@ ${[...col.items].map((i) => toItem(i, 0)).join('\n')}
 
 function toItem(item: ColumnStatsItem, depth: number) {
   const highlight = item.type === 'group' ? '**' : '';
-  let content = `${'\t'.repeat(depth)}- (+${item.likes}/-${
+  let content = `${' '.repeat(depth * 1)}* (+${item.likes}/-${
     item.dislikes
   }) ${highlight}${item.content}${highlight}`;
+  if (item.post && item.post.action) {
+    content += `\n${' '.repeat((depth + 1) * 1)}* **Action**: *${
+      item.post.action
+    }*`;
+  }
   item.children.forEach((child) => {
     content += '\n' + toItem(child, depth + 1);
   });
