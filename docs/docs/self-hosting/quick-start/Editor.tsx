@@ -37,10 +37,31 @@ export default function Editor() {
     'disable-anon',
     false
   );
-  const [disablePasswordAccounts, setDisablePasswordAccounts] =
-    usePersistedState('disable-password-accounts', false);
-  const [disablePasswordRegistration, setDisablePasswordRegistration] =
+  const [disablePassword, setDisablePasswordAccounts] = usePersistedState(
+    'disable-password-accounts',
+    false
+  );
+  const [disableRegistration, setDisablePasswordRegistration] =
     usePersistedState('disable-password-reg', false);
+  const [useSendgrid, setUseSendgrid] = usePersistedState(
+    'use-sendgrid',
+    false
+  );
+  const [useSmtp, setUseSmtp] = usePersistedState('use-smtp', false);
+  const [sendgridKey, setSendgridKey] = usePersistedState('sendgrid-key', '');
+  const [sendgridSender, setSendgridSender] = usePersistedState(
+    'sendgrid-sender',
+    'your@email.com'
+  );
+  const [smtpHost, setSmtpHost] = usePersistedState('smtp-host', '');
+  const [smtpPort, setSmtpPort] = usePersistedState('smtp-port', '465');
+  const [smtpSecure, setSmtpSecure] = usePersistedState('smtp-secure', true);
+  const [smtpUser, setSmtpUser] = usePersistedState('smtp-user', '');
+  const [smtpPassword, setSmtpPassword] = usePersistedState(
+    'smtp-password',
+    ''
+  );
+  const [smtpSender, setSmtpSender] = usePersistedState('smtp-sender', '');
 
   useEffect(() => {
     if (isBrowser) {
@@ -91,7 +112,6 @@ export default function Editor() {
           value={dbPassword}
           onChange={setDbPassword}
         />
-
         <InputField
           label="PGAdmin Password"
           description="PGAdmin administrator password, to be used with the email set above."
@@ -128,7 +148,7 @@ export default function Editor() {
             label="Disable Password / Email accounts?"
             description="Users won't be able to use email / password accounts if checked"
             toggleLabel="Disable Password Accounts"
-            value={disablePasswordAccounts}
+            value={disablePassword}
             onChange={setDisablePasswordAccounts}
           />
           <FieldToggle
@@ -136,25 +156,118 @@ export default function Editor() {
             label="Disable Password / Email registration?"
             description="Users won't be able to register a new email/password account, but will be able to login."
             toggleLabel="Disable Password Registration"
-            value={disablePasswordRegistration || disablePasswordAccounts}
+            value={disableRegistration || disablePassword}
             onChange={setDisablePasswordRegistration}
           />
+        </div>
+      </Accordion>
+      <Accordion title="Email settings">
+        <div className={styles.settings}>
+          <FieldToggle
+            id="enable-sendgrid"
+            label="Enable Sendgrid"
+            description="Use SendGrid for sending emails."
+            toggleLabel="Use SendGrid"
+            value={useSendgrid}
+            onChange={setUseSendgrid}
+          />
+          {useSendgrid ? (
+            <>
+              <InputField
+                label="SendGrid Key"
+                description="Your private SendGrid API Key"
+                value={sendgridKey}
+                onChange={setSendgridKey}
+              />
+              <InputField
+                label="SendGrid Sender email"
+                description="The email the emails will be sent on behalf of."
+                value={sendgridSender}
+                onChange={setSendgridSender}
+              />
+            </>
+          ) : null}
+        </div>
+        <div className={styles.settings}>
+          <FieldToggle
+            id="enable-smtp"
+            label="Enable SMTP"
+            description="Use SMTP for sending emails. Cannot be used in conjunction with SendGrid."
+            toggleLabel="Use SMTP"
+            value={useSmtp && !useSendgrid}
+            onChange={setUseSmtp}
+          />
+          {useSmtp && !useSendgrid ? (
+            <>
+              <InputField
+                label="SMTP Host"
+                description="The URL to your SMTP host"
+                value={smtpHost}
+                onChange={setSmtpHost}
+              />
+              <InputField
+                label="SMTP Port"
+                description="The port, usually 465 for secure SMTP."
+                number
+                value={smtpPort}
+                onChange={setSmtpPort}
+              />
+              <FieldToggle
+                id="smtp-port"
+                label="Enable Secure SMTP"
+                description="Usually enabled, especially if the port is 465."
+                toggleLabel="Enable Secure SMTP"
+                value={smtpSecure}
+                onChange={setSmtpSecure}
+              />
+              <InputField
+                label="SMTP User"
+                description="The username for SMTP authentication."
+                value={smtpUser}
+                onChange={setSmtpUser}
+              />
+              <InputField
+                label="SMTP Password"
+                description="The password to the SMTP account above."
+                value={smtpPassword}
+                onChange={setSmtpPassword}
+              />
+              <InputField
+                label="SMTP Sender email"
+                description="The email the emails will be sent on behalf of."
+                value={smtpSender}
+                onChange={setSmtpSender}
+              />
+            </>
+          ) : null}
         </div>
       </Accordion>
       <h3>Your customised docker-compose file:</h3>
 
       <ComposeView
-        dbPassword={dbPassword}
-        pgPassword={pgPassword}
-        sessionSecret={sessionSecret}
-        licence={licence}
-        email={email}
-        port={port}
-        pgPort={pgPort}
-        arm={isArm}
-        disableAnon={disableAnon}
-        disablePassword={disablePasswordAccounts}
-        disableRegistration={disablePasswordRegistration}
+        settings={{
+          dbPassword,
+          pgPassword,
+          sessionSecret,
+          licence,
+          email,
+          port,
+          pgPort,
+          arm: isArm,
+          disableAnon,
+          disablePassword,
+          disableRegistration,
+          useSendgrid,
+          useSmtp,
+          sendgridKey,
+          sendgridSender,
+          smtpHost,
+          smtpPort,
+          smtpSecure,
+          smtpUser,
+          smtpPassword,
+          smtpSender,
+        }}
       />
       <h1>2 - Run Docker</h1>
       <ul>

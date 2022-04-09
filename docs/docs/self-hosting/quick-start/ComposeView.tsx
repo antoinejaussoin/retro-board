@@ -4,7 +4,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { xonokai } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import styles from './ComposeView.module.css';
 
-type ComposeViewProps = {
+type ComposeViewSettings = {
   dbPassword: string;
   pgPassword: string;
   sessionSecret: string;
@@ -16,21 +16,67 @@ type ComposeViewProps = {
   disableAnon: boolean;
   disablePassword: boolean;
   disableRegistration: boolean;
+  useSendgrid: boolean;
+  useSmtp: boolean;
+  sendgridKey: string;
+  sendgridSender: string;
+  smtpHost: string;
+  smtpPort: string;
+  smtpSecure: boolean;
+  smtpUser: string;
+  smtpPassword: string;
+  smtpSender: string;
 };
 
+type ComposeViewProps = {
+  settings: ComposeViewSettings;
+};
+
+function p(condition: boolean, key: string, value: string, number = false) {
+  return condition
+    ? `      ${key}: ${number ? value : "'" + value + "'"}`
+    : null;
+}
+
 export default function ComposeView({
-  dbPassword,
-  pgPassword,
-  email,
-  licence,
-  sessionSecret,
-  port,
-  pgPort,
-  arm,
-  disableAnon,
-  disablePassword,
-  disableRegistration,
+  settings: {
+    dbPassword,
+    pgPassword,
+    email,
+    licence,
+    sessionSecret,
+    port,
+    pgPort,
+    arm,
+    disableAnon,
+    disablePassword,
+    disableRegistration,
+    useSendgrid,
+    useSmtp,
+    sendgridKey,
+    sendgridSender,
+    smtpHost,
+    smtpPort,
+    smtpSecure,
+    smtpUser,
+    smtpPassword,
+    smtpSender,
+  },
 }: ComposeViewProps) {
+  const optionals = [
+    p(disableAnon, 'DISABLE_ANONYMOUS_LOGIN', 'true'),
+    p(disablePassword, 'DISABLE_PASSWORD_LOGIN', 'true'),
+    p(disableRegistration, 'DISABLE_PASSWORD_REGISTRATION', 'true'),
+    p(useSendgrid, 'SENDGRID_API_KEY', sendgridKey),
+    p(useSendgrid, 'SENDGRID_SENDER', sendgridSender),
+    p(useSmtp, 'MAIL_SMTP_HOST', smtpHost),
+    p(useSmtp, 'MAIL_PORT', smtpPort, true),
+    p(useSmtp, 'MAIL_SECURE', smtpSecure ? 'true' : 'false'),
+    p(useSmtp, 'MAIL_USER', smtpUser),
+    p(useSmtp, 'MAIL_PASSWORD', smtpPassword),
+    p(useSmtp, 'MAIL_SENDER', smtpSender),
+  ].filter(Boolean);
+
   const text = `version: '3'
 services:
   frontend:
@@ -54,9 +100,8 @@ services:
       SELF_HOSTED_ADMIN: '${email}'
       DB_PASSWORD: '${dbPassword}'
       SESSION_SECRET: '${sessionSecret}'
-${disableAnon ? "      DISABLE_ANONYMOUS_LOGIN: 'true'\n" : ''}${
-    disablePassword ? "      DISABLE_PASSWORD_LOGIN: 'true'\n" : ''
-  }${disableRegistration ? "      DISABLE_PASSWORD_REGISTRATION: 'true'\n" : ''}
+${optionals.join('\n')}
+
     restart: unless-stopped
     logging:
       driver: 'json-file'
