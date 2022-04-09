@@ -1,8 +1,7 @@
 import 'core-js/stable';
 import 'whatwg-fetch';
+import ReactDOM from 'react-dom';
 import App from './App';
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
 import { initialiseAnalytics, initialiseSentry } from './track';
 import * as serviceWorker from './serviceWorker';
 import 'emoji-mart/css/emoji-mart.css';
@@ -13,14 +12,7 @@ window.Buffer = window.Buffer || require('buffer').Buffer;
 
 initialiseSentry();
 initialiseAnalytics();
-
-const container = document.getElementById('content')!;
-const root = createRoot(container);
-root.render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
+ReactDOM.render(<App />, document.getElementById('content'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
