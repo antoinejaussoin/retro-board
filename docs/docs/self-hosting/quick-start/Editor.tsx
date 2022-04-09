@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import ComposeView from './ComposeView';
-import { InputField, Field } from './Field';
+import { InputField } from './Field';
 import styles from './Editor.module.css';
 import randomWords from 'random-words';
 import queryString from 'query-string';
 import RunDetails from './RunDetails';
 import useIsBrowser from '@docusaurus/useIsBrowser';
-import Toggle from 'react-toggle';
 import usePersistedState from './usePersistedState';
 import { FieldToggle } from './Toggle';
+import { Accordion } from './Accordion';
 
 function getRandomPassword() {
   return randomWords(4).join('-');
@@ -91,51 +91,56 @@ export default function Editor() {
           value={dbPassword}
           onChange={setDbPassword}
         />
-        <InputField
-          label="Session Secret"
-          description="Web server session secret. This can be anything."
-          value={sessionSecret}
-          onChange={setSessionSecret}
-        />
+
         <InputField
           label="PGAdmin Password"
           description="PGAdmin administrator password, to be used with the email set above."
           value={pgPassword}
           onChange={setPgPassword}
         />
-        <FieldToggle
-          id="arm-toggle"
-          label="Deploying on ARM?"
-          description="Only check this if you are deploying on an ARM-based server."
-          toggleLabel="ARM server"
-          value={isArm}
-          onChange={setIsArm}
-        />
-        <FieldToggle
-          id="disable-anon-toggle"
-          label="Disable Anonymous accounts?"
-          description="Users won't be able to use anonymous accounts if checked"
-          toggleLabel="Disable Anonymous Accounts"
-          value={disableAnon}
-          onChange={setDisableAnon}
-        />
-        <FieldToggle
-          id="disable-pass-accounts"
-          label="Disable Password / Email accounts?"
-          description="Users won't be able to use email / password accounts if checked"
-          toggleLabel="Disable Password Accounts"
-          value={disablePasswordAccounts}
-          onChange={setDisablePasswordAccounts}
-        />
-        <FieldToggle
-          id="disable-pass-reg"
-          label="Disable Password / Email registration?"
-          description="Users won't be able to register a new email/password account, but will be able to login."
-          toggleLabel="Disable Password Registration"
-          value={disablePasswordRegistration || disablePasswordAccounts}
-          onChange={setDisablePasswordRegistration}
-        />
       </div>
+      <Accordion title="Advanced settings">
+        <div className={styles.settings}>
+          <InputField
+            label="Session Secret"
+            description="Web server session secret. This can be anything."
+            value={sessionSecret}
+            onChange={setSessionSecret}
+          />
+          <FieldToggle
+            id="arm-toggle"
+            label="Deploying on ARM?"
+            description="Only check this if you are deploying on an ARM-based server."
+            toggleLabel="ARM server"
+            value={isArm}
+            onChange={setIsArm}
+          />
+          <FieldToggle
+            id="disable-anon-toggle"
+            label="Disable Anonymous accounts?"
+            description="Users won't be able to use anonymous accounts if checked"
+            toggleLabel="Disable Anonymous Accounts"
+            value={disableAnon}
+            onChange={setDisableAnon}
+          />
+          <FieldToggle
+            id="disable-pass-accounts"
+            label="Disable Password / Email accounts?"
+            description="Users won't be able to use email / password accounts if checked"
+            toggleLabel="Disable Password Accounts"
+            value={disablePasswordAccounts}
+            onChange={setDisablePasswordAccounts}
+          />
+          <FieldToggle
+            id="disable-pass-reg"
+            label="Disable Password / Email registration?"
+            description="Users won't be able to register a new email/password account, but will be able to login."
+            toggleLabel="Disable Password Registration"
+            value={disablePasswordRegistration || disablePasswordAccounts}
+            onChange={setDisablePasswordRegistration}
+          />
+        </div>
+      </Accordion>
       <h3>Your customised docker-compose file:</h3>
 
       <ComposeView

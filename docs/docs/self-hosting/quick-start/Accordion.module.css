@@ -1,0 +1,16 @@
+.container {
+	border: 1px solid #E0E0E0;
+	border-radius: 5px;
+	padding: 10px;
+	background-color: #FAFAFA;
+	margin-bottom: 20px;
+}
+
+.title {
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.content {
+margin-top: 20px;
+}
