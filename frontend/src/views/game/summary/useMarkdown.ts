@@ -74,25 +74,25 @@ ${[...col.items].map((i) => toItem(i, 0)).join('\n')}
 
 function toItem(item: ColumnStatsItem, depth: number) {
   const highlight = item.type === 'group' ? '**' : '';
-  let content = `${' '.repeat(depth * 1)}* (+${item.likes}/-${
+  let content = `${' '.repeat(depth * 2)}* (+${item.likes}/-${
     item.dislikes
-  }) ${highlight}${item.content}${highlight}`;
+  }) ${highlight}${toMultiline(item.content)}${highlight}`;
   if (item.post && item.post.action) {
-    content += `\n${' '.repeat((depth + 1) * 1)}* **Action**: *${
+    content += `\n${' '.repeat((depth + 1) * 2)}* **Action**: *${toMultiline(
       item.post.action
-    }*`;
+    )}*`;
   }
   item.children.forEach((child) => {
     content += '\n' + toItem(child, depth + 1);
   });
 
-  return toMultiline(content);
+  return content;
 }
 
 function toAction(action: ActionItem): string {
-  return `- ${action.action}`;
+  return `- ${toMultiline(action.action)}`;
 }
 
 function toMultiline(content: string) {
-  return content.replace(/(?:\r\n|\r|\n)/g, '  \n    ');
+  return content.replace(/(?:\r\n|\r|\n)/g, '  \n');
 }
