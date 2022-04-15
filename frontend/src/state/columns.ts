@@ -108,7 +108,7 @@ export const getTemplateColumnByType =
         },
         {
           color: '#FFEBEE',
-          icon: 'unamused',
+          icon: 'mortar_board',
           label: translations.PostBoard.learnedQuestion,
           type: 'learned',
         },

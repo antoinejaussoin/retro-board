@@ -15,8 +15,8 @@ const IconPicker = ({ value, onChange }: IconPickerProps) => {
   const [opened, open, close] = useModal();
   const handleChange = useCallback(
     (emoji: EmojiData) => {
-      if (emoji.id) {
-        onChange(emoji.id);
+      if (emoji.colons) {
+        onChange(emoji.colons);
         close();
       }
     },
