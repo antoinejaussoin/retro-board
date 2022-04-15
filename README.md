@@ -85,12 +85,14 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
-### Version 4.14.0 (unreleased)
+### Version 4.14.0
 
 - Upgrade to React 18
 - Replace icons by emoji for columns headers (fully customisable)
-- Adding SMTP support for self-hosting, in addition to SendGrid
+- Adding SMTP support for self-hosting, in addition to SendGrid. 👏 Thanks [@dayByte](https://github.com/dayByte) for the idea. ([#365](https://github.com/antoinejaussoin/retro-board/issues/365)).
 - Simplification of SendGrid setup, by removing the need of creating email templates. They are now hardcoded.
+- Improving email templates
+- Improving Text and Markdown exports on Summary Mode. 👏 Thanks Jakob J for the idea. ([#384](https://github.com/antoinejaussoin/retro-board/issues/384)). 
 
 ### Version 4.13.0
 
