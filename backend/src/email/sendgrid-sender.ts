@@ -16,6 +16,12 @@ export const sendGridSender: EmailSender = async function (
     from: config.SENDGRID_SENDER,
     html: body,
     subject,
+    trackingSettings: {
+      subscriptionTracking: {
+        enable: true,
+        substitutionTag: '[Unsubscribe]',
+      },
+    },
   };
   try {
     await sendGrid.send(msg);
