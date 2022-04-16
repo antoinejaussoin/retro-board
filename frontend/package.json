@@ -57,7 +57,7 @@
     "react-ga": "3.3.0",
     "react-giphy-searchbox": "1.5.4",
     "react-helmet": "6.1.0",
-    "react-markdown": "6.0.3",
+    "react-markdown": "8.0.2",
     "react-password-strength-bar": "0.4.0",
     "react-router-dom": "6.3.0",
     "react-scripts": "5.0.1",
@@ -89,5 +89,11 @@
     "not dead",
     "not ie <= 9",
     "not op_mini all"
-  ]
+  ],
+  "jest": {
+    "transformIgnorePatterns": [
+      "(?!(/node_modules/(react-markdown|vfile|vfile-message|unist-.*|unified|bail|is-plain-obj|trough|remark-.*|mdast-util-.*|micromark.*|decode-named-character-reference|character-entities|property-information|hast-util-whitespace|space-separated-tokens|comma-separated-tokens|pretty-bytes)/))(/node_modules/.+.(js|jsx|mjs|cjs|ts|tsx)$)",
+      "^.+.module.(css|sass|scss)$"
+    ]
+  }
 }
