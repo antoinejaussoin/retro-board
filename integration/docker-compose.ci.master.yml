@@ -7,6 +7,7 @@ services:
       - frontend
     environment:
       - CYPRESS_baseUrl=http://frontend
+      - CYPRESS_backend_delay=30000
     working_dir: /e2e
     volumes:
       - ./:/e2e
