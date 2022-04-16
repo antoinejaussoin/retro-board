@@ -1,15 +1,16 @@
 import styled from '@emotion/styled';
 import { Alert } from '@mui/material';
+import { PropsWithChildren } from 'react';
 
 interface SettingCategoryProps {
   title: string;
   subtitle: string;
 }
 
-const SettingCategory: React.FC<SettingCategoryProps> = ({
+export default function SettingCategory({
   subtitle,
   children,
-}) => {
+}: PropsWithChildren<SettingCategoryProps>) {
   return (
     <Container>
       <Alert severity="success" style={{ marginTop: 10 }}>
@@ -18,12 +19,10 @@ const SettingCategory: React.FC<SettingCategoryProps> = ({
       <ChildrenContainer>{children}</ChildrenContainer>
     </Container>
   );
-};
+}
 
 const ChildrenContainer = styled.div`
   width: 100%;
 `;
 
 const Container = styled.div``;
-
-export default SettingCategory;

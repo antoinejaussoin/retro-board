@@ -15,26 +15,29 @@ interface SummaryModeProps {
 
 const SummaryHome = ({ columns, search }: SummaryModeProps) => {
   const [tab, setTab] = useState(0);
-  const handleChange = useCallback((_, v) => setTab(v), []);
-  return <>
-    <AppBar position="static" color="default">
-      <Tabs
-        value={tab}
-        onChange={handleChange}
-        variant="scrollable"
-        scrollButtons
-        indicatorColor="primary"
-        textColor="primary"
-        aria-label="summary tabs"
-        allowScrollButtonsMobile>
-        <Tab label="Summary" icon={<PhoneIcon />} />
-        <Tab label="Markdown" icon={<FavoriteIcon />} />
-      </Tabs>
-    </AppBar>
-    <Page>
-      <SummaryMode columns={columns} search={search} />
-    </Page>
-  </>;
+  const handleChange = useCallback((_: unknown, v: number) => setTab(v), []);
+  return (
+    <>
+      <AppBar position="static" color="default">
+        <Tabs
+          value={tab}
+          onChange={handleChange}
+          variant="scrollable"
+          scrollButtons
+          indicatorColor="primary"
+          textColor="primary"
+          aria-label="summary tabs"
+          allowScrollButtonsMobile
+        >
+          <Tab label="Summary" icon={<PhoneIcon />} />
+          <Tab label="Markdown" icon={<FavoriteIcon />} />
+        </Tabs>
+      </AppBar>
+      <Page>
+        <SummaryMode columns={columns} search={search} />
+      </Page>
+    </>
+  );
 };
 
 export default SummaryHome;

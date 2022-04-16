@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { PropsWithChildren, useCallback, useState } from 'react';
 import { PostGroup } from 'common';
 import styled from '@emotion/styled';
 import {
@@ -27,13 +27,13 @@ interface GroupProps {
   onDelete: (group: PostGroup) => void;
 }
 
-const Group: React.FC<GroupProps> = ({
+export default function Group({
   group,
   onEditLabel,
   onDelete,
   readonly,
   children,
-}) => {
+}: PropsWithChildren<GroupProps>) {
   const { Group: groupTranslations } = useTranslations();
   const [collapsed, setCollapsed] = useState(false);
   const { decrypt, encrypt } = useCrypto();
@@ -105,7 +105,7 @@ const Group: React.FC<GroupProps> = ({
       )}
     </Droppable>
   );
-};
+}
 
 const GroupContainer = styled.div<{ draggingOver: boolean }>`
   position: relative;
@@ -145,5 +145,3 @@ const NoPosts = styled.div`
   color: grey;
   margin: 30px;
 `;
-
-export default Group;

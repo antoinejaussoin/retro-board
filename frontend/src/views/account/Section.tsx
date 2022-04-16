@@ -1,19 +1,24 @@
 import { colors } from '@mui/material';
 import styled from '@emotion/styled';
+import { PropsWithChildren } from 'react';
 
 interface SectionProps {
   title?: string;
   danger?: boolean;
 }
 
-const Section: React.FC<SectionProps> = ({ title, danger, children }) => {
+export default function Section({
+  title,
+  danger,
+  children,
+}: PropsWithChildren<SectionProps>) {
   return (
     <Container danger={!!danger}>
       <Title>{title}</Title>
       <Content>{children}</Content>
     </Container>
   );
-};
+}
 
 const Container = styled.section<{ danger: boolean }>`
   border: 1px solid
@@ -45,5 +50,3 @@ const Title = styled.header`
 `;
 
 const Content = styled.div``;
-
-export default Section;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import { render, RenderOptions, RenderResult } from '@testing-library/react';
 import { FullUser, Session, defaultOptions } from 'common';
 import {
@@ -31,15 +31,15 @@ export const initialSession: Session = {
   ready: [],
 };
 
-export const AllTheProviders: React.FC = ({ children }) => {
+export function AllTheProviders({ children }: PropsWithChildren<{}>) {
   return (
     <RecoilRoot>
       <Inner>{children}</Inner>
     </RecoilRoot>
   );
-};
+}
 
-const Inner: React.FC = ({ children }) => {
+export default function Inner({ children }: PropsWithChildren<{}>) {
   const { receiveBoard } = useSession();
   const [user, setUser] = useState<FullUser | null>({
     id: 'John Doe',
@@ -97,7 +97,7 @@ const Inner: React.FC = ({ children }) => {
       </Droppable>
     </DragDropContext>
   );
-};
+}
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 const customRender = (

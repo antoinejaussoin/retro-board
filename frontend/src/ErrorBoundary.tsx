@@ -6,10 +6,14 @@ interface ErrorBoundaryState {
   errored: boolean;
 }
 
-class ErrorBoundary extends Component<{}, ErrorBoundaryState> {
+interface ErrorBoundaryProps {
+  children: React.ReactNode;
+}
+
+class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   unregisterHistoryListener?: () => void = undefined;
 
-  constructor(props: {}) {
+  constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { errored: false };
     this.handleRouteChange = this.handleRouteChange.bind(this);

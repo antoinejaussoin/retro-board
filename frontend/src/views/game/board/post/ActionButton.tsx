@@ -1,5 +1,6 @@
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
+import { PropsWithChildren } from 'react';
 
 interface ActionButtonProps {
   tooltip: React.ReactElement | string | number;
@@ -10,7 +11,7 @@ interface ActionButtonProps {
   onClick: () => void;
 }
 
-const ActionButton: React.FC<ActionButtonProps> = ({
+export default function ActionButton({
   tooltip,
   icon,
   onClick,
@@ -18,7 +19,7 @@ const ActionButton: React.FC<ActionButtonProps> = ({
   disabled,
   innerRef,
   children,
-}) => {
+}: PropsWithChildren<ActionButtonProps>) {
   const showTooltip = !!tooltip;
   return (
     <Tooltip
@@ -49,6 +50,4 @@ const ActionButton: React.FC<ActionButtonProps> = ({
       </span>
     </Tooltip>
   );
-};
-
-export default ActionButton;
+}

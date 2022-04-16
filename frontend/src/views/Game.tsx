@@ -40,7 +40,10 @@ function GamePage() {
   const translations = useTranslations();
   const { gameId } = useParams<keyof RouteParams>();
   const { session } = useSession();
-  const handleChange = useCallback((_, v) => navigate(v), [navigate]);
+  const handleChange = useCallback(
+    (_: unknown, v: string) => navigate(v),
+    [navigate]
+  );
   const columns = useColumns();
   const { decrypt } = useCrypto();
   const [search, setSearch] = useState('');

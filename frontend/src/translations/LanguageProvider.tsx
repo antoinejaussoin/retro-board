@@ -1,4 +1,10 @@
-import { useState, useEffect, useCallback, useContext } from 'react';
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useContext,
+  PropsWithChildren,
+} from 'react';
 import Context from './Context';
 import UserContext from '../auth/Context';
 import { TrackingEvent } from 'common';
@@ -8,7 +14,7 @@ import { trackEvent } from '../track';
 import useUser from '../auth/useUser';
 import config from '../utils/getConfig';
 
-const LanguageProvider: React.FC = ({ children }) => {
+export default function LanguageProvider({ children }: PropsWithChildren<{}>) {
   const [language, setLanguage] = useState(config.defaultLanguage);
   const user = useUser();
   const { setUser } = useContext(UserContext);
@@ -44,6 +50,4 @@ const LanguageProvider: React.FC = ({ children }) => {
       {children}
     </Context.Provider>
   );
-};
-
-export default LanguageProvider;
+}

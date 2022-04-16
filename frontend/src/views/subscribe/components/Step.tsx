@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { colors } from '@mui/material';
+import { PropsWithChildren } from 'react';
 
 interface StepProps {
   index: number;
@@ -7,7 +8,12 @@ interface StepProps {
   description?: string;
 }
 
-const Step: React.FC<StepProps> = ({ index, title, description, children }) => {
+export default function Step({
+  index,
+  title,
+  description,
+  children,
+}: PropsWithChildren<StepProps>) {
   return (
     <Container>
       <Index>{index}</Index>
@@ -20,7 +26,7 @@ const Step: React.FC<StepProps> = ({ index, title, description, children }) => {
       </Main>
     </Container>
   );
-};
+}
 
 const Container = styled.div`
   border: 1px solid ${colors.grey[200]};
@@ -67,5 +73,3 @@ const Title = styled.div`
 const Description = styled.div``;
 
 const Content = styled.div``;
-
-export default Step;

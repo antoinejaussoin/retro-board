@@ -23,11 +23,11 @@
     "@types/lodash": "4.14.181",
     "@types/md5": "2.3.2",
     "@types/node": "17.0.24",
-    "@types/react": "17.0.43",
+    "@types/react": "18.0.5",
     "@types/react-beautiful-dnd": "13.1.2",
     "@types/react-color": "3.0.6",
     "@types/react-copy-to-clipboard": "5.0.2",
-    "@types/react-dom": "17.0.14",
+    "@types/react-dom": "18.0.1",
     "@types/react-helmet": "6.1.5",
     "@types/react-router-dom": "5.3.3",
     "@types/shortid": "0.0.29",
@@ -90,6 +90,10 @@
     "not ie <= 9",
     "not op_mini all"
   ],
+  "resolutions": {
+    "@types/react": "18.0.5",
+    "@types/react-dom": "18.0.1"
+  },
   "jest": {
     "transformIgnorePatterns": [
       "(?!(/node_modules/(react-markdown|vfile|vfile-message|unist-.*|unified|bail|is-plain-obj|trough|remark-.*|mdast-util-.*|micromark.*|decode-named-character-reference|character-entities|property-information|hast-util-whitespace|space-separated-tokens|comma-separated-tokens|pretty-bytes)/))(/node_modules/.+.(js|jsx|mjs|cjs|ts|tsx)$)",

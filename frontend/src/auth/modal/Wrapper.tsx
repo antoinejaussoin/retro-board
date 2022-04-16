@@ -1,11 +1,16 @@
 import styled from '@emotion/styled';
+import { PropsWithChildren } from 'react';
 
 interface WrapperProps {
   header?: string;
   actions?: JSX.Element;
 }
 
-const Wrapper: React.FC<WrapperProps> = ({ header, actions, children }) => {
+export default function Wrapper({
+  header,
+  actions,
+  children,
+}: PropsWithChildren<WrapperProps>) {
   return (
     <Container>
       <Title>{header}</Title>
@@ -13,7 +18,7 @@ const Wrapper: React.FC<WrapperProps> = ({ header, actions, children }) => {
       <Actions>{actions}</Actions>
     </Container>
   );
-};
+}
 
 const Container = styled.div``;
 const Title = styled.div`
@@ -27,5 +32,3 @@ const Actions = styled.div`
   justify-content: flex-end;
   margin: 20px 0 5px 0;
 `;
-
-export default Wrapper;
