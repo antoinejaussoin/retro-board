@@ -1,15 +1,5 @@
 import * as Sentry from '@sentry/browser';
 
-export let csrf = '';
-
-export async function loadCsrfToken() {
-  const data = await fetchGet<{ token: string } | null>('/api/csrf', null);
-  const token = data ? data.token : null;
-  if (token) {
-    csrf = token;
-  }
-}
-
 export function requestConfig(): Partial<RequestInit> {
   return {
     mode: 'same-origin',
@@ -17,7 +7,6 @@ export function requestConfig(): Partial<RequestInit> {
     credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json',
-      'CSRF-Token': csrf,
     },
     redirect: 'follow',
     referrer: 'same-origin',

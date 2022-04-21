@@ -85,6 +85,10 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 4.14.1 (hotfix)
+
+- Remove CSRF code, causing random issues
+
 ### Version 4.14.0
 
 - Upgrade to React 18

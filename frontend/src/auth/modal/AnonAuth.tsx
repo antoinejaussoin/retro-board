@@ -6,7 +6,6 @@ import useTranslations, { useLanguage } from '../../translations';
 import { anonymousLogin, updateLanguage } from '../../api';
 import { FullUser } from 'common';
 import Wrapper from './Wrapper';
-import { loadCsrfToken } from '../../api/fetch';
 
 interface AnonAuthProps {
   onClose: () => void;
@@ -28,7 +27,6 @@ const AnonAuth = ({ onClose, onUser }: AnonAuthProps) => {
           setError('Your anonymous account is not valid.');
           return;
         }
-        await loadCsrfToken(); // Because the user changed, so the CSRF token must be updated
         const updatedUser = await updateLanguage(language.value);
         onUser(updatedUser);
         if (onClose) {

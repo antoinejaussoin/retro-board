@@ -15,7 +15,6 @@ import Wrapper from './Wrapper';
 import SlackLoginButton from './social/SlackLoginButton';
 import OktaLoginButton from './social/OktaLoginButton';
 import useOAuthAvailabilities from '../../global/useOAuthAvailabilities';
-import { loadCsrfToken } from '../../api/fetch';
 
 const API_URL = '/api/auth';
 
@@ -65,7 +64,6 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
     const s = io();
     setSocket(s);
     s.on('auth', async (_user: FullUser) => {
-      await loadCsrfToken(); // Because the user changed, so the CSRF token must be updated
       const updatedUser = await updateLanguage(language.value);
       onUser(updatedUser);
       if (windowRef.current) {

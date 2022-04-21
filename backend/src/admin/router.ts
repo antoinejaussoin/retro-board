@@ -8,11 +8,9 @@ import config from '../config';
 import { isLicenced } from '../security/is-licenced';
 import { AdminChangePasswordPayload, BackendCapabilities } from '../common';
 import { getIdentityFromRequest, hashPassword } from '../utils';
-import csurf from 'csurf';
 import { canSendEmails } from '../email/utils';
 
 const router = express.Router();
-const csrfProtection = csurf();
 
 router.get('/self-hosting', async (_, res) => {
   const licence = await isLicenced();
@@ -45,7 +43,7 @@ router.get('/users', async (req, res) => {
   res.send(users.map((u) => u.toJson()));
 });
 
-router.patch('/user', csrfProtection, async (req, res) => {
+router.patch('/user', async (req, res) => {
   const authIdentity = await getIdentityFromRequest(req);
   if (!authIdentity || authIdentity.user.email !== config.SELF_HOSTED_ADMIN) {
     return res.status(403).send('You are not allowed to do this');
