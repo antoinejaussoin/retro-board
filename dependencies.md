@@ -10,6 +10,3 @@
 - redis 3.1.2 (new version incompatible with express-redis)
 - passport 0.5.0 (new version, including 0.5.2 breaks set user when using Docker, but not locally)
 
-### Frontend
-
- - react-markdown (6.0.3): Jest won't work with ESM. I hate ESM.
