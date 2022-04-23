@@ -1,4 +1,4 @@
-import { InternalProduct } from './types';
+import { InternalProduct } from './types.js';
 import { Plan } from '../common';
 import config from '../config';
 

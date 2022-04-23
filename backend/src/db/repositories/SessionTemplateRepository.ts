@@ -7,7 +7,7 @@ import {
 } from '../../common';
 import { v4 } from 'uuid';
 import { TemplateColumnRepository } from '.';
-import BaseRepository from './BaseRepository';
+import BaseRepository from './BaseRepository.js';
 
 @EntityRepository(SessionTemplateEntity)
 export default class SessionTemplateRepository extends BaseRepository<SessionTemplateEntity> {

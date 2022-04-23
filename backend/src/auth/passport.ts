@@ -14,11 +14,11 @@ import {
   MICROSOFT_CONFIG,
   SLACK_CONFIG,
   OKTA_CONFIG,
-} from './config';
+} from './config.js';
 import { AccountType } from '../common';
 import chalk from 'chalk';
-import loginUser from './logins/password-user';
-import loginAnonymous from './logins/anonymous-user';
+import loginUser from './logins/password-user.js';
+import loginAnonymous from './logins/anonymous-user.js';
 import {
   BaseProfile,
   TwitterProfile,
@@ -27,7 +27,7 @@ import {
   MicrosoftProfile,
   SlackProfile,
   OktaProfile,
-} from './types';
+} from './types.js';
 import { registerUser, UserRegistration } from '../db/actions/users';
 import { serialiseIds, UserIds, deserialiseIds } from '../utils';
 import config from '../config';

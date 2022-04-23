@@ -11,7 +11,7 @@ import {
 } from 'typeorm';
 import { User, Currency } from '../../common';
 import { SessionEntity, SessionTemplateEntity } from '.';
-import UserIdentityEntity from './UserIdentity';
+import UserIdentityEntity from './UserIdentity.js';
 
 export const ALL_FIELDS: Array<keyof UserEntity> = [
   'id',

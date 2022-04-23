@@ -9,9 +9,9 @@ import {
   Index,
 } from 'typeorm';
 import { LexoRank } from 'lexorank';
-import SessionEntity from './Session';
-import UserEntity from './User';
-import PostEntity from './Post';
+import SessionEntity from './Session.js';
+import UserEntity from './User.js';
+import PostEntity from './Post.js';
 import { PostGroup } from '../../common';
 
 @Entity({ name: 'groups' })

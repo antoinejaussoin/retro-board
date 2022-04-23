@@ -1,8 +1,8 @@
 import { EntityRepository } from 'typeorm';
 import { SessionEntity } from '../entities';
-import ColumnRepository from './ColumnRepository';
+import ColumnRepository from './ColumnRepository.js';
 import { Session as JsonSession, SessionOptions } from '../../common';
-import BaseRepository from './BaseRepository';
+import BaseRepository from './BaseRepository.js';
 
 @EntityRepository(SessionEntity)
 export default class SessionRepository extends BaseRepository<SessionEntity> {

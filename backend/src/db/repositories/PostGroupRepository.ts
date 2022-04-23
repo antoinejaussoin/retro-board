@@ -2,7 +2,7 @@ import { EntityRepository } from 'typeorm';
 import { PostGroupEntity } from '../entities';
 import { PostGroup as JsonPostGroup } from '../../common';
 import { cloneDeep } from 'lodash';
-import BaseRepository from './BaseRepository';
+import BaseRepository from './BaseRepository.js';
 
 @EntityRepository(PostGroupEntity)
 export default class PostGroupRepository extends BaseRepository<PostGroupEntity> {

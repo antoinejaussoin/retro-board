@@ -8,7 +8,7 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { AccountType, UserIdentity } from '../../common';
-import UserEntity from './User';
+import UserEntity from './User.js';
 import { UserIds } from '../../utils';
 
 export const ALL_FIELDS: Array<keyof UserIdentityEntity> = [

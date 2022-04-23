@@ -2,7 +2,7 @@ import { EntityRepository } from 'typeorm';
 import { SessionEntity } from '../entities';
 import { Message as JsonMessage } from '../../common';
 import { cloneDeep } from 'lodash';
-import BaseRepository from './BaseRepository';
+import BaseRepository from './BaseRepository.js';
 import MessageEntity from '../entities/Message';
 
 @EntityRepository(MessageEntity)

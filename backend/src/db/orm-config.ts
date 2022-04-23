@@ -13,10 +13,10 @@ import {
   MessageEntity,
   UserView,
   SessionView,
-} from './entities';
-import LicenceEntity from './entities/Licence';
-import SessionOptionsEntity from './entities/SessionOptions';
-import UserIdentityEntity from './entities/UserIdentity';
+} from './entities.js';
+import LicenceEntity from './entities/Licence.js';
+import SessionOptionsEntity from './entities/SessionOptions.js';
+import UserIdentityEntity from './entities/UserIdentity.js';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import path from 'path';
 

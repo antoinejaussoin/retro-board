@@ -5,29 +5,29 @@ import { createClient } from 'redis';
 import connectRedis from 'connect-redis';
 import http from 'http';
 import chalk from 'chalk';
-import db from './db';
-import config from './config';
+import db from './db/index.js';
+import config from './config.js';
 import passport from 'passport';
-import passportInit from './auth/passport';
-import authRouter from './auth/router';
-import adminRouter from './admin/router';
-import stripeRouter from './stripe/router';
-import slackRouter from './slack/router';
+import passportInit from './auth/passport.js';
+import authRouter from './auth/router.js';
+import adminRouter from './admin/router.js';
+import stripeRouter from './stripe/router.js';
+import slackRouter from './slack/router.js';
 import session from 'express-session';
-import game from './game';
+import game from './game.js';
 import {
   hashPassword,
   getIdentityFromRequest,
   getUserViewFromRequest,
   getUserQuota,
-} from './utils';
+} from './utils.js';
 import {
   initSentry,
   setupSentryErrorHandler,
   setupSentryRequestHandler,
   setScope,
   reportQueryError,
-} from './sentry';
+} from './sentry.js';
 import {
   RegisterPayload,
   ValidateEmailPayload,
@@ -36,29 +36,32 @@ import {
   CreateSessionPayload,
   SelfHostedCheckPayload,
   DeleteAccountPayload,
-} from './common';
-import registerPasswordUser from './auth/register/register-user';
-import { sendVerificationEmail, sendResetPassword } from './email/emailSender';
+} from './common/index.js';
+import registerPasswordUser from './auth/register/register-user.js';
+import {
+  sendVerificationEmail,
+  sendResetPassword,
+} from './email/emailSender.js';
 import { v4 } from 'uuid';
 import {
   createSession,
   previousSessions,
   deleteSessions,
   getDefaultTemplate,
-} from './db/actions/sessions';
+} from './db/actions/sessions.js';
 import {
   updateUser,
   getUserView,
   getPasswordIdentity,
   updateIdentity,
   getIdentityByUsername,
-} from './db/actions/users';
-import { isLicenced } from './security/is-licenced';
-import { fetchLicence, validateLicence } from './db/actions/licences';
-import { hasField } from './security/payload-checker';
+} from './db/actions/users.js';
+import { isLicenced } from './security/is-licenced.js';
+import { fetchLicence, validateLicence } from './db/actions/licences.js';
+import { hasField } from './security/payload-checker.js';
 import mung from 'express-mung';
-import { QueryFailedError } from 'typeorm';
-import { deleteAccount } from './db/actions/delete';
+import {} from 'typeorm';
+import { deleteAccount } from './db/actions/delete.js';
 
 const sessionSecret = `${config.SESSION_SECRET!}-4.11.5`; // Increment to force re-auth
 

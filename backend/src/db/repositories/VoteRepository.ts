@@ -1,7 +1,7 @@
 import { EntityRepository } from 'typeorm';
 import { VoteEntity } from '../entities';
 import { Vote as JsonVote } from '../../common';
-import BaseRepository from './BaseRepository';
+import BaseRepository from './BaseRepository.js';
 
 @EntityRepository(VoteEntity)
 export default class VoteRepository extends BaseRepository<VoteEntity> {

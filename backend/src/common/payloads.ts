@@ -1,4 +1,4 @@
-import { Plan, Currency, StripeLocales, AccessErrorType } from './types';
+import { Plan, Currency, StripeLocales, AccessErrorType } from './types.js';
 
 export interface RegisterPayload {
   name: string;

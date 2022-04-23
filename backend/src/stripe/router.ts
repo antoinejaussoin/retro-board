@@ -7,8 +7,8 @@ import {
   StripeEvent,
   CheckoutCompletedPayload,
   SubscriptionDeletedPayload,
-} from './types';
-import { plans, getProduct } from './products';
+} from './types.js';
+import { plans, getProduct } from './products.js';
 import { updateUser } from '../db/actions/users';
 import { registerLicence } from '../db/actions/licences';
 import { getIdentityFromRequest } from '../utils';

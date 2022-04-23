@@ -10,13 +10,13 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
-import PostEntity from './Post';
-import { ColumnDefinitionEntity } from './ColumnDefinition';
+import PostEntity from './Post.js';
+import { ColumnDefinitionEntity } from './ColumnDefinition.js';
 import { SessionOptions as JsonSessionOptions, Session } from '../../common';
-import UserEntity from './User';
-import SessionOptionsEntity from './SessionOptions';
-import PostGroupEntity from './PostGroup';
-import MessageEntity from './Message';
+import UserEntity from './User.js';
+import SessionOptionsEntity from './SessionOptions.js';
+import PostGroupEntity from './PostGroup.js';
+import MessageEntity from './Message.js';
 
 @Entity({ name: 'sessions' })
 export default class SessionEntity {

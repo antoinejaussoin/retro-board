@@ -3,7 +3,7 @@ import { EntityManager } from 'typeorm';
 import { UserIdentityRepository, UserRepository } from '../repositories';
 import { ALL_FIELDS } from '../entities/User';
 import { ALL_FIELDS as ALL_FIELDS_IDENTITY } from '../entities/UserIdentity';
-import { transaction } from './transaction';
+import { transaction } from './transaction.js';
 import { AccountType, FullUser } from '../../common';
 import { isSelfHostedAndLicenced } from '../../security/is-licenced';
 import { v4 } from 'uuid';

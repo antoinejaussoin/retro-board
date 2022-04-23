@@ -1,7 +1,7 @@
 import { SubscriptionRepository, UserRepository } from '../repositories';
 import { Plan, Currency } from '../../common';
 import { SubscriptionEntity, UserEntity, UserView } from '../entities';
-import { transaction } from './transaction';
+import { transaction } from './transaction.js';
 
 export async function activateSubscription(
   userId: string,

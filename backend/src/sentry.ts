@@ -1,4 +1,4 @@
-import config from './config';
+import config from './config.js';
 import * as Sentry from '@sentry/node';
 import chalk from 'chalk';
 import { Express, Request } from 'express';

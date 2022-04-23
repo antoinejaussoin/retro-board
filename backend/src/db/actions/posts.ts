@@ -5,7 +5,7 @@ import {
   VoteRepository,
   SessionRepository,
 } from '../repositories';
-import { transaction } from './transaction';
+import { transaction } from './transaction.js';
 
 export async function getNumberOfPosts(userId: string): Promise<number> {
   return await transaction(async (manager) => {
