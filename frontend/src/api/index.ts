@@ -99,11 +99,30 @@ interface RegisterResponse {
   loggedIn: boolean;
 }
 
+export async function addUser(
+  name: string,
+  email: string,
+  password: string,
+  language: string
+) {
+  return registerBase(name, email, password, language, `/api/add-user`);
+}
+
 export async function register(
   name: string,
   email: string,
   password: string,
   language: string
+) {
+  return registerBase(name, email, password, language, `/api/register`);
+}
+
+async function registerBase(
+  name: string,
+  email: string,
+  password: string,
+  language: string,
+  endpoint: string
 ): Promise<RegisterResponse> {
   const payload: RegisterPayload = {
     username: email,
@@ -112,7 +131,7 @@ export async function register(
     language,
   };
   try {
-    const response = await fetch(`/api/register`, {
+    const response = await fetch(endpoint, {
       method: 'POST',
       ...requestConfig(),
       body: JSON.stringify(payload),

@@ -6,7 +6,8 @@ import { getIdentityByUsername, registerUser } from '../../db/actions/users';
 import { canSendEmails } from '../../email/utils';
 
 export default async function registerPasswordUser(
-  details: RegisterPayload
+  details: RegisterPayload,
+  skipValidation = false
 ): Promise<UserIdentityEntity | null> {
   const existingIdentity = await getIdentityByUsername(
     'password',
@@ -24,7 +25,7 @@ export default async function registerPasswordUser(
     type: 'password',
     username: details.username,
     password: hashedPassword,
-    emailVerification: canSendEmails() ? v4() : undefined,
+    emailVerification: !skipValidation && canSendEmails() ? v4() : undefined,
     language: details.language,
   });
 
