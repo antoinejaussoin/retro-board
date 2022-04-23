@@ -1,6 +1,12 @@
 import { Suspense, useCallback, useState, useMemo, lazy } from 'react';
 import Button from '@mui/material/Button';
-import { Alert, Dialog, DialogActions, DialogContent } from '@mui/material';
+import {
+  Alert,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from '@mui/material';
 import useTranslations, { useLanguage } from '../../translations';
 import Input from '../../components/Input';
 import { Person, Email, VpnKey } from '@mui/icons-material';
@@ -86,7 +92,8 @@ export function NewAccountModal({
   }
 
   return (
-    <Dialog title={translations.header} open={open} onClose={onClose}>
+    <Dialog open={open} onClose={onClose}>
+      <DialogTitle>Create a new user</DialogTitle>
       <DialogContent>
         {isSuccessful ? (
           <Alert severity="success">{translations.messageSuccess}</Alert>

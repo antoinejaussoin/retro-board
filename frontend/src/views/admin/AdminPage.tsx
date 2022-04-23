@@ -79,15 +79,18 @@ export default function AdminPage() {
   }
   return (
     <Container>
-      <Button startIcon={<Add />} onClick={handleAddOpen}>
-        Add a new user
-      </Button>
-      <Input
-        title="Search"
-        leftIcon={<Search />}
-        value={search}
-        onChangeValue={setSearch}
-      />
+      <Header>
+        <Input
+          title="Search"
+          leftIcon={<Search />}
+          value={search}
+          onChangeValue={setSearch}
+          style={{ margin: 0, flex: 1 }}
+        />
+        <Button startIcon={<Add />} onClick={handleAddOpen}>
+          Add a new user
+        </Button>
+      </Header>
       <DataGrid rows={filteredUsers} columns={columns} filterMode="client" />
       <NewAccountModal
         open={addOpened}
@@ -103,6 +106,12 @@ const Container = styled.div`
   flex-direction: column;
   height: calc(100vh - 65px);
   width: 100%;
+`;
+
+const Header = styled.div`
+  display: flex;
+  gap: 5px;
+  margin: 10px;
 `;
 
 const Actions = styled.div``;
