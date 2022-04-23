@@ -106,6 +106,10 @@ const config: BackendConfig = {
   MAIL_SENDER: defaults('MAIL_SENDER', ''),
   MAIL_USER: defaults('MAIL_USER', ''),
   MAIL_PASSWORD: defaults('MAIL_PASSWORD', ''),
+  MAIL_ALLOW_SELF_SIGNED_CERTS: defaultsBool(
+    'MAIL_ALLOW_SELF_SIGNED_CERTS',
+    false
+  ),
 };
 
 export default config;

@@ -6,6 +6,11 @@ const transporter = nodemailer.createTransport({
   host: config.MAIL_SMTP_HOST,
   port: config.MAIL_PORT,
   secure: config.MAIL_SECURE,
+  tls: config.MAIL_ALLOW_SELF_SIGNED_CERTS
+    ? {
+        rejectUnauthorized: false,
+      }
+    : undefined,
   auth: {
     user: config.MAIL_USER,
     pass: config.MAIL_PASSWORD,

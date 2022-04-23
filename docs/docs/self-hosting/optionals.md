@@ -73,6 +73,7 @@ services:
       MAIL_USER: # SMTP username (or email)
       MAIL_PASSWORD: # SMTP user password
       MAIL_SENDER: # SMTP sender email (usually matches MAIL_USER)
+      MAIL_ALLOW_SELF_SIGNED_CERTS: 'false' # Only set to true if you want to (unsafely) allow an SMTP server with self-signed certificates
       STRIPE_SECRET: # Stripe payment account secret
       STRIPE_WEBHOOK_SECRET: # Stripe webhook secret
       STRIPE_TEAM_PRODUCT: # Stripe product information

@@ -56,6 +56,7 @@ export interface BackendConfig {
   MAIL_USER: string;
   MAIL_PASSWORD: string;
   MAIL_SENDER: string;
+  MAIL_ALLOW_SELF_SIGNED_CERTS: boolean;
 }
 
 export type LicenceMetadata = {
