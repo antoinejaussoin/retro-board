@@ -87,10 +87,11 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ### Version 4.15.0 (not released)
 
-- Improve Admin dashboard for Self-Hosted, allowing the admin to add and delete users
+- **Self-Hosting**: Improve Admin dashboard for Self-Hosted, allowing the admin to add and delete users
 - Fix GDPR account deletion, which did not work when the user had written messages (chat)
 - Upgrade React typings to v18
 - Upgrade all frontend dependencies
+- **Self-Hosting**: Add an option to allow self-signed certificates for the SMTP server, for sending emails
 
 ### Version 4.14.1 (hotfix)
 
@@ -100,9 +101,9 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 - Upgrade to React 18
 - Replace icons by emoji for columns headers (fully customisable)
-- Adding SMTP support for self-hosting, in addition to SendGrid. 👏 Thanks [@dayByte](https://github.com/dayByte) for the idea. ([#365](https://github.com/antoinejaussoin/retro-board/issues/365)).
-- Simplification of SendGrid setup, by removing the need of creating email templates. They are now hardcoded.
-- Improving email templates
+- **Self-Hosting**: Adding SMTP support for self-hosting, in addition to SendGrid. 👏 Thanks [@dayByte](https://github.com/dayByte) for the idea. ([#365](https://github.com/antoinejaussoin/retro-board/issues/365)).
+- **Self-Hosting**: Simplification of SendGrid setup, by removing the need of creating email templates. They are now hardcoded.
+- **Self-Hosting**: Improving email templates
 - Improving Text and Markdown exports on Summary Mode. 👏 Thanks Jakob J for the idea. ([#384](https://github.com/antoinejaussoin/retro-board/issues/384)). 
 
 ### Version 4.13.0
@@ -111,7 +112,7 @@ This will run a demo version, which you can turn into a fully licenced version b
 - Update prices, especially for USD
 - Make the integration tests less brittle by using specific attributes
 - Upgrade (finally!) to React-Router v6.
-- Self-Hosting: Allow an administrator to disable Anonymous Logins (to force users to use regular accounts).
+- **Self-Hosting**: Allow an administrator to disable Anonymous Logins (to force users to use regular accounts).
 
 ### Version 4.12.1 (hotfix)
 
