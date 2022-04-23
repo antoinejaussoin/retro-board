@@ -85,6 +85,11 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 4.15.0 (not released)
+
+- Improve Admin dashboard for Self-Hosted, allowing the admin to add and delete users
+- Fix GDPR account deletion, which did not work when the user had written messages (chat)
+
 ### Version 4.14.1 (hotfix)
 
 - Remove CSRF code, causing random issues
