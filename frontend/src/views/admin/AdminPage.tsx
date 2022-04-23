@@ -65,9 +65,11 @@ export default function AdminPage() {
   }, [onDelete]);
 
   if (!backend.selfHosted) {
-    <Alert severity="error">
-      This page is only accessible for self-hosted instances.
-    </Alert>;
+    return (
+      <Alert severity="error">
+        This page is only accessible for self-hosted instances.
+      </Alert>
+    );
   }
   if (!user || user.email !== backend.adminEmail) {
     return (
