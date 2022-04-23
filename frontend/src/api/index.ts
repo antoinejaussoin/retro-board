@@ -105,7 +105,7 @@ export async function addUser(
   password: string,
   language: string
 ) {
-  return registerBase(name, email, password, language, `/api/add-user`);
+  return registerBase(name, email, password, language, `/api/user`);
 }
 
 export async function register(
@@ -231,6 +231,17 @@ export async function deleteAccount(
 ): Promise<boolean> {
   try {
     return await fetchDelete(`/api/me`, options);
+  } catch (err) {
+    return false;
+  }
+}
+
+export async function deleteUser(
+  user: FullUser,
+  options: DeleteAccountPayload
+): Promise<boolean> {
+  try {
+    return await fetchDelete(`/api/user/${user.identityId}`, options);
   } catch (err) {
     return false;
   }

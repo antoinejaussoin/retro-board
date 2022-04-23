@@ -421,7 +421,27 @@ db().then(() => {
     }
   });
 
-  app.post('/api/add-user', heavyLoadLimiter, async (req, res) => {
+  app.delete('/api/user/:identityId', heavyLoadLimiter, async (req, res) => {
+    const user = await getUserViewFromRequest(req);
+    if (!user || user.email !== config.SELF_HOSTED_ADMIN) {
+      res
+        .status(403)
+        .send('Deleting a user is only allowed for the self-hosted admin.');
+      return;
+    }
+    const userToDelete = await getUserView(req.params.identityId);
+    if (userToDelete) {
+      const result = await deleteAccount(
+        userToDelete,
+        req.body as DeleteAccountPayload
+      );
+      res.status(200).send(result);
+    } else {
+      res.status(404).send('User not found');
+    }
+  });
+
+  app.post('/api/user', heavyLoadLimiter, async (req, res) => {
     const user = await getUserViewFromRequest(req);
     if (!user || user.email !== config.SELF_HOSTED_ADMIN) {
       res

@@ -17,28 +17,37 @@ import {
 import { noop } from 'lodash';
 import { useCallback, useContext, useState } from 'react';
 import styled from '@emotion/styled';
-import useUser from '../../../auth/useUser';
-import { DeleteAccountPayload } from 'common';
-import { deleteAccount, logout } from '../../../api';
+import { DeleteAccountPayload, FullUser } from 'common';
+import { deleteAccount, deleteUser, logout } from '../../../api';
 import UserContext from '../../../auth/Context';
 import { useNavigate } from 'react-router';
 import { useConfirm } from 'material-ui-confirm';
 import { useSnackbar } from 'notistack';
 import useTranslations from '../../../translations';
 import { trackEvent } from '../../../track';
+import useUser from 'auth/useUser';
 
 type DeleteModalProps = {
+  open: boolean;
+  user: FullUser;
   onClose: () => void;
+  onDelete?: (user: FullUser) => void;
 };
 
-export function DeleteModal({ onClose }: DeleteModalProps) {
+export function DeleteModal({
+  open,
+  user,
+  onClose,
+  onDelete,
+}: DeleteModalProps) {
   const fullScreen = useMediaQuery('(max-width:600px)');
   const [deleteSessions, setDeleteSessions] = useState(false);
   const [deletePosts, setDeletePosts] = useState(false);
   const [deleteVotes, setDeleteVotes] = useState(false);
+  const currentUser = useUser();
+  const isOwnAccount = currentUser && currentUser.id === user.id;
   const { setUser } = useContext(UserContext);
   const { enqueueSnackbar } = useSnackbar();
-  const user = useUser();
   const push = useNavigate();
   const confirm = useConfirm();
   const {
@@ -65,23 +74,42 @@ export function DeleteModal({ onClose }: DeleteModalProps) {
     })
       .then(async () => {
         trackEvent('account/gdpr/delete-account');
-        const success = await deleteAccount(payload);
-        if (success) {
-          logout();
-          setUser(null);
-          push('/');
+        if (isOwnAccount) {
+          const success = await deleteAccount(payload);
+          if (success) {
+            logout();
+            setUser(null);
+            push('/');
+          } else {
+            enqueueSnackbar(
+              'Deleting your account failed. Please contact support: support@retrospected.com',
+              { variant: 'error' }
+            );
+            onClose();
+          }
         } else {
-          enqueueSnackbar(
-            'Deleting your account failed. Please contact support: support@retrospected.com',
-            { variant: 'error' }
-          );
-          onClose();
+          const success = await deleteUser(user, payload);
+          if (success) {
+            enqueueSnackbar(
+              `User ${user.name} (${user.email}) has been deleted.`,
+              { variant: 'success' }
+            );
+            if (onDelete) {
+              onDelete(user);
+            }
+          } else {
+            enqueueSnackbar('Deleting the account failed.', {
+              variant: 'error',
+            });
+            onClose();
+          }
         }
       })
       .catch(() => {
         onClose();
       });
   }, [
+    isOwnAccount,
     user,
     deletePosts,
     deleteSessions,
@@ -90,6 +118,7 @@ export function DeleteModal({ onClose }: DeleteModalProps) {
     setUser,
     confirm,
     onClose,
+    onDelete,
     translations,
     enqueueSnackbar,
   ]);
@@ -103,7 +132,7 @@ export function DeleteModal({ onClose }: DeleteModalProps) {
       fullScreen={fullScreen}
       maxWidth="sm"
       fullWidth
-      open
+      open={open}
       onClose={onClose}
     >
       <DialogContent>

@@ -12,6 +12,7 @@ import { useCallback, useState } from 'react';
 import { FullUser } from 'common';
 import Input from '../../components/Input';
 import { changePassword } from './api';
+import { Key } from '@mui/icons-material';
 
 type ChangePasswordProps = {
   user: FullUser;
@@ -41,7 +42,9 @@ export default function ChangePassword({ user }: ChangePasswordProps) {
   }, [enqueueSnackbar, user, newPassword]);
   return (
     <>
-      <Button onClick={handleOpenModal}>Change Password</Button>
+      <Button onClick={handleOpenModal} startIcon={<Key />}>
+        Change Password
+      </Button>
       <Dialog onClose={handleCloseModal} open={showModal}>
         <DialogTitle>Change password for {user.email}</DialogTitle>
         <Alert severity="warning">

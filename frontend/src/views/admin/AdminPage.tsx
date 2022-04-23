@@ -11,20 +11,28 @@ import { Add, Search } from '@mui/icons-material';
 import useModal from 'hooks/useModal';
 import { NewAccountModal } from './NewAccountModal';
 import Input from 'components/Input';
+import { DeleteAccount } from './DeleteAccount';
 
 export default function AdminPage() {
   const user = useUser();
   const backend = useBackendCapabilities();
   const [users, setUsers] = useStateFetch<FullUser[]>('/api/admin/users', []);
-  const [opened, handleOpen, handleClose] = useModal();
+  const [addOpened, handleAddOpen, handleAddClose] = useModal();
   const [search, setSearch] = useState('');
 
   const onAdd = useCallback(
     (user: FullUser) => {
       setUsers((users) => [user, ...users]);
-      handleClose();
+      handleAddClose();
     },
-    [setUsers, handleClose]
+    [setUsers, handleAddClose]
+  );
+
+  const onDelete = useCallback(
+    (user: FullUser) => {
+      setUsers((users) => users.filter((u) => u.id !== user.id));
+    },
+    [setUsers]
   );
 
   const filteredUsers = useMemo(() => {
@@ -45,11 +53,16 @@ export default function AdminPage() {
       {
         field: '',
         headerName: 'Actions',
-        width: 200,
-        renderCell: (p) => <ChangePassword user={p.row as FullUser} />,
+        width: 300,
+        renderCell: (p) => (
+          <Actions>
+            <ChangePassword user={p.row} />
+            <DeleteAccount user={p.row} onDelete={onDelete} />
+          </Actions>
+        ),
       },
     ] as GridColDef[];
-  }, []);
+  }, [onDelete]);
 
   if (!backend.selfHosted) {
     <Alert severity="error">
@@ -66,7 +79,7 @@ export default function AdminPage() {
   }
   return (
     <Container>
-      <Button startIcon={<Add />} onClick={handleOpen}>
+      <Button startIcon={<Add />} onClick={handleAddOpen}>
         Add a new user
       </Button>
       <Input
@@ -76,7 +89,11 @@ export default function AdminPage() {
         onChangeValue={setSearch}
       />
       <DataGrid rows={filteredUsers} columns={columns} filterMode="client" />
-      <NewAccountModal open={opened} onClose={handleClose} onAdd={onAdd} />
+      <NewAccountModal
+        open={addOpened}
+        onClose={handleAddClose}
+        onAdd={onAdd}
+      />
     </Container>
   );
 }
@@ -87,3 +104,5 @@ const Container = styled.div`
   height: calc(100vh - 65px);
   width: 100%;
 `;
+
+const Actions = styled.div``;

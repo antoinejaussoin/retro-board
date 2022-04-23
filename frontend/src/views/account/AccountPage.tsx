@@ -142,9 +142,12 @@ function AccountPage() {
             {translations.deleteAccount.deleteData}
           </Button>
 
-          {deleteModalOpen ? (
-            <DeleteModal onClose={handleDeleteModalClose} />
-          ) : null}
+          <DeleteModal
+            open={deleteModalOpen}
+            user={user}
+            onDelete={handleDeleteModalClose}
+            onClose={handleDeleteModalClose}
+          />
         </Section>
       </Page>
     </>
