@@ -9,6 +9,7 @@ export interface Translation {
     leave?: string;
     summaryMode?: string;
     account?: string;
+    adminPanel?: string;
   };
   LanguagePicker: {
     header?: string;

@@ -7,6 +7,7 @@ export default {
     leave: 'Abbandona',
     summaryMode: 'Modalità sommario',
     account: undefined,
+    adminPanel: undefined,
   },
   LanguagePicker: {
     header: 'Scegli una lingua',

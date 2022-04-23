@@ -7,6 +7,7 @@ export default {
     leave: 'Verlaten',
     summaryMode: 'Samenvatting',
     account: undefined,
+    adminPanel: undefined,
   },
   LanguagePicker: {
     header: 'Kies een taal',

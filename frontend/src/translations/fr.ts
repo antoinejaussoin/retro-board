@@ -8,6 +8,7 @@ export default {
     leave: 'Sortir',
     summaryMode: 'Mode Résumé',
     account: 'Mon compte',
+    adminPanel: 'Gestion des utilisateurs',
   },
   LanguagePicker: {
     header: 'Changez de langue',

@@ -8,6 +8,7 @@ export default {
     leave: 'Leave',
     summaryMode: 'Summary Mode',
     account: 'My Account',
+    adminPanel: 'Administration Panel',
   },
   LanguagePicker: {
     header: 'Choose a language',

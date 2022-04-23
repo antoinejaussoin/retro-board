@@ -6,6 +6,7 @@ export default {
     leave: 'Salir',
     summaryMode: 'Modo resumido',
     account: undefined,
+    adminPanel: undefined,
   },
   LanguagePicker: {
     header: 'Escoje un idioma',

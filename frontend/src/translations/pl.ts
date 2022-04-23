@@ -6,6 +6,7 @@ export default {
     leave: 'Wyjdź',
     summaryMode: 'Tryb Podsumowania',
     account: undefined,
+    adminPanel: undefined,
   },
   LanguagePicker: {
     header: 'Wybierz język',

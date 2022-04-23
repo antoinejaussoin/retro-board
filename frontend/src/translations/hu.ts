@@ -6,6 +6,7 @@ export default {
     leave: 'Távozás',
     summaryMode: 'Összesített mód',
     account: undefined,
+    adminPanel: undefined,
   },
   LanguagePicker: {
     header: 'Válassz nyelvet',

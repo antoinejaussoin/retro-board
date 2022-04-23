@@ -11,9 +11,10 @@ import { logout } from '../api';
 import UserContext from './Context';
 import Avatar from '../components/Avatar';
 import { useNavigate } from 'react-router-dom';
-import { Logout, Star } from '@mui/icons-material';
+import { Key, Logout, Star } from '@mui/icons-material';
 import { colors, Divider, ListItemIcon, ListItemText } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import useIsAdmin from './useIsAdmin';
 
 const AccountMenu = () => {
   const translations = useTranslation();
@@ -24,6 +25,9 @@ const AccountMenu = () => {
   const navigate = useNavigate();
   const closeMenu = useCallback(() => setMenuOpen(false), []);
   const openMenu = useCallback(() => setMenuOpen(true), []);
+  const user = useUser();
+  const isAdmin = useIsAdmin();
+  const isNotAnon = user && user.accountType !== 'anonymous';
 
   const handleModalOpen = useCallback(
     (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -48,12 +52,16 @@ const AccountMenu = () => {
     setMenuOpen(false);
   }, [navigate]);
 
+  const handleAdmin = useCallback(() => {
+    navigate('/admin');
+    setMenuOpen(false);
+  }, [navigate]);
+
   const handleSubscribe = useCallback(() => {
     navigate('/subscribe');
     setMenuOpen(false);
   }, [navigate]);
 
-  const user = useUser();
   if (user) {
     return (
       <div style={{ position: 'relative' }}>
@@ -81,7 +89,7 @@ const AccountMenu = () => {
                 <ListItemText>Go Pro!</ListItemText>
               </MenuItem>
             ) : null}
-            {user && user.accountType !== 'anonymous' ? (
+            {isNotAnon ? (
               <MenuItem onClick={handleAccount}>
                 <ListItemIcon>
                   <AccountCircle />
@@ -89,7 +97,15 @@ const AccountMenu = () => {
                 <ListItemText>{translations.Header.account}</ListItemText>
               </MenuItem>
             ) : null}
-            {user && user.accountType !== 'anonymous' ? <Divider /> : null}
+            {isAdmin ? (
+              <MenuItem onClick={handleAdmin}>
+                <ListItemIcon>
+                  <Key />
+                </ListItemIcon>
+                <ListItemText>{translations.Header.adminPanel}</ListItemText>
+              </MenuItem>
+            ) : null}
+            {isAdmin || isNotAnon ? <Divider /> : null}
             <MenuItem onClick={handleLogout}>
               <ListItemIcon>
                 <Logout />

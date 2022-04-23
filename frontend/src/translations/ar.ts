@@ -6,6 +6,7 @@ export default {
     leave: 'غادر',
     summaryMode: 'النّمط الملخّص',
     account: undefined,
+    adminPanel: undefined,
   },
   LanguagePicker: {
     header: 'إختيار اللُّغة',

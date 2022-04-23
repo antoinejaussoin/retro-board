@@ -6,6 +6,7 @@ export default {
     logout: 'Выйти с учётной записи',
     summaryMode: 'Показать итоги',
     account: undefined,
+    adminPanel: undefined,
   },
   LanguagePicker: {
     header: 'Выбрать язык',

@@ -6,6 +6,7 @@ export default {
     leave: '離開',
     summaryMode: '主旨模式',
     account: undefined,
+    adminPanel: undefined,
   },
   LanguagePicker: {
     header: '切換語言',
