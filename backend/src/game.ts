@@ -21,7 +21,7 @@ import {
   WsGroupUpdatePayload,
   WsUserReadyPayload,
   Message,
-} from './common.js';
+} from './common';
 import { RateLimiterMemory } from 'rate-limiter-flexible';
 import chalk from 'chalk';
 import moment from 'moment';
@@ -31,9 +31,9 @@ import {
   reportQueryError,
   throttledManualReport,
   manualMessage,
-} from './sentry.js';
-import { SessionEntity, UserView } from './db/entities.js';
-import { hasField } from './security/payload-checker.js';
+} from './sentry';
+import { SessionEntity, UserView } from './db/entities';
+import { hasField } from './security/payload-checker';
 import {
   getSession,
   updateOptions,
@@ -47,8 +47,8 @@ import {
   doesSessionExists,
   wasSessionCreatedBy,
   toggleReady,
-} from './db/actions/sessions.js';
-import { getUser, getUserView } from './db/actions/users.js';
+} from './db/actions/sessions';
+import { getUser, getUserView } from './db/actions/users';
 import {
   savePost,
   savePostGroup,
@@ -56,12 +56,12 @@ import {
   deletePostGroup,
   updatePost,
   updatePostGroup,
-} from './db/actions/posts.js';
-import config from './config.js';
-import { registerVote } from './db/actions/votes.js';
-import { deserialiseIds, UserIds } from './utils.js';
+} from './db/actions/posts';
+import config from './config';
+import { registerVote } from './db/actions/votes';
+import { deserialiseIds, UserIds } from './utils';
 import { QueryFailedError } from 'typeorm';
-import { saveChatMessage } from './db/actions/chat.js';
+import { saveChatMessage } from './db/actions/chat';
 
 const {
   ACK,

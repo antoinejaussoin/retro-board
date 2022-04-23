@@ -7,8 +7,8 @@ import {
   UpdateDateColumn,
   Index,
 } from 'typeorm';
-import SessionEntity from './Session.js';
-import UserEntity from './User.js';
+import SessionEntity from './Session';
+import UserEntity from './User';
 import { Message } from '../../common';
 
 @Entity({ name: 'messages' })

@@ -7,7 +7,7 @@ import {
   UserRepository,
   VoteRepository,
 } from '../repositories';
-import { transaction } from './transaction.js';
+import { transaction } from './transaction';
 
 export async function registerVote(
   userId: string,

@@ -6,7 +6,7 @@ import {
   User,
   VoteExtract,
   VoteType,
-} from './types.js';
+} from './types';
 
 export interface WebsocketMessage<T> {
   payload: T;

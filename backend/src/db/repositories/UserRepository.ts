@@ -2,7 +2,7 @@ import { EntityRepository } from 'typeorm';
 import { UserEntity } from '../entities';
 import { FullUser, User as JsonUser } from '../../common';
 import { addDays } from 'date-fns';
-import BaseRepository from './BaseRepository.js';
+import BaseRepository from './BaseRepository';
 
 @EntityRepository(UserEntity)
 export default class UserRepository extends BaseRepository<UserEntity> {

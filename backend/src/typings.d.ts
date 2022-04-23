@@ -1,4 +1,4 @@
-import { UserIds } from './utils.js';
+import { UserIds } from './utils';
 
 declare module 'passport-okta-oauth';
 

@@ -1,7 +1,7 @@
 import { EntityRepository } from 'typeorm';
 import { UserEntity, SubscriptionEntity } from '../entities';
 import { Plan } from '../../common';
-import BaseRepository from './BaseRepository.js';
+import BaseRepository from './BaseRepository';
 @EntityRepository(SubscriptionEntity)
 export default class SubscriptionRepository extends BaseRepository<SubscriptionEntity> {
   async activate(

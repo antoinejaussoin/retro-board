@@ -1,9 +1,9 @@
-import { transaction } from './transaction.js';
+import { transaction } from './transaction';
 import LicenceEntity from '../entities/Licence';
 import { v4 } from 'uuid';
 import { sendSelfHostWelcome } from '../../email/emailSender';
 import { LicenceRepository } from '../repositories';
-import { LicenceMetadata } from './../../types.js';
+import { LicenceMetadata } from './../../types';
 
 export async function registerLicence(
   email: string | null,

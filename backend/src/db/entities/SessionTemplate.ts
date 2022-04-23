@@ -8,13 +8,13 @@ import {
   UpdateDateColumn,
   ManyToOne,
 } from 'typeorm';
-import { TemplateColumnDefinitionEntity } from './ColumnDefinition.js';
+import { TemplateColumnDefinitionEntity } from './ColumnDefinition';
 import {
   SessionOptions as JsonSessionOptions,
   SessionTemplate,
 } from '../../common';
-import UserEntity from './User.js';
-import SessionOptionsEntity from './SessionOptions.js';
+import UserEntity from './User';
+import SessionOptionsEntity from './SessionOptions';
 
 @Entity({ name: 'templates' })
 export default class SessionTemplateEntity {

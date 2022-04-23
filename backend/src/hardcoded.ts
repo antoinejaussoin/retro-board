@@ -1,4 +1,4 @@
-import { encrypt, hashPassword } from './utils.js';
+import { encrypt, hashPassword } from './utils';
 
 export async function buildHardcodedLicence(
   licenceKey: string,

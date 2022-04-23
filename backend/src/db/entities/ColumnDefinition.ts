@@ -8,8 +8,8 @@ import {
   Index,
 } from 'typeorm';
 import { ColumnDefinition, ColumnDefinitionType } from '../../common';
-import SessionEntity from './Session.js';
-import SessionTemplateEntity from './SessionTemplate.js';
+import SessionEntity from './Session';
+import SessionTemplateEntity from './SessionTemplate';
 
 class ColumnDefinitionEntityBase {
   @PrimaryColumn({ primary: true, generated: false, unique: true })

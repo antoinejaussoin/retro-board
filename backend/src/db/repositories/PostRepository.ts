@@ -1,9 +1,9 @@
 import { EntityRepository } from 'typeorm';
 import { SessionEntity, PostEntity } from '../entities';
-import SessionRepository from './SessionRepository.js';
+import SessionRepository from './SessionRepository';
 import { Post as JsonPost, defaultSession } from '../../common';
 import { cloneDeep } from 'lodash';
-import BaseRepository from './BaseRepository.js';
+import BaseRepository from './BaseRepository';
 
 @EntityRepository(PostEntity)
 export default class PostRepository extends BaseRepository<PostEntity> {

@@ -2,7 +2,7 @@ import { EntityRepository } from 'typeorm';
 import { ColumnDefinitionEntity } from '../entities';
 import { ColumnDefinition as JsonColumnDefinition } from '../../common';
 import { v4 } from 'uuid';
-import BaseRepository from './BaseRepository.js';
+import BaseRepository from './BaseRepository';
 
 @EntityRepository(ColumnDefinitionEntity)
 export default class ColumnDefinitionRepository extends BaseRepository<ColumnDefinitionEntity> {

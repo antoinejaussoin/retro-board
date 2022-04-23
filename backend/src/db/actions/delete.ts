@@ -8,8 +8,8 @@ import {
   SessionRepository,
   VoteRepository,
 } from '../repositories';
-import { transaction } from './transaction.js';
-import { registerAnonymousUser } from './users.js';
+import { transaction } from './transaction';
+import { registerAnonymousUser } from './users';
 
 export async function deleteAccount(
   user: UserView,

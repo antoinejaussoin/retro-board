@@ -26,9 +26,9 @@ import {
   PostGroupRepository,
   ColumnRepository,
 } from '../repositories';
-import { transaction } from './transaction.js';
+import { transaction } from './transaction';
 import { EntityManager, In } from 'typeorm';
-import { getUserViewInner, isUserPro } from './users.js';
+import { getUserViewInner, isUserPro } from './users';
 import { uniq } from 'lodash';
 import MessageRepository from '../repositories/MessageRepository';
 import MessageEntity from '../entities/Message';

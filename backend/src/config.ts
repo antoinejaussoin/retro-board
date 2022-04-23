@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { BackendConfig } from './types.js';
+import { BackendConfig } from './types';
 import dotenv from 'dotenv';
 
 function findDotEnvPath(): string | null {
