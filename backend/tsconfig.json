@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "target": "ESNext",
-    "module": "NodeNext",
+    "target": "es5",
+    "module": "commonjs",
     "incremental": true,
+    "moduleResolution": "node",
     "allowJs": false,
     "skipLibCheck": true,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
