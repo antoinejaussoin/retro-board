@@ -21,21 +21,33 @@ export async function deleteAccount(
   }
 
   return await transaction(async (manager) => {
-    await deleteVisits(manager, options.deleteSessions, user, anonymousAccount);
-    await deleteVotes(manager, options.deleteVotes, user, anonymousAccount);
-    await deletePosts(manager, options.deletePosts, user, anonymousAccount);
-    await deleteSessions(
-      manager,
-      options.deleteSessions,
-      user,
-      anonymousAccount
-    );
-    await deleteUserAccount(manager, user);
+    await delMessages(manager, options.deleteSessions, user, anonymousAccount);
+    await delVisits(manager, options.deleteSessions, user, anonymousAccount);
+    await delVotes(manager, options.deleteVotes, user, anonymousAccount);
+    await delPosts(manager, options.deletePosts, user, anonymousAccount);
+    await delSessions(manager, options.deleteSessions, user, anonymousAccount);
+    await delUserAccount(manager, user);
     return true;
   });
 }
 
-async function deleteVisits(
+async function delMessages(
+  manager: EntityManager,
+  hardDelete: boolean,
+  user: UserView,
+  anon: UserIdentityEntity
+) {
+  if (hardDelete) {
+    await manager.query('delete from messages where user_id = $1', [user.id]);
+  } else {
+    await manager.query('update messages set user_id = $1 where user_id = $2', [
+      anon.user.id,
+      user.id,
+    ]);
+  }
+}
+
+async function delVisits(
   manager: EntityManager,
   hardDelete: boolean,
   user: UserView,
@@ -51,7 +63,7 @@ async function deleteVisits(
   }
 }
 
-async function deleteVotes(
+async function delVotes(
   manager: EntityManager,
   hardDelete: boolean,
   user: UserView,
@@ -67,7 +79,7 @@ async function deleteVotes(
   }
 }
 
-async function deletePosts(
+async function delPosts(
   manager: EntityManager,
   hardDelete: boolean,
   user: UserView,
@@ -98,7 +110,7 @@ async function deletePosts(
   }
 }
 
-async function deleteSessions(
+async function delSessions(
   manager: EntityManager,
   hardDelete: boolean,
   user: UserView,
@@ -138,7 +150,7 @@ async function deleteSessions(
   }
 }
 
-async function deleteUserAccount(manager: EntityManager, user: UserView) {
+async function delUserAccount(manager: EntityManager, user: UserView) {
   await manager.query(
     `
 		update users set default_template_id = null where default_template_id in (select id from templates where created_by_id = $1)
