@@ -89,6 +89,8 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 - Improve Admin dashboard for Self-Hosted, allowing the admin to add and delete users
 - Fix GDPR account deletion, which did not work when the user had written messages (chat)
+- Upgrade React typings to v18
+- Upgrade all frontend dependencies
 
 ### Version 4.14.1 (hotfix)
 
