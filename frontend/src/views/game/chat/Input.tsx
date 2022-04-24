@@ -58,7 +58,6 @@ export default function Input({
       onKeyPress={handleKeyPress}
       style={{ border: 'none', outline: 'none', margin: 10 }}
       multiline
-      // data-cy={cy}
       inputProps={{ 'data-cy': cy }}
       endAdornment={
         <InputAdornment position="end">
