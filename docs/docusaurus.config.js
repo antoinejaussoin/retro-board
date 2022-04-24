@@ -33,6 +33,12 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
           theme: {
             customCss: require.resolve('./src/css/custom.css'),
           },
+          gtag: {
+            // You can also use your "G-" Measurement ID here.
+            trackingID: 'G-60PPD8ZVHL',
+            // Optional fields.
+            anonymizeIP: false, // Should IPs be anonymized?
+          },
         }),
       ],
     ],
@@ -110,12 +116,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
           theme: lightCodeTheme,
           darkTheme: darkCodeTheme,
         },
-        gtag: {
-          // You can also use your "G-" Measurement ID here.
-          trackingID: 'G-60PPD8ZVHL',
-          // Optional fields.
-          anonymizeIP: false, // Should IPs be anonymized?
-        },
+      
       }),
   }
 );

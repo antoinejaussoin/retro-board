@@ -7,7 +7,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import styles from './HomepageFeatures.module.css';
-import { Link } from '@docusaurus/router';
+import Link from '@docusaurus/Link';
 
 type FeatureItem = {
   title: string;
