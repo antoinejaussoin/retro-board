@@ -99,6 +99,7 @@ const Register = ({ onClose }: RegisterProps) => {
             color="primary"
             autoFocus
             disabled={!validEmail || passwordScore < 3 || !validName}
+            data-cy="register-button"
           >
             {translations.registerButton}
           </Button>
@@ -127,6 +128,7 @@ const Register = ({ onClose }: RegisterProps) => {
             style={{ marginTop: 20 }}
             leftIcon={<Person />}
             required
+            data-cy="register-name"
           />
           <Input
             value={registerEmail}
@@ -144,6 +146,7 @@ const Register = ({ onClose }: RegisterProps) => {
                 ? translations.errorInvalidEmail
                 : undefined
             }
+            data-cy="register-email"
           />
           <Input
             value={registerPassword}
@@ -156,6 +159,7 @@ const Register = ({ onClose }: RegisterProps) => {
             style={{ marginTop: 20 }}
             leftIcon={<VpnKey />}
             required
+            data-cy="register-password"
           />
           <Suspense fallback={<span />}>
             <PasswordStrength

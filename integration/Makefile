@@ -1,5 +1,7 @@
 master:
-	docker-compose -f docker-compose.ci.master.yml up --exit-code-from cypress
+	docker-compose rm -v -f
+	docker-compose -f docker-compose.local.master.yml pull
+	docker-compose -f docker-compose.local.master.yml up
 
 local:
 	docker build -f ../backend/Dockerfile -t retrospected/backend:local ../backend

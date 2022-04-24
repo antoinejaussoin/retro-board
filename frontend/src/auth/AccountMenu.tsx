@@ -65,7 +65,11 @@ const AccountMenu = () => {
   if (user) {
     return (
       <div style={{ position: 'relative' }}>
-        <AvatarContainer onClick={openMenu} ref={menuAnchor}>
+        <AvatarContainer
+          onClick={openMenu}
+          ref={menuAnchor}
+          data-cy="account-menu"
+        >
           <Avatar user={user} />
           <DisplayName>{user.name}</DisplayName>
         </AvatarContainer>
@@ -76,7 +80,7 @@ const AccountMenu = () => {
             onClose={closeMenu}
           >
             {user && !user.pro && user.accountType !== 'anonymous' ? (
-              <MenuItem onClick={handleSubscribe}>
+              <MenuItem onClick={handleSubscribe} data-cy="account-menu-go-pro">
                 <ListItemIcon>
                   <Star
                     style={{
@@ -90,7 +94,7 @@ const AccountMenu = () => {
               </MenuItem>
             ) : null}
             {isNotAnon ? (
-              <MenuItem onClick={handleAccount}>
+              <MenuItem onClick={handleAccount} data-cy="account-menu-account">
                 <ListItemIcon>
                   <AccountCircle />
                 </ListItemIcon>
@@ -98,7 +102,7 @@ const AccountMenu = () => {
               </MenuItem>
             ) : null}
             {isAdmin ? (
-              <MenuItem onClick={handleAdmin}>
+              <MenuItem onClick={handleAdmin} data-cy="account-menu-admin">
                 <ListItemIcon>
                   <Key />
                 </ListItemIcon>
@@ -106,7 +110,7 @@ const AccountMenu = () => {
               </MenuItem>
             ) : null}
             {isAdmin || isNotAnon ? <Divider /> : null}
-            <MenuItem onClick={handleLogout}>
+            <MenuItem onClick={handleLogout} data-cy="account-menu-logout">
               <ListItemIcon>
                 <Logout />
               </ListItemIcon>
