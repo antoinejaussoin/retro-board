@@ -85,13 +85,13 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
-### Version 4.15.0 (not released)
+### Version 4.15.0
 
 - **Self-Hosting**: Improve Admin dashboard for Self-Hosted, allowing the admin to add and delete users
-- Fix GDPR account deletion, which did not work when the user had written messages (chat)
+- **Self-Hosting**: Add an option to allow self-signed certificates for the SMTP server, for sending emails
+- Fix GDPR account deletion, which did not work when the user had any chat messages
 - Upgrade React typings to v18
 - Upgrade all frontend dependencies
-- **Self-Hosting**: Add an option to allow self-signed certificates for the SMTP server, for sending emails
 
 ### Version 4.14.1 (hotfix)
 

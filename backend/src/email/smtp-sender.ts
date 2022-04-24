@@ -22,11 +22,16 @@ export const smtpSender: EmailSender = async function (
   subject: string,
   body: string
 ): Promise<boolean> {
-  const response = await transporter.sendMail({
-    from: config.MAIL_SENDER,
-    to,
-    subject,
-    html: body,
-  });
-  return !!response.accepted;
+  try {
+    const response = await transporter.sendMail({
+      from: config.MAIL_SENDER,
+      to,
+      subject,
+      html: body,
+    });
+    return !!response.accepted;
+  } catch (e) {
+    console.error('SMTP error', e);
+    return false;
+  }
 };
