@@ -15,41 +15,31 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@docusaurus/core": "2.0.0-beta.14",
-    "@docusaurus/preset-classic": "2.0.0-beta.14",
-    "@mdx-js/react": "1.6.22",
-    "@svgr/webpack": "6.2.0",
+    "@docusaurus/core": "2.0.0-beta.18",
+    "@docusaurus/preset-classic": "2.0.0-beta.18",
+    "@svgr/webpack": "6.2.1",
     "@types/random-words": "1.1.2",
     "@types/react-copy-to-clipboard": "5.0.2",
     "@types/react-syntax-highlighter": "13.5.2",
     "@types/react-toggle": "4.0.3",
     "clsx": "1.1.1",
     "file-loader": "6.2.0",
-    "node-fetch": "2.6.7",
-    "prism-react-renderer": "1.2.1",
-    "prismjs": "1.27.0",
     "query-string": "7.1.1",
     "random-words": "1.1.2",
-    "react": "17.0.2",
-    "react-copy-to-clipboard": "5.0.4",
-    "react-dom": "17.0.2",
-    "react-syntax-highlighter": "15.4.5",
+    "react": "18.0.0",
+    "react-copy-to-clipboard": "5.1.0",
+    "react-dom": "18.0.0",
+    "react-syntax-highlighter": "15.5.0",
     "react-toggle": "4.1.2",
-    "trim": "0.0.3",
     "url-loader": "4.1.1"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "2.0.0-beta.14",
-    "@tsconfig/docusaurus": "1.0.4",
-    "@types/react": "17.0.39",
+    "@docusaurus/module-type-aliases": "2.0.0-beta.18",
+    "@tsconfig/docusaurus": "1.0.5",
+    "@types/react": "18.0.6",
     "@types/react-helmet": "6.1.5",
     "@types/react-router-dom": "5.3.3",
-    "typescript": "4.6.2"
-  },
-  "resolutions": {
-    "node-fetch": "2.6.7",
-    "prismjs": "1.27.0",
-    "trim": "0.0.3"
+    "typescript": "4.6.3"
   },
   "browserslist": {
     "production": [

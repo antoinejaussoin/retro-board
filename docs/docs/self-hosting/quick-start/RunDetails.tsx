@@ -1,4 +1,4 @@
-import { Link } from '@docusaurus/router';
+import Link from '@docusaurus/Link';
 import React from 'react';
 import Admonition from './Admonition';
 
