@@ -25,9 +25,6 @@
     "@types/react-toggle": "4.0.3",
     "clsx": "1.1.1",
     "file-loader": "6.2.0",
-    "node-fetch": "2.6.7",
-    "prism-react-renderer": "1.3.1",
-    "prismjs": "1.28.0",
     "query-string": "7.1.1",
     "random-words": "1.1.2",
     "react": "18.0.0",
@@ -35,7 +32,6 @@
     "react-dom": "18.0.0",
     "react-syntax-highlighter": "15.5.0",
     "react-toggle": "4.1.2",
-    "trim": "0.0.3",
     "url-loader": "4.1.1"
   },
   "devDependencies": {
@@ -45,11 +41,6 @@
     "@types/react-helmet": "6.1.5",
     "@types/react-router-dom": "5.3.3",
     "typescript": "4.6.3"
-  },
-  "resolutions": {
-    "node-fetch": "2.6.7",
-    "prismjs": "1.28.0",
-    "trim": "0.0.3"
   },
   "browserslist": {
     "production": [
