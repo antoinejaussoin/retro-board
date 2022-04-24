@@ -25,7 +25,7 @@ describe('Post workflow', () => {
     
     get('login-button').click();
     get('anon-tab').click();
-    get('anon-input', ' > input').focus().type('Zelensky');
+    get('anon-input').focus().type('Zelensky');
     get('anon-login-button').click();
 
     // Home page should display the user name
@@ -35,7 +35,7 @@ describe('Post workflow', () => {
     get('new-session-button').click();
 
     // And write a post
-    get('column-input', ' > input').first().focus().type('Slava Ukraini!{enter}');
+    get('column-input').first().focus().type('Slava Ukraini!{enter}');
 
     // Reload the page
     cy.reload();
@@ -52,7 +52,7 @@ describe('Post workflow', () => {
 
     get('login-button').click();
     get('anon-tab').click();
-    get('anon-input', ' > input').focus().type('Zelensky');
+    get('anon-input').focus().type('Zelensky');
     get('anon-login-button').click();
 
     // Home page should display the user name
@@ -104,7 +104,7 @@ describe('Post workflow', () => {
     get('new-session-button').click();
 
     // And write a post
-    get('column-input', ' > input').first().focus().type('Slava Ukraini!{enter}');
+    get('column-input').first().focus().type('Slava Ukraini!{enter}');
     cy.get('#content').should('contain', 'Slava Ukraini!');
 
     // And some chat
@@ -113,8 +113,20 @@ describe('Post workflow', () => {
     cy.get('#content').should('contain', 'This is a message');
    
     // Close
-    get('open-chat-button').click();
+    get('open-chat-button').click({force: true});
 
+    // Go to the user admin and delete the account
+    get('account-menu').click();
+    get('account-menu-account').click();
+    get('delete-account-button').click();
+    get('delete-modal-sessions').click();
+    get('delete-modal-posts').click();
+    get('delete-modal-votes').click();
+    get('delete-modal-delete-button').click();
+    get('delete-modal-confirm').click();
 
+    // We should be back to the home page
+    cy.get('div.marketing-content')
+    .should('contain', 'Real-time Retrospectives')
   });
 });

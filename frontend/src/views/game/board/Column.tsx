@@ -109,7 +109,7 @@ const Column: React.FC<ColumnProps> = ({
               </EnterIcon>
             </InputAdornment>
           }
-          data-cy="column-input"
+          inputProps={{ 'data-cy': 'column-input' }}
         />
         {permissions.canCreateGroup ? (
           <AddGroup>

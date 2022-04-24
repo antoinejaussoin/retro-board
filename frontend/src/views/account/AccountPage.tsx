@@ -138,6 +138,7 @@ function AccountPage() {
             variant="contained"
             onClick={handleDeleteModalOpen}
             style={{ marginTop: 20 }}
+            data-cy="delete-account-button"
           >
             {translations.deleteAccount.deleteData}
           </Button>
