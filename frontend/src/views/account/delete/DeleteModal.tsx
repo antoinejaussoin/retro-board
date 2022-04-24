@@ -65,12 +65,17 @@ export function DeleteModal({
       deleteSessions,
       deleteVotes,
     };
+    const buttonProps = {
+      color: 'error',
+      variant: 'contained',
+      'data-cy': 'delete-modal-confirm',
+    };
     confirm({
       title: translations.confirm.title,
       description: translations.confirm.description,
       confirmationText: translations.confirm.confirmation,
       cancellationText: translations.confirm.cancellation,
-      confirmationButtonProps: { color: 'error', variant: 'contained' },
+      confirmationButtonProps: buttonProps as any,
     })
       .then(async () => {
         trackEvent('account/gdpr/delete-account');
@@ -146,6 +151,7 @@ export function DeleteModal({
             checked={deleteSessions}
             onToggle={setDeleteSessions}
             icon={<Dashboard />}
+            cy="delete-modal-sessions"
           >
             <p>{translations.deleteSessions.main}</p>
             {deleteSessions ? (
@@ -161,6 +167,7 @@ export function DeleteModal({
             checked={deletePosts}
             onToggle={setDeletePosts}
             icon={<Note />}
+            cy="delete-modal-posts"
           >
             <p>{translations.deletePosts.main}</p>
             {deletePosts ? (
@@ -176,6 +183,7 @@ export function DeleteModal({
             checked={deleteVotes}
             onToggle={setDeleteVotes}
             icon={<ThumbUpOutlined />}
+            cy="delete-modal-votes"
           >
             <p>{translations.deleteVotes.main}</p>
             {deleteVotes ? (
@@ -190,7 +198,12 @@ export function DeleteModal({
         </List>
       </DialogContent>
       <DialogActions>
-        <Button color="error" variant="contained" onClick={handleDelete}>
+        <Button
+          color="error"
+          variant="contained"
+          onClick={handleDelete}
+          data-cy="delete-modal-delete-button"
+        >
           {translations.deleteAccountButton}
         </Button>
         <Button onClick={onClose}>{translations.cancelButton}</Button>
@@ -203,6 +216,7 @@ type DeleteItemProps = {
   disabled?: boolean;
   checked: boolean;
   icon: React.ReactNode;
+  cy?: string;
   onToggle?: (value: boolean) => void;
 };
 
@@ -211,6 +225,7 @@ function DeleteItem({
   disabled,
   icon,
   checked,
+  cy,
   onToggle,
 }: React.PropsWithChildren<DeleteItemProps>) {
   return (
@@ -225,6 +240,7 @@ function DeleteItem({
           edge="end"
           disabled={disabled}
           checked={checked}
+          data-cy={cy}
           onChange={(_, v) => (onToggle ? onToggle(v) : noop)}
         />
       </ListItemSecondaryAction>

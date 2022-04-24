@@ -26,7 +26,7 @@ export default function Chat({ messages, onMessage }: ChatProps) {
     [encrypt, onMessage]
   );
   return (
-    <Container>
+    <Container data-cy="chat-container">
       <ScrollContainer>
         <Messages>
           {sortedMessages.map((m) => (
@@ -37,6 +37,7 @@ export default function Chat({ messages, onMessage }: ChatProps) {
       <Input
         placeholder={translations.writeAMessage}
         onNewMessage={handleInput}
+        cy="chat-input"
       />
     </Container>
   );

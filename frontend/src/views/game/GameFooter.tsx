@@ -99,7 +99,10 @@ function GameFooter({ onReady, onMessage, messages }: GameFooterProps) {
         </Button>
       ) : null}
       {user ? (
-        <IconButton onClick={chatOpen ? closeChat : openChat}>
+        <IconButton
+          onClick={chatOpen ? closeChat : openChat}
+          data-cy="open-chat-button"
+        >
           <Badge color="secondary" badgeContent={unreadCount ?? undefined}>
             <Chat htmlColor={colors.orange[500]} />
           </Badge>

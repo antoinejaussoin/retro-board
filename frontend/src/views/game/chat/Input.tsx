@@ -3,6 +3,7 @@ import { IconButton, Input as BaseInput, InputAdornment } from '@mui/material';
 import React, { useCallback, useState } from 'react';
 
 type InputProps = {
+  cy?: string;
   placeholder?: string;
   onNewMessage: (value: string) => void;
 };
@@ -14,6 +15,7 @@ function isEnter(code: string) {
 export default function Input({
   placeholder,
   onNewMessage: onAdd,
+  cy,
 }: InputProps) {
   const [value, setValue] = useState('');
   const [valid, setValid] = useState(false);
@@ -56,6 +58,7 @@ export default function Input({
       onKeyPress={handleKeyPress}
       style={{ border: 'none', outline: 'none', margin: 10 }}
       multiline
+      inputProps={{ 'data-cy': cy }}
       endAdornment={
         <InputAdornment position="end">
           <IconButton

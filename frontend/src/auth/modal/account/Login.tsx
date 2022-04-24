@@ -94,8 +94,10 @@ const Login = ({
       />
       <div style={{ marginTop: 20 }} />
       <Links>
-        <Link onClick={onAskRegistration}>{translations.registerLink}</Link>
-        <Link onClick={onAskPasswordReset}>
+        <Link data-cy="register" onClick={onAskRegistration}>
+          {translations.registerLink}
+        </Link>
+        <Link data-cy="forgot-password" onClick={onAskPasswordReset}>
           {translations.forgotPasswordLink}
         </Link>
       </Links>

@@ -71,7 +71,7 @@ const AnonAuth = ({ onClose, onUser }: AnonAuthProps) => {
         placeholder={loginTranslations.namePlaceholder}
         fullWidth
         style={{ marginTop: 20 }}
-        data-cy="anon-input"
+        inputProps={{ 'data-cy': 'anon-input' }}
       />
     </Wrapper>
   );
