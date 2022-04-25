@@ -85,6 +85,12 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 4.16.0
+
+- Fix the empty file download when logging using Google OAuth
+- Upgrade the documentation to the latest version of Docusaurus
+- Add more integration tests, covering password accounts and account deletion
+
 ### Version 4.15.0
 
 - **Self-Hosting**: Improve Admin dashboard for Self-Hosted, allowing the admin to add and delete users
