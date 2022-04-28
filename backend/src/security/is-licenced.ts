@@ -27,6 +27,12 @@ const hardcodedLicences: HardcodedLicence[] = [
     hash: '$2a$10$hLlxhJ8yDp1lQJtTLePJr.SDuWFHSX4Kat8NHUgqPoKgRGLbZWy26',
     encryptedOwner: 'U2FsdGVkX19b7JIgy/QrMncC1JjoVmBJ5EUo4AcGIkA=',
   },
+  {
+    // Mindef
+    hash: '$2a$10$y3ZX441HpKqjMfemCB285O0.JzuaO5wGBPLtS5vJTQ6T352E9O0bC',
+    encryptedOwner:
+      'U2FsdGVkX1+xZTCbhmVh4jBPCZfiJ5kipc0Yeo8bm/8CjEoLG8VK/Z1mwTEKxKlR',
+  },
 ];
 
 export function isSelfHostedAndLicenced() {
