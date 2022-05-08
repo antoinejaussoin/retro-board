@@ -11,7 +11,12 @@
     "header": "切換語言"
   },
   "Main": {
-    "hint": "複製並分享網址，即可讓別人加入此議程"
+    "hint": "複製並分享網址，即可讓別人加入此議程",
+    "helpUkraine": "幫助烏克蘭！",
+    "loading": "正在加載...",
+    "unlicenced": {
+      "title": "追溯是未經許可的"
+    }
   },
   "Home": {
     "welcome": "歡迎， {{name}}"

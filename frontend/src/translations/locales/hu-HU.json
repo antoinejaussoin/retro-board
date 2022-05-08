@@ -11,7 +11,12 @@
     "header": "Válassz nyelvet"
   },
   "Main": {
-    "hint": "Ha meg akarsz hívni másokat, másold ki és oszd meg velük az URL-t"
+    "hint": "Ha meg akarsz hívni másokat, másold ki és oszd meg velük az URL-t",
+    "helpUkraine": "Segíts Ukrajnának!",
+    "loading": "Betöltés...",
+    "unlicenced": {
+      "title": "Az utólag jogosítvány nélküli"
+    }
   },
   "Home": {
     "welcome": "Isten hozott, {{name}}"

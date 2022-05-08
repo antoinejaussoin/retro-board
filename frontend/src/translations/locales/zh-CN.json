@@ -11,7 +11,12 @@
     "header": "切换语言"
   },
   "Main": {
-    "hint": "复制并分享网址，即可让别人加入此议程"
+    "hint": "复制并分享网址，即可让别人加入此议程",
+    "helpUkraine": "帮助乌克兰！",
+    "loading": "加载中...",
+    "unlicenced": {
+      "title": "返回是未授权的"
+    }
   },
   "Home": {
     "welcome": "欢迎， {{name}}"

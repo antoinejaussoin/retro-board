@@ -11,7 +11,12 @@
     "header": "Scegli una lingua"
   },
   "Main": {
-    "hint": "Puoi invitare altre persone a questa sessione copiando ed incollando la URL"
+    "hint": "Puoi invitare altre persone a questa sessione copiando ed incollando la URL",
+    "helpUkraine": "Aiuta Ucraina!",
+    "loading": "Caricamento...",
+    "unlicenced": {
+      "title": "Retrospected is Unlicenced"
+    }
   },
   "Home": {
     "welcome": "Benvenuto, {{name}}"

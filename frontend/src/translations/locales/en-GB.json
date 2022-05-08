@@ -11,7 +11,12 @@
     "header": "Choose a language"
   },
   "Main": {
-    "hint": "You can invite others to this session by copy-pasting the URL"
+    "hint": "You can invite others to this session by copy-pasting the URL",
+    "helpUkraine": "Help Ukraine!",
+    "loading": "Loading...",
+    "unlicenced": {
+      "title": "Retrospected is Unlicenced"
+    }
   },
   "Home": {
     "welcome": "Welcome, {{name}}"

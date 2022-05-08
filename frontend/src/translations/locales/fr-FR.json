@@ -11,7 +11,12 @@
     "header": "Changez de langue"
   },
   "Main": {
-    "hint": "Vous pouvez inviter d'autres participants en leur envoyant l'URL de cette page"
+    "hint": "Vous pouvez inviter d'autres participants en leur envoyant l'URL de cette page",
+    "helpUkraine": "Aidez l'Ukraine!",
+    "loading": "Chargement en cours...",
+    "unlicenced": {
+      "title": "Retrospected est sans licence"
+    }
   },
   "Home": {
     "welcome": "Bienvenue, {{name}}"
@@ -140,7 +145,7 @@
     "sailboat": "Bateau"
   },
   "Clients": {
-    "header": "Participants:",
+    "header": "Participants :",
     "joined": "{{users}} connecté.",
     "left": "{{users}} déconnecté."
   },

@@ -11,7 +11,12 @@
     "header": "言語を選択"
   },
   "Main": {
-    "hint": "URLを共有すれば新たな参加者を本セッションに招待できます"
+    "hint": "URLを共有すれば新たな参加者を本セッションに招待できます",
+    "helpUkraine": "ウクライナを助けよう!",
+    "loading": "読み込み中...",
+    "unlicenced": {
+      "title": "Retrospected is unlicenced"
+    }
   },
   "Home": {
     "welcome": "ようこそ、 {{name}}"

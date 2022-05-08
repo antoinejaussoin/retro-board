@@ -11,7 +11,12 @@
     "header": "Sprache auswählen"
   },
   "Main": {
-    "hint": "Du kannst Andere zu dieser Session einladen indem Du ihnen die URL schickst"
+    "hint": "Du kannst Andere zu dieser Session einladen indem Du ihnen die URL schickst",
+    "helpUkraine": "Hilf der Ukraine!",
+    "loading": "Wird geladen...",
+    "unlicenced": {
+      "title": "Retrospected ist nicht lizenziert"
+    }
   },
   "Home": {
     "welcome": "Willkommen, {{name}}"

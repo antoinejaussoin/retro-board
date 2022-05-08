@@ -11,7 +11,12 @@
     "header": "Kies een taal"
   },
   "Main": {
-    "hint": "Je kan anderen uitnodigen voor deze sessie door de URL te kopiëren en te plakken"
+    "hint": "Je kan anderen uitnodigen voor deze sessie door de URL te kopiëren en te plakken",
+    "helpUkraine": "Help Oekraïne",
+    "loading": "Laden...",
+    "unlicenced": {
+      "title": "Retrospected is niet toegestaan"
+    }
   },
   "Home": {
     "welcome": "Welkom, {{name}}"

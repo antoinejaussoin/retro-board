@@ -26,6 +26,8 @@ import { Alert, AlertTitle, Button, Hidden } from '@mui/material';
 import useBackendCapabilities from './global/useBackendCapabilities';
 import useIsPro from 'auth/useIsPro';
 import ProButton from 'components/ProButton';
+import { Flag } from 'components/Flag';
+import { useTranslation } from 'react-i18next';
 
 const Home = lazy(() => import('./views/Home' /* webpackChunkName: "home" */));
 const Game = lazy(() => import('./views/Game' /* webpackChunkName: "game" */));
@@ -103,6 +105,7 @@ function App() {
   const goToHome = useCallback(() => navigate('/'), [navigate]);
   const location = useLocation();
   const isOnGamePage = !!useMatch('game/:gameId/*');
+  const { t } = useTranslation();
 
   // Tracks page views on every location change
   useEffect(() => {
@@ -113,7 +116,7 @@ function App() {
     <div>
       {!backend.licenced ? (
         <Alert title="Unlicenced" severity="error">
-          <AlertTitle>Retrospected is Unlicenced</AlertTitle>
+          <AlertTitle>{t('Main.unlicenced.title')}</AlertTitle>
           This software is unlicenced. You can obtain a licence{' '}
           <a
             target="_blank"
@@ -127,7 +130,14 @@ function App() {
           administration panel.
         </Alert>
       ) : null}
-      <AppBar position="sticky">
+      <AppBar
+        position="sticky"
+        style={{
+          backgroundColor: 'none',
+          background:
+            'linear-gradient(167deg, rgba(0,87,183,1) 28%, rgba(255,215,0,1) 74%)',
+        }}
+      >
         <Toolbar>
           <IconButton
             color="inherit"
@@ -165,12 +175,20 @@ function App() {
               </GoProContainer>
             </Hidden>
           ) : null}
+          <Hidden mdDown>
+            <HelpUkraine>
+              <Flag country="ua" />
+              <a href="https://www.gov.uk/government/news/ukraine-what-you-can-do-to-help">
+                {t('Main.helpUkraine')}
+              </a>
+            </HelpUkraine>
+          </Hidden>
           <Spacer />
           {isOnGamePage ? <Invite /> : null}
           {isInitialised ? (
             <AccountMenu />
           ) : (
-            <Initialising>Loading...</Initialising>
+            <Initialising>{t('Main.loading')}</Initialising>
           )}
         </Toolbar>
       </AppBar>
@@ -223,6 +241,20 @@ const Initialising = styled.div``;
 
 const Spacer = styled.div`
   flex: 1;
+`;
+
+const HelpUkraine = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  a {
+    font-style: unset;
+    text-decoration: unset;
+    font-size: 1.2rem;
+    font-weight: 100;
+    color: white;
+  }
 `;
 
 export default App;

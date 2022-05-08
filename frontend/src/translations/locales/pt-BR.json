@@ -11,7 +11,12 @@
     "header": "Escolha uma língua"
   },
   "Main": {
-    "hint": "Você pode convidar outras pessoas para esta seção compartilhando a URL"
+    "hint": "Você pode convidar outras pessoas para esta seção compartilhando a URL",
+    "helpUkraine": "Ajude a Ucrânia!",
+    "loading": "Carregandochar@@0",
+    "unlicenced": {
+      "title": "Retrospectiva Não Autorizada"
+    }
   },
   "Home": {
     "welcome": "Bem-vindo, {{name}}"
