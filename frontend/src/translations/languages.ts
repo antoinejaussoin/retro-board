@@ -47,7 +47,7 @@ export default [
     name: 'English',
     englishName: 'English',
     stripeLocale: 'en-US',
-    locale: 'en_GB',
+    locale: 'en-GB',
   },
   {
     dateLocale: fr,
@@ -55,7 +55,7 @@ export default [
     name: 'Français',
     englishName: 'French',
     stripeLocale: 'fr-FR',
-    locale: 'fr_FR',
+    locale: 'fr-FR',
   },
   {
     dateLocale: arDZ,
@@ -63,7 +63,7 @@ export default [
     name: 'عربي',
     englishName: 'Arabic',
     stripeLocale: 'ar-AR',
-    locale: 'ar_SA',
+    locale: 'ar-SA',
   },
   {
     dateLocale: zhCN,
@@ -71,7 +71,7 @@ export default [
     name: '簡中',
     englishName: 'Chinese (Simplified)',
     stripeLocale: 'en-US',
-    locale: 'zh_CN',
+    locale: 'zh-CN',
   },
   {
     dateLocale: zhTW,
@@ -79,7 +79,7 @@ export default [
     name: '繁中',
     englishName: 'Chinese (Traditional)',
     stripeLocale: 'en-US',
-    locale: 'zh_TW',
+    locale: 'zh-TW',
   },
   {
     dateLocale: nl,
@@ -87,7 +87,7 @@ export default [
     name: 'Nederlands',
     englishName: 'Dutch',
     stripeLocale: 'nl-NL',
-    locale: 'nl_NL',
+    locale: 'nl-NL',
   },
   {
     dateLocale: de,
@@ -95,7 +95,7 @@ export default [
     name: 'Deutsch',
     englishName: 'German',
     stripeLocale: 'de-DE',
-    locale: 'de_DE',
+    locale: 'de-DE',
   },
   {
     dateLocale: hu,
@@ -103,7 +103,7 @@ export default [
     name: 'Magyar',
     englishName: 'Hungarian',
     stripeLocale: 'en-US',
-    locale: 'hu_HU',
+    locale: 'hu-HU',
   },
   {
     dateLocale: it,
@@ -111,7 +111,7 @@ export default [
     name: 'Italiano',
     englishName: 'Italian',
     stripeLocale: 'it-IT',
-    locale: 'it_IT',
+    locale: 'it-IT',
   },
   {
     dateLocale: ja,
@@ -119,7 +119,7 @@ export default [
     name: '日本語',
     englishName: 'Japanese',
     stripeLocale: 'ja-JP',
-    locale: 'ja_JP',
+    locale: 'ja-JP',
   },
   {
     dateLocale: pl,
@@ -127,7 +127,7 @@ export default [
     name: 'Polski',
     englishName: 'Polish',
     stripeLocale: 'en-US',
-    locale: 'pl_PL',
+    locale: 'pl-PL',
   },
   {
     dateLocale: ptBR,
@@ -135,7 +135,7 @@ export default [
     name: 'Português Brasileiro',
     englishName: 'Portuguese (Brazilian)',
     stripeLocale: 'pt-BR',
-    locale: 'pt_BR',
+    locale: 'pt-BR',
   },
   {
     dateLocale: pt,
@@ -143,7 +143,7 @@ export default [
     name: 'Português',
     englishName: 'Portuguese (Portugal)',
     stripeLocale: 'pt-PT',
-    locale: 'pt_PT',
+    locale: 'pt-PT',
   },
   {
     dateLocale: uk,
@@ -151,7 +151,7 @@ export default [
     name: 'Yкраїнський',
     englishName: 'Ukrainian',
     stripeLocale: 'uk-UA',
-    locale: 'uk_UA',
+    locale: 'uk-UA',
   },
   {
     dateLocale: es,
@@ -159,6 +159,6 @@ export default [
     name: 'Español',
     englishName: 'Spanish',
     stripeLocale: 'es-ES',
-    locale: 'es_ES',
+    locale: 'es-ES',
   },
 ] as Language[];

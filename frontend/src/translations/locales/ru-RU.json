@@ -1,0 +1,403 @@
+{
+  "Header": {
+    "subtitle": "Отличный способ выговориться прилично",
+    "leave": "Выйти",
+    "logout": "Выйти с учётной записи",
+    "summaryMode": "Показать итоги",
+    "account": null,
+    "adminPanel": null
+  },
+  "LanguagePicker": {
+    "header": "Выбрать язык"
+  },
+  "Main": {
+    "hint": "Просто отправьте ссылку, чтобы пригласить на эту рестроспективу"
+  },
+  "Home": {
+    "welcome": null
+  },
+  "PreviousGame": {
+    "createdBy": null,
+    "posts": null,
+    "participants": null,
+    "votes": null,
+    "actions": null
+  },
+  "Column": {
+    "createGroupTooltip": null
+  },
+  "Group": {
+    "emptyGroupTitle": "",
+    "emptyGroupContent": ""
+  },
+  "Post": {
+    "openExtra": null,
+    "closeExtra": null,
+    "vote": "голос",
+    "votes": "голоса",
+    "deleteButton": "Удалить",
+    "setActionButton": null,
+    "setGiphyButton": null,
+    "noContent": "(пусто)",
+    "by": null,
+    "upVote": null,
+    "downVote": null,
+    "voteRemainingMultiple": null,
+    "voteRemainingOne": null,
+    "voteRemainingNone": null,
+    "toggleGiphyButton": null
+  },
+  "Customize": {
+    "title": null,
+    "votingCategory": null,
+    "votingCategorySub": null,
+    "postCategory": null,
+    "postCategorySub": null,
+    "customTemplateCategory": null,
+    "customTemplateCategorySub": null,
+    "startButton": null,
+    "editButton": null,
+    "maxUpVotes": null,
+    "maxUpVotesHelp": null,
+    "maxDownVotes": null,
+    "maxDownVotesHelp": null,
+    "maxPosts": null,
+    "maxPostsHelp": null,
+    "allowSelfVoting": null,
+    "allowSelfVotingHelp": null,
+    "allowMultipleVotes": null,
+    "allowMultipleVotesHelp": null,
+    "allowActions": null,
+    "allowActionsHelp": null,
+    "allowAuthorVisible": null,
+    "allowAuthorVisibleHelp": null,
+    "newPostsFirst": null,
+    "newPostsFirstHelp": null,
+    "allowGiphy": null,
+    "allowGiphyHelp": null,
+    "allowGrouping": null,
+    "allowGroupingHelp": null,
+    "allowReordering": null,
+    "allowReorderingHelp": null,
+    "blurCards": null,
+    "blurCardsHelp": null,
+    "template": null,
+    "templateHelp": null,
+    "numberOfColumns": null,
+    "numberOfColumnsHelp": null,
+    "makeDefaultTemplate": null
+  },
+  "PostBoard": {
+    "customQuestion": null,
+    "notWellQuestion": "Что можно улучшить?",
+    "wellQuestion": "Что было хорошего?",
+    "ideasQuestion": "Другие хорошие идеи?",
+    "startQuestion": null,
+    "editButton": null,
+    "stopQuestion": null,
+    "continueQuestion": null,
+    "likedQuestion": null,
+    "lackedQuestion": null,
+    "learnedQuestion": null,
+    "longedForQuestion": null,
+    "anchorQuestion": null,
+    "boatQuestion": null,
+    "islandQuestion": null,
+    "windQuestion": null,
+    "rockQuestion": null,
+    "disconnected": null,
+    "reconnect": null,
+    "notLoggedIn": null,
+    "error": null,
+    "maxPostsReached": null,
+    "iAmDone": null,
+    "iAmNotDoneYet": null,
+    "userIsReady": null
+  },
+  "GameMenu": {
+    "board": "Записи",
+    "summary": "Cводка"
+  },
+  "Template": {
+    "default": null,
+    "wellNotWell": null,
+    "startStopContinue": null,
+    "fourLs": null,
+    "sailboat": null
+  },
+  "Clients": {
+    "header": "Участники:",
+    "joined": null,
+    "left": null
+  },
+  "Join": {
+    "welcome": "Добро пожаловать в Retrospected",
+    "standardTab": {
+      "header": "Новая ретроспектива",
+      "text": "Нажмите, чтобы начать:",
+      "button": "Создать новую ретроспективу",
+      "customizeButton": "Настроить"
+    },
+    "optionsTab": {
+      "header": "Дополнительно",
+      "input": "Введите название ретроспективы",
+      "button": "Создать ретроспективу"
+    },
+    "previousTab": {
+      "header": "История",
+      "rejoinButton": "Войти"
+    }
+  },
+  "AnonymousLogin": {
+    "namePlaceholder": "Как вас зовут? Введите имя",
+    "buttonLabel": "Начать",
+    "header": "Логин",
+    "anonymousAuthHeader": null,
+    "anonymousAuthDescription": null,
+    "authenticatingWith": null,
+    "or": null
+  },
+  "SocialMediaLogin": {
+    "header": null,
+    "info": null
+  },
+  "AuthCommon": {
+    "emailField": null,
+    "passwordField": null,
+    "nameField": null,
+    "passwordScoreWords": null
+  },
+  "AccountLogin": {
+    "header": null,
+    "loginButton": null,
+    "info": null,
+    "registerLink": null,
+    "forgotPasswordLink": null,
+    "errorEmailPasswordIncorrect": null
+  },
+  "Register": {
+    "header": null,
+    "info": null,
+    "registerButton": null,
+    "errorAlreadyRegistered": null,
+    "errorGeneral": null,
+    "messageSuccess": null,
+    "errorInvalidEmail": null
+  },
+  "ValidateAccount": {
+    "success": null,
+    "error": null,
+    "loading": null
+  },
+  "ResetPassword": {
+    "doneMessage": null,
+    "header": null,
+    "resetButton": null,
+    "info": null,
+    "success": null,
+    "error": null,
+    "loading": null,
+    "resetInfo": null
+  },
+  "SummaryBoard": {
+    "noPosts": "Здесь пока пусто",
+    "copyAsMarkdown": "Скопировать как Markdown",
+    "copyAsRichText": "Скопировать как RTF",
+    "copySuccessful": "Копирование завершено"
+  },
+  "SessionName": {
+    "defaultSessionName": "Наша ретроспектива"
+  },
+  "Invite": {
+    "inviteButton": "Пригласить",
+    "dialog": {
+      "title": "Пригласить на ретроспективу",
+      "text": "Чтобы пригласить на ретроспективу, просто отправьте ссылку",
+      "copyButton": "Скопировать ссылку"
+    }
+  },
+  "Generic": {
+    "ok": "OK",
+    "cancel": "отменить"
+  },
+  "Actions": {
+    "tooltip": "Создать действие на задней части этого элемента",
+    "label": "Откройте панель действий",
+    "summaryTitle": "Ваши действия",
+    "title": "действие"
+  },
+  "DeleteSession": {
+    "header": null,
+    "firstLine": null,
+    "secondLine": null,
+    "yesImSure": null,
+    "cancel": null
+  },
+  "RevealCards": {
+    "buttonLabel": null,
+    "dialogTitle": null,
+    "dialogContent": null,
+    "confirmButton": null,
+    "cancelButton": null
+  },
+  "AccountPage": {
+    "anonymousError": null,
+    "details": {
+      "header": null,
+      "username": null,
+      "email": null,
+      "accountType": null
+    },
+    "plan": {
+      "header": null,
+      "plan": null,
+      "youAreOwner": null,
+      "youAreMember": null
+    },
+    "subscription": {
+      "header": null,
+      "manageButton": null,
+      "membersEditor": {
+        "title": null,
+        "limitReached": null,
+        "info": null
+      }
+    },
+    "trial": {
+      "header": null,
+      "yourTrialWillExpireIn": null,
+      "subscribe": null
+    },
+    "deleteAccount": {
+      "title": null,
+      "warning": null,
+      "deleteData": null,
+      "modal": {
+        "confirm": {
+          "title": null,
+          "description": null,
+          "confirmation": null,
+          "cancellation": null
+        },
+        "subheader": null,
+        "deleteAccount": null,
+        "recommended": null,
+        "deleteSessions": {
+          "main": null,
+          "selected": null,
+          "unselected": null
+        },
+        "deletePosts": {
+          "main": null,
+          "selected": null,
+          "unselected": null
+        },
+        "deleteVotes": {
+          "main": null,
+          "selected": null,
+          "unselected": null
+        },
+        "deleteAccountButton": null,
+        "cancelButton": null
+      }
+    }
+  },
+  "SubscribePage": {
+    "alertAlreadyPro": null,
+    "alertAlreadySubscribed": null,
+    "currency": {
+      "title": null,
+      "description": null,
+      "warning": null
+    },
+    "plan": {
+      "title": null,
+      "description": null
+    },
+    "domain": {
+      "title": null,
+      "description": null,
+      "invalidDomain": null
+    },
+    "subscribe": {
+      "title": null,
+      "description": null,
+      "cannotRegisterWithAnon": null,
+      "checkout": null
+    }
+  },
+  "SubscribeModal": {
+    "title": null,
+    "header": null,
+    "description": null,
+    "features": {
+      "encryptedSession": {
+        "title": null,
+        "description": null
+      },
+      "privateSessions": {
+        "title": null,
+        "description": null
+      },
+      "unlimitedPosts": {
+        "title": null,
+        "description": null
+      }
+    },
+    "subscribeButton": null,
+    "payButton": null,
+    "cancelButton": null,
+    "startTrial": null
+  },
+  "Products": {
+    "team": null,
+    "unlimited": null,
+    "self-hosted": null,
+    "users": null,
+    "unlimited_seats": null,
+    "month": null,
+    "year": null,
+    "wantToPayYearly": null
+  },
+  "Encryption": {
+    "createEncryptedSession": null,
+    "sessionNotEncrypted": null,
+    "sessionEncryptedHaveKeyTooltip": null,
+    "sessionEncryptedNoKeyTooltip": null,
+    "sessionEncryptedWrongKeyTooltip": null,
+    "newEncryptedSessionWarningTitle": null,
+    "newEncryptedSessionWarningContent": null,
+    "sessionEncryptionError": null,
+    "passwordModalTitle": null,
+    "passwordModelIncorrect": null
+  },
+  "Private": {
+    "lockSuccessNotification": null,
+    "unlockSuccessNotification": null,
+    "lockButton": null,
+    "unlockButton": null,
+    "lockDescription": null,
+    "cancelButton": null,
+    "sessionLockedTitle": null,
+    "sessionLockedDescription": null,
+    "sessionNonProTitle": null,
+    "sessionNonProDescription": null,
+    "sessionIsPublic": null,
+    "sessionIsPrivate": null,
+    "sessionIsPrivateNoAccess": null
+  },
+  "TrialPrompt": {
+    "allowanceReachedTitle": null,
+    "allowanceReachedDescription": null,
+    "nearEndAllowanceTitle": null,
+    "nearEndAllowanceDescription": null,
+    "onTrialTitle": null,
+    "remainingTrialSentence": null,
+    "trialEndedTitle": null,
+    "trialEndedSentence": null,
+    "subscribeNow": null
+  },
+  "Chat": {
+    "writeAMessage": null
+  }
+}

@@ -54,7 +54,7 @@ function getConfig(): Config {
   const defaultLanguage = getKey(
     'DEFAULT_LANGUAGE',
     'NO_DEFAULT_LANGUAGE',
-    'en'
+    'en-GB'
   );
 
   return {
