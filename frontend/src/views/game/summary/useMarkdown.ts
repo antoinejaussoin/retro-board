@@ -68,7 +68,7 @@ ${[...col.items].map((i) => toItem(i, 0)).join('\n')}
     });
 
     return md;
-  }, [session, t('SessionName.defaultSessionName'), stats]);
+  }, [session, t, stats]);
   return result;
 }
 

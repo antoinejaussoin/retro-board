@@ -25,13 +25,13 @@ const CopySpeedDial = () => {
     copyToClipboard(p);
     setOpen(false);
     enqueueSnackbar(t('SummaryBoard.copySuccessful'), { variant: 'success' });
-  }, [md, t('SummaryBoard.copySuccessful'), enqueueSnackbar]);
+  }, [md, t, enqueueSnackbar]);
 
   const handleCopyRichText = useCallback(() => {
     copyToClipboard(mdElement.current!);
     setOpen(false);
     enqueueSnackbar(t('SummaryBoard.copySuccessful'), { variant: 'success' });
-  }, [t('SummaryBoard.copySuccessful'), enqueueSnackbar]);
+  }, [t, enqueueSnackbar]);
 
   return isSupported ? (
     <>
