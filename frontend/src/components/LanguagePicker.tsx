@@ -28,7 +28,7 @@ const LanguagePicker = ({ value, onChange }: LanguagePickerProps) => {
     >
       {languages.map((language) => (
         <MenuItem
-          value={language.value}
+          value={language.locale}
           key={language.value}
           data-cy={`language-picker-item-${language.value}`}
         >

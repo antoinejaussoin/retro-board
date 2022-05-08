@@ -16,11 +16,11 @@ export default function useLanguage(): UseLanguageResult {
   const { i18n } = useTranslation();
   const { setUser } = useContext(UserContext);
 
-  const languageIso = i18n.language;
+  const locale = i18n.language;
   const language = useMemo(() => {
-    const foundLanguage = languages.find((l) => l.value === languageIso);
+    const foundLanguage = languages.find((l) => l.locale === locale);
     return foundLanguage || languages[0];
-  }, [languageIso]);
+  }, [locale]);
 
   const handleChangeLanguage = useCallback(
     async (language: string) => {

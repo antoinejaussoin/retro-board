@@ -31,7 +31,7 @@ function Panel() {
     <Drawer open={opened} onClose={toggle} data-cy="side-panel">
       <DrawerContent>
         <Top>
-          <LanguagePicker value={language.value} onChange={setLanguage} />
+          <LanguagePicker value={language.locale} onChange={setLanguage} />
           <Content>
             <Routes>
               <Route path="/game/:gameId" element={<ParticipantsList />} />

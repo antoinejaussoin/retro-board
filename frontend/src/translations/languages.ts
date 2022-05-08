@@ -160,9 +160,9 @@ export default [
     locale: 'pt_PT',
   },
   {
-    value: 'uk',
+    value: 'ua',
     dateLocale: uk,
-    iso: 'uk',
+    iso: 'ua',
     name: 'Yкраїнський',
     englishName: 'Ukrainian',
     stripeLocale: 'uk-UA',
