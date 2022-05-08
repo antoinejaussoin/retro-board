@@ -14,7 +14,7 @@
     "hint": "Puoi invitare altre persone a questa sessione copiando ed incollando la URL"
   },
   "Home": {
-    
+    "welcome": "Benvenuto, {{name}}"
   },
   "PreviousGame": {
     "createdBy": "Creato da",
@@ -46,7 +46,9 @@
     "by": "da",
     "upVote": "mi piace",
     "downVote": "non mi piace",
-    
+    "voteRemainingMultiple": "Hai {{number}} {{type}}s rimanenti.",
+    "voteRemainingOne": "Hai solo un {{type}} rimanente, farlo contare!",
+    "voteRemainingNone": "Non hai nessun {{type}} rimanente.",
     "toggleGiphyButton": "Toggle immagine Giphy"
   },
   "Customize": {

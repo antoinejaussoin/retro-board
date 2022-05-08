@@ -48,7 +48,7 @@
     "downVote": "abstimmend",
     "voteRemainingMultiple": "Du hast noch {{number}} {{type}}s übrig.",
     "voteRemainingOne": "Du hast nur noch ein {{type}} übrig, mach es zählen!",
-    
+    "voteRemainingNone": "Sie haben keine {{type}} übrig.",
     "toggleGiphyButton": "Giphy-Bild umschalten"
   },
   "Customize": {

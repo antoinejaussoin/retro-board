@@ -14,7 +14,7 @@
     "hint": "Je kan anderen uitnodigen voor deze sessie door de URL te kopiëren en te plakken"
   },
   "Home": {
-    
+    "welcome": "Welkom, {{name}}"
   },
   "PreviousGame": {
     "createdBy": "Aangemaakt door",
@@ -46,6 +46,9 @@
     "by": "door",
     "upVote": "omhoog stemmen",
     "downVote": "tegenstemmen",
+    "voteRemainingMultiple": "Je hebt nog {{number}} {{type}}s over.",
+    "voteRemainingOne": "Je hebt nog maar één {{type}} over, maak het mee!",
+    "voteRemainingNone": "Je hebt geen {{type}} over.",
     "toggleGiphyButton": "Aan- en uitschakelen Giphy afbeelding"
   },
   "Customize": {
