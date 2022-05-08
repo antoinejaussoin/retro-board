@@ -25,7 +25,10 @@ COPY --chown=node:node ./.env ./.env
 
 RUN yarn build
 
-FROM nginx:alpine
+FROM nginx:latest
+
+RUN apt update
+RUN apt -y remove libfreetype6
 
 COPY --from=Node /home/node/app/build /usr/share/nginx/html
 COPY ./docker/nginx.conf.template /etc/nginx/conf.d/default.conf.template
