@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Route, Link as RouterLink, Routes } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { colors } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
 import Link from '@mui/material/Link';
@@ -9,6 +9,7 @@ import LanguagePicker from '../components/LanguagePicker';
 import ParticipantsList from './panel/ParticipantsList';
 import config from '../utils/getConfig';
 import useSidePanel from './panel/useSidePanel';
+import { useMatch } from 'react-router-dom';
 
 interface Policy {
   name: string;
@@ -26,17 +27,14 @@ const policies: Policy[] = [
 function Panel() {
   const [language, setLanguage] = useLanguage();
   const { opened, toggle } = useSidePanel();
+  const hasParticipants = useMatch('/game/:gameId/*');
 
   return (
     <Drawer open={opened} onClose={toggle} data-cy="side-panel">
       <DrawerContent>
         <Top>
           <LanguagePicker value={language.locale} onChange={setLanguage} />
-          <Content>
-            <Routes>
-              <Route path="/game/:gameId" element={<ParticipantsList />} />
-            </Routes>
-          </Content>
+          <Content>{hasParticipants ? <ParticipantsList /> : null}</Content>
         </Top>
         <Bottom>
           <Typography component="div">
