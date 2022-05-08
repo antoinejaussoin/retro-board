@@ -58,6 +58,22 @@ export default [
     locale: 'fr-FR',
   },
   {
+    dateLocale: de,
+    iso: 'de',
+    name: 'Deutsch',
+    englishName: 'German',
+    stripeLocale: 'de-DE',
+    locale: 'de-DE',
+  },
+  {
+    dateLocale: es,
+    iso: 'es',
+    name: 'Español',
+    englishName: 'Spanish',
+    stripeLocale: 'es-ES',
+    locale: 'es-ES',
+  },
+  {
     dateLocale: arDZ,
     iso: 'ae',
     name: 'عربي',
@@ -88,14 +104,6 @@ export default [
     englishName: 'Dutch',
     stripeLocale: 'nl-NL',
     locale: 'nl-NL',
-  },
-  {
-    dateLocale: de,
-    iso: 'de',
-    name: 'Deutsch',
-    englishName: 'German',
-    stripeLocale: 'de-DE',
-    locale: 'de-DE',
   },
   {
     dateLocale: hu,
@@ -152,13 +160,5 @@ export default [
     englishName: 'Ukrainian',
     stripeLocale: 'uk-UA',
     locale: 'uk-UA',
-  },
-  {
-    dateLocale: es,
-    iso: 'es',
-    name: 'Español',
-    englishName: 'Spanish',
-    stripeLocale: 'es-ES',
-    locale: 'es-ES',
   },
 ] as Language[];

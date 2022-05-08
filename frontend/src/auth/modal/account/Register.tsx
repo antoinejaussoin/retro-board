@@ -165,8 +165,12 @@ const Register = ({ onClose }: RegisterProps) => {
             <PasswordStrength
               onChangeScore={setPasswordScore}
               password={registerPassword}
-              shortScoreWord={t('AuthCommon.passwordScoreWords')[0]}
-              scoreWords={t('AuthCommon.passwordScoreWords')}
+              shortScoreWord={
+                t(`AuthCommon.passwordScoreWords`, { returnObjects: true })[0]
+              }
+              scoreWords={t('AuthCommon.passwordScoreWords', {
+                returnObjects: true,
+              })}
             />
           </Suspense>
         </>
