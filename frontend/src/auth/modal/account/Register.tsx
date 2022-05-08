@@ -52,7 +52,7 @@ const Register = ({ onClose }: RegisterProps) => {
       registerName,
       registerEmail,
       registerPassword,
-      language.value
+      language.locale
     );
     if (response.error) {
       switch (response.error) {
@@ -74,7 +74,7 @@ const Register = ({ onClose }: RegisterProps) => {
     registerName,
     registerEmail,
     registerPassword,
-    language.value,
+    language.locale,
     t,
     setUser,
     onClose,

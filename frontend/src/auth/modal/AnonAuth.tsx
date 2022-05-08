@@ -28,7 +28,7 @@ const AnonAuth = ({ onClose, onUser }: AnonAuthProps) => {
           setError('Your anonymous account is not valid.');
           return;
         }
-        const updatedUser = await updateLanguage(language.value);
+        const updatedUser = await updateLanguage(language.locale);
         onUser(updatedUser);
         if (onClose) {
           onClose();

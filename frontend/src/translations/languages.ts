@@ -32,7 +32,6 @@ const es = () =>
   import('date-fns/locale/es' /* webpackChunkName: "date-fns-es" */);
 
 export interface Language {
-  value: string;
   iso: string;
   name: string;
   englishName: string;
@@ -43,7 +42,6 @@ export interface Language {
 
 export default [
   {
-    value: 'en',
     dateLocale: enGB,
     iso: 'gb',
     name: 'English',
@@ -52,7 +50,6 @@ export default [
     locale: 'en_GB',
   },
   {
-    value: 'fr',
     dateLocale: fr,
     iso: 'fr',
     name: 'Français',
@@ -61,7 +58,6 @@ export default [
     locale: 'fr_FR',
   },
   {
-    value: 'ar',
     dateLocale: arDZ,
     iso: 'ae',
     name: 'عربي',
@@ -70,7 +66,6 @@ export default [
     locale: 'ar_SA',
   },
   {
-    value: 'zhcn',
     dateLocale: zhCN,
     iso: 'cn',
     name: '簡中',
@@ -79,7 +74,6 @@ export default [
     locale: 'zh_CN',
   },
   {
-    value: 'zhtw',
     dateLocale: zhTW,
     iso: 'tw',
     name: '繁中',
@@ -88,7 +82,6 @@ export default [
     locale: 'zh_TW',
   },
   {
-    value: 'nl',
     dateLocale: nl,
     iso: 'nl',
     name: 'Nederlands',
@@ -97,7 +90,6 @@ export default [
     locale: 'nl_NL',
   },
   {
-    value: 'de',
     dateLocale: de,
     iso: 'de',
     name: 'Deutsch',
@@ -106,7 +98,6 @@ export default [
     locale: 'de_DE',
   },
   {
-    value: 'hu',
     dateLocale: hu,
     iso: 'hu',
     name: 'Magyar',
@@ -115,7 +106,6 @@ export default [
     locale: 'hu_HU',
   },
   {
-    value: 'it',
     dateLocale: it,
     iso: 'it',
     name: 'Italiano',
@@ -124,7 +114,6 @@ export default [
     locale: 'it_IT',
   },
   {
-    value: 'ja',
     dateLocale: ja,
     iso: 'jp',
     name: '日本語',
@@ -133,7 +122,6 @@ export default [
     locale: 'ja_JP',
   },
   {
-    value: 'pl',
     dateLocale: pl,
     iso: 'pl',
     name: 'Polski',
@@ -142,7 +130,6 @@ export default [
     locale: 'pl_PL',
   },
   {
-    value: 'ptbr',
     dateLocale: ptBR,
     iso: 'br',
     name: 'Português Brasileiro',
@@ -151,7 +138,6 @@ export default [
     locale: 'pt_BR',
   },
   {
-    value: 'pt',
     dateLocale: pt,
     iso: 'pt',
     name: 'Português',
@@ -160,7 +146,6 @@ export default [
     locale: 'pt_PT',
   },
   {
-    value: 'ua',
     dateLocale: uk,
     iso: 'ua',
     name: 'Yкраїнський',
@@ -169,7 +154,6 @@ export default [
     locale: 'uk_UA',
   },
   {
-    value: 'es',
     dateLocale: es,
     iso: 'es',
     name: 'Español',

@@ -55,7 +55,7 @@ export function NewAccountModal({
       registerName,
       registerEmail,
       registerPassword,
-      language.value
+      language.locale
     );
     if (response.error) {
       switch (response.error) {
@@ -72,7 +72,14 @@ export function NewAccountModal({
     } else {
       setIsSuccessful(false);
     }
-  }, [registerName, registerEmail, registerPassword, language.value, t, onAdd]);
+  }, [
+    registerName,
+    registerEmail,
+    registerPassword,
+    language.locale,
+    t,
+    onAdd,
+  ]);
 
   if (disablePasswordRegistration) {
     return (

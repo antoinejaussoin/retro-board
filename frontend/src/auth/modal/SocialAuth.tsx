@@ -65,7 +65,7 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
     const s = io();
     setSocket(s);
     s.on('auth', async (_user: FullUser) => {
-      const updatedUser = await updateLanguage(language.value);
+      const updatedUser = await updateLanguage(language.locale);
       onUser(updatedUser);
       if (windowRef.current) {
         windowRef.current.close();
