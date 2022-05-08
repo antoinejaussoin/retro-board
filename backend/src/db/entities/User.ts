@@ -46,7 +46,7 @@ export default class UserEntity {
   public trial: Date | null;
   @Column({ nullable: false, default: 50 })
   public quota: number;
-  @Column({ nullable: false, type: 'character varying', default: 'en' })
+  @Column({ nullable: false, type: 'character varying', default: 'en-GB' })
   public language: string;
   @ManyToOne(() => SessionTemplateEntity, { nullable: true, eager: false })
   @Index()
@@ -73,7 +73,7 @@ export default class UserEntity {
     this.id = id;
     this.name = name;
     this.email = null;
-    this.language = 'en';
+    this.language = 'en-GB';
     this.stripeId = null;
     this.currency = null;
     this.trial = null;

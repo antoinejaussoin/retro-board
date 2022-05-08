@@ -29,4 +29,4 @@ spec:
             - name: GIPHY_API_KEY
               value: ''
             - name: DEFAULT_LANGUAGE
-              value: 'en'
+              value: 'en-GB'

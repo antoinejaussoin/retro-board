@@ -72,7 +72,7 @@ export default class UserView {
     this.id = id;
     this.identityId = identityId;
     this.name = name;
-    this.language = 'en';
+    this.language = 'en-GB';
     this.accountType = 'anonymous';
     this.username = null;
     this.photo = null;

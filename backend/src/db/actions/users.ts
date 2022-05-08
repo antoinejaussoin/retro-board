@@ -244,7 +244,7 @@ export async function registerAnonymousUser(
       const identity = new UserIdentityEntity(v4(), user, hashedPassword);
 
       identity.username = username;
-      user.language = 'en';
+      user.language = 'en-GB';
 
       await userRepository.save(user);
       await identityRepository.save(identity);

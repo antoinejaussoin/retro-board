@@ -107,7 +107,7 @@ services:
       GA_ID: '' # Optional, Google Analytics ID (UA-1234456-7)
       SENTRY_URL: '' # Optional, Sentry URL (https://1234567890abcdef12345@sentry.io/1234567)
       GIPHY_API_KEY: '' # Optional, can be obtained here: https://developers.giphy.com/
-      DEFAULT_LANGUAGE: 'en' # Set the default language for new users
+      DEFAULT_LANGUAGE: 'en-GB' # Set the default language for new users
 
       # -- Do Not Change --
       BACKEND_HOST: backend # This should be the name of the backend service
