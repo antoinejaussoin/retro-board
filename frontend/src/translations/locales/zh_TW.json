@@ -1,0 +1,423 @@
+{
+  "Header": {
+    "subtitle": "駕馭敏捷方式的好方法",
+    "logout": "登出",
+    "leave": "離開",
+    "summaryMode": "主旨模式",
+    "account": "我的賬戶",
+    "adminPanel": "管理面板"
+  },
+  "LanguagePicker": {
+    "header": "切換語言"
+  },
+  "Main": {
+    "hint": "複製並分享網址，即可讓別人加入此議程"
+  },
+  "Home": {
+    "welcome": "歡迎， {{name}}"
+  },
+  "PreviousGame": {
+    "createdBy": "由...製作",
+    "posts_one": "郵政",
+    "posts_other": "帖子",
+    "participants_one": "參與者",
+    "participants_other": "參與者",
+    "votes_one": "投票",
+    "votes_other": "選票",
+    "actions_one": "行動",
+    "actions_other": "行動"
+  },
+  "Column": {
+    "createGroupTooltip": "創建組以將帖子分組在一起"
+  },
+  "Group": {
+    "emptyGroupTitle": "這是一個空組",
+    "emptyGroupContent": "將帖子移至此處以填充此組"
+  },
+  "Post": {
+    "openExtra": "附加的功能",
+    "closeExtra": "關閉",
+    "vote": "投票",
+    "votes": "表決",
+    "deleteButton": "刪除",
+    "setActionButton": "設置動作",
+    "setGiphyButton": "選擇一個 Giphy 圖像",
+    "noContent": "(目前無任何內容)",
+    "by": "經過",
+    "upVote": "贊成票",
+    "downVote": "否決票",
+    "voteRemainingMultiple": "您還剩 {{number}} {{type}}秒。",
+    "voteRemainingOne": "你只剩下一個 {{type}} 了，算了吧！",
+    "voteRemainingNone": "你沒有任何剩餘的 {{type}}。",
+    "toggleGiphyButton": "切換 Giphy 圖像"
+  },
+  "Customize": {
+    "title": "自定義您的會話",
+    "votingCategory": "表決",
+    "votingCategorySub": "設定好惡規則",
+    "postCategory": "帖子設置",
+    "postCategorySub": "設置用戶在創建或查看帖子時可以做什麼的規則",
+    "customTemplateCategory": "列模板",
+    "customTemplateCategorySub": "設置列數及其特徵",
+    "startButton": "開始會話",
+    "editButton": "更新",
+    "maxUpVotes": "最大投票數",
+    "maxUpVotesHelp": "允許用戶投的“喜歡”投票的最大數量",
+    "maxDownVotes": "最大反對票",
+    "maxDownVotesHelp": "允許用戶投的“不喜歡”投票的最大數量",
+    "maxPosts": "每個用戶的最大帖子數",
+    "maxPostsHelp": "用戶每個會話可以創建的最大帖子數",
+    "allowSelfVoting": "允許自我投票",
+    "allowSelfVotingHelp": "是否允許用戶對自己的帖子進行投票",
+    "allowMultipleVotes": "允許多票",
+    "allowMultipleVotesHelp": "是否允許用戶對同一個帖子進行多次投票",
+    "allowActions": "允許操作",
+    "allowActionsHelp": "是否允許每個帖子上的“操作”（跟進）字段",
+    "allowAuthorVisible": "顯示作者",
+    "allowAuthorVisibleHelp": "在帖子本身上顯示帖子的作者。",
+    "newPostsFirst": "首先添加新帖子",
+    "newPostsFirstHelp": "新帖子添加在列的頂部",
+    "allowGiphy": "允許 Giphy",
+    "allowGiphyHelp": "允許用戶針對帖子設置 Giphy 圖像",
+    "allowGrouping": "允許分組",
+    "allowGroupingHelp": "允許創建組以將帖子分組在一起",
+    "allowReordering": "允許重新訂購",
+    "allowReorderingHelp": "允許通過拖放重新排序帖子",
+    "blurCards": "模糊卡片",
+    "blurCardsHelp": "卡片內容模糊，直到版主顯示內容",
+    "template": "模板",
+    "templateHelp": "使用一組預定義的列",
+    "numberOfColumns": "列數",
+    "numberOfColumnsHelp": "設置列數",
+    "makeDefaultTemplate": "將此作為我的默認模板"
+  },
+  "PostBoard": {
+    "customQuestion": "自定義列",
+    "notWellQuestion": "哪些已經改善?",
+    "wellQuestion": "哪些做的很好?",
+    "ideasQuestion": "分享優秀的點子?",
+    "startQuestion": "開始",
+    "stopQuestion": "停止",
+    "continueQuestion": "繼續",
+    "likedQuestion": "喜歡",
+    "lackedQuestion": "缺乏",
+    "learnedQuestion": "學到了",
+    "longedForQuestion": "渴望",
+    "anchorQuestion": "錨",
+    "boatQuestion": "船",
+    "islandQuestion": "島",
+    "windQuestion": "風",
+    "rockQuestion": "岩石",
+    "disconnected": "您已與當前會話斷開連接。",
+    "reconnect": "重新連接",
+    "notLoggedIn": "您尚未登錄。您可以作為旁觀者查看此會話，但必須登錄才能參與。",
+    "error_action_unauthorised": "您無權執行此操作。",
+    "error_cannot_edit_group": "編輯組失敗。",
+    "error_cannot_edit_post": "編輯帖子失敗。",
+    "error_cannot_get_session": "無法獲取會話數據。請重新加載頁面。",
+    "error_cannot_register_vote": "您的投票未成功登記。",
+    "error_cannot_save_group": "您創建的群組無法保存。",
+    "error_cannot_save_post": "您創建的帖子無法保存。",
+    "error_cannot_delete_group": "無法刪除群組",
+    "error_cannot_delete_post": "無法刪除帖子",
+    "error_cannot_rename_session": "重命名會話失敗",
+    "error_cannot_save_columns": "保存列失敗",
+    "error_cannot_save_options": "保存選項失敗",
+    "maxPostsReached": "您已達到版主設置的最大帖子數。",
+    "iAmDone": "我受夠了！",
+    "iAmNotDoneYet": "我還沒搞定...",
+    "userIsReady": "{{user}} 準備好了！"
+  },
+  "GameMenu": {
+    "board": "木板",
+    "summary": "概括"
+  },
+  "Template": {
+    "default": "默認",
+    "wellNotWell": "好/不好",
+    "startStopContinue": "開始/停止/繼續",
+    "fourLs": "四個 L",
+    "sailboat": "帆船"
+  },
+  "Clients": {
+    "header": "已加入我們的:",
+    "joined": "{{users}} 人加入。",
+    "left": "還剩{{users}} 個。"
+  },
+  "Join": {
+    "welcome": "歡迎 Retrospected",
+    "standardTab": {
+      "header": "新增",
+      "text": "點擊以下開始進行回顧:",
+      "button": "建立新的議程",
+      "customizeButton": "定制"
+    },
+    "optionsTab": {
+      "header": "進階設定",
+      "input": "名稱",
+      "button": "建立議程"
+    },
+    "previousTab": {
+      "header": "之前的議程",
+      "rejoinButton": "再次加入"
+    }
+  },
+  "AnonymousLogin": {
+    "namePlaceholder": "您是誰? 在此輸入您的名稱",
+    "buttonLabel": "開始!",
+    "header": "登錄",
+    "anonymousAuthHeader": "匿名登錄",
+    "anonymousAuthDescription": "這將創建一個匿名帳戶。某些功能將不可用。",
+    "authenticatingWith": "身份驗證",
+    "or": "或者"
+  },
+  "SocialMediaLogin": {
+    "header": "身份驗證",
+    "info": "這將使用您選擇的第三方提供商對您進行身份驗證。沒有存儲密碼。"
+  },
+  "AuthCommon": {
+    "emailField": "電子郵件",
+    "passwordField": "密碼",
+    "nameField": "您的姓名（用於顯示目的）",
+    "passwordScoreWords": [
+      "虛弱的",
+      "虛弱的",
+      "不完全的",
+      "好的",
+      "強的"
+    ]
+  },
+  "AccountLogin": {
+    "header": "密碼",
+    "loginButton": "登錄",
+    "info": "使用您的電子郵件和密碼登錄。",
+    "registerLink": "沒有註冊？點擊這裡",
+    "forgotPasswordLink": "忘記密碼了嗎？",
+    "errorEmailPasswordIncorrect": "您的憑據不正確。"
+  },
+  "Register": {
+    "header": "登記",
+    "info": "給自己一個追溯賬戶！",
+    "registerButton": "登記",
+    "errorAlreadyRegistered": "此郵箱號已被註冊",
+    "errorGeneral": "嘗試創建您的帳戶時出錯。",
+    "messageSuccess": "謝謝！您應該很快會收到一封電子郵件以驗證您的帳戶。",
+    "errorInvalidEmail": "請輸入有效電子郵件"
+  },
+  "ValidateAccount": {
+    "success": "您的電子郵件已正確驗證。我會在幾秒鐘內讓你登錄！",
+    "error": "驗證您的電子郵件時出錯。",
+    "loading": "我們正在驗證您的電子郵件。請稍等。"
+  },
+  "ResetPassword": {
+    "doneMessage": "完畢！查看您的電子郵件，您應該會獲得重置密碼的鏈接。",
+    "header": "重設密碼",
+    "resetButton": "重設密碼",
+    "info": "忘記密碼了嗎？不是問題。在下方輸入您的電子郵件，您將收到重置電子郵件提示。",
+    "success": "您的密碼已更新。我會在幾秒鐘內讓你登錄！",
+    "error": "更新您的密碼時出錯。",
+    "loading": "我們正在更新您的密碼。請稍等。",
+    "resetInfo": "請提供新密碼"
+  },
+  "SummaryBoard": {
+    "noPosts": "目前無任何內容",
+    "copyAsMarkdown": "將摘要復制為 Markdown",
+    "copyAsRichText": "將摘要復制為富文本",
+    "copySuccessful": "您已成功將摘要復製到剪貼板"
+  },
+  "SessionName": {
+    "defaultSessionName": "我的回顧"
+  },
+  "Invite": {
+    "inviteButton": "邀請",
+    "dialog": {
+      "title": "邀請別人來到您的議程",
+      "text": "邀請別人來到您的議程，只要分享以下的網址給他們",
+      "copyButton": "複製網址到剪貼簿"
+    }
+  },
+  "Generic": {
+    "ok": "好的",
+    "cancel": "取消"
+  },
+  "Actions": {
+    "tooltip": "在此項目的背面創建一個操作",
+    "label": "打開“操作”面板",
+    "summaryTitle": "你的行動",
+    "title": "行動"
+  },
+  "DeleteSession": {
+    "header": "刪除“{{name}}”？",
+    "firstLine": "刪除會話是不可逆的。它將刪除所有帖子、投票、組和會話本身。數據無法恢復。",
+    "secondLine": "您確定要刪除此會話及其所有內容嗎？",
+    "yesImSure": "是，我確定",
+    "cancel": "不，對不起，我弄錯了"
+  },
+  "RevealCards": {
+    "buttonLabel": "揭示",
+    "dialogTitle": "顯示所有卡片",
+    "dialogContent": "這將為每個人顯示所有模糊的卡片。這不能被撤消。",
+    "confirmButton": "讓我們揭曉！",
+    "cancelButton": "不，謝謝"
+  },
+  "AccountPage": {
+    "anonymousError": "匿名帳戶無法訪問他們的個人資料（因為他們沒有個人資料）。",
+    "details": {
+      "header": "你的資料",
+      "username": "用戶名",
+      "email": "電子郵件",
+      "accountType": "帳戶類型"
+    },
+    "plan": {
+      "header": "你的計劃",
+      "plan": "計劃",
+      "youAreOwner": "通過以下訂閱，您是該計劃的所有者。",
+      "youAreMember": "您通過其他人的訂閱參與此計劃。"
+    },
+    "subscription": {
+      "header": "您的訂閱",
+      "manageButton": "管理我的訂閱",
+      "membersEditor": {
+        "title": "你的團隊",
+        "limitReached": "您已達到訂閱限制（{{limit}} 個用戶，包括您自己）。請刪除成員，或升級到無限制的公司帳戶。",
+        "info": "在下方添加電子郵件以將 Pro 帳戶授予最多 {{limit}} 位其他同事。在每個電子郵件地址後按 Enter。"
+      }
+    },
+    "trial": {
+      "header": "您的試用",
+      "yourTrialWillExpireIn": "您的試用期將以 {{date}}結束。",
+      "subscribe": "現在訂閱"
+    },
+    "deleteAccount": {
+      "title": "GDPR",
+      "warning": "你有權被遺忘。話雖如此，刪除帳戶時要小心。這不能被撤消。",
+      "deleteData": "刪除我的數據",
+      "modal": {
+        "confirm": {
+          "title": "你絕對確定嗎？",
+          "description": "沒有回頭路。",
+          "confirmation": "是的，我想刪除我的所有數據",
+          "cancellation": "帶我離開這裡"
+        },
+        "subheader": "選擇要刪除的內容",
+        "deleteAccount": "刪除您的帳戶以及與您的電子郵件相關聯的任何身份。",
+        "recommended": "受到推崇的",
+        "deleteSessions": {
+          "main": "我們應該刪除您創建的會議（回顧）嗎？",
+          "selected": "您的會話及其所有數據，包括其他人的帖子和投票，將被永久刪除。",
+          "unselected": "您的會話將被保留，其作者將成為匿名用戶。"
+        },
+        "deletePosts": {
+          "main": "我們應該刪除你寫的所有帖子嗎？",
+          "selected": "您在任何會話中的帖子及其相關投票和操作都將被永久刪除。",
+          "unselected": "您的帖子將被保留，但它們將與匿名用戶相關聯。"
+        },
+        "deleteVotes": {
+          "main": "我們是否也應該刪除您的所有選票？",
+          "selected": "您在所有會話中的投票將被永久刪除。",
+          "unselected": "您的投票將被保留，但它們將與匿名用戶相關聯。"
+        },
+        "deleteAccountButton": "刪除您的帳戶",
+        "cancelButton": "取消"
+      }
+    }
+  },
+  "SubscribePage": {
+    "alertAlreadyPro": "您已經是 Pro 用戶，因此您可能不需要其他訂閱。",
+    "alertAlreadySubscribed": "您已經有訂閱，因此您可能不需要其他訂閱。",
+    "currency": {
+      "title": "貨幣",
+      "description": "選擇一種您想要結算的貨幣",
+      "warning": "您的帳戶已設置為使用 {{currency}}，因此您無法再更改貨幣。"
+    },
+    "plan": {
+      "title": "計劃",
+      "description": "選擇適合您用例的計劃！"
+    },
+    "domain": {
+      "title": "領域",
+      "description": "您的無限制訂閱適用於給定域。擁有此電子郵件域的任何用戶都將自動成為 Pro 用戶。",
+      "invalidDomain": "請提供一個有效的域。該域不能是免費或一次性電子郵件域。"
+    },
+    "subscribe": {
+      "title": "查看",
+      "description": "您將被重定向到我們的合作夥伴 Stripe 進行付款",
+      "cannotRegisterWithAnon": "您需要使用 OAuth 或密碼帳戶登錄才能繼續。",
+      "checkout": "查看"
+    }
+  },
+  "SubscribeModal": {
+    "title": "專業訂閱",
+    "header": "回顧專業版",
+    "description": "通過訂閱 Retrospected Pro 來保護您公司的數據。使用 Retrospected Pro，獲得以下功能及更多：",
+    "features": {
+      "encryptedSession": {
+        "title": "加密會話",
+        "description": "您的數據在您的瀏覽器中被加密，因此無法在 Retrospected 服務器上進行任何解密。"
+      },
+      "privateSessions": {
+        "title": "私人會議",
+        "description": "確保只有經過授權的人才能訪問您的會話。"
+      },
+      "unlimitedPosts": {
+        "title": "無限帖子",
+        "description": "通過 Pro 訂閱，獲得無限的帖子。"
+      }
+    },
+    "subscribeButton": "訂閱",
+    "payButton": "選擇",
+    "cancelButton": "取消",
+    "startTrial": "30 天試用"
+  },
+  "Products": {
+    "team": "非常適合小型團隊，您最多可以選擇 20 位同事升級為 Pro 帳戶。",
+    "unlimited": "如果您是一家更大的公司，您將享受無限數量的 Pro 帳戶。",
+    "self-hosted": "現場回顧、一次性費用和無限更新。永遠完全控制您的數據。",
+    "users": "{{users}} 個用戶",
+    "unlimited_seats": "無限",
+    "month": "月",
+    "year": "年",
+    "wantToPayYearly": "我想按年付款（每 12 個月），每年免費獲得一個月！"
+  },
+  "Encryption": {
+    "createEncryptedSession": "加密會話",
+    "sessionNotEncrypted": "此會話未加密。",
+    "sessionEncryptedHaveKeyTooltip": "此會話已加密，密鑰存儲在您的瀏覽器中。您無需再次提供密碼即可打開此會話。",
+    "sessionEncryptedNoKeyTooltip": "此會話已加密，密鑰未存儲在您的瀏覽器中。打開此會話時，您將被要求提供解密密鑰。",
+    "sessionEncryptedWrongKeyTooltip": "此會話已加密，您存儲的密鑰不是正確的密鑰。",
+    "newEncryptedSessionWarningTitle": "此會話在本地加密",
+    "newEncryptedSessionWarningContent": "將完整的 URL（包含密鑰）保存在安全的地方，或者至少是加密密鑰： {{key}}對您來說非常重要。如果丟失此加密密鑰，則無法檢索數據。",
+    "sessionEncryptionError": "此會話已加密，您似乎沒有本地存儲解密密鑰。請使用原始鏈接，包括解密密鑰。",
+    "passwordModalTitle": "加密會話 - 輸入密碼",
+    "passwordModelIncorrect": "加密密鑰不正確。"
+  },
+  "Private": {
+    "lockSuccessNotification": "您的會話已成功設為私有。沒有新的參與者可以加入。",
+    "unlockSuccessNotification": "您的會話已成功公開。任何人都可以加入。",
+    "lockButton": "設為私有",
+    "unlockButton": "公開",
+    "lockDescription": "您即將將會話設為私有。鎖定後，只有當前參與者（如下所列）才能訪問此會話。",
+    "cancelButton": "取消",
+    "sessionLockedTitle": "本次會議是私人的。",
+    "sessionLockedDescription": "請要求其版主解鎖，以便您加入。然後，刷新此頁面。",
+    "sessionNonProTitle": "此會話僅供專業用戶訪問",
+    "sessionNonProDescription": "此會話使用僅適用於 Pro 用戶的功能。請要求版主或訂閱持有人給您一個 Pro 帳戶。",
+    "sessionIsPublic": "此會話是公開的，任何人都可以訪問。",
+    "sessionIsPrivate": "此會話是私人的，您可以訪問。",
+    "sessionIsPrivateNoAccess": "此會話是私人的，但您無權訪問。"
+  },
+  "TrialPrompt": {
+    "allowanceReachedTitle": "您已達到免費限額",
+    "allowanceReachedDescription": "為了獲得無限的帖子，請訂閱 Retrospected Pro",
+    "nearEndAllowanceTitle": "您的配額即將用完",
+    "nearEndAllowanceDescription": "您還剩大約 {{quota}} 個帖子",
+    "onTrialTitle": "Retrospected Pro - 試用版",
+    "remainingTrialSentence": "您的試用期還剩 {{remaining}} 個。",
+    "trialEndedTitle": "您的 Retrospected Pro 試用已結束",
+    "trialEndedSentence": "立即訂閱以重新獲得對 Pro 功能的訪問權限。",
+    "subscribeNow": "現在訂閱！"
+  },
+  "Chat": {
+    "writeAMessage": "在這裡寫留言..."
+  }
+}
