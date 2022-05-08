@@ -175,6 +175,7 @@ function App() {
               </GoProContainer>
             </Hidden>
           ) : null}
+          <Spacer />
           <Hidden mdDown>
             <HelpUkraine>
               <Flag country="ua" />
@@ -183,7 +184,7 @@ function App() {
               </a>
             </HelpUkraine>
           </Hidden>
-          <Spacer />
+
           {isOnGamePage ? <Invite /> : null}
           {isInitialised ? (
             <AccountMenu />
@@ -247,7 +248,7 @@ const HelpUkraine = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 20px;
+  margin: 0 20px;
   a {
     font-style: unset;
     text-decoration: unset;
@@ -255,6 +256,11 @@ const HelpUkraine = styled.div`
     font-weight: 100;
     color: white;
   }
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 10px;
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.3);
 `;
 
 export default App;
