@@ -61,7 +61,7 @@ describe('Post workflow', () => {
     // Change language
     get('side-panel-toggle').click();
     get('language-picker').click();
-    get('language-picker-item-fr').click();
+    get('language-picker-item-fr-FR').click();
 
     // Exit panel
     cy.get('body').type('{esc}');
