@@ -10,8 +10,8 @@ import config from 'utils/getConfig';
 
 i18n
   .use(
-    resourcesToBackend((language, namespace, callback) => {
-      import(`./locales/${language}/${namespace}.json`)
+    resourcesToBackend((language, _, callback) => {
+      import(`./locales/${language}.json`)
         .then((resources) => {
           callback(null, resources);
         })
@@ -30,8 +30,8 @@ i18n
   .init({
     fallbackLng: config.defaultLanguage,
     debug: true,
-    defaultNS: 'main',
-    ns: 'main',
+    defaultNS: 'ns1',
+    ns: 'ns1',
 
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default

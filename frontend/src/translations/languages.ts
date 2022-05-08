@@ -24,8 +24,10 @@ const pl = () =>
   import('date-fns/locale/pl' /* webpackChunkName: "date-fns-pl" */);
 const ptBR = () =>
   import('date-fns/locale/pt-BR' /* webpackChunkName: "date-fns-pt-BR" */);
-const ru = () =>
-  import('date-fns/locale/ru' /* webpackChunkName: "date-fns-ru" */);
+const pt = () =>
+  import('date-fns/locale/pt' /* webpackChunkName: "date-fns-pt" */);
+const uk = () =>
+  import('date-fns/locale/uk' /* webpackChunkName: "date-fns-uk" */);
 const es = () =>
   import('date-fns/locale/es' /* webpackChunkName: "date-fns-es" */);
 
@@ -36,6 +38,7 @@ export interface Language {
   englishName: string;
   dateLocale: () => Promise<{ default: Locale }>;
   stripeLocale: StripeLocales;
+  locale: string;
 }
 
 export default [
@@ -46,6 +49,7 @@ export default [
     name: 'English',
     englishName: 'English',
     stripeLocale: 'en-US',
+    locale: 'en_GB',
   },
   {
     value: 'fr',
@@ -54,6 +58,7 @@ export default [
     name: 'Français',
     englishName: 'French',
     stripeLocale: 'fr-FR',
+    locale: 'fr_FR',
   },
   {
     value: 'ar',
@@ -62,6 +67,7 @@ export default [
     name: 'عربي',
     englishName: 'Arabic',
     stripeLocale: 'ar-AR',
+    locale: 'ar_SA',
   },
   {
     value: 'zhcn',
@@ -70,6 +76,7 @@ export default [
     name: '簡中',
     englishName: 'Chinese (Simplified)',
     stripeLocale: 'en-US',
+    locale: 'zh_CN',
   },
   {
     value: 'zhtw',
@@ -78,6 +85,7 @@ export default [
     name: '繁中',
     englishName: 'Chinese (Traditional)',
     stripeLocale: 'en-US',
+    locale: 'zh_TW',
   },
   {
     value: 'nl',
@@ -86,6 +94,7 @@ export default [
     name: 'Nederlands',
     englishName: 'Dutch',
     stripeLocale: 'nl-NL',
+    locale: 'nl_NL',
   },
   {
     value: 'de',
@@ -94,6 +103,7 @@ export default [
     name: 'Deutsch',
     englishName: 'German',
     stripeLocale: 'de-DE',
+    locale: 'de_DE',
   },
   {
     value: 'hu',
@@ -102,6 +112,7 @@ export default [
     name: 'Magyar',
     englishName: 'Hungarian',
     stripeLocale: 'en-US',
+    locale: 'hu_HU',
   },
   {
     value: 'it',
@@ -110,6 +121,7 @@ export default [
     name: 'Italiano',
     englishName: 'Italian',
     stripeLocale: 'it-IT',
+    locale: 'it_IT',
   },
   {
     value: 'ja',
@@ -118,6 +130,7 @@ export default [
     name: '日本語',
     englishName: 'Japanese',
     stripeLocale: 'ja-JP',
+    locale: 'ja_JP',
   },
   {
     value: 'pl',
@@ -126,6 +139,7 @@ export default [
     name: 'Polski',
     englishName: 'Polish',
     stripeLocale: 'en-US',
+    locale: 'pl_PL',
   },
   {
     value: 'ptbr',
@@ -134,14 +148,25 @@ export default [
     name: 'Português Brasileiro',
     englishName: 'Portuguese (Brazilian)',
     stripeLocale: 'pt-BR',
+    locale: 'pt_BR',
   },
   {
-    value: 'ru',
-    dateLocale: ru,
-    iso: 'ru',
-    name: 'Русский',
-    englishName: 'Russian',
-    stripeLocale: 'en-US',
+    value: 'pt',
+    dateLocale: pt,
+    iso: 'pt',
+    name: 'Português',
+    englishName: 'Portuguese (Portugal)',
+    stripeLocale: 'pt-PT',
+    locale: 'pt_PT',
+  },
+  {
+    value: 'uk',
+    dateLocale: uk,
+    iso: 'uk',
+    name: 'Yкраїнський',
+    englishName: 'Ukrainian',
+    stripeLocale: 'uk-UA',
+    locale: 'uk_UA',
   },
   {
     value: 'es',
@@ -150,5 +175,6 @@ export default [
     name: 'Español',
     englishName: 'Spanish',
     stripeLocale: 'es-ES',
+    locale: 'es_ES',
   },
 ] as Language[];
