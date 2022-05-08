@@ -100,7 +100,6 @@ export default () => {
     return {
       name: profile.displayName,
       type: 'twitter',
-      language: 'en-GB',
       photo: profile.photos?.length ? profile.photos[0].value : undefined,
       username: profile.username,
       email,
@@ -124,7 +123,6 @@ export default () => {
     return {
       name: displayName,
       type: 'github',
-      language: 'en-GB',
       photo: profile.photos?.length ? profile.photos[0].value : undefined,
       username: profile.username,
       email: email.value,
@@ -141,7 +139,6 @@ export default () => {
     return {
       name: profile.displayName,
       type: 'google',
-      language: 'en-GB',
       photo: profile.photos?.length ? profile.photos[0].value : undefined,
       username: email,
       email,
@@ -156,7 +153,6 @@ export default () => {
     return {
       name: profile.displayName,
       type: 'slack',
-      language: 'en-GB',
       photo: profile.user.image_192,
       username: email,
       email,
@@ -172,7 +168,6 @@ export default () => {
     return {
       name: profile.displayName,
       type: 'microsoft',
-      language: 'en-GB',
       username: email,
       email,
     };
@@ -184,7 +179,6 @@ export default () => {
     return {
       name: profile.fullName,
       type: 'okta',
-      language: 'en-GB',
       username: email,
       email,
     };

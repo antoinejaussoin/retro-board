@@ -50,7 +50,7 @@ export default class UserView {
   @ViewColumn()
   public photo: string | null;
   @ViewColumn()
-  public language: string;
+  public language: string | null;
   @ViewColumn()
   public ownSubscriptionsId: string | null;
   @ViewColumn()
@@ -72,7 +72,7 @@ export default class UserView {
     this.id = id;
     this.identityId = identityId;
     this.name = name;
-    this.language = 'en-GB';
+    this.language = null;
     this.accountType = 'anonymous';
     this.username = null;
     this.photo = null;
