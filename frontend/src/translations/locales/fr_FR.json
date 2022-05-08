@@ -25,7 +25,7 @@
     "votes_one": "vote",
     "votes_other": "votes",
     "actions_one": "action",
-    "actions_other": "actions"
+    "actions_other": "action"
   },
   "Column": {
     "createGroupTooltip": "Créer un groupe"
@@ -58,8 +58,9 @@
     "postCategory": "Options des posts",
     "postCategorySub": "Règles concernant ce qu'un utilisateur peut faire sur un post",
     "customTemplateCategory": "Colonnes personalisées",
-    "customTemplateCategorySub": "Personnalisez vos colonnes et leur caractéristiques",
+    "customTemplateCategorySub": "Définir le nombre de colonnes et leurs caractéristiques",
     "startButton": "Lancez la session",
+    "editButton": "Mettre à jour",
     "maxUpVotes": "Nb de votes max (positifs)",
     "maxUpVotesHelp": "Réglez le nombre de votes positifs maximum qu'un participant peut mettre dans une session",
     "maxDownVotes": "Nb de votes max (négatifs)",
@@ -71,7 +72,7 @@
     "allowMultipleVotes": "Votes multiples",
     "allowMultipleVotesHelp": "Autoriser à voter plusieurs fois pour le même post",
     "allowActions": "Activer les Actions",
-    "allowActionsHelp": "Autoriser un utilisateur à entrer une action sur un post",
+    "allowActionsHelp": "Permettre ou non le champ 'Action' (suivi) sur chaque message",
     "allowAuthorVisible": "Afficher l'auteur",
     "allowAuthorVisibleHelp": "Afficher l'auteur du post sur le post lui-même.",
     "newPostsFirst": "Nouveaux posts en premier",
@@ -91,12 +92,11 @@
     "makeDefaultTemplate": "En faire mes réglages par défaut"
   },
   "PostBoard": {
-    "customQuestion": "Question Additionelle",
+    "customQuestion": "Colonne personnalisée",
     "notWellQuestion": "Des améliorations ?",
     "wellQuestion": "Qu'est-ce qui s'est bien passé ?",
     "ideasQuestion": "Une bonne idée à partager ?",
     "startQuestion": "Commencer",
-    "editButton": "Mettre à jour",
     "stopQuestion": "Arrêter",
     "continueQuestion": "Continuer",
     "likedQuestion": "Aimé",
@@ -112,17 +112,17 @@
     "reconnect": "Se reconnecter",
     "notLoggedIn": "Vous n'êtes pas connecté. Vous pouvez regarder cette session en tant que spectateur, mais vous devez vous connecter pour participer.",
     "error_action_unauthorised": "Vous n'avez pas la permission de performer cette action.",
-        "error_cannot_edit_group": "La modification de ce groupe à échoué.",
-        "error_cannot_edit_post": "La modification de ce post à échoué",
-        "error_cannot_get_session": "Impossible de charger les données de cette session.",
-        "error_cannot_register_vote": "Votre vote n'a pas été enregistré.",
-        "error_cannot_save_group": "Le groupe que vous avez créé n'a pas pu être enregistré correctement.",
-        "error_cannot_save_post": "Le post que vous avez créé n'a pas pu être enregistré correctement.",
-        "error_cannot_delete_group": "Le groupe ne peut être supprimé",
-        "error_cannot_delete_post": "Le post ne peut être supprimé",
-        "error_cannot_rename_session": "La session ne peut être renommée",
-        "error_cannot_save_columns": "Les colonnes n'ont pu être enregistrées",
-        "error_cannot_save_options": "Les options n'ont pu être enregistrées",
+    "error_cannot_edit_group": "La modification du groupe a échoué.",
+    "error_cannot_edit_post": "La modification du message a échoué.",
+    "error_cannot_get_session": "Impossible de charger les données de cette session.",
+    "error_cannot_register_vote": "Votre vote n'a pas été enregistré.",
+    "error_cannot_save_group": "Le groupe que vous avez créé n'a pas pu être enregistré correctement.",
+    "error_cannot_save_post": "Le post que vous avez créé n'a pas pu être enregistré correctement.",
+    "error_cannot_delete_group": "Le groupe ne peut être supprimé",
+    "error_cannot_delete_post": "Le post ne peut être supprimé",
+    "error_cannot_rename_session": "La session ne peut être renommée",
+    "error_cannot_save_columns": "Les colonnes n'ont pu être enregistrées",
+    "error_cannot_save_options": "Les options n'ont pu être enregistrées",
     "maxPostsReached": "Vous avez atteint le nombre de posts maximum prévu par le modérateur.",
     "iAmDone": "J'ai fini !",
     "iAmNotDoneYet": "Je n'ai pas encore fini...",
@@ -167,7 +167,7 @@
     "buttonLabel": "Se connecter",
     "header": "Se connecter",
     "anonymousAuthHeader": "Identification Anonyme",
-    "anonymousAuthDescription": "Ceci va créer un compte anonyme, certaines fonctionalitées ne seront pas disponibles.",
+    "anonymousAuthDescription": "Ceci créera un compte anonyme. Certaines fonctionnalités ne seront pas disponibles.",
     "authenticatingWith": "Identification avec",
     "or": "ou"
   },
@@ -184,7 +184,7 @@
       "faible",
       "encore un effort",
       "suffisant",
-      "très bien!"
+      "excellent"
     ]
   },
   "AccountLogin": {
@@ -200,24 +200,24 @@
     "info": "Enregistrez un nouveau compte Retrospected.",
     "registerButton": "Créer un compte",
     "errorAlreadyRegistered": "Désolé, cet email est déjà enregistré",
-    "errorGeneral": "Une error est survenue lors de la création de votre compte.",
-    "messageSuccess": "Merci ! Vous devriez reçevoir un email pour valider votre compte.",
+    "errorGeneral": "Une erreur s'est produite lors de la tentative de création de votre compte.",
+    "messageSuccess": "Merci! Vous devriez recevoir un e-mail sous peu pour valider votre compte.",
     "errorInvalidEmail": "Merci d'entrer un email valide"
   },
   "ValidateAccount": {
-    "success": "Votre email a été validé. Ne bougez pas, je vous connecte dans quelques secondes.",
+    "success": "Votre adresse e-mail a été correctement validée. Je vais vous connecter dans un instant !",
     "error": "Une erreur est survenue lors de la validation de votre adresse e-mail.",
     "loading": "Nous validons votre e-mail... Merci de votre patience."
   },
   "ResetPassword": {
-    "doneMessage": "C'est fait ! Jetez un oeuil dans votre boîte email, vous devriez reçevoir un email pour mettre à jour votre mot de passe.",
+    "doneMessage": "C'est fait ! Jetez un œil dans vos e-mails, vous devriez obtenir un lien pour réinitialiser votre mot de passe.",
     "header": "Changer de mot de passe",
     "resetButton": "Mettre à jour",
     "info": "Vous avez oublié votre mot de passe ? Pas de problème, entrez votre email et vous recevrez un email en retour.",
-    "success": "Votre mot de passe a été mis à jour. Je vais vous connecter dans quelques secondes.",
+    "success": "Votre mot de passe a été mis à jour. Je vais vous connecter dans quelques secondes !",
     "error": "Une erreur est survenue lors de la mise à jour de votre mot de passe.",
     "loading": "Nous mettons votre mot de passe à jour. Merci de patienter.",
-    "resetInfo": "Merci de choisir un nouveau mot de passe:"
+    "resetInfo": "Merci de choisir un nouveau mot de passe"
   },
   "SummaryBoard": {
     "noPosts": "Aucun post à afficher",
@@ -289,7 +289,7 @@
       "subscribe": "S'abonner"
     },
     "deleteAccount": {
-      "title": "GDPR",
+      "title": "RGPD",
       "warning": "Vous avez le droit à l'oubli. Cela étant dit, effacer vos données est définitif.",
       "deleteData": "Effacer mes données",
       "modal": {

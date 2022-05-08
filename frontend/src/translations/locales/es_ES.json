@@ -4,8 +4,8 @@
     "logout": "Cerrar sesión",
     "leave": "Salir",
     "summaryMode": "Modo resumido",
-    "account": null,
-    "adminPanel": null
+    "account": "Mi cuenta",
+    "adminPanel": "Panel de administración"
   },
   "LanguagePicker": {
     "header": "Escoje un idioma"
@@ -14,121 +14,135 @@
     "hint": "Puedes invitar a otros a esta sesión compartiendo la URL"
   },
   "Home": {
-    "welcome": null
+    "welcome": "Bienvenido, {{name}}"
   },
   "PreviousGame": {
-    "createdBy": null,
-    "posts": null,
-    "participants": null,
-    "votes": null,
-    "actions": null
+    "createdBy": "Creado por",
+    "posts_one": "post",
+    "posts_other": "mensajes",
+    "participants_one": "participante",
+    "participants_other": "participantes",
+    "votes_one": "votar",
+    "votes_other": "votos",
+    "actions_one": "acción",
+    "actions_other": "acciones"
   },
   "Column": {
-    "createGroupTooltip": null
+    "createGroupTooltip": "Crear un grupo para agrupar publicaciones juntas"
   },
   "Group": {
-    "emptyGroupTitle": "",
-    "emptyGroupContent": ""
+    "emptyGroupTitle": "Este es un grupo vacío",
+    "emptyGroupContent": "Mover un mensaje aquí para llenar este grupo"
   },
   "Post": {
-    "openExtra": null,
-    "closeExtra": null,
-    "vote": "vote",
+    "openExtra": "Características adicionales",
+    "closeExtra": "Cerrar",
+    "vote": "votar",
     "votes": "votos",
     "deleteButton": "Suprimir",
-    "setActionButton": null,
-    "setGiphyButton": null,
+    "setActionButton": "Definir acción",
+    "setGiphyButton": "Elige una imagen de Giphy",
     "noContent": "(Esta publicacion no tiene contenido)",
-    "by": null,
-    "upVote": null,
-    "downVote": null,
-    "voteRemainingMultiple": null,
-    "voteRemainingOne": null,
-    "voteRemainingNone": null,
-    "toggleGiphyButton": null
+    "by": "por",
+    "upVote": "voto positivo",
+    "downVote": "voto negativo",
+    "voteRemainingMultiple": "Tienes {{number}} {{type}}s restantes.",
+    "voteRemainingOne": "Solo te queda un {{type}} restante, ¡hazlo contar!",
+    "voteRemainingNone": "No te quedan {{type}}.",
+    "toggleGiphyButton": "Cambiar imagen de Giphy"
   },
   "Customize": {
-    "title": null,
-    "votingCategory": null,
-    "votingCategorySub": null,
-    "postCategory": null,
-    "postCategorySub": null,
-    "customTemplateCategory": null,
-    "customTemplateCategorySub": null,
-    "startButton": null,
-    "editButton": null,
-    "maxUpVotes": null,
-    "maxUpVotesHelp": null,
-    "maxDownVotes": null,
-    "maxDownVotesHelp": null,
-    "maxPosts": null,
-    "maxPostsHelp": null,
-    "allowSelfVoting": null,
-    "allowSelfVotingHelp": null,
-    "allowMultipleVotes": null,
-    "allowMultipleVotesHelp": null,
-    "allowActions": null,
-    "allowActionsHelp": null,
-    "allowAuthorVisible": null,
-    "allowAuthorVisibleHelp": null,
-    "newPostsFirst": null,
-    "newPostsFirstHelp": null,
-    "allowGiphy": null,
-    "allowGiphyHelp": null,
-    "allowGrouping": null,
-    "allowGroupingHelp": null,
-    "allowReordering": null,
-    "allowReorderingHelp": null,
-    "blurCards": null,
-    "blurCardsHelp": null,
-    "template": null,
-    "templateHelp": null,
-    "numberOfColumns": null,
-    "numberOfColumnsHelp": null,
-    "makeDefaultTemplate": null
+    "title": "Personaliza tu sesión",
+    "votingCategory": "Votaciones",
+    "votingCategorySub": "Establecer las reglas sobre \"me gusta\" y \"me gusta\"",
+    "postCategory": "Ajustes de publicación",
+    "postCategorySub": "Establecer las reglas sobre lo que un usuario puede hacer al crear o ver un mensaje",
+    "customTemplateCategory": "Plantilla de columna",
+    "customTemplateCategorySub": "Establecer el número de columnas y sus características",
+    "startButton": "Iniciar la sesión",
+    "editButton": "Actualizar",
+    "maxUpVotes": "Máximo de votos",
+    "maxUpVotesHelp": "Número máximo de votos 'likes' que un usuario puede emitir",
+    "maxDownVotes": "Descensos máximos",
+    "maxDownVotesHelp": "Número máximo de votos 'no me gusta' que un usuario puede emitir",
+    "maxPosts": "Máximo de mensajes por usuario",
+    "maxPostsHelp": "Número máximo de mensajes que un usuario puede crear por sesión",
+    "allowSelfVoting": "Permitir voto propio",
+    "allowSelfVotingHelp": "Si permitir que un usuario vote en su propio post",
+    "allowMultipleVotes": "Permitir múltiples votos",
+    "allowMultipleVotesHelp": "Si permitir que un usuario vote varias veces en el mismo post",
+    "allowActions": "Permitir acciones",
+    "allowActionsHelp": "Si permitir o no el campo 'Acción' (seguimiento) en cada publicación",
+    "allowAuthorVisible": "Mostrar autor",
+    "allowAuthorVisibleHelp": "Mostrar el autor de la publicación, en el propio mensaje.",
+    "newPostsFirst": "Añadir nuevos posts primero",
+    "newPostsFirstHelp": "Nuevos mensajes se añaden en la parte superior de la columna",
+    "allowGiphy": "Permitir Giphy",
+    "allowGiphyHelp": "Permitir a los usuarios establecer una imagen de Giphy en un post",
+    "allowGrouping": "Permitir agrupar",
+    "allowGroupingHelp": "Permitir la creación de grupos agrupar mensajes juntos",
+    "allowReordering": "Permitir reordenar",
+    "allowReorderingHelp": "Permitir reordenar mensajes por arrastrar y soltar",
+    "blurCards": "Desenfocar tarjetas",
+    "blurCardsHelp": "El contenido de las tarjetas está desenfocado hasta que el moderador revele el contenido",
+    "template": "Plantilla",
+    "templateHelp": "Usar un conjunto predefinido de columnas",
+    "numberOfColumns": "Número de columnas",
+    "numberOfColumnsHelp": "Establecer el número de columnas",
+    "makeDefaultTemplate": "Hacer esta mi plantilla predeterminada"
   },
   "PostBoard": {
-    "customQuestion": null,
+    "customQuestion": "Columna personalizada",
     "notWellQuestion": "Qué se podría mejorar?",
     "wellQuestion": "Qué ha ido bien?",
     "ideasQuestion": "Una brillante idea que compartir?",
-    "startQuestion": null,
-    "editButton": null,
-    "stopQuestion": null,
-    "continueQuestion": null,
-    "likedQuestion": null,
-    "lackedQuestion": null,
-    "learnedQuestion": null,
-    "longedForQuestion": null,
-    "anchorQuestion": null,
-    "boatQuestion": null,
-    "islandQuestion": null,
-    "windQuestion": null,
-    "rockQuestion": null,
-    "disconnected": null,
-    "reconnect": null,
-    "notLoggedIn": null,
-    "error": null,
-    "maxPostsReached": null,
-    "iAmDone": null,
-    "iAmNotDoneYet": null,
-    "userIsReady": null
+    "startQuestion": "Comenzar",
+    "stopQuestion": "Parar",
+    "continueQuestion": "Continuar",
+    "likedQuestion": "Me gustó",
+    "lackedQuestion": "Atraído",
+    "learnedQuestion": "Aprendido",
+    "longedForQuestion": "Lanzado para",
+    "anchorQuestion": "Ancla",
+    "boatQuestion": "Barco",
+    "islandQuestion": "Isla",
+    "windQuestion": "Viento",
+    "rockQuestion": "Roca",
+    "disconnected": "Has sido desconectado de la sesión actual.",
+    "reconnect": "Volver a conectar",
+    "notLoggedIn": "No estás conectado. Puedes ver esta sesión como un espectador, pero debes iniciar sesión para participar.",
+    "error_action_unauthorised": "No tienes permisos para realizar esta acción.",
+    "error_cannot_edit_group": "Falló la edición del grupo.",
+    "error_cannot_edit_post": "Error al editar el mensaje.",
+    "error_cannot_get_session": "No se pudo obtener los datos de la sesión. Por favor, vuelva a cargar la página.",
+    "error_cannot_register_vote": "Tu voto no se ha registrado correctamente.",
+    "error_cannot_save_group": "El grupo creado no pudo ser guardado.",
+    "error_cannot_save_post": "No se pudo guardar la publicación que creó.",
+    "error_cannot_delete_group": "El grupo no pudo ser eliminado",
+    "error_cannot_delete_post": "No se ha podido eliminar la publicación",
+    "error_cannot_rename_session": "Fallo al renombrar la sesión",
+    "error_cannot_save_columns": "Error al guardar columnas",
+    "error_cannot_save_options": "Fallo al guardar opciones",
+    "maxPostsReached": "Has alcanzado el número máximo de mensajes establecidos por el moderador.",
+    "iAmDone": "¡He terminado!",
+    "iAmNotDoneYet": "No he terminado todavía...",
+    "userIsReady": "¡{{user}} está listo!"
   },
   "GameMenu": {
-    "board": null,
-    "summary": null
+    "board": "Tablero",
+    "summary": "Summary"
   },
   "Template": {
-    "default": null,
-    "wellNotWell": null,
-    "startStopContinue": null,
-    "fourLs": null,
-    "sailboat": null
+    "default": "Por defecto",
+    "wellNotWell": "Bueno / No Bueno",
+    "startStopContinue": "Inicio / Parar / Continuar",
+    "fourLs": "Cuatro Ls",
+    "sailboat": "Barco de vela"
   },
   "Clients": {
     "header": "Acompañenos amablemente en este momento:",
-    "joined": null,
-    "left": null
+    "joined": "{{users}} se ha unido.",
+    "left": "{{users}} restante."
   },
   "Join": {
     "welcome": "Bienvenido a la retrospectiva",
@@ -136,7 +150,7 @@
       "header": "Crear una sesión",
       "text": "Pulse abajo y empieze la retrospectiva:",
       "button": "Crear una sesión nueva",
-      "customizeButton": null
+      "customizeButton": "Personalizar"
     },
     "optionsTab": {
       "header": "Avanzado",
@@ -151,59 +165,65 @@
   "AnonymousLogin": {
     "namePlaceholder": "Quién eres exáctamente? Inserta tu nombre aquí",
     "buttonLabel": "Empezemos",
-    "header": "Login",
-    "anonymousAuthHeader": null,
-    "anonymousAuthDescription": null,
-    "authenticatingWith": null,
-    "or": null
+    "header": "Ingresar",
+    "anonymousAuthHeader": "Inicio de sesión anónimo",
+    "anonymousAuthDescription": "Esto creará una cuenta anónima. Algunas características no estarán disponibles.",
+    "authenticatingWith": "Autenticando con",
+    "or": "o"
   },
   "SocialMediaLogin": {
-    "header": null,
-    "info": null
+    "header": "OAuth",
+    "info": "Esto utilizará un proveedor de terceros de su elección para autenticarse. No hay contraseña almacenada."
   },
   "AuthCommon": {
-    "emailField": null,
-    "passwordField": null,
-    "nameField": null,
-    "passwordScoreWords": null
+    "emailField": "E-mail",
+    "passwordField": "Contraseña",
+    "nameField": "Tu nombre (por motivos de visualización)",
+    "passwordScoreWords": [
+      "débil",
+      "débil",
+      "no muy bien",
+      "bueno",
+      "fuerte"
+    ]
   },
   "AccountLogin": {
-    "header": null,
-    "loginButton": null,
-    "info": null,
-    "registerLink": null,
-    "forgotPasswordLink": null,
-    "errorEmailPasswordIncorrect": null
+    "header": "Contraseña",
+    "loginButton": "Ingresar",
+    "info": "Inicia sesión con tu correo electrónico y contraseña.",
+    "registerLink": "¿No está registrado? Haga clic aquí",
+    "forgotPasswordLink": "¿Olvidaste tu contraseña?",
+    "errorEmailPasswordIncorrect": "Sus credenciales son incorrectas."
   },
   "Register": {
-    "header": null,
-    "info": null,
-    "registerButton": null,
-    "errorAlreadyRegistered": null,
-    "errorGeneral": null,
-    "messageSuccess": null,
-    "errorInvalidEmail": null
+    "header": "Registrarse",
+    "info": "¡Obtén una cuenta Retrospectiva!",
+    "registerButton": "Registrarse",
+    "errorAlreadyRegistered": "Este correo electrónico ya está registrado",
+    "errorGeneral": "Ocurrió un error mientras se trataba de crear su cuenta.",
+    "messageSuccess": "¡Gracias! En breve recibirás un correo electrónico para validar tu cuenta.",
+    "errorInvalidEmail": "Por favor ingrese un email válido"
   },
   "ValidateAccount": {
-    "success": null,
-    "error": null,
-    "loading": null
+    "success": "Tu correo electrónico ha sido validado correctamente. ¡Voy a iniciar sesión en un segundo!",
+    "error": "Hubo un error al validar tu correo electrónico.",
+    "loading": "Estamos validando tu correo electrónico. Por favor, espera."
   },
   "ResetPassword": {
-    "doneMessage": null,
-    "header": null,
-    "resetButton": null,
-    "info": null,
-    "success": null,
-    "error": null,
-    "loading": null,
-    "resetInfo": null
+    "doneMessage": "¡Hecho! Echa un vistazo en tus correos electrónicos, deberías obtener un enlace para restablecer tu contraseña.",
+    "header": "Restablecer contraseña",
+    "resetButton": "Restablecer contraseña",
+    "info": "¿Olvidaste tu contraseña? No es un problema. Introduce tu correo electrónico a continuación y obtendrás un cambio de dirección de correo electrónico.",
+    "success": "Su contraseña ha sido actualizada. ¡Voy a iniciar sesión en un segundo!",
+    "error": "Se ha producido un error al actualizar su contraseña.",
+    "loading": "Estamos actualizando tu contraseña. Por favor, espera.",
+    "resetInfo": "Por favor proporcione una nueva contraseña"
   },
   "SummaryBoard": {
     "noPosts": "No hay publicaciones que mostrar",
-    "copyAsMarkdown": null,
-    "copyAsRichText": null,
-    "copySuccessful": null
+    "copyAsMarkdown": "Copiar el resumen como Markdown",
+    "copyAsRichText": "Copiar el resumen como texto enriquecido",
+    "copySuccessful": "Has copiado correctamente tu resumen en tu portapapeles"
   },
   "SessionName": {
     "defaultSessionName": "Mi retrospectiva"
@@ -227,177 +247,177 @@
     "title": "Acción"
   },
   "DeleteSession": {
-    "header": null,
-    "firstLine": null,
-    "secondLine": null,
-    "yesImSure": null,
-    "cancel": null
+    "header": "¿Eliminar '{{name}}'?",
+    "firstLine": "La eliminación de una sesión es irreversible. Se eliminarán todos los mensajes, votos, grupos y la sesión misma. Los datos no se pueden restaurar.",
+    "secondLine": "¿Está seguro que desea eliminar esta sesión y todo su contenido?",
+    "yesImSure": "Sí, estoy seguro",
+    "cancel": "No, lo siento, cometí un error"
   },
   "RevealCards": {
-    "buttonLabel": null,
-    "dialogTitle": null,
-    "dialogContent": null,
-    "confirmButton": null,
-    "cancelButton": null
+    "buttonLabel": "Revelar",
+    "dialogTitle": "Mostrar todas las tarjetas",
+    "dialogContent": "Esto revelará todas las cartas borrosas para todos. Esto no se puede deshacer.",
+    "confirmButton": "¡Vamos a revelar!",
+    "cancelButton": "No gracias"
   },
   "AccountPage": {
-    "anonymousError": null,
+    "anonymousError": "Las cuentas anónimas no pueden tener acceso a su perfil (porque no tienen una).",
     "details": {
-      "header": null,
-      "username": null,
-      "email": null,
-      "accountType": null
+      "header": "Tus detalles",
+      "username": "Usuario",
+      "email": "E-mail",
+      "accountType": "Tipo de cuenta"
     },
     "plan": {
-      "header": null,
-      "plan": null,
-      "youAreOwner": null,
-      "youAreMember": null
+      "header": "Su plan",
+      "plan": "Plano",
+      "youAreOwner": "Usted es el propietario de este plan, a través de la suscripción a continuación.",
+      "youAreMember": "Estás en este plan a través de la suscripción de otra persona."
     },
     "subscription": {
-      "header": null,
-      "manageButton": null,
+      "header": "Tu suscripción",
+      "manageButton": "Administrar mi suscripción",
       "membersEditor": {
-        "title": null,
-        "limitReached": null,
-        "info": null
+        "title": "Tu equipo",
+        "limitReached": "Has alcanzado el límite de tu suscripción ({{limit}} usuarios, incluido tú mismo). Por favor, elimina miembros o actualiza a una cuenta de empresa ilimitada.",
+        "info": "Añada correos electrónicos a continuación para conceder cuentas Pro hasta {{limit}} otras opciones. Pulse Intro después de cada dirección de correo electrónico."
       }
     },
     "trial": {
-      "header": null,
-      "yourTrialWillExpireIn": null,
-      "subscribe": null
+      "header": "Tu prueba",
+      "yourTrialWillExpireIn": "Tu periodo de prueba terminará en {{date}}.",
+      "subscribe": "Suscríbete ahora"
     },
     "deleteAccount": {
-      "title": null,
-      "warning": null,
-      "deleteData": null,
+      "title": "GDPR",
+      "warning": "Tienes derecho a ser olvidado. Dicho esto, ten cuidado al eliminar tu cuenta. Esto no se puede deshacer.",
+      "deleteData": "Eliminar mis datos",
       "modal": {
         "confirm": {
-          "title": null,
-          "description": null,
-          "confirmation": null,
-          "cancellation": null
+          "title": "¿Estás absolutamente seguro?",
+          "description": "No hay vuelta atrás en esto.",
+          "confirmation": "Sí, quiero eliminar todos mis datos",
+          "cancellation": "Sígueme de aquí"
         },
-        "subheader": null,
-        "deleteAccount": null,
-        "recommended": null,
+        "subheader": "Elegir qué borrar",
+        "deleteAccount": "Elimina tu cuenta y cualquier identidad vinculada a tu correo electrónico.",
+        "recommended": "Recomendado",
         "deleteSessions": {
-          "main": null,
-          "selected": null,
-          "unselected": null
+          "main": "¿Deberíamos eliminar las sesiones (retrospectivas) que has creado?",
+          "selected": "Sus sesiones y todos sus datos, incluyendo los mensajes y votos de otras personas, serán eliminados permanentemente.",
+          "unselected": "Sus sesiones se mantendrán y su autor se convertirá en un usuario anónimo."
         },
         "deletePosts": {
-          "main": null,
-          "selected": null,
-          "unselected": null
+          "main": "¿Deberíamos eliminar todos los mensajes que quieras?",
+          "selected": "Tus mensajes, en cualquier sesión, y sus votos y acciones asociados serán eliminados permanentemente.",
+          "unselected": "Tus mensajes serán descontados, pero se asociarán con un usuario anónimo."
         },
         "deleteVotes": {
-          "main": null,
-          "selected": null,
-          "unselected": null
+          "main": "¿Deberíamos también eliminar todos sus votos?",
+          "selected": "Sus votos, en todas las sesiones se eliminarán permanentemente.",
+          "unselected": "Tus votos serán contundentes, pero se asociarán con un usuario anónimo."
         },
-        "deleteAccountButton": null,
-        "cancelButton": null
+        "deleteAccountButton": "ELIMINAR TU CUENTA",
+        "cancelButton": "Cancelar"
       }
     }
   },
   "SubscribePage": {
-    "alertAlreadyPro": null,
-    "alertAlreadySubscribed": null,
+    "alertAlreadyPro": "Ya eres un usuario Pro, así que puede que no necesites otra suscripción.",
+    "alertAlreadySubscribed": "Ya tienes una suscripción, así que puede que no necesites otra suscripción.",
     "currency": {
-      "title": null,
-      "description": null,
-      "warning": null
+      "title": "Moneda",
+      "description": "Elige una moneda con la que te gustaría ser facturada",
+      "warning": "Tu cuenta ya está configurada para usar {{currency}}, por lo que ya no puedes cambiar la divisa."
     },
     "plan": {
-      "title": null,
-      "description": null
+      "title": "Plano",
+      "description": "¡Elija el plan que se ajuste a su caso de uso!"
     },
     "domain": {
-      "title": null,
-      "description": null,
-      "invalidDomain": null
+      "title": "Dominio",
+      "description": "Tu suscripción ilimitada se aplica a un dominio determinado. Cualquier usuario con este dominio de correo electrónico se convertirá automáticamente en un usuario Pro.",
+      "invalidDomain": "Por favor, proporcione un dominio válido. El dominio no puede ser un dominio de correo electrónico libre o desechable."
     },
     "subscribe": {
-      "title": null,
-      "description": null,
-      "cannotRegisterWithAnon": null,
-      "checkout": null
+      "title": "Pedido",
+      "description": "Serás redirigido a nuestro socio, Stripe, por pago",
+      "cannotRegisterWithAnon": "Necesitas iniciar sesión con una cuenta de OAuth o Contraseña para continuar.",
+      "checkout": "Pedido"
     }
   },
   "SubscribeModal": {
-    "title": null,
-    "header": null,
-    "description": null,
+    "title": "Suscripción Pro",
+    "header": "Reprobado Pro",
+    "description": "Protege los datos de tu empresa suscribiéndote a Retrospected Pro. Con Retrospected Pro, consigue las siguientes características y más:",
     "features": {
       "encryptedSession": {
-        "title": null,
-        "description": null
+        "title": "Sesiones cifradas",
+        "description": "Sus datos están cifrados en su navegador, haciendo imposible cualquier descifrado en el servidor Retrospecto."
       },
       "privateSessions": {
-        "title": null,
-        "description": null
+        "title": "Sesiones Privadas",
+        "description": "Asegúrese de que sólo las personas autorizadas pueden acceder a su sesión."
       },
       "unlimitedPosts": {
-        "title": null,
-        "description": null
+        "title": "Mensajes ilimitados",
+        "description": "Con una suscripción Pro, obtén mensajes ilimitados."
       }
     },
-    "subscribeButton": null,
-    "payButton": null,
-    "cancelButton": null,
-    "startTrial": null
+    "subscribeButton": "Suscribirse",
+    "payButton": "Seleccionar",
+    "cancelButton": "Cancelar",
+    "startTrial": "Prueba de 30 días"
   },
   "Products": {
-    "team": null,
-    "unlimited": null,
-    "self-hosted": null,
-    "users": null,
-    "unlimited_seats": null,
-    "month": null,
-    "year": null,
-    "wantToPayYearly": null
+    "team": "Perfecto para equipos más pequeños, puedes seleccionar hasta 20 colegas que serán actualizados a una cuenta Pro.",
+    "unlimited": "Si eres una empresa más grande, disfrutarás de un número ilimitado de cuentas Pro.",
+    "self-hosted": "Retrospectivamente en casas, honorarios únicos y actualizaciones ilimitadas. Mantén el control total de tus datos para siempre.",
+    "users": "{{users}} usuarios",
+    "unlimited_seats": "Ilimitado",
+    "month": "mes",
+    "year": "año",
+    "wantToPayYearly": "Quiero pagar anualmente (cada 12 meses), y obtener un mes gratis por año!"
   },
   "Encryption": {
-    "createEncryptedSession": null,
-    "sessionNotEncrypted": null,
-    "sessionEncryptedHaveKeyTooltip": null,
-    "sessionEncryptedNoKeyTooltip": null,
-    "sessionEncryptedWrongKeyTooltip": null,
-    "newEncryptedSessionWarningTitle": null,
-    "newEncryptedSessionWarningContent": null,
-    "sessionEncryptionError": null,
-    "passwordModalTitle": null,
-    "passwordModelIncorrect": null
+    "createEncryptedSession": "Sesión cifrada",
+    "sessionNotEncrypted": "Esta sesión no está cifrada.",
+    "sessionEncryptedHaveKeyTooltip": "Esta sesión está cifrada, y la clave se almacena en su navegador. Puede abrir esta sesión sin tener que proporcionar la contraseña de nuevo.",
+    "sessionEncryptedNoKeyTooltip": "Esta sesión está cifrada, y la clave no se almacena en su navegador. Se le pedirá la clave de descifrado al abrir esta sesión.",
+    "sessionEncryptedWrongKeyTooltip": "Esta sesión está cifrada y la clave que tiene almacenada no es la clave correcta.",
+    "newEncryptedSessionWarningTitle": "Esta sesión está cifrada localmente",
+    "newEncryptedSessionWarningContent": "Es muy importante que guarde la URL completa (que contiene la clave) en algún lugar seguro, o al menos la clave de cifrado: {{key}}. Si pierde esta clave de cifrado, no hay nada que pueda hacerse para recuperar los datos.",
+    "sessionEncryptionError": "Esta sesión está cifrada, y parece que no tiene la clave de descifrado almacenada localmente. Por favor, utilice el enlace original, incluyendo la clave de descifrado.",
+    "passwordModalTitle": "Sesión cifrada - Introduzca contraseña",
+    "passwordModelIncorrect": "La clave de cifrado es incorrecta."
   },
   "Private": {
-    "lockSuccessNotification": null,
-    "unlockSuccessNotification": null,
-    "lockButton": null,
-    "unlockButton": null,
-    "lockDescription": null,
-    "cancelButton": null,
-    "sessionLockedTitle": null,
-    "sessionLockedDescription": null,
-    "sessionNonProTitle": null,
-    "sessionNonProDescription": null,
-    "sessionIsPublic": null,
-    "sessionIsPrivate": null,
-    "sessionIsPrivateNoAccess": null
+    "lockSuccessNotification": "Tu sesión se ha hecho privada con éxito. No se pueden unir nuevos participantes.",
+    "unlockSuccessNotification": "Tu sesión se ha hecho pública con éxito. Cualquiera puede unirse.",
+    "lockButton": "Hacer Privado",
+    "unlockButton": "Hacer público",
+    "lockDescription": "Está a punto de hacer la sesión privada. Sólo los participantes actuales (listados a continuación) tendrán acceso a esta sesión una vez bloqueado.",
+    "cancelButton": "Cancelar",
+    "sessionLockedTitle": "Esta sesión es privada.",
+    "sessionLockedDescription": "Pídele a su moderador que lo desbloquee para poder unirte. Luego, actualiza esta página.",
+    "sessionNonProTitle": "Esta sesión sólo es accesible para usuarios Pro",
+    "sessionNonProDescription": "Esta sesión utiliza características sólo disponibles para usuarios Pro. Por favor, pide al moderador o al titular de la suscripción que te dé una cuenta Pro.",
+    "sessionIsPublic": "Esta sesión es pública y accesible para cualquier persona.",
+    "sessionIsPrivate": "Esta sesión es privada y tiene acceso.",
+    "sessionIsPrivateNoAccess": "Esta sesión es privada, pero no tiene acceso."
   },
   "TrialPrompt": {
-    "allowanceReachedTitle": null,
-    "allowanceReachedDescription": null,
-    "nearEndAllowanceTitle": null,
-    "nearEndAllowanceDescription": null,
-    "onTrialTitle": null,
-    "remainingTrialSentence": null,
-    "trialEndedTitle": null,
-    "trialEndedSentence": null,
-    "subscribeNow": null
+    "allowanceReachedTitle": "Has alcanzado tu franquicia gratuita",
+    "allowanceReachedDescription": "Para obtener mensajes ilimitados, por favor suscríbase a Retrospected Pro",
+    "nearEndAllowanceTitle": "Estás cerca del final de tu cuota",
+    "nearEndAllowanceDescription": "Te quedan alrededor de {{quota}} publicaciones",
+    "onTrialTitle": "Retrospected Pro - Prueba",
+    "remainingTrialSentence": "Tienes {{remaining}} restantes en tu periodo de prueba.",
+    "trialEndedTitle": "Tu Reprobación Pro ha terminado",
+    "trialEndedSentence": "Suscríbete hoy para recuperar el acceso a las funciones Pro.",
+    "subscribeNow": "¡Suscríbete ahora!"
   },
   "Chat": {
-    "writeAMessage": null
+    "writeAMessage": "Escribe un mensaje aquí..."
   }
 }

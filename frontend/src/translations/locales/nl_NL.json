@@ -4,8 +4,8 @@
     "logout": "Afmelden",
     "leave": "Verlaten",
     "summaryMode": "Samenvatting",
-    "account": null,
-    "adminPanel": null
+    "account": "Mijn account",
+    "adminPanel": "Beheer paneel"
   },
   "LanguagePicker": {
     "header": "Kies een taal"
@@ -18,10 +18,14 @@
   },
   "PreviousGame": {
     "createdBy": "Aangemaakt door",
-    "posts": "null",
-    "participants": "null",
-    "votes": "null",
-    "actions": "null"
+    "posts_one": "bericht",
+    "posts_other": "berichten",
+    "participants_one": "deelnemer",
+    "participants_other": "deelnemers",
+    "votes_one": "stemmen",
+    "votes_other": "Stemmen",
+    "actions_one": "actie",
+    "actions_other": "acties"
   },
   "Column": {
     "createGroupTooltip": "Creeër een groep om retropunten te bundelen"
@@ -40,8 +44,8 @@
     "setGiphyButton": "Kies een Giphy afbeelding",
     "noContent": "(Dit retropunt heeft geen inhoud)",
     "by": "door",
-    "upVote": "up-vote",
-    "downVote": "down-vote",
+    "upVote": "omhoog stemmen",
+    "downVote": "tegenstemmen",
     "voteRemainingMultiple": "null",
     "voteRemainingOne": "null",
     "voteRemainingNone": "null",
@@ -56,12 +60,13 @@
     "customTemplateCategory": "Kolommen template",
     "customTemplateCategorySub": "Instellen aantal kolommen en hun specificaties",
     "startButton": "Start de sessie",
+    "editButton": "Vernieuwen",
     "maxUpVotes": "Maximum up-votes",
     "maxUpVotesHelp": "Maximum aantal 'likes' die een gebruiker mag uitbrengen",
     "maxDownVotes": "Maximum down-votes",
     "maxDownVotesHelp": "Maximum aantal 'dislikes' die een gebruiker mag uitbrengen",
-    "maxPosts": null,
-    "maxPostsHelp": null,
+    "maxPosts": "Maximum aantal berichten per gebruiker",
+    "maxPostsHelp": "Maximum aantal berichten dat een gebruiker per sessie kan maken",
     "allowSelfVoting": "Zelf-stemmen toestaan",
     "allowSelfVotingHelp": "Of een gebruiker op zijn eigen retropunten mag stemmen",
     "allowMultipleVotes": "Meerdere stemmen toestaan",
@@ -70,17 +75,17 @@
     "allowActionsHelp": "Toestaan van 'Acties' veld (follow-up) op elk retropunt",
     "allowAuthorVisible": "Toon auteur",
     "allowAuthorVisibleHelp": "Tonen van auteur op het retropunt.",
-    "newPostsFirst": null,
-    "newPostsFirstHelp": null,
+    "newPostsFirst": "Eerst nieuwe berichten toevoegen",
+    "newPostsFirstHelp": "Nieuwe berichten worden bovenaan de kolom toegevoegd",
     "allowGiphy": "Giphy toestaan",
     "allowGiphyHelp": "Gebruikers toestaan een Giphy afbeelding bij een retropunt te plaatsen",
     "allowGrouping": "Groeperen toestaan",
     "allowGroupingHelp": "Aanmaken van groepen van retropunten toestaan.",
     "allowReordering": "Herordenen toestaan",
     "allowReorderingHelp": "Toestaan om retropunten mbv drag-en-drop te herordenen",
-    "blurCards": null,
-    "blurCardsHelp": null,
-    "template": "Template",
+    "blurCards": "Vervaag Kaarten",
+    "blurCardsHelp": "Inhoud van kaarten wordt vervaagd totdat de moderator de inhoud onthult",
+    "template": "Sjabloon",
     "templateHelp": "Gebruik een vooringestelde set kolommen",
     "numberOfColumns": "Aantal kolommen",
     "numberOfColumnsHelp": "Stel het aantal kolommen in",
@@ -91,9 +96,8 @@
     "notWellQuestion": "Wat kan er beter?",
     "wellQuestion": "Wat ging goed?",
     "ideasQuestion": "Een geweldig idee om te delen?",
-    "startQuestion": "Start",
-    "editButton": null,
-    "stopQuestion": "Stop",
+    "startQuestion": "Beginnen",
+    "stopQuestion": "Stoppen",
     "continueQuestion": "Blijven doen",
     "likedQuestion": "Liked (Leuk)",
     "lackedQuestion": "Lacked (Ontbrak)",
@@ -107,10 +111,22 @@
     "disconnected": "Je huidige sessie is verbroken",
     "reconnect": "Opnieuw verbinden",
     "notLoggedIn": "Je bent niet ingelogd. Je kan de sessie bekijken als toeschouwer maar moet inloggen om deel te nemen.",
-    "maxPostsReached": null,
-    "iAmDone": null,
-    "iAmNotDoneYet": null,
-    "userIsReady": null
+    "error_action_unauthorised": "U bent niet bevoegd om deze actie uit te voeren.",
+    "error_cannot_edit_group": "Bewerken van de groep is mislukt.",
+    "error_cannot_edit_post": "Bewerken van post mislukt.",
+    "error_cannot_get_session": "Kan de sessie gegevens niet ophalen. Herlaad de pagina.",
+    "error_cannot_register_vote": "Uw stem is niet met succes geregistreerd.",
+    "error_cannot_save_group": "De groep die je hebt aangemaakt kon niet worden opgeslagen.",
+    "error_cannot_save_post": "De post die je hebt gemaakt kon niet worden opgeslagen.",
+    "error_cannot_delete_group": "De groep kon niet verwijderd worden",
+    "error_cannot_delete_post": "Het bericht kon niet verwijderd worden",
+    "error_cannot_rename_session": "Hernoemen van de sessie is mislukt",
+    "error_cannot_save_columns": "Kolommen opslaan mislukt",
+    "error_cannot_save_options": "Opties opslaan mislukt",
+    "maxPostsReached": "Je hebt het maximum aantal berichten bereikt dat door de moderator is ingesteld.",
+    "iAmDone": "Ik ben klaar!",
+    "iAmNotDoneYet": "Ik ben nog niet klaar...",
+    "userIsReady": "{{user}} is klaar!"
   },
   "GameMenu": {
     "board": "Bord",
@@ -125,8 +141,8 @@
   },
   "Clients": {
     "header": "Deelnemers:",
-    "joined": null,
-    "left": null
+    "joined": "{{users}} kwam binnen.",
+    "left": "{{users}} is weggegaan."
   },
   "Join": {
     "welcome": "Welkom bij Retrospected",
@@ -149,7 +165,7 @@
   "AnonymousLogin": {
     "namePlaceholder": "Laat weten wie je bent met je naam",
     "buttonLabel": "Laten we beginnen",
-    "header": "Login",
+    "header": "Aanmelden",
     "anonymousAuthHeader": "Aanmelden zonder account",
     "anonymousAuthDescription": "Hiermee maak je aan anonieme account aan. Hiermee kan geen sessies opslaan en terughalen.",
     "authenticatingWith": "Authenticeer met",
@@ -160,42 +176,48 @@
     "info": "Dit gebruikt je social media account en slaat de sessies op onder je account. Er is geen wachtwoord nodig."
   },
   "AuthCommon": {
-    "emailField": null,
-    "passwordField": null,
-    "nameField": null,
-    "passwordScoreWords": null
+    "emailField": "E-mailadres",
+    "passwordField": "Wachtwoord",
+    "nameField": "Uw naam (voor weergegeven doelen)",
+    "passwordScoreWords": [
+      "zwak",
+      "zwak",
+      "niet helemaal",
+      "goed",
+      "sterk"
+    ]
   },
   "AccountLogin": {
-    "header": null,
-    "loginButton": null,
-    "info": null,
-    "registerLink": null,
-    "forgotPasswordLink": null,
-    "errorEmailPasswordIncorrect": null
+    "header": "Wachtwoord",
+    "loginButton": "Aanmelden",
+    "info": "Log in met je e-mailadres en wachtwoord.",
+    "registerLink": "Niet geregistreerd? Klik hier",
+    "forgotPasswordLink": "Wachtwoord vergeten?",
+    "errorEmailPasswordIncorrect": "Uw referenties zijn onjuist."
   },
   "Register": {
-    "header": null,
-    "info": null,
-    "registerButton": null,
-    "errorAlreadyRegistered": null,
-    "errorGeneral": null,
-    "messageSuccess": null,
-    "errorInvalidEmail": null
+    "header": "Registreren",
+    "info": "Krijg jezelf een Retrospected account!",
+    "registerButton": "Registreren",
+    "errorAlreadyRegistered": "Dit e-mailadres is al geregistreerd",
+    "errorGeneral": "Er is een fout opgetreden tijdens het aanmaken van uw account.",
+    "messageSuccess": "Bedankt! U ontvangt binnenkort een e-mail om uw account te valideren.",
+    "errorInvalidEmail": "Voer een geldig e-mailadres in"
   },
   "ValidateAccount": {
-    "success": null,
-    "error": null,
-    "loading": null
+    "success": "Je e-mail is correct gevalideerd. Ik ga je in een paar seconden aanmelden!",
+    "error": "Er is een fout opgetreden bij het valideren van je e-mail.",
+    "loading": "We zijn je e-mailadres aan het valideren. Een ogenblik geduld."
   },
   "ResetPassword": {
-    "doneMessage": null,
-    "header": null,
-    "resetButton": null,
-    "info": null,
-    "success": null,
-    "error": null,
-    "loading": null,
-    "resetInfo": null
+    "doneMessage": "Klaar! Neem een kijkje in uw e-mails, u krijgt een link om uw wachtwoord te resetten.",
+    "header": "Wachtwoord opnieuw instellen",
+    "resetButton": "Wachtwoord opnieuw instellen",
+    "info": "Wachtwoord vergeten? Geen probleem. Voer hieronder uw e-mailadres in en u krijgt een reset e-mail prompt.",
+    "success": "Je wachtwoord is bijgewerkt. Ik ga je in een paar seconden aanmelden!",
+    "error": "Er is een fout opgetreden bij het bijwerken van uw wachtwoord.",
+    "loading": "We zijn je wachtwoord aan het bijwerken. Een ogenblik geduld.",
+    "resetInfo": "Geef een nieuw wachtwoord op"
   },
   "SummaryBoard": {
     "noPosts": "Er zijn geen retropunten om te tonen",
@@ -215,7 +237,7 @@
     }
   },
   "Generic": {
-    "ok": "OK",
+    "ok": "Ok",
     "cancel": "Annuleren"
   },
   "Actions": {
@@ -225,177 +247,177 @@
     "title": "Actie"
   },
   "DeleteSession": {
-    "header": null,
-    "firstLine": null,
-    "secondLine": null,
-    "yesImSure": null,
-    "cancel": null
+    "header": "{{name}} '? verwijderen?",
+    "firstLine": "Het verwijderen van een sessie is onomkeerbaar. Het zal alle berichten, stemmen, groepen en de sessie zelf verwijderen. De gegevens kunnen niet worden hersteld.",
+    "secondLine": "Weet u zeker dat u deze sessie en alle inhoud wilt verwijderen?",
+    "yesImSure": "Ja, dat weet ik zeker",
+    "cancel": "Nee, het spijt me, ik heb een fout gemaakt"
   },
   "RevealCards": {
-    "buttonLabel": null,
-    "dialogTitle": null,
-    "dialogContent": null,
-    "confirmButton": null,
-    "cancelButton": null
+    "buttonLabel": "Onthul",
+    "dialogTitle": "Alle kaarten vrijgeven",
+    "dialogContent": "Dit zal alle wazige kaarten voor iedereen onthullen. Dit kan niet ongedaan worden gemaakt.",
+    "confirmButton": "Laat ons onthullen!",
+    "cancelButton": "Nee, bedankt"
   },
   "AccountPage": {
-    "anonymousError": null,
+    "anonymousError": "Anonieme accounts kunnen geen toegang hebben tot hun profiel (omdat ze geen account hebben).",
     "details": {
-      "header": null,
-      "username": null,
-      "email": null,
-      "accountType": null
+      "header": "Uw gegevens",
+      "username": "Gebruikersnaam",
+      "email": "E-mailadres",
+      "accountType": "Klant type"
     },
     "plan": {
-      "header": null,
-      "plan": null,
-      "youAreOwner": null,
-      "youAreMember": null
+      "header": "Uw abonnement",
+      "plan": "Abonnement",
+      "youAreOwner": "U bent de eigenaar van dit abonnement, via het onderstaande abonnement.",
+      "youAreMember": "U bent op dit plan via iemands abonnement."
     },
     "subscription": {
-      "header": null,
-      "manageButton": null,
+      "header": "Uw abonnement",
+      "manageButton": "Mijn abonnement beheren",
       "membersEditor": {
-        "title": null,
-        "limitReached": null,
-        "info": null
+        "title": "Jouw team",
+        "limitReached": "Je hebt de limiet van je abonnement bereikt ({{limit}} gebruikers, waaronder jezelf). Verwijder de leden, of upgrade naar een onbeperkt bedrijfsaccount.",
+        "info": "Voeg hieronder e-mails toe om Pro-accounts tot {{limit}} andere collega's toe te kennen. Druk op Enter na elk e-mailadres."
       }
     },
     "trial": {
-      "header": null,
-      "yourTrialWillExpireIn": null,
-      "subscribe": null
+      "header": "Uw proefperiode",
+      "yourTrialWillExpireIn": "Je proefperiode loopt af over {{date}}.",
+      "subscribe": "Nu abonneren"
     },
     "deleteAccount": {
-      "title": null,
-      "warning": null,
-      "deleteData": null,
+      "title": "AVG",
+      "warning": "Je hebt het recht om vergeten te worden. Dat gezegd hebbende, wees voorzichtig bij het verwijderen van je account. Dit kan niet ongedaan worden gemaakt.",
+      "deleteData": "Verwijder mijn gegevens",
       "modal": {
         "confirm": {
-          "title": null,
-          "description": null,
-          "confirmation": null,
-          "cancellation": null
+          "title": "Weet je het zeker?",
+          "description": "Daar kunnen we niet op terugkomen.",
+          "confirmation": "Ja dat ik al mijn gegevens wil verwijderen",
+          "cancellation": "Haal me hier uit"
         },
-        "subheader": null,
-        "deleteAccount": null,
-        "recommended": null,
+        "subheader": "Kies wat u wilt verwijderen",
+        "deleteAccount": "Verwijder uw account en alle identiteiten die aan uw e-mail zijn gekoppeld.",
+        "recommended": "Aanbevolen",
         "deleteSessions": {
-          "main": null,
-          "selected": null,
-          "unselected": null
+          "main": "Moeten we de sessies verwijderen (retrospectives) die u hebt aangemaakt?",
+          "selected": "Uw sessies en al hun gegevens, inclusief berichten en stemmen van anderen, worden permanent verwijderd.",
+          "unselected": "Je sessies worden bewaard en de auteur wordt anonieme gebruiker."
         },
         "deletePosts": {
-          "main": null,
-          "selected": null,
-          "unselected": null
+          "main": "Moeten we alle berichten die je schreef verwijderen?",
+          "selected": "Je berichten in elke sessie en de bijbehorende stemmen en acties worden permanent verwijderd.",
+          "unselected": "Je berichten worden bewaard, maar ze worden geassocieerd met een anonieme gebruiker."
         },
         "deleteVotes": {
-          "main": null,
-          "selected": null,
-          "unselected": null
+          "main": "Moeten we ook al je stemmen verwijderen?",
+          "selected": "Uw stemmen in alle sessies zullen permanent worden verwijderd.",
+          "unselected": "Uw stemmen worden bewaard, maar ze worden geassocieerd met een anonieme gebruiker."
         },
-        "deleteAccountButton": null,
-        "cancelButton": null
+        "deleteAccountButton": "VERWIJDER UW ACCOUNT",
+        "cancelButton": "annuleren"
       }
     }
   },
   "SubscribePage": {
-    "alertAlreadyPro": null,
-    "alertAlreadySubscribed": null,
+    "alertAlreadyPro": "U bent al Pro-gebruiker, dus u heeft mogelijk geen behoefte aan een ander abonnement.",
+    "alertAlreadySubscribed": "Je hebt al een abonnement, dus misschien heb je geen ander abonnement nodig.",
     "currency": {
-      "title": null,
-      "description": null,
-      "warning": null
+      "title": "valuta",
+      "description": "Kies een valuta waarmee u gefactureerd wilt worden",
+      "warning": "Uw account is al ingesteld om {{currency}}te gebruiken, dus u kunt de valuta niet meer wijzigen."
     },
     "plan": {
-      "title": null,
-      "description": null
+      "title": "Abonnement",
+      "description": "Kies het abonnement dat past bij uw keuze!"
     },
     "domain": {
-      "title": null,
-      "description": null,
-      "invalidDomain": null
+      "title": "Domein",
+      "description": "Uw onbeperkte abonnement is van toepassing op een bepaald domein. Elke gebruiker met dit e-maildomein wordt automatisch een Pro-gebruiker.",
+      "invalidDomain": "Geef een geldig domein. Het domein mag geen gratis of onbruikbaar e-maildomein zijn."
     },
     "subscribe": {
-      "title": null,
-      "description": null,
-      "cannotRegisterWithAnon": null,
-      "checkout": null
+      "title": "Afrekenen",
+      "description": "U wordt doorgestuurd naar onze partner Stripe, voor betaling",
+      "cannotRegisterWithAnon": "Je moet ingelogd zijn met een OAuth of Wachtwoordaccount om door te gaan.",
+      "checkout": "Afrekenen"
     }
   },
   "SubscribeModal": {
-    "title": null,
-    "header": null,
-    "description": null,
+    "title": "Pro abonnement",
+    "header": "Retrospecte Pro",
+    "description": "Bescherm de gegevens van uw bedrijf door u te abonneren op Retrospected Pro. Met Retrospected Pro krijgt u de volgende functies en meer:",
     "features": {
       "encryptedSession": {
-        "title": null,
-        "description": null
+        "title": "Versleutelde sessies",
+        "description": "Uw gegevens zijn versleuteld in uw browser, waardoor elke decodering onmogelijk wordt gemaakt op de Retrospected server."
       },
       "privateSessions": {
-        "title": null,
-        "description": null
+        "title": "Privé sessies",
+        "description": "Zorg ervoor dat alleen erkende mensen toegang hebben tot uw sessie."
       },
       "unlimitedPosts": {
-        "title": null,
-        "description": null
+        "title": "Onbeperkt aantal berichten",
+        "description": "Met een Pro-abonnement krijg je onbeperkt berichten."
       }
     },
-    "subscribeButton": null,
-    "payButton": null,
-    "cancelButton": null,
-    "startTrial": null
+    "subscribeButton": "Abonneren",
+    "payButton": "Selecteren",
+    "cancelButton": "annuleren",
+    "startTrial": "30-dagen Proef"
   },
   "Products": {
-    "team": null,
-    "unlimited": null,
-    "self-hosted": null,
-    "users": null,
-    "unlimited_seats": null,
-    "month": null,
-    "year": null,
-    "wantToPayYearly": null
+    "team": "Perfect voor kleinere teams, u kunt maximaal 20 collega's selecteren die zullen worden geüpgraded naar een Pro-account.",
+    "unlimited": "Als u een groter bedrijf bent, kunt u genieten van een onbeperkt aantal Pro-accounts.",
+    "self-hosted": "Retrospecteerd op gebouwen, eenmalige vergoeding en onbeperkte updates. Houd de totale controle over uw gegevens voorgoed.",
+    "users": "{{users}} gebruikers",
+    "unlimited_seats": "Onbeperkt",
+    "month": "maand",
+    "year": "Jaar",
+    "wantToPayYearly": "Ik wil jaarlijks betalen (elke 12 maanden) en een maand gratis per jaar!"
   },
   "Encryption": {
-    "createEncryptedSession": null,
-    "sessionNotEncrypted": null,
-    "sessionEncryptedHaveKeyTooltip": null,
-    "sessionEncryptedNoKeyTooltip": null,
-    "sessionEncryptedWrongKeyTooltip": null,
-    "newEncryptedSessionWarningTitle": null,
-    "newEncryptedSessionWarningContent": null,
-    "sessionEncryptionError": null,
-    "passwordModalTitle": null,
-    "passwordModelIncorrect": null
+    "createEncryptedSession": "Versleutelde sessie",
+    "sessionNotEncrypted": "Deze sessie is niet versleuteld.",
+    "sessionEncryptedHaveKeyTooltip": "Deze sessie is versleuteld, en de sleutel wordt opgeslagen in uw browser. U kunt deze sessie openen zonder het wachtwoord opnieuw op te geven.",
+    "sessionEncryptedNoKeyTooltip": "Deze sessie is versleuteld en de sleutel is niet opgeslagen in uw browser. U wordt gevraagd om de decoderingssleutel bij het openen van deze sessie.",
+    "sessionEncryptedWrongKeyTooltip": "Deze sessie is versleuteld, en de sleutel die je hebt opgeslagen is niet de juiste sleutel.",
+    "newEncryptedSessionWarningTitle": "Deze sessie is lokaal versleuteld",
+    "newEncryptedSessionWarningContent": "Het is erg belangrijk dat je de volledige URL (die de sleutel bevat) ergens veilig opslaat, of ten minste de encryptiesleutel: {{key}}. Als u deze encryptiesleutel verliest, kan er niets worden gedaan om de gegevens op te halen.",
+    "sessionEncryptionError": "Deze sessie is versleuteld, en het lijkt erop dat de decodering sleutel niet lokaal is opgeslagen. Gebruik de originele link, inclusief de ontsleutel.",
+    "passwordModalTitle": "Versleutelde sessie - Voer wachtwoord in",
+    "passwordModelIncorrect": "De encryptiesleutel is onjuist."
   },
   "Private": {
-    "lockSuccessNotification": null,
-    "unlockSuccessNotification": null,
-    "lockButton": null,
-    "unlockButton": null,
-    "lockDescription": null,
-    "cancelButton": null,
-    "sessionLockedTitle": null,
-    "sessionLockedDescription": null,
-    "sessionNonProTitle": null,
-    "sessionNonProDescription": null,
-    "sessionIsPublic": null,
-    "sessionIsPrivate": null,
-    "sessionIsPrivateNoAccess": null
+    "lockSuccessNotification": "Je sessie is succesvol privé gemaakt. Er kunnen geen nieuwe deelnemers deelnemen.",
+    "unlockSuccessNotification": "Je sessie is openbaar gemaakt. Iedereen kan lid worden.",
+    "lockButton": "Privé maken",
+    "unlockButton": "Openbaar maken",
+    "lockDescription": "U staat op het punt om de sessie privé te maken. Alleen de huidige deelnemers (hieronder vermeld) zullen toegang tot deze sessie krijgen zodra ze zijn vergrendeld.",
+    "cancelButton": "annuleren",
+    "sessionLockedTitle": "Deze sessie is privé.",
+    "sessionLockedDescription": "Vraag de moderator om hem te ontgrendelen zodat je kan inloggen. Vernieuw vervolgens deze pagina.",
+    "sessionNonProTitle": "Deze sessie is alleen toegankelijk voor Pro-gebruikers",
+    "sessionNonProDescription": "Deze sessie maakt gebruik van functies die alleen beschikbaar zijn voor Pro-gebruikers. Vraag de moderator of abonnementhouder om u een Pro-account te geven.",
+    "sessionIsPublic": "Deze sessie is openbaar en voor iedereen toegankelijk.",
+    "sessionIsPrivate": "Deze sessie is privé, en u hebt toegang.",
+    "sessionIsPrivateNoAccess": "Deze sessie is privé, maar u hebt geen toegang."
   },
   "TrialPrompt": {
-    "allowanceReachedTitle": null,
-    "allowanceReachedDescription": null,
-    "nearEndAllowanceTitle": null,
-    "nearEndAllowanceDescription": null,
-    "onTrialTitle": null,
-    "remainingTrialSentence": null,
-    "trialEndedTitle": null,
-    "trialEndedSentence": null,
-    "subscribeNow": null
+    "allowanceReachedTitle": "Je hebt je gratis toelage bereikt",
+    "allowanceReachedDescription": "Om onbeperkte berichten te krijgen, abonneer u alstublieft op Retrospected Pro",
+    "nearEndAllowanceTitle": "U nadert het einde van uw quotum",
+    "nearEndAllowanceDescription": "Je hebt nog ongeveer {{quota}} berichten over",
+    "onTrialTitle": "Retrospected Pro - Proef",
+    "remainingTrialSentence": "Je hebt {{remaining}} over je proefperiode.",
+    "trialEndedTitle": "Uw Retrospected Pro-proefperiode is beëindigd",
+    "trialEndedSentence": "Abonneer vandaag om toegang te krijgen tot de Pro functies.",
+    "subscribeNow": "Abonneer je nu!"
   },
   "Chat": {
-    "writeAMessage": null
+    "writeAMessage": "Schrijf hier een bericht..."
   }
 }

@@ -4,8 +4,8 @@
     "logout": "注销",
     "leave": "离开",
     "summaryMode": "主旨模式",
-    "account": null,
-    "adminPanel": null
+    "account": "我的帐户",
+    "adminPanel": "管理面板"
   },
   "LanguagePicker": {
     "header": "切换语言"
@@ -14,121 +14,135 @@
     "hint": "复制并分享网址，即可让别人加入此议程"
   },
   "Home": {
-    "welcome": null
+    "welcome": "欢迎， {{name}}"
   },
   "PreviousGame": {
-    "createdBy": null,
-    "posts": null,
-    "participants": null,
-    "votes": null,
-    "actions": null
+    "createdBy": "创建者",
+    "posts_one": "发帖",
+    "posts_other": "帖子",
+    "participants_one": "参与者",
+    "participants_other": "参与者",
+    "votes_one": "投票",
+    "votes_other": "投票",
+    "actions_one": "行动",
+    "actions_other": "操作"
   },
   "Column": {
-    "createGroupTooltip": null
+    "createGroupTooltip": "创建一个群组将帖子一起分组"
   },
   "Group": {
-    "emptyGroupTitle": "",
-    "emptyGroupContent": ""
+    "emptyGroupTitle": "这是一个空组",
+    "emptyGroupContent": "将一个帖子移动到这里来填写此组"
   },
   "Post": {
-    "openExtra": null,
-    "closeExtra": null,
+    "openExtra": "附加功能",
+    "closeExtra": "关闭",
     "vote": "投票",
     "votes": "表决",
     "deleteButton": "删除",
-    "setActionButton": null,
-    "setGiphyButton": null,
+    "setActionButton": "设置操作",
+    "setGiphyButton": "选择一个Giphy 图像",
     "noContent": "(目前无任何内容)",
-    "by": null,
-    "upVote": null,
-    "downVote": null,
-    "voteRemainingMultiple": null,
-    "voteRemainingOne": null,
-    "voteRemainingNone": null,
-    "toggleGiphyButton": null
+    "by": "由",
+    "upVote": "向上投票",
+    "downVote": "投反对票",
+    "voteRemainingMultiple": "您还剩下了 {{number}} {{type}}秒。",
+    "voteRemainingOne": "你只剩下一个 {{type}} ，把它算进去！",
+    "voteRemainingNone": "您没有剩余任何 {{type}}。",
+    "toggleGiphyButton": "切换Giphy图像"
   },
   "Customize": {
-    "title": null,
-    "votingCategory": null,
-    "votingCategorySub": null,
-    "postCategory": null,
-    "postCategorySub": null,
-    "customTemplateCategory": null,
-    "customTemplateCategorySub": null,
-    "startButton": null,
-    "editButton": null,
-    "maxUpVotes": null,
-    "maxUpVotesHelp": null,
-    "maxDownVotes": null,
-    "maxDownVotesHelp": null,
-    "maxPosts": null,
-    "maxPostsHelp": null,
-    "allowSelfVoting": null,
-    "allowSelfVotingHelp": null,
-    "allowMultipleVotes": null,
-    "allowMultipleVotesHelp": null,
-    "allowActions": null,
-    "allowActionsHelp": null,
-    "allowAuthorVisible": null,
-    "allowAuthorVisibleHelp": null,
-    "newPostsFirst": null,
-    "newPostsFirstHelp": null,
-    "allowGiphy": null,
-    "allowGiphyHelp": null,
-    "allowGrouping": null,
-    "allowGroupingHelp": null,
-    "allowReordering": null,
-    "allowReorderingHelp": null,
-    "blurCards": null,
-    "blurCardsHelp": null,
-    "template": null,
-    "templateHelp": null,
-    "numberOfColumns": null,
-    "numberOfColumnsHelp": null,
-    "makeDefaultTemplate": null
+    "title": "自定义您的会话",
+    "votingCategory": "表 决",
+    "votingCategorySub": "设置关于喜欢和不喜欢的规则",
+    "postCategory": "帖子设置",
+    "postCategorySub": "设置用户在创建或查看帖子时可以做什么的规则",
+    "customTemplateCategory": "列模板",
+    "customTemplateCategorySub": "设置列数及其特性",
+    "startButton": "开始会话",
+    "editButton": "更新",
+    "maxUpVotes": "最大向上投票数",
+    "maxUpVotesHelp": "允许用户投出的最大“喜欢”票数",
+    "maxDownVotes": "最大投票数",
+    "maxDownVotesHelp": "允许用户投出的最大“不喜欢”票数",
+    "maxPosts": "每个用户的最大帖子",
+    "maxPostsHelp": "每个用户可以创建的帖子的最大数量",
+    "allowSelfVoting": "允许自己投票",
+    "allowSelfVotingHelp": "是否允许用户对自己的帖子投票",
+    "allowMultipleVotes": "允许多个投票",
+    "allowMultipleVotesHelp": "是否允许用户在同一个帖子上多次投票",
+    "allowActions": "允许操作",
+    "allowActionsHelp": "是否允许每个帖子上的“动作”(后续)",
+    "allowAuthorVisible": "显示作者",
+    "allowAuthorVisibleHelp": "在帖子本身上显示帖子的作者。",
+    "newPostsFirst": "先添加新帖子",
+    "newPostsFirstHelp": "在列顶部添加新帖子",
+    "allowGiphy": "允许Giphy",
+    "allowGiphyHelp": "允许用户根据帖子设置Giphy 图像",
+    "allowGrouping": "允许分组",
+    "allowGroupingHelp": "允许创建群组将帖子一起分组",
+    "allowReordering": "允许重新排序",
+    "allowReorderingHelp": "允许通过拖放重新排序帖子",
+    "blurCards": "模糊卡",
+    "blurCardsHelp": "在版主显示内容之前，卡片内容是模糊的",
+    "template": "模板",
+    "templateHelp": "使用预定义的列集",
+    "numberOfColumns": "列数",
+    "numberOfColumnsHelp": "设置列数",
+    "makeDefaultTemplate": "将此设置为我的默认模板"
   },
   "PostBoard": {
-    "customQuestion": null,
+    "customQuestion": "自定义列",
     "notWellQuestion": "哪些已经改善?",
     "wellQuestion": "哪些做的很好?",
     "ideasQuestion": "分享优秀的点子?",
-    "startQuestion": null,
-    "editButton": null,
-    "stopQuestion": null,
-    "continueQuestion": null,
-    "likedQuestion": null,
-    "lackedQuestion": null,
-    "learnedQuestion": null,
-    "longedForQuestion": null,
-    "anchorQuestion": null,
-    "boatQuestion": null,
-    "islandQuestion": null,
-    "windQuestion": null,
-    "rockQuestion": null,
-    "disconnected": null,
-    "reconnect": null,
-    "notLoggedIn": null,
-    "error": null,
-    "maxPostsReached": null,
-    "iAmDone": null,
-    "iAmNotDoneYet": null,
-    "userIsReady": null
+    "startQuestion": "开始",
+    "stopQuestion": "停止",
+    "continueQuestion": "继续",
+    "likedQuestion": "赞的",
+    "lackedQuestion": "已打包",
+    "learnedQuestion": "学习",
+    "longedForQuestion": "延时",
+    "anchorQuestion": "锚点",
+    "boatQuestion": "小船",
+    "islandQuestion": "岛",
+    "windQuestion": "向导",
+    "rockQuestion": "摇动",
+    "disconnected": "您已与当前会话断开连接。",
+    "reconnect": "重新连接",
+    "notLoggedIn": "您尚未登录。您可以将此会话视为旁观者，但必须登录才能参与。",
+    "error_action_unauthorised": "您无权执行此操作。",
+    "error_cannot_edit_group": "编辑组失败。",
+    "error_cannot_edit_post": "编辑帖子失败。",
+    "error_cannot_get_session": "无法获取会话数据。请重新加载页面。",
+    "error_cannot_register_vote": "您的投票未成功注册。",
+    "error_cannot_save_group": "无法保存您创建的组。",
+    "error_cannot_save_post": "您创建的帖子无法保存。",
+    "error_cannot_delete_group": "群组无法删除",
+    "error_cannot_delete_post": "帖子无法删除",
+    "error_cannot_rename_session": "重命名会话失败",
+    "error_cannot_save_columns": "保存列失败",
+    "error_cannot_save_options": "保存选项失败",
+    "maxPostsReached": "您已经达到了版主设置的帖子的最大数量。",
+    "iAmDone": "我已完成！",
+    "iAmNotDoneYet": "我还没有完成...",
+    "userIsReady": "{{user}} 已准备好了！"
   },
   "GameMenu": {
-    "board": null,
-    "summary": null
+    "board": "棋盘",
+    "summary": "Summary"
   },
   "Template": {
-    "default": null,
-    "wellNotWell": null,
-    "startStopContinue": null,
-    "fourLs": null,
-    "sailboat": null
+    "default": "默认设置",
+    "wellNotWell": "好的 / 不好",
+    "startStopContinue": "开始/停止/继续",
+    "fourLs": "四指示灯",
+    "sailboat": "帆船"
   },
   "Clients": {
     "header": "已加入我们的:",
-    "joined": null,
-    "left": null
+    "joined": "{{users}} 已加入。",
+    "left": "{{users}} 离开了。"
   },
   "Join": {
     "welcome": "欢迎 Retrospected",
@@ -136,7 +150,7 @@
       "header": "创建",
       "text": "点击以下开始进行回顾:",
       "button": "创建新的议程",
-      "customizeButton": null
+      "customizeButton": "自定义"
     },
     "optionsTab": {
       "header": "高级设定",
@@ -151,59 +165,65 @@
   "AnonymousLogin": {
     "namePlaceholder": "您是谁? 在此输入您的名称",
     "buttonLabel": "开始!",
-    "header": "Login",
-    "anonymousAuthHeader": null,
-    "anonymousAuthDescription": null,
-    "authenticatingWith": null,
-    "or": null
+    "header": "登录",
+    "anonymousAuthHeader": "匿名登录",
+    "anonymousAuthDescription": "这将创建一个匿名帐户。有些功能将不可用。",
+    "authenticatingWith": "正在验证",
+    "or": "或"
   },
   "SocialMediaLogin": {
-    "header": null,
-    "info": null
+    "header": "OAuth",
+    "info": "这将使用您选择的第三方提供商来验证您。没有密码已保存。"
   },
   "AuthCommon": {
-    "emailField": null,
-    "passwordField": null,
-    "nameField": null,
-    "passwordScoreWords": null
+    "emailField": "电子邮箱",
+    "passwordField": "密码",
+    "nameField": "您的名字(用于显示目的)",
+    "passwordScoreWords": [
+      "脆弱的",
+      "脆弱的",
+      "不好",
+      "很好",
+      "强度"
+    ]
   },
   "AccountLogin": {
-    "header": null,
-    "loginButton": null,
-    "info": null,
-    "registerLink": null,
-    "forgotPasswordLink": null,
-    "errorEmailPasswordIncorrect": null
+    "header": "密码",
+    "loginButton": "登录",
+    "info": "使用您的电子邮件和密码登录。",
+    "registerLink": "未注册？点击这里",
+    "forgotPasswordLink": "忘记密码？",
+    "errorEmailPasswordIncorrect": "您的凭据不正确。"
   },
   "Register": {
-    "header": null,
-    "info": null,
-    "registerButton": null,
-    "errorAlreadyRegistered": null,
-    "errorGeneral": null,
-    "messageSuccess": null,
-    "errorInvalidEmail": null
+    "header": "注册",
+    "info": "给自己一个回归账户！",
+    "registerButton": "注册",
+    "errorAlreadyRegistered": "此电子邮件已注册",
+    "errorGeneral": "尝试创建您的帐户时出错。",
+    "messageSuccess": "谢谢！您将很快收到一封电子邮件来验证您的帐户。",
+    "errorInvalidEmail": "请输入一个有效的电子邮件"
   },
   "ValidateAccount": {
-    "success": null,
-    "error": null,
-    "loading": null
+    "success": "您的电子邮件已被正确验证。我将登录一个秒钟！",
+    "error": "验证您的电子邮件时出错。",
+    "loading": "我们正在验证您的电子邮件。请稍候。"
   },
   "ResetPassword": {
-    "doneMessage": null,
-    "header": null,
-    "resetButton": null,
-    "info": null,
-    "success": null,
-    "error": null,
-    "loading": null,
-    "resetInfo": null
+    "doneMessage": "完成了！看看您的电子邮件，您应该有一个重置密码的链接。",
+    "header": "密码重置",
+    "resetButton": "重置密码",
+    "info": "忘记密码？不会出现问题。请在下方输入您的电子邮件，然后您会收到重置电子邮件提示。",
+    "success": "您的密码已经更新。我将登录一会儿！",
+    "error": "更新您的密码时出错。",
+    "loading": "我们正在更新您的密码。请稍候。",
+    "resetInfo": "请提供新密码"
   },
   "SummaryBoard": {
     "noPosts": "目前无任何内容",
-    "copyAsMarkdown": null,
-    "copyAsRichText": null,
-    "copySuccessful": null
+    "copyAsMarkdown": "将摘要复制为Markdown",
+    "copyAsRichText": "复制摘要为富文本",
+    "copySuccessful": "您已成功复制您的摘要到剪贴板"
   },
   "SessionName": {
     "defaultSessionName": "我的回顾"
@@ -217,7 +237,7 @@
     }
   },
   "Generic": {
-    "ok": "OK",
+    "ok": "好的",
     "cancel": "取消"
   },
   "Actions": {
@@ -227,177 +247,177 @@
     "title": "行动"
   },
   "DeleteSession": {
-    "header": null,
-    "firstLine": null,
-    "secondLine": null,
-    "yesImSure": null,
-    "cancel": null
+    "header": "正在删除 '{{name}} ' 吗？",
+    "firstLine": "删除会话是不可逆的。它将删除所有帖子、投票、组和会话本身。数据无法恢复。",
+    "secondLine": "您确定要删除此会话及其所有内容吗？",
+    "yesImSure": "是的，我确定",
+    "cancel": "不，对不起，我犯了一个错误"
   },
   "RevealCards": {
-    "buttonLabel": null,
-    "dialogTitle": null,
-    "dialogContent": null,
-    "confirmButton": null,
-    "cancelButton": null
+    "buttonLabel": "显示",
+    "dialogTitle": "显示所有卡片",
+    "dialogContent": "这将显示所有人的模糊卡片。无法撤消。",
+    "confirmButton": "让我们揭示！",
+    "cancelButton": "不要谢谢。"
   },
   "AccountPage": {
-    "anonymousError": null,
+    "anonymousError": "匿名帐户不能访问他们的个人资料 (因为他们没有一个)。",
     "details": {
-      "header": null,
-      "username": null,
-      "email": null,
-      "accountType": null
+      "header": "您的详细信息",
+      "username": "用户名",
+      "email": "电子邮件地址",
+      "accountType": "帐户类型"
     },
     "plan": {
-      "header": null,
-      "plan": null,
-      "youAreOwner": null,
-      "youAreMember": null
+      "header": "您的计划",
+      "plan": "计划",
+      "youAreOwner": "您是此计划的所有者，通过下面的订阅。",
+      "youAreMember": "您正在通过其他人的订阅加入此计划。"
     },
     "subscription": {
-      "header": null,
-      "manageButton": null,
+      "header": "您的订阅",
+      "manageButton": "管理我的订阅",
       "membersEditor": {
-        "title": null,
-        "limitReached": null,
-        "info": null
+        "title": "您的团队",
+        "limitReached": "您的订阅已达到极限({{limit}} 用户，包括您自己)。请删除会员，或升级到无限公司帐户。",
+        "info": "在下面添加电子邮件，给予最多 {{limit}} 位其他同事专业版帐户。在每个电子邮件地址后按回车键。"
       }
     },
     "trial": {
-      "header": null,
-      "yourTrialWillExpireIn": null,
-      "subscribe": null
+      "header": "您的测试",
+      "yourTrialWillExpireIn": "您的试用版将在 {{date}} 后结束。",
+      "subscribe": "现在订阅"
     },
     "deleteAccount": {
-      "title": null,
-      "warning": null,
-      "deleteData": null,
+      "title": "GDPR",
+      "warning": "您有权被遗忘。虽然这么说，在删除您的帐户时要小心。这不能撤消。",
+      "deleteData": "删除我的数据",
       "modal": {
         "confirm": {
-          "title": null,
-          "description": null,
-          "confirmation": null,
-          "cancellation": null
+          "title": "您是否绝对确定？",
+          "description": "在这个问题上没有回来。",
+          "confirmation": "是的，我想要删除我的所有数据",
+          "cancellation": "让我离开这里"
         },
-        "subheader": null,
-        "deleteAccount": null,
-        "recommended": null,
+        "subheader": "选择要删除的内容",
+        "deleteAccount": "删除您的帐户和与您的电子邮件链接的任何身份。",
+        "recommended": "推荐的",
         "deleteSessions": {
-          "main": null,
-          "selected": null,
-          "unselected": null
+          "main": "我们是否应该删除您创建的会话 (追溯) ？",
+          "selected": "您的会议和他们的所有数据，包括其他人的帖子和投票，将被永久删除。",
+          "unselected": "您的会话将被保存，其作者将成为匿名用户。"
         },
         "deletePosts": {
-          "main": null,
-          "selected": null,
-          "unselected": null
+          "main": "我们是否应该删除你写过的所有帖子？",
+          "selected": "您在任何会话中的帖子及其相关的投票和动作将被永久删除。",
+          "unselected": "您的帖子将被保留，但他们将与匿名用户关联。"
         },
         "deleteVotes": {
-          "main": null,
-          "selected": null,
-          "unselected": null
+          "main": "我们是否也要删除您所有的投票？",
+          "selected": "您的投票将在所有会话中被永久删除。",
+          "unselected": "您的投票将被保留，但他们将与匿名用户关联。"
         },
-        "deleteAccountButton": null,
-        "cancelButton": null
+        "deleteAccountButton": "删除您的帐户",
+        "cancelButton": "取消"
       }
     }
   },
   "SubscribePage": {
-    "alertAlreadyPro": null,
-    "alertAlreadySubscribed": null,
+    "alertAlreadyPro": "您已经是专业版用户，所以您可能不需要其他订阅。",
+    "alertAlreadySubscribed": "您已经有一个订阅，所以您可能不需要另一个订阅。",
     "currency": {
-      "title": null,
-      "description": null,
-      "warning": null
+      "title": "货币",
+      "description": "选择您想要计费的货币",
+      "warning": "您的帐户已设置为 {{currency}}，因此您不能再更改货币。"
     },
     "plan": {
-      "title": null,
-      "description": null
+      "title": "计划",
+      "description": "选择适合您使用情况的计划！"
     },
     "domain": {
-      "title": null,
-      "description": null,
-      "invalidDomain": null
+      "title": "域",
+      "description": "您的无限订阅适用于指定的域。任何使用此电子邮件域的用户都将自动成为专业版用户。",
+      "invalidDomain": "请提供一个有效的域。该域不能是一个免费或可用的电子邮件域。"
     },
     "subscribe": {
-      "title": null,
-      "description": null,
-      "cannotRegisterWithAnon": null,
-      "checkout": null
+      "title": "签出",
+      "description": "您将被重定向到我们的合伙人，Stripe以便付款",
+      "cannotRegisterWithAnon": "您需要使用 OAuth 或密码帐户登录才能继续。",
+      "checkout": "签出"
     }
   },
   "SubscribeModal": {
-    "title": null,
-    "header": null,
-    "description": null,
+    "title": "Pro 订阅",
+    "header": "回顾专业版",
+    "description": "通过订阅Retrospected Pro来保护您的公司数据。使用Retrospected Pro，获得以下功能和更多功能：",
     "features": {
       "encryptedSession": {
-        "title": null,
-        "description": null
+        "title": "加密会话",
+        "description": "您的数据被加密在您的浏览器中，从而使得任何解密都无法在返回服务器上进行。"
       },
       "privateSessions": {
-        "title": null,
-        "description": null
+        "title": "私人会话",
+        "description": "请确保只有授权的人可以访问您的会话。"
       },
       "unlimitedPosts": {
-        "title": null,
-        "description": null
+        "title": "无限帖子",
+        "description": "通过专业版订阅，获得无限的帖子。"
       }
     },
-    "subscribeButton": null,
-    "payButton": null,
-    "cancelButton": null,
-    "startTrial": null
+    "subscribeButton": "订阅",
+    "payButton": "选择",
+    "cancelButton": "取消",
+    "startTrial": "30天测试"
   },
   "Products": {
-    "team": null,
-    "unlimited": null,
-    "self-hosted": null,
-    "users": null,
-    "unlimited_seats": null,
-    "month": null,
-    "year": null,
-    "wantToPayYearly": null
+    "team": "适合较小的团队，您可以选择最多20个同事升级到专业版帐户。",
+    "unlimited": "如果您是一个较大的公司，您将享受无限数量的专业版账户。",
+    "self-hosted": "回到房地，一次性收费和无限制的更新。始终保持对您数据的完全控制。",
+    "users": "{{users}} 位用户",
+    "unlimited_seats": "无限制",
+    "month": "月",
+    "year": "年",
+    "wantToPayYearly": "我想每年支付一次（每12个月），每年免费支付一个月！"
   },
   "Encryption": {
-    "createEncryptedSession": null,
-    "sessionNotEncrypted": null,
-    "sessionEncryptedHaveKeyTooltip": null,
-    "sessionEncryptedNoKeyTooltip": null,
-    "sessionEncryptedWrongKeyTooltip": null,
-    "newEncryptedSessionWarningTitle": null,
-    "newEncryptedSessionWarningContent": null,
-    "sessionEncryptionError": null,
-    "passwordModalTitle": null,
-    "passwordModelIncorrect": null
+    "createEncryptedSession": "加密会话",
+    "sessionNotEncrypted": "此会话未加密。",
+    "sessionEncryptedHaveKeyTooltip": "此会话已加密，密钥已保存在您的浏览器中。您可以打开此会话而不必再次提供密码。",
+    "sessionEncryptedNoKeyTooltip": "此会话已加密，密钥未保存在您的浏览器中。在打开此会话时，您将被要求输入解密密钥。",
+    "sessionEncryptedWrongKeyTooltip": "此会话已加密，您存储的密钥不是正确的密钥。",
+    "newEncryptedSessionWarningTitle": "此会话是本地加密",
+    "newEncryptedSessionWarningContent": "非常重要的是，您可以在安全的地方保存完整的 URL (包含密钥)。 或至少加密密钥： {{key}}如果您丢失了此加密密钥，则无法检索数据。",
+    "sessionEncryptionError": "此会话已加密，您似乎没有本地解密密钥。请使用原始链接，包括解密密钥。",
+    "passwordModalTitle": "加密会话 - 输入密码",
+    "passwordModelIncorrect": "加密密钥不正确。"
   },
   "Private": {
-    "lockSuccessNotification": null,
-    "unlockSuccessNotification": null,
-    "lockButton": null,
-    "unlockButton": null,
-    "lockDescription": null,
-    "cancelButton": null,
-    "sessionLockedTitle": null,
-    "sessionLockedDescription": null,
-    "sessionNonProTitle": null,
-    "sessionNonProDescription": null,
-    "sessionIsPublic": null,
-    "sessionIsPrivate": null,
-    "sessionIsPrivateNoAccess": null
+    "lockSuccessNotification": "您的会话已成功私有。没有新的参与者可以加入。",
+    "unlockSuccessNotification": "您的会话已成功发布。任何人都可以加入。",
+    "lockButton": "设为私人的",
+    "unlockButton": "公开设置",
+    "lockDescription": "您将要将会话变为隐私。只允许当前的参与者 (下面列出)在锁定后访问此会话。",
+    "cancelButton": "取消",
+    "sessionLockedTitle": "此会话是私密的。",
+    "sessionLockedDescription": "请让其版主解锁它，以便您可以加入，然后刷新此页面。",
+    "sessionNonProTitle": "此会话仅供专业版用户访问",
+    "sessionNonProDescription": "此会话只使用专业版用户可用的功能。请联系人或订阅者给您一个专业版账户。",
+    "sessionIsPublic": "此会话是公开的，任何人都可以访问。",
+    "sessionIsPrivate": "此会话是私密的，您可以访问。",
+    "sessionIsPrivateNoAccess": "此会话是私密的，但您没有访问权限。"
   },
   "TrialPrompt": {
-    "allowanceReachedTitle": null,
-    "allowanceReachedDescription": null,
-    "nearEndAllowanceTitle": null,
-    "nearEndAllowanceDescription": null,
-    "onTrialTitle": null,
-    "remainingTrialSentence": null,
-    "trialEndedTitle": null,
-    "trialEndedSentence": null,
-    "subscribeNow": null
+    "allowanceReachedTitle": "您已达到免费津贴",
+    "allowanceReachedDescription": "为了获得无限的帖子，请订阅Retrospected Pro",
+    "nearEndAllowanceTitle": "您的配额即将结束",
+    "nearEndAllowanceDescription": "您还剩下了大约 {{quota}} 个帖子",
+    "onTrialTitle": "回忆Pro - 测试",
+    "remainingTrialSentence": "您的试用版还有 {{remaining}}。",
+    "trialEndedTitle": "您的回忆专业版试用已结束",
+    "trialEndedSentence": "今天订阅以重新获得专业版功能。",
+    "subscribeNow": "现在订阅 ！"
   },
   "Chat": {
-    "writeAMessage": null
+    "writeAMessage": "在此处写一条消息..."
   }
 }

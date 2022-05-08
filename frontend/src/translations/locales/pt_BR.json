@@ -1,11 +1,11 @@
 {
   "Header": {
     "subtitle": "Uma ótima maneira de reclamar se divertindo",
-    "logout": "Logout",
+    "logout": "Desconectar",
     "leave": "Sair",
     "summaryMode": "Modo Sumário",
-    "account": null,
-    "adminPanel": null
+    "account": "Minha conta",
+    "adminPanel": "Painel de Administração"
   },
   "LanguagePicker": {
     "header": "Escolha uma língua"
@@ -14,121 +14,135 @@
     "hint": "Você pode convidar outras pessoas para esta seção compartilhando a URL"
   },
   "Home": {
-    "welcome": null
+    "welcome": "Bem-vindo, {{name}}"
   },
   "PreviousGame": {
-    "createdBy": null,
-    "posts": null,
-    "participants": null,
-    "votes": null,
-    "actions": null
+    "createdBy": "Criado Por",
+    "posts_one": "publicação",
+    "posts_other": "publicações",
+    "participants_one": "participante",
+    "participants_other": "participantes",
+    "votes_one": "Votar",
+    "votes_other": "votos",
+    "actions_one": "Ação",
+    "actions_other": "Ações"
   },
   "Column": {
-    "createGroupTooltip": null
+    "createGroupTooltip": "Criar um grupo para agrupar postagens"
   },
   "Group": {
-    "emptyGroupTitle": "",
-    "emptyGroupContent": ""
+    "emptyGroupTitle": "Este grupo está vazio",
+    "emptyGroupContent": "Mova uma publicação para cá para preencher este grupo"
   },
   "Post": {
-    "openExtra": null,
-    "closeExtra": null,
-    "vote": "vote",
+    "openExtra": "Recursos adicionais",
+    "closeExtra": "FECHAR",
+    "vote": "Votar",
     "votes": "votos",
     "deleteButton": "Remover",
-    "setActionButton": null,
-    "setGiphyButton": null,
-    "noContent": "(This post has no content)",
-    "by": null,
-    "upVote": null,
-    "downVote": null,
-    "voteRemainingMultiple": null,
-    "voteRemainingOne": null,
-    "voteRemainingNone": null,
-    "toggleGiphyButton": null
+    "setActionButton": "Definir ação",
+    "setGiphyButton": "Escolha uma imagem de Giphy",
+    "noContent": "(Esta postagem não tem conteúdo)",
+    "by": "Por",
+    "upVote": "voto-up-vote",
+    "downVote": "voto negativo",
+    "voteRemainingMultiple": "Você tem {{number}} {{type}}restantes.",
+    "voteRemainingOne": "Você tem apenas um {{type}} restante, faça com que ele conte!",
+    "voteRemainingNone": "Você não tem nenhum {{type}} restante.",
+    "toggleGiphyButton": "Alternar imagem Giphy"
   },
   "Customize": {
-    "title": null,
-    "votingCategory": null,
-    "votingCategorySub": null,
-    "postCategory": null,
-    "postCategorySub": null,
-    "customTemplateCategory": null,
-    "customTemplateCategorySub": null,
-    "startButton": null,
-    "editButton": null,
-    "maxUpVotes": null,
-    "maxUpVotesHelp": null,
-    "maxDownVotes": null,
-    "maxDownVotesHelp": null,
-    "maxPosts": null,
-    "maxPostsHelp": null,
-    "allowSelfVoting": null,
-    "allowSelfVotingHelp": null,
-    "allowMultipleVotes": null,
-    "allowMultipleVotesHelp": null,
-    "allowActions": null,
-    "allowActionsHelp": null,
-    "allowAuthorVisible": null,
-    "allowAuthorVisibleHelp": null,
-    "newPostsFirst": null,
-    "newPostsFirstHelp": null,
-    "allowGiphy": null,
-    "allowGiphyHelp": null,
-    "allowGrouping": null,
-    "allowGroupingHelp": null,
-    "allowReordering": null,
-    "allowReorderingHelp": null,
-    "blurCards": null,
-    "blurCardsHelp": null,
-    "template": null,
-    "templateHelp": null,
-    "numberOfColumns": null,
-    "numberOfColumnsHelp": null,
-    "makeDefaultTemplate": null
+    "title": "Personalize sua sessão",
+    "votingCategory": "Votação",
+    "votingCategorySub": "Definir regras sobre curtidas e não curtidas",
+    "postCategory": "Configurações de postagem",
+    "postCategorySub": "Defina as regras sobre o que um usuário pode fazer ao criar ou visualizar uma postagem",
+    "customTemplateCategory": "Modelo de coluna",
+    "customTemplateCategorySub": "Define o número de colunas e suas características",
+    "startButton": "Iniciar a sessão",
+    "editButton": "Atualização",
+    "maxUpVotes": "Máximo de Votos Atuais",
+    "maxUpVotesHelp": "Número máximo de votos 'curtidos' que um usuário pode transmitir",
+    "maxDownVotes": "Máximo de Votos Inativos",
+    "maxDownVotesHelp": "Número máximo de votos 'descurtidos' que um usuário pode transmitir",
+    "maxPosts": "Máximo de postagens por usuário",
+    "maxPostsHelp": "Número máximo de postagens que um usuário pode criar por sessão",
+    "allowSelfVoting": "Permitir auto-votação",
+    "allowSelfVotingHelp": "Se permite que um usuário vote em sua própria publicação",
+    "allowMultipleVotes": "Permitir Vários Votos",
+    "allowMultipleVotesHelp": "Se permite que um usuário vote várias vezes na mesma publicação",
+    "allowActions": "Permitir Ações",
+    "allowActionsHelp": "Se deseja permitir o campo 'Ação' (seguimento) em cada postagem",
+    "allowAuthorVisible": "Mostrar autor",
+    "allowAuthorVisibleHelp": "Mostrar o autor da postagem no próprio post.",
+    "newPostsFirst": "Adicione novas postagens primeiro",
+    "newPostsFirstHelp": "Novas postagens são adicionadas no topo da coluna",
+    "allowGiphy": "Permitir Giphy",
+    "allowGiphyHelp": "Permitir que os usuários definam uma imagem para Giphy contra um post",
+    "allowGrouping": "Permitir Agrupamento",
+    "allowGroupingHelp": "Permitir a criação de grupos para agrupar postagens",
+    "allowReordering": "Permitir reordenação",
+    "allowReorderingHelp": "Permitir reordenação de postagens arrastando-se-e-soltar",
+    "blurCards": "Cartões de Desfoque",
+    "blurCardsHelp": "O conteúdo dos cartões fica desfocado até que o moderador revele o conteúdo",
+    "template": "Modelo",
+    "templateHelp": "Usar um conjunto de colunas pré-definidas",
+    "numberOfColumns": "Número de colunas",
+    "numberOfColumnsHelp": "Definir o número de colunas",
+    "makeDefaultTemplate": "Tornar este meu modelo padrão"
   },
   "PostBoard": {
-    "customQuestion": null,
+    "customQuestion": "Coluna personalizada",
     "notWellQuestion": "O que poderia ser melhorado?",
     "wellQuestion": "O que deu certo?",
     "ideasQuestion": "Compartilhar uma ideia brilhante?",
-    "startQuestion": null,
-    "editButton": null,
-    "stopQuestion": null,
-    "continueQuestion": null,
-    "likedQuestion": null,
-    "lackedQuestion": null,
-    "learnedQuestion": null,
-    "longedForQuestion": null,
-    "anchorQuestion": null,
-    "boatQuestion": null,
-    "islandQuestion": null,
-    "windQuestion": null,
-    "rockQuestion": null,
-    "disconnected": null,
-    "reconnect": null,
-    "notLoggedIn": null,
-    "error": null,
-    "maxPostsReached": null,
-    "iAmDone": null,
-    "iAmNotDoneYet": null,
-    "userIsReady": null
+    "startQuestion": "Iniciar",
+    "stopQuestion": "Interromper",
+    "continueQuestion": "Continuar",
+    "likedQuestion": "Curtiu",
+    "lackedQuestion": "Descompactado",
+    "learnedQuestion": "Aprendido",
+    "longedForQuestion": "Longo Para",
+    "anchorQuestion": "Âncora",
+    "boatQuestion": "Barco",
+    "islandQuestion": "Ilha",
+    "windQuestion": "Vento",
+    "rockQuestion": "Pedras",
+    "disconnected": "Você foi desconectado da sessão atual.",
+    "reconnect": "Reconectar",
+    "notLoggedIn": "Você não está conectado. Você pode ver esta sessão como um espectador, mas precisa fazer o login para participar.",
+    "error_action_unauthorised": "Você não tem permissão para executar esta ação.",
+    "error_cannot_edit_group": "Falha ao editar o grupo.",
+    "error_cannot_edit_post": "Falha ao editar o post.",
+    "error_cannot_get_session": "Não foi possível obter os dados da sessão. Por favor, recarregue a página.",
+    "error_cannot_register_vote": "Seu voto não foi registrado com sucesso.",
+    "error_cannot_save_group": "O grupo que você criou não pode ser salvo.",
+    "error_cannot_save_post": "A postagem que você criou não pode ser salva.",
+    "error_cannot_delete_group": "O grupo não pôde ser excluído",
+    "error_cannot_delete_post": "A publicação não pôde ser excluída",
+    "error_cannot_rename_session": "Falha ao renomear a sessão",
+    "error_cannot_save_columns": "Falha ao salvar colunas",
+    "error_cannot_save_options": "Opções de salvamento falharam",
+    "maxPostsReached": "Você atingiu o número máximo de postagens definido pelo moderador.",
+    "iAmDone": "Estou pronto!",
+    "iAmNotDoneYet": "Eu não terminei ainda...",
+    "userIsReady": "{{user}} está pronto!"
   },
   "GameMenu": {
-    "board": null,
-    "summary": null
+    "board": "Tabuleiro",
+    "summary": "Summary"
   },
   "Template": {
-    "default": null,
-    "wellNotWell": null,
-    "startStopContinue": null,
-    "fourLs": null,
-    "sailboat": null
+    "default": "Padrão",
+    "wellNotWell": "Bem / Não Bom",
+    "startStopContinue": "Iniciar / Parar / Continuar",
+    "fourLs": "Quatro Ls",
+    "sailboat": "Veleiro"
   },
   "Clients": {
     "header": "Participando conosco agora:",
-    "joined": null,
-    "left": null
+    "joined": "{{users}} juntou-se.",
+    "left": "{{users}} restante(s)."
   },
   "Join": {
     "welcome": "Bem-vindo ao Retrospected",
@@ -136,7 +150,7 @@
       "header": "Crie uma seção",
       "text": "Clique abaixo e inicie a restropectiva:",
       "button": "Crie uma nova seção",
-      "customizeButton": null
+      "customizeButton": "Personalizar"
     },
     "optionsTab": {
       "header": "Avançado",
@@ -151,73 +165,79 @@
   "AnonymousLogin": {
     "namePlaceholder": "Quem é você? Insira seu nome aqui",
     "buttonLabel": "Vamos começar",
-    "header": "Login",
-    "anonymousAuthHeader": null,
-    "anonymousAuthDescription": null,
-    "authenticatingWith": null,
-    "or": null
+    "header": "Conectar-se",
+    "anonymousAuthHeader": "Login Anônimo",
+    "anonymousAuthDescription": "Isso criará uma conta anônima. Alguns recursos não estarão disponíveis.",
+    "authenticatingWith": "Autenticando com",
+    "or": "ou"
   },
   "SocialMediaLogin": {
-    "header": null,
-    "info": null
+    "header": "OAuth",
+    "info": "Isto usará um provedor de terceiros da sua escolha para autenticar você. Nenhuma senha é armazenada."
   },
   "AuthCommon": {
-    "emailField": null,
-    "passwordField": null,
-    "nameField": null,
-    "passwordScoreWords": null
+    "emailField": "e-mail",
+    "passwordField": "Palavra-passe",
+    "nameField": "Seu nome (para fins de exibição)",
+    "passwordScoreWords": [
+      "fraco",
+      "fraco",
+      "não é muito",
+      "bom",
+      "forte"
+    ]
   },
   "AccountLogin": {
-    "header": null,
-    "loginButton": null,
-    "info": null,
-    "registerLink": null,
-    "forgotPasswordLink": null,
-    "errorEmailPasswordIncorrect": null
+    "header": "Palavra-passe",
+    "loginButton": "Conectar-se",
+    "info": "Faça o login com seu e-mail e senha.",
+    "registerLink": "Não registrado? Clique aqui",
+    "forgotPasswordLink": "Esqueceu-se da sua senha?",
+    "errorEmailPasswordIncorrect": "Suas credenciais estão incorretas."
   },
   "Register": {
-    "header": null,
-    "info": null,
-    "registerButton": null,
-    "errorAlreadyRegistered": null,
-    "errorGeneral": null,
-    "messageSuccess": null,
-    "errorInvalidEmail": null
+    "header": "Cadastrar",
+    "info": "Obtenha uma conta Retrospecionada!",
+    "registerButton": "Cadastrar",
+    "errorAlreadyRegistered": "Este e-mail já está registrado",
+    "errorGeneral": "Ocorreu um erro ao tentar criar a sua conta.",
+    "messageSuccess": "Obrigado! Você deverá receber um e-mail em breve para validar sua conta.",
+    "errorInvalidEmail": "Por favor, digite um e-mail válido"
   },
   "ValidateAccount": {
-    "success": null,
-    "error": null,
-    "loading": null
+    "success": "Seu e-mail foi validado corretamente. Vou fazer login em um segundo!",
+    "error": "Houve um erro ao validar o seu e-mail.",
+    "loading": "Estamos validando o seu e-mail. Por favor, aguarde."
   },
   "ResetPassword": {
-    "doneMessage": null,
-    "header": null,
-    "resetButton": null,
-    "info": null,
-    "success": null,
-    "error": null,
-    "loading": null,
-    "resetInfo": null
+    "doneMessage": "Pronto! Veja seus e-mails, você deve receber um link para redefinir a sua senha.",
+    "header": "Recuperar senha",
+    "resetButton": "Redefinir a senha",
+    "info": "Esqueceu sua senha? Não é um problema. Digite seu e-mail abaixo e você receberá um pedido de redefinição por e-mail.",
+    "success": "Sua senha foi atualizada. Vou fazer login em um segundo!",
+    "error": "Houve um erro ao atualizar a sua senha.",
+    "loading": "Estamos atualizando sua senha. Aguarde.",
+    "resetInfo": "Forneça uma nova senha"
   },
   "SummaryBoard": {
-    "noPosts": "There are no posts to display",
-    "copyAsMarkdown": null,
-    "copyAsRichText": null,
-    "copySuccessful": null
+    "noPosts": "Não há nenhuma postagem para exibir",
+    "copyAsMarkdown": "Copiar o resumo como Markdown",
+    "copyAsRichText": "Copiar o resumo como Rich Text",
+    "copySuccessful": "Você copiou o seu resumo para a área de transferência"
   },
   "SessionName": {
-    "defaultSessionName": "My Retrospective"
+    "defaultSessionName": "Meu Retrospectivo"
   },
   "Invite": {
-    "inviteButton": "Invite",
+    "inviteButton": "Convidar",
     "dialog": {
-      "title": "Invite people to your retrospective",
-      "text": "To invite people to your retrospected session, simply send them the following URL",
-      "copyButton": "Copy URL to Clipboard"
+      "title": "Convide pessoas para seu retrospectivo",
+      "text": "Para convidar pessoas para sua sessão retrospectiva, basta enviá-las o seguinte URL",
+      "copyButton": "Copiar URL para área de transferência"
     }
   },
   "Generic": {
-    "ok": "OK",
+    "ok": "Certo",
     "cancel": "Cancelar"
   },
   "Actions": {
@@ -227,177 +247,177 @@
     "title": "Açao"
   },
   "DeleteSession": {
-    "header": null,
-    "firstLine": null,
-    "secondLine": null,
-    "yesImSure": null,
-    "cancel": null
+    "header": "Apagando '{{name}}'?",
+    "firstLine": "A exclusão de uma sessão é irreversível. Ela excluirá todas as postagens, votos, grupos e a sessão em si. Os dados não podem ser restaurados.",
+    "secondLine": "Tem certeza que deseja excluir esta sessão e todo o seu conteúdo?",
+    "yesImSure": "Sim, tenho certeza",
+    "cancel": "Não, desculpe, eu cometi um erro"
   },
   "RevealCards": {
-    "buttonLabel": null,
-    "dialogTitle": null,
-    "dialogContent": null,
-    "confirmButton": null,
-    "cancelButton": null
+    "buttonLabel": "Mostrar",
+    "dialogTitle": "Mostrar todos os cards",
+    "dialogContent": "Isto revelará todas as cartas desfocadas para todos. Isso não poderá ser desfeito.",
+    "confirmButton": "Vamos revelar!",
+    "cancelButton": "Não, obrigado."
   },
   "AccountPage": {
-    "anonymousError": null,
+    "anonymousError": "Contas anônimas não podem ter acesso ao seu perfil (porque não têm uma).",
     "details": {
-      "header": null,
-      "username": null,
-      "email": null,
-      "accountType": null
+      "header": "Suas informações",
+      "username": "Usuário:",
+      "email": "e-mail",
+      "accountType": "Tipo de Conta"
     },
     "plan": {
-      "header": null,
-      "plan": null,
-      "youAreOwner": null,
-      "youAreMember": null
+      "header": "Seu plano",
+      "plan": "Planejamento",
+      "youAreOwner": "Você é o proprietário deste plano, através da assinatura abaixo.",
+      "youAreMember": "Você está nesse plano por meio da assinatura de outra pessoa."
     },
     "subscription": {
-      "header": null,
-      "manageButton": null,
+      "header": "Sua assinatura",
+      "manageButton": "Gerenciar minha assinatura",
       "membersEditor": {
-        "title": null,
-        "limitReached": null,
-        "info": null
+        "title": "Seu time",
+        "limitReached": "Você atingiu o limite de sua assinatura ({{limit}} usuários, incluindo você mesmo). Por favor, remova os membros ou faça o upgrade para uma conta ilimitada da empresa.",
+        "info": "Adicione e-mails abaixo para conceder contas Pro para até {{limit}} outros colegas. Pressione Enter após cada endereço de e-mail."
       }
     },
     "trial": {
-      "header": null,
-      "yourTrialWillExpireIn": null,
-      "subscribe": null
+      "header": "Seu período de teste",
+      "yourTrialWillExpireIn": "Seu período de teste terminará em {{date}}.",
+      "subscribe": "Inscreva-se agora"
     },
     "deleteAccount": {
-      "title": null,
-      "warning": null,
-      "deleteData": null,
+      "title": "RGPD",
+      "warning": "Você tem o direito de ser esquecido. Dito isso, tenha cuidado ao excluir sua conta. Isso não poderá ser desfeito.",
+      "deleteData": "Excluir meus dados",
       "modal": {
         "confirm": {
-          "title": null,
-          "description": null,
-          "confirmation": null,
-          "cancellation": null
+          "title": "Você tem certeza absoluta?",
+          "description": "Não se pode voltar atrás nesta questão.",
+          "confirmation": "Sim eu quero apagar todos os meus dados",
+          "cancellation": "Leve-me daqui fora"
         },
-        "subheader": null,
-        "deleteAccount": null,
-        "recommended": null,
+        "subheader": "Escolha o que excluir",
+        "deleteAccount": "Apague sua conta e quaisquer identidades ligadas ao seu e-mail.",
+        "recommended": "Recomendados",
         "deleteSessions": {
-          "main": null,
-          "selected": null,
-          "unselected": null
+          "main": "Devemos excluir as sessões (retrospectivas) que você criou?",
+          "selected": "Suas sessões e todos os seus dados, incluindo publicações e votos de outras pessoas, serão excluídos permanentemente.",
+          "unselected": "Suas sessões serão mantidas e seu autor se tornará um usuário anônimo."
         },
         "deletePosts": {
-          "main": null,
-          "selected": null,
-          "unselected": null
+          "main": "Devemos excluir todos os posts que você escreveu?",
+          "selected": "Seus posts, em qualquer sessão, e seus votos e ações associados serão excluídos permanentemente.",
+          "unselected": "Suas postagens serão mantidas, mas elas se tornarão associadas a um usuário anônimo."
         },
         "deleteVotes": {
-          "main": null,
-          "selected": null,
-          "unselected": null
+          "main": "Será que devemos também suprimir todos os seus votos?",
+          "selected": "Seus votos, em todas as sessões serão permanentemente excluídos.",
+          "unselected": "Seus votos serão mantidos, mas se tornarão associados a um usuário anônimo."
         },
-        "deleteAccountButton": null,
-        "cancelButton": null
+        "deleteAccountButton": "EXCLUIR SUA CONTA",
+        "cancelButton": "cancelar"
       }
     }
   },
   "SubscribePage": {
-    "alertAlreadyPro": null,
-    "alertAlreadySubscribed": null,
+    "alertAlreadyPro": "Você já é um usuário Pro, então você pode não precisar de outra assinatura.",
+    "alertAlreadySubscribed": "Você já tem uma assinatura, então você pode não precisar de outra assinatura.",
     "currency": {
-      "title": null,
-      "description": null,
-      "warning": null
+      "title": "moeda",
+      "description": "Escolha uma moeda em que você gostaria de ser cobrada",
+      "warning": "Sua conta já está configurada para usar {{currency}}, então você não pode mais alterar a moeda."
     },
     "plan": {
-      "title": null,
-      "description": null
+      "title": "Planejamento",
+      "description": "Escolha o plano que se adapte ao seu caso de uso!"
     },
     "domain": {
-      "title": null,
-      "description": null,
-      "invalidDomain": null
+      "title": "Domínio",
+      "description": "Sua assinatura ilimitada se aplica a um determinado domínio. Qualquer usuário com este domínio de e-mail se tornará automaticamente um usuário Pro.",
+      "invalidDomain": "Por favor, forneça um domínio válido. O domínio não pode ser um domínio de e-mail gratuito ou descartável."
     },
     "subscribe": {
-      "title": null,
-      "description": null,
-      "cannotRegisterWithAnon": null,
-      "checkout": null
+      "title": "Confiramar",
+      "description": "Você será redirecionado para nosso parceiro, Stripe, para pagamento",
+      "cannotRegisterWithAnon": "Você precisa estar logado com uma conta OAuth ou senha para continuar.",
+      "checkout": "Confiramar"
     }
   },
   "SubscribeModal": {
-    "title": null,
-    "header": null,
-    "description": null,
+    "title": "Assinatura Pro",
+    "header": "Retrospected Pro",
+    "description": "Proteja os dados da sua empresa inscrevendo-se no Retrospected Pro. Com Retrospected Pro, obtenha os seguintes recursos e muito mais:",
     "features": {
       "encryptedSession": {
-        "title": null,
-        "description": null
+        "title": "Sessões criptografadas",
+        "description": "Seus dados estão criptografados no seu navegador, tornando qualquer descriptografia impossível no servidor Retrospecionado."
       },
       "privateSessions": {
-        "title": null,
-        "description": null
+        "title": "Sessões Privadas",
+        "description": "Certifique-se de que apenas pessoas autorizadas podem acessar sua sessão."
       },
       "unlimitedPosts": {
-        "title": null,
-        "description": null
+        "title": "Postagens ilimitadas",
+        "description": "Com uma assinatura Pro, receba publicações ilimitadas."
       }
     },
-    "subscribeButton": null,
-    "payButton": null,
-    "cancelButton": null,
-    "startTrial": null
+    "subscribeButton": "Inscrever-se",
+    "payButton": "Selecionar",
+    "cancelButton": "cancelar",
+    "startTrial": "30 dias de teste"
   },
   "Products": {
-    "team": null,
-    "unlimited": null,
-    "self-hosted": null,
-    "users": null,
-    "unlimited_seats": null,
-    "month": null,
-    "year": null,
-    "wantToPayYearly": null
+    "team": "Perfeito para equipes menores, você pode selecionar até 20 colegas que serão atualizados para uma conta Pro.",
+    "unlimited": "Se você é uma empresa maior, você vai desfrutar de um número ilimitado de contas Pro.",
+    "self-hosted": "Retrospectiva no local, taxa única e atualizações ilimitadas. Mantenha o controle total de seus dados, para sempre.",
+    "users": "{{users}} usuários",
+    "unlimited_seats": "Ilimitado",
+    "month": "mês",
+    "year": "Ano",
+    "wantToPayYearly": "Quero pagar anualmente (a cada 12 meses) e ganhar um mês grátis por ano!"
   },
   "Encryption": {
-    "createEncryptedSession": null,
-    "sessionNotEncrypted": null,
-    "sessionEncryptedHaveKeyTooltip": null,
-    "sessionEncryptedNoKeyTooltip": null,
-    "sessionEncryptedWrongKeyTooltip": null,
-    "newEncryptedSessionWarningTitle": null,
-    "newEncryptedSessionWarningContent": null,
-    "sessionEncryptionError": null,
-    "passwordModalTitle": null,
-    "passwordModelIncorrect": null
+    "createEncryptedSession": "Sessão criptografada",
+    "sessionNotEncrypted": "Esta sessão não está criptografada.",
+    "sessionEncryptedHaveKeyTooltip": "Esta sessão é criptografada, e a chave é armazenada no seu navegador. Você pode abrir esta sessão sem precisar fornecer a senha novamente.",
+    "sessionEncryptedNoKeyTooltip": "Esta sessão é criptografada, e a chave não é armazenada no seu navegador. Você será solicitado pela chave de descriptografia ao abrir esta sessão.",
+    "sessionEncryptedWrongKeyTooltip": "Esta sessão é criptografada, e a chave armazenada não é a chave correta.",
+    "newEncryptedSessionWarningTitle": "Esta sessão é criptografada localmente",
+    "newEncryptedSessionWarningContent": "É muito importante para você salvar a URL completa (que contém a chave) em algum lugar seguro, ou pelo menos a chave de criptografia: {{key}}. Se você perder essa chave de criptografia, não há nada que possa ser feito para recuperar os dados.",
+    "sessionEncryptionError": "Esta sessão está criptografada, e parece que você não tem a chave de descriptografia armazenada localmente. Por favor, use o link original, incluindo a chave de descriptografia.",
+    "passwordModalTitle": "Sessão criptografada - Digite a senha",
+    "passwordModelIncorrect": "A chave de criptografia está incorreta."
   },
   "Private": {
-    "lockSuccessNotification": null,
-    "unlockSuccessNotification": null,
-    "lockButton": null,
-    "unlockButton": null,
-    "lockDescription": null,
-    "cancelButton": null,
-    "sessionLockedTitle": null,
-    "sessionLockedDescription": null,
-    "sessionNonProTitle": null,
-    "sessionNonProDescription": null,
-    "sessionIsPublic": null,
-    "sessionIsPrivate": null,
-    "sessionIsPrivateNoAccess": null
+    "lockSuccessNotification": "Sua sessão foi privada com sucesso. Nenhum novo participante pode participar.",
+    "unlockSuccessNotification": "Sua sessão foi publicada com sucesso. Qualquer pessoa pode entrar.",
+    "lockButton": "Tornar privado",
+    "unlockButton": "Tornar público",
+    "lockDescription": "Você está prestes a tornar a sessão privada. Apenas os participantes atuais (listados abaixo) terão acesso a esta sessão quando bloqueados.",
+    "cancelButton": "cancelar",
+    "sessionLockedTitle": "Esta sessão é privada.",
+    "sessionLockedDescription": "Por favor, peça ao seu moderador para desbloqueá-lo para que você possa entrar. Em seguida, atualize esta página.",
+    "sessionNonProTitle": "Esta sessão só é acessível a usuários Pro",
+    "sessionNonProDescription": "Esta sessão usa recursos apenas disponíveis para usuários Pro. Peça ao moderador ou titular da assinatura para lhe dar uma conta Pro.",
+    "sessionIsPublic": "Esta sessão é pública e acessível a qualquer um.",
+    "sessionIsPrivate": "Esta sessão é privada e você tem acesso.",
+    "sessionIsPrivateNoAccess": "Esta sessão é privada, mas você não tem acesso."
   },
   "TrialPrompt": {
-    "allowanceReachedTitle": null,
-    "allowanceReachedDescription": null,
-    "nearEndAllowanceTitle": null,
-    "nearEndAllowanceDescription": null,
-    "onTrialTitle": null,
-    "remainingTrialSentence": null,
-    "trialEndedTitle": null,
-    "trialEndedSentence": null,
-    "subscribeNow": null
+    "allowanceReachedTitle": "Você alcançou o seu subsídio gratuito",
+    "allowanceReachedDescription": "Para obter publicações ilimitadas, por favor, inscreva-se no Retrospeted Pro",
+    "nearEndAllowanceTitle": "Você está perto do fim da sua cota",
+    "nearEndAllowanceDescription": "Você tem cerca de {{quota}} publicações restantes",
+    "onTrialTitle": "Retrospected Pro - Teste",
+    "remainingTrialSentence": "Você tem {{remaining}} restantes na sua avaliação.",
+    "trialEndedTitle": "Seu Teste Retrospected Pro terminou",
+    "trialEndedSentence": "Assine hoje para recuperar o acesso aos recursos Pro.",
+    "subscribeNow": "Inscreva-se agora!"
   },
   "Chat": {
-    "writeAMessage": null
+    "writeAMessage": "Escreva uma mensagem aqui..."
   }
 }

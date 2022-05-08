@@ -4,8 +4,8 @@
     "logout": "Kijelentkezés",
     "leave": "Távozás",
     "summaryMode": "Összesített mód",
-    "account": null,
-    "adminPanel": null
+    "account": "Fiókom",
+    "adminPanel": "Adminisztrációs panel"
   },
   "LanguagePicker": {
     "header": "Válassz nyelvet"
@@ -14,121 +14,135 @@
     "hint": "Ha meg akarsz hívni másokat, másold ki és oszd meg velük az URL-t"
   },
   "Home": {
-    "welcome": null
+    "welcome": "Isten hozott, {{name}}"
   },
   "PreviousGame": {
-    "createdBy": null,
-    "posts": null,
-    "participants": null,
-    "votes": null,
-    "actions": null
+    "createdBy": "Készítette",
+    "posts_one": "hozzászólás",
+    "posts_other": "hozzászólások",
+    "participants_one": "résztvevő",
+    "participants_other": "résztvevők",
+    "votes_one": "szavazás",
+    "votes_other": "szavazatokat",
+    "actions_one": "akció",
+    "actions_other": "akciók"
   },
   "Column": {
-    "createGroupTooltip": null
+    "createGroupTooltip": "Hozzon létre egy csoportot a bejegyzések csoportosításához"
   },
   "Group": {
-    "emptyGroupTitle": "",
-    "emptyGroupContent": ""
+    "emptyGroupTitle": "Ez egy üres csoport",
+    "emptyGroupContent": "Helyezzen át egy bejegyzést ide a csoport kitöltéséhez"
   },
   "Post": {
-    "openExtra": null,
-    "closeExtra": null,
+    "openExtra": "További jellemzők",
+    "closeExtra": "Bezárás",
     "vote": "szavazat",
     "votes": "szavazat",
     "deleteButton": "törlés",
-    "setActionButton": null,
-    "setGiphyButton": null,
-    "noContent": "(This post has no content)",
-    "by": null,
-    "upVote": null,
-    "downVote": null,
-    "voteRemainingMultiple": null,
-    "voteRemainingOne": null,
-    "voteRemainingNone": null,
-    "toggleGiphyButton": null
+    "setActionButton": "Művelet beállítása",
+    "setGiphyButton": "Válasszon egy Giphy-képet",
+    "noContent": "(Ennek a bejegyzésnek nincs tartalma)",
+    "by": "által",
+    "upVote": "fel-szavazás",
+    "downVote": "le-szavazás",
+    "voteRemainingMultiple": "{{number}} {{type}}mp van hátra.",
+    "voteRemainingOne": "Már csak egy {{type}} van hátra, számítson rá!",
+    "voteRemainingNone": "Nem maradt {{type}}.",
+    "toggleGiphyButton": "Kapcsolja be a Giphy képet"
   },
   "Customize": {
-    "title": null,
-    "votingCategory": null,
-    "votingCategorySub": null,
-    "postCategory": null,
-    "postCategorySub": null,
-    "customTemplateCategory": null,
-    "customTemplateCategorySub": null,
-    "startButton": null,
-    "editButton": null,
-    "maxUpVotes": null,
-    "maxUpVotesHelp": null,
-    "maxDownVotes": null,
-    "maxDownVotesHelp": null,
-    "maxPosts": null,
-    "maxPostsHelp": null,
-    "allowSelfVoting": null,
-    "allowSelfVotingHelp": null,
-    "allowMultipleVotes": null,
-    "allowMultipleVotesHelp": null,
-    "allowActions": null,
-    "allowActionsHelp": null,
-    "allowAuthorVisible": null,
-    "allowAuthorVisibleHelp": null,
-    "newPostsFirst": null,
-    "newPostsFirstHelp": null,
-    "allowGiphy": null,
-    "allowGiphyHelp": null,
-    "allowGrouping": null,
-    "allowGroupingHelp": null,
-    "allowReordering": null,
-    "allowReorderingHelp": null,
-    "blurCards": null,
-    "blurCardsHelp": null,
-    "template": null,
-    "templateHelp": null,
-    "numberOfColumns": null,
-    "numberOfColumnsHelp": null,
-    "makeDefaultTemplate": null
+    "title": "A munkamenet testreszabása",
+    "votingCategory": "Szavazás",
+    "votingCategorySub": "Állítsd be a tetszésnyilvánításokra és a nemtetszésekre vonatkozó szabályokat",
+    "postCategory": "Hozzászólás beállításai",
+    "postCategorySub": "Állítsa be a szabályokat arra vonatkozóan, hogy a felhasználó mit tehet bejegyzés létrehozásakor vagy megtekintésekor",
+    "customTemplateCategory": "Oszlop sablon",
+    "customTemplateCategorySub": "Állítsa be az oszlopok számát és jellemzőit",
+    "startButton": "Indítsa el a munkamenetet",
+    "editButton": "Frissítés",
+    "maxUpVotes": "Max fel-szavazatok",
+    "maxUpVotesHelp": "Egy felhasználó által leadható „tetszik” szavazatok maximális száma",
+    "maxDownVotes": "Max le-szavazatok",
+    "maxDownVotesHelp": "A felhasználó által leadható „nem tetszik” szavazatok maximális száma",
+    "maxPosts": "Maximum hozzászólások felhasználónként",
+    "maxPostsHelp": "Egy felhasználó által munkamenetenként létrehozható bejegyzések maximális száma",
+    "allowSelfVoting": "Önszavazás engedélyezése",
+    "allowSelfVotingHelp": "Engedélyezi-e a felhasználónak, hogy szavazzon a saját bejegyzésére",
+    "allowMultipleVotes": "Több szavazat engedélyezése",
+    "allowMultipleVotesHelp": "Engedélyezi-e, hogy egy felhasználó többször szavazzon ugyanarra a bejegyzésre",
+    "allowActions": "Műveletek engedélyezése",
+    "allowActionsHelp": "Engedélyezi-e az „Action” (követés) mezőt az egyes bejegyzéseknél",
+    "allowAuthorVisible": "Szerző megjelenítése",
+    "allowAuthorVisibleHelp": "Jelenítse meg a bejegyzés szerzőjét magán a bejegyzésen.",
+    "newPostsFirst": "Először adj hozzá új bejegyzéseket",
+    "newPostsFirstHelp": "Az új bejegyzések az oszlop tetején jelennek meg",
+    "allowGiphy": "Engedélyezze a Giphyt",
+    "allowGiphyHelp": "Lehetővé teszi a felhasználók számára, hogy Giphy-képet állítsanak be egy bejegyzéshez",
+    "allowGrouping": "Csoportosítás engedélyezése",
+    "allowGroupingHelp": "Csoportok létrehozásának engedélyezése a bejegyzések csoportosításához",
+    "allowReordering": "Újrarendelés engedélyezése",
+    "allowReorderingHelp": "A bejegyzések átrendezésének engedélyezése fogd és vidd módszerrel",
+    "blurCards": "Kártyák elmosódása",
+    "blurCardsHelp": "A kártyák tartalma elmosódik, amíg a moderátor fel nem fedi a tartalmat",
+    "template": "Sablon",
+    "templateHelp": "Használjon előre meghatározott oszlopkészletet",
+    "numberOfColumns": "Oszlopok száma",
+    "numberOfColumnsHelp": "Állítsa be az oszlopok számát",
+    "makeDefaultTemplate": "Legyen ez az alapértelmezett sablonom"
   },
   "PostBoard": {
-    "customQuestion": null,
+    "customQuestion": "Egyéni oszlop",
     "notWellQuestion": "Mit lehetne jobban csinálni?",
     "wellQuestion": "Mit ment jól?",
     "ideasQuestion": "Van valami nagyszerű ötleted?",
-    "startQuestion": null,
-    "editButton": null,
-    "stopQuestion": null,
-    "continueQuestion": null,
-    "likedQuestion": null,
-    "lackedQuestion": null,
-    "learnedQuestion": null,
-    "longedForQuestion": null,
-    "anchorQuestion": null,
-    "boatQuestion": null,
-    "islandQuestion": null,
-    "windQuestion": null,
-    "rockQuestion": null,
-    "disconnected": null,
-    "reconnect": null,
-    "notLoggedIn": null,
-    "error": null,
-    "maxPostsReached": null,
-    "iAmDone": null,
-    "iAmNotDoneYet": null,
-    "userIsReady": null
+    "startQuestion": "Rajt",
+    "stopQuestion": "Állj meg",
+    "continueQuestion": "Folytatni",
+    "likedQuestion": "tetszett",
+    "lackedQuestion": "Hiányzik",
+    "learnedQuestion": "Tanult",
+    "longedForQuestion": "Vágyott",
+    "anchorQuestion": "Horgony",
+    "boatQuestion": "Hajó",
+    "islandQuestion": "sziget",
+    "windQuestion": "Szél",
+    "rockQuestion": "Szikla",
+    "disconnected": "Lekapcsolták az aktuális munkamenetről.",
+    "reconnect": "Csatlakozzon újra",
+    "notLoggedIn": "Nincs bejelentkezve. Ezt az ülést nézőként tekintheti meg, de a részvételhez be kell jelentkeznie.",
+    "error_action_unauthorised": "Ezt a műveletet nem hajthatja végre.",
+    "error_cannot_edit_group": "A csoport szerkesztése nem sikerült.",
+    "error_cannot_edit_post": "A bejegyzés szerkesztése nem sikerült.",
+    "error_cannot_get_session": "Nem sikerült lekérni a munkamenet adatait. Kérjük, töltse be újra az oldalt.",
+    "error_cannot_register_vote": "A szavazat regisztrálása nem sikerült.",
+    "error_cannot_save_group": "A létrehozott csoport nem menthető.",
+    "error_cannot_save_post": "Az általad létrehozott bejegyzést nem sikerült elmenteni.",
+    "error_cannot_delete_group": "A csoportot nem sikerült törölni",
+    "error_cannot_delete_post": "A bejegyzést nem sikerült törölni",
+    "error_cannot_rename_session": "A munkamenet átnevezése nem sikerült",
+    "error_cannot_save_columns": "Az oszlopok mentése nem sikerült",
+    "error_cannot_save_options": "A beállítások mentése nem sikerült",
+    "maxPostsReached": "Elérted a moderátor által beállított maximális bejegyzések számát.",
+    "iAmDone": "Kész vagyok!",
+    "iAmNotDoneYet": "Még nem végeztem...",
+    "userIsReady": "{{user}} kész!"
   },
   "GameMenu": {
-    "board": null,
-    "summary": null
+    "board": "Tábla",
+    "summary": "Összegzés"
   },
   "Template": {
-    "default": null,
-    "wellNotWell": null,
-    "startStopContinue": null,
-    "fourLs": null,
-    "sailboat": null
+    "default": "Alapértelmezett",
+    "wellNotWell": "Hát / Nem jól",
+    "startStopContinue": "Indítás / Leállítás / Folytatás",
+    "fourLs": "Négy Ls",
+    "sailboat": "Vitorlás"
   },
   "Clients": {
     "header": "Jelenleg itt van:",
-    "joined": null,
-    "left": null
+    "joined": "{{users}} csatlakozott.",
+    "left": "{{users}} maradt."
   },
   "Join": {
     "welcome": "Üdv, ez itt a Retrospected",
@@ -136,7 +150,7 @@
       "header": "Ülés létrehozása",
       "text": "Kattints ide a kezdéshez:",
       "button": "Új ülés indítása",
-      "customizeButton": null
+      "customizeButton": "Testreszab"
     },
     "optionsTab": {
       "header": "Haladó",
@@ -145,79 +159,85 @@
     },
     "previousTab": {
       "header": "Previous sessions",
-      "rejoinButton": "Rejoin"
+      "rejoinButton": "Csatlakozzon újra"
     }
   },
   "AnonymousLogin": {
     "namePlaceholder": "Hogy is hívnak? Kérlek írd ide a nevedet",
     "buttonLabel": "Kezdjük",
-    "header": "Login",
-    "anonymousAuthHeader": null,
-    "anonymousAuthDescription": null,
-    "authenticatingWith": null,
-    "or": null
+    "header": "Belépés",
+    "anonymousAuthHeader": "Névtelen bejelentkezés",
+    "anonymousAuthDescription": "Ezzel névtelen fiókot hoz létre. Egyes funkciók nem lesznek elérhetők.",
+    "authenticatingWith": "Hitelesítés a következővel:",
+    "or": "vagy"
   },
   "SocialMediaLogin": {
-    "header": null,
-    "info": null
+    "header": "OAuth",
+    "info": "Ez az Ön által választott harmadik fél szolgáltatót fogja használni az Ön hitelesítésére. Nincs jelszó tárolva."
   },
   "AuthCommon": {
-    "emailField": null,
-    "passwordField": null,
-    "nameField": null,
-    "passwordScoreWords": null
+    "emailField": "Email",
+    "passwordField": "Jelszó",
+    "nameField": "Az Ön neve (megjelenítési célból)",
+    "passwordScoreWords": [
+      "gyenge",
+      "gyenge",
+      "nem egészen",
+      "jó",
+      "erős"
+    ]
   },
   "AccountLogin": {
-    "header": null,
-    "loginButton": null,
-    "info": null,
-    "registerLink": null,
-    "forgotPasswordLink": null,
-    "errorEmailPasswordIncorrect": null
+    "header": "Jelszó",
+    "loginButton": "Belépés",
+    "info": "Jelentkezzen be e-mail címével és jelszavával.",
+    "registerLink": "Nem regisztrált? Kattints ide",
+    "forgotPasswordLink": "Elfelejtette a jelszavát?",
+    "errorEmailPasswordIncorrect": "A hitelesítési adatai hibásak."
   },
   "Register": {
-    "header": null,
-    "info": null,
-    "registerButton": null,
-    "errorAlreadyRegistered": null,
-    "errorGeneral": null,
-    "messageSuccess": null,
-    "errorInvalidEmail": null
+    "header": "Regisztráció",
+    "info": "Szerezzen magának egy Retrospected fiókot!",
+    "registerButton": "Regisztráció",
+    "errorAlreadyRegistered": "Ez az e-mail cím már regisztrálva van",
+    "errorGeneral": "Hiba történt a fiók létrehozása közben.",
+    "messageSuccess": "Köszönöm! Hamarosan e-mailt kell kapnia fiókja érvényesítéséhez.",
+    "errorInvalidEmail": "Kérlek létező email címet adj meg"
   },
   "ValidateAccount": {
-    "success": null,
-    "error": null,
-    "loading": null
+    "success": "Az e-mail-címét megfelelően ellenőriztük. Egy pillanat múlva bejelentkezem!",
+    "error": "Hiba történt az e-mail-cím érvényesítése során.",
+    "loading": "Ellenőrizzük e-mail-címét. Kérlek várj."
   },
   "ResetPassword": {
-    "doneMessage": null,
-    "header": null,
-    "resetButton": null,
-    "info": null,
-    "success": null,
-    "error": null,
-    "loading": null,
-    "resetInfo": null
+    "doneMessage": "Kész! Nézze meg az e-mailjeit, kapnia kell egy linket a jelszó visszaállításához.",
+    "header": "Jelszó visszaállítása",
+    "resetButton": "Jelszó visszaállítása",
+    "info": "Elfelejtette a jelszavát? Nem probléma. Írja be e-mail címét alább, és kap egy visszaállítási e-mail üzenetet.",
+    "success": "A jelszava frissítve lett. Egy pillanat múlva bejelentkezem!",
+    "error": "Hiba történt a jelszó frissítésekor.",
+    "loading": "Frissítjük jelszavát. Kérlek várj.",
+    "resetInfo": "Kérjük, adjon meg új jelszót"
   },
   "SummaryBoard": {
-    "noPosts": "There are no posts to display",
-    "copyAsMarkdown": null,
-    "copyAsRichText": null,
-    "copySuccessful": null
+    "noPosts": "Nincsenek megjeleníthető bejegyzések",
+    "copyAsMarkdown": "Másolja az összefoglalót Markdown néven",
+    "copyAsRichText": "Másolja ki az összefoglalót Rich Text formátumban",
+    "copySuccessful": "Sikeresen másolta az összefoglalót a vágólapra"
   },
   "SessionName": {
-    "defaultSessionName": "My Retrospective"
+    "defaultSessionName": "Retrospektívám"
   },
   "Invite": {
-    "inviteButton": "Invite",
+    "inviteButton": "Meghívás",
     "dialog": {
-      "title": "Invite people to your retrospective",
-      "text": "To invite people to your retrospected session, simply send them the following URL",
-      "copyButton": "Copy URL to Clipboard"
+      "title": "Hívj meg embereket a retrospektívedre",
+      "text": "Ha szeretne embereket meghívni az utólagos munkamenetre, egyszerűen küldje el nekik a következő URL-t",
+      "copyButton": "URL másolása a vágólapra"
     }
   },
   "Generic": {
-    "ok": "OK",
+    "ok": "rendben",
     "cancel": "Megszünteti"
   },
   "Actions": {
@@ -227,177 +247,177 @@
     "title": "Akció"
   },
   "DeleteSession": {
-    "header": null,
-    "firstLine": null,
-    "secondLine": null,
-    "yesImSure": null,
-    "cancel": null
+    "header": "\"{{name}}\" törlése?",
+    "firstLine": "A munkamenet törlése visszafordíthatatlan. Törli az összes bejegyzést, szavazatot, csoportot és magát a munkamenetet. Az adatok nem állíthatók vissza.",
+    "secondLine": "Biztosan törli ezt a munkamenetet és annak összes tartalmát?",
+    "yesImSure": "Igen biztos vagyok benne",
+    "cancel": "Nem, sajnálom, hibáztam"
   },
   "RevealCards": {
-    "buttonLabel": null,
-    "dialogTitle": null,
-    "dialogContent": null,
-    "confirmButton": null,
-    "cancelButton": null
+    "buttonLabel": "felfed",
+    "dialogTitle": "Mutasd fel az összes kártyát",
+    "dialogContent": "Ez mindenki számára felfedi az összes elmosódott kártyát. Ezt nem lehet visszacsinálni.",
+    "confirmButton": "Fedezzük fel!",
+    "cancelButton": "Nem köszönöm"
   },
   "AccountPage": {
-    "anonymousError": null,
+    "anonymousError": "Az anonim fiókok nem férhetnek hozzá a profiljukhoz (mert nincs ilyenük).",
     "details": {
-      "header": null,
-      "username": null,
-      "email": null,
-      "accountType": null
+      "header": "Az adataid",
+      "username": "Felhasználónév",
+      "email": "Email",
+      "accountType": "Fiók Típus"
     },
     "plan": {
-      "header": null,
-      "plan": null,
-      "youAreOwner": null,
-      "youAreMember": null
+      "header": "Az Ön terve",
+      "plan": "Terv",
+      "youAreOwner": "Az alábbi előfizetésen keresztül Ön ennek a csomagnak a tulajdonosa.",
+      "youAreMember": "Valaki más előfizetésén keresztül részt vesz ebben a tervben."
     },
     "subscription": {
-      "header": null,
-      "manageButton": null,
+      "header": "Az Ön előfizetése",
+      "manageButton": "Az előfizetésem kezelése",
       "membersEditor": {
-        "title": null,
-        "limitReached": null,
-        "info": null
+        "title": "Csapatod",
+        "limitReached": "Elérted az előfizetésed korlátját ({{limit}} felhasználó, téged is beleértve). Kérjük, távolítsa el a tagokat, vagy frissítsen korlátlan számú vállalati fiókra.",
+        "info": "Adjon hozzá e-mail-címeket alább, hogy Pro-fiókot biztosítson akár {{limit}} másik kollégának. Minden e-mail cím után nyomja meg az Enter billentyűt."
       }
     },
     "trial": {
-      "header": null,
-      "yourTrialWillExpireIn": null,
-      "subscribe": null
+      "header": "Az Ön próbatétele",
+      "yourTrialWillExpireIn": "A próbaidőszak {{date}}-val ér véget.",
+      "subscribe": "Iratkozz fel most"
     },
     "deleteAccount": {
-      "title": null,
-      "warning": null,
-      "deleteData": null,
+      "title": "GDPR",
+      "warning": "Jogod van ahhoz, hogy elfelejtsenek. Ennek ellenére legyen óvatos a fiók törlésekor. Ezt nem lehet visszacsinálni.",
+      "deleteData": "Törölje az adataimat",
       "modal": {
         "confirm": {
-          "title": null,
-          "description": null,
-          "confirmation": null,
-          "cancellation": null
+          "title": "Teljesen biztos vagy benne?",
+          "description": "Erre nincs visszaút.",
+          "confirmation": "Igen, törölni akarom az összes adatomat",
+          "cancellation": "Juttass ki innen"
         },
-        "subheader": null,
-        "deleteAccount": null,
-        "recommended": null,
+        "subheader": "Válassza ki, mit szeretne törölni",
+        "deleteAccount": "Törölje fiókját és az e-mailekhez kapcsolódó identitásokat.",
+        "recommended": "Ajánlott",
         "deleteSessions": {
-          "main": null,
-          "selected": null,
-          "unselected": null
+          "main": "Töröljük az Ön által létrehozott munkameneteket (retrospektívákat)?",
+          "selected": "Az Ön munkamenetei és minden adatuk, beleértve mások bejegyzéseit és szavazatait is, véglegesen törlődnek.",
+          "unselected": "A munkamenetei megmaradnak, és a szerzőjük névtelen felhasználó lesz."
         },
         "deletePosts": {
-          "main": null,
-          "selected": null,
-          "unselected": null
+          "main": "Töröljük az összes hozzászólást, amit írtál?",
+          "selected": "Bármely munkamenetben közzétett bejegyzéseid, valamint a hozzájuk kapcsolódó szavazatok és műveletek véglegesen törlődnek.",
+          "unselected": "A bejegyzéseid megmaradnak, de névtelen felhasználóhoz kapcsolódnak."
         },
         "deleteVotes": {
-          "main": null,
-          "selected": null,
-          "unselected": null
+          "main": "Töröljük is az összes szavazatát?",
+          "selected": "Az összes munkamenetben leadott szavazatai véglegesen törlődnek.",
+          "unselected": "A szavazatait megőrizzük, de névtelen felhasználóhoz kapcsoljuk őket."
         },
-        "deleteAccountButton": null,
-        "cancelButton": null
+        "deleteAccountButton": "FIÓK TÖRLÉSE",
+        "cancelButton": "Megszünteti"
       }
     }
   },
   "SubscribePage": {
-    "alertAlreadyPro": null,
-    "alertAlreadySubscribed": null,
+    "alertAlreadyPro": "Ön már Pro-felhasználó, ezért lehet, hogy nincs szüksége újabb előfizetésre.",
+    "alertAlreadySubscribed": "Már van előfizetése, ezért lehet, hogy nincs szüksége újabb előfizetésre.",
     "currency": {
-      "title": null,
-      "description": null,
-      "warning": null
+      "title": "Valuta",
+      "description": "Válassza ki azt a pénznemet, amellyel számlázni szeretne",
+      "warning": "Fiókja már {{currency}}használatára van beállítva, így a pénznemet többé nem módosíthatja."
     },
     "plan": {
-      "title": null,
-      "description": null
+      "title": "Terv",
+      "description": "Válassza ki az Ön használati esetének megfelelő tervet!"
     },
     "domain": {
-      "title": null,
-      "description": null,
-      "invalidDomain": null
+      "title": "Tartomány",
+      "description": "Korlátlan előfizetése egy adott domainre vonatkozik. Az e-mail domain minden felhasználója automatikusan Pro-felhasználóvá válik.",
+      "invalidDomain": "Adjon meg egy érvényes domaint. A domain nem lehet ingyenes vagy eldobható e-mail domain."
     },
     "subscribe": {
-      "title": null,
-      "description": null,
-      "cannotRegisterWithAnon": null,
-      "checkout": null
+      "title": "Pénztár",
+      "description": "A fizetésért átirányítjuk partnerünkhöz, a Stripe-hoz",
+      "cannotRegisterWithAnon": "A folytatáshoz be kell jelentkeznie OAuth- vagy Jelszó-fiókkal.",
+      "checkout": "Pénztár"
     }
   },
   "SubscribeModal": {
-    "title": null,
-    "header": null,
-    "description": null,
+    "title": "Pro előfizetés",
+    "header": "Retrospected Pro",
+    "description": "Védje meg cége adatait a Retrospected Pro szolgáltatásra való előfizetéssel. A Retrospected Pro segítségével a következő funkciókat és még sok mást érhet el:",
     "features": {
       "encryptedSession": {
-        "title": null,
-        "description": null
+        "title": "Titkosított munkamenetek",
+        "description": "Adatai titkosítva vannak a böngészőjében, így a Retrospected szerveren lehetetlen a visszafejtés."
       },
       "privateSessions": {
-        "title": null,
-        "description": null
+        "title": "Magánfoglalkozások",
+        "description": "Győződjön meg arról, hogy csak arra jogosult személyek férhetnek hozzá a munkamenetéhez."
       },
       "unlimitedPosts": {
-        "title": null,
-        "description": null
+        "title": "Korlátlan számú bejegyzés",
+        "description": "Pro-előfizetéssel korlátlan számú bejegyzést kaphat."
       }
     },
-    "subscribeButton": null,
-    "payButton": null,
-    "cancelButton": null,
-    "startTrial": null
+    "subscribeButton": "Iratkozz fel",
+    "payButton": "Válassza ki",
+    "cancelButton": "Megszünteti",
+    "startTrial": "30 napos próbaverzió"
   },
   "Products": {
-    "team": null,
-    "unlimited": null,
-    "self-hosted": null,
-    "users": null,
-    "unlimited_seats": null,
-    "month": null,
-    "year": null,
-    "wantToPayYearly": null
+    "team": "Kisebb csapatok számára tökéletes, akár 20 kollégát is kiválaszthat, akiket Pro-fiókra frissítenek.",
+    "unlimited": "Ha Ön egy nagyobb cég, akkor korlátlan számú Pro-fiókot élvezhet.",
+    "self-hosted": "Helyszíni visszatekintés, egyszeri díj és korlátlan frissítés. Örökre teljes mértékben kézben tarthatja adatait.",
+    "users": "{{users}} felhasználó",
+    "unlimited_seats": "Korlátlan",
+    "month": "hónap",
+    "year": "év",
+    "wantToPayYearly": "Évente szeretnék fizetni (12 havonta), és évente egy hónapot ingyen kapok!"
   },
   "Encryption": {
-    "createEncryptedSession": null,
-    "sessionNotEncrypted": null,
-    "sessionEncryptedHaveKeyTooltip": null,
-    "sessionEncryptedNoKeyTooltip": null,
-    "sessionEncryptedWrongKeyTooltip": null,
-    "newEncryptedSessionWarningTitle": null,
-    "newEncryptedSessionWarningContent": null,
-    "sessionEncryptionError": null,
-    "passwordModalTitle": null,
-    "passwordModelIncorrect": null
+    "createEncryptedSession": "Titkosított munkamenet",
+    "sessionNotEncrypted": "Ez a munkamenet nincs titkosítva.",
+    "sessionEncryptedHaveKeyTooltip": "Ez a munkamenet titkosított, és a kulcsot a böngésző tárolja. Ezt a munkamenetet a jelszó újbóli megadása nélkül is megnyithatja.",
+    "sessionEncryptedNoKeyTooltip": "Ez a munkamenet titkosított, és a kulcsot nem tárolja a böngésző. A munkamenet megnyitásakor a rendszer kérni fogja a visszafejtési kulcsot.",
+    "sessionEncryptedWrongKeyTooltip": "Ez a munkamenet titkosított, és a tárolt kulcs nem a megfelelő kulcs.",
+    "newEncryptedSessionWarningTitle": "Ez a munkamenet helyileg titkosított",
+    "newEncryptedSessionWarningContent": "Nagyon fontos, hogy a teljes URL-t (ami tartalmazza a kulcsot) biztonságos helyre mentse, vagy legalább a titkosítási kulcsot: {{key}}. Ha elveszíti ezt a titkosítási kulcsot, nincs mit tenni az adatok visszaállítása érdekében.",
+    "sessionEncryptionError": "Ez a munkamenet titkosított, és úgy tűnik, hogy nincs helyben tárolva a visszafejtési kulcs. Kérjük, használja az eredeti hivatkozást, beleértve a visszafejtő kulcsot is.",
+    "passwordModalTitle": "Titkosított munkamenet - Adja meg a jelszót",
+    "passwordModelIncorrect": "A titkosítási kulcs helytelen."
   },
   "Private": {
-    "lockSuccessNotification": null,
-    "unlockSuccessNotification": null,
-    "lockButton": null,
-    "unlockButton": null,
-    "lockDescription": null,
-    "cancelButton": null,
-    "sessionLockedTitle": null,
-    "sessionLockedDescription": null,
-    "sessionNonProTitle": null,
-    "sessionNonProDescription": null,
-    "sessionIsPublic": null,
-    "sessionIsPrivate": null,
-    "sessionIsPrivateNoAccess": null
+    "lockSuccessNotification": "A munkamenetet sikeresen priváttá tettük. Új résztvevők nem csatlakozhatnak.",
+    "unlockSuccessNotification": "A munkamenetét sikeresen nyilvánosságra hoztuk. Bárki csatlakozhat.",
+    "lockButton": "Tedd priváttá",
+    "unlockButton": "Nyilvánosságra hoz",
+    "lockDescription": "A munkamenet priváttá tételére készül. Csak a jelenlegi résztvevők (az alábbiakban felsorolva) férhetnek hozzá ehhez a munkamenethez, miután lezárták.",
+    "cancelButton": "Megszünteti",
+    "sessionLockedTitle": "Ez a munkamenet privát.",
+    "sessionLockedDescription": "Kérd meg a moderátort, hogy oldja fel, hogy csatlakozhasson. Ezután frissítse ezt az oldalt.",
+    "sessionNonProTitle": "Ez a munkamenet csak a Pro felhasználók számára érhető el",
+    "sessionNonProDescription": "Ez a munkamenet csak a Pro felhasználók számára elérhető funkciókat használja. Kérje meg a moderátort vagy az előfizetés tulajdonosát, hogy adjon Pro-fiókot.",
+    "sessionIsPublic": "Ez az ülés nyilvános és bárki számára elérhető.",
+    "sessionIsPrivate": "Ez a munkamenet privát, és Önnek van hozzáférése.",
+    "sessionIsPrivateNoAccess": "Ez a munkamenet privát, de nincs hozzáférése."
   },
   "TrialPrompt": {
-    "allowanceReachedTitle": null,
-    "allowanceReachedDescription": null,
-    "nearEndAllowanceTitle": null,
-    "nearEndAllowanceDescription": null,
-    "onTrialTitle": null,
-    "remainingTrialSentence": null,
-    "trialEndedTitle": null,
-    "trialEndedSentence": null,
-    "subscribeNow": null
+    "allowanceReachedTitle": "Elérte ingyenes juttatását",
+    "allowanceReachedDescription": "Ha korlátlan számú bejegyzést szeretne elérni, kérjük, iratkozzon fel a Retrospected Pro szolgáltatásra",
+    "nearEndAllowanceTitle": "A kvóta végéhez közeledik",
+    "nearEndAllowanceDescription": "Körülbelül {{quota}} bejegyzésed maradt",
+    "onTrialTitle": "Retrospected Pro – próbaverzió",
+    "remainingTrialSentence": "{{remaining}} maradt a próbaidőből.",
+    "trialEndedTitle": "A Retrospected Pro próbaverziója véget ért",
+    "trialEndedSentence": "Iratkozzon fel még ma, hogy visszaszerezze a hozzáférést a Pro funkciókhoz.",
+    "subscribeNow": "Iratkozz fel most!"
   },
   "Chat": {
-    "writeAMessage": null
+    "writeAMessage": "Írj üzenetet ide..."
   }
 }

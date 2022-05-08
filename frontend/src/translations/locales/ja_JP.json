@@ -4,8 +4,8 @@
     "logout": "ログアウト",
     "leave": "退室",
     "summaryMode": "要約モード",
-    "account": null,
-    "adminPanel": null
+    "account": "マイアカウント",
+    "adminPanel": "管理パネル"
   },
   "LanguagePicker": {
     "header": "言語を選択"
@@ -14,121 +14,135 @@
     "hint": "URLを共有すれば新たな参加者を本セッションに招待できます"
   },
   "Home": {
-    "welcome": null
+    "welcome": "ようこそ、 {{name}}"
   },
   "PreviousGame": {
-    "createdBy": null,
-    "posts": null,
-    "participants": null,
-    "votes": null,
-    "actions": null
+    "createdBy": "作成者:",
+    "posts_one": "投稿",
+    "posts_other": "投稿",
+    "participants_one": "参加者",
+    "participants_other": "参加者",
+    "votes_one": "投票",
+    "votes_other": "投票",
+    "actions_one": "アクション",
+    "actions_other": "アクション"
   },
   "Column": {
-    "createGroupTooltip": null
+    "createGroupTooltip": "一緒に投稿をグループ化するグループを作成"
   },
   "Group": {
-    "emptyGroupTitle": "",
-    "emptyGroupContent": ""
+    "emptyGroupTitle": "これは空のグループです",
+    "emptyGroupContent": "このグループを埋めるには、ここに投稿を移動してください"
   },
   "Post": {
-    "openExtra": null,
-    "closeExtra": null,
+    "openExtra": "その他の機能",
+    "closeExtra": "閉じる",
     "vote": "投票",
     "votes": "表決",
     "deleteButton": "削除",
-    "setActionButton": null,
-    "setGiphyButton": null,
+    "setActionButton": "アクションを設定",
+    "setGiphyButton": "Giphy画像を選択",
     "noContent": "(項目が空です)",
-    "by": null,
-    "upVote": null,
-    "downVote": null,
-    "voteRemainingMultiple": null,
-    "voteRemainingOne": null,
-    "voteRemainingNone": null,
-    "toggleGiphyButton": null
+    "by": "作成者:",
+    "upVote": "up-vote",
+    "downVote": "downvote",
+    "voteRemainingMultiple": "残り {{number}} {{type}}秒です。",
+    "voteRemainingOne": "残り {{type}} は1つです。カウントしてください！",
+    "voteRemainingNone": "残り {{type}} はありません。",
+    "toggleGiphyButton": "Giphy画像の切り替え"
   },
   "Customize": {
-    "title": null,
-    "votingCategory": null,
-    "votingCategorySub": null,
-    "postCategory": null,
-    "postCategorySub": null,
-    "customTemplateCategory": null,
-    "customTemplateCategorySub": null,
-    "startButton": null,
-    "editButton": null,
-    "maxUpVotes": null,
-    "maxUpVotesHelp": null,
-    "maxDownVotes": null,
-    "maxDownVotesHelp": null,
-    "maxPosts": null,
-    "maxPostsHelp": null,
-    "allowSelfVoting": null,
-    "allowSelfVotingHelp": null,
-    "allowMultipleVotes": null,
-    "allowMultipleVotesHelp": null,
-    "allowActions": null,
-    "allowActionsHelp": null,
-    "allowAuthorVisible": null,
-    "allowAuthorVisibleHelp": null,
-    "newPostsFirst": null,
-    "newPostsFirstHelp": null,
-    "allowGiphy": null,
-    "allowGiphyHelp": null,
-    "allowGrouping": null,
-    "allowGroupingHelp": null,
-    "allowReordering": null,
-    "allowReorderingHelp": null,
-    "blurCards": null,
-    "blurCardsHelp": null,
-    "template": null,
-    "templateHelp": null,
-    "numberOfColumns": null,
-    "numberOfColumnsHelp": null,
-    "makeDefaultTemplate": null
+    "title": "セッションをカスタマイズ",
+    "votingCategory": "投票",
+    "votingCategorySub": "「いいね」と「嫌い」に関するルールを設定",
+    "postCategory": "投稿設定",
+    "postCategorySub": "投稿を作成または表示する際にユーザができることに関するルールを設定します",
+    "customTemplateCategory": "列テンプレート",
+    "customTemplateCategorySub": "列数とその特性を設定します",
+    "startButton": "セッションを開始",
+    "editButton": "更新",
+    "maxUpVotes": "最大投票数",
+    "maxUpVotesHelp": "Maximum number of 'likes' vote which user is allowed to cast.",
+    "maxDownVotes": "投票の最大数",
+    "maxDownVotesHelp": "ユーザーがキャストできる「嫌い」票の最大数",
+    "maxPosts": "ユーザーあたりの最大投稿数",
+    "maxPostsHelp": "Maximum number of posts a user can create per session",
+    "allowSelfVoting": "自己投票を許可する",
+    "allowSelfVotingHelp": "ユーザーが自分の投稿に投票できるようにするかどうか",
+    "allowMultipleVotes": "複数の投票を許可する",
+    "allowMultipleVotesHelp": "ユーザーが同じ投稿に複数回投票できるようにするか",
+    "allowActions": "アクションを許可する",
+    "allowActionsHelp": "各投稿の「アクション」フィールドを許可するかどうか",
+    "allowAuthorVisible": "投稿者を表示",
+    "allowAuthorVisibleHelp": "投稿者を投稿自体に表示します。",
+    "newPostsFirst": "新しい投稿を先に追加",
+    "newPostsFirstHelp": "新しい投稿が列の上部に追加されます",
+    "allowGiphy": "Giphyを許可する",
+    "allowGiphyHelp": "ユーザーが投稿に対してGiphy画像を設定できるようにする",
+    "allowGrouping": "グループ化を許可",
+    "allowGroupingHelp": "投稿をグループ化するグループの作成を許可する",
+    "allowReordering": "並べ替えを許可",
+    "allowReorderingHelp": "ドラッグ＆ドロップで投稿の並べ替えを許可する",
+    "blurCards": "ぼかしカード",
+    "blurCardsHelp": "モデレーターがコンテンツを表示するまでカードの内容がぼかしています",
+    "template": "テンプレート",
+    "templateHelp": "あらかじめ定義された列のセットを使用",
+    "numberOfColumns": "列数",
+    "numberOfColumnsHelp": "列数を設定",
+    "makeDefaultTemplate": "これをデフォルトのテンプレートにする"
   },
   "PostBoard": {
-    "customQuestion": null,
+    "customQuestion": "カスタム列",
     "notWellQuestion": "改善できること",
     "wellQuestion": "良かったこと",
     "ideasQuestion": "共有したいアイディア",
-    "startQuestion": null,
-    "editButton": null,
-    "stopQuestion": null,
-    "continueQuestion": null,
-    "likedQuestion": null,
-    "lackedQuestion": null,
-    "learnedQuestion": null,
-    "longedForQuestion": null,
-    "anchorQuestion": null,
-    "boatQuestion": null,
-    "islandQuestion": null,
-    "windQuestion": null,
-    "rockQuestion": null,
-    "disconnected": null,
-    "reconnect": null,
-    "notLoggedIn": null,
-    "error": null,
-    "maxPostsReached": null,
-    "iAmDone": null,
-    "iAmNotDoneYet": null,
-    "userIsReady": null
+    "startQuestion": "開始",
+    "stopQuestion": "停止",
+    "continueQuestion": "続ける",
+    "likedQuestion": "いいね！",
+    "lackedQuestion": "不足しています",
+    "learnedQuestion": "学びました",
+    "longedForQuestion": "Longed For",
+    "anchorQuestion": "アンカー",
+    "boatQuestion": "ボート",
+    "islandQuestion": "島",
+    "windQuestion": "風",
+    "rockQuestion": "岩",
+    "disconnected": "現在のセッションから切断されました。",
+    "reconnect": "再接続",
+    "notLoggedIn": "ログインしていません。このセッションは観戦者として表示できますが、参加するにはログインする必要があります。",
+    "error_action_unauthorised": "この操作を実行する権限がありません。",
+    "error_cannot_edit_group": "グループの編集に失敗しました。",
+    "error_cannot_edit_post": "投稿の編集に失敗しました。",
+    "error_cannot_get_session": "セッションデータを取得できませんでした。ページを再読み込みしてください。",
+    "error_cannot_register_vote": "投票は正常に登録されませんでした。",
+    "error_cannot_save_group": "作成したグループを保存できませんでした。",
+    "error_cannot_save_post": "作成した投稿を保存できませんでした。",
+    "error_cannot_delete_group": "グループを削除できませんでした",
+    "error_cannot_delete_post": "投稿を削除できませんでした",
+    "error_cannot_rename_session": "セッションの名前を変更できませんでした",
+    "error_cannot_save_columns": "列の保存に失敗しました",
+    "error_cannot_save_options": "オプションの保存に失敗しました",
+    "maxPostsReached": "モデレーターが設定した投稿の最大数に達しました。",
+    "iAmDone": "終わりました！",
+    "iAmNotDoneYet": "まだ完了していません...",
+    "userIsReady": "{{user}} の準備ができました！"
   },
   "GameMenu": {
-    "board": null,
-    "summary": null
+    "board": "ボード",
+    "summary": "Summary"
   },
   "Template": {
-    "default": null,
-    "wellNotWell": null,
-    "startStopContinue": null,
-    "fourLs": null,
-    "sailboat": null
+    "default": "デフォルト",
+    "wellNotWell": "よくない/よくない",
+    "startStopContinue": "開始 / 停止 / 続ける",
+    "fourLs": "4 Ls",
+    "sailboat": "帆船"
   },
   "Clients": {
     "header": "現在の参加者",
-    "joined": null,
-    "left": null
+    "joined": "{{users}} が参加しました。",
+    "left": "{{users}} が残りました。"
   },
   "Join": {
     "welcome": "Retrospectedへようこそ",
@@ -136,7 +150,7 @@
       "header": "作成",
       "text": "セッションを作成してレトロスペクティブをはじめる",
       "button": "新しいセッションを作成する",
-      "customizeButton": null
+      "customizeButton": "カスタマイズ"
     },
     "optionsTab": {
       "header": "設定",
@@ -151,59 +165,65 @@
   "AnonymousLogin": {
     "namePlaceholder": "名前を入力",
     "buttonLabel": "スタート",
-    "header": "Login",
-    "anonymousAuthHeader": null,
-    "anonymousAuthDescription": null,
-    "authenticatingWith": null,
-    "or": null
+    "header": "ログイン",
+    "anonymousAuthHeader": "匿名でログイン",
+    "anonymousAuthDescription": "これは匿名アカウントを作成します。いくつかの機能は利用できません。",
+    "authenticatingWith": "認証中",
+    "or": "または"
   },
   "SocialMediaLogin": {
-    "header": null,
-    "info": null
+    "header": "OAuth",
+    "info": "認証を選択した第三者プロバイダーを使用します。パスワードは保存されません。"
   },
   "AuthCommon": {
-    "emailField": null,
-    "passwordField": null,
-    "nameField": null,
-    "passwordScoreWords": null
+    "emailField": "電子メール",
+    "passwordField": "パスワード",
+    "nameField": "あなたの名前 (表示目的のため)",
+    "passwordScoreWords": [
+      "弱い",
+      "弱い",
+      "そうではありません",
+      "良い",
+      "強い"
+    ]
   },
   "AccountLogin": {
-    "header": null,
-    "loginButton": null,
-    "info": null,
-    "registerLink": null,
-    "forgotPasswordLink": null,
-    "errorEmailPasswordIncorrect": null
+    "header": "パスワード",
+    "loginButton": "ログイン",
+    "info": "メールアドレスとパスワードでログインします。",
+    "registerLink": "登録されていませんか？ここをクリックしてください",
+    "forgotPasswordLink": "パスワードをお忘れですか？",
+    "errorEmailPasswordIncorrect": "資格情報が正しくありません。"
   },
   "Register": {
-    "header": null,
-    "info": null,
-    "registerButton": null,
-    "errorAlreadyRegistered": null,
-    "errorGeneral": null,
-    "messageSuccess": null,
-    "errorInvalidEmail": null
+    "header": "登録",
+    "info": "レトロスペクティブなアカウントを手に入れよう！",
+    "registerButton": "登録",
+    "errorAlreadyRegistered": "このメールアドレスは既に登録されています",
+    "errorGeneral": "アカウントの作成中にエラーが発生しました。",
+    "messageSuccess": "ありがとうございます！あなたのアカウントを認証するために間もなくメールが届きます。",
+    "errorInvalidEmail": "有効なメールアドレスを入力してください"
   },
   "ValidateAccount": {
-    "success": null,
-    "error": null,
-    "loading": null
+    "success": "あなたのメールアドレスは正しく認証されました。すぐにログインします！",
+    "error": "メールアドレスの検証中にエラーが発生しました。",
+    "loading": "メールアドレスを認証中です。しばらくお待ちください。"
   },
   "ResetPassword": {
-    "doneMessage": null,
-    "header": null,
-    "resetButton": null,
-    "info": null,
-    "success": null,
-    "error": null,
-    "loading": null,
-    "resetInfo": null
+    "doneMessage": "完了しました！メールを確認してください。パスワードをリセットするためのリンクが表示されます。",
+    "header": "パスワードのリセット",
+    "resetButton": "パスワードのリセット",
+    "info": "パスワードをお忘れですか？問題ありません。下にメールアドレスを入力すると、リセットのメールが表示されます。",
+    "success": "パスワードが更新されました。すぐにログインします！",
+    "error": "パスワードの更新中にエラーが発生しました。",
+    "loading": "パスワードを更新中です。しばらくお待ちください。",
+    "resetInfo": "新しいパスワードを入力してください"
   },
   "SummaryBoard": {
     "noPosts": "表示する項目がありません",
-    "copyAsMarkdown": null,
-    "copyAsRichText": null,
-    "copySuccessful": null
+    "copyAsMarkdown": "概要をマークダウンとしてコピー",
+    "copyAsRichText": "要約をリッチテキストとしてコピー",
+    "copySuccessful": "クリップボードにサマリーをコピーしました"
   },
   "SessionName": {
     "defaultSessionName": "新しいレトロスペクティブ"
@@ -227,177 +247,177 @@
     "title": "アクション"
   },
   "DeleteSession": {
-    "header": null,
-    "firstLine": null,
-    "secondLine": null,
-    "yesImSure": null,
-    "cancel": null
+    "header": "'{{name}}' を削除していますか?",
+    "firstLine": "セッションの削除は元に戻すことができません。すべての投稿、投票、グループ、およびセッション自体を削除します。データは復元できません。",
+    "secondLine": "このセッションとすべてのコンテンツを削除してもよろしいですか？",
+    "yesImSure": "はい、確信しています",
+    "cancel": "いいえ、申し訳ありませんが、間違いを犯しました"
   },
   "RevealCards": {
-    "buttonLabel": null,
-    "dialogTitle": null,
-    "dialogContent": null,
-    "confirmButton": null,
-    "cancelButton": null
+    "buttonLabel": "表示する",
+    "dialogTitle": "すべてのカードを表示",
+    "dialogContent": "すべてのぼやけたカードが表示されます。元に戻すことはできません。",
+    "confirmButton": "明らかにしましょう！",
+    "cancelButton": "いいえ結構です"
   },
   "AccountPage": {
-    "anonymousError": null,
+    "anonymousError": "匿名のアカウントはプロフィールへのアクセス権を持つことはできません（そのアカウントがないので）",
     "details": {
-      "header": null,
-      "username": null,
-      "email": null,
-      "accountType": null
+      "header": "詳細",
+      "username": "ユーザー名",
+      "email": "Eメールアドレス",
+      "accountType": "アカウントの種類"
     },
     "plan": {
-      "header": null,
-      "plan": null,
-      "youAreOwner": null,
-      "youAreMember": null
+      "header": "あなたのプラン",
+      "plan": "プラン",
+      "youAreOwner": "あなたは以下のサブスクリプションを通じて、このプランの所有者です。",
+      "youAreMember": "あなたは他人のサブスクリプションを通じてこのプランにいます。"
     },
     "subscription": {
-      "header": null,
-      "manageButton": null,
+      "header": "あなたのサブスクリプション",
+      "manageButton": "サブスクリプションの管理",
       "membersEditor": {
-        "title": null,
-        "limitReached": null,
-        "info": null
+        "title": "あなたのチーム",
+        "limitReached": "サブスクリプションの上限に達しました（自分を含む{{limit}} ユーザー）。メンバーを削除するか、無制限の会社アカウントにアップグレードしてください。",
+        "info": "Proアカウントに他の {{limit}} 人の同僚を許可するには、以下のメールを追加してください。各メールアドレスの後にEnterを押します。"
       }
     },
     "trial": {
-      "header": null,
-      "yourTrialWillExpireIn": null,
-      "subscribe": null
+      "header": "あなたのトライアル",
+      "yourTrialWillExpireIn": "試用期間は {{date}}で終了します。",
+      "subscribe": "今すぐ購読する"
     },
     "deleteAccount": {
-      "title": null,
-      "warning": null,
-      "deleteData": null,
+      "title": "GDPR",
+      "warning": "あなたには忘れられる権利があります。アカウントを削除する際は注意してください。元に戻すことはできません。",
+      "deleteData": "データを削除する",
       "modal": {
         "confirm": {
-          "title": null,
-          "description": null,
-          "confirmation": null,
-          "cancellation": null
+          "title": "本当によろしいですか？",
+          "description": "これには後戻りはできない。",
+          "confirmation": "はい、すべてのデータを削除します",
+          "cancellation": "ここから出してください"
         },
-        "subheader": null,
-        "deleteAccount": null,
-        "recommended": null,
+        "subheader": "削除するものを選択してください",
+        "deleteAccount": "アカウントとメールにリンクされているIDを削除します。",
+        "recommended": "Recommended",
         "deleteSessions": {
-          "main": null,
-          "selected": null,
-          "unselected": null
+          "main": "作成したセッション(遡及)を削除しますか?",
+          "selected": "セッションと他の人の投稿や投票を含むすべてのデータは完全に削除されます。",
+          "unselected": "セッションは保持され、その著者は匿名ユーザーになります。"
         },
         "deletePosts": {
-          "main": null,
-          "selected": null,
-          "unselected": null
+          "main": "投稿したすべての投稿を削除しますか？",
+          "selected": "投稿、セッション、および関連する投票およびアクションは完全に削除されます。",
+          "unselected": "あなたの投稿は保持されますが、匿名ユーザーに関連付けられます。"
         },
         "deleteVotes": {
-          "main": null,
-          "selected": null,
-          "unselected": null
+          "main": "すべての投票も削除しますか？",
+          "selected": "投票はすべてのセッションで完全に削除されます。",
+          "unselected": "投票は保持されますが、匿名ユーザーに関連付けられます。"
         },
-        "deleteAccountButton": null,
-        "cancelButton": null
+        "deleteAccountButton": "アカウントを削除する",
+        "cancelButton": "キャンセル"
       }
     }
   },
   "SubscribePage": {
-    "alertAlreadyPro": null,
-    "alertAlreadySubscribed": null,
+    "alertAlreadyPro": "あなたはすでにProユーザーなので、別のサブスクリプションは必要ないかもしれません。",
+    "alertAlreadySubscribed": "既にサブスクリプションがありますので、別のサブスクリプションは必要ないかもしれません。",
     "currency": {
-      "title": null,
-      "description": null,
-      "warning": null
+      "title": "通貨",
+      "description": "請求先の通貨を選択してください",
+      "warning": "あなたのアカウントは既に {{currency}}を使用するように設定されているため、通貨を変更することはできません。"
     },
     "plan": {
-      "title": null,
-      "description": null
+      "title": "プラン",
+      "description": "あなたのユースケースに合ったプランを選択してください！"
     },
     "domain": {
-      "title": null,
-      "description": null,
-      "invalidDomain": null
+      "title": "ドメイン",
+      "description": "無制限のサブスクリプションは、特定のドメインに適用されます。このメールドメインを持つすべてのユーザーは、自動的にプロユーザーになります。",
+      "invalidDomain": "有効なドメインを入力してください。ドメインは無料または使い捨てのメールドメインにすることはできません。"
     },
     "subscribe": {
-      "title": null,
-      "description": null,
-      "cannotRegisterWithAnon": null,
-      "checkout": null
+      "title": "チェックアウト",
+      "description": "支払いのために、パートナーのStripeにリダイレクトされます。",
+      "cannotRegisterWithAnon": "続行するには、OAuth アカウントまたはパスワードアカウントでログインする必要があります。",
+      "checkout": "チェックアウト"
     }
   },
   "SubscribeModal": {
-    "title": null,
-    "header": null,
-    "description": null,
+    "title": "Proサブスクリプション",
+    "header": "Retrospected Pro",
+    "description": "Retrospected Proに登録することで、会社のデータを保護します。Retrospected Proでは、以下の機能を利用できます。",
     "features": {
       "encryptedSession": {
-        "title": null,
-        "description": null
+        "title": "暗号化されたセッション",
+        "description": "あなたのデータはブラウザで暗号化されているため、Retrospectedサーバーでは復号できません。"
       },
       "privateSessions": {
-        "title": null,
-        "description": null
+        "title": "プライベートセッション",
+        "description": "承認された人だけがセッションにアクセスできることを確認してください。"
       },
       "unlimitedPosts": {
-        "title": null,
-        "description": null
+        "title": "無制限の投稿",
+        "description": "Proサブスクリプションでは、無制限の投稿を取得します。"
       }
     },
-    "subscribeButton": null,
-    "payButton": null,
-    "cancelButton": null,
-    "startTrial": null
+    "subscribeButton": "購読する",
+    "payButton": "選択",
+    "cancelButton": "キャンセル",
+    "startTrial": "30日間のトライアル"
   },
   "Products": {
-    "team": null,
-    "unlimited": null,
-    "self-hosted": null,
-    "users": null,
-    "unlimited_seats": null,
-    "month": null,
-    "year": null,
-    "wantToPayYearly": null
+    "team": "小規模なチームに最適な場合は、Proアカウントにアップグレードされる最大20人の同僚を選択できます。",
+    "unlimited": "あなたがより大きな会社であれば、あなたは無制限のProアカウントを楽しむことができます。",
+    "self-hosted": "オンプレミス、一回限りの料金、無制限のアップデートで、常にデータを完全に制御し続けましょう。",
+    "users": "{{users}} ユーザー",
+    "unlimited_seats": "無制限です",
+    "month": "月",
+    "year": "年",
+    "wantToPayYearly": "私は毎年(12ヶ月ごと)を支払い、毎年1ヶ月無料にしたいと思います!"
   },
   "Encryption": {
-    "createEncryptedSession": null,
-    "sessionNotEncrypted": null,
-    "sessionEncryptedHaveKeyTooltip": null,
-    "sessionEncryptedNoKeyTooltip": null,
-    "sessionEncryptedWrongKeyTooltip": null,
-    "newEncryptedSessionWarningTitle": null,
-    "newEncryptedSessionWarningContent": null,
-    "sessionEncryptionError": null,
-    "passwordModalTitle": null,
-    "passwordModelIncorrect": null
+    "createEncryptedSession": "暗号化セッション",
+    "sessionNotEncrypted": "このセッションは暗号化されていません。",
+    "sessionEncryptedHaveKeyTooltip": "このセッションは暗号化されており、キーはブラウザに保存されます。再度パスワードを入力することなく、このセッションを開くことができます。",
+    "sessionEncryptedNoKeyTooltip": "このセッションは暗号化されており、キーはブラウザに保存されていません。このセッションを開くときに復号キーを求められます。",
+    "sessionEncryptedWrongKeyTooltip": "このセッションは暗号化されており、保存したキーは正しいキーではありません。",
+    "newEncryptedSessionWarningTitle": "このセッションはローカルで暗号化されています",
+    "newEncryptedSessionWarningContent": "完全な URL (キーを含む) を安全な場所に保存することは非常に重要です。 または、暗号化キー: {{key}}。 この暗号化キーを失った場合、データを取得するためにできることは何もありません。",
+    "sessionEncryptionError": "このセッションは暗号化されており、ローカルに復号キーが保存されていないようです。復号キーを含む元のリンクを使用してください。",
+    "passwordModalTitle": "暗号化されたセッション - パスワードを入力",
+    "passwordModelIncorrect": "暗号化キーが正しくありません。"
   },
   "Private": {
-    "lockSuccessNotification": null,
-    "unlockSuccessNotification": null,
-    "lockButton": null,
-    "unlockButton": null,
-    "lockDescription": null,
-    "cancelButton": null,
-    "sessionLockedTitle": null,
-    "sessionLockedDescription": null,
-    "sessionNonProTitle": null,
-    "sessionNonProDescription": null,
-    "sessionIsPublic": null,
-    "sessionIsPrivate": null,
-    "sessionIsPrivateNoAccess": null
+    "lockSuccessNotification": "セッションがプライベートになりました。新しい参加者は参加できません。",
+    "unlockSuccessNotification": "セッションが公開されました。誰でも参加できます。",
+    "lockButton": "プライベートにする",
+    "unlockButton": "公開する",
+    "lockDescription": "セッションを非公開にしようとしています。ロックされると、現在の参加者（以下のリスト）だけがこのセッションへのアクセスを許可されます。",
+    "cancelButton": "キャンセル",
+    "sessionLockedTitle": "このセッションはプライベートです。",
+    "sessionLockedDescription": "参加できるようにモデレータにロックを解除するよう依頼してください。その後、このページを更新してください。",
+    "sessionNonProTitle": "このセッションはProユーザーのみアクセス可能です",
+    "sessionNonProDescription": "このセッションでは、Proユーザーのみが利用できる機能を使用します。Proアカウントを提供するには、モデレータまたはサブスクリプション所有者に問い合わせてください。",
+    "sessionIsPublic": "このセッションは公開され、誰でもアクセスできます。",
+    "sessionIsPrivate": "このセッションはプライベートでアクセスできます。",
+    "sessionIsPrivateNoAccess": "このセッションはプライベートですが、アクセスできません。"
   },
   "TrialPrompt": {
-    "allowanceReachedTitle": null,
-    "allowanceReachedDescription": null,
-    "nearEndAllowanceTitle": null,
-    "nearEndAllowanceDescription": null,
-    "onTrialTitle": null,
-    "remainingTrialSentence": null,
-    "trialEndedTitle": null,
-    "trialEndedSentence": null,
-    "subscribeNow": null
+    "allowanceReachedTitle": "無料手当に達しました",
+    "allowanceReachedDescription": "無制限の投稿を取得するには、Retrospected Pro に登録してください",
+    "nearEndAllowanceTitle": "割り当ての終わりに近づいています",
+    "nearEndAllowanceDescription": "残り {{quota}} 件の投稿があります",
+    "onTrialTitle": "Retrospected Pro - トライアル",
+    "remainingTrialSentence": "試用版に {{remaining}} が残っています。",
+    "trialEndedTitle": "Retrospected Pro Trial は終了しました",
+    "trialEndedSentence": "今すぐ購読して、Pro機能へのアクセスを取り戻しましょう。",
+    "subscribeNow": "今すぐ購読！"
   },
   "Chat": {
-    "writeAMessage": null
+    "writeAMessage": "ここにメッセージを書いてください"
   }
 }
