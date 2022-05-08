@@ -51,11 +51,18 @@ function getConfig(): Config {
   const sentryUrl = getKey('SENTRY_URL', 'NO_SENTRY');
   const giphyApiKey = getKey('GIPHY_API_KEY', 'NO_GIPHY');
   const stripeKey = getKey('STRIPE_KEY', 'NO_STRIPE');
-  const defaultLanguage = getKey(
+  let defaultLanguage = getKey(
     'DEFAULT_LANGUAGE',
     'NO_DEFAULT_LANGUAGE',
     'en-GB'
   );
+
+  if (defaultLanguage.length !== 5) {
+    console.error(
+      'Your default language (DEFAULT_LANGUAGE) is not in the right format. The right format should be a string of 5 characters, for example: en-GB, fr-FR, etc.'
+    );
+    defaultLanguage = 'en-GB';
+  }
 
   return {
     hasGA: !!googleAnalyticsId,

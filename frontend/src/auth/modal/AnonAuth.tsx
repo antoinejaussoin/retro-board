@@ -2,8 +2,7 @@ import { useCallback, useState } from 'react';
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
 import { Alert } from '@mui/material';
-import { useLanguage } from '../../translations';
-import { anonymousLogin, updateLanguage } from '../../api';
+import { anonymousLogin, me } from '../../api';
 import { FullUser } from 'common';
 import Wrapper from './Wrapper';
 import { useTranslation } from 'react-i18next';
@@ -15,7 +14,6 @@ interface AnonAuthProps {
 
 const AnonAuth = ({ onClose, onUser }: AnonAuthProps) => {
   const { t } = useTranslation();
-  const [language] = useLanguage();
   const [username, setUsername] = useState('');
   const [error, setError] = useState('');
 
@@ -28,7 +26,7 @@ const AnonAuth = ({ onClose, onUser }: AnonAuthProps) => {
           setError('Your anonymous account is not valid.');
           return;
         }
-        const updatedUser = await updateLanguage(language.locale);
+        const updatedUser = await me();
         onUser(updatedUser);
         if (onClose) {
           onClose();
@@ -36,7 +34,7 @@ const AnonAuth = ({ onClose, onUser }: AnonAuthProps) => {
       }
     }
     login();
-  }, [username, onUser, onClose, language]);
+  }, [username, onUser, onClose]);
   const handleUsernameChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value),
     [setUsername]

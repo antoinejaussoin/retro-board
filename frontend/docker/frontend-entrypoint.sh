@@ -10,6 +10,6 @@ sed -i "s#NO_GA#${GA_ID:-}#g" /usr/share/nginx/html/index.html
 sed -i "s#NO_SENTRY#${SENTRY_URL:-}#g" /usr/share/nginx/html/index.html
 sed -i "s#NO_GIPHY#${GIPHY_API_KEY:-}#g" /usr/share/nginx/html/index.html
 sed -i "s#NO_STRIPE#${STRIPE_KEY:-}#g" /usr/share/nginx/html/index.html
-sed -i "s#NO_DEFAULT_LANGUAGE#${DEFAULT_LANGUAGE:-en}#g" /usr/share/nginx/html/index.html
+sed -i "s#NO_DEFAULT_LANGUAGE#${DEFAULT_LANGUAGE:-en-GB}#g" /usr/share/nginx/html/index.html
 
 exec "$@"

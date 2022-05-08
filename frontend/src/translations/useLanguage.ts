@@ -13,7 +13,7 @@ type UseLanguageResult = [
 
 export default function useLanguage(): UseLanguageResult {
   const { i18n } = useTranslation();
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   const locale = i18n.language;
   const language = useMemo(() => {
@@ -25,12 +25,14 @@ export default function useLanguage(): UseLanguageResult {
     async (language: string) => {
       trackEvent(`language/change/${language}` as TrackingEvent);
       i18n.changeLanguage(language);
-      const updatedUser = await updateLanguage(language);
-      if (updatedUser) {
-        setUser(updatedUser);
+      if (user) {
+        const updatedUser = await updateLanguage(language);
+        if (updatedUser) {
+          setUser(updatedUser);
+        }
       }
     },
-    [setUser, i18n]
+    [user, setUser, i18n]
   );
 
   return [language, handleChangeLanguage];

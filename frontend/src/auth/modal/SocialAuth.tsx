@@ -9,7 +9,7 @@ import {
 import styled from '@emotion/styled';
 import io, { Socket } from 'socket.io-client';
 import { useLanguage } from '../../translations';
-import { updateLanguage } from '../../api';
+import { me } from '../../api';
 import { FullUser } from 'common';
 import Wrapper from './Wrapper';
 import SlackLoginButton from './social/SlackLoginButton';
@@ -65,7 +65,7 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
     const s = io();
     setSocket(s);
     s.on('auth', async (_user: FullUser) => {
-      const updatedUser = await updateLanguage(language.locale);
+      const updatedUser = await me();
       onUser(updatedUser);
       if (windowRef.current) {
         windowRef.current.close();

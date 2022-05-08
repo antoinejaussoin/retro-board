@@ -191,7 +191,7 @@ export async function registerUser(
       UserIdentityRepository
     );
 
-    const identity = await getOrCreateIdentity(
+    const [identity, existing] = await getOrCreateIdentity(
       manager,
       registration.username,
       registration.email,
@@ -211,7 +211,7 @@ export async function registerUser(
     user.photo = registration.photo || user.photo;
     user.email = registration.email;
 
-    if (registration.language) {
+    if (!existing && registration.language) {
       user.language = registration.language;
     }
 
@@ -275,7 +275,7 @@ async function getOrCreateIdentity(
   username: string,
   email: string,
   accountType: AccountType
-): Promise<UserIdentityEntity> {
+): Promise<[identity: UserIdentityEntity, existing: boolean]> {
   const identityRepository = manager.getCustomRepository(
     UserIdentityRepository
   );
@@ -287,33 +287,36 @@ async function getOrCreateIdentity(
     // In certain conditions, the user attached to the identity could be wrong if the user didn't have an email
     const identity = identities[0];
     if (identity.user.email !== email) {
-      const user = await getOrCreateUser(manager, email);
+      const [user, existing] = await getOrCreateUser(manager, email);
       identity.user = user;
+      return [identity, existing];
     }
 
-    return identity;
+    return [identity, true];
   }
 
-  const user = await getOrCreateUser(manager, email);
+  const [user, existing] = await getOrCreateUser(manager, email);
   const identity = new UserIdentityEntity(v4(), user);
 
-  return identity;
+  return [identity, existing];
 }
 
 async function getOrCreateUser(
   manager: EntityManager,
   email: string
-): Promise<UserEntity> {
+): Promise<[identity: UserEntity, existing: boolean]> {
   const userRepository = manager.getCustomRepository(UserRepository);
   const existingUser = await userRepository.findOne({
     where: { email },
   });
   if (existingUser) {
-    return existingUser;
+    return [existingUser, true];
   }
   const user = new UserEntity(v4(), '');
   user.email = email;
-  return await userRepository.saveAndReload(user);
+  const savedUser = await userRepository.saveAndReload(user);
+
+  return [savedUser, false];
 }
 
 async function updateUserPassword(
