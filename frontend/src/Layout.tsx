@@ -254,9 +254,9 @@ const HelpUkraine = styled.div`
     text-decoration: unset;
     font-size: 1.2rem;
     font-weight: 100;
-    color: white;
+    color: #0057b7;
   }
-  border: 1px solid white;
+  border: 1px solid #0057b7;
   border-radius: 5px;
   padding: 10px;
   backdrop-filter: blur(10px);
