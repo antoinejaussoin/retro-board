@@ -1,0 +1,423 @@
+{
+  "Header": {
+    "subtitle": "أسلوب جيّد للتّوبيخ بطريقة مرنة ",
+    "logout": "خروج",
+    "leave": "غادر",
+    "summaryMode": "النّمط الملخّص",
+    "account": "حسابي",
+    "adminPanel": "لوحة الإدارة"
+  },
+  "LanguagePicker": {
+    "header": "إختيار اللُّغة"
+  },
+  "Main": {
+    "hint": "يمكنُكَ دعوة أشخاص إلى هذه الجلسة عن طريق نسخ عنوان هذه الصفحة"
+  },
+  "Home": {
+    "welcome": "مرحبا، {{name}}"
+  },
+  "PreviousGame": {
+    "createdBy": "تم إنشاؤها بواسطة",
+    "posts_one": "منشور",
+    "posts_other": "المشاركات",
+    "participants_one": "مشارك",
+    "participants_other": "المشاركون",
+    "votes_one": "التصويت",
+    "votes_other": "الأصوات",
+    "actions_one": "اجراء",
+    "actions_other": "الإجراءات"
+  },
+  "Column": {
+    "createGroupTooltip": "إنشاء مجموعة لتجميع المشاركات معا"
+  },
+  "Group": {
+    "emptyGroupTitle": "هذه مجموعة فارغة",
+    "emptyGroupContent": "نقل منشور هنا لملء هذه المجموعة"
+  },
+  "Post": {
+    "openExtra": "ميزات إضافية",
+    "closeExtra": "أغلق",
+    "vote": "صوت",
+    "votes": "أصوات",
+    "deleteButton": "حذف",
+    "setActionButton": "تعيين الإجراء",
+    "setGiphyButton": "اختر صورة «غيفي»",
+    "noContent": "(هذا الموضوع فارغ)",
+    "by": "بواسطة",
+    "upVote": "التصويت للأعلى",
+    "downVote": "التصويت للأسفل",
+    "voteRemainingMultiple": "لديك {{number}} {{type}}ثانية متبقية.",
+    "voteRemainingOne": "لديك فقط {{type}} واحد متبقي، جعله عديم!",
+    "voteRemainingNone": "ليس لديك أي {{type}} متبقي.",
+    "toggleGiphyButton": "تبديل الصورة الجافية"
+  },
+  "Customize": {
+    "title": "تخصيص الجلسة الخاصة بك",
+    "votingCategory": "التصويت",
+    "votingCategorySub": "تعيين القواعد حول الإعجاب و عدم الإعجاب",
+    "postCategory": "إعدادات النشر",
+    "postCategorySub": "تعيين القواعد حول ما يمكن للمستخدم أن يفعله عند إنشاء أو عرض مشاركة",
+    "customTemplateCategory": "قالب العمود",
+    "customTemplateCategorySub": "تعيين عدد الأعمدة وخصائصها",
+    "startButton": "بدء الجلسة",
+    "editButton": "تحديث",
+    "maxUpVotes": "الحد الاقصى للتصويتات",
+    "maxUpVotesHelp": "الحد الأقصى لعدد الأصوات 'الإعجاب' المسموح للمستخدم بالإدلاء بها",
+    "maxDownVotes": "الحد الاقصى للأصوات",
+    "maxDownVotesHelp": "الحد الأقصى لعدد الأصوات 'غير المعجبة' المسموح للمستخدم بالإدلاء بها",
+    "maxPosts": "الحد الأقصى للمشاركات لكل مستخدم",
+    "maxPostsHelp": "الحد الأقصى لعدد المشاركات التي يمكن للمستخدم إنشاؤها في كل جلسة",
+    "allowSelfVoting": "السماح بالتصويت الذاتي",
+    "allowSelfVotingHelp": "ما إذا كان يسمح للمستخدم بالتصويت على مشاركته الخاصة",
+    "allowMultipleVotes": "السماح بتعدد الأصوات",
+    "allowMultipleVotesHelp": "ما إذا كان يسمح للمستخدم بالتصويت عدة مرات على نفس المنشور",
+    "allowActions": "السماح بالإجراءات",
+    "allowActionsHelp": "ما إذا كان سيتم السماح بحقل \"الإجراء\" (المتابعة) في كل مشاركة",
+    "allowAuthorVisible": "إظهار المؤلف",
+    "allowAuthorVisibleHelp": "عرض مؤلف المنشور على المنشور نفسه.",
+    "newPostsFirst": "إضافة مشاركات جديدة أولاً",
+    "newPostsFirstHelp": "يتم إضافة مشاركات جديدة في الجزء العلوي من العمود",
+    "allowGiphy": "السماح بالجفي",
+    "allowGiphyHelp": "السماح للمستخدمين بتعيين صورة Giphy مقابل مشاركة",
+    "allowGrouping": "السماح بالتجميع",
+    "allowGroupingHelp": "السماح بإنشاء مجموعات لتجميع المشاركات معا",
+    "allowReordering": "السماح بإعادة الطلب",
+    "allowReorderingHelp": "السماح بإعادة ترتيب المشاركات بسحب وإسقاط",
+    "blurCards": "طمس البطاقات",
+    "blurCardsHelp": "محتوى البطاقات غير واضح حتى يكشف المشرف عن المحتوى",
+    "template": "قالب",
+    "templateHelp": "استخدام مجموعة محددة مسبقاً من الأعمدة",
+    "numberOfColumns": "عدد الأعمدة",
+    "numberOfColumnsHelp": "تعيين عدد الأعمدة",
+    "makeDefaultTemplate": "اجعل هذا قالبي الافتراضي"
+  },
+  "PostBoard": {
+    "customQuestion": "عمود مخصص",
+    "notWellQuestion": "ما الذي يمكن تحسينه ؟",
+    "wellQuestion": "ما الذي فُعِلَ بنجاح؟",
+    "ideasQuestion": "هل من أيِّ فكرةٍ ذكيّة ؟",
+    "startQuestion": "ابدأ",
+    "stopQuestion": "توقف",
+    "continueQuestion": "متابعة",
+    "likedQuestion": "معجب",
+    "lackedQuestion": "مفقود",
+    "learnedQuestion": "تعلّم",
+    "longedForQuestion": "طويل لـ",
+    "anchorQuestion": "مرساة",
+    "boatQuestion": "قارب",
+    "islandQuestion": "الجزيرة",
+    "windQuestion": "الريح",
+    "rockQuestion": "الصخور",
+    "disconnected": "لقد تم فصلك عن الدورة الحالية.",
+    "reconnect": "إعادة الاتصال",
+    "notLoggedIn": "لم تقم بتسجيل الدخول. يمكنك عرض هذه الجلسة كمتفرج، ولكن يجب تسجيل الدخول للمشاركة.",
+    "error_action_unauthorised": "غير مسموح لك بتنفيذ هذا الإجراء.",
+    "error_cannot_edit_group": "فشل تحرير المجموعة.",
+    "error_cannot_edit_post": "فشل تحرير المشاركة.",
+    "error_cannot_get_session": "تعذر الحصول على بيانات الجلسة. الرجاء إعادة تحميل الصفحة.",
+    "error_cannot_register_vote": "لم يتم تسجيل تصويتك بنجاح.",
+    "error_cannot_save_group": "لا يمكن حفظ المجموعة التي أنشأتها.",
+    "error_cannot_save_post": "لا يمكن حفظ المنشور الذي قمت بإنشائه.",
+    "error_cannot_delete_group": "لا يمكن حذف المجموعة",
+    "error_cannot_delete_post": "لا يمكن حذف المنشور",
+    "error_cannot_rename_session": "فشل إعادة تسمية الجلسة",
+    "error_cannot_save_columns": "فشل حفظ الأعمدة",
+    "error_cannot_save_options": "فشل حفظ الخيارات",
+    "maxPostsReached": "لقد وصلت إلى الحد الأقصى لعدد المشاركات التي حددها المشرف",
+    "iAmDone": "لقد انتهيت!",
+    "iAmNotDoneYet": "أنا لم أنتهِ بعد...",
+    "userIsReady": "{{user}} جاهز!"
+  },
+  "GameMenu": {
+    "board": "المجلس",
+    "summary": "Summary"
+  },
+  "Template": {
+    "default": "الافتراضي",
+    "wellNotWell": "حسنا / غير جيد",
+    "startStopContinue": "بدء / إيقاف / متابعة",
+    "fourLs": "أربعة لترات",
+    "sailboat": "زورق بحري"
+  },
+  "Clients": {
+    "header": "الضيوف الحاضرين معنا الآن:",
+    "joined": "انضم {{users}}.",
+    "left": "بقي {{users}}."
+  },
+  "Join": {
+    "welcome": " ! مرحبا",
+    "standardTab": {
+      "header": "موضوع جديد",
+      "text": ": انقر أدناه و إبدء إعادة النظر",
+      "button": "إنشاء جلسة عمل جديدة",
+      "customizeButton": "تخصيص"
+    },
+    "optionsTab": {
+      "header": "أكثر",
+      "input": "عنوان",
+      "button": "إنشاء جلسة مخصصة"
+    },
+    "previousTab": {
+      "header": "الجلسات السابقة",
+      "rejoinButton": "الإنضمام"
+    }
+  },
+  "AnonymousLogin": {
+    "namePlaceholder": "من أنت بالضبط؟ أدخل اسمك هنا",
+    "buttonLabel": "لنبدأ",
+    "header": "تسجيل الدخول",
+    "anonymousAuthHeader": "تسجيل دخول مجهول",
+    "anonymousAuthDescription": "سيؤدي هذا إلى إنشاء حساب مجهول. لن تكون بعض الميزات متاحة.",
+    "authenticatingWith": "المصادقة مع",
+    "or": "أو"
+  },
+  "SocialMediaLogin": {
+    "header": "OAuth",
+    "info": "هذا سوف يستخدم موفر طرف ثالث من اختيارك للمصادقة عليك. لا يتم تخزين كلمة المرور."
+  },
+  "AuthCommon": {
+    "emailField": "البريد الإلكتروني",
+    "passwordField": "كلمة المرور",
+    "nameField": "اسمك (لأغراض العرض)",
+    "passwordScoreWords": [
+      "ضعيف",
+      "ضعيف",
+      "ليس تماما",
+      "جيد",
+      "قوي"
+    ]
+  },
+  "AccountLogin": {
+    "header": "كلمة المرور",
+    "loginButton": "تسجيل الدخول",
+    "info": "تسجيل الدخول باستخدام بريدك الإلكتروني وكلمة المرور الخاصة بك.",
+    "registerLink": "غير مسجل؟ انقر هنا",
+    "forgotPasswordLink": "هل نسيت كلمة المرور؟",
+    "errorEmailPasswordIncorrect": "بيانات الاعتماد الخاصة بك غير صحيحة."
+  },
+  "Register": {
+    "header": "تسجيل",
+    "info": "احصل على حساب تراجعي!",
+    "registerButton": "تسجيل",
+    "errorAlreadyRegistered": "هذا البريد الإلكتروني مسجل بالفعل",
+    "errorGeneral": "حدث خطأ أثناء محاولة إنشاء حسابك.",
+    "messageSuccess": "شكرًا لك! يجب أن تتلقى رسالة بريد إلكتروني قريبًا للتحقق من صحة حسابك.",
+    "errorInvalidEmail": "الرجاء إدخال بريد إلكتروني صالح"
+  },
+  "ValidateAccount": {
+    "success": "تم التحقق من بريدك الإلكتروني بشكل صحيح. سأقوم بتسجيل دخولك في لحظة!",
+    "error": "حدث خطأ أثناء التحقق من صحة بريدك الإلكتروني.",
+    "loading": "نحن نقوم بالتحقق من صحة بريدك الإلكتروني. الرجاء الانتظار."
+  },
+  "ResetPassword": {
+    "doneMessage": "تم! ألقي نظرة على رسائل البريد الإلكتروني الخاصة بك، يجب أن تحصل على رابط لإعادة تعيين كلمة المرور الخاصة بك.",
+    "header": "إعادة تعيين كلمة المرور",
+    "resetButton": "إعادة تعيين كلمة المرور",
+    "info": "هل نسيت كلمة المرور؟ ليس هناك مشكلة. أدخل بريدك الإلكتروني أدناه وستحصل على طلب إعادة تعيين البريد الإلكتروني.",
+    "success": "تم تحديث كلمة المرور الخاصة بك. سأقوم بتسجيل الدخول في ثانية!",
+    "error": "حدث خطأ أثناء تحديث كلمة المرور الخاصة بك.",
+    "loading": "نحن نقوم بتحديث كلمة المرور الخاصة بك. الرجاء الانتظار.",
+    "resetInfo": "الرجاء تقديم كلمة مرور جديدة"
+  },
+  "SummaryBoard": {
+    "noPosts": "لا توجد مشاركات للعرض",
+    "copyAsMarkdown": "نسخ الملخص كـ Markdown",
+    "copyAsRichText": "نسخ الملخص في النص الغني",
+    "copySuccessful": "تم نسخ ملخصك بنجاح في الحافظة الخاصة بك"
+  },
+  "SessionName": {
+    "defaultSessionName": "جلسة جديدة"
+  },
+  "Invite": {
+    "inviteButton": "دعوة",
+    "dialog": {
+      "title": "دعوة أشخاص إلى الجلسة",
+      "text": "لدعوة أشخاص إلى الجلسة يمكنك إرسال عنوان هذه الصفحة",
+      "copyButton": "نسخ العنوان"
+    }
+  },
+  "Generic": {
+    "ok": "حسناً",
+    "cancel": "إلغاء"
+  },
+  "Actions": {
+    "tooltip": "إنشاء إجراء على ظهر هذا العنصر",
+    "label": "افتح لوحة Action",
+    "summaryTitle": "أفعالك",
+    "title": "عمل"
+  },
+  "DeleteSession": {
+    "header": "حذف '{{name}}'؟",
+    "firstLine": "حذف جلسة أمر لا رجعة فيه. سيؤدي إلى حذف جميع المشاركات، والتصويبات، والمجموعات، والجلسة نفسها. لا يمكن استعادة البيانات.",
+    "secondLine": "هل أنت متأكد من أنك تريد حذف هذه الجلسة وكل محتوياتها؟",
+    "yesImSure": "نعم، أنا متأكد",
+    "cancel": "لا، أنا آسف، لقد ارتكبت خطأ"
+  },
+  "RevealCards": {
+    "buttonLabel": "كشف",
+    "dialogTitle": "كشف جميع البطاقات",
+    "dialogContent": "هذا سوف يكشف جميع البطاقات غير المرغوب فيها للجميع. لا يمكن التراجع عن ذلك.",
+    "confirmButton": "هيا بنا نكشف",
+    "cancelButton": "لا شكراً"
+  },
+  "AccountPage": {
+    "anonymousError": "الحسابات المجهولة المصدر لا يمكن الوصول إلى ملفها الشخصي (لأنها لا تملك ملفاً).",
+    "details": {
+      "header": "التفاصيل الخاصة بك",
+      "username": "اسم المستخدم",
+      "email": "البريد الإلكتروني",
+      "accountType": "نوع الحساب"
+    },
+    "plan": {
+      "header": "خطتك",
+      "plan": "خطة",
+      "youAreOwner": "أنت صاحب هذه الخطة، من خلال الاشتراك أدناه.",
+      "youAreMember": "أنت على هذه الخطة من خلال اشتراك شخص آخر."
+    },
+    "subscription": {
+      "header": "اشتراكك",
+      "manageButton": "إدارة اشتراكي",
+      "membersEditor": {
+        "title": "فريقك",
+        "limitReached": "لقد وصلت إلى الحد الأقصى للاشتراك الخاص بك (المستخدمون{{limit}} ، بما في ذلك نفسك). الرجاء إزالة الأعضاء، أو الترقية إلى حساب شركة غير محدود.",
+        "info": "إضافة رسائل البريد الإلكتروني أدناه لمنح حسابات Pro حتى {{limit}} من الزملاء الآخرين. اضغط Enter بعد كل عنوان بريد إلكتروني."
+      }
+    },
+    "trial": {
+      "header": "تجريبك التجريبي",
+      "yourTrialWillExpireIn": "ستنتهي التجربة الخاصة بك في {{date}}.",
+      "subscribe": "اشترك الآن"
+    },
+    "deleteAccount": {
+      "title": "GDPR",
+      "warning": "لديك الحق في أن تنسى. مع ذلك، كن حذراً عند حذف حسابك. لا يمكن التراجع عن ذلك.",
+      "deleteData": "حذف بياناتي",
+      "modal": {
+        "confirm": {
+          "title": "هل أنت متأكد تماماً؟",
+          "description": "ولا يوجد تراجع في هذا الشأن.",
+          "confirmation": "نعم أريد حذف جميع بياناتي",
+          "cancellation": "اخرجي من هنا"
+        },
+        "subheader": "اختر ما تريد حذفه",
+        "deleteAccount": "حذف حسابك وأي هويات مرتبطة ببريدك الإلكتروني.",
+        "recommended": "موصى",
+        "deleteSessions": {
+          "main": "هل يجب علينا حذف الجلسات (رجعية) التي أنشأتها؟",
+          "selected": "سيتم حذف جلساتكم وجميع بياناتهم، بما في ذلك مناصب الآخرين والتصويت، بشكل دائم.",
+          "unselected": "سيتم الحفاظ على جلساتك وسيصبح مؤلفها مستخدما مجهولا."
+        },
+        "deletePosts": {
+          "main": "هل يجب علينا حذف جميع المشاركات التي كتبتها؟",
+          "selected": "سيتم حذف منشوراتك في أي جلسة والتصويبات والإجراءات المرتبطة بها بشكل دائم.",
+          "unselected": "سيتم الاحتفاظ بمشاركاتك، ولكن ستصبح مرتبطة مع مستخدم مجهول."
+        },
+        "deleteVotes": {
+          "main": "هل ينبغي لنا أيضا حذف جميع تصويتاتك؟",
+          "selected": "سيتم حذف تصويتك في جميع الجلسات بشكل دائم.",
+          "unselected": "سيتم الاحتفاظ بأصواتك، ولكن ستصبح مرتبطة مع مستخدم مجهول."
+        },
+        "deleteAccountButton": "حذف حسابك",
+        "cancelButton": "إلغاء"
+      }
+    }
+  },
+  "SubscribePage": {
+    "alertAlreadyPro": "أنت بالفعل مستخدم محترف، لذلك قد لا تحتاج إلى اشتراك آخر.",
+    "alertAlreadySubscribed": "لديك بالفعل اشتراك، لذلك قد لا تحتاج إلى اشتراك آخر.",
+    "currency": {
+      "title": "العملة",
+      "description": "اختر عملة ترغب في الحصول على فاتورة بها",
+      "warning": "تم تعيين حسابك بالفعل لاستخدام {{currency}}، لذلك لا يمكنك تغيير العملة بعد الآن."
+    },
+    "plan": {
+      "title": "خطة",
+      "description": "اختر الخطة التي تناسب حالة الاستخدام الخاصة بك!"
+    },
+    "domain": {
+      "title": "النطاق",
+      "description": "ينطبق اشتراكك غير المحدود على نطاق معين. أي مستخدم لديه نطاق البريد الإلكتروني هذا سيصبح تلقائياً مستخدماً محترفاً.",
+      "invalidDomain": "الرجاء توفير نطاق صالح. النطاق لا يمكن أن يكون مجاناً أو قابلاً للاستعمال في البريد الإلكتروني."
+    },
+    "subscribe": {
+      "title": "الدفع",
+      "description": "سيتم توجيهك إلى شريكنا، الشريط، للدفع",
+      "cannotRegisterWithAnon": "تحتاج إلى تسجيل الدخول باستخدام حساب OAuth أو كلمة المرور للمتابعة.",
+      "checkout": "الدفع"
+    }
+  },
+  "SubscribeModal": {
+    "title": "الاشتراك المحترف",
+    "header": "نسخة محترفة تراجعية",
+    "description": "قم بحماية بيانات شركتك عن طريق الاشتراك في Retrospected Pro. مع Rerspected Pro، احصل على الميزات التالية وأكثر منها:",
+    "features": {
+      "encryptedSession": {
+        "title": "الجلسات المشفرة",
+        "description": "البيانات الخاصة بك مشفرة في المتصفح الخاص بك، مما يجعل من المستحيل فك التشفير على خادم Respected"
+      },
+      "privateSessions": {
+        "title": "الجلسات الخاصة",
+        "description": "تأكد من أن الأشخاص المصرح لهم فقط يمكنهم الوصول إلى جلستك."
+      },
+      "unlimitedPosts": {
+        "title": "مشاركات غير محدودة",
+        "description": "مع اشتراك محترف، احصل على مشاركات غير محدودة."
+      }
+    },
+    "subscribeButton": "اشترك",
+    "payButton": "حدد",
+    "cancelButton": "إلغاء",
+    "startTrial": "30 يوم تجريبي"
+  },
+  "Products": {
+    "team": "ممتاز لفرق أصغر، يمكنك اختيار ما يصل إلى 20 زميلاً سيتم ترقيتهم إلى حساب محترف.",
+    "unlimited": "إذا كنت شركة أكبر، فستستمتع بعدد غير محدود من حسابات المحترفين.",
+    "self-hosted": "تم التنقيب عنها في المباني، رسوم لمرة واحدة، وتحديثات غير محدودة. حافظ على السيطرة الكاملة على بياناتك إلى الأبد.",
+    "users": "{{users}} مستخدمين",
+    "unlimited_seats": "غير محدود",
+    "month": "شهر",
+    "year": "سنة",
+    "wantToPayYearly": "أريد أن أدفع سنويا (كل 12 شهرا)، واحصل على شهر واحد مجانا في السنة!"
+  },
+  "Encryption": {
+    "createEncryptedSession": "جلسة مشفرة",
+    "sessionNotEncrypted": "هذه الجلسة غير مشفرة.",
+    "sessionEncryptedHaveKeyTooltip": "هذه الجلسة مشفرة، والمفتاح مخزون في المتصفح الخاص بك. يمكنك فتح هذه الجلسة دون الحاجة إلى توفير كلمة المرور مرة أخرى.",
+    "sessionEncryptedNoKeyTooltip": "هذه الجلسة مشفرة، والمفتاح غير مخزن في المتصفح الخاص بك. سوف يطلب منك مفتاح فك التشفير عند افتتاح هذه الجلسة.",
+    "sessionEncryptedWrongKeyTooltip": "هذه الجلسة مشفرة، والمفتاح الذي قمت بتخزينه ليس هو المفتاح الصحيح.",
+    "newEncryptedSessionWarningTitle": "هذه الجلسة مشفرة محليا",
+    "newEncryptedSessionWarningContent": "من المهم جداً أن تحفظ عنوان URL الكامل (الذي يحتوي على المفتاح) في مكان ما آمن، أو على الأقل مفتاح التشفير: {{key}}. إذا فقدت مفتاح التشفير هذا، لا يوجد شيء يمكن فعله لاسترداد البيانات.",
+    "sessionEncryptionError": "هذه الجلسة مشفرة، ولا يبدو أن لديك مفتاح فك التشفير مخزون محليا. الرجاء استخدام الرابط الأصلي، بما في ذلك مفتاح فك التشفير.",
+    "passwordModalTitle": "الجلسة المشفرة - أدخل كلمة المرور",
+    "passwordModelIncorrect": "مفتاح التشفير غير صحيح."
+  },
+  "Private": {
+    "lockSuccessNotification": "تم جعل جلستك خاصة بنجاح. لا يمكن لأي مشاركين جدد الانضمام إليها.",
+    "unlockSuccessNotification": "تم إعلان جلسة العمل الخاصة بك بنجاح. يمكن لأي شخص أن ينضم.",
+    "lockButton": "جعلها خاصة",
+    "unlockButton": "جعل الجمهور",
+    "lockDescription": "أنت على وشك جعل الجلسة خاصة. سيسمح فقط للمشاركين الحاليين (المدرجة أدناه) بالدخول إلى هذه الجلسة بمجرد قفلهم.",
+    "cancelButton": "إلغاء",
+    "sessionLockedTitle": "هذه الجلسة سرية.",
+    "sessionLockedDescription": "من فضلك اطلب من المشرف فتح القفل حتى تتمكن من الانضمام. ثم قم بتحديث هذه الصفحة.",
+    "sessionNonProTitle": "هذه الجلسة متاحة فقط للمستخدمين المحترفين",
+    "sessionNonProDescription": "هذه الجلسة تستخدم الميزات المتاحة فقط للمستخدمين المحترفين. الرجاء الطلب من المشرف أو صاحب الاشتراك أن يعطيك حساب محترف.",
+    "sessionIsPublic": "وهذه الجلسة علنية ويمكن لأي شخص الوصول إليها.",
+    "sessionIsPrivate": "هذه الجلسة خاصة، ولديك حق الوصول.",
+    "sessionIsPrivateNoAccess": "هذه الجلسة خاصة، ولكن ليس لديك حق الوصول."
+  },
+  "TrialPrompt": {
+    "allowanceReachedTitle": "لقد وصلت إلى نقودك المجانية",
+    "allowanceReachedDescription": "للحصول على مشاركات غير محدودة، يرجى الاشتراك في Respected Pro",
+    "nearEndAllowanceTitle": "أنت تقترب من نهاية حصتك",
+    "nearEndAllowanceDescription": "لديك حوالي {{quota}} مشاركات متبقية",
+    "onTrialTitle": "تم التنقيب عن المحترف - تجريبي",
+    "remainingTrialSentence": "بقي لديك {{remaining}} في تجربتك.",
+    "trialEndedTitle": "انتهت تجربتك المحترفة المعاد النظر فيها",
+    "trialEndedSentence": "اشترك اليوم لاستعادة الوصول إلى ميزات المحترف.",
+    "subscribeNow": "اشترك الآن!"
+  },
+  "Chat": {
+    "writeAMessage": "اكتب رسالة هنا..."
+  }
+}
