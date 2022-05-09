@@ -177,11 +177,12 @@ function App() {
           ) : null}
           <Spacer />
           <Hidden mdDown>
-            <HelpUkraine>
+            <HelpUkraine
+              href="https://www.gov.uk/government/news/ukraine-what-you-can-do-to-help"
+              target="_blank"
+            >
               <Flag country="ua" />
-              <a href="https://www.gov.uk/government/news/ukraine-what-you-can-do-to-help">
-                {t('Main.helpUkraine')}
-              </a>
+              {t('Main.helpUkraine')}
             </HelpUkraine>
           </Hidden>
 
@@ -244,19 +245,16 @@ const Spacer = styled.div`
   flex: 1;
 `;
 
-const HelpUkraine = styled.div`
+const HelpUkraine = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 20px;
-  a {
-    font-style: unset;
-    text-decoration: unset;
-    font-size: 1.2rem;
-    font-weight: 100;
-    color: #0057b7;
-  }
-  border: 1px solid #0057b7;
+  font-style: unset;
+  text-decoration: unset;
+  font-size: 1.2rem;
+  font-weight: 100;
+  color: #0057b7;
   border-radius: 5px;
   padding: 10px;
   backdrop-filter: blur(10px);
