@@ -34,5 +34,5 @@ trivy:
 
 translate:
 	crowdin push sources
-	crowdin pre-translate --method=mt --engine-id=316468 -l=fr -l=nl -l=es -l=ar -l=de -l=hu -l=it -l=ja -l=pt -l=uk -l=zh
+	crowdin pre-translate --method=mt --engine-id=316468 -l=fr -l=nl -l=ar -l=de  -l=it -l=ja -l=uk
 	crowdin download
