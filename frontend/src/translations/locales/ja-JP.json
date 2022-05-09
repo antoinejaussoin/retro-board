@@ -266,6 +266,7 @@
     "cancelButton": "いいえ結構です"
   },
   "AccountPage": {
+    "noEmptyNameError": "空の表示名を選択することはできません。もう一度やり直してください。",
     "anonymousError": "匿名のアカウントはプロフィールへのアクセス権を持つことはできません（そのアカウントがないので）",
     "details": {
       "header": "詳細",

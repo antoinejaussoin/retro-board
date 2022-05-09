@@ -266,6 +266,7 @@
     "cancelButton": "不要谢谢。"
   },
   "AccountPage": {
+    "noEmptyNameError": "You cannot choose an empty display name. Please try again.",
     "anonymousError": "匿名帐户不能访问他们的个人资料 (因为他们没有一个)。",
     "details": {
       "header": "您的详细信息",

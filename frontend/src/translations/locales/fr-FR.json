@@ -12,7 +12,7 @@
   },
   "Main": {
     "hint": "Vous pouvez inviter d'autres participants en leur envoyant l'URL de cette page",
-    "helpUkraine": "Aidez l'Ukraine!",
+    "helpUkraine": "Aidez l'Ukraine !",
     "loading": "Chargement en cours...",
     "unlicenced": {
       "title": "Retrospected est sans licence"
@@ -30,7 +30,7 @@
     "votes_one": "vote",
     "votes_other": "votes",
     "actions_one": "action",
-    "actions_other": "action"
+    "actions_other": "actions"
   },
   "Column": {
     "createGroupTooltip": "Créer un groupe"
@@ -202,11 +202,11 @@
   },
   "Register": {
     "header": "S'enregistrer",
-    "info": "Enregistrez un nouveau compte Retrospected.",
+    "info": "Enregistrez un nouveau compte Retrospected !",
     "registerButton": "Créer un compte",
     "errorAlreadyRegistered": "Désolé, cet email est déjà enregistré",
     "errorGeneral": "Une erreur s'est produite lors de la tentative de création de votre compte.",
-    "messageSuccess": "Merci! Vous devriez recevoir un e-mail sous peu pour valider votre compte.",
+    "messageSuccess": "Merci ! Vous devriez recevoir un e-mail sous peu pour valider votre compte.",
     "errorInvalidEmail": "Merci d'entrer un email valide"
   },
   "ValidateAccount": {
@@ -237,7 +237,7 @@
     "inviteButton": "Inviter",
     "dialog": {
       "title": "Invitez des participants à votre retrospective",
-      "text": "Pour inviter des participants à votre session retrospected, envoyez leur le lien suivant",
+      "text": "Pour inviter des participants à votre session Retrospected, envoyez leur le lien suivant",
       "copyButton": "Copier"
     }
   },
@@ -253,20 +253,21 @@
   },
   "DeleteSession": {
     "header": "Supprimer \"{{name}}\" ?",
-    "firstLine": "Effacer une session est irreversible. Tout les posts, groupes, votes et la session elle-même vont être effacés. Les données ne peuvent être récupérée.",
-    "secondLine": "Êtes-vous certain(e) de vouloir effaçer cette session et son contenu ?",
+    "firstLine": "Effacer une session est irréversible. Tous les posts, groupes, votes et la session elle-même vont être effacés. Les données ne peuvent être récupérée.",
+    "secondLine": "Êtes-vous certain(e) de vouloir effacer cette session et son contenu ?",
     "yesImSure": "Oui, j'en suis sûr",
     "cancel": "Non, je me suis trompé(e)"
   },
   "RevealCards": {
     "buttonLabel": "Révéler",
     "dialogTitle": "Révéler tous les posts",
-    "dialogContent": "Cela va révéler (déflouter) tout les posts. L'opération n'est pas reversible.",
+    "dialogContent": "Cela va révéler (déflouter) tous les posts. L'opération n'est pas réversible.",
     "confirmButton": "Révéler",
     "cancelButton": "Non merci"
   },
   "AccountPage": {
-    "anonymousError": "Les comptes anonymes ne peuvent avoir accès à leur profile (puisque ils n'en ont pas).",
+    "noEmptyNameError": "Vous ne pouvez pas choisir un nom d'affichage vide. Veuillez réessayer.",
+    "anonymousError": "Les comptes anonymes ne peuvent avoir accès à leur profil (puisqu'ils n'en ont pas).",
     "details": {
       "header": "Vos Coordonnées",
       "username": "Nom d'utilisateur",
@@ -283,13 +284,13 @@
       "header": "Votre Abonnement",
       "manageButton": "Gérer mon abonnement",
       "membersEditor": {
-        "title": "Votre Equipe",
-        "limitReached": "Vous avez atteint le nombre maximum de membres ({{limit}}) permis par votre abonnement. Vous pouvez passer à l'abonnement Company pour un nombre de collaborateur illimité.",
-        "info": "Ajouter des addresses emails ci-dessous pour donner un accès Pro à vos collaborateurs (dans la limite de {{limit}} collaborateurs). Appuyez sur Entrée après chaque email."
+        "title": "Votre Équipe",
+        "limitReached": "Vous avez atteint le nombre maximum de membres ({{limit}}) permis par votre abonnement. Vous pouvez passer à l'abonnement Unlimited pour un nombre de collaborateur illimité.",
+        "info": "Ajouter des adresses emails ci-dessous pour donner un accès Pro à vos collaborateurs (dans la limite de {{limit}} collaborateurs). Appuyez sur Entrée après chaque email."
       }
     },
     "trial": {
-      "header": "Votre Periode d'Essai",
+      "header": "Votre Période d'Essai",
       "yourTrialWillExpireIn": "Votre période d'essai va se terminer dans {{date}}.",
       "subscribe": "S'abonner"
     },
@@ -301,7 +302,7 @@
         "confirm": {
           "title": "Êtes-vous absolument certain(e) ?",
           "description": "Cette opération n'est pas réversible !",
-          "confirmation": "Oui, je veux effaçer toutes mes données",
+          "confirmation": "Oui, je veux effacer toutes mes données",
           "cancellation": "J'ai changé d'avis !"
         },
         "subheader": "Choisir quoi effacer",
@@ -309,18 +310,18 @@
         "recommended": "Recommandé",
         "deleteSessions": {
           "main": "Effacer les sessions (les rétrospectives) que vous avez créées ?",
-          "selected": "Vos sessions, and toutes les données associées (incluant les posts et votes d'autres personnes) seront éffacées de manière permanente et irréversible.",
-          "unselected": "Vos sessions seront conservées, et leur auteur deviendra un auteur anonyme."
+          "selected": "Vos sessions, and toutes les données associées (incluant les posts et votes d'autres personnes) seront effacées de manière permanente et irréversible.",
+          "unselected": "Vos sessions seront conservées et leur auteur deviendra un auteur anonyme."
         },
         "deletePosts": {
-          "main": "Effacer les posts que vous avez écris ?",
-          "selected": "Vos posts, dans n'importe quelle session, ainsi que les votes associés, seront effacés de manière permanente et irreversible.",
+          "main": "Effacer les posts que vous avez écrit ?",
+          "selected": "Vos posts, dans n'importe quelle session, ainsi que les votes associés, seront effacés de manière permanente et irréversible.",
           "unselected": "Vos posts seront conservés, mais leur auteur deviendra un compte anonyme."
         },
         "deleteVotes": {
           "main": "Effacer vos votes ?",
           "selected": "Vos votes, dans n'importe quelle session, seront effacés.",
-          "unselected": "Vos votes seront conservés, et deviendront anonymes."
+          "unselected": "Vos votes seront conservés et deviendront anonymes."
         },
         "deleteAccountButton": "SUPPRIMER VOTRE COMPTE",
         "cancelButton": "Annuler"
@@ -332,7 +333,7 @@
     "alertAlreadySubscribed": "Vous avez déjà un abonnement, vous n'avez peut-être donc pas besoin d'un abonnement supplémentaire.",
     "currency": {
       "title": "Devise",
-      "description": "Choisissez une devise de facturation.",
+      "description": "Choisissez une devise de facturation",
       "warning": "Votre compte est déjà en {{currency}}, vous ne pouvez donc plus en changer."
     },
     "plan": {

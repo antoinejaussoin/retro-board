@@ -266,6 +266,7 @@
     "cancelButton": "Nee, bedankt"
   },
   "AccountPage": {
+    "noEmptyNameError": "U kunt geen lege weergavenaam kiezen. Probeer het opnieuw.",
     "anonymousError": "Anonieme accounts kunnen geen toegang hebben tot hun profiel (omdat ze geen account hebben).",
     "details": {
       "header": "Uw gegevens",

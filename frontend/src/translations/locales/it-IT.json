@@ -266,6 +266,7 @@
     "cancelButton": "No grazie"
   },
   "AccountPage": {
+    "noEmptyNameError": "Non puoi scegliere un nome di visualizzazione vuoto. Per favore riprova.",
     "anonymousError": "Gli account anonimi non possono avere accesso al loro profilo (perché non ne hanno uno).",
     "details": {
       "header": "I Tuoi Dettagli",

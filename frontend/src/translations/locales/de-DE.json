@@ -266,6 +266,7 @@
     "cancelButton": "Nein danke"
   },
   "AccountPage": {
+    "noEmptyNameError": "Sie können keinen leeren Anzeigenamen auswählen. Bitte versuchen Sie es erneut.",
     "anonymousError": "Anonyme Konten können keinen Zugriff auf ihr Profil haben (weil sie kein Profil haben).",
     "details": {
       "header": "Ihre Details",

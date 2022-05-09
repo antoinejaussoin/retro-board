@@ -266,6 +266,7 @@
     "cancelButton": "Nie, dziękuję"
   },
   "AccountPage": {
+    "noEmptyNameError": "You cannot choose an empty display name. Please try again.",
     "anonymousError": "Anonimowe konta nie mogą mieć dostępu do swojego profilu (ponieważ nie mają nich).",
     "details": {
       "header": "Twoje dane",
