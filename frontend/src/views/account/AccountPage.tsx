@@ -18,6 +18,7 @@ import EditableLabel from 'components/EditableLabel';
 import { useCallback, useContext } from 'react';
 import { updateUserName } from './api';
 import UserContext from 'auth/Context';
+import { useSnackbar } from 'notistack';
 
 function AccountPage() {
   const url = usePortalUrl();
@@ -27,15 +28,23 @@ function AccountPage() {
   const formatDistanceToNow = useFormatDate();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { enqueueSnackbar } = useSnackbar();
   const [deleteModalOpen, handleDeleteModalOpen, handleDeleteModalClose] =
     useModal();
 
   const handleEditName = useCallback(
     async (name: string) => {
-      const updatedUser = await updateUserName(name);
-      setUser(updatedUser);
+      const trimmed = name.trim();
+      if (!trimmed.length) {
+        enqueueSnackbar(t('AccountPage.noEmptyNameError'), {
+          variant: 'warning',
+        });
+      } else {
+        const updatedUser = await updateUserName(name);
+        setUser(updatedUser);
+      }
     },
-    [setUser]
+    [setUser, enqueueSnackbar, t]
   );
 
   const ownsThePlan =

@@ -31,3 +31,8 @@ trivy:
 	docker build -f ./frontend/Dockerfile -t retrospected/frontend:trivy ./frontend
 	trivy retrospected/backend:trivy
 	trivy retrospected/frontend:trivy
+
+translate:
+	crowdin push sources
+	crowdin pre-translate --method=mt --engine-id=316468 -l=fr
+	crowdin download
