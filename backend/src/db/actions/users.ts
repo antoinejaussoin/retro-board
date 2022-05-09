@@ -205,7 +205,7 @@ export async function registerUser(
     identity.password = registration.password || null;
     identity.emailVerification = registration.emailVerification || null;
 
-    user.name = registration.name;
+    user.name = user.name || registration.name;
     user.slackUserId = registration.slackUserId || null;
     user.slackTeamId = registration.slackTeamId || null;
     user.photo = registration.photo || user.photo;

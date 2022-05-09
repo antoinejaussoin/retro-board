@@ -130,7 +130,7 @@ export interface FullUser extends User {
   username: string | null;
   accountType: AccountType;
   photo: string | null;
-  language: string;
+  language: string | null;
   email: string | null;
   canDeleteSession: boolean;
   stripeId: string | null;

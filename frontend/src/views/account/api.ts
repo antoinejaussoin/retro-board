@@ -1,5 +1,5 @@
-import { Quota } from 'common';
-import { fetchGet, fetchPatch } from '../../api/fetch';
+import { ChangeUserNamePayload, FullUser, Quota } from 'common';
+import { fetchGet, fetchPatch, fetchPostGet } from '../../api/fetch';
 
 export async function getPortalUrl(): Promise<string | null> {
   const response = await fetchGet<{ url: string } | null>(
@@ -19,4 +19,13 @@ export async function getQuota(): Promise<Quota | null> {
 
 export async function updateMembers(members: string[]): Promise<void> {
   await fetchPatch(`/api/stripe/members`, members);
+}
+
+export async function updateUserName(name: string): Promise<FullUser | null> {
+  const updated = await fetchPostGet<ChangeUserNamePayload, FullUser | null>(
+    `/api/me/username`,
+    null,
+    { name }
+  );
+  return updated;
 }

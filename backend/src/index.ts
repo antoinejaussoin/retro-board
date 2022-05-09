@@ -37,6 +37,7 @@ import {
   CreateSessionPayload,
   SelfHostedCheckPayload,
   DeleteAccountPayload,
+  ChangeUserNamePayload,
 } from './common';
 import registerPasswordUser from './auth/register/register-user';
 import { sendVerificationEmail, sendResetPassword } from './email/emailSender';
@@ -292,6 +293,24 @@ db().then(() => {
     } else {
       res.status(401).send('Not logged in');
     }
+  });
+
+  app.post('/api/me/username', async (req, res) => {
+    const user = await getUserViewFromRequest(req);
+    if (!user) {
+      return res.status(401).send('Please login');
+    }
+    const payload = req.body as ChangeUserNamePayload;
+    const success = await updateUser(user.id, { name: payload.name });
+    if (success) {
+      const updated = await getUserView(user.identityId);
+      if (updated) {
+        return res.send(updated.toJson());
+      }
+    }
+    return res
+      .status(500)
+      .send('Something went wrong while updating the user name');
   });
 
   app.delete('/api/me', heavyLoadLimiter, async (req, res) => {

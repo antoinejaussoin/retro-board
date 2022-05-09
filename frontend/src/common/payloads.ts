@@ -80,3 +80,7 @@ export interface DeleteAccountPayload {
 export interface ChatMessagePayload {
   content: string;
 }
+
+export interface ChangeUserNamePayload {
+  name: string;
+}

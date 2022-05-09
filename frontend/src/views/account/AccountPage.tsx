@@ -14,16 +14,29 @@ import TrialPrompt from '../home/TrialPrompt';
 import useFormatDate from '../../hooks/useFormatDate';
 import { DeleteModal } from './delete/DeleteModal';
 import useModal from '../../hooks/useModal';
+import EditableLabel from 'components/EditableLabel';
+import { useCallback, useContext } from 'react';
+import { updateUserName } from './api';
+import UserContext from 'auth/Context';
 
 function AccountPage() {
   const url = usePortalUrl();
   const user = useUser();
+  const { setUser } = useContext(UserContext);
   const isTrial = useIsTrial();
   const formatDistanceToNow = useFormatDate();
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [deleteModalOpen, handleDeleteModalOpen, handleDeleteModalClose] =
     useModal();
+
+  const handleEditName = useCallback(
+    async (name: string) => {
+      const updatedUser = await updateUserName(name);
+      setUser(updatedUser);
+    },
+    [setUser]
+  );
 
   const ownsThePlan =
     user &&
@@ -47,8 +60,9 @@ function AccountPage() {
       <TrialPrompt />
       <Page>
         <Name>
-          {user.name}&nbsp;
           <ProPill />
+          &nbsp;
+          <EditableLabel value={user.name} onChange={handleEditName} />
         </Name>
 
         <Section title={t('AccountPage.details.header')}>
@@ -159,6 +173,9 @@ function AccountPage() {
 }
 
 const Name = styled.h1`
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-weight: 100;
   font-size: 3em;
   @media screen and (max-width: 500px) {

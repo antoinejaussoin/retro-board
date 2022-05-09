@@ -8,7 +8,7 @@ export default function LanguageProvider({ children }: PropsWithChildren<{}>) {
 
   useEffect(() => {
     if (user) {
-      i18n.changeLanguage(user.language);
+      i18n.changeLanguage(user.language || 'en-GB');
     }
   }, [user, i18n]);
 
