@@ -19,7 +19,8 @@
     }
   },
   "Home": {
-    "welcome": "Bem-vindo, {{name}}"
+    "welcome": "Bem-vindo, {{name}}",
+    "howDoesThatWork": "Como funciona isso?"
   },
   "PreviousGame": {
     "createdBy": "Criado Por",
@@ -266,7 +267,7 @@
     "cancelButton": "Não, obrigado."
   },
   "AccountPage": {
-    "noEmptyNameError": "",
+    "noEmptyNameError": "Você não pode escolher um nome de exibição vazio. Por favor, tente novamente.",
     "anonymousError": "Contas anônimas não podem ter acesso ao seu perfil (porque não têm uma).",
     "details": {
       "header": "Suas informações",

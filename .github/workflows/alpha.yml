@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [v4160/i18n]
+    branches: [v4160/german]
 
 jobs:
   build:

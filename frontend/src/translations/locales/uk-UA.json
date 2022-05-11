@@ -19,7 +19,8 @@
     }
   },
   "Home": {
-    "welcome": "Ласкаво просимо, {{name}}"
+    "welcome": "Ласкаво просимо, {{name}}",
+    "howDoesThatWork": "Як це працює?"
   },
   "PreviousGame": {
     "createdBy": "Створено",

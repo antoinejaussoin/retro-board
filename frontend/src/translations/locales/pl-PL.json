@@ -19,7 +19,8 @@
     }
   },
   "Home": {
-    "welcome": "Witaj, {{name}}"
+    "welcome": "Witaj, {{name}}",
+    "howDoesThatWork": "Jak to działa?"
   },
   "PreviousGame": {
     "createdBy": "Utworzony przez",
@@ -266,7 +267,7 @@
     "cancelButton": "Nie, dziękuję"
   },
   "AccountPage": {
-    "noEmptyNameError": "",
+    "noEmptyNameError": "Nie można wybrać pustej nazwy wyświetlacza. Spróbuj ponownie.",
     "anonymousError": "Anonimowe konta nie mogą mieć dostępu do swojego profilu (ponieważ nie mają nich).",
     "details": {
       "header": "Twoje dane",

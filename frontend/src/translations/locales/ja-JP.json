@@ -19,7 +19,8 @@
     }
   },
   "Home": {
-    "welcome": "ようこそ、 {{name}}"
+    "welcome": "ようこそ、 {{name}}",
+    "howDoesThatWork": "それはどのように機能しますか?"
   },
   "PreviousGame": {
     "createdBy": "作成者:",

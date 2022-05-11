@@ -19,7 +19,8 @@
     }
   },
   "Home": {
-    "welcome": "Welkom, {{name}}"
+    "welcome": "Welkom, {{name}}",
+    "howDoesThatWork": "Hoe werkt dat?"
   },
   "PreviousGame": {
     "createdBy": "Aangemaakt door",

@@ -19,7 +19,8 @@
     }
   },
   "Home": {
-    "welcome": "Isten hozott, {{name}}"
+    "welcome": "Isten hozott, {{name}}",
+    "howDoesThatWork": "Hogyan működik?"
   },
   "PreviousGame": {
     "createdBy": "Készítette",
@@ -266,7 +267,7 @@
     "cancelButton": "Nem köszönöm"
   },
   "AccountPage": {
-    "noEmptyNameError": "",
+    "noEmptyNameError": "Nem választhat üres megjelenített nevet. Kérlek próbáld újra.",
     "anonymousError": "Az anonim fiókok nem férhetnek hozzá a profiljukhoz (mert nincs ilyenük).",
     "details": {
       "header": "Az adataid",

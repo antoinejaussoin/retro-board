@@ -19,7 +19,8 @@
     }
   },
   "Home": {
-    "welcome": "歡迎， {{name}}"
+    "welcome": "歡迎， {{name}}",
+    "howDoesThatWork": "這是如何運作的？"
   },
   "PreviousGame": {
     "createdBy": "由...製作",
@@ -266,7 +267,7 @@
     "cancelButton": "不，謝謝"
   },
   "AccountPage": {
-    "noEmptyNameError": "",
+    "noEmptyNameError": "您不能選擇空的顯示名稱。請再試一次。",
     "anonymousError": "匿名帳戶無法訪問他們的個人資料（因為他們沒有個人資料）。",
     "details": {
       "header": "你的資料",

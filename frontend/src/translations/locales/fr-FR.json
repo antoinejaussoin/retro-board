@@ -19,7 +19,8 @@
     }
   },
   "Home": {
-    "welcome": "Bienvenue, {{name}}"
+    "welcome": "Bienvenue, {{name}}",
+    "howDoesThatWork": "Comment cela fonctionne-t-il?"
   },
   "PreviousGame": {
     "createdBy": "Créé par",

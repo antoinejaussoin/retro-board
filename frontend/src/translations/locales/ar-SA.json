@@ -19,7 +19,8 @@
     }
   },
   "Home": {
-    "welcome": "مرحبا، {{name}}"
+    "welcome": "مرحبا، {{name}}",
+    "howDoesThatWork": "كيف يعمل ذلك؟"
   },
   "PreviousGame": {
     "createdBy": "تم إنشاؤها بواسطة",

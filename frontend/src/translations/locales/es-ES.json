@@ -19,7 +19,8 @@
     }
   },
   "Home": {
-    "welcome": "Bienvenido, {{name}}"
+    "welcome": "Bienvenido, {{name}}",
+    "howDoesThatWork": "¿Cómo funciona esto?"
   },
   "PreviousGame": {
     "createdBy": "Creado por",
@@ -266,7 +267,7 @@
     "cancelButton": "No gracias"
   },
   "AccountPage": {
-    "noEmptyNameError": "",
+    "noEmptyNameError": "No puedes elegir un nombre vacío. Por favor, inténtalo de nuevo.",
     "anonymousError": "Las cuentas anónimas no pueden tener acceso a su perfil (porque no tienen una).",
     "details": {
       "header": "Tus detalles",

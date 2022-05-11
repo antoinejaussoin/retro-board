@@ -19,7 +19,8 @@
     }
   },
   "Home": {
-    "welcome": "Willkommen, {{name}}"
+    "welcome": "Willkommen, {{name}}",
+    "howDoesThatWork": "Wie funktioniert das?"
   },
   "PreviousGame": {
     "createdBy": "Erstellt von",
