@@ -266,7 +266,7 @@
     "cancelButton": "Nem köszönöm"
   },
   "AccountPage": {
-    "noEmptyNameError": "You cannot choose an empty display name. Please try again.",
+    "noEmptyNameError": "",
     "anonymousError": "Az anonim fiókok nem férhetnek hozzá a profiljukhoz (mert nincs ilyenük).",
     "details": {
       "header": "Az adataid",

@@ -23,14 +23,14 @@
   },
   "PreviousGame": {
     "createdBy": "Erstellt von",
-    "posts_one": "eintragen",
-    "posts_other": "posten",
-    "participants_one": "teilnehmer",
-    "participants_other": "teilnehmer",
-    "votes_one": "abstimmen",
-    "votes_other": "stimmen",
-    "actions_one": "aktion",
-    "actions_other": "aktionen"
+    "posts_one": "Beitrag",
+    "posts_other": "Beiträge",
+    "participants_one": "Teilnehmer",
+    "participants_other": "Teilnehmer",
+    "votes_one": "Abstimmen",
+    "votes_other": "Stimmen",
+    "actions_one": "Aktion",
+    "actions_other": "Aktionen"
   },
   "Column": {
     "createGroupTooltip": "Erstelle eine Gruppe um Beiträge zusammen zu gruppieren"
@@ -61,7 +61,7 @@
     "votingCategory": "Abstimmung",
     "votingCategorySub": "Setze die Abstimmregeln",
     "postCategory": "Beitragseinstellungen",
-    "postCategorySub": "Stelle ein, wie Nutzer mit Beitragen interagieren können",
+    "postCategorySub": "Stelle ein, wie Nutzer mit Beiträgen interagieren können",
     "customTemplateCategory": "Spaltenkonfiguration",
     "customTemplateCategorySub": "Setze die Anzahl an Spalten und deren Eigenschaften",
     "startButton": "Spiel starten!",
@@ -78,18 +78,18 @@
     "allowMultipleVotesHelp": "Soll es Nutzern möglich sein mehrfach zu bewerten?",
     "allowActions": "Erlaube Maßnahmen",
     "allowActionsHelp": "Bestimmt ob Maßnahmen hinzugefügt werden können",
-    "allowAuthorVisible": "Zeige Author",
-    "allowAuthorVisibleHelp": "Zeigt den Author eines Posts an.",
+    "allowAuthorVisible": "Zeige Autor",
+    "allowAuthorVisibleHelp": "Zeigt den Autor eines Posts an.",
     "newPostsFirst": "Neue Beiträge zuerst hinzufügen",
     "newPostsFirstHelp": "Neue Beiträge werden oben in der Spalte hinzugefügt",
     "allowGiphy": "Giphy erlauben",
-    "allowGiphyHelp": "Benutzern erlauben, ein Giphy-Bild gegen einen Beitrag zu setzen",
+    "allowGiphyHelp": "Benutzern erlauben, ein Giphy-Bild statt einen Beitrag zu setzen",
     "allowGrouping": "Gruppieren erlauben",
     "allowGroupingHelp": "Erstelle Gruppen, um Beiträge zusammenzufassen",
-    "allowReordering": "Nachbestellung erlauben",
-    "allowReorderingHelp": "Erlaubt die Nachbestellung von Posts per Drag-and-Drop",
-    "blurCards": "Unschärfe Karten",
-    "blurCardsHelp": "Karteninhalte werden verschwommen, bis der Moderator den Inhalt aufdeckt",
+    "allowReordering": "Neu sortieren erlauben",
+    "allowReorderingHelp": "Erlaubt die Beiträge per Drag-and-Drop neu zu sortieren",
+    "blurCards": "Unscharfe Karten",
+    "blurCardsHelp": "Karteninhalte werden verschwommen dargestellt, bis der Moderator den Inhalt aufdeckt",
     "template": "Vorlage",
     "templateHelp": "Nutze ein vordefiniertes Spaltenset",
     "numberOfColumns": "Anzahl an Spalten",
@@ -134,8 +134,8 @@
     "userIsReady": "{{user}} ist bereit!"
   },
   "GameMenu": {
-    "board": "Brett",
-    "summary": "Summary"
+    "board": "Board",
+    "summary": "Zusammenfassung"
   },
   "Template": {
     "default": "Standard",
