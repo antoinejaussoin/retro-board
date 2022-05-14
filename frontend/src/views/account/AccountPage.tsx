@@ -19,10 +19,13 @@ import { useCallback, useContext } from 'react';
 import { updateUserName } from './api';
 import UserContext from 'auth/Context';
 import { useSnackbar } from 'notistack';
+import LanguagePicker from 'components/LanguagePicker';
+import { useLanguage } from 'translations';
 
 function AccountPage() {
   const url = usePortalUrl();
   const user = useUser();
+  const [language, setLanguage] = useLanguage();
   const { setUser } = useContext(UserContext);
   const isTrial = useIsTrial();
   const formatDistanceToNow = useFormatDate();
@@ -88,6 +91,17 @@ function AccountPage() {
           <Data>
             <Title>{t('AccountPage.details.accountType')}</Title>
             <Value>{user.accountType}</Value>
+          </Data>
+
+          <Data>
+            <Title>{t('AccountPage.details.language')}</Title>
+            <Value>
+              <LanguagePicker
+                value={language.locale}
+                onChange={setLanguage}
+                variant="standard"
+              />
+            </Value>
           </Data>
         </Section>
 
@@ -194,6 +208,7 @@ const Name = styled.h1`
 
 const Data = styled.div`
   display: flex;
+  align-items: center;
   margin: 15px 0;
 `;
 

@@ -8,10 +8,15 @@ import { Flag } from './Flag';
 
 interface LanguagePickerProps {
   value: string;
+  variant?: 'outlined' | 'standard' | 'filled';
   onChange: (value: string) => void;
 }
 
-const LanguagePicker = ({ value, onChange }: LanguagePickerProps) => {
+const LanguagePicker = ({
+  value,
+  variant = 'standard',
+  onChange,
+}: LanguagePickerProps) => {
   const handleSelect = useCallback(
     (event: SelectChangeEvent<unknown>) => {
       const language = event.target.value as string;
@@ -23,7 +28,7 @@ const LanguagePicker = ({ value, onChange }: LanguagePickerProps) => {
     <StyledSelect
       value={value}
       onChange={handleSelect}
-      variant="standard"
+      variant={variant}
       data-cy="language-picker"
     >
       {languages.map((language) => (
