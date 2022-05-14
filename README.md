@@ -87,8 +87,8 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ### Version 4.16.0
 
-- Complete overhaul of the translations. Switching to [i18next](https://www.i18next.com). Translated all languages using Machine Learning (via Crowdin).
-- Added translations for the Ukrainian language, and a link to provide help for Ukraine 🇺🇦.
+- Complete overhaul of the translations. Switching to [i18next](https://www.i18next.com). Translated all languages using Machine Learning (via Crowdin)
+- Added translations for the Ukrainian language, and a link to provide help for [Ukraine 🇺🇦](https://www.gov.uk/government/news/ukraine-what-you-can-do-to-help)
 - Fix the empty file download when logging using Google OAuth
 - Upgrade the documentation to the latest version of Docusaurus
 - Add more integration tests, covering password accounts and account deletion
