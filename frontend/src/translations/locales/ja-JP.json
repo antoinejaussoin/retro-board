@@ -273,7 +273,8 @@
       "header": "詳細",
       "username": "ユーザー名",
       "email": "Eメールアドレス",
-      "accountType": "アカウントの種類"
+      "accountType": "アカウントの種類",
+      "language": "言語"
     },
     "plan": {
       "header": "あなたのプラン",

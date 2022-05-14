@@ -273,7 +273,8 @@
       "header": "您的详细信息",
       "username": "用户名",
       "email": "电子邮件地址",
-      "accountType": "帐户类型"
+      "accountType": "帐户类型",
+      "language": "语言"
     },
     "plan": {
       "header": "您的计划",

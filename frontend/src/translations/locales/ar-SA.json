@@ -273,7 +273,8 @@
       "header": "التفاصيل الخاصة بك",
       "username": "اسم المستخدم",
       "email": "البريد الإلكتروني",
-      "accountType": "نوع الحساب"
+      "accountType": "نوع الحساب",
+      "language": "اللغة"
     },
     "plan": {
       "header": "خطتك",

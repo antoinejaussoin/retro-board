@@ -273,7 +273,8 @@
       "header": "你的資料",
       "username": "用戶名",
       "email": "電子郵件",
-      "accountType": "帳戶類型"
+      "accountType": "帳戶類型",
+      "language": "語言"
     },
     "plan": {
       "header": "你的計劃",

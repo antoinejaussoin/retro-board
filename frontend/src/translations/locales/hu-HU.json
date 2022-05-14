@@ -273,7 +273,8 @@
       "header": "Az adataid",
       "username": "Felhasználónév",
       "email": "Email",
-      "accountType": "Fiók Típus"
+      "accountType": "Fiók Típus",
+      "language": "Nyelv"
     },
     "plan": {
       "header": "Az Ön terve",

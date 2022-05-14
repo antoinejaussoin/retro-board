@@ -273,7 +273,8 @@
       "header": "I Tuoi Dettagli",
       "username": "Username",
       "email": "Email",
-      "accountType": "Tipo Di Account"
+      "accountType": "Tipo Di Account",
+      "language": "Lingua"
     },
     "plan": {
       "header": "Il Tuo Piano",

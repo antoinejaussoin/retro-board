@@ -273,7 +273,8 @@
       "header": "Tus detalles",
       "username": "Usuario",
       "email": "E-mail",
-      "accountType": "Tipo de cuenta"
+      "accountType": "Tipo de cuenta",
+      "language": "Idioma"
     },
     "plan": {
       "header": "Su plan",

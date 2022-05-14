@@ -273,7 +273,8 @@
       "header": "Vos Coordonnées",
       "username": "Nom d'utilisateur",
       "email": "E-Mail",
-      "accountType": "Type de compte"
+      "accountType": "Type de compte",
+      "language": "Langue"
     },
     "plan": {
       "header": "Votre Accès",

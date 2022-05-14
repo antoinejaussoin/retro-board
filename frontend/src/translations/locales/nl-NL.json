@@ -273,7 +273,8 @@
       "header": "Uw gegevens",
       "username": "Gebruikersnaam",
       "email": "E-mailadres",
-      "accountType": "Klant type"
+      "accountType": "Klant type",
+      "language": "Taal"
     },
     "plan": {
       "header": "Uw abonnement",
