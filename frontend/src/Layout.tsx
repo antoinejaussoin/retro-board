@@ -26,7 +26,6 @@ import { Alert, AlertTitle, Button, Hidden } from '@mui/material';
 import useBackendCapabilities from './global/useBackendCapabilities';
 import useIsPro from 'auth/useIsPro';
 import ProButton from 'components/ProButton';
-import { Flag } from 'components/Flag';
 import { useTranslation } from 'react-i18next';
 
 const Home = lazy(() => import('./views/Home' /* webpackChunkName: "home" */));
@@ -176,16 +175,6 @@ function App() {
             </Hidden>
           ) : null}
           <Spacer />
-          <Hidden mdDown>
-            <HelpUkraine
-              href="https://www.gov.uk/government/news/ukraine-what-you-can-do-to-help"
-              target="_blank"
-            >
-              <Flag country="ua" />
-              {t('Main.helpUkraine')}
-            </HelpUkraine>
-          </Hidden>
-
           {isOnGamePage ? <Invite /> : null}
           {isInitialised ? (
             <AccountMenu />
@@ -243,22 +232,6 @@ const Initialising = styled.div``;
 
 const Spacer = styled.div`
   flex: 1;
-`;
-
-const HelpUkraine = styled.a`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 20px;
-  font-style: unset;
-  text-decoration: unset;
-  font-size: 1.2rem;
-  font-weight: 100;
-  color: #0057b7;
-  border-radius: 5px;
-  padding: 10px;
-  backdrop-filter: blur(10px);
-  background-color: rgba(255, 255, 255, 0.3);
 `;
 
 export default App;

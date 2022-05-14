@@ -10,6 +10,7 @@ import ParticipantsList from './panel/ParticipantsList';
 import config from '../utils/getConfig';
 import useSidePanel from './panel/useSidePanel';
 import { useMatch } from 'react-router-dom';
+import { HelpUkraine } from './panel/HelpUkraine';
 
 interface Policy {
   name: string;
@@ -35,6 +36,7 @@ function Panel() {
         <Top>
           <LanguagePicker value={language.locale} onChange={setLanguage} />
           <Content>{hasParticipants ? <ParticipantsList /> : null}</Content>
+          <HelpUkraine />
         </Top>
         <Bottom>
           <Typography component="div">
