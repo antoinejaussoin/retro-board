@@ -1,7 +1,5 @@
 import { UserIds } from './utils';
 
-declare module 'passport-okta-oauth';
-
 declare module 'express-serve-static-core' {
   interface Request {
     user?: UserIds | undefined;

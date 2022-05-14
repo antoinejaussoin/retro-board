@@ -73,7 +73,7 @@
     "passport-local": "1.0.0",
     "passport-microsoft": "1.0.0",
     "passport-okta-oauth20": "1.1.0",
-    "passport-slack": "0.0.7",
+    "passport-slack-oauth2": "^1.1.1",
     "passport-twitter": "1.0.4",
     "pg": "8.7.3",
     "prettier": "2.6.2",

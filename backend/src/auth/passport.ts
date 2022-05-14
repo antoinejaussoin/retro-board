@@ -3,7 +3,7 @@ import { Strategy as LocalStrategy, IVerifyOptions } from 'passport-local';
 import { Strategy as TwitterStrategy } from 'passport-twitter';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as GithubStrategy } from 'passport-github2';
-import { Strategy as SlackStrategy } from 'passport-slack';
+import { Strategy as SlackStrategy } from 'passport-slack-oauth2';
 import { Strategy as MicrosoftStrategy } from 'passport-microsoft';
 import { Strategy as OktaStrategy } from 'passport-okta-oauth20';
 

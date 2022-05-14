@@ -48,10 +48,16 @@ export const GITHUB_CONFIG: GitHubStrategy | null =
 export const SLACK_CONFIG =
   config.SLACK_KEY && config.SLACK_SECRET
     ? {
+        skipUserProfile: false, // default
+        scope: [
+          'identity.basic',
+          'identity.email',
+          'identity.avatar',
+          'identity.team',
+        ], // default
         clientID: config.SLACK_KEY || '',
         clientSecret: config.SLACK_SECRET || '',
         callbackURL: slackURL,
-        scope: ['identity.email', 'identity.avatar', 'identity.basic'],
       }
     : null;
 

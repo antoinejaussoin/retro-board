@@ -9,7 +9,7 @@ const googleAuth = passport.authenticate('google', {
 });
 const facebookAuth = passport.authenticate('facebook');
 const githubAuth = passport.authenticate('github', { scope: ['user:email'] });
-const slackAuth = passport.authenticate('slack');
+const slackAuth = passport.authenticate('Slack');
 const microsoftAuth = passport.authenticate('microsoft');
 const oktaAuth = passport.authenticate('okta');
 
