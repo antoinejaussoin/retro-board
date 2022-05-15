@@ -57,6 +57,7 @@ export interface BackendCapabilities {
   adminEmail: string;
   licenced: boolean;
   oAuth: OAuthAvailabilities;
+  slackClientId?: string;
   disableAnonymous: boolean;
   disablePasswords: boolean;
   disablePasswordRegistration: boolean;

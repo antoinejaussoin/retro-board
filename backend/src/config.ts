@@ -78,6 +78,7 @@ const config: BackendConfig = {
   GITHUB_SECRET: defaults('GITHUB_SECRET', ''),
   SLACK_KEY: defaults('SLACK_KEY', ''),
   SLACK_SECRET: defaults('SLACK_SECRET', ''),
+  SLACK_BOT_ENABLE: defaultsBool('SLACK_BOT_ENABLE', false),
   MICROSOFT_KEY: defaults('MICROSOFT_KEY', ''),
   MICROSOFT_SECRET: defaults('MICROSOFT_SECRET', ''),
   OKTA_AUDIENCE: defaults('OKTA_AUDIENCE', ''),

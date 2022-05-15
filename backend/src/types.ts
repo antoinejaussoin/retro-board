@@ -28,6 +28,7 @@ export interface BackendConfig {
   GITHUB_SECRET: string;
   SLACK_KEY: string;
   SLACK_SECRET: string;
+  SLACK_BOT_ENABLE: boolean;
   MICROSOFT_KEY: string;
   MICROSOFT_SECRET: string;
   OKTA_AUDIENCE: string;

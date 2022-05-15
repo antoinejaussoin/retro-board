@@ -19,6 +19,10 @@ router.get('/self-hosting', async (_, res) => {
     selfHosted: config.SELF_HOSTED,
     licenced: !!licence,
     emailAvailable: canSendEmails(),
+    slackClientId:
+      config.SLACK_BOT_ENABLE && config.SLACK_KEY
+        ? config.SLACK_KEY
+        : undefined,
     disableAnonymous: config.DISABLE_ANONYMOUS_LOGIN,
     disablePasswords: config.DISABLE_PASSWORD_LOGIN,
     disablePasswordRegistration: config.DISABLE_PASSWORD_REGISTRATION,
