@@ -116,7 +116,7 @@ function AccountPage() {
               href={`https://slack.com/oauth/v2/authorize?client_id=${capabilities.slackClientId}&scope=commands&user_scope=`}
             >
               <img
-                alt="Add to Slack"
+                alt={t('AccountPage.slack.addToSlack')}
                 height="40"
                 width="139"
                 src="https://platform.slack-edge.com/img/add_to_slack.png"

@@ -276,6 +276,11 @@
       "accountType": "Klant type",
       "language": "Taal"
     },
+    "slack": {
+      "header": "Slack integratie",
+      "help": "Voeg de Retrospected Bot toe aan je slack werkruimte, en krijg de mogelijkheid om een retro te beginnen met een eenvoudige opdracht: '/retro My Retro'.",
+      "addToSlack": "Toevoegen aan Slack"
+    },
     "plan": {
       "header": "Uw abonnement",
       "plan": "Abonnement",

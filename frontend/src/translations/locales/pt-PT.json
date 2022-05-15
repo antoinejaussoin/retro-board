@@ -276,6 +276,11 @@
       "accountType": "Tipo de Conta",
       "language": "IDIOMA"
     },
+    "slack": {
+      "header": "Integração Slack",
+      "help": "Adicione o Bot Retrospecionado ao seu espaço de trabalho slack e obtenha a habilidade de iniciar uma retração com um comando simples: '/retro My Retro'.",
+      "addToSlack": "Adicionar ao Slack"
+    },
     "plan": {
       "header": "Seu plano",
       "plan": "Planejamento",

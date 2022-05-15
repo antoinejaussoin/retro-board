@@ -276,6 +276,11 @@
       "accountType": "帐户类型",
       "language": "语言"
     },
+    "slack": {
+      "header": "Slack 集成",
+      "help": "将回顾机器人添加到您的视图工作空间，并获得以简单命令开始反转的能力：“/retro 我的回归”。",
+      "addToSlack": "添加到 Slack"
+    },
     "plan": {
       "header": "您的计划",
       "plan": "计划",

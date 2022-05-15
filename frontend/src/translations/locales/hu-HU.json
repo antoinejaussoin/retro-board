@@ -276,6 +276,11 @@
       "accountType": "Fiók Típus",
       "language": "Nyelv"
     },
+    "slack": {
+      "header": "Laza integráció",
+      "help": "Adja hozzá a Retrospected Botot laza munkaterületéhez, és tegye lehetővé a retro elindítását egy egyszerű paranccsal: '/retro My Retro'.",
+      "addToSlack": "Add hozzá a Slackhoz"
+    },
     "plan": {
       "header": "Az Ön terve",
       "plan": "Terv",

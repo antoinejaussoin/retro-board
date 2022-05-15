@@ -276,6 +276,11 @@
       "accountType": "Kontotyp",
       "language": "Sprache"
     },
+    "slack": {
+      "header": "Slack Integration",
+      "help": "Fügen Sie den Retrospected Bot Ihrem Arbeitsbereich hinzu und erhalten Sie die Möglichkeit, ein Retro mit einem einfachen Befehl zu starten: '/retro My Retro'.",
+      "addToSlack": "Zu Slack hinzufügen"
+    },
     "plan": {
       "header": "Ihr Plan",
       "plan": "Plan",

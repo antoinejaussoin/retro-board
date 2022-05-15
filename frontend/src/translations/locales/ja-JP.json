@@ -276,6 +276,11 @@
       "accountType": "アカウントの種類",
       "language": "言語"
     },
+    "slack": {
+      "header": "Slack Integration",
+      "help": "Retrospected Botをスラックワークスペースに追加し、'/retro My Retro'という簡単なコマンドでレトロを開始することができます。",
+      "addToSlack": "Slack に追加"
+    },
     "plan": {
       "header": "あなたのプラン",
       "plan": "プラン",

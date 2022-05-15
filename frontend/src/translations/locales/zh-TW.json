@@ -276,6 +276,11 @@
       "accountType": "帳戶類型",
       "language": "語言"
     },
+    "slack": {
+      "header": "鬆弛集成",
+      "help": "將 Retrospected Bot 添加到您的 slack 工作區，並能夠使用簡單的命令開始復古：'/retro My Retro'。",
+      "addToSlack": "添加到鬆弛"
+    },
     "plan": {
       "header": "你的計劃",
       "plan": "計劃",

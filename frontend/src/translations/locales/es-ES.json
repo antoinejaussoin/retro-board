@@ -276,6 +276,11 @@
       "accountType": "Tipo de cuenta",
       "language": "Idioma"
     },
+    "slack": {
+      "header": "Integración de Slack",
+      "help": "Agregue el Bot Reprobado a su espacio de trabajo slack y obtenga la capacidad de iniciar un retro con un simple comando: '/retro My Retro'.",
+      "addToSlack": "Añadir a Slack"
+    },
     "plan": {
       "header": "Su plan",
       "plan": "Plano",
