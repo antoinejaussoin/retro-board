@@ -29,7 +29,7 @@ export default function slackRouter(): Router {
       if (session) {
         await sendToSlack(
           msg.response_url,
-          `Well done! You can start retrospecting here: ${config.BASE_URL}/game/${session.id}`
+          `All done! You can start retrospecting here: ${config.BASE_URL}/game/${session.id}`
         );
       } else {
         await sendToSlack(
