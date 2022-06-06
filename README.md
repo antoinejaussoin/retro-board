@@ -536,7 +536,7 @@ This will run a demo version, which you can turn into a fully licenced version b
 - Converting entire project to 2-space indentation
 - ⏫ Upgrade other dependencies
 - 🇵🇱 Polish Translation (👏 Thanks [@olaf-cichocki](https://github.com/olaf-cichocki))
-- 🇦🇪 Arabic Translation (👏 Thanks [@Meshredded](https://github.com/Meshredded))
+- 🇦🇪 Arabic Translation (👏 Thanks [@FrenchTechLead](https://github.com/FrenchTechLead))
 - Improved the loading screen
 
 ### Version 0.9.0
@@ -674,7 +674,7 @@ Many thanks to the following contributors who helped translating the app:
 - Spanish: [@andresin87](https://github.com/andresin87)
 - Chinese: [@aqutw](https://github.com/aqutw)
 - Polish: [@olaf-cichocki](https://github.com/olaf-cichocki)
-- Arabic: [@Meshredded](https://github.com/Meshredded)
+- Arabic: [@FrenchTechLead](https://github.com/FrenchTechLead)
 - Japanese: [@sat0yu](https://github.com/sat0yu)
 - German: [@PaulBrandt](https://github.com/PaulBrandt)
 - Italian: [@mventuri](https://github.com/mventuri)
