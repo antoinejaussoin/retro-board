@@ -1,6 +1,6 @@
 {
   "name": "retro-board-integration",
-  "version": "4.16.0",
+  "version": "4.16.1",
   "description": "Integrations tests",
   "main": "index.js",
   "directories": {
