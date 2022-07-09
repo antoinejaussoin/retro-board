@@ -226,23 +226,35 @@ export async function deleteSessions(
       );
       return false;
     }
-    await sessionRepository.query(
-      `delete from visitors where sessions_id = $1;`,
-      [sessionId]
-    );
-    await sessionRepository.query(`delete from posts where session_id = $1;`, [
-      sessionId,
-    ]);
-    await sessionRepository.query(
-      `delete from columns where session_id = $1;`,
-      [sessionId]
-    );
-    await sessionRepository.query(`delete from groups where session_id = $1;`, [
-      sessionId,
-    ]);
-    await sessionRepository.query(`delete from sessions where id = $1;`, [
-      sessionId,
-    ]);
+
+    try {
+      await sessionRepository.query(
+        `delete from messages where session_id = $1;`,
+        [sessionId]
+      );
+      await sessionRepository.query(
+        `delete from visitors where sessions_id = $1;`,
+        [sessionId]
+      );
+      await sessionRepository.query(
+        `delete from posts where session_id = $1;`,
+        [sessionId]
+      );
+      await sessionRepository.query(
+        `delete from columns where session_id = $1;`,
+        [sessionId]
+      );
+      await sessionRepository.query(
+        `delete from groups where session_id = $1;`,
+        [sessionId]
+      );
+      await sessionRepository.query(`delete from sessions where id = $1;`, [
+        sessionId,
+      ]);
+    } catch (err) {
+      console.error('Could not delete session', sessionId, err);
+      return false;
+    }
 
     return true;
   });
