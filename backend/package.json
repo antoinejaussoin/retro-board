@@ -63,7 +63,7 @@
     "jest": "27.5.1",
     "lexorank": "1.0.4",
     "lodash": "4.17.21",
-    "moment": "2.29.3",
+    "moment": "2.29.4",
     "node-fetch": "2.6.7",
     "nodemailer": "6.7.3",
     "nodemon": "2.0.15",
