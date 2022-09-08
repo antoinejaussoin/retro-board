@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [v4162/emergency-fix]
+    branches: [v4162/compose-fix]
 
 jobs:
   build:

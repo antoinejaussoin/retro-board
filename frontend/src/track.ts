@@ -38,8 +38,8 @@ export const recordManualError = (message: string) => {
       );
     } else {
       Sentry.withScope((scope) => {
-        scope.setLevel(Sentry.Severity.Error);
-        Sentry.captureMessage(message, Sentry.Severity.Error);
+        scope.setLevel('error');
+        Sentry.captureMessage(message, 'error');
       });
     }
   }

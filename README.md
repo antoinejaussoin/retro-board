@@ -85,6 +85,10 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 4.16.3
+
+- Adding a health-check constraint on Docker-Compose for Postgres, ensuring the backend is only started once the database is ready. 👏 Thanks to Frank B for this!
+
 ### Version 4.16.2
 
 - Fixed a bug where sessions a user participated in did not show up on their homepage. (👏 Thanks a bunch to Frank Becker for reporting the issue and helping find the problem)

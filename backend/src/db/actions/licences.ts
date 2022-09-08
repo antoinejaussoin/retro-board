@@ -7,7 +7,7 @@ import { LicenceMetadata } from './../../types';
 
 export async function registerLicence(
   email: string | null,
-  name: string | null,
+  name: string | null | undefined,
   customerId: string,
   sessionId: string
 ): Promise<boolean> {

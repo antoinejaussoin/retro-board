@@ -28,7 +28,7 @@ export function manualReport(message: string, request?: Request) {
 
 export function manualMessage(message: string) {
   if (useSentry) {
-    Sentry.captureMessage(message, Sentry.Severity.Error);
+    Sentry.captureMessage(message, 'error');
   }
 }
 
