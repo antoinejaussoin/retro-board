@@ -85,6 +85,10 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 4.16.2
+
+- Fixed a bug where sessions a user participated in did not show up on their homepage. (👏 Thanks a bunch to Frank Becker for reporting the issue and helping find the problem)
+
 ### Version 4.16.1
 
 - Fixed a bug where sessions could not be deleted when there was any chat messages (👏 Thanks Florin Bicher for the report)
