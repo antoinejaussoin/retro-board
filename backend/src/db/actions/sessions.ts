@@ -264,7 +264,7 @@ export async function previousSessions(
   userId: string
 ): Promise<SessionMetadata[]> {
   return await transaction(async (manager) => {
-    const sessionsAsVisitors: { sessionsId: string }[] = await manager.query(
+    const sessionsAsVisitors: { sessions_id: string }[] = await manager.query(
       `
       select distinct v.sessions_id from visitors v
       where v.users_id = $1
@@ -281,7 +281,7 @@ export async function previousSessions(
     );
 
     const ids = uniq([
-      ...sessionsAsVisitors.map((s) => s.sessionsId),
+      ...sessionsAsVisitors.map((s) => s.sessions_id),
       ...sessionsAsOwner.map((s) => s.id),
     ]);
 
