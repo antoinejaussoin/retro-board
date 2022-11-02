@@ -21,7 +21,7 @@ describe('Post workflow', () => {
     cy.wait(+Cypress.env('backend_delay'));
 
     // Close cookie banner
-    cy.get('a.wpcc-btn').click();
+    cy.get('.wpcc-btn').click();
     
     get('login-button').click();
     get('anon-tab').click();
@@ -48,7 +48,7 @@ describe('Post workflow', () => {
     cy.visit('/');
 
     // Close cookie banner
-    cy.get('a.wpcc-btn').click();
+    cy.get('.wpcc-btn').click();
 
     get('login-button').click();
     get('anon-tab').click();
@@ -81,7 +81,7 @@ describe('Post workflow', () => {
     cy.visit('/');
 
     // Close cookie banner
-    cy.get('a.wpcc-btn').click();
+    cy.get('.wpcc-btn').click();
 
     // Login
     get('login-button').click();
