@@ -54,6 +54,9 @@ services:
       SLACK_SECRET:
       MICROSOFT_KEY:
       MICROSOFT_SECRET:
+      MICROSOFT_TENANT: # This should generally not be set at all.
+      MICROSOFT_AUTHORIZATION_URL: # This should generally not be set at all.
+      MICROSOFT_TOKEN_URL: # This should generally not be set at all.
       OKTA_AUDIENCE:
       OKTA_KEY:
       OKTA_SECRET:
