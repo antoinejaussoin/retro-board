@@ -129,14 +129,7 @@ function App() {
           administration panel.
         </Alert>
       ) : null}
-      <AppBar
-        position="sticky"
-        style={{
-          backgroundColor: 'none',
-          background:
-            'linear-gradient(167deg, rgba(0,87,183,1) 28%, rgba(255,215,0,1) 74%)',
-        }}
-      >
+      <AppBar position="sticky">
         <Toolbar>
           <IconButton
             color="inherit"
