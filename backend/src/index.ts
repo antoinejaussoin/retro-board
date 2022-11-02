@@ -62,6 +62,7 @@ import { hasField } from './security/payload-checker';
 import mung from 'express-mung';
 import { QueryFailedError } from 'typeorm';
 import { deleteAccount } from './db/actions/delete';
+import { noop } from 'lodash';
 
 const realIpHeader = 'X-Forwarded-For';
 const sessionSecret = `${config.SESSION_SECRET!}-4.11.5`; // Increment to force re-auth
@@ -277,7 +278,7 @@ db().then(() => {
   });
 
   app.post('/api/logout', async (req, res, next) => {
-    req.logout();
+    req.logout({ keepSessionInfo: false }, noop);
     req.session?.destroy((err: string) => {
       if (err) {
         return next(err);
