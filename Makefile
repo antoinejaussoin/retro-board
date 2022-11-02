@@ -29,8 +29,8 @@ install-trivy:
 trivy:
 	docker build -f ./backend/Dockerfile -t retrospected/backend:trivy ./backend
 	docker build -f ./frontend/Dockerfile -t retrospected/frontend:trivy ./frontend
-	trivy retrospected/backend:trivy
-	trivy retrospected/frontend:trivy
+	trivy image retrospected/backend:trivy
+	trivy image retrospected/frontend:trivy
 
 translate:
 	crowdin push sources

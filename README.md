@@ -87,7 +87,7 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ### Version 4.16.3
 
-- Adding a health-check constraint on Docker-Compose for Postgres, ensuring the backend is only started once the database is ready. 👏 Thanks to Frank B for this!
+- TBD
 
 ### Version 4.16.2
 
