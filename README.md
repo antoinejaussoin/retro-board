@@ -87,9 +87,9 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ### Version 4.16.3
 
-- Exposing "tenant", "authorization url" and "token url" for Microsoft OAuth.
+- Exposing "tenant", "authorization url" and "token url" for Microsoft OAuth. (👏 Thanks to Frank Becker for the idea)
+- 🇩🇪 German language improvements (👏 Thanks [@Tobias G](https://github.com/Xyaren) for the PR!)
 - Upgrading dependencies
-- 🇩🇪 German language improvements
 
 ### Version 4.16.2
 
