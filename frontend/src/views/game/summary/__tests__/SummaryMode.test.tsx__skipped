@@ -83,7 +83,7 @@ const data: ColumnContent[] = [
   },
 ];
 
-describe('SummaryMode', () => {
+describe.skip('SummaryMode', () => {
   it('Should display all columns', () => {
     const { getAllByRole } = renderWithRouter(
       <SummaryMode columns={data} search="" />
