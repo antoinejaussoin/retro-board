@@ -5,6 +5,10 @@ import { MicrosoftStrategyOptions } from 'passport-microsoft';
 import { OktaStrategyOptions } from 'passport-okta-oauth20';
 import config from '../config';
 
+type MicrosoftStrategyOptionsWithTenant = MicrosoftStrategyOptions & {
+  tenant: string | undefined;
+};
+
 const providers = ['twitter', 'google', 'github', 'slack', 'microsoft', 'okta'];
 
 const CLIENT_ORIGIN = config.BASE_URL || 'http://localhost:3000';
@@ -61,11 +65,14 @@ export const SLACK_CONFIG =
       }
     : null;
 
-export const MICROSOFT_CONFIG: MicrosoftStrategyOptions | null =
+export const MICROSOFT_CONFIG: MicrosoftStrategyOptionsWithTenant | null =
   config.MICROSOFT_KEY && config.MICROSOFT_SECRET
     ? {
         clientID: config.MICROSOFT_KEY || '',
         clientSecret: config.MICROSOFT_SECRET || '',
+        tenant: config.MICROSOFT_TENANT,
+        authorizationURL: config.MICROSOFT_AUTHORIZATION_URL,
+        tokenURL: config.MICROSOFT_TOKEN_URL,
         callbackURL: microsoftURL,
         scope: ['user.read'],
       }

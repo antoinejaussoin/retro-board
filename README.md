@@ -87,7 +87,9 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ### Version 4.16.3
 
-- TBD
+- Exposing "tenant", "authorization url" and "token url" for Microsoft OAuth.
+- Upgrading dependencies
+- 🇩🇪 German language improvements
 
 ### Version 4.16.2
 

@@ -31,6 +31,9 @@ export interface BackendConfig {
   SLACK_BOT_ENABLE: boolean;
   MICROSOFT_KEY: string;
   MICROSOFT_SECRET: string;
+  MICROSOFT_TENANT: string | undefined;
+  MICROSOFT_AUTHORIZATION_URL: string | undefined;
+  MICROSOFT_TOKEN_URL: string | undefined;
   OKTA_AUDIENCE: string;
   OKTA_KEY: string;
   OKTA_SECRET: string;

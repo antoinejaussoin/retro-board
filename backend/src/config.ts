@@ -45,6 +45,13 @@ function defaultsNumber(key: string, defaultValue: number): number {
   return parseInt(process.env[key]!);
 }
 
+function defaultsUndefined(key: string): string | undefined {
+  if (process.env[key] === undefined) {
+    return undefined;
+  }
+  return process.env[key]!;
+}
+
 const config: BackendConfig = {
   LICENCE_KEY: defaults('LICENCE_KEY', ''),
   SELF_HOSTED: defaultsBool('SELF_HOSTED', true),
@@ -81,6 +88,9 @@ const config: BackendConfig = {
   SLACK_BOT_ENABLE: defaultsBool('SLACK_BOT_ENABLE', false),
   MICROSOFT_KEY: defaults('MICROSOFT_KEY', ''),
   MICROSOFT_SECRET: defaults('MICROSOFT_SECRET', ''),
+  MICROSOFT_TENANT: defaultsUndefined('MICROSOFT_TENANT'),
+  MICROSOFT_AUTHORIZATION_URL: defaultsUndefined('MICROSOFT_AUTHORIZATION_URL'),
+  MICROSOFT_TOKEN_URL: defaultsUndefined('MICROSOFT_TOKEN_URL'),
   OKTA_AUDIENCE: defaults('OKTA_AUDIENCE', ''),
   OKTA_KEY: defaults('OKTA_KEY', ''),
   OKTA_SECRET: defaults('OKTA_SECRET', ''),
