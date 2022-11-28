@@ -3,7 +3,7 @@ import { AccountType, FullUser, Currency, Plan } from '../../common';
 
 @ViewEntity({
   expression: `
-select 
+  select 
   u.id,
   i.id as identity_id,
   u.name,
@@ -16,18 +16,23 @@ select
   u.email,
   case when i.account_type = 'anonymous' and i.password is null then false else true end as "can_delete_session",
   u.trial,
-  s.id as "own_subscriptions_id",
-  s.plan as "own_plan",
-  coalesce(s.id, s2.id, s3.id) as "subscriptions_id",
-  coalesce(s.active, s2.active, s3.active, false) as "pro",
-  coalesce(s.plan, s2.plan, s3.plan) as "plan",
-  coalesce(s.domain, s2.domain, s3.domain) as "domain"
+  s1.id as "own_subscriptions_id",
+  s1.plan as "own_plan",
+  coalesce(s1.id, s2.id, s3.id) as "subscriptions_id",
+  coalesce(s1.active, s2.active, s3.active, false) as "pro",
+  coalesce(s1.plan, s2.plan, s3.plan) as "plan",
+  coalesce(s1.domain, s2.domain, s3.domain) as "domain",
+  coalesce(o1.name, o2.name, o2.name) as "plan_owner",
+  coalesce(o1.email, o2.email, o2.email) as "plan_owner_email"
 from users_identities i
 
 join users u on u.id = i.user_id
-left join subscriptions s on s.owner_id = u.id and s.active is true
+left join subscriptions s1 on s1.owner_id = u.id and s1.active is true
+left join users o1 on o1.id = s1.owner_id
 left join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true
+left join users o2 on o2.id = s2.owner_id
 left join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true
+left join users o3 on o3.id = s3.owner_id
   `,
 })
 export default class UserView {
@@ -56,6 +61,10 @@ export default class UserView {
   @ViewColumn()
   public ownPlan: Plan | null;
   @ViewColumn()
+  public planOwner: string | null;
+  @ViewColumn()
+  public planOwnerEmail: string | null;
+  @ViewColumn()
   public subscriptionsId: string | null;
   @ViewColumn()
   public plan: Plan | null;
@@ -83,6 +92,8 @@ export default class UserView {
     this.canDeleteSession = false;
     this.currency = null;
     this.ownPlan = null;
+    this.planOwner = null;
+    this.planOwnerEmail = null;
     this.ownSubscriptionsId = null;
     this.plan = null;
     this.domain = null;
@@ -105,6 +116,8 @@ export default class UserView {
       stripeId: this.stripeId,
       currency: this.currency,
       plan: this.plan,
+      planOwner: this.planOwner,
+      planOwnerEmail: this.planOwnerEmail,
       domain: this.domain,
       ownPlan: this.ownPlan,
       ownSubscriptionsId: this.ownSubscriptionsId,

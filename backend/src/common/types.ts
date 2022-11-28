@@ -138,6 +138,8 @@ export interface FullUser extends User {
   subscriptionsId: string | null;
   currency: Currency | null;
   plan: Plan | null;
+  planOwner: string | null;
+  planOwnerEmail: string | null;
   domain: string | null;
   ownPlan: Plan | null;
   ownSubscriptionsId: string | null;

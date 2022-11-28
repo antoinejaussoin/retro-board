@@ -140,9 +140,20 @@ function AccountPage() {
               </Data>
             ) : null}
             {onSomebodysPlan && (
-              <Alert severity="info">
-                {t('AccountPage.plan.youAreMember')}
-              </Alert>
+              <>
+                <Alert severity="info">
+                  {t('AccountPage.plan.youAreMember')}
+                </Alert>
+
+                {user.planOwner && user.planOwnerEmail ? (
+                  <Data>
+                    <Title>{t('AccountPage.plan.ownedBy')}</Title>
+                    <Value>
+                      {user.planOwner} ({user.planOwnerEmail})
+                    </Value>
+                  </Data>
+                ) : null}
+              </>
             )}
             {ownsThePlan && (
               <Alert severity="info">{t('AccountPage.plan.youAreOwner')}</Alert>

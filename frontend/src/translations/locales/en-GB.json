@@ -285,7 +285,8 @@
       "header": "Your Plan",
       "plan": "Plan",
       "youAreOwner": "You are the owner of this plan, through the subscription below.",
-      "youAreMember": "You are on this plan through somebody else's subscription."
+      "youAreMember": "You are on this plan through somebody else's subscription.",
+      "ownedBy": "Owned By"
     },
     "subscription": {
       "header": "Your Subscription",
