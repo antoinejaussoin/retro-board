@@ -21,6 +21,10 @@ export async function updateMembers(members: string[]): Promise<void> {
   await fetchPatch(`/api/stripe/members`, members);
 }
 
+export async function updateAdmins(admins: string[]): Promise<void> {
+  await fetchPatch(`/api/stripe/admins`, admins);
+}
+
 export async function updateUserName(name: string): Promise<FullUser | null> {
   const updated = await fetchPostGet<ChangeUserNamePayload, FullUser | null>(
     `/api/me/username`,

@@ -295,6 +295,12 @@
         "title": "Your Team",
         "limitReached": "You reached the limit of your subscription ({{limit}} users, including yourself). Please remove members, or upgrade to an unlimited Company account.",
         "info": "Add emails below to grant Pro accounts to up to {{limit}} other colleagues. Press Enter after each email address."
+      },
+      "adminsEditor": {
+        "added": "{{email}} is now an administrator of this subscription.",
+        "removed": "{{email}} is no longer an administrator of this subscription.",
+        "title": "Administrators",
+        "description": "Administrators can add users to or remove users from the subscription."
       }
     },
     "trial": {

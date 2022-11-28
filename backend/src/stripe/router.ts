@@ -248,6 +248,7 @@ function stripeRouter(): Router {
   });
 
   router.get('/members', async (req, res) => {
+    // possibly move this
     const identity = await getIdentityFromRequest(req);
     if (identity) {
       const subscription = await getActiveSubscription(identity.user.id);
@@ -259,11 +260,26 @@ function stripeRouter(): Router {
   });
 
   router.patch('/members', async (req, res) => {
+    // possibly move this
     const identity = await getIdentityFromRequest(req);
     if (identity) {
       const subscription = await getActiveSubscription(identity.user.id);
       if (subscription && subscription.plan === 'team') {
         subscription.members = req.body as string[];
+        await saveSubscription(subscription);
+        return res.status(200).send();
+      }
+    }
+    res.status(401).send();
+  });
+
+  router.patch('/admins', async (req, res) => {
+    // possibly move this
+    const identity = await getIdentityFromRequest(req);
+    if (identity) {
+      const subscription = await getActiveSubscription(identity.user.id);
+      if (subscription && subscription.plan === 'team') {
+        subscription.admins = req.body as string[];
         await saveSubscription(subscription);
         return res.status(200).send();
       }

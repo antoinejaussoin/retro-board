@@ -25,6 +25,8 @@ export default class SubscriptionEntity {
   public domain: string | null;
   @Column('text', { array: true, default: '{}' })
   public members: string[];
+  @Column('text', { array: true, default: '{}' })
+  public admins: string[];
   @CreateDateColumn({ type: 'timestamp with time zone', select: false })
   public created: Date | undefined;
   @UpdateDateColumn({ type: 'timestamp with time zone', select: false })
@@ -36,5 +38,6 @@ export default class SubscriptionEntity {
     this.plan = plan;
     this.domain = null;
     this.members = [];
+    this.admins = [];
   }
 }

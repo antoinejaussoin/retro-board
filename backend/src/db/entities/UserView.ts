@@ -3,7 +3,7 @@ import { AccountType, FullUser, Currency, Plan } from '../../common';
 
 @ViewEntity({
   expression: `
-  select 
+select 
   u.id,
   i.id as identity_id,
   u.name,
@@ -22,8 +22,9 @@ import { AccountType, FullUser, Currency, Plan } from '../../common';
   coalesce(s1.active, s2.active, s3.active, false) as "pro",
   coalesce(s1.plan, s2.plan, s3.plan) as "plan",
   coalesce(s1.domain, s2.domain, s3.domain) as "domain",
-  coalesce(o1.name, o2.name, o2.name) as "plan_owner",
-  coalesce(o1.email, o2.email, o2.email) as "plan_owner_email"
+  coalesce(o1.name, o2.name, o3.name) as "plan_owner",
+  coalesce(o1.email, o2.email, o3.email) as "plan_owner_email",
+  coalesce(s1.admins, s2.admins, s3.admins) as "plan_admins"
 from users_identities i
 
 join users u on u.id = i.user_id
@@ -65,6 +66,8 @@ export default class UserView {
   @ViewColumn()
   public planOwnerEmail: string | null;
   @ViewColumn()
+  public planAdmins: string[] | null;
+  @ViewColumn()
   public subscriptionsId: string | null;
   @ViewColumn()
   public plan: Plan | null;
@@ -94,6 +97,7 @@ export default class UserView {
     this.ownPlan = null;
     this.planOwner = null;
     this.planOwnerEmail = null;
+    this.planAdmins = null;
     this.ownSubscriptionsId = null;
     this.plan = null;
     this.domain = null;
@@ -118,6 +122,7 @@ export default class UserView {
       plan: this.plan,
       planOwner: this.planOwner,
       planOwnerEmail: this.planOwnerEmail,
+      planAdmins: this.planAdmins,
       domain: this.domain,
       ownPlan: this.ownPlan,
       ownSubscriptionsId: this.ownSubscriptionsId,
