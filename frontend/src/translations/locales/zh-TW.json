@@ -284,8 +284,11 @@
     "plan": {
       "header": "你的計劃",
       "plan": "計劃",
+      "admins": "",
       "youAreOwner": "通過以下訂閱，您是該計劃的所有者。",
-      "youAreMember": "您通過其他人的訂閱參與此計劃。"
+      "youAreMember": "您通過其他人的訂閱參與此計劃。",
+      "ownedBy": "",
+      "notPro": ""
     },
     "subscription": {
       "header": "您的訂閱",
@@ -294,6 +297,12 @@
         "title": "你的團隊",
         "limitReached": "您已達到訂閱限制（{{limit}} 個用戶，包括您自己）。請刪除成員，或升級到無限制的公司帳戶。",
         "info": "在下方添加電子郵件以將 Pro 帳戶授予最多 {{limit}} 位其他同事。在每個電子郵件地址後按 Enter。"
+      },
+      "adminsEditor": {
+        "added": "",
+        "removed": "",
+        "title": "",
+        "description": ""
       }
     },
     "trial": {

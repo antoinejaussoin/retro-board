@@ -284,8 +284,11 @@
     "plan": {
       "header": "Az Ön terve",
       "plan": "Terv",
+      "admins": "",
       "youAreOwner": "Az alábbi előfizetésen keresztül Ön ennek a csomagnak a tulajdonosa.",
-      "youAreMember": "Valaki más előfizetésén keresztül részt vesz ebben a tervben."
+      "youAreMember": "Valaki más előfizetésén keresztül részt vesz ebben a tervben.",
+      "ownedBy": "",
+      "notPro": ""
     },
     "subscription": {
       "header": "Az Ön előfizetése",
@@ -294,6 +297,12 @@
         "title": "Csapatod",
         "limitReached": "Elérted az előfizetésed korlátját ({{limit}} felhasználó, téged is beleértve). Kérjük, távolítsa el a tagokat, vagy frissítsen korlátlan számú vállalati fiókra.",
         "info": "Adjon hozzá e-mail-címeket alább, hogy Pro-fiókot biztosítson akár {{limit}} másik kollégának. Minden e-mail cím után nyomja meg az Enter billentyűt."
+      },
+      "adminsEditor": {
+        "added": "",
+        "removed": "",
+        "title": "",
+        "description": ""
       }
     },
     "trial": {

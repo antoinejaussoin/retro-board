@@ -20,7 +20,7 @@
   },
   "Home": {
     "welcome": "Bienvenue, {{name}}",
-    "howDoesThatWork": "Comment cela fonctionne-t-il?"
+    "howDoesThatWork": "Comment cela fonctionne-t-il ?"
   },
   "PreviousGame": {
     "createdBy": "Créé par",
@@ -284,8 +284,11 @@
     "plan": {
       "header": "Votre Accès",
       "plan": "Accès",
+      "admins": "Administrateurs",
       "youAreOwner": "Vous êtes l'administrateur de cet abonnement. Vous pouvez le gérer via la section ci-dessous.",
-      "youAreMember": "Vous devez votre accès Pro grâce à l'abonnement d'un tiers."
+      "youAreMember": "Vous devez votre accès Pro grâce à l'abonnement d'un tiers.",
+      "ownedBy": "Détenu par",
+      "notPro": "Vous n'êtes pas un utilisateur Pro, bien que vous soyez administrateur du forfait. Ajoutez-vous à la liste des comptes Pro dans la section ci-dessous."
     },
     "subscription": {
       "header": "Votre Abonnement",
@@ -294,6 +297,12 @@
         "title": "Votre Équipe",
         "limitReached": "Vous avez atteint le nombre maximum de membres ({{limit}}) permis par votre abonnement. Vous pouvez passer à l'abonnement Unlimited pour un nombre de collaborateur illimité.",
         "info": "Ajouter des adresses emails ci-dessous pour donner un accès Pro à vos collaborateurs (dans la limite de {{limit}} collaborateurs). Appuyez sur Entrée après chaque email."
+      },
+      "adminsEditor": {
+        "added": "{{email}} est maintenant administrateur de cet abonnement.",
+        "removed": "{{email}} n'est plus administrateur de cet abonnement.",
+        "title": "Administrateurs",
+        "description": "Les administrateurs peuvent ajouter ou supprimer des utilisateurs de l'abonnement. Les administrateurs n'obtiennent pas de manière automatique une licence Pro."
       }
     },
     "trial": {
@@ -354,7 +363,7 @@
     },
     "subscribe": {
       "title": "Payer",
-      "description": "Vous serez redirigé vers notre partenaire Stripe. Aucune coordonnées bancaire n'est stockée par Retrospected.",
+      "description": "Vous serez redirigé vers notre partenaire Stripe. Aucunes coordonnées bancaires ne sont stockées par Retrospected.",
       "cannotRegisterWithAnon": "Vous devez être connecté avec un compte OAuth ou Classique (mot de passe) avant de continuer.",
       "checkout": "Payer"
     }
@@ -362,7 +371,7 @@
   "SubscribeModal": {
     "title": "Abonnement Pro",
     "header": "Retrospected Pro",
-    "description": "Protégez les données de votre entreprise en vous abonnant à Retrospected Pro. Avec Retrospected Pro, bénéficiez des fonctionalités suivantes:",
+    "description": "Protégez les données de votre entreprise en vous abonnant à Retrospected Pro. Avec Retrospected Pro, bénéficiez des fonctionnalités suivantes :",
     "features": {
       "encryptedSession": {
         "title": "Session Cryptées",
@@ -378,28 +387,28 @@
       }
     },
     "subscribeButton": "S'abonner",
-    "payButton": "Selectionner",
+    "payButton": "Sélectionner",
     "cancelButton": "Annuler",
     "startTrial": "Essai 30 jours"
   },
   "Products": {
-    "team": "Parfait pour une équipe, vous pouvez sélectioner jusqu'à 20 collègues qui recevront un compte Retrospected Pro.",
-    "unlimited": "Si vous avez besoin de plus, l'abonnement \"Pro Unlimited\" vous donnera un nombre de compte Pro illimité",
-    "self-hosted": "Installez Retrospected sur vos serveurs. Gardez le contrôle total de vos données, et profitez des mise-à-jours illimitées.",
+    "team": "Parfait pour une équipe, vous pouvez sélectionner jusqu'à 20 collègues qui recevront un compte Retrospected Pro.",
+    "unlimited": "Si vous avez besoin de plus, l'abonnement \"Pro Unlimited\" vous donnera un nombre de comptes Pro illimité.",
+    "self-hosted": "Installez Retrospected sur vos serveurs. Gardez le contrôle total de vos données et profitez des mises à jour illimitées.",
     "users": "{{users}} utilisateurs",
     "unlimited_seats": "Illimité",
     "month": "mois",
     "year": "an",
-    "wantToPayYearly": "Je souhaite payer annuellement, et obtenir un mois gratuit par an !"
+    "wantToPayYearly": "Je souhaite payer annuellement et obtenir un mois gratuit par an !"
   },
   "Encryption": {
     "createEncryptedSession": "Session cryptée",
-    "sessionNotEncrypted": "Cette session n'est pas cryptée",
-    "sessionEncryptedHaveKeyTooltip": "Cette session est chiffrée, et la clef est stockée dans votre navigateur. Vous pouvez ouvrir cette session sans avoir à en donner le mot de passe.",
-    "sessionEncryptedNoKeyTooltip": "Cette session est chiffrée, et la clef n'a pas été trouvée dans votre navigateur. Il vous sera demandé de donner le mot de passe lors de l'ouverture de cette session.",
-    "sessionEncryptedWrongKeyTooltip": "Cette session est chiffrée, et la clef qui est stockée dans votre navigateur n'est pas la bonne.",
+    "sessionNotEncrypted": "Cette session n'est pas cryptée.",
+    "sessionEncryptedHaveKeyTooltip": "Cette session est chiffrée et la clef est stockée dans votre navigateur. Vous pouvez ouvrir cette session sans avoir à en donner le mot de passe.",
+    "sessionEncryptedNoKeyTooltip": "Cette session est chiffrée et la clef n'a pas été trouvée dans votre navigateur. Il vous sera demandé de donner le mot de passe lors de l'ouverture de cette session.",
+    "sessionEncryptedWrongKeyTooltip": "Cette session est chiffrée et la clef qui est stockée dans votre navigateur n'est pas la bonne.",
     "newEncryptedSessionWarningTitle": "Cette session est chiffrée localement",
-    "newEncryptedSessionWarningContent": "Il est très important de sauvegarder l'URL complète de cette page (qui contient la clef de chiffrement). Le cas échéant, vous pouvez également sauvegarder la clef elle-même ({{key}}). Si vous perdez cette clef, il vous sera impossible de récupérer vos données.",
+    "newEncryptedSessionWarningContent": "Il est très important de sauvegarder l'URL complète de cette page (qui contient la clef de chiffrement). Le cas échéant, vous pouvez également sauvegarder la clef elle-même : {{key}}. Si vous perdez cette clef, il vous sera impossible de récupérer vos données.",
     "sessionEncryptionError": "Cette session est cryptée, et vous ne semblez pas avoir la clef de chiffrement dans votre navigateur. Merci d'utiliser le lien complet qui vous a été donné lors de la création de cette session.",
     "passwordModalTitle": "Session chiffrée - Saisie du mot de passe",
     "passwordModelIncorrect": "Le mot de passe (ou clef de chiffrement) est incorrect."
@@ -409,13 +418,13 @@
     "unlockSuccessNotification": "La session a été correctement rendue publique.",
     "lockButton": "Rendre privée",
     "unlockButton": "Rendre publique",
-    "lockDescription": "Vous êtes sur le point de privatiser la session. Seuls les utilisateurs ayant déjà accédé à cette session (dont la liste s'affiche ci-dessous) pourront accéder à cette session une fois vérouillée.",
+    "lockDescription": "Vous êtes sur le point de privatiser la session. Seuls les utilisateurs ayant déjà accédé à cette session (dont la liste s'affiche ci-dessous) pourront accéder à cette session une fois verrouillée.",
     "cancelButton": "Annuler",
     "sessionLockedTitle": "Cette session est privée.",
     "sessionLockedDescription": "Demandez à votre modérateur de la rendre publique pour que vous puissiez la rejoindre. Ensuite, rafraichissez la page.",
-    "sessionNonProTitle": "Cette session n'est accessible qu'aux utilisateurs Pro.",
+    "sessionNonProTitle": "Cette session n'est accessible qu'aux utilisateurs Pro",
     "sessionNonProDescription": "Cette session n'est ouverte qu'aux détenteurs d'un compte Retrospected Pro. Vous pouvez demander au modérateur ou au gérant de l'abonnement Pro de vous donner un accès.",
-    "sessionIsPublic": "Cette session est publique, et accessible à tout le monde.",
+    "sessionIsPublic": "Cette session est publique et accessible à tout le monde.",
     "sessionIsPrivate": "Cette session est privée, et vous y avez accès.",
     "sessionIsPrivateNoAccess": "Cette session est privée, mais vous n'y avez pas accès."
   },
@@ -423,12 +432,12 @@
     "allowanceReachedTitle": "Vous avez atteint la limite de posts gratuits",
     "allowanceReachedDescription": "Inscrivez-vous à Retrospected Pro pour passer en illimité",
     "nearEndAllowanceTitle": "Vous approchez la limite de posts gratuits",
-    "nearEndAllowanceDescription": "Vous avez environ {{quota}} posts restants.",
+    "nearEndAllowanceDescription": "Vous avez environ {{quota}} posts restants",
     "onTrialTitle": "Retrospected Pro - Période d'essai",
     "remainingTrialSentence": "Vous avez {{remaining}} restant sur votre période d'essai.",
     "trialEndedTitle": "Votre période d'essai Retrospected Pro est terminée",
     "trialEndedSentence": "Abonnez-vous aujourd'hui pour continuer à bénéficier des avantages de la version Pro.",
-    "subscribeNow": "Je m'abonne"
+    "subscribeNow": "Je m'abonne !"
   },
   "Chat": {
     "writeAMessage": "Écrivez un message ici..."

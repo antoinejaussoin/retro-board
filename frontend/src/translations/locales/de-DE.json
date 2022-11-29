@@ -62,7 +62,7 @@
     "votingCategory": "Abstimmung",
     "votingCategorySub": "Setze die Abstimmregeln",
     "postCategory": "Beitragseinstellungen",
-    "postCategorySub": "Stellen Sie ein, wie Nutzer mit Beiträgen interagieren können",
+    "postCategorySub": "Stelle ein, wie Nutzer mit Beiträgen interagieren können",
     "customTemplateCategory": "Spaltenkonfiguration",
     "customTemplateCategorySub": "Setzen Sie die Anzahl an Spalten und deren Eigenschaften",
     "startButton": "Spiel starten!",
@@ -80,7 +80,7 @@
     "allowActions": "Erlaube Maßnahmen",
     "allowActionsHelp": "Bestimmt ob Maßnahmen hinzugefügt werden können",
     "allowAuthorVisible": "Zeige Autor",
-    "allowAuthorVisibleHelp": "Zeigt den Autor eines Beitrags an.",
+    "allowAuthorVisibleHelp": "Zeigt den Autor eines Posts an.",
     "newPostsFirst": "Neue Beiträge zuerst hinzufügen",
     "newPostsFirstHelp": "Neue Beiträge werden oben in der Spalte hinzugefügt",
     "allowGiphy": "Giphy erlauben",
@@ -89,7 +89,7 @@
     "allowGroupingHelp": "Erstelle Gruppen, um Beiträge zusammenzufassen",
     "allowReordering": "Neu sortieren erlauben",
     "allowReorderingHelp": "Erlaubt die Beiträge per Drag-and-Drop neu zu sortieren",
-    "blurCards": "Karten unkenntlich machen",
+    "blurCards": "Unscharfe Karten",
     "blurCardsHelp": "Karteninhalte werden verschwommen dargestellt, bis der Moderator den Inhalt aufdeckt",
     "template": "Vorlage",
     "templateHelp": "Nutze ein vordefiniertes Spaltenset",
@@ -284,8 +284,11 @@
     "plan": {
       "header": "Ihr Plan",
       "plan": "Plan",
+      "admins": "Administratoren",
       "youAreOwner": "Sie sind der Besitzer dieses Pakets, durch das untenstehende Abonnement.",
-      "youAreMember": "Du bist auf diesem Plan durch ein anderes Abonnement."
+      "youAreMember": "Du bist auf diesem Plan durch ein anderes Abonnement.",
+      "ownedBy": "Besitzt von",
+      "notPro": "Sie sind kein Pro-Nutzer, obwohl Sie ein Administrator für den Plan sind. Fügen Sie sich in die Liste der Pro-Konten in dem untenstehenden Abschnitt ein."
     },
     "subscription": {
       "header": "Ihr Abonnement",
@@ -294,6 +297,12 @@
         "title": "Ihr Team",
         "limitReached": "Sie haben das Limit Ihres Abonnements erreicht ({{limit}} Benutzer, einschließlich sich selbst). Bitte entfernen Sie Mitglieder, oder upgraden Sie auf ein unbegrenztes Firmenkonto.",
         "info": "Fügen Sie unten E-Mails hinzu, um bis zu {{limit}} anderen Kollegen Konten zu gewähren. Drücken Sie Enter nach jeder E-Mail-Adresse."
+      },
+      "adminsEditor": {
+        "added": "{{email}} ist jetzt Administrator dieses Abonnements.",
+        "removed": "{{email}} ist kein Administrator dieses Abonnements.",
+        "title": "Administratoren",
+        "description": "Administratoren können Benutzer hinzufügen oder aus dem Abonnement entfernen. Administratoren werden nicht automatisch Pro Konten gewährt."
       }
     },
     "trial": {

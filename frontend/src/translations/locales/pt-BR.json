@@ -284,8 +284,11 @@
     "plan": {
       "header": "Seu plano",
       "plan": "Planejamento",
+      "admins": "Administradores",
       "youAreOwner": "Você é o proprietário deste plano, através da assinatura abaixo.",
-      "youAreMember": "Você está nesse plano por meio da assinatura de outra pessoa."
+      "youAreMember": "Você está nesse plano por meio da assinatura de outra pessoa.",
+      "ownedBy": "Possuído por",
+      "notPro": "Você não é um usuário Pro, apesar de ser um administrador do plano. Adicione você mesmo à lista de contas Pro na seção abaixo."
     },
     "subscription": {
       "header": "Sua assinatura",
@@ -294,6 +297,12 @@
         "title": "Seu time",
         "limitReached": "Você atingiu o limite de sua assinatura ({{limit}} usuários, incluindo você mesmo). Por favor, remova os membros ou faça o upgrade para uma conta ilimitada da empresa.",
         "info": "Adicione e-mails abaixo para conceder contas Pro para até {{limit}} outros colegas. Pressione Enter após cada endereço de e-mail."
+      },
+      "adminsEditor": {
+        "added": "{{email}} agora é um administrador desta assinatura.",
+        "removed": "{{email}} não é mais um administrador dessa assinatura.",
+        "title": "Administradores",
+        "description": "Administradores podem adicionar usuários ou remover usuários da assinatura. Administradores não são concedidas contas Pro automaticamente."
       }
     },
     "trial": {

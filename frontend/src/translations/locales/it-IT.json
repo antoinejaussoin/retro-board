@@ -284,8 +284,11 @@
     "plan": {
       "header": "Il Tuo Piano",
       "plan": "Piano",
+      "admins": "Amministratori",
       "youAreOwner": "Sei il proprietario di questo piano, tramite l'abbonamento qui sotto.",
-      "youAreMember": "Sei su questo piano attraverso l'abbonamento di qualcun altro."
+      "youAreMember": "Sei su questo piano attraverso l'abbonamento di qualcun altro.",
+      "ownedBy": "Posseduta Da",
+      "notPro": "Non sei un utente Pro, pur essendo un amministratore per il piano. Aggiungiti alla lista degli account Pro nella sezione sottostante."
     },
     "subscription": {
       "header": "Il Tuo Abbonamento",
@@ -294,6 +297,12 @@
         "title": "La Tua Squadra",
         "limitReached": "Hai raggiunto il limite del tuo abbonamento ({{limit}} utenti, incluso te stesso). Rimuovi i membri o aggiorna a un account illimitato dell'azienda.",
         "info": "Aggiungi email qui sotto per concedere account Pro fino a {{limit}} altri colleghi. Premi Invio dopo ogni indirizzo email."
+      },
+      "adminsEditor": {
+        "added": "{{email}} è ora un amministratore di questo abbonamento.",
+        "removed": "{{email}} non è più un amministratore di questo abbonamento.",
+        "title": "Amministratori",
+        "description": "Gli amministratori possono aggiungere utenti o rimuovere utenti dalla sottoscrizione. Gli amministratori non ricevono automaticamente gli account Pro."
       }
     },
     "trial": {
