@@ -163,6 +163,10 @@ function AccountPage() {
               </Value>
             </Data>
 
+            {!user.pro ? (
+              <Alert severity="warning">{t('AccountPage.plan.notPro')}</Alert>
+            ) : null}
+
             {user.domain ? (
               <Data>
                 <Title>{t('SubscribePage.domain.title')}</Title>
@@ -171,10 +175,6 @@ function AccountPage() {
             ) : null}
             {onSomebodysPlan && (
               <>
-                <Alert severity="info">
-                  {t('AccountPage.plan.youAreMember')}
-                </Alert>
-
                 {user.planOwner && user.planOwnerEmail ? (
                   <Data>
                     <Title>{t('AccountPage.plan.ownedBy')}</Title>
@@ -183,6 +183,9 @@ function AccountPage() {
                     </Value>
                   </Data>
                 ) : null}
+                <Alert severity="info">
+                  {t('AccountPage.plan.youAreMember')}
+                </Alert>
               </>
             )}
             {ownsThePlan && (

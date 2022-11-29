@@ -3,7 +3,7 @@ import { AccountType, FullUser, Currency, Plan } from '../../common';
 
 @ViewEntity({
   expression: `
-select 
+  select 
   u.id,
   i.id as identity_id,
   u.name,
@@ -19,21 +19,23 @@ select
   s1.id as "own_subscriptions_id",
   s1.plan as "own_plan",
   coalesce(s1.id, s2.id, s3.id) as "subscriptions_id",
-  coalesce(s1.active, s2.active, s3.active, false) as "pro",
-  coalesce(s1.plan, s2.plan, s3.plan) as "plan",
-  coalesce(s1.domain, s2.domain, s3.domain) as "domain",
-  coalesce(o1.name, o2.name, o3.name) as "plan_owner",
-  coalesce(o1.email, o2.email, o3.email) as "plan_owner_email",
-  coalesce(s1.admins, s2.admins, s3.admins) as "plan_admins"
+  coalesce(s1.active, s2.active, s3.active, false) as "pro", /* s4 should not be taken into account for Pro */
+  coalesce(s1.plan, s2.plan, s3.plan, s4.plan) as "plan",
+  coalesce(s1.domain, s2.domain, s3.domain, s4.domain) as "domain",
+  coalesce(o1.name, o2.name, o3.name, o4.name) as "plan_owner",
+  coalesce(o1.email, o2.email, o3.email, o4.email) as "plan_owner_email",
+  coalesce(s1.admins, s2.admins, s3.admins, s4.admins) as "plan_admins"
 from users_identities i
 
 join users u on u.id = i.user_id
 left join subscriptions s1 on s1.owner_id = u.id and s1.active is true
 left join users o1 on o1.id = s1.owner_id
-left join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true
+left join subscriptions s2 on s2.members @> ARRAY[u.email::text] and s2.active is true
 left join users o2 on o2.id = s2.owner_id
 left join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true
 left join users o3 on o3.id = s3.owner_id
+left join subscriptions s4 on s4.admins @> ARRAY[u.email::text] and s4.active is true
+left join users o4 on o4.id = s4.owner_id
   `,
 })
 export default class UserView {

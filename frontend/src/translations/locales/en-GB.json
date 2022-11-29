@@ -287,7 +287,8 @@
       "admins": "Administrators",
       "youAreOwner": "You are the owner of this plan, through the subscription below.",
       "youAreMember": "You are on this plan through somebody else's subscription.",
-      "ownedBy": "Owned By"
+      "ownedBy": "Owned By",
+      "notPro": "You are not a Pro user, despite being an administrator for the plan. Add yourself to the list of Pro accounts in the section below."
     },
     "subscription": {
       "header": "Your Subscription",
@@ -301,7 +302,7 @@
         "added": "{{email}} is now an administrator of this subscription.",
         "removed": "{{email}} is no longer an administrator of this subscription.",
         "title": "Administrators",
-        "description": "Administrators can add users to or remove users from the subscription."
+        "description": "Administrators can add users to or remove users from the subscription. Administrators are not automatically granted Pro accounts."
       }
     },
     "trial": {
