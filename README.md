@@ -85,11 +85,17 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 4.17.0
+
+- Adding the ability to set administrators for a Pro subscription. An administrator can add and remove users from the Pro subscription, and be independent from the owner (who manages payments).
+- Display the owner of the subscription clearly on the Account Page
+- ⏫ Upgrading dependencies
+
 ### Version 4.16.3
 
 - Exposing "tenant", "authorization url" and "token url" for Microsoft OAuth. (👏 Thanks to Frank Becker for the idea)
 - 🇩🇪 German language improvements (👏 Thanks [@Tobias G](https://github.com/Xyaren) for the PR!)
-- Upgrading dependencies
+- ⏫ Upgrading dependencies
 
 ### Version 4.16.2
 
@@ -116,7 +122,7 @@ This will run a demo version, which you can turn into a fully licenced version b
 - **Self-Hosting**: Add an option to allow self-signed certificates for the SMTP server, for sending emails
 - Fix GDPR account deletion, which did not work when the user had any chat messages
 - Upgrade React typings to v18
-- Upgrade all frontend dependencies
+- ⏫ Upgrading all frontend dependencies
 
 ### Version 4.14.1 (hotfix)
 
