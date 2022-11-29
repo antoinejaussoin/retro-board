@@ -23,6 +23,7 @@ import LanguagePicker from 'components/LanguagePicker';
 import { useLanguage } from 'translations';
 import useBackendCapabilities from 'global/useBackendCapabilities';
 import AdminsEditor from './AdminEditor';
+import Tag from 'components/TagInput/Tag';
 
 function AccountPage() {
   const url = usePortalUrl();
@@ -149,6 +150,17 @@ function AccountPage() {
             <Data>
               <Title>{t('AccountPage.plan.plan')}</Title>
               <Value>{user.plan}</Value>
+            </Data>
+
+            <Data>
+              <Title>{t('AccountPage.plan.admins')}</Title>
+              <Value>
+                {[user.planOwnerEmail, ...(user.planAdmins || [])]
+                  .filter(Boolean)
+                  .map((email, i) => (
+                    <Tag key={i} value={email as string} />
+                  ))}
+              </Value>
             </Data>
 
             {user.domain ? (
