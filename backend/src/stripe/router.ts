@@ -23,7 +23,7 @@ import {
 } from '../db/actions/subscriptions';
 
 const stripe = new Stripe(config.STRIPE_SECRET, {
-  apiVersion: '2022-08-01',
+  apiVersion: '2022-11-15',
 } as Stripe.StripeConfig);
 
 function stripeRouter(): Router {
