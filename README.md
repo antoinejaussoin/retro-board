@@ -89,6 +89,7 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 - Adding the ability to set administrators for a Pro subscription. An administrator can add and remove users from the Pro subscription, and be independent from the owner (who manages payments).
 - Display the owner of the subscription clearly on the Account Page
+- Upgrade GitHub actions versions
 - ⏫ Upgrading dependencies
 
 ### Version 4.16.3
