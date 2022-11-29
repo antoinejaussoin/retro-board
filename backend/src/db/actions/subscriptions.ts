@@ -2,6 +2,7 @@ import { SubscriptionRepository, UserRepository } from '../repositories';
 import { Plan, Currency } from '../../common';
 import { SubscriptionEntity, UserEntity, UserView } from '../entities';
 import { transaction } from './transaction';
+import { In } from 'typeorm';
 
 export async function activateSubscription(
   userId: string,
@@ -50,7 +51,7 @@ export async function cancelSubscription(
   });
 }
 
-export async function getActiveSubscription(
+export async function getActiveSubscriptionWhereUserIsOwner(
   userId: string
 ): Promise<SubscriptionEntity | null> {
   return await transaction(async (manager) => {
@@ -68,6 +69,36 @@ export async function getActiveSubscription(
         updated: 'DESC',
       },
     });
+    if (subscriptions.length === 0) {
+      return null;
+    }
+    return subscriptions[0];
+  });
+}
+
+export async function getActiveSubscriptionWhereUserIsAdmin(
+  userId: string,
+  email: string | null
+): Promise<SubscriptionEntity | null> {
+  return await transaction(async (manager) => {
+    const subscriptionRepository = manager.getCustomRepository(
+      SubscriptionRepository
+    );
+
+    const ids = await subscriptionRepository.query(
+      `
+select s.id from subscriptions s
+where s.active = true
+and (s.owner_id = $1 or s.admins @> $2)
+order by s.updated desc
+    `,
+      [userId, `{${email}}`]
+    );
+
+    const subscriptions = await subscriptionRepository.find({
+      where: { id: In(ids.map((id: { id: string }) => id.id)) },
+    });
+
     if (subscriptions.length === 0) {
       return null;
     }

@@ -16,9 +16,10 @@ import isValidDomain from '../security/is-valid-domain';
 import {
   cancelSubscription,
   activateSubscription,
-  getActiveSubscription,
+  getActiveSubscriptionWhereUserIsOwner,
   saveSubscription,
   startTrial,
+  getActiveSubscriptionWhereUserIsAdmin,
 } from '../db/actions/subscriptions';
 
 const stripe = new Stripe(config.STRIPE_SECRET, {
@@ -251,7 +252,10 @@ function stripeRouter(): Router {
     // possibly move this
     const identity = await getIdentityFromRequest(req);
     if (identity) {
-      const subscription = await getActiveSubscription(identity.user.id);
+      const subscription = await getActiveSubscriptionWhereUserIsAdmin(
+        identity.user.id,
+        identity.user.email
+      );
       if (subscription && subscription.plan === 'team') {
         return res.status(200).send(subscription.members);
       }
@@ -263,7 +267,10 @@ function stripeRouter(): Router {
     // possibly move this
     const identity = await getIdentityFromRequest(req);
     if (identity) {
-      const subscription = await getActiveSubscription(identity.user.id);
+      const subscription = await getActiveSubscriptionWhereUserIsAdmin(
+        identity.user.id,
+        identity.user.email
+      );
       if (subscription && subscription.plan === 'team') {
         subscription.members = req.body as string[];
         await saveSubscription(subscription);
@@ -277,7 +284,9 @@ function stripeRouter(): Router {
     // possibly move this
     const identity = await getIdentityFromRequest(req);
     if (identity) {
-      const subscription = await getActiveSubscription(identity.user.id);
+      const subscription = await getActiveSubscriptionWhereUserIsOwner(
+        identity.user.id
+      );
       if (subscription && subscription.plan === 'team') {
         subscription.admins = req.body as string[];
         await saveSubscription(subscription);
