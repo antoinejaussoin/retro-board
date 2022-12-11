@@ -1,6 +1,6 @@
 import express, { NextFunction, Response, Request } from 'express';
 import {
-  getAllPasswordUsers,
+  getAllNonDeletedUsers,
   getPasswordIdentityByUserId,
   updateIdentity,
 } from '../db/actions/users';
@@ -56,7 +56,7 @@ router.get('/self-hosting', async (_, res) => {
 });
 
 router.get('/users', isSelfHostAdmin, async (req, res) => {
-  const users = await getAllPasswordUsers();
+  const users = await getAllNonDeletedUsers();
   res.send(users.map((u) => u.toJson()));
 });
 

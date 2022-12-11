@@ -1,5 +1,5 @@
 import { UserEntity, UserView } from '../entities';
-import { EntityManager } from 'typeorm';
+import { EntityManager, Not } from 'typeorm';
 import { UserIdentityRepository, UserRepository } from '../repositories';
 import { ALL_FIELDS } from '../entities/User';
 import { ALL_FIELDS as ALL_FIELDS_IDENTITY } from '../entities/UserIdentity';
@@ -24,11 +24,11 @@ export async function getIdentity(
   });
 }
 
-export async function getAllPasswordUsers(): Promise<UserView[]> {
+export async function getAllNonDeletedUsers(): Promise<UserView[]> {
   return await transaction(async (manager) => {
     const userRepository = manager.getRepository(UserView);
     const users = await userRepository.find({
-      // where: { accountType: 'password' },
+      where: { name: Not('(deleted user)') },
     });
     return users;
   });
