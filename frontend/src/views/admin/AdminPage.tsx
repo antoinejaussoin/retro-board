@@ -1,5 +1,5 @@
-import { Alert, Button } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { Alert, Button, Checkbox } from '@mui/material';
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { FullUser } from 'common';
 import useUser from '../../auth/useUser';
 import useStateFetch from '../../hooks/useStateFetch';
@@ -7,18 +7,26 @@ import { useCallback, useMemo, useState } from 'react';
 import styled from '@emotion/styled';
 import ChangePassword from './ChangePassword';
 import useBackendCapabilities from '../../global/useBackendCapabilities';
-import { Add, Search } from '@mui/icons-material';
+import { Add, CallMerge, Search } from '@mui/icons-material';
 import useModal from 'hooks/useModal';
 import { NewAccountModal } from './NewAccountModal';
 import Input from 'components/Input';
 import { DeleteAccount } from './DeleteAccount';
+import { uniq } from 'lodash';
+import MergeModal from './MergeModal';
 
 export default function AdminPage() {
   const user = useUser();
   const backend = useBackendCapabilities();
   const [users, setUsers] = useStateFetch<FullUser[]>('/api/admin/users', []);
   const [addOpened, handleAddOpen, handleAddClose] = useModal();
+  const [mergeOpened, handleOpenMerge, handleCloseMerge] = useModal();
   const [search, setSearch] = useState('');
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
+  const selected = useMemo(() => {
+    return users.filter((u) => selectedIds.includes(u.id));
+  }, [selectedIds, users]);
 
   const onAdd = useCallback(
     (user: FullUser) => {
@@ -46,23 +54,46 @@ export default function AdminPage() {
     );
   }, [search, users]);
 
-  const columns: GridColDef[] = useMemo(() => {
+  const columns: GridColDef<FullUser>[] = useMemo(() => {
     return [
-      { field: 'email', headerName: 'Email', width: 300, filterable: true },
-      { field: 'name', headerName: 'Name', width: 300 },
       {
         field: '',
+        headerName: '',
+        renderCell: (p: GridRenderCellParams<unknown, FullUser>) => {
+          return (
+            <Checkbox
+              checked={selectedIds.includes(p.row.id)}
+              onChange={(_, checked) =>
+                checked
+                  ? setSelectedIds((prev) => uniq([...prev, p.row.id]))
+                  : setSelectedIds((prev) =>
+                      prev.filter((id) => id !== p.row.id)
+                    )
+              }
+            />
+          );
+        },
+      },
+      { field: 'id', headerName: 'ID' },
+      { field: 'email', headerName: 'Email', width: 300, filterable: true },
+      { field: 'name', headerName: 'Name', width: 300 },
+      { field: 'accountType', headerName: 'Acct Type', filterable: true },
+      {
         headerName: 'Actions',
         width: 300,
-        renderCell: (p) => (
-          <Actions>
-            <ChangePassword user={p.row} />
-            <DeleteAccount user={p.row} onDelete={onDelete} />
-          </Actions>
-        ),
+        renderCell: (p: GridRenderCellParams<unknown, FullUser>) => {
+          return (
+            <Actions>
+              {p.row.accountType === 'password' ? (
+                <ChangePassword user={p.row} />
+              ) : null}
+              <DeleteAccount user={p.row} onDelete={onDelete} />
+            </Actions>
+          );
+        },
       },
     ] as GridColDef[];
-  }, [onDelete]);
+  }, [onDelete, selectedIds]);
 
   if (!backend.selfHosted) {
     return (
@@ -92,12 +123,25 @@ export default function AdminPage() {
         <Button startIcon={<Add />} onClick={handleAddOpen}>
           Add a new user
         </Button>
+        <Button
+          startIcon={<CallMerge />}
+          onClick={handleOpenMerge}
+          disabled={selectedIds.length < 2}
+        >
+          Merge
+        </Button>
       </Header>
       <DataGrid rows={filteredUsers} columns={columns} filterMode="client" />
       <NewAccountModal
         open={addOpened}
         onClose={handleAddClose}
         onAdd={onAdd}
+      />
+      <MergeModal
+        open={mergeOpened}
+        onClose={handleCloseMerge}
+        users={selected}
+        onMerge={handleCloseMerge}
       />
     </Container>
   );

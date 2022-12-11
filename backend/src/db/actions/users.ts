@@ -28,7 +28,7 @@ export async function getAllPasswordUsers(): Promise<UserView[]> {
   return await transaction(async (manager) => {
     const userRepository = manager.getRepository(UserView);
     const users = await userRepository.find({
-      where: { accountType: 'password' },
+      // where: { accountType: 'password' },
     });
     return users;
   });
