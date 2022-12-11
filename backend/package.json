@@ -19,6 +19,7 @@
     "copy-templates": "copyfiles -u 0 src/**/*.html dist/"
   },
   "dependencies": {
+    "@passport-js/passport-twitter": "^1.0.7",
     "@sendgrid/mail": "7.7.0",
     "@sentry/node": "7.22.0",
     "@types/bcryptjs": "2.4.2",
@@ -74,7 +75,6 @@
     "passport-microsoft": "1.0.0",
     "passport-okta-oauth20": "1.1.0",
     "passport-slack-oauth2": "^1.1.1",
-    "passport-twitter": "1.0.4",
     "pg": "8.8.0",
     "prettier": "2.8.0",
     "rate-limiter-flexible": "2.4.1",
