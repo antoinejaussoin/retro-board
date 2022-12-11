@@ -73,7 +73,7 @@ export async function sendResetPassword(
   }
 }
 
-function generatePassword(): string {
+function generateReadableSecret(): string {
   return randomWords({ exactly: 4 }).join('-');
 }
 
@@ -85,9 +85,9 @@ export async function sendSelfHostWelcome(
   if (!send) {
     return;
   }
-  const dbPassword = generatePassword();
-  const pgAdminPassword = generatePassword();
-  const sessionSecret = generatePassword();
+  const dbPassword = generateReadableSecret();
+  const pgAdminPassword = generateReadableSecret();
+  const sessionSecret = generateReadableSecret();
 
   const template = await getSelfHostedWelcomeEmailTemplate(
     name,
