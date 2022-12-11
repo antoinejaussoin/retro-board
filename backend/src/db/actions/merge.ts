@@ -69,7 +69,12 @@ async function migrateOne(main: UserView, target: UserView) {
     ]);
 
     await manager.query(
-      'update visitors set users_id = $1 where users_id = $2',
+      `update visitors set users_id = $1 where users_id = $2
+			and (
+				select count(*) from visitors v 
+				where v.sessions_id = sessions_id and v.users_id = $2
+			) = 0
+			`,
       [main.id, target.id]
     );
 
