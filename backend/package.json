@@ -1,6 +1,6 @@
 {
   "name": "@retrospected/backend",
-  "version": "4.17.0",
+  "version": "4.18.0",
   "license": "GNU GPLv3",
   "private": true,
   "scripts": {

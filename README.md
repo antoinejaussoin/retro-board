@@ -85,6 +85,12 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 4.18.0
+
+- Self-Hosted: Adding the ability to merge users (migrating their data into another user). This is only available for self-hosted instances, through the Administration panel (👏 Thanks to Frank Becker for the idea)
+- ⏫ Upgrade vulnerable dependencies (thanks to dependabot)
+- Fix issues found by code scanning (CodeQL)
+
 ### Version 4.17.0
 
 - Adding the ability to set administrators for a Pro subscription. An administrator can add and remove users from the Pro subscription, and be independent from the owner (who manages payments). Useful for resellers.

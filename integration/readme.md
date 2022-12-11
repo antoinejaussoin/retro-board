@@ -2,7 +2,7 @@
 
 ## What are they?
 
-They are tests, meants to be run on a production-like environement (using Docker), to ensure that it tests something as close as possible to production.
+They are tests, meant to be run on a production-like environment (using Docker), to ensure that it tests something as close as possible to production.
 
 It uses Cypress.
 
