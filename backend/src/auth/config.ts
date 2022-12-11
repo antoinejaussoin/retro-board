@@ -1,4 +1,4 @@
-import { IStrategyOption } from 'passport-twitter';
+import { IStrategyOption } from '@passport-js/passport-twitter';
 import { StrategyOptions as GoogleStrategyOptions } from 'passport-google-oauth20';
 import { StrategyOptions as GitHubStrategy } from 'passport-github2';
 import { MicrosoftStrategyOptions } from 'passport-microsoft';
