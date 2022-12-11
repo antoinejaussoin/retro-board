@@ -85,3 +85,8 @@ export interface ChatMessagePayload {
 export interface ChangeUserNamePayload {
   name: string;
 }
+
+export interface MergeUsersPayload {
+  main: string;
+  merged: string[];
+}

@@ -13,7 +13,9 @@ import {
   ListSubheader,
 } from '@mui/material';
 import { FullUser } from 'common';
-import { useState } from 'react';
+import { noop } from 'lodash';
+import { useSnackbar } from 'notistack';
+import { useEffect, useState } from 'react';
 
 type MergeModalProps = {
   users: FullUser[];
@@ -29,6 +31,11 @@ export default function MergeModal({
   onMerge,
 }: MergeModalProps) {
   const [main, setMain] = useState<FullUser | null>(null);
+  const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    setMain(null);
+  }, [users]);
 
   return (
     <Dialog onClose={onClose} open={open}>
@@ -49,7 +56,16 @@ export default function MergeModal({
                 disablePadding
                 selected={main === u}
                 key={u.id}
-                onClick={() => setMain(u)}
+                onClick={() => {
+                  if (u.accountType !== 'anonymous') {
+                    setMain(u);
+                  } else {
+                    enqueueSnackbar(
+                      'You cannot merge into an anonymous account. Please select another account.',
+                      { variant: 'error' }
+                    );
+                  }
+                }}
               >
                 <ListItemButton>
                   <ListItemText
@@ -78,7 +94,14 @@ export default function MergeModal({
         <Button onClick={onClose}>Cancel</Button>
         <Button
           style={{ backgroundColor: colors.red[500], color: 'white' }}
-          onClick={onClose}
+          onClick={() =>
+            main
+              ? onMerge(
+                  main,
+                  users.filter((u) => u.id !== main.id)
+                )
+              : noop
+          }
           disabled={false}
         >
           Merge{main ? ` ${users.length - 1} users into ${main.name}` : ''}

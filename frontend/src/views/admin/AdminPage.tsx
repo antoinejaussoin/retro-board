@@ -14,6 +14,7 @@ import Input from 'components/Input';
 import { DeleteAccount } from './DeleteAccount';
 import { uniq } from 'lodash';
 import MergeModal from './MergeModal';
+import { mergeUsers } from './api';
 
 export default function AdminPage() {
   const user = useUser();
@@ -41,6 +42,16 @@ export default function AdminPage() {
       setUsers((users) => users.filter((u) => u.id !== user.id));
     },
     [setUsers]
+  );
+
+  const onMerge = useCallback(
+    (main: FullUser, merged: FullUser[]) => {
+      handleCloseMerge();
+      const removedIds = merged.map((u) => u.id);
+      setUsers((prev) => prev.filter((u) => !removedIds.includes(u.id)));
+      mergeUsers(main, merged);
+    },
+    [setUsers, handleCloseMerge]
   );
 
   const filteredUsers = useMemo(() => {
@@ -126,7 +137,7 @@ export default function AdminPage() {
         <Button
           startIcon={<CallMerge />}
           onClick={handleOpenMerge}
-          disabled={selectedIds.length < 2}
+          disabled={selected.length < 2}
         >
           Merge
         </Button>
@@ -141,7 +152,7 @@ export default function AdminPage() {
         open={mergeOpened}
         onClose={handleCloseMerge}
         users={selected}
-        onMerge={handleCloseMerge}
+        onMerge={onMerge}
       />
     </Container>
   );
