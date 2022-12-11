@@ -646,7 +646,7 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@passport-js/passport-twitter@^1.0.7":
+"@passport-js/passport-twitter@1.0.7":
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/@passport-js/passport-twitter/-/passport-twitter-1.0.7.tgz#c07ac04c849145b64786cb8060fd664103ba9945"
   integrity sha512-BeESbSjAxd484+YtBJO7sKxdid7ZYedOjzlybYoshqCVfM0O+vKi9/+J8UBIpvfBj840a9fS3nH4ugoCJTbPRA==
@@ -3614,7 +3614,7 @@ passport-okta-oauth20@1.1.0:
     node-fetch "^2.6.1"
     passport-oauth2 "^1.6.1"
 
-passport-slack-oauth2@^1.1.1:
+passport-slack-oauth2@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/passport-slack-oauth2/-/passport-slack-oauth2-1.1.1.tgz#d831ffc3f1e968fcc3622e6ecf41643c8d8f9cbc"
   integrity sha512-xC+yMKFXximP5TzSNt4lr9TP78MMos5B+acC7bJNCxBAVNyL9e02AEpVpVtyMIqHv4nNZnv1vyoOb50J8VCcZQ==
