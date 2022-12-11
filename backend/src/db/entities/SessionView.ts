@@ -74,6 +74,7 @@ export default class SessionView {
   toJson(userId: string): SessionMetadata {
     return {
       ...this,
+      participants: this.participants ?? [],
       canBeDeleted: userId === this.createdBy.id,
       lockedForUser:
         this.locked && this.participants
