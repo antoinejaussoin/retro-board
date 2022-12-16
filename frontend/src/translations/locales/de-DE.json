@@ -3,7 +3,7 @@
     "subtitle": "Eine gute Art, sich auf agile Weise auszudrücken",
     "logout": "Abmelden",
     "leave": "Verlassen",
-    "summaryMode": "Zusammenfassungsmodus",
+    "summaryMode": "Zusammenfassung",
     "account": "Mein Konto",
     "adminPanel": "Administrationsbereich"
   },
@@ -11,7 +11,7 @@
     "header": "Sprache auswählen"
   },
   "Main": {
-    "hint": "Sie können Andere zu dieser Session einladen, indem Sie ihnen die URL schickst",
+    "hint": "Sie können andere zu dieser Session einladen, indem Sie ihnen die URL schicken",
     "helpUkraine": "Hilf der Ukraine!",
     "loading": "Wird geladen...",
     "unlicenced": {
@@ -58,7 +58,7 @@
     "toggleGiphyButton": "Giphy-Bild umschalten"
   },
   "Customize": {
-    "title": "Personalisieren sie die Sitzung",
+    "title": "Personalisieren Sie die Sitzung",
     "votingCategory": "Abstimmung",
     "votingCategorySub": "Setze die Abstimmregeln",
     "postCategory": "Beitragseinstellungen",
@@ -147,7 +147,7 @@
   },
   "Clients": {
     "header": "Mit dabei sind:",
-    "joined": "{{users}} beigetreten.",
+    "joined": "{{users}} ist beigetreten.",
     "left": "{{users}} ist gegangen."
   },
   "Join": {
@@ -178,7 +178,7 @@
     "or": "oder"
   },
   "SocialMediaLogin": {
-    "header": "OAuh",
+    "header": "OAuth",
     "info": "Dies wird einen Drittanbieter Ihrer Wahl verwenden, um Sie zu authentifizieren. Es wird kein Passwort gespeichert."
   },
   "AuthCommon": {
@@ -205,10 +205,10 @@
     "header": "Registrieren",
     "info": "Holen Sie sich ein Retrospected Account!",
     "registerButton": "Registrieren",
-    "errorAlreadyRegistered": "Diese E-Mail ist bereits registriert",
+    "errorAlreadyRegistered": "Diese E-Mail ist bereits registriert.",
     "errorGeneral": "Beim Versuch, Ihr Konto zu erstellen, ist ein Fehler aufgetreten.",
     "messageSuccess": "Vielen Dank! Sie sollten in Kürze eine E-Mail erhalten, um Ihr Konto zu bestätigen.",
-    "errorInvalidEmail": "Bitte geben Sie eine gültige E-Mail ein"
+    "errorInvalidEmail": "Bitte geben Sie eine gültige E-Mail ein."
   },
   "ValidateAccount": {
     "success": "Deine E-Mail wurde korrekt überprüft. Ich werde dich in einer Sekunde einloggen!",
@@ -223,7 +223,7 @@
     "success": "Dein Passwort wurde aktualisiert. Ich werde dich in einer Sekunde einloggen!",
     "error": "Beim Aktualisieren Ihres Passworts ist ein Fehler aufgetreten.",
     "loading": "Wir aktualisieren Ihr Passwort. Bitte warten.",
-    "resetInfo": "Bitte geben Sie ein neues Passwort ein"
+    "resetInfo": "Bitte geben Sie ein neues Passwort ein."
   },
   "SummaryBoard": {
     "noPosts": "Es gibt keine Beiträge",
@@ -237,8 +237,8 @@
   "Invite": {
     "inviteButton": "Einladen",
     "dialog": {
-      "title": "Lade Andere in deine Retrospektive ein",
-      "text": "Um Andere in deine Retrospektive einzuladen schicke ihnen einfach die folgende URL",
+      "title": "Lade andere in deine Retrospektive ein",
+      "text": "Um andere in deine Retrospektive einzuladen schicke ihnen einfach die folgende URL",
       "copyButton": "URL in die Zwischenablage kopieren"
     }
   },
@@ -257,7 +257,7 @@
     "firstLine": "Das Löschen einer Sitzung ist unumkehrbar. Es werden alle Beiträge, Abstimmungen, Gruppen und die Sitzung selbst gelöscht. Die Daten können nicht wiederhergestellt werden.",
     "secondLine": "Sind Sie sicher, dass Sie diese Sitzung und ihren gesamten Inhalt löschen möchten?",
     "yesImSure": "Ja, ich bin sicher",
-    "cancel": "Nein, es tut mir leid, ich habe einen Fehler gemacht"
+    "cancel": "Nein, nicht löschen"
   },
   "RevealCards": {
     "buttonLabel": "Offenlegen",
@@ -311,17 +311,17 @@
       "subscribe": "Jetzt abonnieren"
     },
     "deleteAccount": {
-      "title": "DDR",
-      "warning": "Sie haben das Recht, vergessen zu werden. Seien Sie vorsichtig, wenn Sie Ihr Konto löschen. Dies kann nicht rückgängig gemacht werden.",
+      "title": "DSGVO",
+      "warning": "Sie haben das Recht, ihre Daten zu löschen. Seien Sie vorsichtig, wenn Sie Ihr Konto löschen. Dies kann nicht rückgängig gemacht werden.",
       "deleteData": "Meine Daten löschen",
       "modal": {
         "confirm": {
           "title": "Sind Sie absolut sicher?",
-          "description": "Hier gibt es keinen Rückschritt.",
+          "description": "Hier gibt es kein zurück.",
           "confirmation": "Ja, ich möchte alle meine Daten löschen",
-          "cancellation": "Hol mich hier aus"
+          "cancellation": "Lieber nicht löschen"
         },
-        "subheader": "Wähle was löschen soll",
+        "subheader": "Wähle was gelöscht werden soll",
         "deleteAccount": "Löschen Sie Ihr Konto und alle Identitäten, die mit Ihrer E-Mail verknüpft sind.",
         "recommended": "Empfohlen",
         "deleteSessions": {
@@ -330,7 +330,7 @@
           "unselected": "Ihre Sitzungen werden gespeichert und der Autor wird ein anonymer Benutzer."
         },
         "deletePosts": {
-          "main": "Sollen wir alle Beiträge löschen, die du geschrieben hast?",
+          "main": "Sollen wir alle Beiträge löschen, die Sie geschrieben haben?",
           "selected": "Ihre Beiträge in jeder Sitzung und ihre zugehörigen Stimmen und Aktionen werden dauerhaft gelöscht.",
           "unselected": "Ihre Beiträge werden aufbewahrt, aber sie werden mit einem anonymen Benutzer verknüpft."
         },
@@ -345,12 +345,12 @@
     }
   },
   "SubscribePage": {
-    "alertAlreadyPro": "Du bist bereits ein Pro-Nutzer, also benötigst du kein weiteres Abonnement.",
-    "alertAlreadySubscribed": "Du hast bereits ein Abonnement, daher brauchst du kein anderes Abonnement.",
+    "alertAlreadyPro": "Sie sind bereits ein Pro-Nutzer, also benötigen Sie kein weiteres Abonnement.",
+    "alertAlreadySubscribed": "Sie sind bereits ein Abonnement, daher brauchen Sie kein anderes Abonnement.",
     "currency": {
       "title": "Währung",
-      "description": "Wählen Sie eine Währung aus, mit der Sie abgerechnet werden möchten",
-      "warning": "Ihr Konto ist bereits auf {{currency}}gesetzt, so dass Sie die Währung nicht mehr ändern können."
+      "description": "Wählen Sie eine Währung aus, mit der Sie bezahlen möchten",
+      "warning": "Ihr Konto ist bereits auf {{currency}} gesetzt, so dass Sie die Währung nicht mehr ändern können."
     },
     "plan": {
       "title": "Plan",
@@ -429,7 +429,7 @@
     "sessionIsPrivateNoAccess": "Diese Sitzung ist privat, aber Sie haben keinen Zugriff."
   },
   "TrialPrompt": {
-    "allowanceReachedTitle": "Sie haben Ihr Freigepäck erreicht",
+    "allowanceReachedTitle": "Sie haben Ihr freies Kontingent aufgebraucht",
     "allowanceReachedDescription": "Um unbegrenzte Beiträge zu erhalten, abonnieren Sie bitte Retrospected Pro",
     "nearEndAllowanceTitle": "Sie nähern sich dem Ende Ihres Kontingents",
     "nearEndAllowanceDescription": "Du hast noch ca. {{quota}} Beiträge übrig",
