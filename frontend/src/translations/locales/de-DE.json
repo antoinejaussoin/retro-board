@@ -3,7 +3,7 @@
     "subtitle": "Eine gute Art, sich auf agile Weise auszudrücken",
     "logout": "Abmelden",
     "leave": "Verlassen",
-    "summaryMode": "Zusammenfassung",
+    "summaryMode": "Zusammenfassungsmodus",
     "account": "Mein Konto",
     "adminPanel": "Administrationsbereich"
   },
@@ -317,9 +317,9 @@
       "modal": {
         "confirm": {
           "title": "Sind Sie absolut sicher?",
-          "description": "Hier gibt es kein zurück.",
+          "description": "Diese Aktion kann nicht rückgängig gemacht werden.",
           "confirmation": "Ja, ich möchte alle meine Daten löschen",
-          "cancellation": "Lieber nicht löschen"
+          "cancellation": "Nein, nichts löschen"
         },
         "subheader": "Wähle was gelöscht werden soll",
         "deleteAccount": "Löschen Sie Ihr Konto und alle Identitäten, die mit Ihrer E-Mail verknüpft sind.",
@@ -339,7 +339,7 @@
           "selected": "Ihre Stimmen in allen Sitzungen werden dauerhaft gelöscht.",
           "unselected": "Deine Stimmen werden beibehalten, aber sie werden mit einem anonymen Benutzer assoziiert."
         },
-        "deleteAccountButton": "IHRE KONTO LÖSCHEN",
+        "deleteAccountButton": "IHR KONTO LÖSCHEN",
         "cancelButton": "Abbrechen"
       }
     }
