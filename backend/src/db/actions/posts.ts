@@ -9,7 +9,7 @@ import { transaction } from './transaction';
 
 export async function getNumberOfPosts(userId: string): Promise<number> {
   return await transaction(async (manager) => {
-    const postRepository = manager.getCustomRepository(PostRepository);
+    const postRepository = manager.withRepository(PostRepository);
     return await postRepository.count({ where: { user: { id: userId } } });
   });
 }
@@ -20,7 +20,7 @@ export async function savePost(
   post: Post
 ): Promise<Post | null> {
   return await transaction(async (manager) => {
-    const postRepository = manager.getCustomRepository(PostRepository);
+    const postRepository = manager.withRepository(PostRepository);
     const entity = await postRepository.saveFromJson(sessionId, userId, post);
     if (entity) {
       return entity.toJson();
@@ -36,7 +36,7 @@ export async function updatePost(
   groupId: string | null
 ): Promise<Post | null> {
   return await transaction(async (manager) => {
-    const postRepository = manager.getCustomRepository(PostRepository);
+    const postRepository = manager.withRepository(PostRepository);
     const entity = await postRepository.findOne({
       where: {
         id: postData.id,
@@ -65,8 +65,7 @@ export async function savePostGroup(
   group: PostGroup
 ): Promise<PostGroup | null> {
   return await transaction(async (manager) => {
-    const postGroupRepository =
-      manager.getCustomRepository(PostGroupRepository);
+    const postGroupRepository = manager.withRepository(PostGroupRepository);
     const entity = await postGroupRepository.saveFromJson(
       sessionId,
       userId,
@@ -85,8 +84,7 @@ export async function updatePostGroup(
   groupData: Omit<Omit<PostGroup, 'user'>, 'posts'>
 ) {
   return await transaction(async (manager) => {
-    const postGroupRepository =
-      manager.getCustomRepository(PostGroupRepository);
+    const postGroupRepository = manager.withRepository(PostGroupRepository);
     const entity = await postGroupRepository.findOne({
       where: { id: groupData.id, session: { id: sessionId } },
     });
@@ -114,7 +112,7 @@ export async function saveVote(
   vote: Vote
 ): Promise<void> {
   return await transaction(async (manager) => {
-    const voteRepository = manager.getCustomRepository(VoteRepository);
+    const voteRepository = manager.withRepository(VoteRepository);
     await voteRepository.saveFromJson(postId, userId, vote);
   });
 }
@@ -126,7 +124,7 @@ export async function deletePost(
 ): Promise<boolean> {
   return await transaction(async (manager) => {
     try {
-      const postRepository = manager.getCustomRepository(PostRepository);
+      const postRepository = manager.withRepository(PostRepository);
       const result = await postRepository.delete({
         id: postId,
         user: { id: userId },
@@ -145,9 +143,8 @@ export async function deletePostGroup(
 ): Promise<boolean> {
   return await transaction(async (manager) => {
     try {
-      const postGroupRepository =
-        manager.getCustomRepository(PostGroupRepository);
-      const sessionRepository = manager.getCustomRepository(SessionRepository);
+      const postGroupRepository = manager.withRepository(PostGroupRepository);
+      const sessionRepository = manager.withRepository(SessionRepository);
       const session = await sessionRepository.findOne({
         where: { id: sessionId },
         relations: ['visitors'],

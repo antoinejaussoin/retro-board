@@ -8,7 +8,7 @@ export async function saveChatMessage(
   message: Message
 ): Promise<Message | null> {
   return await transaction(async (manager) => {
-    const postRepository = manager.getCustomRepository(MessageRepository);
+    const postRepository = manager.withRepository(MessageRepository);
     const entity = await postRepository.saveFromJson(
       sessionId,
       userId,

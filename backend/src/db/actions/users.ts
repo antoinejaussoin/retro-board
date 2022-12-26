@@ -38,7 +38,7 @@ async function getUserInner(
   manager: EntityManager,
   userId: string
 ): Promise<UserEntity | null> {
-  const userRepository = manager.getCustomRepository(UserRepository);
+  const userRepository = manager.withRepository(UserRepository);
   const user = await userRepository.findOne({
     select: ALL_FIELDS,
     where: { id: userId },
@@ -50,9 +50,7 @@ async function getIdentityInner(
   manager: EntityManager,
   identityId: string
 ): Promise<UserIdentityEntity | null> {
-  const identityRepository = manager.getCustomRepository(
-    UserIdentityRepository
-  );
+  const identityRepository = manager.withRepository(UserIdentityRepository);
   const user = await identityRepository.findOne({
     select: ALL_FIELDS_IDENTITY,
     where: {
@@ -87,9 +85,7 @@ export async function getPasswordIdentity(
   username: string
 ): Promise<UserIdentityEntity | null> {
   return await transaction(async (manager) => {
-    const identityRepository = manager.getCustomRepository(
-      UserIdentityRepository
-    );
+    const identityRepository = manager.withRepository(UserIdentityRepository);
     const identity = await identityRepository.findOne({
       where: { username, accountType: 'password' },
     });
@@ -101,9 +97,7 @@ export async function getPasswordIdentityByUserId(
   userId: string
 ): Promise<UserIdentityEntity | null> {
   return await transaction(async (manager) => {
-    const identityRepository = manager.getCustomRepository(
-      UserIdentityRepository
-    );
+    const identityRepository = manager.withRepository(UserIdentityRepository);
     const identity = await identityRepository.findOne({
       where: { user: { id: userId }, accountType: 'password' },
     });
@@ -115,9 +109,7 @@ export async function getUserByUsername(
   username: string
 ): Promise<UserEntity | null> {
   return await transaction(async (manager) => {
-    const identityRepository = manager.getCustomRepository(
-      UserIdentityRepository
-    );
+    const identityRepository = manager.withRepository(UserIdentityRepository);
     const identity = await identityRepository.findOne({ where: { username } });
     return identity ? identity.user : null;
   });
@@ -129,9 +121,7 @@ export async function updateIdentity(
 ): Promise<UserView | null> {
   return await transaction(async (manager) => {
     try {
-      const identityRepository = manager.getCustomRepository(
-        UserIdentityRepository
-      );
+      const identityRepository = manager.withRepository(UserIdentityRepository);
       await identityRepository.update(identityId, updatedIdentity);
       const newUser = await getUserViewInner(manager, identityId);
       return newUser || null;
@@ -147,7 +137,7 @@ export async function updateUser(
   updatedUser: Partial<UserEntity>
 ): Promise<boolean> {
   return await transaction(async (manager) => {
-    const userRepository = manager.getCustomRepository(UserRepository);
+    const userRepository = manager.withRepository(UserRepository);
     const user = await getUserInner(manager, userId);
     if (user) {
       const result = await userRepository.update(userId, updatedUser);
@@ -162,7 +152,7 @@ export async function getIdentityByUsername(
   username: string
 ): Promise<UserIdentityEntity | null> {
   return await transaction(async (manager) => {
-    const repo = manager.getCustomRepository(UserIdentityRepository);
+    const repo = manager.withRepository(UserIdentityRepository);
     const identity = await repo.findOne({
       where: { accountType, username },
     });
@@ -190,10 +180,8 @@ export async function registerUser(
   registration: UserRegistration
 ): Promise<UserIdentityEntity> {
   return await transaction(async (manager) => {
-    const userRepository = manager.getCustomRepository(UserRepository);
-    const identityRepository = manager.getCustomRepository(
-      UserIdentityRepository
-    );
+    const userRepository = manager.withRepository(UserRepository);
+    const identityRepository = manager.withRepository(UserIdentityRepository);
 
     const [identity, existing] = await getOrCreateIdentity(
       manager,
@@ -231,10 +219,8 @@ export async function registerAnonymousUser(
   password: string
 ): Promise<UserIdentityEntity | null> {
   return await transaction(async (manager) => {
-    const userRepository = manager.getCustomRepository(UserRepository);
-    const identityRepository = manager.getCustomRepository(
-      UserIdentityRepository
-    );
+    const userRepository = manager.withRepository(UserRepository);
+    const identityRepository = manager.withRepository(UserIdentityRepository);
 
     const actualUsername = username.split('^')[0];
     const existingIdentity = await identityRepository.findOne({
@@ -278,9 +264,7 @@ async function getOrCreateIdentity(
   email: string,
   accountType: AccountType
 ): Promise<[identity: UserIdentityEntity, existing: boolean]> {
-  const identityRepository = manager.getCustomRepository(
-    UserIdentityRepository
-  );
+  const identityRepository = manager.withRepository(UserIdentityRepository);
   const identities = await identityRepository.find({
     where: { username, accountType },
   });
@@ -307,7 +291,7 @@ async function getOrCreateUser(
   manager: EntityManager,
   email: string
 ): Promise<[identity: UserEntity, existing: boolean]> {
-  const userRepository = manager.getCustomRepository(UserRepository);
+  const userRepository = manager.withRepository(UserRepository);
   const existingUser = await userRepository.findOne({
     where: { email },
   });
@@ -326,7 +310,7 @@ async function updateUserPassword(
   identityId: string,
   password: string
 ): Promise<UserIdentityEntity | null> {
-  const identityRepo = manager.getCustomRepository(UserIdentityRepository);
+  const identityRepo = manager.withRepository(UserIdentityRepository);
   const existingUser = await identityRepo.findOne({
     where: { id: identityId },
   });

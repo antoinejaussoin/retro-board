@@ -58,10 +58,10 @@ async function migrateOne(main: UserView, target: UserView) {
     ` > Migrating data from ${target.id} (${target.name}) to ${main.id} (${main.name})`
   );
   return await transaction(async (manager) => {
-    const voteRepo = manager.getCustomRepository(VoteRepository);
-    const postRepo = manager.getCustomRepository(PostRepository);
-    const groupRepo = manager.getCustomRepository(PostGroupRepository);
-    const sessionRepo = manager.getCustomRepository(SessionRepository);
+    const voteRepo = manager.withRepository(VoteRepository);
+    const postRepo = manager.withRepository(PostRepository);
+    const groupRepo = manager.withRepository(PostGroupRepository);
+    const sessionRepo = manager.withRepository(SessionRepository);
 
     await manager.query('update messages set user_id = $1 where user_id = $2', [
       main.id,

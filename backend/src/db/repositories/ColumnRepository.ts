@@ -1,11 +1,9 @@
-import { EntityRepository } from 'typeorm';
 import { ColumnDefinitionEntity } from '../entities';
 import { ColumnDefinition as JsonColumnDefinition } from '../../common';
 import { v4 } from 'uuid';
-import BaseRepository from './BaseRepository';
+import { getBaseRepository } from './BaseRepository';
 
-@EntityRepository(ColumnDefinitionEntity)
-export default class ColumnDefinitionRepository extends BaseRepository<ColumnDefinitionEntity> {
+export default getBaseRepository(ColumnDefinitionEntity).extend({
   async saveFromJson(
     colDef: JsonColumnDefinition,
     sessionId: string
@@ -22,7 +20,7 @@ export default class ColumnDefinitionRepository extends BaseRepository<ColumnDef
       session: { id: sessionId },
     };
     await this.save(newColumn);
-  }
+  },
 
   async updateColumns(
     sessionId: string,
@@ -36,5 +34,5 @@ export default class ColumnDefinitionRepository extends BaseRepository<ColumnDef
     } catch {
       return null;
     }
-  }
-}
+  },
+});

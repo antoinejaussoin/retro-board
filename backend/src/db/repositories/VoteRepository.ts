@@ -1,10 +1,8 @@
-import { EntityRepository } from 'typeorm';
 import { VoteEntity } from '../entities';
 import { Vote as JsonVote } from '../../common';
-import BaseRepository from './BaseRepository';
+import { getBaseRepository } from './BaseRepository';
 
-@EntityRepository(VoteEntity)
-export default class VoteRepository extends BaseRepository<VoteEntity> {
+export default getBaseRepository(VoteEntity).extend({
   async saveFromJson(
     postId: string,
     userId: string,
@@ -22,5 +20,5 @@ export default class VoteRepository extends BaseRepository<VoteEntity> {
       console.error('Error while saving a vote', error);
       throw error;
     }
-  }
-}
+  },
+});

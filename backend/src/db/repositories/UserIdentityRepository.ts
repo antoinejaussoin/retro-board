@@ -1,6 +1,4 @@
-import { EntityRepository } from 'typeorm';
-import UserIdentityEntity from '../entities/UserIdentity';
-import BaseRepository from './BaseRepository';
+import { UserIdentityEntity } from '../entities';
+import { getBaseRepository } from './BaseRepository';
 
-@EntityRepository(UserIdentityEntity)
-export default class UserIdentityRepository extends BaseRepository<UserIdentityEntity> {}
+export default getBaseRepository(UserIdentityEntity).extend({});

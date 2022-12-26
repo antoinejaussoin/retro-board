@@ -16,10 +16,10 @@ export async function registerVote(
   type: VoteType
 ): Promise<VoteExtract | null> {
   return await transaction(async (manager) => {
-    const sessionRepository = manager.getCustomRepository(SessionRepository);
-    const userRepository = manager.getCustomRepository(UserRepository);
-    const voteRepository = manager.getCustomRepository(VoteRepository);
-    const postRepository = manager.getCustomRepository(PostRepository);
+    const sessionRepository = manager.withRepository(SessionRepository);
+    const userRepository = manager.withRepository(UserRepository);
+    const voteRepository = manager.withRepository(VoteRepository);
+    const postRepository = manager.withRepository(PostRepository);
     const user = await userRepository.findOne({ where: { id: userId } });
     const post = await postRepository.findOne({
       where: { id: postId, session: { id: sessionId } },

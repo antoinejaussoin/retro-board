@@ -1,11 +1,9 @@
-import { EntityRepository } from 'typeorm';
 import { TemplateColumnDefinitionEntity } from '../entities';
 import { ColumnDefinition as JsonColumnDefinition } from '../../common';
 import { v4 } from 'uuid';
-import BaseRepository from './BaseRepository';
+import { getBaseRepository } from './BaseRepository';
 
-@EntityRepository(TemplateColumnDefinitionEntity)
-export default class TemplateColumnDefinitionRepository extends BaseRepository<TemplateColumnDefinitionEntity> {
+export default getBaseRepository(TemplateColumnDefinitionEntity).extend({
   async saveFromJson(
     colDef: JsonColumnDefinition,
     templateId: string
@@ -15,5 +13,5 @@ export default class TemplateColumnDefinitionRepository extends BaseRepository<T
       id: colDef.id || v4(),
       template: { id: templateId },
     });
-  }
-}
+  },
+});

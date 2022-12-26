@@ -1,11 +1,9 @@
-import { EntityRepository } from 'typeorm';
 import { SessionEntity } from '../entities';
 import ColumnRepository from './ColumnRepository';
 import { Session as JsonSession, SessionOptions } from '../../common';
-import BaseRepository from './BaseRepository';
+import { getBaseRepository } from './BaseRepository';
 
-@EntityRepository(SessionEntity)
-export default class SessionRepository extends BaseRepository<SessionEntity> {
+export default getBaseRepository(SessionEntity).extend({
   async updateOptions(
     sessionId: string,
     options: SessionOptions
@@ -19,14 +17,14 @@ export default class SessionRepository extends BaseRepository<SessionEntity> {
     } catch {
       return null;
     }
-  }
+  },
   async updateName(sessionId: string, name: string) {
     const sessionEntity = await this.findOne({ where: { id: sessionId } });
     if (sessionEntity) {
       sessionEntity.name = name;
       await this.save(sessionEntity);
     }
-  }
+  },
   async saveFromJson(
     session: Omit<JsonSession, 'createdBy'>,
     authorId: string
@@ -40,12 +38,12 @@ export default class SessionRepository extends BaseRepository<SessionEntity> {
     delete sessionWithoutPosts.posts;
     delete sessionWithoutPosts.columns;
 
-    const columnsRepo = this.manager.getCustomRepository(ColumnRepository);
+    const columnsRepo = this.manager.withRepository(ColumnRepository);
     const createdSession = await this.saveAndReload(sessionWithoutPosts);
     for (let i = 0; i < session.columns.length; i++) {
       await columnsRepo.saveFromJson(session.columns[i], session.id);
     }
 
     return createdSession.toJson();
-  }
-}
+  },
+});

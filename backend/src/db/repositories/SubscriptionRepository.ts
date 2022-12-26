@@ -1,9 +1,8 @@
-import { EntityRepository } from 'typeorm';
 import { UserEntity, SubscriptionEntity } from '../entities';
 import { Plan } from '../../common';
-import BaseRepository from './BaseRepository';
-@EntityRepository(SubscriptionEntity)
-export default class SubscriptionRepository extends BaseRepository<SubscriptionEntity> {
+import { getBaseRepository } from './BaseRepository';
+
+export default getBaseRepository(SubscriptionEntity).extend({
   async activate(
     stripeSubscriptionId: string,
     owner: UserEntity,
@@ -27,7 +26,7 @@ export default class SubscriptionRepository extends BaseRepository<SubscriptionE
     existingSub.active = true;
     existingSub.domain = domain;
     return await this.saveAndReload(existingSub);
-  }
+  },
 
   async cancel(stripeSubscriptionId: string): Promise<SubscriptionEntity> {
     const existingSub = await this.findOne({
@@ -38,5 +37,5 @@ export default class SubscriptionRepository extends BaseRepository<SubscriptionE
     }
     existingSub.active = false;
     return await this.saveAndReload(existingSub);
-  }
-}
+  },
+});

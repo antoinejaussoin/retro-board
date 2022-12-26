@@ -69,7 +69,7 @@ async function delVotes(
   user: UserView,
   anon: UserIdentityEntity
 ) {
-  const repo = manager.getCustomRepository(VoteRepository);
+  const repo = manager.withRepository(VoteRepository);
   if (hardDelete) {
     await repo.delete({ user: { id: user.id } });
     return true;
@@ -85,8 +85,8 @@ async function delPosts(
   user: UserView,
   anon: UserIdentityEntity
 ) {
-  const repo = manager.getCustomRepository(PostRepository);
-  const groupRepo = manager.getCustomRepository(PostGroupRepository);
+  const repo = manager.withRepository(PostRepository);
+  const groupRepo = manager.withRepository(PostGroupRepository);
   if (hardDelete) {
     await manager.query(
       `
@@ -116,7 +116,7 @@ async function delSessions(
   user: UserView,
   anon: UserIdentityEntity
 ) {
-  const repo = manager.getCustomRepository(SessionRepository);
+  const repo = manager.withRepository(SessionRepository);
   if (hardDelete) {
     await manager.query(
       `

@@ -1,12 +1,10 @@
-import { EntityRepository } from 'typeorm';
 import { SessionEntity, PostEntity } from '../entities';
 import SessionRepository from './SessionRepository';
 import { Post as JsonPost, defaultSession } from '../../common';
 import { cloneDeep } from 'lodash';
-import BaseRepository from './BaseRepository';
+import { getBaseRepository } from './BaseRepository';
 
-@EntityRepository(PostEntity)
-export default class PostRepository extends BaseRepository<PostEntity> {
+export default getBaseRepository(PostEntity).extend({
   async updateFromJson(
     sessionId: string,
     post: JsonPost
@@ -26,7 +24,7 @@ export default class PostRepository extends BaseRepository<PostEntity> {
           }
         : null,
     });
-  }
+  },
   async saveFromJson(
     sessionId: string,
     userId: string,
@@ -51,8 +49,7 @@ export default class PostRepository extends BaseRepository<PostEntity> {
           : null,
       });
     } else {
-      const sessionRepository =
-        this.manager.getCustomRepository(SessionRepository);
+      const sessionRepository = this.manager.withRepository(SessionRepository);
       const newSession = {
         ...defaultSession,
         id: sessionId,
@@ -60,5 +57,5 @@ export default class PostRepository extends BaseRepository<PostEntity> {
       await sessionRepository.saveFromJson(newSession, userId);
       return await this.saveFromJson(sessionId, userId, cloneDeep(post));
     }
-  }
-}
+  },
+});

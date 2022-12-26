@@ -12,7 +12,7 @@ export async function registerLicence(
   sessionId: string
 ): Promise<boolean> {
   return await transaction(async (manager) => {
-    const repository = manager.getCustomRepository(LicenceRepository);
+    const repository = manager.withRepository(LicenceRepository);
     const key = v4();
     const licence = new LicenceEntity(v4(), email, key, customerId, sessionId);
     try {
