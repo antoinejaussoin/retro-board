@@ -30,7 +30,9 @@ export default class SessionTemplateRepository extends BaseRepository<SessionTem
     );
     const createdTemplate = await this.save(template);
 
-    const reloadedTemplate = await this.findOne(createdTemplate.id);
+    const reloadedTemplate = await this.findOne({
+      where: { id: createdTemplate.id },
+    });
     if (reloadedTemplate) {
       for (let i = 0; i < columns.length; i++) {
         await columnsRepo.saveFromJson(columns[i], createdTemplate.id);

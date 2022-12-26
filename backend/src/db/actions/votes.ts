@@ -20,11 +20,13 @@ export async function registerVote(
     const userRepository = manager.getCustomRepository(UserRepository);
     const voteRepository = manager.getCustomRepository(VoteRepository);
     const postRepository = manager.getCustomRepository(PostRepository);
-    const user = await userRepository.findOne(userId);
-    const post = await postRepository.findOne(postId, {
-      where: { session: { id: sessionId } },
+    const user = await userRepository.findOne({ where: { id: userId } });
+    const post = await postRepository.findOne({
+      where: { id: postId, session: { id: sessionId } },
     });
-    const session = await sessionRepository.findOne(sessionId);
+    const session = await sessionRepository.findOne({
+      where: { id: sessionId },
+    });
     if (post && session && user) {
       const existingVote: Vote | undefined = find(
         post.votes,

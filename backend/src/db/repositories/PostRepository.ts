@@ -32,7 +32,9 @@ export default class PostRepository extends BaseRepository<PostEntity> {
     userId: string,
     post: JsonPost
   ): Promise<PostEntity | undefined> {
-    const session = await this.manager.findOne(SessionEntity, sessionId);
+    const session = await this.manager.findOne(SessionEntity, {
+      where: { id: sessionId },
+    });
     if (session) {
       return await this.saveAndReload({
         ...cloneDeep(post),

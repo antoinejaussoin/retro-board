@@ -10,7 +10,9 @@ export default class SubscriptionRepository extends BaseRepository<SubscriptionE
     plan: Plan,
     domain: string | null
   ): Promise<SubscriptionEntity> {
-    const existingSub = await this.findOne(stripeSubscriptionId);
+    const existingSub = await this.findOne({
+      where: { id: stripeSubscriptionId },
+    });
 
     if (!existingSub) {
       const newSubscription = new SubscriptionEntity(
@@ -28,7 +30,9 @@ export default class SubscriptionRepository extends BaseRepository<SubscriptionE
   }
 
   async cancel(stripeSubscriptionId: string): Promise<SubscriptionEntity> {
-    const existingSub = await this.findOne(stripeSubscriptionId);
+    const existingSub = await this.findOne({
+      where: { id: stripeSubscriptionId },
+    });
     if (!existingSub) {
       throw Error('Cannot cancel a subscription that does not exist');
     }

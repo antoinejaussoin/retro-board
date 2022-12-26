@@ -12,7 +12,9 @@ export default class MessageRepository extends BaseRepository<MessageEntity> {
     userId: string,
     message: JsonMessage
   ): Promise<MessageEntity | undefined> {
-    const session = await this.manager.findOne(SessionEntity, sessionId);
+    const session = await this.manager.findOne(SessionEntity, {
+      where: { id: sessionId },
+    });
     if (session) {
       return await this.saveAndReload({
         ...cloneDeep(message),

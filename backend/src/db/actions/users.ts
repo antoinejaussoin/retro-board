@@ -39,7 +39,10 @@ async function getUserInner(
   userId: string
 ): Promise<UserEntity | null> {
   const userRepository = manager.getCustomRepository(UserRepository);
-  const user = await userRepository.findOne(userId, { select: ALL_FIELDS });
+  const user = await userRepository.findOne({
+    select: ALL_FIELDS,
+    where: { id: userId },
+  });
   return user || null;
 }
 
@@ -50,8 +53,11 @@ async function getIdentityInner(
   const identityRepository = manager.getCustomRepository(
     UserIdentityRepository
   );
-  const user = await identityRepository.findOne(identityId, {
+  const user = await identityRepository.findOne({
     select: ALL_FIELDS_IDENTITY,
+    where: {
+      id: identityId,
+    },
   });
   return user || null;
 }
@@ -69,7 +75,7 @@ export async function getUserViewInner(
   identityId: string
 ): Promise<UserView | null> {
   const userViewRepository = manager.getRepository(UserView);
-  const user = await userViewRepository.findOne({ identityId });
+  const user = await userViewRepository.findOne({ where: { id: identityId } });
   // All users are pro if self-hosted and licenced
   if (user && isSelfHostedAndLicenced()) {
     user.pro = true;
@@ -85,8 +91,7 @@ export async function getPasswordIdentity(
       UserIdentityRepository
     );
     const identity = await identityRepository.findOne({
-      username,
-      accountType: 'password',
+      where: { username, accountType: 'password' },
     });
     return identity || null;
   });
@@ -100,8 +105,7 @@ export async function getPasswordIdentityByUserId(
       UserIdentityRepository
     );
     const identity = await identityRepository.findOne({
-      user: { id: userId },
-      accountType: 'password',
+      where: { user: { id: userId }, accountType: 'password' },
     });
     return identity || null;
   });
@@ -114,7 +118,7 @@ export async function getUserByUsername(
     const identityRepository = manager.getCustomRepository(
       UserIdentityRepository
     );
-    const identity = await identityRepository.findOne({ username });
+    const identity = await identityRepository.findOne({ where: { username } });
     return identity ? identity.user : null;
   });
 }
@@ -234,8 +238,7 @@ export async function registerAnonymousUser(
 
     const actualUsername = username.split('^')[0];
     const existingIdentity = await identityRepository.findOne({
-      username,
-      accountType: 'anonymous',
+      where: { username, accountType: 'anonymous' },
     });
 
     if (!existingIdentity) {
@@ -324,7 +327,9 @@ async function updateUserPassword(
   password: string
 ): Promise<UserIdentityEntity | null> {
   const identityRepo = manager.getCustomRepository(UserIdentityRepository);
-  const existingUser = await identityRepo.findOne(identityId);
+  const existingUser = await identityRepo.findOne({
+    where: { id: identityId },
+  });
   if (existingUser) {
     return await identityRepo.saveAndReload({
       ...existingUser,

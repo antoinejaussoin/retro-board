@@ -7,7 +7,7 @@ export default class BaseRepository<T extends Entity> extends Repository<T> {
     options?: SaveOptions
   ): Promise<T> {
     const saved = await this.save(entity, options);
-    const reloaded = await this.findOne(saved.id);
+    const reloaded = await this.findOne({ where: { id: saved.id as any } }); // TODO
     return reloaded!;
   }
 }

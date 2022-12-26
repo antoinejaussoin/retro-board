@@ -37,8 +37,11 @@ export async function updatePost(
 ): Promise<Post | null> {
   return await transaction(async (manager) => {
     const postRepository = manager.getCustomRepository(PostRepository);
-    const entity = await postRepository.findOne(postData.id, {
-      where: { session: { id: sessionId } },
+    const entity = await postRepository.findOne({
+      where: {
+        id: postData.id,
+        session: { id: sessionId },
+      },
     });
     if (entity) {
       const post = entity.toJson();
@@ -84,8 +87,8 @@ export async function updatePostGroup(
   return await transaction(async (manager) => {
     const postGroupRepository =
       manager.getCustomRepository(PostGroupRepository);
-    const entity = await postGroupRepository.findOne(groupData.id, {
-      where: { session: { id: sessionId } },
+    const entity = await postGroupRepository.findOne({
+      where: { id: groupData.id, session: { id: sessionId } },
     });
     if (entity) {
       const group = entity.toJson();
@@ -145,7 +148,8 @@ export async function deletePostGroup(
       const postGroupRepository =
         manager.getCustomRepository(PostGroupRepository);
       const sessionRepository = manager.getCustomRepository(SessionRepository);
-      const session = await sessionRepository.findOne(sessionId, {
+      const session = await sessionRepository.findOne({
+        where: { id: sessionId },
         relations: ['visitors'],
       });
       if (

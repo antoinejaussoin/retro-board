@@ -14,7 +14,7 @@ export default class UserRepository extends BaseRepository<UserEntity> {
   }
 
   async startTrial(user: FullUser): Promise<UserEntity | null> {
-    const userEntity = await this.findOne(user.id);
+    const userEntity = await this.findOne({ where: { id: user.id } });
     if (userEntity && !userEntity.trial && !user.pro) {
       userEntity.trial = addDays(new Date(), 30);
       return await this.saveAndReload(userEntity);

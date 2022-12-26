@@ -21,7 +21,7 @@ export default class SessionRepository extends BaseRepository<SessionEntity> {
     }
   }
   async updateName(sessionId: string, name: string) {
-    const sessionEntity = await this.findOne(sessionId);
+    const sessionEntity = await this.findOne({ where: { id: sessionId } });
     if (sessionEntity) {
       sessionEntity.name = name;
       await this.save(sessionEntity);

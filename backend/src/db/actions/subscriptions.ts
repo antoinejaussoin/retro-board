@@ -16,7 +16,7 @@ export async function activateSubscription(
     const subscriptionRepository = manager.getCustomRepository(
       SubscriptionRepository
     );
-    const user = await userRepository.findOne(userId);
+    const user = await userRepository.findOne({ where: { id: userId } });
     if (!user) {
       throw Error('Cannot activate subscription on a non existing user');
     }
@@ -120,7 +120,9 @@ export async function saveSubscription(
 export async function startTrial(userId: string): Promise<UserEntity | null> {
   return await transaction(async (manager) => {
     const userViewRepository = manager.getRepository(UserView);
-    const fullUser = await userViewRepository.findOne({ id: userId });
+    const fullUser = await userViewRepository.findOne({
+      where: { id: userId },
+    });
     if (fullUser) {
       const userRepository = manager.getCustomRepository(UserRepository);
       const user = await userRepository.startTrial(fullUser);
