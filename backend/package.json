@@ -6,17 +6,18 @@
   "scripts": {
     "build": "rimraf dist && tsc --build && yarn copy-templates",
     "start": "nodemon --exec 'yarn fix & ts-node' --files ./src/index.ts",
-    "create-migration": "ts-node ./node_modules/typeorm/cli.js --config src/db/orm-config.ts migration:generate -n ",
-    "create-empty-migration": "ts-node ./node_modules/typeorm/cli.js --config src/db/orm-config.ts migration:create -n ",
-    "migrate": "ts-node ./node_modules/typeorm/cli.js --config src/db/orm-config.ts migration:run",
-    "revert": "ts-node ./node_modules/typeorm/cli.js --config src/db/orm-config.ts migration:revert",
+    "create-migration": "scripty",
+    "create-empty-migration": "scripty",
+    "migrate": "typeorm-ts-node-commonjs -d src/db/index.ts migration:run",
+    "revert": "typeorm-ts-node-commonjs -d src/db/index.ts migration:revert",
     "lint": "eslint 'src/**/*.ts'",
     "test": "yarn jest",
     "ci-test": "CI=true yarn test",
     "fix": "eslint 'src/**/*.ts' --fix",
     "backend-production": "yarn migrate-production && cd ./dist/src && node index.js",
-    "migrate-production": "node ./node_modules/typeorm/cli.js --config dist/src/db/orm-config.js migration:run",
-    "copy-templates": "copyfiles -u 0 src/**/*.html dist/"
+    "migrate-production": "typeorm -d dist/src/db/orm-config.js migration:run",
+    "copy-templates": "copyfiles -u 0 src/**/*.html dist/",
+    "mig": "typeorm-ts-node-commonjs -d src/db/index.ts migration:run"
   },
   "dependencies": {
     "@passport-js/passport-twitter": "1.0.7",
@@ -80,6 +81,7 @@
     "rate-limiter-flexible": "2.4.1",
     "redis": "3.1.2",
     "rimraf": "3.0.2",
+    "scripty": "^2.1.1",
     "shortid": "2.2.16",
     "socket.io": "4.5.4",
     "socket.io-redis": "6.1.1",

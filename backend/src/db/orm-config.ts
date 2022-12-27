@@ -1,5 +1,5 @@
 import config from '../config';
-import { ConnectionOptions } from 'typeorm';
+import { DataSourceOptions } from 'typeorm';
 import {
   PostEntity,
   PostGroupEntity,
@@ -61,4 +61,4 @@ export default {
   cli: {
     migrationsDir: getMigrationsDirectory(),
   },
-} as ConnectionOptions;
+} as DataSourceOptions;
