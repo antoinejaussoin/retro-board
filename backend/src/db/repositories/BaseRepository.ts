@@ -8,7 +8,8 @@ export async function saveAndReload<T extends Entity>(
   options?: SaveOptions
 ): Promise<T> {
   const saved = await repo.save(entity, options);
-  const reloaded = await repo.findOne({ where: { id: saved.id as any } }); // TODO
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const reloaded = await repo.findOne({ where: { id: saved.id as any } });
   return reloaded!;
 }
 
