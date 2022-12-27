@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [v4180/deps2]
+    branches: [v4190/typeorm]
 
 jobs:
   build:
