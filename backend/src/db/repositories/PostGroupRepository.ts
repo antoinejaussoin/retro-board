@@ -1,7 +1,7 @@
 import { PostGroupEntity } from '../entities';
 import { PostGroup as JsonPostGroup } from '../../common';
 import { cloneDeep } from 'lodash';
-import { getBaseRepository } from './BaseRepository';
+import { getBaseRepository, saveAndReload } from './BaseRepository';
 
 export default getBaseRepository(PostGroupEntity).extend({
   async saveFromJson(
@@ -17,6 +17,6 @@ export default getBaseRepository(PostGroupEntity).extend({
     };
     delete groupWithoutPosts.posts;
 
-    return await this.saveAndReload(groupWithoutPosts);
+    return await saveAndReload(this, groupWithoutPosts);
   },
 });

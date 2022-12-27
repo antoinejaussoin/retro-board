@@ -1,6 +1,6 @@
 import { UserEntity, SubscriptionEntity } from '../entities';
 import { Plan } from '../../common';
-import { getBaseRepository } from './BaseRepository';
+import { getBaseRepository, saveAndReload } from './BaseRepository';
 
 export default getBaseRepository(SubscriptionEntity).extend({
   async activate(
@@ -21,11 +21,11 @@ export default getBaseRepository(SubscriptionEntity).extend({
       );
       newSubscription.domain = domain;
       newSubscription.active = true;
-      return await this.saveAndReload(newSubscription);
+      return await saveAndReload(this, newSubscription);
     }
     existingSub.active = true;
     existingSub.domain = domain;
-    return await this.saveAndReload(existingSub);
+    return await saveAndReload(this, existingSub);
   },
 
   async cancel(stripeSubscriptionId: string): Promise<SubscriptionEntity> {
@@ -36,6 +36,6 @@ export default getBaseRepository(SubscriptionEntity).extend({
       throw Error('Cannot cancel a subscription that does not exist');
     }
     existingSub.active = false;
-    return await this.saveAndReload(existingSub);
+    return await saveAndReload(this, existingSub);
   },
 });

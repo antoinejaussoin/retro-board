@@ -1,7 +1,7 @@
 import { SessionEntity } from '../entities';
 import { Message as JsonMessage } from '../../common';
 import { cloneDeep } from 'lodash';
-import { getBaseRepository } from './BaseRepository';
+import { getBaseRepository, saveAndReload } from './BaseRepository';
 import MessageEntity from '../entities/Message';
 
 export default getBaseRepository(MessageEntity).extend({
@@ -14,7 +14,7 @@ export default getBaseRepository(MessageEntity).extend({
       where: { id: sessionId },
     });
     if (session) {
-      return await this.saveAndReload({
+      return await saveAndReload(this, {
         ...cloneDeep(message),
         user: {
           id: userId,

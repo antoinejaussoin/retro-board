@@ -2,14 +2,14 @@ import { SessionEntity, PostEntity } from '../entities';
 import SessionRepository from './SessionRepository';
 import { Post as JsonPost, defaultSession } from '../../common';
 import { cloneDeep } from 'lodash';
-import { getBaseRepository } from './BaseRepository';
+import { getBaseRepository, saveAndReload } from './BaseRepository';
 
 export default getBaseRepository(PostEntity).extend({
   async updateFromJson(
     sessionId: string,
     post: JsonPost
   ): Promise<PostEntity | undefined> {
-    return await this.saveAndReload({
+    return await saveAndReload(this, {
       ...cloneDeep(post),
       session: {
         id: sessionId,
@@ -34,7 +34,7 @@ export default getBaseRepository(PostEntity).extend({
       where: { id: sessionId },
     });
     if (session) {
-      return await this.saveAndReload({
+      return await saveAndReload(this, {
         ...cloneDeep(post),
         user: {
           id: userId,

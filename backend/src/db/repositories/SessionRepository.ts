@@ -1,7 +1,7 @@
 import { SessionEntity } from '../entities';
 import ColumnRepository from './ColumnRepository';
 import { Session as JsonSession, SessionOptions } from '../../common';
-import { getBaseRepository } from './BaseRepository';
+import { getBaseRepository, saveAndReload } from './BaseRepository';
 
 export default getBaseRepository(SessionEntity).extend({
   async updateOptions(
@@ -39,7 +39,7 @@ export default getBaseRepository(SessionEntity).extend({
     delete sessionWithoutPosts.columns;
 
     const columnsRepo = this.manager.withRepository(ColumnRepository);
-    const createdSession = await this.saveAndReload(sessionWithoutPosts);
+    const createdSession = await saveAndReload(this, sessionWithoutPosts);
     for (let i = 0; i < session.columns.length; i++) {
       await columnsRepo.saveFromJson(session.columns[i], session.id);
     }

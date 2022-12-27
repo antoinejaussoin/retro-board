@@ -4,6 +4,7 @@ import { v4 } from 'uuid';
 import { sendSelfHostWelcome } from '../../email/emailSender';
 import { LicenceRepository } from '../repositories';
 import { LicenceMetadata } from './../../types';
+import { saveAndReload } from '../repositories/BaseRepository';
 
 export async function registerLicence(
   email: string | null,
@@ -16,7 +17,7 @@ export async function registerLicence(
     const key = v4();
     const licence = new LicenceEntity(v4(), email, key, customerId, sessionId);
     try {
-      const savedLicence = await repository.saveAndReload(licence);
+      const savedLicence = await saveAndReload(repository, licence);
       if (savedLicence) {
         if (email) {
           await sendSelfHostWelcome(email, name || '', key);

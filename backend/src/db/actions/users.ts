@@ -9,6 +9,7 @@ import { isSelfHostedAndLicenced } from '../../security/is-licenced';
 import { v4 } from 'uuid';
 import UserIdentityEntity from '../entities/UserIdentity';
 import { comparePassword, hashPassword } from '../../utils';
+import { saveAndReload } from '../repositories/BaseRepository';
 
 export async function getUser(userId: string): Promise<UserEntity | null> {
   return await transaction(async (manager) => {
@@ -73,7 +74,7 @@ export async function getUserViewInner(
   identityId: string
 ): Promise<UserView | null> {
   const userViewRepository = manager.getRepository(UserView);
-  const user = await userViewRepository.findOne({ where: { id: identityId } });
+  const user = await userViewRepository.findOne({ where: { identityId } });
   // All users are pro if self-hosted and licenced
   if (user && isSelfHostedAndLicenced()) {
     user.pro = true;
@@ -300,7 +301,7 @@ async function getOrCreateUser(
   }
   const user = new UserEntity(v4(), '');
   user.email = email;
-  const savedUser = await userRepository.saveAndReload(user);
+  const savedUser = await saveAndReload(userRepository, user);
 
   return [savedUser, false];
 }
@@ -315,7 +316,7 @@ async function updateUserPassword(
     where: { id: identityId },
   });
   if (existingUser) {
-    return await identityRepo.saveAndReload({
+    return await saveAndReload(identityRepo, {
       ...existingUser,
       password,
     });
