@@ -6,6 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Index,
+  Relation,
 } from 'typeorm';
 import SessionEntity from './Session.js';
 import { Message } from '../../common/index.js';
@@ -17,7 +18,7 @@ export default class MessageEntity {
   public id: string;
   @ManyToOne(() => SessionEntity, { nullable: false })
   @Index()
-  public session: SessionEntity;
+  public session: Relation<SessionEntity>;
   @Column()
   public content: string;
   @ManyToOne(() => UserEntity, { eager: true, cascade: true, nullable: false })
@@ -39,7 +40,7 @@ export default class MessageEntity {
 
   constructor(
     id: string,
-    session: SessionEntity,
+    session: Relation<SessionEntity>,
     content: string,
     user: UserEntity
   ) {

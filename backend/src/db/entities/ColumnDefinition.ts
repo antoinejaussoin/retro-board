@@ -6,6 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Index,
+  Relation,
 } from 'typeorm';
 import { ColumnDefinition, ColumnDefinitionType } from '../../common/index.js';
 import SessionEntity from './Session.js';
@@ -61,10 +62,10 @@ class ColumnDefinitionEntityBase {
 export class ColumnDefinitionEntity extends ColumnDefinitionEntityBase {
   @ManyToOne(() => SessionEntity, { nullable: false })
   @Index()
-  public session: SessionEntity;
+  public session: Relation<SessionEntity>;
   constructor(
     id: string,
-    session: SessionEntity,
+    session: Relation<SessionEntity>,
     type: string,
     index: number,
     label: string,

@@ -19,14 +19,17 @@ import LicenceEntity from './entities/Licence.js';
 import SessionOptionsEntity from './entities/SessionOptions.js';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const fileName = fileURLToPath(import.meta.url);
 
 function getMigrationsDirectory(): string {
-  return path.resolve(__dirname, 'migrations');
+  return path.resolve(path.dirname(import.meta.url), 'migrations');
 }
 
 function getMigrationsFiles(): string {
   return `${getMigrationsDirectory()}/*.${
-    __filename.endsWith('js') ? 'js' : 'ts'
+    fileName.endsWith('js') ? 'js' : 'ts'
   }`;
 }
 
