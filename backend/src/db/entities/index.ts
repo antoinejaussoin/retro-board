@@ -1,15 +1,14 @@
-export { default as PostEntity } from './Post';
-export { default as PostGroupEntity } from './PostGroup';
-export { default as SessionEntity } from './Session';
-export { default as SessionView } from './SessionView';
-export { default as UserEntity } from './User';
+export { default as PostEntity } from './Post.js';
+export { default as PostGroupEntity } from './PostGroup.js';
+export { default as SessionEntity } from './Session.js';
+export { default as SessionView } from './SessionView.js';
 export {
   ColumnDefinitionEntity,
   TemplateColumnDefinitionEntity,
-} from './ColumnDefinition';
-export { default as VoteEntity } from './Vote';
-export { default as SessionTemplateEntity } from './SessionTemplate';
-export { default as SubscriptionEntity } from './Subscription';
-export { default as UserView } from './UserView';
-export { default as UserIdentityEntity } from './UserIdentity';
-export { default as MessageEntity } from './Message';
+} from './ColumnDefinition.js';
+export { default as VoteEntity } from './Vote.js';
+export { default as SessionTemplateEntity } from './SessionTemplate.js';
+export { default as SubscriptionEntity } from './Subscription.js';
+export { default as UserView } from './UserView.js';
+export { UserIdentityEntity, UserEntity } from './UserIdentity.js';
+export { default as MessageEntity } from './Message.js';

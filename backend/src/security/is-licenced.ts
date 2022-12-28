@@ -1,8 +1,8 @@
-import { SelfHostedCheckPayload } from '../common';
-import config from '../config';
+import { SelfHostedCheckPayload } from '../common/index.js';
+import config from '../config.js';
 import fetch from 'node-fetch';
-import wait, { comparePassword, decrypt } from '../utils';
-import { LicenceMetadata } from './../types';
+import wait, { comparePassword, decrypt } from '../utils.js';
+import { LicenceMetadata } from './../types.js';
 
 let licenced: LicenceMetadata | null = null;
 

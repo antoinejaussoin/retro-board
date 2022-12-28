@@ -3,7 +3,7 @@ import { StrategyOptions as GoogleStrategyOptions } from 'passport-google-oauth2
 import { StrategyOptions as GitHubStrategy } from 'passport-github2';
 import { MicrosoftStrategyOptions } from 'passport-microsoft';
 import { OktaStrategyOptions } from 'passport-okta-oauth20';
-import config from '../config';
+import config from '../config.js';
 
 type MicrosoftStrategyOptionsWithTenant = MicrosoftStrategyOptions & {
   tenant: string | undefined;

@@ -1,7 +1,10 @@
-import { SubscriptionRepository, UserRepository } from '../repositories';
-import { Plan, Currency } from '../../common';
-import { SubscriptionEntity, UserEntity, UserView } from '../entities';
-import { transaction } from './transaction';
+import {
+  SubscriptionRepository,
+  UserRepository,
+} from '../repositories/index.js';
+import { Plan, Currency } from '../../common/index.js';
+import { SubscriptionEntity, UserEntity, UserView } from '../entities/index.js';
+import { transaction } from './transaction.js';
 import { In } from 'typeorm';
 
 export async function activateSubscription(

@@ -7,8 +7,8 @@ import {
   ManyToOne,
   Index,
 } from 'typeorm';
-import UserEntity from './User';
-import { Plan } from '../../common';
+import { Plan } from '../../common/index.js';
+import { UserEntity } from './UserIdentity.js';
 
 @Entity({ name: 'subscriptions' })
 export default class SubscriptionEntity {

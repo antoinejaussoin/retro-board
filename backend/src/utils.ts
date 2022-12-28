@@ -1,11 +1,14 @@
 import { Request } from 'express';
-import { compare, genSalt, hash } from 'bcryptjs';
-import aes from 'crypto-js/aes';
-import { stringify } from 'crypto-js/enc-utf8';
-import { UserView, UserIdentityEntity } from './db/entities';
-import { getUserView, getUser, getIdentity } from './db/actions/users';
-import { Quota } from './common';
-import { getNumberOfPosts } from './db/actions/posts';
+import bcryptjs from 'bcryptjs';
+import crypto from 'crypto-js';
+import { UserView, UserIdentityEntity } from './db/entities/index.js';
+import { getUserView, getUser, getIdentity } from './db/actions/users.js';
+import { Quota } from './common/index.js';
+import { getNumberOfPosts } from './db/actions/posts.js';
+
+const aes = crypto.AES;
+const stringify = crypto.enc.Utf8.stringify;
+const { compare, genSalt, hash } = bcryptjs;
 
 export async function getUserViewFromRequest(
   request: Request

@@ -1,11 +1,11 @@
-import { Post, PostGroup, Vote } from '../../common';
+import { Post, PostGroup, Vote } from '../../common/index.js';
 import {
   PostRepository,
   PostGroupRepository,
   VoteRepository,
   SessionRepository,
-} from '../repositories';
-import { transaction } from './transaction';
+} from '../repositories/index.js';
+import { transaction } from './transaction.js';
 
 export async function getNumberOfPosts(userId: string): Promise<number> {
   return await transaction(async (manager) => {

@@ -1,4 +1,4 @@
-import { dataSource } from '../index';
+import { dataSource } from '../index.js';
 import { EntityManager } from 'typeorm';
 
 type Inner<T> = (manager: EntityManager) => Promise<T>;

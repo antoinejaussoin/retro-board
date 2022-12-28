@@ -7,9 +7,9 @@ import {
   UpdateDateColumn,
   Index,
 } from 'typeorm';
-import { VoteType, Vote, VoteExtract } from '../../common';
-import UserEntity from './User';
-import PostEntity from './Post';
+import { VoteType, Vote, VoteExtract } from '../../common/index.js';
+import PostEntity from './Post.js';
+import { UserEntity } from './UserIdentity.js';
 
 @Entity({ name: 'votes' })
 export default class VoteEntity {

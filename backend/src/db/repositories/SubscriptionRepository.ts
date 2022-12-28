@@ -1,6 +1,6 @@
-import { UserEntity, SubscriptionEntity } from '../entities';
-import { Plan } from '../../common';
-import { getBaseRepository, saveAndReload } from './BaseRepository';
+import { UserEntity, SubscriptionEntity } from '../entities/index.js';
+import { Plan } from '../../common/index.js';
+import { getBaseRepository, saveAndReload } from './BaseRepository.js';
 
 export default getBaseRepository(SubscriptionEntity).extend({
   async activate(

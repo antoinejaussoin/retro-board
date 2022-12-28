@@ -1,5 +1,5 @@
-import { UserIdentityEntity } from '../../db/entities';
-import { registerAnonymousUser } from '../../db/actions/users';
+import { UserIdentityEntity } from '../../db/entities/index.js';
+import { registerAnonymousUser } from '../../db/actions/users.js';
 
 export default async function loginAnonymous(
   username: string,

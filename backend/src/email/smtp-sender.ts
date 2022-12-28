@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
-import config from '../config';
-import { EmailSender } from './types';
+import config from '../config.js';
+import { EmailSender } from './types.js';
 
 const transporter = nodemailer.createTransport({
   host: config.MAIL_SMTP_HOST,

@@ -1,9 +1,9 @@
-import { RegisterPayload } from '../../common';
+import { RegisterPayload } from '../../common/index.js';
 import { v4 } from 'uuid';
-import { hashPassword } from '../../utils';
-import { UserIdentityEntity } from '../../db/entities';
-import { getIdentityByUsername, registerUser } from '../../db/actions/users';
-import { canSendEmails } from '../../email/utils';
+import { hashPassword } from '../../utils.js';
+import { UserIdentityEntity } from '../../db/entities/index.js';
+import { getIdentityByUsername, registerUser } from '../../db/actions/users.js';
+import { canSendEmails } from '../../email/utils.js';
 
 export default async function registerPasswordUser(
   details: RegisterPayload,

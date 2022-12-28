@@ -1,7 +1,7 @@
-import { SessionEntity } from '../entities';
-import ColumnRepository from './ColumnRepository';
-import { Session as JsonSession, SessionOptions } from '../../common';
-import { getBaseRepository, saveAndReload } from './BaseRepository';
+import { SessionEntity } from '../entities/index.js';
+import ColumnRepository from './ColumnRepository.js';
+import { Session as JsonSession, SessionOptions } from '../../common/index.js';
+import { getBaseRepository, saveAndReload } from './BaseRepository.js';
 
 export default getBaseRepository(SessionEntity).extend({
   async updateOptions(

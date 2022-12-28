@@ -3,17 +3,17 @@ import {
   getAllNonDeletedUsers,
   getPasswordIdentityByUserId,
   updateIdentity,
-} from '../db/actions/users';
-import config from '../config';
-import { isLicenced } from '../security/is-licenced';
+} from '../db/actions/users.js';
+import config from '../config.js';
+import { isLicenced } from '../security/is-licenced.js';
 import {
   AdminChangePasswordPayload,
   BackendCapabilities,
   MergeUsersPayload,
-} from '../common';
-import { getIdentityFromRequest, hashPassword } from '../utils';
-import { canSendEmails } from '../email/utils';
-import { mergeUsers } from '../db/actions/merge';
+} from '../common/index.js';
+import { getIdentityFromRequest, hashPassword } from '../utils.js';
+import { canSendEmails } from '../email/utils.js';
+import { mergeUsers } from '../db/actions/merge.js';
 
 const router = express.Router();
 

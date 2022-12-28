@@ -1,8 +1,8 @@
-import { SessionEntity } from '../entities';
-import { Message as JsonMessage } from '../../common';
-import { cloneDeep } from 'lodash';
-import { getBaseRepository, saveAndReload } from './BaseRepository';
-import MessageEntity from '../entities/Message';
+import { SessionEntity } from '../entities/index.js';
+import { Message as JsonMessage } from '../../common/index.js';
+import { cloneDeep } from 'lodash-es';
+import { getBaseRepository, saveAndReload } from './BaseRepository.js';
+import MessageEntity from '../entities/Message.js';
 
 export default getBaseRepository(MessageEntity).extend({
   async saveFromJson(

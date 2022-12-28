@@ -1,8 +1,8 @@
-import { SessionEntity, PostEntity } from '../entities';
-import SessionRepository from './SessionRepository';
-import { Post as JsonPost, defaultSession } from '../../common';
-import { cloneDeep } from 'lodash';
-import { getBaseRepository, saveAndReload } from './BaseRepository';
+import { SessionEntity, PostEntity } from '../entities/index.js';
+import SessionRepository from './SessionRepository.js';
+import { Post as JsonPost, defaultSession } from '../../common/index.js';
+import { cloneDeep } from 'lodash-es';
+import { getBaseRepository, saveAndReload } from './BaseRepository.js';
 
 export default getBaseRepository(PostEntity).extend({
   async updateFromJson(

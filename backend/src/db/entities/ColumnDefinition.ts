@@ -7,9 +7,9 @@ import {
   UpdateDateColumn,
   Index,
 } from 'typeorm';
-import { ColumnDefinition, ColumnDefinitionType } from '../../common';
-import SessionEntity from './Session';
-import SessionTemplateEntity from './SessionTemplate';
+import { ColumnDefinition, ColumnDefinitionType } from '../../common/index.js';
+import SessionEntity from './Session.js';
+import SessionTemplateEntity from './SessionTemplate.js';
 
 class ColumnDefinitionEntityBase {
   @PrimaryColumn({ primary: true, generated: false, unique: true })

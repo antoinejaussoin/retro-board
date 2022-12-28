@@ -1,4 +1,4 @@
-import { inMemoryCache } from '../cache';
+import { inMemoryCache } from '../cache.js';
 
 const { set, get, invalidate } = inMemoryCache();
 

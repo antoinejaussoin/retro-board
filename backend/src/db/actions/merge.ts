@@ -1,13 +1,13 @@
-import { UserView } from '../entities';
-import { getUserView } from './users';
-import { transaction } from './transaction';
+import { UserView } from '../entities/index.js';
+import { getUserView } from './users.js';
+import { transaction } from './transaction.js';
 import {
   PostGroupRepository,
   PostRepository,
   SessionRepository,
   VoteRepository,
-} from '../repositories';
-import { deleteAccount } from './delete';
+} from '../repositories/index.js';
+import { deleteAccount } from './delete.js';
 
 export async function mergeUsers(
   mainUserId: string,

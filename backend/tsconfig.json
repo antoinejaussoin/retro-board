@@ -2,9 +2,9 @@
   "compilerOptions": {
     "outDir": "./dist",
     "target": "es6",
-    "module": "commonjs",
+    "module": "ESNext",
     "incremental": true,
-    "moduleResolution": "node",
+    "moduleResolution": "NodeNext",
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -20,7 +20,7 @@
     "sourceMap": true,
     "inlineSources": true,
     "sourceRoot": "/",
-    "lib": ["es2015", "es2017", "dom"],
+    "lib": ["es2015", "es2017", "dom", "ESNext"],
     "baseUrl": "src"
   },
   "include": ["src", "./package.json"],

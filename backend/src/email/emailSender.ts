@@ -1,14 +1,14 @@
 import chalk from 'chalk';
-import config from '../config';
-import randomWords from './random-words';
-import { sendGridSender } from './sendgrid-sender';
-import { smtpSender } from './smtp-sender';
+import config from '../config.js';
+import randomWords from './random-words.js';
+import { sendGridSender } from './sendgrid-sender.js';
+import { smtpSender } from './smtp-sender.js';
 import {
   getPasswordResetTemplate,
   getRegisterTemplate,
   getSelfHostedWelcomeEmailTemplate,
-} from './template-loader';
-import { EmailSender } from './types';
+} from './template-loader.js';
+import { EmailSender } from './types.js';
 
 function getSender(): EmailSender | null {
   if (config.SENDGRID_API_KEY) {

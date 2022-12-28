@@ -1,15 +1,20 @@
-import { UserEntity, UserView } from '../entities';
+import { UserEntity, UserView } from '../entities/index.js';
 import { EntityManager, Not } from 'typeorm';
-import { UserIdentityRepository, UserRepository } from '../repositories';
-import { ALL_FIELDS } from '../entities/User';
-import { ALL_FIELDS as ALL_FIELDS_IDENTITY } from '../entities/UserIdentity';
-import { transaction } from './transaction';
-import { AccountType, FullUser } from '../../common';
-import { isSelfHostedAndLicenced } from '../../security/is-licenced';
+import {
+  UserIdentityRepository,
+  UserRepository,
+} from '../repositories/index.js';
+import {
+  ALL_FIELDS,
+  ALL_IDENTITY_FIELDS as ALL_FIELDS_IDENTITY,
+  UserIdentityEntity,
+} from '../entities/UserIdentity.js';
+import { transaction } from './transaction.js';
+import { AccountType, FullUser } from '../../common/index.js';
+import { isSelfHostedAndLicenced } from '../../security/is-licenced.js';
 import { v4 } from 'uuid';
-import UserIdentityEntity from '../entities/UserIdentity';
-import { comparePassword, hashPassword } from '../../utils';
-import { saveAndReload } from '../repositories/BaseRepository';
+import { comparePassword, hashPassword } from '../../utils.js';
+import { saveAndReload } from '../repositories/BaseRepository.js';
 
 export async function getUser(userId: string): Promise<UserEntity | null> {
   return await transaction(async (manager) => {

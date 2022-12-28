@@ -9,11 +9,11 @@ import {
   Index,
 } from 'typeorm';
 import { LexoRank } from 'lexorank';
-import SessionEntity from './Session';
-import UserEntity from './User';
-import VoteEntity from './Vote';
-import PostGroupEntity from './PostGroup';
-import { Post } from '../../common';
+import SessionEntity from './Session.js';
+import VoteEntity from './Vote.js';
+import PostGroupEntity from './PostGroup.js';
+import { UserEntity } from './UserIdentity.js';
+import { Post } from 'common/types.js';
 
 @Entity({ name: 'posts' })
 export default class PostEntity {

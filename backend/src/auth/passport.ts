@@ -5,7 +5,9 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as GithubStrategy } from 'passport-github2';
 import { Strategy as SlackStrategy } from 'passport-slack-oauth2';
 import { Strategy as MicrosoftStrategy } from 'passport-microsoft';
-import { Strategy as OktaStrategy } from 'passport-okta-oauth20';
+import passportOkta from 'passport-okta-oauth20';
+
+const { Strategy: OktaStrategy } = passportOkta;
 
 import {
   TWITTER_CONFIG,
@@ -14,11 +16,11 @@ import {
   MICROSOFT_CONFIG,
   SLACK_CONFIG,
   OKTA_CONFIG,
-} from './config';
-import { AccountType } from '../common';
+} from './config.js';
+import { AccountType } from '../common/index.js';
 import chalk from 'chalk';
-import loginUser from './logins/password-user';
-import loginAnonymous from './logins/anonymous-user';
+import loginUser from './logins/password-user.js';
+import loginAnonymous from './logins/anonymous-user.js';
 import {
   BaseProfile,
   TwitterProfile,
@@ -27,10 +29,10 @@ import {
   MicrosoftProfile,
   SlackProfile,
   OktaProfile,
-} from './types';
-import { registerUser, UserRegistration } from '../db/actions/users';
-import { serialiseIds, UserIds, deserialiseIds } from '../utils';
-import config from '../config';
+} from './types.js';
+import { registerUser, UserRegistration } from '../db/actions/users.js';
+import { serialiseIds, UserIds, deserialiseIds } from '../utils.js';
+import config from '../config.js';
 
 export default () => {
   passport.serializeUser<string>((user, cb) => {

@@ -1,7 +1,7 @@
-import { UserEntity } from '../entities';
-import { FullUser, User as JsonUser } from '../../common';
+import { UserEntity } from '../entities/index.js';
+import { FullUser, User as JsonUser } from '../../common/index.js';
 import { addDays } from 'date-fns';
-import { getBaseRepository, saveAndReload } from './BaseRepository';
+import { getBaseRepository, saveAndReload } from './BaseRepository.js';
 
 export default getBaseRepository(UserEntity).extend({
   async saveFromJson(user: JsonUser): Promise<UserEntity> {

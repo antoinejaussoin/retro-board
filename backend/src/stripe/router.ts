@@ -1,18 +1,22 @@
 import express, { Router } from 'express';
-import { CreateSubscriptionPayload, Product, StripeLocales } from '../common';
-import config from '../config';
+import {
+  CreateSubscriptionPayload,
+  Product,
+  StripeLocales,
+} from '../common/index.js';
+import config from '../config.js';
 import Stripe from 'stripe';
-import { UserIdentityEntity } from '../db/entities';
+import { UserIdentityEntity } from '../db/entities/index.js';
 import {
   StripeEvent,
   CheckoutCompletedPayload,
   SubscriptionDeletedPayload,
-} from './types';
-import { plans, getProduct } from './products';
-import { updateUser } from '../db/actions/users';
-import { registerLicence } from '../db/actions/licences';
-import { getIdentityFromRequest } from '../utils';
-import isValidDomain from '../security/is-valid-domain';
+} from './types.js';
+import { plans, getProduct } from './products.js';
+import { updateUser } from '../db/actions/users.js';
+import { registerLicence } from '../db/actions/licences.js';
+import { getIdentityFromRequest } from '../utils.js';
+import isValidDomain from '../security/is-valid-domain.js';
 import {
   cancelSubscription,
   activateSubscription,
@@ -20,7 +24,7 @@ import {
   saveSubscription,
   startTrial,
   getActiveSubscriptionWhereUserIsAdmin,
-} from '../db/actions/subscriptions';
+} from '../db/actions/subscriptions.js';
 
 const stripe = new Stripe(config.STRIPE_SECRET, {
   apiVersion: '2022-11-15',

@@ -1,15 +1,15 @@
-import { DeleteAccountPayload } from '../../common';
+import { DeleteAccountPayload } from '../../common/index.js';
 import { EntityManager } from 'typeorm';
 import { v4 } from 'uuid';
-import { UserIdentityEntity, UserView } from '../entities';
+import { UserIdentityEntity, UserView } from '../entities/index.js';
 import {
   PostGroupRepository,
   PostRepository,
   SessionRepository,
   VoteRepository,
-} from '../repositories';
-import { transaction } from './transaction';
-import { registerAnonymousUser } from './users';
+} from '../repositories/index.js';
+import { transaction } from './transaction.js';
+import { registerAnonymousUser } from './users.js';
 
 export async function deleteAccount(
   user: UserView,

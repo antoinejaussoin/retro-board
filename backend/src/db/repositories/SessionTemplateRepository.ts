@@ -1,12 +1,12 @@
-import { SessionTemplateEntity } from '../entities';
+import { SessionTemplateEntity } from '../entities/index.js';
 import {
   SessionTemplate as JsonSessionTemplate,
   ColumnDefinition as JsonColumnDefinition,
   SessionOptions as JsonSessionOptions,
-} from '../../common';
+} from '../../common/index.js';
 import { v4 } from 'uuid';
-import { TemplateColumnRepository } from '.';
-import { getBaseRepository } from './BaseRepository';
+import { TemplateColumnRepository } from './index.js';
+import { getBaseRepository } from './BaseRepository.js';
 
 export default getBaseRepository(SessionTemplateEntity).extend({
   async saveFromJson(

@@ -1,6 +1,6 @@
 import sendGrid, { MailDataRequired } from '@sendgrid/mail';
-import config from '../config';
-import { EmailSender } from './types';
+import config from '../config.js';
+import { EmailSender } from './types.js';
 
 if (config.SENDGRID_API_KEY) {
   sendGrid.setApiKey(config.SENDGRID_API_KEY);

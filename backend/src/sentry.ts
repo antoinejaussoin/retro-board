@@ -1,11 +1,12 @@
-import config from './config';
+import config from './config.js';
 import * as Sentry from '@sentry/node';
 import chalk from 'chalk';
 import { Express, Request } from 'express';
-import { version } from '../package.json';
+import packageJson from '../package.json' assert { type: 'json' };
 import { QueryFailedError } from 'typeorm';
-import { throttle } from 'lodash';
+import { throttle } from 'lodash-es';
 
+const { version } = packageJson;
 const useSentry = !!config.SENTRY_URL && config.SENTRY_URL !== 'NO_SENTRY';
 
 type ConfigureScopeFn = (scope: Sentry.Scope | null) => void;

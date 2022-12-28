@@ -1,6 +1,6 @@
-import { VoteEntity } from '../entities';
-import { Vote as JsonVote } from '../../common';
-import { getBaseRepository } from './BaseRepository';
+import { VoteEntity } from '../entities/index.js';
+import { Vote as JsonVote } from '../../common/index.js';
+import { getBaseRepository } from './BaseRepository.js';
 
 export default getBaseRepository(VoteEntity).extend({
   async saveFromJson(

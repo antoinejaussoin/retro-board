@@ -1,4 +1,4 @@
-import LicenceEntity from '../entities/Licence';
-import { getBaseRepository } from './BaseRepository';
+import LicenceEntity from '../entities/Licence.js';
+import { getBaseRepository } from './BaseRepository.js';
 
 export default getBaseRepository(LicenceEntity).extend({});

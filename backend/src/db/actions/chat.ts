@@ -1,6 +1,6 @@
-import { Message } from '../../common';
-import MessageRepository from '../repositories/MessageRepository';
-import { transaction } from './transaction';
+import { Message } from '../../common/index.js';
+import MessageRepository from '../repositories/MessageRepository.js';
+import { transaction } from './transaction.js';
 
 export async function saveChatMessage(
   userId: string,

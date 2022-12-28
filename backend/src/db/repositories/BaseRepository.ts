@@ -1,6 +1,6 @@
 import { DeepPartial, EntityTarget, Repository, SaveOptions } from 'typeorm';
-import { Entity } from '../../common';
-import { dataSource } from '../index';
+import { Entity } from '../../common/index.js';
+import { dataSource } from '../index.js';
 
 export async function saveAndReload<T extends Entity>(
   repo: Repository<T>,

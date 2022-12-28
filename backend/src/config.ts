@@ -1,10 +1,10 @@
 import fs from 'fs';
 import path from 'path';
-import { BackendConfig } from './types';
+import { BackendConfig } from './types.js';
 import dotenv from 'dotenv';
 
 function findDotEnvPath(): string | null {
-  let current = path.resolve(__dirname);
+  let current = path.resolve(path.dirname(import.meta.url));
   for (let i = 0; i < 5; i++) {
     const custom = path.resolve(current, '.env');
     const example = path.resolve(current, '.env.example');

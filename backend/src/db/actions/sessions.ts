@@ -6,7 +6,7 @@ import {
   SessionEntity,
   SessionTemplateEntity,
   SessionView,
-} from '../entities';
+} from '../entities/index.js';
 import {
   Session,
   defaultSession,
@@ -15,7 +15,7 @@ import {
   SessionMetadata,
   AccessErrorType,
   FullUser,
-} from '../../common';
+} from '../../common/index.js';
 import shortId from 'shortid';
 import { v4 } from 'uuid';
 import {
@@ -25,13 +25,13 @@ import {
   PostRepository,
   PostGroupRepository,
   ColumnRepository,
-} from '../repositories';
-import { transaction } from './transaction';
+} from '../repositories/index.js';
+import { transaction } from './transaction.js';
 import { EntityManager, In } from 'typeorm';
-import { getUserViewInner, isUserPro } from './users';
-import { uniq } from 'lodash';
-import MessageRepository from '../repositories/MessageRepository';
-import MessageEntity from '../entities/Message';
+import { getUserViewInner, isUserPro } from './users.js';
+import { uniq } from 'lodash-es';
+import MessageRepository from '../repositories/MessageRepository.js';
+import MessageEntity from '../entities/Message.js';
 
 export async function createSessionFromSlack(
   slackUserId: string,
@@ -73,7 +73,7 @@ export async function createSession(
           options: { ...template.options },
           columns: template.columns
             ? template.columns.map(
-                (c) =>
+                (c: any) =>
                   ({
                     ...c,
                     id: v4(),

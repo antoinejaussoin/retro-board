@@ -1,4 +1,4 @@
-import { UserIdentityEntity } from '../entities';
-import { getBaseRepository } from './BaseRepository';
+import { UserIdentityEntity } from '../entities/index.js';
+import { getBaseRepository } from './BaseRepository.js';
 
 export default getBaseRepository(UserIdentityEntity).extend({});

@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import chalk from 'chalk';
 import { DataSource } from 'typeorm';
-import ormConfig from './orm-config';
+import ormConfig from './orm-config.js';
 
 export const dataSource = new DataSource(ormConfig);
 

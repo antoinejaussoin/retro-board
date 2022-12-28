@@ -1,7 +1,7 @@
-import { TemplateColumnDefinitionEntity } from '../entities';
-import { ColumnDefinition as JsonColumnDefinition } from '../../common';
+import { TemplateColumnDefinitionEntity } from '../entities/index.js';
+import { ColumnDefinition as JsonColumnDefinition } from '../../common/index.js';
 import { v4 } from 'uuid';
-import { getBaseRepository } from './BaseRepository';
+import { getBaseRepository } from './BaseRepository.js';
 
 export default getBaseRepository(TemplateColumnDefinitionEntity).extend({
   async saveFromJson(

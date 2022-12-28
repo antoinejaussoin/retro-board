@@ -1,13 +1,13 @@
-import { Vote, VoteExtract, VoteType } from '../../common';
-import { find } from 'lodash';
+import { Vote, VoteExtract, VoteType } from '../../common/index.js';
+import { find } from 'lodash-es';
 import { v4 } from 'uuid';
 import {
   PostRepository,
   SessionRepository,
   UserRepository,
   VoteRepository,
-} from '../repositories';
-import { transaction } from './transaction';
+} from '../repositories/index.js';
+import { transaction } from './transaction.js';
 
 export async function registerVote(
   userId: string,
