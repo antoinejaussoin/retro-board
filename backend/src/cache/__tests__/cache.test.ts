@@ -1,4 +1,4 @@
-import { inMemoryCache } from '../cache.js';
+import { inMemoryCache } from '../cache';
 
 const { set, get, invalidate } = inMemoryCache();
 
@@ -44,3 +44,5 @@ describe('Cache - Invalidate', () => {
     expect(result).toBe(null);
   });
 });
+
+export {};
