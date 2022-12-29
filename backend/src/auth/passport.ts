@@ -18,7 +18,7 @@ import {
   OKTA_CONFIG,
 } from './config.js';
 import { AccountType } from '../common/index.js';
-import chalk from 'chalk';
+import chalk from 'chalk-template';
 import loginUser from './logins/password-user.js';
 import loginAnonymous from './logins/anonymous-user.js';
 import {

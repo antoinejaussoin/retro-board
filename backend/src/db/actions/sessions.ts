@@ -73,7 +73,7 @@ export async function createSession(
           options: { ...template.options },
           columns: template.columns
             ? template.columns.map(
-                (c: any) =>
+                (c) =>
                   ({
                     ...c,
                     id: v4(),

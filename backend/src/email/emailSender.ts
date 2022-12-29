@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+import chalk from 'chalk-template';
 import config from '../config.js';
 import randomWords from './random-words.js';
 import { sendGridSender } from './sendgrid-sender.js';

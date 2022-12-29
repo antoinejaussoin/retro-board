@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import chalk from 'chalk';
+import chalk from 'chalk-template';
 import { DataSource } from 'typeorm';
 import ormConfig from './orm-config.js';
 

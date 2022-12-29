@@ -6,7 +6,6 @@ import { getDirname } from './path-utils.js';
 
 function findDotEnvPath(): string | null {
   let current = getDirname(import.meta.url);
-  console.log('dot env: ', current);
   for (let i = 0; i < 5; i++) {
     const custom = path.resolve(current, '.env');
     const example = path.resolve(current, '.env.example');

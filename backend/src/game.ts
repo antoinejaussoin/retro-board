@@ -23,7 +23,7 @@ import {
   Message,
 } from './common/index.js';
 import { RateLimiterMemory } from 'rate-limiter-flexible';
-import chalk from 'chalk';
+import chalk from 'chalk-template';
 import moment from 'moment';
 import { Server, Socket } from 'socket.io';
 import {

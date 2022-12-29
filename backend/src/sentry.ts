@@ -1,6 +1,6 @@
 import config from './config.js';
 import * as Sentry from '@sentry/node';
-import chalk from 'chalk';
+import chalk from 'chalk-template';
 import { Express, Request } from 'express';
 import packageJson from '../package.json' assert { type: 'json' };
 import { QueryFailedError } from 'typeorm';

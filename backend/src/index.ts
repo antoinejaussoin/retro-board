@@ -4,7 +4,7 @@ import { createAdapter } from 'socket.io-redis';
 import { createClient } from 'redis';
 import connectRedis from 'connect-redis';
 import http from 'http';
-import chalk from 'chalk';
+import chalk from 'chalk-template';
 import session from 'express-session';
 import passport from 'passport';
 import db from './db/index.js';
