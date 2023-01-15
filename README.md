@@ -85,6 +85,10 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 4.18.1 (hotfix)
+
+- Reinstates the Enter icon on board input on mobiles (👏 Thanks to Hans K. for the idea)
+
 ### Version 4.18.0
 
 - Self-Hosted: Adding the ability to merge users (migrating their data into another user). This is only available for self-hosted instances, through the Administration panel (👏 Thanks to Frank Becker for the idea)

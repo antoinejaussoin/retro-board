@@ -279,11 +279,6 @@ const EnterIcon = styled.div`
       color: ${colors.deepPurple[500]};
     }
   }
-
-  @media (max-width: 600px) {
-    display: none;
-    visibility: hidden;
-  }
 `;
 
 const IconContainer = styled.div`
