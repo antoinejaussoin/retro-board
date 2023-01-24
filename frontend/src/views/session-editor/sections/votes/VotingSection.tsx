@@ -32,6 +32,15 @@ function VotingSection({ options, onChange }: VotingSectionProps) {
     },
     [onChange, options]
   );
+  const setAllowCancelVote = useCallback(
+    (value: boolean) => {
+      onChange({
+        ...options,
+        allowCancelVote: value,
+      });
+    },
+    [onChange, options]
+  );
   const setMaxUpVotes = useCallback(
     (value: number | null) => {
       onChange({
@@ -88,6 +97,15 @@ function VotingSection({ options, onChange }: VotingSectionProps) {
         <BooleanOption
           value={options.allowMultipleVotes}
           onChange={setAllowMultipleVotes}
+        />
+      </OptionItem>
+      <OptionItem
+        label={t('Customize.allowCancelVote')!}
+        help={t('Customize.allowCancelVoteHelp')!}
+      >
+        <BooleanOption
+          value={options.allowCancelVote}
+          onChange={setAllowCancelVote}
         />
       </OptionItem>
     </SettingCategory>
