@@ -13,6 +13,7 @@ export const defaultOptions: SessionOptions = {
   allowReordering: true,
   blurCards: false,
   newPostsFirst: true,
+  allowCancelVote: false,
 };
 
 export const defaultSession: Omit<Session, 'createdBy'> = {

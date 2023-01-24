@@ -57,6 +57,7 @@ export interface SessionOptions {
   allowGiphy: boolean;
   allowGrouping: boolean;
   allowReordering: boolean;
+  allowCancelVote: boolean;
   blurCards: boolean;
   newPostsFirst: boolean;
 }

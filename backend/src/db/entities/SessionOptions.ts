@@ -27,6 +27,8 @@ export default class SessionOptionsEntity {
   @Column({ default: true })
   public allowReordering: boolean;
   @Column({ default: false })
+  public allowCancelVote: boolean;
+  @Column({ default: false })
   public blurCards: boolean;
   @Column({ default: true })
   public newPostsFirst: boolean;
@@ -49,6 +51,7 @@ export default class SessionOptionsEntity {
     this.allowGiphy = optionsWithDefault.allowGiphy;
     this.allowGrouping = optionsWithDefault.allowGrouping;
     this.allowReordering = optionsWithDefault.allowMultipleVotes;
+    this.allowCancelVote = optionsWithDefault.allowCancelVote;
     this.blurCards = optionsWithDefault.blurCards;
     this.newPostsFirst = optionsWithDefault.newPostsFirst;
   }
