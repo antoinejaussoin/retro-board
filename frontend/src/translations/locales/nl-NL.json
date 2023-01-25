@@ -55,7 +55,8 @@
     "voteRemainingMultiple": "Je hebt nog {{number}} {{type}}s over.",
     "voteRemainingOne": "Je hebt nog maar één {{type}} over, maak het mee!",
     "voteRemainingNone": "Je hebt geen {{type}} over.",
-    "toggleGiphyButton": "Aan- en uitschakelen Giphy afbeelding"
+    "toggleGiphyButton": "Aan- en uitschakelen Giphy afbeelding",
+    "cancelVote": "Uw stemmen op dit bericht annuleren"
   },
   "Customize": {
     "title": "Sessie aanpassen",
@@ -77,6 +78,8 @@
     "allowSelfVotingHelp": "Of een gebruiker op zijn eigen retropunten mag stemmen",
     "allowMultipleVotes": "Meerdere stemmen toestaan",
     "allowMultipleVotesHelp": "Of een gebruiker meerdere stemmen op hetzelfde retropunt kan uitbrengen",
+    "allowCancelVote": "Annuleren van stemmen toestaan",
+    "allowCancelVoteHelp": "Wel of niet toestaan dat een gebruiker zijn stem op een bepaald bericht annuleert",
     "allowActions": "Acties toestaan",
     "allowActionsHelp": "Toestaan van 'Acties' veld (follow-up) op elk retropunt",
     "allowAuthorVisible": "Toon auteur",
@@ -129,6 +132,7 @@
     "error_cannot_rename_session": "Hernoemen van de sessie is mislukt",
     "error_cannot_save_columns": "Kolommen opslaan mislukt",
     "error_cannot_save_options": "Opties opslaan mislukt",
+    "error_cannot_cancel_votes": "Annuleren van stemmen mislukt",
     "maxPostsReached": "Je hebt het maximum aantal berichten bereikt dat door de moderator is ingesteld.",
     "iAmDone": "Ik ben klaar!",
     "iAmNotDoneYet": "Ik ben nog niet klaar...",

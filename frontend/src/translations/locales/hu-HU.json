@@ -55,7 +55,8 @@
     "voteRemainingMultiple": "{{number}} {{type}}mp van hátra.",
     "voteRemainingOne": "Már csak egy {{type}} van hátra, számítson rá!",
     "voteRemainingNone": "Nem maradt {{type}}.",
-    "toggleGiphyButton": "Kapcsolja be a Giphy képet"
+    "toggleGiphyButton": "Kapcsolja be a Giphy képet",
+    "cancelVote": ""
   },
   "Customize": {
     "title": "A munkamenet testreszabása",
@@ -77,6 +78,8 @@
     "allowSelfVotingHelp": "Engedélyezi-e a felhasználónak, hogy szavazzon a saját bejegyzésére",
     "allowMultipleVotes": "Több szavazat engedélyezése",
     "allowMultipleVotesHelp": "Engedélyezi-e, hogy egy felhasználó többször szavazzon ugyanarra a bejegyzésre",
+    "allowCancelVote": "",
+    "allowCancelVoteHelp": "",
     "allowActions": "Műveletek engedélyezése",
     "allowActionsHelp": "Engedélyezi-e az „Action” (követés) mezőt az egyes bejegyzéseknél",
     "allowAuthorVisible": "Szerző megjelenítése",
@@ -129,6 +132,7 @@
     "error_cannot_rename_session": "A munkamenet átnevezése nem sikerült",
     "error_cannot_save_columns": "Az oszlopok mentése nem sikerült",
     "error_cannot_save_options": "A beállítások mentése nem sikerült",
+    "error_cannot_cancel_votes": "",
     "maxPostsReached": "Elérted a moderátor által beállított maximális bejegyzések számát.",
     "iAmDone": "Kész vagyok!",
     "iAmNotDoneYet": "Még nem végeztem...",

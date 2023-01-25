@@ -55,7 +55,8 @@
     "voteRemainingMultiple": "Hai {{number}} {{type}}s rimanenti.",
     "voteRemainingOne": "Hai solo un {{type}} rimanente, farlo contare!",
     "voteRemainingNone": "Non hai nessun {{type}} rimanente.",
-    "toggleGiphyButton": "Toggle immagine Giphy"
+    "toggleGiphyButton": "Toggle immagine Giphy",
+    "cancelVote": "Annulla i tuoi voti su questo post"
   },
   "Customize": {
     "title": "Personalizza il tuo gioco!",
@@ -77,6 +78,8 @@
     "allowSelfVotingHelp": "Se consentire ad un utente di votare sul proprio post",
     "allowMultipleVotes": "Permettere votazioni multiple",
     "allowMultipleVotesHelp": "Se consentire a un utente di votare più volte sullo stesso post",
+    "allowCancelVote": "Consenti Annulla Voti",
+    "allowCancelVoteHelp": "Indica se consentire a un utente di annullare il proprio voto su un post specifico",
     "allowActions": "Permettere Azioni",
     "allowActionsHelp": "Se consentire il campo \"Azione\" (follow-up) su ciascun post",
     "allowAuthorVisible": "Mostra Autore",
@@ -129,6 +132,7 @@
     "error_cannot_rename_session": "Rinomina della sessione non riuscita",
     "error_cannot_save_columns": "Salvataggio colonne non riuscito",
     "error_cannot_save_options": "Opzioni di salvataggio fallite",
+    "error_cannot_cancel_votes": "Annullamento dei voti fallito",
     "maxPostsReached": "Hai raggiunto il numero massimo di post impostati dal moderatore.",
     "iAmDone": "Ho finito!",
     "iAmNotDoneYet": "Non ho ancora finito...",

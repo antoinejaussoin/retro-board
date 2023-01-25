@@ -55,7 +55,8 @@
     "voteRemainingMultiple": "您還剩 {{number}} {{type}}秒。",
     "voteRemainingOne": "你只剩下一個 {{type}} 了，算了吧！",
     "voteRemainingNone": "你沒有任何剩餘的 {{type}}。",
-    "toggleGiphyButton": "切換 Giphy 圖像"
+    "toggleGiphyButton": "切換 Giphy 圖像",
+    "cancelVote": ""
   },
   "Customize": {
     "title": "自定義您的會話",
@@ -77,6 +78,8 @@
     "allowSelfVotingHelp": "是否允許用戶對自己的帖子進行投票",
     "allowMultipleVotes": "允許多票",
     "allowMultipleVotesHelp": "是否允許用戶對同一個帖子進行多次投票",
+    "allowCancelVote": "",
+    "allowCancelVoteHelp": "",
     "allowActions": "允許操作",
     "allowActionsHelp": "是否允許每個帖子上的“操作”（跟進）字段",
     "allowAuthorVisible": "顯示作者",
@@ -129,6 +132,7 @@
     "error_cannot_rename_session": "重命名會話失敗",
     "error_cannot_save_columns": "保存列失敗",
     "error_cannot_save_options": "保存選項失敗",
+    "error_cannot_cancel_votes": "",
     "maxPostsReached": "您已達到版主設置的最大帖子數。",
     "iAmDone": "我受夠了！",
     "iAmNotDoneYet": "我還沒搞定...",

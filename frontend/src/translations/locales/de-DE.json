@@ -55,7 +55,8 @@
     "voteRemainingMultiple": "Sie können noch {{number}} mal {{type}}.",
     "voteRemainingOne": "Sie können noch ein mal {{type}}, überlegen Sie es sich gut!",
     "voteRemainingNone": "Sie können nicht mehr {{type}}.",
-    "toggleGiphyButton": "Giphy-Bild umschalten"
+    "toggleGiphyButton": "Giphy-Bild umschalten",
+    "cancelVote": "Deine Stimme für diesen Beitrag abbrechen"
   },
   "Customize": {
     "title": "Personalisieren Sie die Sitzung",
@@ -77,6 +78,8 @@
     "allowSelfVotingHelp": "Soll es Nutzern möglich sein für seine eigenen Beiträge zu stimmen?",
     "allowMultipleVotes": "Mehrfachstimmen",
     "allowMultipleVotesHelp": "Soll es Nutzern möglich sein mehrfach zu abzustimmen?",
+    "allowCancelVote": "Abstimmungen abbrechen",
+    "allowCancelVoteHelp": "Gibt an, ob ein Benutzer seine Stimme für einen bestimmten Beitrag abbrechen kann",
     "allowActions": "Erlaube Maßnahmen",
     "allowActionsHelp": "Bestimmt ob Maßnahmen hinzugefügt werden können",
     "allowAuthorVisible": "Zeige Autor",
@@ -129,6 +132,7 @@
     "error_cannot_rename_session": "Umbenennen der Sitzung fehlgeschlagen",
     "error_cannot_save_columns": "Spalten speichern fehlgeschlagen",
     "error_cannot_save_options": "Speichern der Optionen fehlgeschlagen",
+    "error_cannot_cancel_votes": "Abbruch der Abstimmung fehlgeschlagen",
     "maxPostsReached": "Sie haben die vom Moderator festgelegte maximale Anzahl von Beiträgen erreicht.",
     "iAmDone": "Ich bin fertig!",
     "iAmNotDoneYet": "Ich bin noch nicht fertig...",

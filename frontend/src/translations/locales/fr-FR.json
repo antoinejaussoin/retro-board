@@ -55,7 +55,8 @@
     "voteRemainingMultiple": "Il vous reste {{number}} votes {{type}}s.",
     "voteRemainingOne": "Il ne vous reste plus qu'un vote {{type}}, ne le gâchez pas !",
     "voteRemainingNone": "Il ne vous reste plus aucun vote {{type}}.",
-    "toggleGiphyButton": "Montrer/Cacher l'image Giphy"
+    "toggleGiphyButton": "Montrer/Cacher l'image Giphy",
+    "cancelVote": "Annuler vos votes sur ce post"
   },
   "Customize": {
     "title": "Nouvelle session personalisée",
@@ -77,6 +78,8 @@
     "allowSelfVotingHelp": "Autoriser à voter pour ses propres posts",
     "allowMultipleVotes": "Votes multiples",
     "allowMultipleVotesHelp": "Autoriser à voter plusieurs fois pour le même post",
+    "allowCancelVote": "Permettre d'annuler ses votes",
+    "allowCancelVoteHelp": "Permettre à un utilisateur d'annuler son vote sur un post spécifique",
     "allowActions": "Activer les Actions",
     "allowActionsHelp": "Permettre ou non le champ 'Action' (suivi) sur chaque message",
     "allowAuthorVisible": "Afficher l'auteur",
@@ -129,6 +132,7 @@
     "error_cannot_rename_session": "La session ne peut être renommée",
     "error_cannot_save_columns": "Les colonnes n'ont pu être enregistrées",
     "error_cannot_save_options": "Les options n'ont pu être enregistrées",
+    "error_cannot_cancel_votes": "L'annulation des votes a échoué",
     "maxPostsReached": "Vous avez atteint le nombre de posts maximum prévu par le modérateur.",
     "iAmDone": "J'ai fini !",
     "iAmNotDoneYet": "Je n'ai pas encore fini...",

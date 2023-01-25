@@ -55,7 +55,8 @@
     "voteRemainingMultiple": "您还剩下了 {{number}} {{type}}秒。",
     "voteRemainingOne": "你只剩下一个 {{type}} ，把它算进去！",
     "voteRemainingNone": "您没有剩余任何 {{type}}。",
-    "toggleGiphyButton": "切换Giphy图像"
+    "toggleGiphyButton": "切换Giphy图像",
+    "cancelVote": "取消您对此帖子的投票"
   },
   "Customize": {
     "title": "自定义您的会话",
@@ -77,6 +78,8 @@
     "allowSelfVotingHelp": "是否允许用户对自己的帖子投票",
     "allowMultipleVotes": "允许多个投票",
     "allowMultipleVotesHelp": "是否允许用户在同一个帖子上多次投票",
+    "allowCancelVote": "允许取消投票",
+    "allowCancelVoteHelp": "是否允许用户取消对特定帖子的投票",
     "allowActions": "允许操作",
     "allowActionsHelp": "是否允许每个帖子上的“动作”(后续)",
     "allowAuthorVisible": "显示作者",
@@ -129,6 +132,7 @@
     "error_cannot_rename_session": "重命名会话失败",
     "error_cannot_save_columns": "保存列失败",
     "error_cannot_save_options": "保存选项失败",
+    "error_cannot_cancel_votes": "取消投票失败",
     "maxPostsReached": "您已经达到了版主设置的帖子的最大数量。",
     "iAmDone": "我已完成！",
     "iAmNotDoneYet": "我还没有完成...",

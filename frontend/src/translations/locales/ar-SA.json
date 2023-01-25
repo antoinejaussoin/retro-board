@@ -55,7 +55,8 @@
     "voteRemainingMultiple": "لديك {{number}} {{type}}ثانية متبقية.",
     "voteRemainingOne": "لديك فقط {{type}} واحد متبقي، جعله عديم!",
     "voteRemainingNone": "ليس لديك أي {{type}} متبقي.",
-    "toggleGiphyButton": "تبديل الصورة الجافية"
+    "toggleGiphyButton": "تبديل الصورة الجافية",
+    "cancelVote": "إلغاء تصويتك على هذا المنشور"
   },
   "Customize": {
     "title": "تخصيص الجلسة الخاصة بك",
@@ -77,6 +78,8 @@
     "allowSelfVotingHelp": "ما إذا كان يسمح للمستخدم بالتصويت على مشاركته الخاصة",
     "allowMultipleVotes": "السماح بتعدد الأصوات",
     "allowMultipleVotesHelp": "ما إذا كان يسمح للمستخدم بالتصويت عدة مرات على نفس المنشور",
+    "allowCancelVote": "السماح بإلغاء التصويت",
+    "allowCancelVoteHelp": "ما إذا كان يسمح للمستخدم بإلغاء تصويته على مشاركة محددة",
     "allowActions": "السماح بالإجراءات",
     "allowActionsHelp": "ما إذا كان سيتم السماح بحقل \"الإجراء\" (المتابعة) في كل مشاركة",
     "allowAuthorVisible": "إظهار المؤلف",
@@ -129,6 +132,7 @@
     "error_cannot_rename_session": "فشل إعادة تسمية الجلسة",
     "error_cannot_save_columns": "فشل حفظ الأعمدة",
     "error_cannot_save_options": "فشل حفظ الخيارات",
+    "error_cannot_cancel_votes": "فشل إلغاء الأصوات",
     "maxPostsReached": "لقد وصلت إلى الحد الأقصى لعدد المشاركات التي حددها المشرف",
     "iAmDone": "لقد انتهيت!",
     "iAmNotDoneYet": "أنا لم أنتهِ بعد...",

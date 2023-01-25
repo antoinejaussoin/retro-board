@@ -55,7 +55,8 @@
     "voteRemainingMultiple": "残り {{number}} {{type}}秒です。",
     "voteRemainingOne": "残り {{type}} は1つです。カウントしてください！",
     "voteRemainingNone": "残り {{type}} はありません。",
-    "toggleGiphyButton": "Giphy画像の切り替え"
+    "toggleGiphyButton": "Giphy画像の切り替え",
+    "cancelVote": "この投稿への投票をキャンセル"
   },
   "Customize": {
     "title": "セッションをカスタマイズ",
@@ -77,6 +78,8 @@
     "allowSelfVotingHelp": "ユーザーが自分の投稿に投票できるようにするかどうか",
     "allowMultipleVotes": "複数の投票を許可する",
     "allowMultipleVotesHelp": "ユーザーが同じ投稿に複数回投票できるようにするか",
+    "allowCancelVote": "投票をキャンセルする",
+    "allowCancelVoteHelp": "ユーザーに特定の投稿への投票を許可するかどうか",
     "allowActions": "アクションを許可する",
     "allowActionsHelp": "各投稿の「アクション」フィールドを許可するかどうか",
     "allowAuthorVisible": "投稿者を表示",
@@ -129,6 +132,7 @@
     "error_cannot_rename_session": "セッションの名前を変更できませんでした",
     "error_cannot_save_columns": "列の保存に失敗しました",
     "error_cannot_save_options": "オプションの保存に失敗しました",
+    "error_cannot_cancel_votes": "投票のキャンセルに失敗しました",
     "maxPostsReached": "モデレーターが設定した投稿の最大数に達しました。",
     "iAmDone": "終わりました！",
     "iAmNotDoneYet": "まだ完了していません...",

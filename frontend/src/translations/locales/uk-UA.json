@@ -55,7 +55,8 @@
     "voteRemainingMultiple": "Залишилось {{number}} {{type}}сек.",
     "voteRemainingOne": "У вас залишилось тільки один {{type}} і ви можете зробити цей рахунок!",
     "voteRemainingNone": "У вас не залишилося {{type}}.",
-    "toggleGiphyButton": "Перемкнути зображення Giphy"
+    "toggleGiphyButton": "Перемкнути зображення Giphy",
+    "cancelVote": "Скасувати Ваші голосування в цьому повідомленні"
   },
   "Customize": {
     "title": "Налаштуйте вашу сесію",
@@ -77,6 +78,8 @@
     "allowSelfVotingHelp": "Дозволити користувачу голосувати за власне повідомлення",
     "allowMultipleVotes": "Дозволити кілька голосів",
     "allowMultipleVotesHelp": "Чи дозволити користувачу голосувати кілька разів на тому ж повідомленні",
+    "allowCancelVote": "Дозволити скасування голосування",
+    "allowCancelVoteHelp": "Чи дозволити користувачу скасувати свій голос у конкретному повідомленні",
     "allowActions": "Дозволити дії",
     "allowActionsHelp": "Чи дозволяти поле \"Дія\" (follow-up) в кожному повідомленні",
     "allowAuthorVisible": "Показати автора",
@@ -129,6 +132,7 @@
     "error_cannot_rename_session": "Перейменування сесії не вдалося",
     "error_cannot_save_columns": "Помилка збереження стовпців",
     "error_cannot_save_options": "Зберегти параметри не вдалося",
+    "error_cannot_cancel_votes": "Скасування голосування не вдалося",
     "maxPostsReached": "Ви досягли максимальної кількості повідомлень, встановлених модератором.",
     "iAmDone": "Я завершив!",
     "iAmNotDoneYet": "Я ще не завершив...",

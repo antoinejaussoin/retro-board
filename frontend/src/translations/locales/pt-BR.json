@@ -55,7 +55,8 @@
     "voteRemainingMultiple": "Você tem {{number}} {{type}}restantes.",
     "voteRemainingOne": "Você tem apenas um {{type}} restante, faça com que ele conte!",
     "voteRemainingNone": "Você não tem nenhum {{type}} restante.",
-    "toggleGiphyButton": "Alternar imagem Giphy"
+    "toggleGiphyButton": "Alternar imagem Giphy",
+    "cancelVote": "Cancelar seus votos nesta publicação"
   },
   "Customize": {
     "title": "Personalize sua sessão",
@@ -77,6 +78,8 @@
     "allowSelfVotingHelp": "Se permite que um usuário vote em sua própria publicação",
     "allowMultipleVotes": "Permitir Vários Votos",
     "allowMultipleVotesHelp": "Se permite que um usuário vote várias vezes na mesma publicação",
+    "allowCancelVote": "Permitir Votos Cancelar",
+    "allowCancelVoteHelp": "Se permite que um usuário cancele o seu voto em uma publicação específica",
     "allowActions": "Permitir Ações",
     "allowActionsHelp": "Se deseja permitir o campo 'Ação' (seguimento) em cada postagem",
     "allowAuthorVisible": "Mostrar autor",
@@ -129,6 +132,7 @@
     "error_cannot_rename_session": "Falha ao renomear a sessão",
     "error_cannot_save_columns": "Falha ao salvar colunas",
     "error_cannot_save_options": "Opções de salvamento falharam",
+    "error_cannot_cancel_votes": "Falha ao cancelar votos",
     "maxPostsReached": "Você atingiu o número máximo de postagens definido pelo moderador.",
     "iAmDone": "Estou pronto!",
     "iAmNotDoneYet": "Eu não terminei ainda...",

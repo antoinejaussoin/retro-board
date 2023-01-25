@@ -55,7 +55,8 @@
     "voteRemainingMultiple": "Pozostało Ci {{number}} {{type}}s.",
     "voteRemainingOne": "Pozostało Ci tylko jeden {{type}} , zliczaj się!",
     "voteRemainingNone": "Nie masz jeszcze żadnych {{type}}.",
-    "toggleGiphyButton": "Przełącz obraz Giphy"
+    "toggleGiphyButton": "Przełącz obraz Giphy",
+    "cancelVote": "Anuluj swoje głosy na ten post"
   },
   "Customize": {
     "title": "Dostosuj swoją sesję",
@@ -77,6 +78,8 @@
     "allowSelfVotingHelp": "Czy zezwolić użytkownikowi na głosowanie na własny post",
     "allowMultipleVotes": "Zezwalaj na wiele głosów",
     "allowMultipleVotesHelp": "Czy zezwolić użytkownikowi na wielokrotne głosowanie na ten sam post",
+    "allowCancelVote": "Zezwalaj na anulowanie głosów",
+    "allowCancelVoteHelp": "Czy zezwolić użytkownikowi na anulowanie głosowania na konkretny post",
     "allowActions": "Zezwól na działania",
     "allowActionsHelp": "Czy zezwolić na pole \"Akcja\" (kontynuacja) dla każdego postu",
     "allowAuthorVisible": "Pokaż autora",
@@ -129,6 +132,7 @@
     "error_cannot_rename_session": "Zmiana nazwy sesji nie powiodła się",
     "error_cannot_save_columns": "Zapisywanie kolumn nie powiodło się",
     "error_cannot_save_options": "Zapisywanie opcji nie powiodło się",
+    "error_cannot_cancel_votes": "Anulowanie głosów nie powiodło się",
     "maxPostsReached": "Osiągnąłeś maksymalną liczbę postów ustawionych przez moderatora.",
     "iAmDone": "Gotowe!",
     "iAmNotDoneYet": "Jeszcze nie skończyłem...",
