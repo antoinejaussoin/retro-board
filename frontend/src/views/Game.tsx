@@ -65,6 +65,7 @@ function GamePage() {
     onDeletePostGroup,
     onEditPostGroup,
     onLike,
+    onCancelVotes,
     onRenameSession,
     onEditOptions,
     onEditColumns,
@@ -172,6 +173,7 @@ function GamePage() {
               onAddGroup={onAddGroup}
               onDeletePost={onDeletePost}
               onLike={onLike}
+              onCancelVotes={onCancelVotes}
               onDeleteGroup={onDeletePostGroup}
               onEditGroup={onEditPostGroup}
               onRenameSession={onRenameSession}

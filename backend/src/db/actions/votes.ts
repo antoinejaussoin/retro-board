@@ -9,6 +9,26 @@ import {
 } from '../repositories/index.js';
 import { transaction } from './transaction.js';
 
+export async function cancelVotes(
+  userId: string,
+  sessionId: string,
+  postId: string
+): Promise<void> {
+  return await transaction(async (manager) => {
+    const sessionRepository = manager.withRepository(SessionRepository);
+    const voteRepository = manager.withRepository(VoteRepository);
+    const session = await sessionRepository.findOne({
+      where: { id: sessionId },
+    });
+    if (session && session.options.allowCancelVote) {
+      await voteRepository.delete({
+        user: { id: userId },
+        post: { id: postId },
+      });
+    }
+  });
+}
+
 export async function registerVote(
   userId: string,
   sessionId: string,

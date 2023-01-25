@@ -34,6 +34,7 @@ interface ColumnProps {
   onDeleteGroup: (group: PostGroup) => void;
   onLike: (post: Post) => void;
   onDislike: (post: Post) => void;
+  onCancelVotes: (post: Post) => void;
   onEdit: (post: Post) => void;
   onDelete: (post: Post) => void;
 }
@@ -50,6 +51,7 @@ const Column: React.FC<ColumnProps> = ({
   onAddGroup,
   onLike,
   onDislike,
+  onCancelVotes,
   onEdit,
   onDelete,
   onEditGroup,
@@ -145,6 +147,7 @@ const Column: React.FC<ColumnProps> = ({
                 onLike={() => onLike(post)}
                 onDislike={() => onDislike(post)}
                 onDelete={() => onDelete(post)}
+                onCancelVotes={() => onCancelVotes(post)}
                 onEdit={(content) =>
                   onEdit({
                     ...post,
@@ -188,6 +191,7 @@ const Column: React.FC<ColumnProps> = ({
                 color={color}
                 onLike={() => onLike(post)}
                 onDislike={() => onDislike(post)}
+                onCancelVotes={() => onCancelVotes(post)}
                 onDelete={() => onDelete(post)}
                 onEdit={(content) =>
                   onEdit({

@@ -17,6 +17,7 @@ import {
   Assignment,
   AssignmentOutlined,
   EmojiEmotionsOutlined,
+  Clear,
 } from '@mui/icons-material';
 import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
@@ -45,6 +46,7 @@ interface PostItemProps {
   search: string;
   onLike: () => void;
   onDislike: () => void;
+  onCancelVotes: () => void;
   onEdit: (content: string) => void;
   onEditAction: (action: string) => void;
   onEditGiphy: (giphyId: string | null) => void;
@@ -72,6 +74,7 @@ const PostItem = ({
   search,
   onLike,
   onDislike,
+  onCancelVotes,
   onEdit,
   onEditAction,
   onEditGiphy,
@@ -85,6 +88,7 @@ const PostItem = ({
     canDownVote,
     canDisplayUpVote,
     canDisplayDownVote,
+    canCancelVote,
     canShowAuthor,
     canReorder,
     canUseGiphy,
@@ -306,6 +310,14 @@ const PostItem = ({
                   onClick={onDislike}
                   showTooltip={canShowAuthor}
                   ariaLabel="Dislike"
+                />
+              ) : null}
+              {canCancelVote ? (
+                <ActionButton
+                  icon={<Clear htmlColor={Palette.negative} />}
+                  tooltip={t('Post.cancelVote')}
+                  ariaLabel={t('Post.cancelVote')}
+                  onClick={onCancelVotes}
                 />
               ) : null}
             </ActionsBar>

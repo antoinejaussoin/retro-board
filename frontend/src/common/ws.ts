@@ -6,7 +6,7 @@ import {
   User,
   VoteExtract,
   VoteType,
-} from './types';
+} from './types.js';
 
 export interface WebsocketMessage<T> {
   payload: T;
@@ -41,7 +41,16 @@ export interface WsReceiveLikeUpdatePayload {
   vote: VoteExtract;
 }
 
+export interface WsReceiveCancelVotesPayload {
+  postId: string;
+  userId: string;
+}
+
 export interface WsDeletePostPayload {
+  postId: string;
+}
+
+export interface WsCancelVotesPayload {
   postId: string;
 }
 
@@ -73,6 +82,7 @@ export type WsErrorType =
   | 'cannot_delete_group'
   | 'cannot_rename_session'
   | 'cannot_record_chat_message'
+  | 'cannot_cancel_votes'
   | 'unknown_error'
   | 'action_unauthorised';
 

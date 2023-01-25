@@ -29,6 +29,7 @@ interface UseSession {
   editColumns: (columns: ColumnDefinition[]) => void;
   lockSession: (locked: boolean) => void;
   userReady: (userId: string, ready?: boolean) => void;
+  cancelVotes: (postId: string, userId: string) => void;
 }
 
 export default function useSession(): UseSession {
@@ -174,6 +175,29 @@ export default function useSession(): UseSession {
     [setSession]
   );
 
+  const cancelVotes = useCallback(
+    (postId: string, userId: string) => {
+      setSession((session) => {
+        if (!session) {
+          return session;
+        }
+        return {
+          ...session,
+          posts: session.posts.map((p) => {
+            if (p.id !== postId) {
+              return p;
+            }
+            return {
+              ...p,
+              votes: p.votes.filter((v) => v.userId !== userId),
+            };
+          }),
+        };
+      });
+    },
+    [setSession]
+  );
+
   const deletePost = useCallback(
     (postId: string) => {
       setSession((session) =>
@@ -285,5 +309,6 @@ export default function useSession(): UseSession {
     editOptions,
     lockSession,
     userReady,
+    cancelVotes,
   };
 }

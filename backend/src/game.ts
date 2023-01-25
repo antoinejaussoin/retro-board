@@ -21,6 +21,8 @@ import {
   WsGroupUpdatePayload,
   WsUserReadyPayload,
   Message,
+  WsCancelVotesPayload,
+  WsReceiveCancelVotesPayload,
 } from './common/index.js';
 import { RateLimiterMemory } from 'rate-limiter-flexible';
 import chalk from 'chalk-template';
@@ -58,7 +60,7 @@ import {
   updatePostGroup,
 } from './db/actions/posts.js';
 import config from './config.js';
-import { registerVote } from './db/actions/votes.js';
+import { cancelVotes, registerVote } from './db/actions/votes.js';
 import { deserialiseIds, UserIds } from './utils.js';
 import { QueryFailedError } from 'typeorm';
 import { saveChatMessage } from './db/actions/chat.js';
@@ -79,6 +81,8 @@ const {
   ADD_POST_GROUP_SUCCESS,
   DELETE_POST,
   LIKE_SUCCESS,
+  CANCEL_VOTES_SUCCESS,
+  RECEIVE_CANCEL_VOTES,
   EDIT_POST,
   DELETE_POST_GROUP,
   EDIT_POST_GROUP,
@@ -478,6 +482,28 @@ export default (io: Server) => {
     }
   };
 
+  const onCancelVotes = async (
+    userIds: UserIds | null,
+    sessionId: string,
+    data: WsCancelVotesPayload,
+    socket: Socket
+  ) => {
+    if (checkUser(userIds, socket)) {
+      await cancelVotes(userIds.userId, sessionId, data.postId);
+
+      sendToAllOrError<WsReceiveCancelVotesPayload>(
+        socket,
+        sessionId,
+        RECEIVE_CANCEL_VOTES,
+        'cannot_cancel_votes',
+        {
+          postId: data.postId,
+          userId: userIds.userId,
+        }
+      );
+    }
+  };
+
   const onEditPost = async (
     _userIds: UserIds | null,
     sessionId: string,
@@ -607,6 +633,7 @@ export default (io: Server) => {
       { type: EDIT_POST, handler: onEditPost },
       { type: DELETE_POST, handler: onDeletePost },
       { type: LIKE_SUCCESS, handler: onLikePost },
+      { type: CANCEL_VOTES_SUCCESS, handler: onCancelVotes },
 
       { type: ADD_POST_GROUP_SUCCESS, handler: onAddPostGroup },
       { type: EDIT_POST_GROUP, handler: onEditPostGroup },

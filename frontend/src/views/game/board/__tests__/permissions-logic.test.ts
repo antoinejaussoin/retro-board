@@ -75,6 +75,8 @@ const session = (options: SessionOptions, ...posts: Post[]): Session => ({
   groups: [],
   encrypted: null,
   locked: false,
+  messages: [],
+  ready: [],
 });
 
 describe('Session Permission Logic', () => {
@@ -491,5 +493,45 @@ describe('Posts Permission Logic', () => {
     );
     const result = postPermissionLogic(p, s, currentUser);
     expect(result.isBlurred).toBe(false);
+  });
+
+  it('When votes can be cancelled', () => {
+    const p = post(anotherUser, [currentUser]);
+    const s = session(
+      {
+        ...defaultOptions,
+        allowCancelVote: true,
+      },
+      p
+    );
+    const result = postPermissionLogic(p, s, currentUser);
+    expect(result.canCancelVote).toBe(true);
+  });
+
+  it(`When votes can be cancelled but there aren't any vote`, () => {
+    const p = post(anotherUser, [currentUser]);
+    p.votes = [];
+    const s = session(
+      {
+        ...defaultOptions,
+        allowCancelVote: true,
+      },
+      p
+    );
+    const result = postPermissionLogic(p, s, currentUser);
+    expect(result.canCancelVote).toBe(false);
+  });
+
+  it('When votes cannot be cancelled', () => {
+    const p = post(anotherUser, [currentUser]);
+    const s = session(
+      {
+        ...defaultOptions,
+        allowCancelVote: false,
+      },
+      p
+    );
+    const result = postPermissionLogic(p, s, currentUser);
+    expect(result.canCancelVote).toBe(false);
   });
 });

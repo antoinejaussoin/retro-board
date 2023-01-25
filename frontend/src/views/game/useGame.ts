@@ -23,6 +23,8 @@ import {
   Message,
   WsUserReadyPayload,
   ChatMessagePayload,
+  WsCancelVotesPayload,
+  WsReceiveCancelVotesPayload,
 } from 'common';
 import { v4 } from 'uuid';
 import find from 'lodash/find';
@@ -125,11 +127,14 @@ const useGame = (sessionId: string) => {
     editColumns,
     lockSession,
     userReady,
+    cancelVotes,
   } = useSession();
 
   const allowMultipleVotes = session
     ? session.options.allowMultipleVotes
     : false;
+
+  const allowCancelVotes = session ? session.options.allowCancelVote : false;
 
   // Send function, built with current socket, user and sessionId
   const send = useMemo(
@@ -322,6 +327,16 @@ const useGame = (sessionId: string) => {
       }
     );
 
+    socket.on(
+      Actions.RECEIVE_CANCEL_VOTES,
+      ({ postId, userId }: WsReceiveCancelVotesPayload) => {
+        if (debug) {
+          console.log('Receive cancel votes: ', postId, userId);
+        }
+        cancelVotes(postId, userId);
+      }
+    );
+
     socket.on(Actions.RECEIVE_EDIT_POST, (post: Post | null) => {
       if (debug) {
         console.log('Receive edit post: ', post);
@@ -421,6 +436,7 @@ const useGame = (sessionId: string) => {
     enqueueSnackbar,
     setUnauthorised,
     userReady,
+    cancelVotes,
     userId,
   ]);
 
@@ -667,6 +683,32 @@ const useGame = (sessionId: string) => {
     [user, send, updatePost, allowMultipleVotes]
   );
 
+  const onCancelVotes = useCallback(
+    (post: Post) => {
+      if (send) {
+        if (!user) {
+          return;
+        }
+        const existingVotes = post.votes.filter((v) => v.userId === user.id);
+
+        if (!existingVotes.length || !allowCancelVotes) {
+          return;
+        }
+
+        const modifiedPost: Post = {
+          ...post,
+          votes: post.votes.filter((v) => v.userId !== user.id),
+        };
+        updatePost(modifiedPost);
+        send<WsCancelVotesPayload>(Actions.CANCEL_VOTES_SUCCESS, {
+          postId: post.id,
+        });
+        trackAction(Actions.CANCEL_VOTES_SUCCESS);
+      }
+    },
+    [user, send, updatePost, allowCancelVotes]
+  );
+
   const onRenameSession = useCallback(
     (name: string) => {
       if (send) {
@@ -745,6 +787,7 @@ const useGame = (sessionId: string) => {
     onDeletePost,
     onDeletePostGroup,
     onLike,
+    onCancelVotes,
     onRenameSession,
     onEditOptions,
     onEditColumns,

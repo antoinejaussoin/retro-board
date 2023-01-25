@@ -46,6 +46,7 @@ export interface PostUserPermissions {
   canUseGiphy: boolean;
   canReorder: boolean;
   canCreateGroup: boolean;
+  canCancelVote: boolean;
   isBlurred: boolean;
 }
 
@@ -67,6 +68,7 @@ export function postPermissionLogic(
       canDisplayUpVote: false,
       canReorder: false,
       canCreateGroup: false,
+      canCancelVote: false,
       isBlurred: false,
     };
   }
@@ -80,6 +82,7 @@ export function postPermissionLogic(
     allowGiphy,
     allowGrouping,
     allowReordering,
+    allowCancelVote,
     blurCards,
   } = session.options;
 
@@ -88,6 +91,7 @@ export function postPermissionLogic(
   const userId = user ? user.id : -1;
   const isAuthor = user ? user.id === post.user.id : false;
   const canPotentiallyVote = isLoggedIn && allowSelfVoting ? true : !isAuthor;
+  const hasVoted = some(post.votes, (u) => u.userId === userId);
   const hasVotedOrAuthor =
     (!allowMultipleVotes &&
       some(post.votes, (u) => u.userId === userId && u.type === 'like')) ||
@@ -109,6 +113,7 @@ export function postPermissionLogic(
   const canUseGiphy = isLoggedIn && allowGiphy;
   const canReorder = isLoggedIn && allowReordering;
   const canCreateGroup = isLoggedIn && allowGrouping;
+  const canCancelVote = hasVoted && allowCancelVote;
   const isBlurred = blurCards && !isAuthor;
 
   return {
@@ -123,6 +128,7 @@ export function postPermissionLogic(
     canUseGiphy,
     canCreateGroup,
     canReorder,
+    canCancelVote,
     isBlurred,
   };
 }
