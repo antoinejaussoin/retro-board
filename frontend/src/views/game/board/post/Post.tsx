@@ -38,6 +38,7 @@ import useCrypto from '../../../../crypto/useCrypto';
 import { getLorem } from './lorem';
 import useCanDecrypt from '../../../../crypto/useCanDecrypt';
 import isSearchMatch from '../../is-search-match';
+import { useConfirm } from 'material-ui-confirm';
 
 interface PostItemProps {
   index: number;
@@ -104,6 +105,8 @@ const PostItem = ({
   const postElement = useRef(null);
   const [actionsToggled, toggleAction] = useToggle(false);
   const [showGiphyEditor, setShowGiphyEditor] = useState(false);
+  const confirm = useConfirm();
+
   const upVotes = useMemo(() => countVotes(post, 'like'), [post]);
   const downVotes = useMemo(() => countVotes(post, 'dislike'), [post]);
   const upVoters = useMemo(() => enumerateVotes(post, 'like'), [post]);
@@ -137,6 +140,23 @@ const PostItem = ({
     },
     [onEditAction, encrypt]
   );
+  const handleDelete = useCallback(() => {
+    const buttonProps = {
+      color: 'error',
+      variant: 'contained',
+      'data-cy': 'delete-post-confirm',
+    };
+    confirm({
+      title: t('PostBoard.deleteConfirmation.title'),
+      description: t('PostBoard.deleteConfirmation.description'),
+      confirmationText: t('PostBoard.deleteConfirmation.confirm'),
+      cancellationText: t('PostBoard.deleteConfirmation.cancel'),
+      confirmationButtonProps: buttonProps as any,
+    }).then(() => {
+      onDelete();
+      trackEvent('game/post/delete');
+    });
+  }, [onDelete, confirm, t]);
 
   const actualContent = useMemo(() => {
     return isBlurred ? generateLoremIpsum(post.content) : decrypt(post.content);
@@ -282,7 +302,7 @@ const PostItem = ({
                           }}
                         />
                       }
-                      onClick={onDelete}
+                      onClick={handleDelete}
                     />
                   )}
                 </>

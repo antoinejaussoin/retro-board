@@ -195,6 +195,7 @@ export type TrackingEvent =
   | 'game/session/disconnect'
   | 'game/session/unexpected-disconnection'
   | 'game/session/user-ready'
+  | 'game/post/delete'
   | 'game/post/giphy/open'
   | 'game/post/giphy/choose'
   | 'game/post/giphy/toggle'
