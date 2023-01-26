@@ -71,6 +71,7 @@ describe('Post', () => {
         onEdit={noop}
         onLike={noop}
         onEditAction={noop}
+        onCancelVotes={noop}
         color="#123456"
         search=""
       />
@@ -93,6 +94,7 @@ describe('Post', () => {
         onEdit={noop}
         onLike={likeHandler}
         onEditAction={noop}
+        onCancelVotes={noop}
         color="#123456"
         search=""
       />
@@ -118,48 +120,6 @@ describe('Post', () => {
     expect(deleteHandler).not.toHaveBeenCalled();
   });
 
-  it('Should let the user delete the post if the author is the user, but not like or dislike', () => {
-    const customPost: Post = {
-      ...post,
-      user: u('John Doe'),
-    };
-    const deleteHandler = jest.fn();
-    const likeHandler = jest.fn();
-    const dislikeHandler = jest.fn();
-
-    const { getByLabelText } = renderWithRouter(
-      <PostItem
-        post={customPost}
-        index={1}
-        onEditGiphy={noop}
-        onDelete={deleteHandler}
-        onDislike={dislikeHandler}
-        onEdit={noop}
-        onLike={likeHandler}
-        onEditAction={noop}
-        color="#123456"
-        search=""
-      />
-    );
-    const deleteButton = getByLabelText(/delete/i, { selector: 'button' });
-    const likeButton = getByLabelText(/^like/i);
-    const dislikeButton = getByLabelText(/dislike/i);
-    act(() => {
-      deleteButton.click();
-    });
-
-    expect(deleteHandler).toHaveBeenCalledTimes(1);
-
-    expect(likeButton).toBeDisabled();
-    expect(dislikeButton).toBeDisabled();
-    act(() => {
-      likeButton.click();
-      dislikeButton.click();
-    });
-    expect(likeHandler).not.toHaveBeenCalled();
-    expect(dislikeHandler).not.toHaveBeenCalled();
-  });
-
   it('Should let the user edit the post if the author is the user', () => {
     const customPost: Post = {
       ...post,
@@ -177,6 +137,7 @@ describe('Post', () => {
         onEdit={editHandler}
         onEditAction={noop}
         onLike={noop}
+        onCancelVotes={noop}
         color="#123456"
         search=""
       />
@@ -211,6 +172,7 @@ describe('Post', () => {
         onEdit={editHandler}
         onEditAction={noop}
         onLike={noop}
+        onCancelVotes={noop}
         color="#123456"
         search=""
       />
