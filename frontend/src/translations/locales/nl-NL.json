@@ -136,7 +136,13 @@
     "maxPostsReached": "Je hebt het maximum aantal berichten bereikt dat door de moderator is ingesteld.",
     "iAmDone": "Ik ben klaar!",
     "iAmNotDoneYet": "Ik ben nog niet klaar...",
-    "userIsReady": "{{user}} is klaar!"
+    "userIsReady": "{{user}} is klaar!",
+    "deleteConfirmation": {
+      "title": "Dit bericht verwijderen?",
+      "description": "Dit zal het bericht en al zijn stemmen verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
+      "confirm": "Dit bericht verwijderen",
+      "cancel": "Ik ben van gedachten veranderd"
+    }
   },
   "GameMenu": {
     "board": "Bord",

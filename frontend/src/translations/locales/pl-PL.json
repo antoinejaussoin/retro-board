@@ -136,7 +136,13 @@
     "maxPostsReached": "Osiągnąłeś maksymalną liczbę postów ustawionych przez moderatora.",
     "iAmDone": "Gotowe!",
     "iAmNotDoneYet": "Jeszcze nie skończyłem...",
-    "userIsReady": "{{user}} jest gotowy!"
+    "userIsReady": "{{user}} jest gotowy!",
+    "deleteConfirmation": {
+      "title": "Usunąć ten post?",
+      "description": "Spowoduje to usunięcie wpisu i wszystkich jego głosów. Tej czynności nie można cofnąć.",
+      "confirm": "Usuń ten post",
+      "cancel": "Zmieniłem zdanie"
+    }
   },
   "GameMenu": {
     "board": "Tablica",

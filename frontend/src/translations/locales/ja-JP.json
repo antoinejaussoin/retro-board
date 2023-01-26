@@ -136,7 +136,13 @@
     "maxPostsReached": "モデレーターが設定した投稿の最大数に達しました。",
     "iAmDone": "終わりました！",
     "iAmNotDoneYet": "まだ完了していません...",
-    "userIsReady": "{{user}} の準備ができました！"
+    "userIsReady": "{{user}} の準備ができました！",
+    "deleteConfirmation": {
+      "title": "この投稿を削除しますか？",
+      "description": "投稿とすべての投票を削除します。この操作は元に戻せません。",
+      "confirm": "この投稿を削除",
+      "cancel": "気が変わりました"
+    }
   },
   "GameMenu": {
     "board": "ボード",

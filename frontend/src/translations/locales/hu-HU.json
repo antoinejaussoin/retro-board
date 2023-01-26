@@ -136,7 +136,13 @@
     "maxPostsReached": "Elérted a moderátor által beállított maximális bejegyzések számát.",
     "iAmDone": "Kész vagyok!",
     "iAmNotDoneYet": "Még nem végeztem...",
-    "userIsReady": "{{user}} kész!"
+    "userIsReady": "{{user}} kész!",
+    "deleteConfirmation": {
+      "title": "",
+      "description": "",
+      "confirm": "",
+      "cancel": ""
+    }
   },
   "GameMenu": {
     "board": "Tábla",

@@ -136,7 +136,13 @@
     "maxPostsReached": "您已经达到了版主设置的帖子的最大数量。",
     "iAmDone": "我已完成！",
     "iAmNotDoneYet": "我还没有完成...",
-    "userIsReady": "{{user}} 已准备好了！"
+    "userIsReady": "{{user}} 已准备好了！",
+    "deleteConfirmation": {
+      "title": "删除此帖子？",
+      "description": "这将删除帖子及其所有投票。此操作无法撤消。",
+      "confirm": "删除此帖子",
+      "cancel": "我改变了主意。"
+    }
   },
   "GameMenu": {
     "board": "棋盘",

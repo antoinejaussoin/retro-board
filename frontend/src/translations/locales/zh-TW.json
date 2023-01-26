@@ -136,7 +136,13 @@
     "maxPostsReached": "您已達到版主設置的最大帖子數。",
     "iAmDone": "我受夠了！",
     "iAmNotDoneYet": "我還沒搞定...",
-    "userIsReady": "{{user}} 準備好了！"
+    "userIsReady": "{{user}} 準備好了！",
+    "deleteConfirmation": {
+      "title": "",
+      "description": "",
+      "confirm": "",
+      "cancel": ""
+    }
   },
   "GameMenu": {
     "board": "木板",

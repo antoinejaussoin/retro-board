@@ -136,7 +136,13 @@
     "maxPostsReached": "Vous avez atteint le nombre de posts maximum prévu par le modérateur.",
     "iAmDone": "J'ai fini !",
     "iAmNotDoneYet": "Je n'ai pas encore fini...",
-    "userIsReady": "{{user}} est prêt !"
+    "userIsReady": "{{user}} est prêt !",
+    "deleteConfirmation": {
+      "title": "Supprimer ce post ?",
+      "description": "Vous allez supprimer le post et tous ses votes. Cette action est définitive.",
+      "confirm": "Supprimer ce post",
+      "cancel": "J'ai changé d'avis"
+    }
   },
   "GameMenu": {
     "board": "Board",

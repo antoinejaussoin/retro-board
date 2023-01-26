@@ -136,7 +136,13 @@
     "maxPostsReached": "Você atingiu o número máximo de postagens definido pelo moderador.",
     "iAmDone": "Estou pronto!",
     "iAmNotDoneYet": "Eu não terminei ainda...",
-    "userIsReady": "{{user}} está pronto!"
+    "userIsReady": "{{user}} está pronto!",
+    "deleteConfirmation": {
+      "title": "Excluir esta publicação?",
+      "description": "Isto irá excluir a publicação e todos os seus votos. Esta ação não pode ser desfeita.",
+      "confirm": "Excluir esta publicação",
+      "cancel": "Mudei de ideia"
+    }
   },
   "GameMenu": {
     "board": "Tabuleiro",

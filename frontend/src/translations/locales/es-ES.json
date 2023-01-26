@@ -136,7 +136,13 @@
     "maxPostsReached": "Has alcanzado el número máximo de mensajes establecidos por el moderador.",
     "iAmDone": "¡He terminado!",
     "iAmNotDoneYet": "No he terminado todavía...",
-    "userIsReady": "¡{{user}} está listo!"
+    "userIsReady": "¡{{user}} está listo!",
+    "deleteConfirmation": {
+      "title": "¿Eliminar esta publicación?",
+      "description": "Esto eliminará el mensaje y todos sus votos. Esta acción no se puede deshacer.",
+      "confirm": "Eliminar esta publicación",
+      "cancel": "He cambiado de opinión"
+    }
   },
   "GameMenu": {
     "board": "Tablero",

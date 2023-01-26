@@ -136,7 +136,13 @@
     "maxPostsReached": "لقد وصلت إلى الحد الأقصى لعدد المشاركات التي حددها المشرف",
     "iAmDone": "لقد انتهيت!",
     "iAmNotDoneYet": "أنا لم أنتهِ بعد...",
-    "userIsReady": "{{user}} جاهز!"
+    "userIsReady": "{{user}} جاهز!",
+    "deleteConfirmation": {
+      "title": "حذف هذا المنشور؟",
+      "description": "سيؤدي هذا إلى حذف المنشور وجميع أصواته. لا يمكن التراجع عن هذا الإجراء.",
+      "confirm": "حذف هذا المنشور",
+      "cancel": "لقد غيرت رأيي"
+    }
   },
   "GameMenu": {
     "board": "المجلس",

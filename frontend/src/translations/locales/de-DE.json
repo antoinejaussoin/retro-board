@@ -136,7 +136,13 @@
     "maxPostsReached": "Sie haben die vom Moderator festgelegte maximale Anzahl von Beiträgen erreicht.",
     "iAmDone": "Ich bin fertig!",
     "iAmNotDoneYet": "Ich bin noch nicht fertig...",
-    "userIsReady": "{{user}} ist bereit!"
+    "userIsReady": "{{user}} ist bereit!",
+    "deleteConfirmation": {
+      "title": "Diesen Beitrag löschen?",
+      "description": "Dies löscht den Beitrag und alle seine Abstimmungen. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "confirm": "Diesen Beitrag löschen",
+      "cancel": "Ich habe meine Meinung geändert"
+    }
   },
   "GameMenu": {
     "board": "Board",
@@ -182,7 +188,7 @@
     "or": "oder"
   },
   "SocialMediaLogin": {
-    "header": "OAuth",
+    "header": "OAuh",
     "info": "Dies wird einen Drittanbieter Ihrer Wahl verwenden, um Sie zu authentifizieren. Es wird kein Passwort gespeichert."
   },
   "AuthCommon": {
