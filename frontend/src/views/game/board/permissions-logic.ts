@@ -11,7 +11,7 @@ export function sessionPermissionLogic(
   session: Session | null,
   user: User | null,
   canDecrypt: boolean,
-  userDisabled: boolean
+  readonly: boolean
 ): SessionUserPermissions {
   const numberOfPosts =
     session && user
@@ -23,7 +23,7 @@ export function sessionPermissionLogic(
     session.options.maxPosts !== null &&
     session.options.maxPosts <= numberOfPosts;
   const canCreatePost =
-    !!user && canDecrypt && !userDisabled && !hasReachedMaxPosts;
+    !!user && canDecrypt && !readonly && !hasReachedMaxPosts;
   const canCreateGroup =
     canCreatePost && !!session && session.options.allowGrouping;
 
@@ -53,7 +53,8 @@ export interface PostUserPermissions {
 export function postPermissionLogic(
   post: Post,
   session: Session | null,
-  user: User | null
+  user: User | null,
+  readonly: boolean
 ): PostUserPermissions {
   if (!session) {
     return {
@@ -87,10 +88,11 @@ export function postPermissionLogic(
   } = session.options;
 
   const isLoggedIn = !!user;
-  const canCreateAction = isLoggedIn && allowActions;
+  const canCreateAction = !readonly && isLoggedIn && allowActions;
   const userId = user ? user.id : -1;
   const isAuthor = user ? user.id === post.user.id : false;
-  const canPotentiallyVote = isLoggedIn && allowSelfVoting ? true : !isAuthor;
+  const canPotentiallyVote =
+    !readonly && isLoggedIn && allowSelfVoting ? true : !isAuthor;
   const hasVoted = some(post.votes, (u) => u.userId === userId);
   const hasVotedOrAuthor =
     (!allowMultipleVotes &&
@@ -103,17 +105,19 @@ export function postPermissionLogic(
   const hasMaxedUpVotes = maxUpVotes === null ? false : upVotes >= maxUpVotes;
   const hasMaxedDownVotes =
     maxDownVotes === null ? false : downVotes >= maxDownVotes;
-  const canUpVote = isLoggedIn && !hasVotedOrAuthor && !hasMaxedUpVotes;
-  const canDownVote = isLoggedIn && !hasVotedOrAuthor && !hasMaxedDownVotes;
+  const canUpVote =
+    !readonly && isLoggedIn && !hasVotedOrAuthor && !hasMaxedUpVotes;
+  const canDownVote =
+    !readonly && isLoggedIn && !hasVotedOrAuthor && !hasMaxedDownVotes;
   const canDisplayUpVote = maxUpVotes !== null ? maxUpVotes > 0 : true;
   const canDisplayDownVote = maxDownVotes !== null ? maxDownVotes > 0 : true;
-  const canEdit = isLoggedIn && isAuthor;
-  const canDelete = isLoggedIn && isAuthor;
+  const canEdit = !readonly && isLoggedIn && isAuthor;
+  const canDelete = !readonly && isLoggedIn && isAuthor;
   const canShowAuthor = allowAuthorVisible;
   const canUseGiphy = isLoggedIn && allowGiphy;
-  const canReorder = isLoggedIn && allowReordering;
-  const canCreateGroup = isLoggedIn && allowGrouping;
-  const canCancelVote = hasVoted && allowCancelVote;
+  const canReorder = !readonly && isLoggedIn && allowReordering;
+  const canCreateGroup = !readonly && isLoggedIn && allowGrouping;
+  const canCancelVote = !readonly && hasVoted && allowCancelVote;
   const isBlurred = blurCards && !isAuthor;
 
   return {

@@ -29,6 +29,12 @@ export default class SessionOptionsEntity {
   @Column({ default: false })
   public allowCancelVote: boolean;
   @Column({ default: false })
+  public allowTimer: boolean;
+  @Column({ type: 'numeric', default: 15 * 60 })
+  public timerDuration: number;
+  @Column({ default: true })
+  public readonlyOnTimerEnd: boolean;
+  @Column({ default: false })
   public blurCards: boolean;
   @Column({ default: true })
   public newPostsFirst: boolean;
@@ -54,6 +60,9 @@ export default class SessionOptionsEntity {
     this.allowCancelVote = optionsWithDefault.allowCancelVote;
     this.blurCards = optionsWithDefault.blurCards;
     this.newPostsFirst = optionsWithDefault.newPostsFirst;
+    this.allowTimer = optionsWithDefault.allowTimer;
+    this.timerDuration = optionsWithDefault.timerDuration;
+    this.readonlyOnTimerEnd = optionsWithDefault.readonlyOnTimerEnd;
   }
 }
 

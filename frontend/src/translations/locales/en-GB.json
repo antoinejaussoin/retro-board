@@ -60,6 +60,14 @@
   },
   "Customize": {
     "title": "Customise your Session",
+    "timerCategory": "Timer",
+    "timerCategorySub": "Set the timer for the session",
+    "allowTimer": "Allow Timer",
+    "allowTimerHelp": "Display a timer at the bottom of the screen",
+    "timerDuration": "Timer Duration",
+    "timerDurationHelp": "The timer will be set to {{duration}} minutes",
+    "lockOnTimerEnd": "Lock on Timer End",
+    "lockOnTimerEndHelp": "Lock the session (make it read-only) when the timer ends",
     "votingCategory": "Voting",
     "votingCategorySub": "Set the rules about likes and dislikes",
     "postCategory": "Post settings",
@@ -120,6 +128,8 @@
     "disconnected": "You have been disconnected from the current session.",
     "reconnect": "Reconnect",
     "notLoggedIn": "You are not logged in. You can view this session as a spectator, but must login to participate.",
+    "lockedTitle": "The timer has run out",
+    "lockedDescription": "You can no longer add or edit posts, as the timer ran out. This can be changed in the session settings.",
     "error_action_unauthorised": "You are not allowed to perform this action.",
     "error_cannot_edit_group": "Editing the group failed.",
     "error_cannot_edit_post": "Editing the post failed.",
@@ -451,5 +461,11 @@
   },
   "Chat": {
     "writeAMessage": "Write a message here..."
+  },
+  "Timer": {
+    "stopTimerTitle": "Are you sure you want to stop (and reset) the timer?",
+    "stopTimerDescription": "If you stop the timer, it will be reset to its original duration.",
+    "stopTimerButton": "Stop Timer",
+    "stopTimerCancelButton": "Cancel"
   }
 }

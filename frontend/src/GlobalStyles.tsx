@@ -1,6 +1,11 @@
 import { css } from '@emotion/react';
 
 const GlobalStyle = css`
+  @font-face {
+    font-family: 'DIGITALDREAM';
+    src: url('/fonts/digital/DIGITALDREAM.woff2') format('woff2');
+  }
+
   html {
     touch-action: manipulation;
     font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;

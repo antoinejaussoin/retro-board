@@ -42,7 +42,7 @@ function postToItem(
   user: User | null,
   session: Session | null
 ): ColumnStatsItem {
-  const permissions = postPermissionLogic(post, session, user);
+  const permissions = postPermissionLogic(post, session, user, false);
   return {
     id: post.id,
     content: post.content,

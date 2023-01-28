@@ -60,6 +60,14 @@
   },
   "Customize": {
     "title": "Personaliza tu sesión",
+    "timerCategory": "Temporizador",
+    "timerCategorySub": "Establecer el temporizador de la sesión",
+    "allowTimer": "Permitir temporizador",
+    "allowTimerHelp": "Mostrar un temporizador en la parte inferior de la pantalla",
+    "timerDuration": "Duración del temporizador",
+    "timerDurationHelp": "El temporizador se establecerá a {{duration}} minutos",
+    "lockOnTimerEnd": "Bloquear al final del temporizador",
+    "lockOnTimerEndHelp": "Bloquear la sesión (hacer sólo lectura) cuando finalice el temporizador",
     "votingCategory": "Votaciones",
     "votingCategorySub": "Establecer las reglas sobre \"me gusta\" y \"me gusta\"",
     "postCategory": "Ajustes de publicación",
@@ -120,6 +128,8 @@
     "disconnected": "Has sido desconectado de la sesión actual.",
     "reconnect": "Volver a conectar",
     "notLoggedIn": "No estás conectado. Puedes ver esta sesión como un espectador, pero debes iniciar sesión para participar.",
+    "lockedTitle": "El temporizador se ha agotado",
+    "lockedDescription": "Ya no puede añadir o editar mensajes, ya que se acabó el temporizador. Esto puede cambiarse en la configuración de la sesión.",
     "error_action_unauthorised": "No tienes permisos para realizar esta acción.",
     "error_cannot_edit_group": "Falló la edición del grupo.",
     "error_cannot_edit_post": "Error al editar el mensaje.",
@@ -451,5 +461,11 @@
   },
   "Chat": {
     "writeAMessage": "Escribe un mensaje aquí..."
+  },
+  "Timer": {
+    "stopTimerTitle": "¿Está seguro que desea detener (y restablecer) el temporizador?",
+    "stopTimerDescription": "Si detiene el temporizador, se restablecerá a su duración original.",
+    "stopTimerButton": "Detener temporizador",
+    "stopTimerCancelButton": "Cancelar"
   }
 }

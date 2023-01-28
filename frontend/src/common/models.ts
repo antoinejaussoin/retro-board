@@ -14,6 +14,9 @@ export const defaultOptions: SessionOptions = {
   blurCards: false,
   newPostsFirst: true,
   allowCancelVote: false,
+  allowTimer: false,
+  timerDuration: 0,
+  readonlyOnTimerEnd: true,
 };
 
 export const defaultSession: Omit<Session, 'createdBy'> = {
@@ -31,4 +34,5 @@ export const defaultSession: Omit<Session, 'createdBy'> = {
   encrypted: null,
   locked: false,
   ready: [],
+  timer: null,
 };

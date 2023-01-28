@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import styled from '@emotion/styled';
 import { SessionOptions, ColumnDefinition } from 'common';
 import Typography from '@mui/material/Typography';
@@ -9,7 +9,6 @@ import useCanReveal from './useCanReveal';
 import EditableLabel from '../../../../components/EditableLabel';
 import RemainingVotes from './RemainingVotes';
 import useUser from '../../../../auth/useUser';
-import { Alert, AlertTitle } from '@mui/material';
 import RevealButton from './RevealButton';
 import ModifyOptions from './ModifyOptions';
 import useCanModifyOptions from './useCanModifyOptions';
@@ -23,6 +22,8 @@ import LockSession from './LockSession';
 import useSession from '../../useSession';
 import useSessionUserPermissions from '../useSessionUserPermissions';
 import useIsDisabled from '../../../../hooks/useIsDisabled';
+import { useShouldLockSession } from 'views/game/useTimer';
+import ClosableAlert from 'components/ClosableAlert';
 
 interface BoardHeaderProps {
   onRenameSession: (name: string) => void;
@@ -65,6 +66,7 @@ function BoardHeader({
   const shouldDisplayEncryptionWarning = useShouldDisplayEncryptionWarning();
   const { session } = useSession();
   const permissions = useSessionUserPermissions();
+  const locked = useShouldLockSession();
 
   const handleReveal = useCallback(() => {
     if (session) {
@@ -90,22 +92,40 @@ function BoardHeader({
   return (
     <>
       {!canDecrypt ? <EncryptionModal /> : null}
-      {!isLoggedIn ? (
-        <Alert severity="warning">{t('PostBoard.notLoggedIn')}</Alert>
-      ) : null}
-      {!canDecrypt ? (
-        <Alert severity="error">{t('Encryption.sessionEncryptionError')}</Alert>
-      ) : null}
-      {permissions.hasReachedMaxPosts ? (
-        <Alert severity="warning">{t('PostBoard.maxPostsReached')}</Alert>
-      ) : null}
-      {isDisabled ? (
-        <Alert severity="warning">
-          <AlertTitle>{t('TrialPrompt.allowanceReachedTitle')}</AlertTitle>
-          {t('TrialPrompt.allowanceReachedDescription')}
-        </Alert>
-      ) : null}
-
+      <Alerts>
+        {!isLoggedIn ? (
+          <ClosableAlert severity="warning">
+            {t('PostBoard.notLoggedIn')}
+          </ClosableAlert>
+        ) : null}
+        {!canDecrypt ? (
+          <ClosableAlert severity="error">
+            {t('Encryption.sessionEncryptionError')}
+          </ClosableAlert>
+        ) : null}
+        {permissions.hasReachedMaxPosts ? (
+          <ClosableAlert severity="warning" closable>
+            {t('PostBoard.maxPostsReached')}
+          </ClosableAlert>
+        ) : null}
+        {isDisabled ? (
+          <ClosableAlert
+            severity="warning"
+            title={t('TrialPrompt.allowanceReachedTitle')}
+          >
+            {t('TrialPrompt.allowanceReachedDescription')}
+          </ClosableAlert>
+        ) : null}
+        {locked ? (
+          <ClosableAlert
+            severity="info"
+            title={t('PostBoard.lockedTitle')}
+            closable
+          >
+            {t('PostBoard.lockedDescription')}
+          </ClosableAlert>
+        ) : null}
+      </Alerts>
       <Header className={classes.container}>
         <LeftOptions>
           {canReveal ? <RevealButton onClick={handleReveal} /> : null}
@@ -152,6 +172,12 @@ function BoardHeader({
     </>
   );
 }
+
+const Alerts = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
 
 const Header = styled.div`
   display: grid;
@@ -228,4 +254,4 @@ const RightOptions = styled.div`
   }
 `;
 
-export default BoardHeader;
+export default memo(BoardHeader);

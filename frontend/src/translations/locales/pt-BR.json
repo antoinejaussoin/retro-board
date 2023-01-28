@@ -60,6 +60,14 @@
   },
   "Customize": {
     "title": "Personalize sua sessão",
+    "timerCategory": "Cronômetro",
+    "timerCategorySub": "Definir o temporizador para a sessão",
+    "allowTimer": "Permitir Temporizador",
+    "allowTimerHelp": "Exibir um cronômetro na parte inferior da tela",
+    "timerDuration": "Duração do temporizador",
+    "timerDurationHelp": "O temporizador será definido para {{duration}} minutos",
+    "lockOnTimerEnd": "Bloquear no término do cronômetro",
+    "lockOnTimerEndHelp": "Bloquear a sessão (torná-la somente leitura) quando o timer terminar",
     "votingCategory": "Votação",
     "votingCategorySub": "Definir regras sobre curtidas e não curtidas",
     "postCategory": "Configurações de postagem",
@@ -120,6 +128,8 @@
     "disconnected": "Você foi desconectado da sessão atual.",
     "reconnect": "Reconectar",
     "notLoggedIn": "Você não está conectado. Você pode ver esta sessão como um espectador, mas precisa fazer o login para participar.",
+    "lockedTitle": "O temporizador acabou",
+    "lockedDescription": "Você não pode mais adicionar ou editar postagens, pois o temporizador acabou. Isso pode ser alterado nas configurações da sessão.",
     "error_action_unauthorised": "Você não tem permissão para executar esta ação.",
     "error_cannot_edit_group": "Falha ao editar o grupo.",
     "error_cannot_edit_post": "Falha ao editar o post.",
@@ -451,5 +461,11 @@
   },
   "Chat": {
     "writeAMessage": "Escreva uma mensagem aqui..."
+  },
+  "Timer": {
+    "stopTimerTitle": "Tem certeza que deseja parar (e redefinir) o temporizador?",
+    "stopTimerDescription": "Se você parar o temporizador, ele será redefinido para a sua duração original.",
+    "stopTimerButton": "Parar Temporizador",
+    "stopTimerCancelButton": "cancelar"
   }
 }

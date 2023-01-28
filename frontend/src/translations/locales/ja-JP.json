@@ -60,6 +60,14 @@
   },
   "Customize": {
     "title": "セッションをカスタマイズ",
+    "timerCategory": "タイマー",
+    "timerCategorySub": "セッションのタイマーを設定する",
+    "allowTimer": "タイマーを許可",
+    "allowTimerHelp": "画面下部にタイマーを表示する",
+    "timerDuration": "タイマー時間",
+    "timerDurationHelp": "タイマーは {{duration}} 分に設定されます",
+    "lockOnTimerEnd": "タイマー終了時にロック",
+    "lockOnTimerEndHelp": "タイマーが終了したときにセッションをロックする",
     "votingCategory": "投票",
     "votingCategorySub": "「いいね」と「嫌い」に関するルールを設定",
     "postCategory": "投稿設定",
@@ -120,6 +128,8 @@
     "disconnected": "現在のセッションから切断されました。",
     "reconnect": "再接続",
     "notLoggedIn": "ログインしていません。このセッションは観戦者として表示できますが、参加するにはログインする必要があります。",
+    "lockedTitle": "タイマーが切れました",
+    "lockedDescription": "タイマーがなくなったため、投稿の追加や編集はできません。これはセッション設定で変更できます。",
     "error_action_unauthorised": "この操作を実行する権限がありません。",
     "error_cannot_edit_group": "グループの編集に失敗しました。",
     "error_cannot_edit_post": "投稿の編集に失敗しました。",
@@ -451,5 +461,11 @@
   },
   "Chat": {
     "writeAMessage": "ここにメッセージを書いてください"
+  },
+  "Timer": {
+    "stopTimerTitle": "タイマーを停止してもよろしいですか？",
+    "stopTimerDescription": "タイマーを停止すると、タイマーは元の時間にリセットされます。",
+    "stopTimerButton": "停止タイマー",
+    "stopTimerCancelButton": "キャンセル"
   }
 }

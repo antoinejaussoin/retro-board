@@ -60,6 +60,14 @@
   },
   "Customize": {
     "title": "Dostosuj swoją sesję",
+    "timerCategory": "Timer",
+    "timerCategorySub": "Ustaw czasomierz dla sesji",
+    "allowTimer": "Zezwalaj na Timer",
+    "allowTimerHelp": "Wyświetlaj licznik na dole ekranu",
+    "timerDuration": "Czas trwania zegara",
+    "timerDurationHelp": "Licznik czasu zostanie ustawiony na {{duration}} minut",
+    "lockOnTimerEnd": "Zablokuj na końcu timera",
+    "lockOnTimerEndHelp": "Zablokuj sesję (utwórz tylko do odczytu) po zakończeniu timera",
     "votingCategory": "Głosowanie",
     "votingCategorySub": "Ustaw reguły dotyczące polubień i polubień",
     "postCategory": "Ustawienia postów",
@@ -120,6 +128,8 @@
     "disconnected": "Zostałeś odłączony od bieżącej sesji.",
     "reconnect": "Połącz ponownie",
     "notLoggedIn": "Nie jesteś zalogowany. Możesz zobaczyć tę sesję jako obserwator, ale musisz się zalogować, aby wziąć udział.",
+    "lockedTitle": "Minutnik skończył się",
+    "lockedDescription": "Nie możesz już dodawać ani edytować postów, ponieważ skończył się czas. Można to zmienić w ustawieniach sesji.",
     "error_action_unauthorised": "Nie masz uprawnień do wykonania tej czynności.",
     "error_cannot_edit_group": "Edycja grupy nie powiodła się.",
     "error_cannot_edit_post": "Edycja wpisu nie powiodła się.",
@@ -451,5 +461,11 @@
   },
   "Chat": {
     "writeAMessage": "Napisz wiadomość tutaj..."
+  },
+  "Timer": {
+    "stopTimerTitle": "Czy na pewno chcesz zatrzymać (i zresetować) licznika?",
+    "stopTimerDescription": "Jeśli zatrzymasz minutnik, zostanie on zresetowany do pierwotnego czasu trwania.",
+    "stopTimerButton": "Zatrzymaj Timer",
+    "stopTimerCancelButton": "Anuluj"
   }
 }

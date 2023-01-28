@@ -60,6 +60,14 @@
   },
   "Customize": {
     "title": "تخصيص الجلسة الخاصة بك",
+    "timerCategory": "المؤقت",
+    "timerCategorySub": "تعيين المؤقت للدورة",
+    "allowTimer": "السماح بالتوقيت",
+    "allowTimerHelp": "عرض المؤقت في الجزء السفلي من الشاشة",
+    "timerDuration": "مدة المؤقت",
+    "timerDurationHelp": "سيتم تعيين المؤقت إلى {{duration}} دقائق",
+    "lockOnTimerEnd": "قفل في نهاية المؤقت",
+    "lockOnTimerEndHelp": "قفل الجلسة (قم بقراءتها فقط) عند انتهاء المؤقت",
     "votingCategory": "التصويت",
     "votingCategorySub": "تعيين القواعد حول الإعجاب و عدم الإعجاب",
     "postCategory": "إعدادات النشر",
@@ -120,6 +128,8 @@
     "disconnected": "لقد تم فصلك عن الدورة الحالية.",
     "reconnect": "إعادة الاتصال",
     "notLoggedIn": "لم تقم بتسجيل الدخول. يمكنك عرض هذه الجلسة كمتفرج، ولكن يجب تسجيل الدخول للمشاركة.",
+    "lockedTitle": "انتهت صلاحية المؤقت",
+    "lockedDescription": "لم يعد بإمكانك إضافة أو تحرير المشاركات، مع نفاد المؤقت. يمكن تغيير هذا في إعدادات الجلسة.",
     "error_action_unauthorised": "غير مسموح لك بتنفيذ هذا الإجراء.",
     "error_cannot_edit_group": "فشل تحرير المجموعة.",
     "error_cannot_edit_post": "فشل تحرير المشاركة.",
@@ -451,5 +461,11 @@
   },
   "Chat": {
     "writeAMessage": "اكتب رسالة هنا..."
+  },
+  "Timer": {
+    "stopTimerTitle": "هل أنت متأكد من أنك تريد إيقاف (وإعادة تعيين) المؤقت ؟",
+    "stopTimerDescription": "إذا توقفت عن المؤقت ، فسيتم إعادة تعيينه إلى مدته الأصلية.",
+    "stopTimerButton": "إيقاف المؤقت",
+    "stopTimerCancelButton": "إلغاء"
   }
 }

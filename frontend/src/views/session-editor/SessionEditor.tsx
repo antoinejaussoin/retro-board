@@ -17,6 +17,7 @@ import TemplateSection from './sections/template/TemplateSection';
 import PostsSection from './sections/posts/PostsSection';
 import VotingSection from './sections/votes/VotingSection';
 import { extrapolate, hasChanged } from '../../state/columns';
+import TimerSection from './sections/timer/TimerSection';
 
 interface SessionEditorProps {
   open: boolean;
@@ -82,11 +83,13 @@ function SessionEditor({
           textColor="primary"
           variant="scrollable"
           scrollButtons="auto"
+          allowScrollButtonsMobile
           aria-label="scrollable auto tabs example"
         >
           <Tab label={t('Customize.template')} value="template" />
           <Tab label={t('Customize.postCategory')} value="posts" />
           <Tab label={t('Customize.votingCategory')} value="voting" />
+          <Tab label={t('Customize.timerCategory')} value="timer" />
         </Tabs>
       </AppBar>
       <DialogContent>
@@ -98,6 +101,9 @@ function SessionEditor({
         ) : null}
         {currentTab === 'voting' ? (
           <VotingSection options={options} onChange={setOptions} />
+        ) : null}
+        {currentTab === 'timer' ? (
+          <TimerSection options={options} onChange={setOptions} />
         ) : null}
       </DialogContent>
       <DialogActions>

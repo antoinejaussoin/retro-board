@@ -60,6 +60,14 @@
   },
   "Customize": {
     "title": "Nouvelle session personalisée",
+    "timerCategory": "Minuteur",
+    "timerCategorySub": "Régler le minuteur pour la session",
+    "allowTimer": "Utiliser le minuteur",
+    "allowTimerHelp": "Afficher un minuteur en bas de l'écran",
+    "timerDuration": "Durée du minuteur",
+    "timerDurationHelp": "Le minuteur sera réglé sur {{duration}} minutes",
+    "lockOnTimerEnd": "Verrouiller la session",
+    "lockOnTimerEndHelp": "Verrouiller la session (lecture seule) quand le minuteur se termine",
     "votingCategory": "Votes",
     "votingCategorySub": "Règles concernant les votes",
     "postCategory": "Options des posts",
@@ -120,6 +128,8 @@
     "disconnected": "Vous avez été déconnecté de la session.",
     "reconnect": "Se reconnecter",
     "notLoggedIn": "Vous n'êtes pas connecté. Vous pouvez regarder cette session en tant que spectateur, mais vous devez vous connecter pour participer.",
+    "lockedTitle": "Le minuteur est terminé",
+    "lockedDescription": "Vous ne pouvez plus ajouter ou modifier les messages, car le minuteur a expiré. Cela peut être modifié dans les paramètres de la session.",
     "error_action_unauthorised": "Vous n'avez pas la permission de performer cette action.",
     "error_cannot_edit_group": "La modification du groupe a échoué.",
     "error_cannot_edit_post": "La modification du message a échoué.",
@@ -451,5 +461,11 @@
   },
   "Chat": {
     "writeAMessage": "Écrivez un message ici..."
+  },
+  "Timer": {
+    "stopTimerTitle": "Êtes-vous sûr de vouloir arrêter (et réinitialiser) le minuteur ?",
+    "stopTimerDescription": "Si vous arrêtez le minuteur, il sera réinitialisé à sa durée initiale.",
+    "stopTimerButton": "Arrêter le minuteur",
+    "stopTimerCancelButton": "Annuler"
   }
 }

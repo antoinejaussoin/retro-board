@@ -64,6 +64,8 @@ export default class SessionEntity {
   visitors: UserEntity[] | undefined;
   @Column({ default: false })
   public locked: boolean;
+  @Column({ default: null, type: 'timestamp with time zone', nullable: true })
+  public timer: Date | null;
   @Column('text', { array: true, default: '{}' })
   public ready: string[];
   @CreateDateColumn({ type: 'timestamp with time zone' })
@@ -87,6 +89,7 @@ export default class SessionEntity {
       encrypted: this.encrypted,
       locked: this.locked,
       ready: this.ready,
+      timer: this.timer,
     };
   }
 
@@ -103,5 +106,6 @@ export default class SessionEntity {
     this.encrypted = null;
     this.locked = false;
     this.ready = [];
+    this.timer = null;
   }
 }

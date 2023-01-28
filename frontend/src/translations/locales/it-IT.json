@@ -60,6 +60,14 @@
   },
   "Customize": {
     "title": "Personalizza il tuo gioco!",
+    "timerCategory": "Timer",
+    "timerCategorySub": "Imposta il timer per la sessione",
+    "allowTimer": "Consenti Timer",
+    "allowTimerHelp": "Mostra un timer nella parte inferiore dello schermo",
+    "timerDuration": "Durata Timer",
+    "timerDurationHelp": "Il timer sarà impostato a {{duration}} minuti",
+    "lockOnTimerEnd": "Blocca alla fine del timer",
+    "lockOnTimerEndHelp": "Blocca la sessione (fai in sola lettura) quando il timer finisce",
     "votingCategory": "Votazione",
     "votingCategorySub": "Imposta tutte le regole relative a \"mi piace\" e \"non mi piace\"",
     "postCategory": "Impostazioni del Post",
@@ -120,6 +128,8 @@
     "disconnected": "Ti sei disconnesso/a dalla sessione corrente.",
     "reconnect": "Riconnesso",
     "notLoggedIn": "Non sei autenticato. Puoi assistere a questa sessione come spettatore ma non puoi partecipare",
+    "lockedTitle": "Il timer è scaduto",
+    "lockedDescription": "Non è più possibile aggiungere o modificare post, dato che il timer è scaduto. Questo può essere modificato nelle impostazioni della sessione.",
     "error_action_unauthorised": "Non hai i permessi per eseguire questa azione.",
     "error_cannot_edit_group": "Modifica del gruppo non riuscita.",
     "error_cannot_edit_post": "Modifica del post non riuscita.",
@@ -451,5 +461,11 @@
   },
   "Chat": {
     "writeAMessage": "Scrivi un messaggio qui..."
+  },
+  "Timer": {
+    "stopTimerTitle": "Sei sicuro di voler fermare (e resettare) il timer?",
+    "stopTimerDescription": "Se si ferma il timer, verrà ripristinato alla sua durata originale.",
+    "stopTimerButton": "Ferma Timer",
+    "stopTimerCancelButton": "Annulla"
   }
 }

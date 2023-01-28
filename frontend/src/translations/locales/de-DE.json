@@ -60,6 +60,14 @@
   },
   "Customize": {
     "title": "Personalisieren Sie die Sitzung",
+    "timerCategory": "Timer",
+    "timerCategorySub": "Timer für die Sitzung festlegen",
+    "allowTimer": "Timer erlauben",
+    "allowTimerHelp": "Timer am unteren Bildschirmrand anzeigen",
+    "timerDuration": "Timer-Dauer",
+    "timerDurationHelp": "Der Timer wird auf {{duration}} Minuten gesetzt",
+    "lockOnTimerEnd": "Timer-Ende sperren",
+    "lockOnTimerEndHelp": "Sitzung sperren (nur lesen) wenn der Timer endet",
     "votingCategory": "Abstimmung",
     "votingCategorySub": "Setze die Abstimmregeln",
     "postCategory": "Beitragseinstellungen",
@@ -120,6 +128,8 @@
     "disconnected": "Sie wurden von der aktuellen Sitzung getrennt.",
     "reconnect": "Neu verbinden",
     "notLoggedIn": "Sie sind nicht eingeloggt. Sie können diese Sitzung als Zuschauer betrachten, müssen sich aber einloggen, um daran teilzunehmen.",
+    "lockedTitle": "Der Timer ist ausgelaufen",
+    "lockedDescription": "Sie können keine Beiträge mehr hinzufügen oder bearbeiten, da der Timer ausgelaufen ist. Dies kann in den Sitzungseinstellungen geändert werden.",
     "error_action_unauthorised": "Sie sind nicht berechtigt, diese Aktion auszuführen.",
     "error_cannot_edit_group": "Bearbeiten der Gruppe fehlgeschlagen.",
     "error_cannot_edit_post": "Bearbeiten des Beitrags fehlgeschlagen.",
@@ -451,5 +461,11 @@
   },
   "Chat": {
     "writeAMessage": "Hier eine Nachricht schreiben..."
+  },
+  "Timer": {
+    "stopTimerTitle": "Sind Sie sicher, dass Sie den Timer stoppen (und zurücksetzen) möchten?",
+    "stopTimerDescription": "Wenn Sie den Timer stoppen, wird er auf seine ursprüngliche Dauer zurückgesetzt.",
+    "stopTimerButton": "Timer stoppen",
+    "stopTimerCancelButton": "Abbrechen"
   }
 }

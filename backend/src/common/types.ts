@@ -9,6 +9,7 @@ export interface Session extends PostContainer, Entity {
   locked: boolean;
   createdBy: User;
   ready: string[];
+  timer: Date | null;
 }
 
 export interface SessionMetadata extends Entity {
@@ -60,6 +61,9 @@ export interface SessionOptions {
   allowCancelVote: boolean;
   blurCards: boolean;
   newPostsFirst: boolean;
+  allowTimer: boolean;
+  timerDuration: number;
+  readonlyOnTimerEnd: boolean;
 }
 
 export interface Entity {

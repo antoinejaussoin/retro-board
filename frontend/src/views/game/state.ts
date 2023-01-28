@@ -20,3 +20,8 @@ export const SessionState = atom<Session | null>({
   key: 'SESSION',
   default: null,
 });
+
+export const TimerState = atom<Date | null>({
+  key: 'TIMER',
+  default: null,
+});

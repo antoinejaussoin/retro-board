@@ -60,6 +60,14 @@
   },
   "Customize": {
     "title": "A munkamenet testreszabása",
+    "timerCategory": "",
+    "timerCategorySub": "",
+    "allowTimer": "",
+    "allowTimerHelp": "",
+    "timerDuration": "",
+    "timerDurationHelp": "",
+    "lockOnTimerEnd": "",
+    "lockOnTimerEndHelp": "",
     "votingCategory": "Szavazás",
     "votingCategorySub": "Állítsd be a tetszésnyilvánításokra és a nemtetszésekre vonatkozó szabályokat",
     "postCategory": "Hozzászólás beállításai",
@@ -120,6 +128,8 @@
     "disconnected": "Lekapcsolták az aktuális munkamenetről.",
     "reconnect": "Csatlakozzon újra",
     "notLoggedIn": "Nincs bejelentkezve. Ezt az ülést nézőként tekintheti meg, de a részvételhez be kell jelentkeznie.",
+    "lockedTitle": "",
+    "lockedDescription": "",
     "error_action_unauthorised": "Ezt a műveletet nem hajthatja végre.",
     "error_cannot_edit_group": "A csoport szerkesztése nem sikerült.",
     "error_cannot_edit_post": "A bejegyzés szerkesztése nem sikerült.",
@@ -451,5 +461,11 @@
   },
   "Chat": {
     "writeAMessage": "Írj üzenetet ide..."
+  },
+  "Timer": {
+    "stopTimerTitle": "",
+    "stopTimerDescription": "",
+    "stopTimerButton": "",
+    "stopTimerCancelButton": ""
   }
 }

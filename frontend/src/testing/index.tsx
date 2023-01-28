@@ -29,6 +29,7 @@ export const initialSession: Session = {
     ...defaultOptions,
   },
   ready: [],
+  timer: null,
 };
 
 export function AllTheProviders({ children }: PropsWithChildren<{}>) {

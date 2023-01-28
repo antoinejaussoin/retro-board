@@ -25,6 +25,7 @@ import {
   ChatMessagePayload,
   WsCancelVotesPayload,
   WsReceiveCancelVotesPayload,
+  WsReceiveTimerStartPayload,
 } from 'common';
 import { v4 } from 'uuid';
 import find from 'lodash/find';
@@ -45,6 +46,9 @@ import useParticipants from './useParticipants';
 import useUnauthorised from './useUnauthorised';
 import useSession from './useSession';
 import { useTranslation } from 'react-i18next';
+import { useSetRecoilState } from 'recoil';
+import { TimerState } from './state';
+import { addSeconds } from 'date-fns';
 
 export type Status =
   /**
@@ -96,7 +100,7 @@ function sendFactory(
   };
 }
 
-const useGame = (sessionId: string) => {
+function useGame(sessionId: string) {
   const { user, initialised: userInitialised } = useUserMetadata();
   const userId = !user ? user : user.id;
   const { enqueueSnackbar } = useSnackbar();
@@ -110,6 +114,7 @@ const useGame = (sessionId: string) => {
   const { setUnauthorised, resetUnauthorised } = useUnauthorised();
   const [acks, setAcks] = useState<AckItem[]>([]);
   const prevUser = useRef<string | null | undefined>(undefined); // Undefined until the user is actually loaded
+  const setTimer = useSetRecoilState(TimerState);
   const {
     session,
     receivePost,
@@ -160,6 +165,7 @@ const useGame = (sessionId: string) => {
   // Cleaning up the socket
   useEffect(() => {
     return () => {
+      setTimer(null);
       if (socket) {
         if (debug) {
           console.log('Attempting disconnection ', socket);
@@ -170,7 +176,7 @@ const useGame = (sessionId: string) => {
         resetUnauthorised();
       }
     };
-  }, [socket, resetSession, statusValue, resetUnauthorised]);
+  }, [socket, resetSession, statusValue, resetUnauthorised, setTimer]);
 
   // Disconnect when needed
   useEffect(() => {
@@ -412,6 +418,23 @@ const useGame = (sessionId: string) => {
         }
       }
     );
+
+    socket.on(
+      Actions.RECEIVE_TIMER_START,
+      ({ duration }: WsReceiveTimerStartPayload) => {
+        if (debug) {
+          console.log('Receive timer start: ', duration);
+        }
+        setTimer(addSeconds(new Date(), duration));
+      }
+    );
+
+    socket.on(Actions.RECEIVE_TIMER_STOP, () => {
+      if (debug) {
+        console.log('Receive timer stop');
+      }
+      setTimer(null);
+    });
   }, [
     socket,
     status,
@@ -437,6 +460,7 @@ const useGame = (sessionId: string) => {
     setUnauthorised,
     userReady,
     cancelVotes,
+    setTimer,
     userId,
   ]);
 
@@ -774,6 +798,22 @@ const useGame = (sessionId: string) => {
     }
   }, [send, userReady, userId]);
 
+  const onTimerStart = useCallback(() => {
+    if (send && userId && session?.options.timerDuration) {
+      setTimer(addSeconds(new Date(), session.options.timerDuration));
+      send<void>(Actions.START_TIMER);
+      trackAction(Actions.START_TIMER);
+    }
+  }, [send, session?.options.timerDuration, userId, setTimer]);
+
+  const onTimerReset = useCallback(() => {
+    if (send && userId) {
+      setTimer(null);
+      send<void>(Actions.STOP_TIMER);
+      trackAction(Actions.STOP_TIMER);
+    }
+  }, [send, userId, setTimer]);
+
   return {
     status,
     acks,
@@ -795,8 +835,10 @@ const useGame = (sessionId: string) => {
     onLockSession,
     reconnect,
     onUserReady,
+    onTimerStart,
+    onTimerReset,
   };
-};
+}
 
 function toPostUpdate(post: Post): WsPostUpdatePayload {
   return {

@@ -90,3 +90,10 @@ export interface WsErrorPayload {
   type: WsErrorType;
   details: string | null;
 }
+
+export interface WsReceiveTimerStartPayload {
+  /**
+   * Duration in seconds
+   */
+  duration: number;
+}

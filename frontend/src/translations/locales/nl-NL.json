@@ -60,6 +60,14 @@
   },
   "Customize": {
     "title": "Sessie aanpassen",
+    "timerCategory": "Timer",
+    "timerCategorySub": "Zet de timer voor de sessie",
+    "allowTimer": "Timer toestaan",
+    "allowTimerHelp": "Toon een timer aan de onderkant van het scherm",
+    "timerDuration": "Timer duur",
+    "timerDurationHelp": "De timer wordt ingesteld op {{duration}} minuten",
+    "lockOnTimerEnd": "Vergrendel op Einde Timer",
+    "lockOnTimerEndHelp": "Vergrendel de sessie (maak het alleen-lezen) wanneer de timer eindigt",
     "votingCategory": "Stemmen",
     "votingCategorySub": "Instellen regels voor stemmen",
     "postCategory": "Retropunten instellingen",
@@ -120,6 +128,8 @@
     "disconnected": "Je huidige sessie is verbroken",
     "reconnect": "Opnieuw verbinden",
     "notLoggedIn": "Je bent niet ingelogd. Je kan de sessie bekijken als toeschouwer maar moet inloggen om deel te nemen.",
+    "lockedTitle": "De timer is opgeraakt",
+    "lockedDescription": "Je kunt geen berichten meer toevoegen of bewerken omdat de timer is opgeraakt. Dit kan worden gewijzigd in de sessie-instellingen.",
     "error_action_unauthorised": "U bent niet bevoegd om deze actie uit te voeren.",
     "error_cannot_edit_group": "Bewerken van de groep is mislukt.",
     "error_cannot_edit_post": "Bewerken van post mislukt.",
@@ -451,5 +461,11 @@
   },
   "Chat": {
     "writeAMessage": "Schrijf hier een bericht..."
+  },
+  "Timer": {
+    "stopTimerTitle": "Weet je zeker dat je de timer wilt stoppen (en opnieuw instellen?",
+    "stopTimerDescription": "Als je de timer stopt, wordt deze gereset naar de oorspronkelijke duur.",
+    "stopTimerButton": "Stop timer",
+    "stopTimerCancelButton": "annuleren"
   }
 }

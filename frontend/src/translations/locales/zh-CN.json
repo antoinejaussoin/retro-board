@@ -60,6 +60,14 @@
   },
   "Customize": {
     "title": "自定义您的会话",
+    "timerCategory": "定时器",
+    "timerCategorySub": "设置会话计时器",
+    "allowTimer": "允许计时器",
+    "allowTimerHelp": "在屏幕底部显示计时器",
+    "timerDuration": "计时器持续时间",
+    "timerDurationHelp": "计时器将设置为 {{duration}} 分钟",
+    "lockOnTimerEnd": "计时器结束时锁定",
+    "lockOnTimerEndHelp": "当计时器结束时锁定会话(只读)",
     "votingCategory": "表 决",
     "votingCategorySub": "设置关于喜欢和不喜欢的规则",
     "postCategory": "帖子设置",
@@ -120,6 +128,8 @@
     "disconnected": "您已与当前会话断开连接。",
     "reconnect": "重新连接",
     "notLoggedIn": "您尚未登录。您可以将此会话视为旁观者，但必须登录才能参与。",
+    "lockedTitle": "计时器已过期",
+    "lockedDescription": "您不能再添加或编辑帖子，因为计时器已经退出。这可以在会话设置中更改。",
     "error_action_unauthorised": "您无权执行此操作。",
     "error_cannot_edit_group": "编辑组失败。",
     "error_cannot_edit_post": "编辑帖子失败。",
@@ -451,5 +461,11 @@
   },
   "Chat": {
     "writeAMessage": "在此处写一条消息..."
+  },
+  "Timer": {
+    "stopTimerTitle": "您确定要停止(并重置)计时器吗？",
+    "stopTimerDescription": "如果您停止计时器，它将被重置为其原始持续时间。",
+    "stopTimerButton": "停止计时器",
+    "stopTimerCancelButton": "取消"
   }
 }

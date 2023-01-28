@@ -23,6 +23,7 @@ import {
   Message,
   WsCancelVotesPayload,
   WsReceiveCancelVotesPayload,
+  WsReceiveTimerStartPayload,
 } from './common/index.js';
 import { RateLimiterMemory } from 'rate-limiter-flexible';
 import chalk from 'chalk-template';
@@ -64,6 +65,8 @@ import { cancelVotes, registerVote } from './db/actions/votes.js';
 import { deserialiseIds, UserIds } from './utils.js';
 import { QueryFailedError } from 'typeorm';
 import { saveChatMessage } from './db/actions/chat.js';
+import { startTimer, stopTimer } from './db/actions/timer.js';
+import { differenceInSeconds } from 'date-fns';
 
 const {
   ACK,
@@ -104,6 +107,10 @@ const {
   REQUEST_BOARD,
   CHAT_MESSAGE,
   RECEIVE_CHAT_MESSAGE,
+  START_TIMER,
+  STOP_TIMER,
+  RECEIVE_TIMER_START,
+  RECEIVE_TIMER_STOP,
 } = Actions;
 
 interface Users {
@@ -333,7 +340,7 @@ export default (io: Server) => {
         if (user) {
           const userEntity = await getUser(user.id);
           if (userEntity) {
-            // TODO : inneficient, rework all this
+            // TODO : inefficient, rework all this
             await storeVisitor(sessionId, userEntity);
             const sessionEntity2 = await getSessionWithVisitors(sessionId);
             if (sessionEntity2) {
@@ -346,6 +353,15 @@ export default (io: Server) => {
         const session = await getSession(sessionId);
         if (session) {
           sendToSelf<Session>(socket, RECEIVE_BOARD, session);
+          if (session.timer) {
+            sendToSelf<WsReceiveTimerStartPayload>(
+              socket,
+              RECEIVE_TIMER_START,
+              {
+                duration: differenceInSeconds(session.timer, new Date()),
+              }
+            );
+          }
         } else {
           sendToSelf<WsErrorPayload>(socket, RECEIVE_ERROR, {
             type: 'cannot_get_session',
@@ -595,6 +611,35 @@ export default (io: Server) => {
     sendToAll<boolean>(socket, sessionId, RECEIVE_LOCK_SESSION, locked);
   };
 
+  const onStartTimer = async (
+    userIds: UserIds | null,
+    sessionId: string,
+    _: unknown,
+    socket: Socket
+  ) => {
+    if (checkUser(userIds, socket)) {
+      const duration = await startTimer(sessionId);
+      sendToAll<WsReceiveTimerStartPayload>(
+        socket,
+        sessionId,
+        RECEIVE_TIMER_START,
+        { duration }
+      );
+    }
+  };
+
+  const onStopTimer = async (
+    userIds: UserIds | null,
+    sessionId: string,
+    _: unknown,
+    socket: Socket
+  ) => {
+    if (checkUser(userIds, socket)) {
+      await stopTimer(sessionId);
+      sendToAll<undefined>(socket, sessionId, RECEIVE_TIMER_STOP, undefined);
+    }
+  };
+
   io.on('connection', async (socket) => {
     const ip =
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -640,6 +685,9 @@ export default (io: Server) => {
       { type: DELETE_POST_GROUP, handler: onDeletePostGroup },
 
       { type: CHAT_MESSAGE, handler: onChatMessage },
+
+      { type: START_TIMER, handler: onStartTimer },
+      { type: STOP_TIMER, handler: onStopTimer },
 
       { type: JOIN_SESSION, handler: onJoinSession },
       { type: REQUEST_BOARD, handler: onRequestBoard },

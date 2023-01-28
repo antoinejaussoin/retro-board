@@ -19,6 +19,8 @@ const actions = {
   REQUEST_BOARD: 'retrospected/session/request',
   USER_READY: 'retrospected/user-ready',
   CHAT_MESSAGE: 'retrospected/session/chat',
+  START_TIMER: 'retrospected/timer/start',
+  STOP_TIMER: 'retrospected/timer/stop',
 
   RECEIVE_POST: 'retrospected/posts/receive/add',
   RECEIVE_DELETE_POST: 'retrospected/posts/receive/delete',
@@ -40,6 +42,8 @@ const actions = {
   RECEIVE_ERROR: 'retrospected/receive/error',
   RECEIVE_USER_READY: 'retrospected/receive/user-ready',
   RECEIVE_CHAT_MESSAGE: 'retrospected/session/chat/receive',
+  RECEIVE_TIMER_START: 'retrospected/timer/start/receive',
+  RECEIVE_TIMER_STOP: 'retrospected/timer/stop/receive',
 };
 
 export default actions;

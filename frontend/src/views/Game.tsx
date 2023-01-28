@@ -24,10 +24,11 @@ import NoContent from '../components/NoContent';
 import useCrypto from '../crypto/useCrypto';
 import Unauthorized from './game/Unauthorized';
 import SearchBar from './game/SearchBar';
-import GameFooter from './game/GameFooter';
+import GameFooter from './game/footer/GameFooter';
 import AckWarning from './game/AckWarning';
 import useUnauthorised from './game/useUnauthorised';
 import useSession from './game/useSession';
+import TimerProvider from './game/TimerProvider';
 
 interface RouteParams {
   gameId: string;
@@ -72,6 +73,8 @@ function GamePage() {
     onSaveTemplate,
     onLockSession,
     onUserReady,
+    onTimerStart,
+    onTimerReset,
     reconnect,
   } = useGame(gameId || '');
 
@@ -97,110 +100,116 @@ function GamePage() {
   }
 
   return (
-    <div>
-      <Helmet>
-        <title>
-          {decrypt(session.name) || t('SessionName.defaultSessionName')} -
-          Retrospected
-        </title>
-        <meta
-          property="og:title"
-          content={`${
-            decrypt(session.name) || t('SessionName.defaultSessionName')
-          } - Retrospected`}
-        />
-        <meta
-          property="og:url"
-          content={window.location.href.replace(hash, '')}
-        />
-      </Helmet>
-      {status === 'disconnected' ? (
-        <DisconnectedContainer>
-          <DisconnectedTitle>
-            <CloudOff
-              style={{ position: 'relative', top: 3, marginRight: 10 }}
-            />
-            &nbsp;{t('PostBoard.disconnected')}
-          </DisconnectedTitle>
-          <Button color="secondary" variant="contained" onClick={reconnect}>
-            {t('PostBoard.reconnect')}
-          </Button>
-        </DisconnectedContainer>
-      ) : null}
-      <AppBar position="static" color="default">
-        <AppBarContent>
-          <Tabs
-            value={path}
-            onChange={handleChange}
-            variant="scrollable"
-            scrollButtons
-            indicatorColor="primary"
-            textColor="primary"
-            aria-label="Game mode tabs"
-            allowScrollButtonsMobile
-          >
-            <Tab
-              label={t('GameMenu.board')}
-              icon={<Dashboard />}
-              value={rootUrl}
-            />
-            {!session.options.blurCards ? (
-              <Tab
-                label={t('GameMenu.summary')}
-                icon={<List />}
-                value={summaryUrl}
+    <TimerProvider>
+      <div>
+        <Helmet>
+          <title>
+            {decrypt(session.name) || t('SessionName.defaultSessionName')} -
+            Retrospected
+          </title>
+          <meta
+            property="og:title"
+            content={`${
+              decrypt(session.name) || t('SessionName.defaultSessionName')
+            } - Retrospected`}
+          />
+          <meta
+            property="og:url"
+            content={window.location.href.replace(hash, '')}
+          />
+        </Helmet>
+        {status === 'disconnected' ? (
+          <DisconnectedContainer>
+            <DisconnectedTitle>
+              <CloudOff
+                style={{ position: 'relative', top: 3, marginRight: 10 }}
               />
-            ) : null}
-          </Tabs>
-          <SearchContent>
-            <SearchBar value={search} onChange={setSearch} />
-          </SearchContent>
-        </AppBarContent>
-      </AppBar>
-      <AckWarning acks={acks} onRefresh={reconnect} />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Board
-              columns={columns}
-              options={session.options}
-              search={search}
-              onEdit={onEditPost}
-              onAddPost={onAddPost}
-              onMovePost={onMovePost}
-              onCombinePost={onCombinePost}
-              onAddGroup={onAddGroup}
-              onDeletePost={onDeletePost}
-              onLike={onLike}
-              onCancelVotes={onCancelVotes}
-              onDeleteGroup={onDeletePostGroup}
-              onEditGroup={onEditPostGroup}
-              onRenameSession={onRenameSession}
-              onEditOptions={onEditOptions}
-              onEditColumns={onEditColumns}
-              onSaveTemplate={onSaveTemplate}
-              onLockSession={onLockSession}
-            />
-          }
-        />
-        <Route
-          path="/summary"
-          element={
-            !session.options.blurCards ? (
-              <SummaryMode columns={columns} search={search} />
-            ) : null
-          }
-        />
-      </Routes>
-      <ParticipantContainer>
-        <GameFooter
-          onReady={onUserReady}
-          messages={session.messages}
-          onMessage={onChatMessage}
-        />
-      </ParticipantContainer>
-    </div>
+              &nbsp;{t('PostBoard.disconnected')}
+            </DisconnectedTitle>
+            <Button color="secondary" variant="contained" onClick={reconnect}>
+              {t('PostBoard.reconnect')}
+            </Button>
+          </DisconnectedContainer>
+        ) : null}
+        <AppBar position="static" color="default">
+          <AppBarContent>
+            <Tabs
+              value={path}
+              onChange={handleChange}
+              variant="scrollable"
+              scrollButtons
+              indicatorColor="primary"
+              textColor="primary"
+              aria-label="Game mode tabs"
+              allowScrollButtonsMobile
+            >
+              <Tab
+                label={t('GameMenu.board')}
+                icon={<Dashboard />}
+                value={rootUrl}
+              />
+              {!session.options.blurCards ? (
+                <Tab
+                  label={t('GameMenu.summary')}
+                  icon={<List />}
+                  value={summaryUrl}
+                />
+              ) : null}
+            </Tabs>
+            <SearchContent>
+              <SearchBar value={search} onChange={setSearch} />
+            </SearchContent>
+          </AppBarContent>
+        </AppBar>
+        <AckWarning acks={acks} onRefresh={reconnect} />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Board
+                columns={columns}
+                options={session.options}
+                search={search}
+                onEdit={onEditPost}
+                onAddPost={onAddPost}
+                onMovePost={onMovePost}
+                onCombinePost={onCombinePost}
+                onAddGroup={onAddGroup}
+                onDeletePost={onDeletePost}
+                onLike={onLike}
+                onCancelVotes={onCancelVotes}
+                onDeleteGroup={onDeletePostGroup}
+                onEditGroup={onEditPostGroup}
+                onRenameSession={onRenameSession}
+                onEditOptions={onEditOptions}
+                onEditColumns={onEditColumns}
+                onSaveTemplate={onSaveTemplate}
+                onLockSession={onLockSession}
+              />
+            }
+          />
+          <Route
+            path="/summary"
+            element={
+              !session.options.blurCards ? (
+                <SummaryMode columns={columns} search={search} />
+              ) : null
+            }
+          />
+        </Routes>
+        <ParticipantContainer>
+          <GameFooter
+            onReady={onUserReady}
+            messages={session.messages}
+            timer={session.options.allowTimer}
+            timerDuration={session.options.timerDuration}
+            onTimerReset={onTimerReset}
+            onTimerStart={onTimerStart}
+            onMessage={onChatMessage}
+          />
+        </ParticipantContainer>
+      </div>
+    </TimerProvider>
   );
 }
 
