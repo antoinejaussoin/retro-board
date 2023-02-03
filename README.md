@@ -93,7 +93,7 @@ This will run a demo version, which you can turn into a fully licenced version b
 - Feature: Self-Hosted only: Display the number of logged users (👏 Thanks to [@dayByte](https://github.com/dayByte) for the idea)
 - Upgrade to the latest version of TypeORM
 - Convert all backend code to ESM
-- 🇩🇪 German language updates (👏 Thanks to Frank Becker for his contribution)
+- 🇩🇪 German language updates (👏 Thanks to [@dayByte](https://github.com/dayByte) for his contribution)
 
 ### Version 4.18.1 (hotfix)
 
@@ -719,7 +719,7 @@ Many thanks to the following contributors who helped translating the app:
 - Polish: [@olaf-cichocki](https://github.com/olaf-cichocki)
 - Arabic: [@FrenchTechLead](https://github.com/FrenchTechLead)
 - Japanese: [@sat0yu](https://github.com/sat0yu)
-- German: [@PaulBrandt](https://github.com/PaulBrandt)
+- German: [@PaulBrandt](https://github.com/PaulBrandt), [@dayByte](https://github.com/dayByte)
 - Italian: [@mventuri](https://github.com/mventuri)
 
 If you are a native speaker of another language, please don't hesitate to make a pull request to add a translation.
