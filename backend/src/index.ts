@@ -248,7 +248,7 @@ db().then(() => {
   app.use('/api/stripe', stripeRouter());
 
   // Admin
-  app.use('/api/admin', adminRouter);
+  app.use('/api/admin', adminRouter(io));
 
   // Slack
   app.use('/api/slack', slackRouter());

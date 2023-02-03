@@ -180,6 +180,10 @@ export interface VoteExtract extends Entity {
 
 export type VoteType = 'like' | 'dislike';
 
+export type AdminStats = {
+  clients: number;
+};
+
 export type TrackingEvent =
   | 'custom-modal/open'
   | 'custom-modal/close'

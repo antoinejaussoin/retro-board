@@ -15,6 +15,7 @@ import { DeleteAccount } from './DeleteAccount';
 import { uniq } from 'lodash';
 import MergeModal from './MergeModal';
 import { mergeUsers } from './api';
+import { Stats } from './Stats';
 
 export default function AdminPage() {
   const user = useUser();
@@ -123,6 +124,9 @@ export default function AdminPage() {
   }
   return (
     <Container>
+      <StatsContainer>
+        <Stats />
+      </StatsContainer>
       <Header>
         <Input
           title="Search"
@@ -169,6 +173,12 @@ const Header = styled.div`
   display: flex;
   gap: 5px;
   margin: 10px;
+`;
+
+const StatsContainer = styled.div`
+  position: fixed;
+  bottom: 18px;
+  left: 10px;
 `;
 
 const Actions = styled.div``;

@@ -1,6 +1,7 @@
-import { fetchPatch, fetchPost } from '../../api/fetch';
+import { fetchGet, fetchPatch, fetchPost } from '../../api/fetch';
 import {
   AdminChangePasswordPayload,
+  AdminStats,
   FullUser,
   MergeUsersPayload,
 } from 'common';
@@ -17,4 +18,8 @@ export async function mergeUsers(main: FullUser, merged: FullUser[]) {
     main: main.identityId,
     merged: merged.map((u) => u.identityId),
   });
+}
+
+export async function fetchAdminStats() {
+  return await fetchGet<AdminStats>('/api/admin/stats', { clients: 0 });
 }
