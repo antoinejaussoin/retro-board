@@ -26,11 +26,19 @@ local:
 install-trivy:
 	brew install trivy
 
+trivy-f:
+	docker build -f ./frontend/Dockerfile -t retrospected/frontend:trivy ./frontend
+	trivy image retrospected/frontend:trivy --security-checks vuln
+
+trivy-b:
+	docker build -f ./backend/Dockerfile -t retrospected/backend:trivy ./backend
+	trivy image retrospected/backend:trivy --security-checks vuln
+	
 trivy:
 	docker build -f ./backend/Dockerfile -t retrospected/backend:trivy ./backend
 	docker build -f ./frontend/Dockerfile -t retrospected/frontend:trivy ./frontend
-	trivy image retrospected/backend:trivy
-	trivy image retrospected/frontend:trivy
+	trivy image retrospected/backend:trivy --security-checks vuln
+	trivy image retrospected/frontend:trivy --security-checks vuln
 
 translate:
 	crowdin push sources

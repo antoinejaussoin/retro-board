@@ -1,7 +1,7 @@
 # This must be run with the Docker context set to the root folder of the repository
 # (the one with the yarn.lock file)
 
-FROM node:16-alpine
+FROM node:lts-alpine
 
 # App directory
 WORKDIR /usr/src/backend
