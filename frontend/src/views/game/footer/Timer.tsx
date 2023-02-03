@@ -1,32 +1,42 @@
 import styled from '@emotion/styled';
-import { PlayArrow, Stop, TimerOutlined } from '@mui/icons-material';
+import { PlayArrow, Settings, Stop, TimerOutlined } from '@mui/icons-material';
 import { Color, colors, IconButton } from '@mui/material';
+import { SessionOptions } from 'common';
 import { differenceInSeconds } from 'date-fns';
+import useModal from 'hooks/useModal';
 import { noop } from 'lodash';
 import { useConfirm } from 'material-ui-confirm';
 import { useCallback, useEffect, useState, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTimer } from '../useTimer';
+import { TimerSettingsModal } from './TimerSettingsModal';
 
 type TimerProps = {
-  duration: number;
+  options: SessionOptions;
   canControl: boolean;
   onStart: () => void;
   onStop: () => void;
+  onConfigure: (options: SessionOptions) => void;
 };
 
 export const Timer = memo(function Timer({
-  duration,
   canControl,
+  options,
   onStart,
   onStop,
+  onConfigure,
 }: TimerProps) {
   const confirm = useConfirm();
   const end = useTimer();
   const { t } = useTranslation();
   const [remaining, setRemaining] = useState<Time>(
-    getTime(end, duration, end ? differenceInSeconds(end, new Date()) : null)
+    getTime(
+      end,
+      options.timerDuration,
+      end ? differenceInSeconds(end, new Date()) : null
+    )
   );
+  const [opened, open, close] = useModal();
 
   const handleStop = useCallback(() => {
     confirm({
@@ -43,35 +53,64 @@ export const Timer = memo(function Timer({
 
   useEffect(() => {
     if (!end) {
-      setRemaining(getTime(null, duration, null));
+      setRemaining(getTime(null, options.timerDuration, null));
       return;
     }
     const handle = setInterval(() => {
-      const time = getTime(end, duration, differenceInSeconds(end, new Date()));
+      const time = getTime(
+        end,
+        options.timerDuration,
+        differenceInSeconds(end, new Date())
+      );
       setRemaining(time);
     }, 1000);
 
     return () => clearInterval(handle);
-  }, [end, duration]);
+  }, [end, options.timerDuration]);
 
-  const color = getColor(duration, end);
+  const color = getColor(options.timerDuration, end);
 
   return (
     <Container>
-      <TimerOutlined fontSize="large" htmlColor={color[600]} />
-      <Remaining color={color[400]}>
-        {remaining.minutes}:{remaining.seconds}
-      </Remaining>
+      {options.allowTimer || canControl ? (
+        <TimerOutlined fontSize="large" htmlColor={color[600]} />
+      ) : null}
+      {options.allowTimer ? (
+        <>
+          <Remaining color={color[400]}>
+            {remaining.minutes}:{remaining.seconds}
+          </Remaining>
+          {canControl ? (
+            end ? (
+              <IconButton onClick={handleStop}>
+                <Stop />
+              </IconButton>
+            ) : (
+              <IconButton onClick={onStart}>
+                <PlayArrow />
+              </IconButton>
+            )
+          ) : null}
+        </>
+      ) : null}
       {canControl ? (
-        end ? (
-          <IconButton onClick={handleStop}>
-            <Stop />
-          </IconButton>
-        ) : (
-          <IconButton onClick={onStart}>
-            <PlayArrow />
-          </IconButton>
-        )
+        <IconButton onClick={open}>
+          <Settings />
+        </IconButton>
+      ) : null}
+      {opened ? (
+        <TimerSettingsModal
+          open
+          onClose={close}
+          onChange={(updatedOptions) => {
+            if (!updatedOptions.allowTimer && !!end) {
+              onStop();
+            }
+            onConfigure(updatedOptions);
+            close();
+          }}
+          options={options}
+        />
       ) : null}
     </Container>
   );

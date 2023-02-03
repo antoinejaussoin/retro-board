@@ -201,11 +201,11 @@ function GamePage() {
           <GameFooter
             onReady={onUserReady}
             messages={session.messages}
-            timer={session.options.allowTimer}
-            timerDuration={session.options.timerDuration}
+            options={session.options}
             onTimerReset={onTimerReset}
             onTimerStart={onTimerStart}
             onMessage={onChatMessage}
+            onConfigure={onEditOptions}
           />
         </ParticipantContainer>
       </div>

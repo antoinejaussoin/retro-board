@@ -11,7 +11,7 @@ import styled from '@emotion/styled';
 import useUser from '../../../auth/useUser';
 import { useCallback, useEffect, useState } from 'react';
 import { trackEvent } from '../../../track';
-import { Message } from 'common';
+import { Message, SessionOptions } from 'common';
 import useModal from '../../../hooks/useModal';
 import ChatModal from '../chat/ChatModal';
 import { useTranslation } from 'react-i18next';
@@ -21,22 +21,22 @@ import useCanModifyOptions from '../board/header/useCanModifyOptions';
 
 type GameFooterProps = {
   onReady: () => void;
-  timer: boolean;
-  timerDuration: number;
   messages: Message[];
+  options: SessionOptions;
   onMessage: (content: string) => void;
   onTimerStart: () => void;
   onTimerReset: () => void;
+  onConfigure: (options: SessionOptions) => void;
 };
 
 function GameFooter({
   onReady,
   onMessage,
   messages,
-  timer,
-  timerDuration,
+  options,
   onTimerStart,
   onTimerReset,
+  onConfigure,
 }: GameFooterProps) {
   const { session } = useSession();
   const user = useUser();
@@ -61,16 +61,15 @@ function GameFooter({
       <UsersContainer>
         <Users />
       </UsersContainer>
-      {timer ? (
-        <TimerContainer>
-          <Timer
-            canControl={canActionTimer}
-            duration={timerDuration}
-            onStart={onTimerStart}
-            onStop={onTimerReset}
-          />
-        </TimerContainer>
-      ) : null}
+      <TimerContainer>
+        <Timer
+          canControl={canActionTimer}
+          options={options}
+          onStart={onTimerStart}
+          onStop={onTimerReset}
+          onConfigure={onConfigure}
+        />
+      </TimerContainer>
 
       <EndControlsContainer>
         {user && !fullScreen ? (

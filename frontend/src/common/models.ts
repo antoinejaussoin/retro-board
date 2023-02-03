@@ -14,8 +14,8 @@ export const defaultOptions: SessionOptions = {
   blurCards: false,
   newPostsFirst: true,
   allowCancelVote: false,
-  allowTimer: false,
-  timerDuration: 0,
+  allowTimer: true,
+  timerDuration: 15 * 60,
   readonlyOnTimerEnd: true,
 };
 
