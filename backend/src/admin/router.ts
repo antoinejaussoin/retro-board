@@ -6,14 +6,15 @@ import {
   updateIdentity,
 } from '../db/actions/users.js';
 import config from '../config.js';
-import { isLicenced } from '../security/is-licenced.js';
+import { isLicensed } from '../security/is-licenced.js';
 import {
   AdminChangePasswordPayload,
   AdminStats,
   BackendCapabilities,
   MergeUsersPayload,
 } from '../common/index.js';
-import { getIdentityFromRequest, hashPassword } from '../utils.js';
+import { getIdentityFromRequest } from '../utils.js';
+import { hashPassword } from '../encryption.js';
 import { canSendEmails } from '../email/utils.js';
 import { mergeUsers } from '../db/actions/merge.js';
 
@@ -33,7 +34,7 @@ export default function getRouter(io: Server) {
   }
 
   router.get('/self-hosting', async (_, res) => {
-    const licence = await isLicenced();
+    const licence = await isLicensed();
     const payload: BackendCapabilities = {
       adminEmail: config.SELF_HOSTED_ADMIN,
       selfHosted: config.SELF_HOSTED,

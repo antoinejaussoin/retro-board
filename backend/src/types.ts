@@ -63,7 +63,7 @@ export interface BackendConfig {
   MAIL_ALLOW_SELF_SIGNED_CERTS: boolean;
 }
 
-export type LicenceMetadata = {
-  licence: string;
+export type LicenseMetadata = {
+  license: string;
   owner: string;
 };

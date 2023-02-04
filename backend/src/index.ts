@@ -16,11 +16,11 @@ import stripeRouter from './stripe/router.js';
 import slackRouter from './slack/router.js';
 import game from './game.js';
 import {
-  hashPassword,
   getIdentityFromRequest,
   getUserViewFromRequest,
   getUserQuota,
 } from './utils.js';
+import { hashPassword } from './encryption.js';
 import {
   initSentry,
   setupSentryErrorHandler,
@@ -58,7 +58,7 @@ import {
   updateIdentity,
   getIdentityByUsername,
 } from './db/actions/users.js';
-import { isLicenced } from './security/is-licenced.js';
+import { isLicensed } from './security/is-licenced.js';
 import rateLimit from 'express-rate-limit';
 import { fetchLicence, validateLicence } from './db/actions/licences.js';
 import { hasField } from './security/payload-checker.js';
@@ -70,7 +70,7 @@ import { noop } from 'lodash-es';
 const realIpHeader = 'X-Forwarded-For';
 const sessionSecret = `${config.SESSION_SECRET!}-4.11.5`; // Increment to force re-auth
 
-isLicenced().then((hasLicence) => {
+isLicensed().then((hasLicence) => {
   if (!hasLicence) {
     console.log(
       chalk`{red ------------------------------------------------------------- }`
