@@ -14,7 +14,7 @@ import {
 } from './types.js';
 import { plans, getProduct } from './products.js';
 import { updateUser } from '../db/actions/users.js';
-import { registerLicence } from '../db/actions/licences.js';
+import { registerLicense } from '../db/actions/licences.js';
 import { getIdentityFromRequest } from '../utils.js';
 import isValidDomain from '../security/is-valid-domain.js';
 import {
@@ -149,7 +149,7 @@ function stripeRouter(): Router {
             product.product === config.STRIPE_SELF_HOSTED_PRODUCT
           ) {
             console.log(' >> Received payment for a Self Hosted product');
-            await registerLicence(
+            await registerLicense(
               customerEmail,
               customerName,
               stripeCustomerId,

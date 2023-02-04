@@ -6,7 +6,7 @@ import { LicenceRepository } from '../repositories/index.js';
 import { LicenseMetadata } from './../../types.js';
 import { saveAndReload } from '../repositories/BaseRepository.js';
 
-export async function registerLicence(
+export async function registerLicense(
   email: string | null,
   name: string | null | undefined,
   customerId: string,
@@ -15,9 +15,9 @@ export async function registerLicence(
   return await transaction(async (manager) => {
     const repository = manager.withRepository(LicenceRepository);
     const key = v4();
-    const licence = new LicenceEntity(v4(), email, key, customerId, sessionId);
+    const license = new LicenceEntity(v4(), email, key, customerId, sessionId);
     try {
-      const savedLicence = await saveAndReload(repository, licence);
+      const savedLicence = await saveAndReload(repository, license);
       if (savedLicence) {
         if (email) {
           await sendSelfHostWelcome(email, name || '', key);
@@ -26,7 +26,7 @@ export async function registerLicence(
       }
       return false;
     } catch (err) {
-      console.log('Error while saving the licence: ', err);
+      console.log('Error while saving the license: ', err);
       return false;
     }
   });
@@ -41,7 +41,7 @@ export async function validateLicence(key: string): Promise<boolean> {
       });
       return found > 0;
     } catch (err) {
-      console.log('Error while retriving the licence: ', err);
+      console.log('Error while retrieving the license: ', err);
       return false;
     }
   });
@@ -58,12 +58,12 @@ export async function fetchLicence(
       });
       if (found) {
         return {
-          licence: key,
+          license: key,
           owner: found.email!,
         };
       }
     } catch (err) {
-      console.log('Error while retriving the licence: ', err);
+      console.log('Error while retrieving the license: ', err);
       return null;
     }
     return null;
