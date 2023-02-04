@@ -11,7 +11,7 @@ export const defaultOptions: SessionOptions = {
   allowGiphy: true,
   allowGrouping: true,
   allowReordering: true,
-  allowCancelVote: false,
+  allowCancelVote: true,
   blurCards: false,
   newPostsFirst: true,
   allowTimer: true,

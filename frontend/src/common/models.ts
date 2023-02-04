@@ -13,7 +13,7 @@ export const defaultOptions: SessionOptions = {
   allowReordering: true,
   blurCards: false,
   newPostsFirst: true,
-  allowCancelVote: false,
+  allowCancelVote: true,
   allowTimer: true,
   timerDuration: 15 * 60,
   readonlyOnTimerEnd: true,

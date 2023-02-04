@@ -26,9 +26,9 @@ export default class SessionOptionsEntity {
   public allowGrouping: boolean;
   @Column({ default: true })
   public allowReordering: boolean;
-  @Column({ default: false })
+  @Column({ default: true })
   public allowCancelVote: boolean;
-  @Column({ default: false })
+  @Column({ default: true })
   public allowTimer: boolean;
   @Column({ type: 'numeric', default: 15 * 60 })
   public timerDuration: number;

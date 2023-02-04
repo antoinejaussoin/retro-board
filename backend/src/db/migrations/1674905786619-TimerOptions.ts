@@ -4,9 +4,9 @@ export class TimerOptions1674905786619 implements MigrationInterface {
     name = 'TimerOptions1674905786619'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`ALTER TABLE "templates" ADD "options_allow_timer" boolean NOT NULL DEFAULT false`);
+        await queryRunner.query(`ALTER TABLE "templates" ADD "options_allow_timer" boolean NOT NULL DEFAULT true`);
         await queryRunner.query(`ALTER TABLE "templates" ADD "options_timer_duration" numeric NOT NULL DEFAULT '900'`);
-        await queryRunner.query(`ALTER TABLE "sessions" ADD "options_allow_timer" boolean NOT NULL DEFAULT false`);
+        await queryRunner.query(`ALTER TABLE "sessions" ADD "options_allow_timer" boolean NOT NULL DEFAULT true`);
         await queryRunner.query(`ALTER TABLE "sessions" ADD "options_timer_duration" numeric NOT NULL DEFAULT '900'`);
     }
 
