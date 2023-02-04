@@ -39,7 +39,6 @@
     "date-fns": "2.29.3",
     "emoji-mart": "3.0.1",
     "flag-icons": "6.6.6",
-    "http-proxy-middleware": "2.0.6",
     "i18next": "^21.9.2",
     "i18next-browser-languagedetector": "^6.1.5",
     "i18next-resources-to-backend": "^1.0.0",

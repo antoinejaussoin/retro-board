@@ -4,4 +4,4 @@
 - Remove webpack comments
 - Check that REACT_APP_ keys are working
 - Docker build / test
-- Remove imports in tests
+- DONE Remove imports in tests
