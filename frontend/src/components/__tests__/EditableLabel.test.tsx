@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { vi } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import EditableLabel from '../EditableLabel';
 

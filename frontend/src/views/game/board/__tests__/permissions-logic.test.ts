@@ -12,7 +12,6 @@ import {
   VoteExtract,
 } from 'common';
 import { v4 } from 'uuid';
-import { describe, it, expect } from 'vitest';
 
 const userBase: User = {
   photo: null,

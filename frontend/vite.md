@@ -1,4 +1,4 @@
-- Fix MD files
+- DONE Fix MD files
 - Giphy
 - isEmail
 - Remove webpack comments

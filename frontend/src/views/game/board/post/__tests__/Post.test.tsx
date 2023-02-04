@@ -1,4 +1,3 @@
-import { describe, it, expect, vi } from 'vitest';
 import noop from 'lodash/noop';
 import groupBy from 'lodash/groupBy';
 import values from 'lodash/values';
@@ -10,6 +9,7 @@ import { ThemeProvider } from '@mui/material';
 import theme from '../../../../../Theme';
 import { SnackbarProvider } from 'notistack';
 import { act } from '@testing-library/react';
+import { vi } from 'vitest';
 
 const u = (name: string): User => ({
   name,

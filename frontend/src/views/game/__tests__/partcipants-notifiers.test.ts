@@ -4,7 +4,6 @@ import {
   getRemovedParticipants,
   joinNames,
 } from '../participants-notifiers';
-import { describe, it, expect } from 'vitest';
 
 function p(id: string, online = true): Participant {
   return {
