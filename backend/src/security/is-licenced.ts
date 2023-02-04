@@ -1,8 +1,9 @@
 import { SelfHostedCheckPayload } from '../common/index.js';
 import config from '../config.js';
 import fetch from 'node-fetch';
-import wait, { comparePassword, decrypt } from '../utils.js';
+import wait from '../utils.js';
 import { LicenceMetadata } from './../types.js';
+import { comparePassword, decrypt } from '../encryption.js';
 
 let licenced: LicenceMetadata | null = null;
 
@@ -32,6 +33,11 @@ const hardcodedLicences: HardcodedLicence[] = [
     hash: '$2a$10$y3ZX441HpKqjMfemCB285O0.JzuaO5wGBPLtS5vJTQ6T352E9O0bC',
     encryptedOwner:
       'U2FsdGVkX1+xZTCbhmVh4jBPCZfiJ5kipc0Yeo8bm/8CjEoLG8VK/Z1mwTEKxKlR',
+  },
+  {
+    // BAM
+    hash: '$2a$10$udpIRa0hWeurSsaXtM0iveT4geuQBuGvnNS9UqczkgxOYzHaPqau.',
+    encryptedOwner: 'U2FsdGVkX1/DQ2JJ57C+LGM7XBLLg9NDxviOwRwj0pI=',
   },
 ];
 

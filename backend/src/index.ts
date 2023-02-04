@@ -16,11 +16,11 @@ import stripeRouter from './stripe/router.js';
 import slackRouter from './slack/router.js';
 import game from './game.js';
 import {
-  hashPassword,
   getIdentityFromRequest,
   getUserViewFromRequest,
   getUserQuota,
 } from './utils.js';
+import { hashPassword } from './encryption.js';
 import {
   initSentry,
   setupSentryErrorHandler,

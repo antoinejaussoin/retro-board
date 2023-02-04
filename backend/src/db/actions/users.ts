@@ -13,7 +13,7 @@ import { transaction } from './transaction.js';
 import { AccountType, FullUser } from '../../common/index.js';
 import { isSelfHostedAndLicenced } from '../../security/is-licenced.js';
 import { v4 } from 'uuid';
-import { comparePassword, hashPassword } from '../../utils.js';
+import { hashPassword, comparePassword } from '../../encryption.js';
 import { saveAndReload } from '../repositories/BaseRepository.js';
 
 export async function getUser(userId: string): Promise<UserEntity | null> {

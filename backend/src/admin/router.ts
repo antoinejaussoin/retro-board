@@ -13,7 +13,8 @@ import {
   BackendCapabilities,
   MergeUsersPayload,
 } from '../common/index.js';
-import { getIdentityFromRequest, hashPassword } from '../utils.js';
+import { getIdentityFromRequest } from '../utils.js';
+import { hashPassword } from '../encryption.js';
 import { canSendEmails } from '../email/utils.js';
 import { mergeUsers } from '../db/actions/merge.js';
 

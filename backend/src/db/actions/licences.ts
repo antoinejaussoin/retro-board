@@ -41,7 +41,7 @@ export async function validateLicence(key: string): Promise<boolean> {
       });
       return found > 0;
     } catch (err) {
-      console.log('Error while retriving the licence: ', err);
+      console.log('Error while retrieving the licence: ', err);
       return false;
     }
   });
@@ -63,7 +63,7 @@ export async function fetchLicence(
         };
       }
     } catch (err) {
-      console.log('Error while retriving the licence: ', err);
+      console.log('Error while retrieving the licence: ', err);
       return null;
     }
     return null;

@@ -9,6 +9,7 @@
     "start": "nodemon --exec 'yarn fix & ts-node' --esm --files ./src/index.ts",
     "create-migration": "scripty",
     "create-empty-migration": "scripty",
+    "hardcode-licence": "scripty",
     "migrate": "typeorm-ts-node-esm -d src/db/index.ts migration:run",
     "revert": "typeorm-ts-node-esm -d src/db/index.ts migration:revert",
     "lint": "eslint 'src/**/*.ts'",
