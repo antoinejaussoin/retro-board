@@ -85,7 +85,7 @@ function GameFooter({
           <Button
             onClick={handleReady}
             variant="outlined"
-            endIcon={
+            startIcon={
               isUserReady ? (
                 <Create htmlColor={colors.orange[500]} />
               ) : (
