@@ -6,7 +6,7 @@ import {
   updateIdentity,
 } from '../db/actions/users.js';
 import config from '../config.js';
-import { isLicensed } from '../security/is-licenced.js';
+import { isLicenced } from '../security/is-licenced.js';
 import {
   AdminChangePasswordPayload,
   AdminStats,
@@ -34,7 +34,7 @@ export default function getRouter(io: Server) {
   }
 
   router.get('/self-hosting', async (_, res) => {
-    const licence = await isLicensed();
+    const licence = await isLicenced();
     const payload: BackendCapabilities = {
       adminEmail: config.SELF_HOSTED_ADMIN,
       selfHosted: config.SELF_HOSTED,

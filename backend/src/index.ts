@@ -58,7 +58,7 @@ import {
   updateIdentity,
   getIdentityByUsername,
 } from './db/actions/users.js';
-import { isLicensed } from './security/is-licenced.js';
+import { isLicenced } from './security/is-licenced.js';
 import rateLimit from 'express-rate-limit';
 import { fetchLicence, validateLicence } from './db/actions/licences.js';
 import { hasField } from './security/payload-checker.js';
@@ -70,7 +70,7 @@ import { noop } from 'lodash-es';
 const realIpHeader = 'X-Forwarded-For';
 const sessionSecret = `${config.SESSION_SECRET!}-4.11.5`; // Increment to force re-auth
 
-isLicensed().then((hasLicence) => {
+isLicenced().then((hasLicence) => {
   if (!hasLicence) {
     console.log(
       chalk`{red ------------------------------------------------------------- }`

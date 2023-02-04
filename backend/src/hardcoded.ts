@@ -12,22 +12,22 @@ if (!process.argv[2]) {
 const company = process.argv[2].trim();
 const key = process.argv[3] ? process.argv[3].trim() : uuid();
 
-buildHardcodedLicense(key, company);
+buildHardcodedLicence(key, company);
 
-export async function buildHardcodedLicense(
-  licenseKey: string,
+export async function buildHardcodedLicence(
+  licenceKey: string,
   company: string
 ): Promise<void> {
   console.log(
-    chalk`Building hardcoded license for company: {yellow ${company}}`
+    chalk`Building hardcoded licence for company: {yellow ${company}}`
   );
-  console.log(chalk`License key to communicate to them: {yellow ${key}}`);
-  const hash = await hashPassword(licenseKey);
-  const encryptedOwner = encrypt(company, licenseKey);
+  console.log(chalk`Licence key to communicate to them: {yellow ${key}}`);
+  const hash = await hashPassword(licenceKey);
+  const encryptedOwner = encrypt(company, licenceKey);
   const obj = {
     hash,
     encryptedOwner,
   };
-  console.log('Copy the following object to the hardcodedLicenses array:');
+  console.log('Copy the following object to the hardcodedLicences array:');
   console.log(chalk`{red ${JSON.stringify(obj, null, 2)}}`);
 }

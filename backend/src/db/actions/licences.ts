@@ -3,10 +3,10 @@ import LicenceEntity from '../entities/Licence.js';
 import { v4 } from 'uuid';
 import { sendSelfHostWelcome } from '../../email/emailSender.js';
 import { LicenceRepository } from '../repositories/index.js';
-import { LicenseMetadata } from './../../types.js';
+import { LicenceMetadata } from './../../types.js';
 import { saveAndReload } from '../repositories/BaseRepository.js';
 
-export async function registerLicense(
+export async function registerLicence(
   email: string | null,
   name: string | null | undefined,
   customerId: string,
@@ -15,9 +15,9 @@ export async function registerLicense(
   return await transaction(async (manager) => {
     const repository = manager.withRepository(LicenceRepository);
     const key = v4();
-    const license = new LicenceEntity(v4(), email, key, customerId, sessionId);
+    const licence = new LicenceEntity(v4(), email, key, customerId, sessionId);
     try {
-      const savedLicence = await saveAndReload(repository, license);
+      const savedLicence = await saveAndReload(repository, licence);
       if (savedLicence) {
         if (email) {
           await sendSelfHostWelcome(email, name || '', key);
@@ -26,7 +26,7 @@ export async function registerLicense(
       }
       return false;
     } catch (err) {
-      console.log('Error while saving the license: ', err);
+      console.log('Error while saving the licence: ', err);
       return false;
     }
   });
@@ -41,7 +41,7 @@ export async function validateLicence(key: string): Promise<boolean> {
       });
       return found > 0;
     } catch (err) {
-      console.log('Error while retrieving the license: ', err);
+      console.log('Error while retrieving the licence: ', err);
       return false;
     }
   });
@@ -49,7 +49,7 @@ export async function validateLicence(key: string): Promise<boolean> {
 
 export async function fetchLicence(
   key: string
-): Promise<LicenseMetadata | null> {
+): Promise<LicenceMetadata | null> {
   return await transaction(async (manager) => {
     const repository = manager.getRepository(LicenceEntity);
     try {
@@ -58,12 +58,12 @@ export async function fetchLicence(
       });
       if (found) {
         return {
-          license: key,
+          licence: key,
           owner: found.email!,
         };
       }
     } catch (err) {
-      console.log('Error while retrieving the license: ', err);
+      console.log('Error while retrieving the licence: ', err);
       return null;
     }
     return null;

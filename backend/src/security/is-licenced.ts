@@ -2,17 +2,17 @@ import { SelfHostedCheckPayload } from '../common/index.js';
 import config from '../config.js';
 import fetch from 'node-fetch';
 import wait from '../utils.js';
-import { LicenseMetadata } from './../types.js';
+import { LicenceMetadata } from './../types.js';
 import { comparePassword, decrypt } from '../encryption.js';
 
-let licensed: LicenseMetadata | null = null;
+let licenced: LicenceMetadata | null = null;
 
-type HardcodedLicense = {
+type HardcodedLicence = {
   hash: string;
   encryptedOwner: string;
 };
 
-const hardcodedLicenses: HardcodedLicense[] = [
+const hardcodedLicences: HardcodedLicence[] = [
   {
     hash: '$2a$10$kt4DnxKZEwvoh052JFygru7iLiIrTzSJngcJlaYkWm.tlNzRJx/Di',
     encryptedOwner: 'U2FsdGVkX18/e8sfZ3bpjz3pLQkCxloH8nuniFdU+vo=',
@@ -42,28 +42,28 @@ const hardcodedLicenses: HardcodedLicense[] = [
 ];
 
 export function isSelfHostedAndLicenced() {
-  return !!licensed && config.SELF_HOSTED;
+  return !!licenced && config.SELF_HOSTED;
 }
 
-export async function isLicensed(): Promise<LicenseMetadata | null> {
-  if (licensed !== null) {
-    return licensed;
+export async function isLicenced(): Promise<LicenceMetadata | null> {
+  if (licenced !== null) {
+    return licenced;
   }
   await wait(3000);
-  const result = await isLicensedBase();
-  licensed = result;
+  const result = await isLicencedBase();
+  licenced = result;
   return result;
 }
 
-async function checkHardcodedLicense(
+async function checkHardcodedLicence(
   key: string
-): Promise<LicenseMetadata | null> {
-  for (const hardcodedLicence of hardcodedLicenses) {
+): Promise<LicenceMetadata | null> {
+  for (const hardcodedLicence of hardcodedLicences) {
     const match = await comparePassword(key, hardcodedLicence.hash);
     if (match) {
       const decrypted = decrypt(hardcodedLicence.encryptedOwner, key);
       return {
-        license: key,
+        licence: key,
         owner: decrypted,
       };
     }
@@ -71,13 +71,13 @@ async function checkHardcodedLicense(
   return null;
 }
 
-async function isLicensedBase(): Promise<LicenseMetadata | null> {
-  const licenseKey = config.LICENCE_KEY;
+async function isLicencedBase(): Promise<LicenceMetadata | null> {
+  const licenceKey = config.LICENCE_KEY;
 
   // Checking hardcoded licence as a last resort
-  const hardcodedLicense = await checkHardcodedLicense(licenseKey);
+  const hardcodedLicence = await checkHardcodedLicence(licenceKey);
 
-  const payload: SelfHostedCheckPayload = { key: licenseKey };
+  const payload: SelfHostedCheckPayload = { key: licenceKey };
   try {
     const response = await fetch(
       'https://www.retrospected.com/api/self-hosted-licence',
@@ -90,35 +90,35 @@ async function isLicensedBase(): Promise<LicenseMetadata | null> {
       }
     );
     if (response.ok) {
-      const result = (await response.json()) as LicenseMetadata;
+      const result = (await response.json()) as LicenceMetadata;
       return result;
     } else {
-      if (hardcodedLicense) {
-        return hardcodedLicense;
+      if (hardcodedLicence) {
+        return hardcodedLicence;
       }
       if (response.status === 403) {
         console.error(
-          'The license key is not recognised. If you have a valid license, please contact support@retrospected.com for support.'
+          'The licence key is not recognised. If you have a valid licence, please contact support@retrospected.com for support.'
         );
       } else {
         console.error(
-          'Could not contact the license server. If you have a valid license, please contact support@retrospected.com for support.'
+          'Could not contact the licence server. If you have a valid licence, please contact support@retrospected.com for support.'
         );
         console.log(response.status, response.statusText);
       }
     }
   } catch (err) {
-    if (hardcodedLicense) {
-      return hardcodedLicense;
+    if (hardcodedLicence) {
+      return hardcodedLicence;
     }
     console.error(
-      'Could not contact the license server. If you have a valid license, please contact support@retrospected.com for support.'
+      'Could not contact the licence server. If you have a valid licence, please contact support@retrospected.com for support.'
     );
     console.log(err);
   }
 
-  if (hardcodedLicense) {
-    return hardcodedLicense;
+  if (hardcodedLicence) {
+    return hardcodedLicence;
   }
 
   return null;
