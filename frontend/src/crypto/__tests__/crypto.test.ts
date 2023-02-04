@@ -1,4 +1,5 @@
 import { encrypt, decrypt } from '../crypto';
+import { describe, it, expect } from 'vitest';
 
 describe('Cryptography', () => {
   it('Can encrypt and decrypt successfuly with the correct key', () => {

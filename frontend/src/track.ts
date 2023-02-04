@@ -70,5 +70,5 @@ export const trackPageView = (path: string) => {
 };
 
 const isGAEnabled = () => {
-  return process.env.NODE_ENV === 'production' && config.hasGA;
+  return import.meta.env.NODE_ENV === 'production' && config.hasGA;
 };

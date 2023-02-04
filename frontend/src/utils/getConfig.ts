@@ -37,8 +37,8 @@ function getKey(
   noValue: string,
   defaultValue?: string
 ): string {
-  if (process.env[`REACT_APP_${key}`]) {
-    return process.env[`REACT_APP_${key}`] || '';
+  if (import.meta.env[`REACT_APP_${key}`]) {
+    return import.meta.env[`REACT_APP_${key}`] || '';
   }
   if (!!window.__env__[key] && window.__env__[key] !== noValue) {
     return window.__env__[key];

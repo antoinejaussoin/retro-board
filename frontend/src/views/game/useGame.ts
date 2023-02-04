@@ -72,7 +72,7 @@ export type Status =
    */
   | 'need-to-disconnect';
 
-const debug = process.env.NODE_ENV === 'development';
+const debug = import.meta.env.NODE_ENV === 'development';
 
 function sendFactory(
   socket: Socket,

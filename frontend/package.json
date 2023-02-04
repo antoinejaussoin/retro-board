@@ -14,12 +14,11 @@
     "@sentry/browser": "7.22.0",
     "@stripe/react-stripe-js": "1.15.0",
     "@stripe/stripe-js": "1.44.1",
-    "@testing-library/jest-dom": "5.16.5",
+    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "13.4.0",
     "@testing-library/react-hooks": "8.0.1",
     "@types/crypto-js": "4.1.1",
     "@types/emoji-mart": "3.0.9",
-    "@types/jest": "29.2.3",
     "@types/lodash": "4.14.190",
     "@types/md5": "2.3.2",
     "@types/node": "18.11.9",
@@ -32,6 +31,7 @@
     "@types/react-router-dom": "5.3.3",
     "@types/shortid": "0.0.29",
     "@types/uuid": "8.3.4",
+    "@vitejs/plugin-react": "^3.1.0",
     "bowser": "2.11.0",
     "buffer": "6.0.3",
     "core-js": "3.26.1",
@@ -44,6 +44,7 @@
     "i18next-browser-languagedetector": "^6.1.5",
     "i18next-resources-to-backend": "^1.0.0",
     "isemail": "3.2.0",
+    "jsdom": "^21.1.0",
     "lexorank": "1.0.5",
     "lodash": "4.17.21",
     "material-ui-confirm": "3.0.7",
@@ -64,7 +65,6 @@
     "react-markdown": "8.0.3",
     "react-password-strength-bar": "0.4.1",
     "react-router-dom": "6.4.3",
-    "react-scripts": "5.0.1",
     "react-scroll-to-bottom": "4.2.0",
     "react-social-login-buttons": "3.6.1",
     "recoil": "0.7.6",
@@ -75,13 +75,18 @@
     "typescript": "4.9.3",
     "util": "0.12.5",
     "uuid": "9.0.0",
+    "vite": "^4.1.1",
+    "vite-plugin-markdown": "^2.1.0",
+    "vite-plugin-svgr": "^2.4.0",
+    "vite-tsconfig-paths": "^4.0.5",
+    "vitest": "^0.28.4",
     "whatwg-fetch": "3.6.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "NODE_ENV=production && react-scripts build",
+    "start": "vite",
+    "build": "NODE_ENV=production tsc && vite build",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
-    "test": "react-scripts test",
+    "test": "vitest",
     "ci-test": "CI=true yarn test",
     "analyze": "source-map-explorer build/static/js/*"
   },
@@ -97,11 +102,5 @@
   "resolutions": {
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9"
-  },
-  "jest": {
-    "transformIgnorePatterns": [
-      "(?!(/node_modules/(react-markdown|vfile|vfile-message|unist-.*|unified|bail|is-plain-obj|trough|remark-.*|mdast-util-.*|micromark.*|decode-named-character-reference|character-entities|property-information|hast-util-whitespace|space-separated-tokens|comma-separated-tokens|pretty-bytes)/))(/node_modules/.+.(js|jsx|mjs|cjs|ts|tsx)$)",
-      "^.+.module.(css|sass|scss)$"
-    ]
   }
 }

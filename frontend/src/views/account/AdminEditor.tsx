@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { validate } from 'isemail';
+import { validate } from 'email/validate';
 import styled from '@emotion/styled';
 import { useTranslation } from 'react-i18next';
 import { useSnackbar } from 'notistack';

@@ -7,9 +7,17 @@ import { initialiseAnalytics, initialiseSentry } from './track';
 import * as serviceWorker from './serviceWorker';
 import 'emoji-mart/css/emoji-mart.css';
 
+window.process = {
+  env: import.meta.env,
+} as any;
+
+window.module = {
+  hot: false,
+} as any;
+
 (window as any).global = window;
 // @ts-ignore
-window.Buffer = window.Buffer || require('buffer').Buffer;
+// window.Buffer = window.Buffer || require('buffer').Buffer;
 
 initialiseSentry();
 initialiseAnalytics();

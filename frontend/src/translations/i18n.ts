@@ -20,7 +20,7 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: config.defaultLanguage,
-    debug: process.env.NODE_ENV === 'development',
+    debug: import.meta.env.NODE_ENV === 'development',
     defaultNS: 'ns1',
     ns: 'ns1',
 

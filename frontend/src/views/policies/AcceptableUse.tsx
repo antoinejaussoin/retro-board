@@ -1,8 +1,8 @@
-import policy from './acceptable-use.md';
+// import policy from './acceptable-use.md';
 import GenericPolicy from './Policy';
 
 const AcceptableUsePolicyPage = () => {
-  return <GenericPolicy url={policy} />;
+  return <GenericPolicy url={''} />;
 };
 
 export default AcceptableUsePolicyPage;

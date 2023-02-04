@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import useStateFetch from '../../hooks/useStateFetch';
 import { updateMembers } from './api';
-import { validate } from 'isemail';
+import { validate } from 'email/validate';
 import styled from '@emotion/styled';
 import { Alert } from '@mui/material';
 import { useTranslation } from 'react-i18next';

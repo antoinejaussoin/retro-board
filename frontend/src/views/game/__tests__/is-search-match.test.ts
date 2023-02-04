@@ -1,4 +1,5 @@
 import isSearchMatch from '../is-search-match';
+import { describe, it, expect } from 'vitest';
 
 describe('Search Match logic', () => {
   it('Should be a match if there is no search (as everything matches)', () => {
