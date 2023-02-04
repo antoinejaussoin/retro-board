@@ -2,13 +2,15 @@ import { encrypt, hashPassword } from './encryption.js';
 import { v4 as uuid } from 'uuid';
 import chalk from 'chalk-template';
 
-const company = process.argv[2].trim();
-const key = process.argv[3] ? process.argv[3].trim() : uuid();
-
-if (!company) {
-  console.log('No company name provided');
+if (!process.argv[2]) {
+  console.log(
+    chalk`No company name provided. {red Please provide the company name as the first argument}.`
+  );
   process.exit(1);
 }
+
+const company = process.argv[2].trim();
+const key = process.argv[3] ? process.argv[3].trim() : uuid();
 
 buildHardcodedLicense(key, company);
 
