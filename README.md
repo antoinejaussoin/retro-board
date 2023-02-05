@@ -85,6 +85,10 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 4.19.1
+
+- Hotfix: Issue with password account creation
+
 ### Version 4.19.0
 
 - Feature: Adding the ability to set a timer for a session. This is optional and can be enabled in the settings. (👏 Thanks to [@Xyaren](https://github.com/Xyaren) for the idea)

@@ -1,9 +1,10 @@
 import fs from 'fs/promises';
 import path from 'path';
 import h from 'handlebars';
+import { getDirname } from './../path-utils.js';
 
 async function getEmailBody<T>(data: T, fileName: string): Promise<string> {
-  const file = path.resolve(__dirname, fileName);
+  const file = path.resolve(getDirname(import.meta.url), fileName);
   const content = await fs.readFile(file, 'utf8');
   const template = h.compile(content);
   const result = template(data);
