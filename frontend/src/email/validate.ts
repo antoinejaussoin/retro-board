@@ -1,3 +1,5 @@
+import { validate as validateBase } from 'isemail';
+
 export function validate(email: string): boolean {
-  return true; // TODO
+  return validateBase(email);
 }

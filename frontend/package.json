@@ -6,6 +6,8 @@
   "dependencies": {
     "@emotion/react": "11.10.5",
     "@emotion/styled": "11.10.5",
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@mui/base": "5.0.0-alpha.108",
     "@mui/icons-material": "5.10.16",
     "@mui/material": "5.10.16",
