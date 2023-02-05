@@ -238,7 +238,7 @@ const PostItem = ({
                   <EditableLabel
                     value={decrypt(post.action || '')}
                     onChange={handleEditAction}
-                    label={t('Actions.title')}
+                    label={t('Actions.title')!}
                     focused={actionsToggled && !post.action}
                     multiline
                   />
@@ -252,7 +252,7 @@ const PostItem = ({
                   {giphyImageUrl && (
                     <ActionButton
                       ariaLabel={t('Post.toggleGiphyButton')}
-                      tooltip={t('Post.toggleGiphyButton')}
+                      tooltip={t('Post.toggleGiphyButton')!}
                       icon={
                         <InsertPhotoTwoTone
                           style={{
@@ -268,7 +268,7 @@ const PostItem = ({
                   {canCreateAction && (
                     <ActionButton
                       ariaLabel={t('Post.setActionButton')}
-                      tooltip={t('Post.setActionButton')}
+                      tooltip={t('Post.setActionButton')!}
                       icon={
                         post.action ? (
                           <Assignment className={classes.actionIcon} />
@@ -282,7 +282,7 @@ const PostItem = ({
                   {canEdit && config.hasGiphy && canUseGiphy && (
                     <ActionButton
                       ariaLabel={t('Post.setGiphyButton')}
-                      tooltip={t('Post.setGiphyButton')}
+                      tooltip={t('Post.setGiphyButton')!}
                       icon={
                         <EmojiEmotionsOutlined className={classes.ghipyIcon} />
                       }
@@ -293,7 +293,7 @@ const PostItem = ({
                   {canDelete && (
                     <ActionButton
                       ariaLabel={t('Post.deleteButton')}
-                      tooltip={t('Post.deleteButton')}
+                      tooltip={t('Post.deleteButton')!}
                       icon={
                         <DeleteForeverOutlined
                           style={{
@@ -334,7 +334,7 @@ const PostItem = ({
               {canCancelVote ? (
                 <ActionButton
                   icon={<Clear htmlColor={Palette.negative} />}
-                  tooltip={t('Post.cancelVote')}
+                  tooltip={t('Post.cancelVote')!}
                   ariaLabel={t('Post.cancelVote')}
                   onClick={onCancelVotes}
                 />

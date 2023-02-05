@@ -98,7 +98,7 @@ function AccountPage() {
           <EditableLabel value={user.name} onChange={handleEditName} />
         </Name>
 
-        <Section title={t('AccountPage.details.header')}>
+        <Section title={t('AccountPage.details.header')!}>
           <Data>
             <Title>{t('AccountPage.details.username')}</Title>
             <Value>{user.username}</Value>
@@ -127,7 +127,7 @@ function AccountPage() {
         </Section>
 
         {capabilities.slackClientId ? (
-          <Section title={t('AccountPage.slack.header')}>
+          <Section title={t('AccountPage.slack.header')!}>
             <Alert severity="info" style={{ marginBottom: 20 }}>
               {t('AccountPage.slack.help')}
             </Alert>
@@ -135,7 +135,7 @@ function AccountPage() {
               href={`https://slack.com/oauth/v2/authorize?client_id=${capabilities.slackClientId}&scope=commands&user_scope=`}
             >
               <img
-                alt={t('AccountPage.slack.addToSlack')}
+                alt={t('AccountPage.slack.addToSlack')!}
                 height="40"
                 width="139"
                 src="https://platform.slack-edge.com/img/add_to_slack.png"
@@ -146,7 +146,7 @@ function AccountPage() {
         ) : null}
 
         {user.plan ? (
-          <Section title={t('AccountPage.plan.header')}>
+          <Section title={t('AccountPage.plan.header')!}>
             <Data>
               <Title>{t('AccountPage.plan.plan')}</Title>
               <Value>{user.plan}</Value>
@@ -198,7 +198,7 @@ function AccountPage() {
         user &&
         user.plan &&
         user.plan === 'team' ? (
-          <Section title={t('AccountPage.subscription.membersEditor.title')}>
+          <Section title={t('AccountPage.subscription.membersEditor.title')!}>
             <MembersEditor />
           </Section>
         ) : null}
@@ -208,7 +208,7 @@ function AccountPage() {
         user &&
         user.plan &&
         user.plan === 'team' ? (
-          <Section title={t('AccountPage.subscription.adminsEditor.title')}>
+          <Section title={t('AccountPage.subscription.adminsEditor.title')!}>
             <Alert severity="info">
               {t('AccountPage.subscription.adminsEditor.description')}
             </Alert>
@@ -217,7 +217,7 @@ function AccountPage() {
         ) : null}
 
         {ownsThePlan && !isTrial ? (
-          <Section title={t('AccountPage.subscription.header')}>
+          <Section title={t('AccountPage.subscription.header')!}>
             {url ? (
               <Button
                 variant="contained"
@@ -232,7 +232,7 @@ function AccountPage() {
         ) : null}
 
         {isTrial ? (
-          <Section title={t('AccountPage.trial.header')}>
+          <Section title={t('AccountPage.trial.header')!}>
             <Alert severity="info">
               {t('AccountPage.trial.yourTrialWillExpireIn', {
                 date: formatDistanceToNow(new Date(user.trial!)),
@@ -249,7 +249,7 @@ function AccountPage() {
           </Section>
         ) : null}
 
-        <Section title={t('AccountPage.deleteAccount.title')} danger>
+        <Section title={t('AccountPage.deleteAccount.title')!} danger>
           <Alert severity="error">
             {t('AccountPage.deleteAccount.warning')}
           </Alert>

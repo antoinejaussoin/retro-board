@@ -1,5 +1,5 @@
 import { ColumnDefinitionType } from 'common';
-import { Namespace, TFunction } from 'react-i18next';
+import { Namespace, TFunction } from 'i18next';
 
 export interface ColumnSettings {
   color: string;

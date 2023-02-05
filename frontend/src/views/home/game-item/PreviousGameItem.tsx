@@ -122,9 +122,11 @@ const PreviousGameItem = ({
           </Stats>
           <AvatarGroup
             max={10}
-            title={t('PreviousGame.participants', {
-              count: session.participants.length,
-            })}
+            title={
+              t('PreviousGame.participants', {
+                count: session.participants.length,
+              })!
+            }
           >
             {session.participants.map((user) => {
               return <CustomAvatar user={user} key={user.id} />;

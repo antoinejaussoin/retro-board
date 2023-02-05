@@ -66,8 +66,8 @@ function ResetPasswordPage() {
           <Input
             value={password}
             onChangeValue={setPassword}
-            title={t('AuthCommon.passwordField')}
-            placeholder={t('AuthCommon.passwordField')}
+            title={t('AuthCommon.passwordField')!}
+            placeholder={t('AuthCommon.passwordField')!}
             type="password"
             fullWidth
             style={{ marginTop: 20 }}
@@ -79,7 +79,11 @@ function ResetPasswordPage() {
               onChangeScore={setScore}
               password={password}
               shortScoreWord={t('AuthCommon.passwordScoreWords')![0]}
-              scoreWords={t('AuthCommon.passwordScoreWords')}
+              scoreWords={
+                t('AuthCommon.passwordScoreWords', {
+                  returnObjects: true,
+                }) as string[]
+              }
             />
           </Suspense>
           <Button

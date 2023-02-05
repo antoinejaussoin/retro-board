@@ -86,7 +86,7 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
   }, [onClose, onUser, language]);
 
   return (
-    <Wrapper header={t('SocialMediaLogin.header')}>
+    <Wrapper header={t('SocialMediaLogin.header')!}>
       <Alert severity="info">{t('SocialMediaLogin.info')}</Alert>
       <AccountsButtons>
         {details.microsoft && (

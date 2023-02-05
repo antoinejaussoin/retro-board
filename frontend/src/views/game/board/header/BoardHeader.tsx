@@ -144,7 +144,7 @@ function BoardHeader({
             className={classes.sessionName}
           >
             <EditableLabel
-              placeholder={t('SessionName.defaultSessionName')}
+              placeholder={t('SessionName.defaultSessionName')!}
               value={decrypt(session.name)}
               centered
               onChange={handleRenameSession}
@@ -162,7 +162,7 @@ function BoardHeader({
       {shouldDisplayEncryptionWarning ? (
         <TransitionAlert
           severity="warning"
-          title={t('Encryption.newEncryptedSessionWarningTitle')}
+          title={t('Encryption.newEncryptedSessionWarningTitle')!}
         >
           {t('Encryption.newEncryptedSessionWarningContent', {
             key: key || '(unknown)',

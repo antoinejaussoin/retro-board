@@ -50,7 +50,7 @@ const Login = ({
 
   return (
     <Wrapper
-      header={t('AccountLogin.header')}
+      header={t('AccountLogin.header')!}
       actions={
         <Button
           onClick={handleAccountogin}
@@ -72,8 +72,8 @@ const Login = ({
       <Input
         value={loginEmail}
         onChangeValue={setLoginEmail}
-        title={t('AuthCommon.emailField')}
-        placeholder={t('AuthCommon.emailField')}
+        title={t('AuthCommon.emailField')!}
+        placeholder={t('AuthCommon.emailField')!}
         type="email"
         variant="standard"
         fullWidth
@@ -83,8 +83,8 @@ const Login = ({
       <Input
         value={loginPassword}
         onChangeValue={setLoginPassword}
-        title={t('AuthCommon.passwordField')}
-        placeholder={t('AuthCommon.passwordField')}
+        title={t('AuthCommon.passwordField')!}
+        placeholder={t('AuthCommon.passwordField')!}
         type="password"
         variant="standard"
         fullWidth

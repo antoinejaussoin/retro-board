@@ -112,8 +112,8 @@ function SubscriberPage() {
     (index: number) => (
       <Step
         index={index}
-        title={t('SubscribePage.plan.title')}
-        description={t('SubscribePage.plan.description')}
+        title={t('SubscribePage.plan.title')!}
+        description={t('SubscribePage.plan.description')!}
       >
         <ProductPicker
           value={plan}
@@ -141,8 +141,8 @@ function SubscriberPage() {
       ? (index: number) => (
           <Step
             index={index}
-            title={t('SubscribePage.domain.title')}
-            description={t('SubscribePage.domain.description')}
+            title={t('SubscribePage.domain.title')!}
+            description={t('SubscribePage.domain.description')!}
           >
             <Input
               value={domain}
@@ -159,8 +159,8 @@ function SubscriberPage() {
     (index: number) => (
       <Step
         index={index}
-        title={t('SubscribePage.currency.title')}
-        description={t('SubscribePage.currency.description')}
+        title={t('SubscribePage.currency.title')!}
+        description={t('SubscribePage.currency.description')!}
       >
         {user && !!user.currency ? (
           <Alert severity="warning" style={{ marginBottom: 10 }}>
@@ -182,7 +182,7 @@ function SubscriberPage() {
         title={`${t('SubscribePage.subscribe.title')} ${
           product ? ` - ${product.name}` : ''
         }`}
-        description={t('SubscribePage.subscribe.description')}
+        description={t('SubscribePage.subscribe.description')!}
       >
         {needLogin ? (
           <Alert severity="info" style={{ marginBottom: 10 }}>

@@ -35,7 +35,7 @@ export default function Chat({ messages, onMessage }: ChatProps) {
         </Messages>
       </ScrollContainer>
       <Input
-        placeholder={t('Chat.writeAMessage')}
+        placeholder={t('Chat.writeAMessage')!}
         onNewMessage={handleInput}
         cy="chat-input"
       />

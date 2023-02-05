@@ -37,7 +37,7 @@ const LostPassword = () => {
     <Alert severity="success">{t('ResetPassword.doneMessage')}</Alert>
   ) : (
     <Wrapper
-      header={t('ResetPassword.header')}
+      header={t('ResetPassword.header')!}
       actions={
         <Button
           onClick={handleForgotPassword}
@@ -54,8 +54,8 @@ const LostPassword = () => {
       <Input
         value={email}
         onChangeValue={setEmail}
-        title={t('AuthCommon.emailField')}
-        placeholder={t('AuthCommon.emailField')}
+        title={t('AuthCommon.emailField')!}
+        placeholder={t('AuthCommon.emailField')!}
         type="email"
         variant="standard"
         fullWidth

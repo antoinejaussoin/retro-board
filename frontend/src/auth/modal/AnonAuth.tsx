@@ -47,7 +47,7 @@ const AnonAuth = ({ onClose, onUser }: AnonAuthProps) => {
 
   return (
     <Wrapper
-      header={t('AnonymousLogin.anonymousAuthHeader')}
+      header={t('AnonymousLogin.anonymousAuthHeader')!}
       actions={
         <Button
           onClick={handleAnonLogin}
@@ -71,8 +71,8 @@ const AnonAuth = ({ onClose, onUser }: AnonAuthProps) => {
       <Input
         value={username}
         onChange={handleUsernameChange}
-        title={t('AnonymousLogin.buttonLabel')}
-        placeholder={t('AnonymousLogin.namePlaceholder')}
+        title={t('AnonymousLogin.buttonLabel')!}
+        placeholder={t('AnonymousLogin.namePlaceholder')!}
         fullWidth
         style={{ marginTop: 20 }}
         inputProps={{ 'data-cy': 'anon-input' }}
