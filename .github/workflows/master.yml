@@ -5,75 +5,150 @@ on:
     branches: [master]
 
 jobs:
-  build:
+  frontend:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
-
       - name: Read VERSION
         id: package
         uses: martinbeentjes/npm-get-version-action@master
-
       - name: Echo VERSION
         run: echo ${{ steps.package.outputs.current-version }}
-
       - name: Setup QEMU
-        uses: docker/setup-qemu-action@master
+        uses: docker/setup-qemu-action@v2
         with:
           platforms: all
-
       - name: Setup BuildX
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v2
         id: buildx
         with:
           install: true
-
       - name: Login to DockerHub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_NEW_USERNAME }}
           password: ${{ secrets.DOCKER_NEW_PASSWORD }}
-
-      - name: Build and push Documentation
-        uses: docker/build-push-action@v2
-        with:
-          builder: ${{ steps.buildx.outputs.name }}
-          file: docs/Dockerfile
-          context: docs
-          tags: retrospected/docs:latest,retrospected/docs:${{ steps.package.outputs.current-version }}
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
-          push: true
-
-      - name: Build and push Backend
-        uses: docker/build-push-action@v2
-        with:
-          builder: ${{ steps.buildx.outputs.name }}
-          file: backend/Dockerfile
-          context: backend
-          tags: retrospected/backend:latest,retrospected/backend:${{ steps.package.outputs.current-version }}
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
-          push: true
-
       - name: Build and push Frontend
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v4
         with:
           builder: ${{ steps.buildx.outputs.name }}
           file: frontend/Dockerfile
           context: frontend
-          tags: retrospected/frontend:latest,retrospected/frontend:${{ steps.package.outputs.current-version }}
+          tags: retrospected/frontend:${{ steps.package.outputs.current-version }}
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
 
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Read VERSION
+        id: package
+        uses: martinbeentjes/npm-get-version-action@master
+      - name: Echo VERSION
+        run: echo ${{ steps.package.outputs.current-version }}
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: all
+      - name: Setup BuildX
+        uses: docker/setup-buildx-action@v2
+        id: buildx
+        with:
+          install: true
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_NEW_USERNAME }}
+          password: ${{ secrets.DOCKER_NEW_PASSWORD }}
+      - name: Build and push Backend
+        uses: docker/build-push-action@v4
+        with:
+          builder: ${{ steps.buildx.outputs.name }}
+          file: backend/Dockerfile
+          context: backend
+          tags: retrospected/backend:${{ steps.package.outputs.current-version }}
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          push: true
+
+  documentation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Read VERSION
+        id: package
+        uses: martinbeentjes/npm-get-version-action@master
+      - name: Echo VERSION
+        run: echo ${{ steps.package.outputs.current-version }}
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: all
+      - name: Setup BuildX
+        uses: docker/setup-buildx-action@v2
+        id: buildx
+        with:
+          install: true
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_NEW_USERNAME }}
+          password: ${{ secrets.DOCKER_NEW_PASSWORD }}
+      - name: Build and push Documentation
+        uses: docker/build-push-action@v4
+        with:
+          builder: ${{ steps.buildx.outputs.name }}
+          file: docs/Dockerfile
+          context: docs
+          tags: retrospected/docs:${{ steps.package.outputs.current-version }}
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          push: true
+
+  maintenance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Read VERSION
+        id: package
+        uses: martinbeentjes/npm-get-version-action@master
+      - name: Echo VERSION
+        run: echo ${{ steps.package.outputs.current-version }}
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: all
+      - name: Setup BuildX
+        uses: docker/setup-buildx-action@v2
+        id: buildx
+        with:
+          install: true
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_NEW_USERNAME }}
+          password: ${{ secrets.DOCKER_NEW_PASSWORD }}
       - name: Build and push Maintenance
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v4
         with:
           builder: ${{ steps.buildx.outputs.name }}
           file: maintenance/Dockerfile
           context: maintenance
-          tags: retrospected/maintenance:latest,retrospected/maintenance:${{ steps.package.outputs.current-version }}
+          tags: retrospected/maintenance:${{ steps.package.outputs.current-version }}
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
 
+  integration:
+    runs-on: ubuntu-latest
+    needs: [frontend, backend]
+
+    steps:
+      - uses: actions/checkout@v3
       - name: Run Integration Tests
         run: docker-compose -f ./integration/docker-compose.ci.master.yml up --exit-code-from cypress
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: Test videos
+          path: integration/cypress/videos
+          retention-days: 14
+

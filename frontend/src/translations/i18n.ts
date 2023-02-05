@@ -3,6 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import resourcesToBackend from 'i18next-resources-to-backend';
 import config from 'utils/getConfig';
+import { isProduction } from 'is-production';
 
 i18n
   .use(
@@ -20,7 +21,7 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: config.defaultLanguage,
-    debug: process.env.NODE_ENV === 'development',
+    debug: !isProduction(),
     defaultNS: 'ns1',
     ns: 'ns1',
 

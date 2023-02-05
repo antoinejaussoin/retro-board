@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Mark } from '@mui/base';
 import { Slider } from '@mui/material';
+import { isProduction } from 'is-production';
 import { useCallback } from 'react';
 
 type DurationSelectionProps = {
@@ -28,7 +29,7 @@ export default function DurationSelection({
   const handleChange = useCallback(
     (_event: Event, value: number | number[]) => {
       // Allows testing on a small duration in development mode
-      if (process.env.NODE_ENV === 'development' && value === 5) {
+      if (!isProduction() && value === 5) {
         onChange(10);
         return;
       }

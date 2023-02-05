@@ -13,10 +13,10 @@ import Wrapper from './../Wrapper';
 import Input from '../../../components/Input';
 import { Person, Email, VpnKey } from '@mui/icons-material';
 import { register } from '../../../api';
-import { validate } from 'isemail';
 import UserContext from '../../Context';
 import useBackendCapabilities from 'global/useBackendCapabilities';
 import { useTranslation } from 'react-i18next';
+import { validate } from 'email/validate';
 
 type RegisterProps = {
   onClose: () => void;

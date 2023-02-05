@@ -7,9 +7,12 @@ import { initialiseAnalytics, initialiseSentry } from './track';
 import * as serviceWorker from './serviceWorker';
 import 'emoji-mart/css/emoji-mart.css';
 
+// Hack because a dependency requires module.hot to be defined
+window.module = {
+  hot: false,
+} as any;
+
 (window as any).global = window;
-// @ts-ignore
-window.Buffer = window.Buffer || require('buffer').Buffer;
 
 initialiseSentry();
 initialiseAnalytics();

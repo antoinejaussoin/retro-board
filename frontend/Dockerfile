@@ -21,6 +21,9 @@ RUN yarn --network-timeout 1000000 install
 COPY --chown=node:node ./src ./src
 COPY --chown=node:node ./public ./public
 COPY --chown=node:node ./tsconfig.json ./tsconfig.json
+COPY --chown=node:node ./vite.config.ts ./vite.config.ts
+COPY --chown=node:node ./vitest.config.ts ./vitest.config.ts
+COPY --chown=node:node ./index.html ./index.html
 COPY --chown=node:node ./.env ./.env
 
 RUN yarn build
@@ -30,7 +33,7 @@ FROM nginx:latest
 RUN apt update
 RUN apt -y remove libfreetype6
 
-COPY --from=Node /home/node/app/build /usr/share/nginx/html
+COPY --from=Node /home/node/app/dist /usr/share/nginx/html
 COPY ./docker/nginx.conf.template /etc/nginx/conf.d/default.conf.template
 COPY ./docker/frontend-entrypoint.sh /
 

@@ -1,8 +1,8 @@
-import policy from './privacy.md';
+import privacy from './privacy.md';
 import GenericPolicy from './Policy';
 
 const PrivacyPolicyPage = () => {
-  return <GenericPolicy url={policy} />;
+  return <GenericPolicy url={privacy} />;
 };
 
 export default PrivacyPolicyPage;

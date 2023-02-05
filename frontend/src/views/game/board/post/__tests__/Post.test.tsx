@@ -9,6 +9,7 @@ import { ThemeProvider } from '@mui/material';
 import theme from '../../../../../Theme';
 import { SnackbarProvider } from 'notistack';
 import { act } from '@testing-library/react';
+import { vi } from 'vitest';
 
 const u = (name: string): User => ({
   name,
@@ -81,9 +82,9 @@ describe('Post', () => {
   });
 
   it('Should let the user like and dislike the post but not delete if he didnt write the post', () => {
-    const deleteHandler = jest.fn();
-    const likeHandler = jest.fn();
-    const dislikeHandler = jest.fn();
+    const deleteHandler = vi.fn();
+    const likeHandler = vi.fn();
+    const dislikeHandler = vi.fn();
     const { getByLabelText, queryByText } = renderWithRouter(
       <PostItem
         post={post}
@@ -125,7 +126,7 @@ describe('Post', () => {
       ...post,
       user: u('John Doe'),
     };
-    const editHandler = jest.fn();
+    const editHandler = vi.fn();
 
     const { getByLabelText } = renderWithRouter(
       <PostItem
@@ -160,7 +161,7 @@ describe('Post', () => {
       ...post,
       user: u('Somebody else'),
     };
-    const editHandler = jest.fn();
+    const editHandler = vi.fn();
 
     const { getByLabelText, queryByLabelText } = renderWithRouter(
       <PostItem

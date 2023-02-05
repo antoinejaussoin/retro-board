@@ -11,7 +11,7 @@ import { useLanguage } from '../../translations';
 import Input from '../../components/Input';
 import { Person, Email, VpnKey } from '@mui/icons-material';
 import { addUser } from '../../api';
-import { validate } from 'isemail';
+import { validate } from 'email/validate';
 import useBackendCapabilities from 'global/useBackendCapabilities';
 import { FullUser } from 'common';
 import { useTranslation } from 'react-i18next';

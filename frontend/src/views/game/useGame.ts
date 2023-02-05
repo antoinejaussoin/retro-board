@@ -49,6 +49,7 @@ import { useTranslation } from 'react-i18next';
 import { useSetRecoilState } from 'recoil';
 import { TimerState } from './state';
 import { addSeconds } from 'date-fns';
+import { isProduction } from 'is-production';
 
 export type Status =
   /**
@@ -72,7 +73,7 @@ export type Status =
    */
   | 'need-to-disconnect';
 
-const debug = process.env.NODE_ENV === 'development';
+const debug = !isProduction();
 
 function sendFactory(
   socket: Socket,

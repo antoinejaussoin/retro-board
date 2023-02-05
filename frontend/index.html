@@ -14,7 +14,6 @@
   <meta http-equiv="cleartype" content="on">
   <meta name="theme-color" content="#d1c4e9">
 
-
   <meta property="og:site_name" content="Retrospected" />
   <meta property="og:site" content="https://www.retrospected.com" />
   <meta property="og:title" content="Retrospected.com" />
@@ -29,34 +28,30 @@
       GIPHY_API_KEY: 'NO_GIPHY',
       STRIPE_KEY: 'NO_STRIPE',
       DEFAULT_LANGUAGE: 'NO_DEFAULT_LANGUAGE',
-      VERSION: '%REACT_APP_VERSION%',
     };
   </script>
 
-  <% if (process.env.NODE_ENV === 'development') { %>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=Map%2CSet%2CWeakMap%2CObject.setPrototypeOf"></script>
-  <% } %>
-
-  <link rel="apple-touch-icon" sizes="57x57" href="%PUBLIC_URL%/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="%PUBLIC_URL%/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="%PUBLIC_URL%/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="%PUBLIC_URL%/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="%PUBLIC_URL%/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="%PUBLIC_URL%/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="%PUBLIC_URL%/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="%PUBLIC_URL%/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192"  href="%PUBLIC_URL%/android-icon-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="%PUBLIC_URL%/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/favicon-16x16.png">
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+  
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
   <meta name="msapplication-TileColor" content="#5842DE">
-  <meta name="msapplication-TileImage" content="%PUBLIC_URL%/ms-icon-144x144.png">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
 
   <meta name="theme-color" content="#ffffff">
-  <meta name="version" content="%REACT_APP_VERSION%" />
-  <meta name="env" content="%NODE_ENV%" />
+  <meta name="version" content="<%= APP_VERSION  %>" />
+  <meta name="env" content="<%= APP_ENV  %>" />
 
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
@@ -65,13 +60,13 @@
 
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700%7COpen+Sans&display=swap"
     rel="stylesheet" class="marketing" />
-  <link rel="stylesheet" href="%PUBLIC_URL%/marketing/css/bootstrap.min.css" class="marketing" />
-  <link rel="stylesheet" href="%PUBLIC_URL%/marketing/css/themify-icons.css" class="marketing" />
-  <link rel="stylesheet" href="%PUBLIC_URL%/marketing/css/owl.carousel.min.css" class="marketing" />
-  <link rel="stylesheet" href="%PUBLIC_URL%/marketing/css/owl.theme.default.min.css" class="marketing" />
-  <link rel="stylesheet" href="%PUBLIC_URL%/marketing/css/style.css" class="marketing" />
-  <link rel="stylesheet" href="%PUBLIC_URL%/marketing/css/responsive.css" class="marketing" />
-  <link rel="stylesheet" href="%PUBLIC_URL%/marketing/css/custom.css" class="marketing" />
+  <link rel="stylesheet" href="/marketing/css/bootstrap.min.css" class="marketing" />
+  <link rel="stylesheet" href="/marketing/css/themify-icons.css" class="marketing" />
+  <link rel="stylesheet" href="/marketing/css/owl.carousel.min.css" class="marketing" />
+  <link rel="stylesheet" href="/marketing/css/owl.theme.default.min.css" class="marketing" />
+  <link rel="stylesheet" href="/marketing/css/style.css" class="marketing" />
+  <link rel="stylesheet" href="/marketing/css/responsive.css" class="marketing" />
+  <link rel="stylesheet" href="/marketing/css/custom.css" class="marketing" />
 
   <link rel="stylesheet" type="text/css" href="//wpcc.io/lib/1.0.2/cookieconsent.min.css" />
   <script src="//wpcc.io/lib/1.0.2/cookieconsent.min.js"></script>
@@ -104,7 +99,7 @@
 </head>
 
 <body ontouchstart="">
-  <!-- Version: %REACT_APP_VERSION% - %NODE_ENV% -->
+  <!-- Version: <%= APP_VERSION  %> - <%= APP_ENV  %> -->
 
   <div id="content">
     <div style="
@@ -151,9 +146,9 @@
           <div class="col-md-5 col-lg-5">
             <div class="">
               <picture class="img-fluid">
-                <source srcset="%PUBLIC_URL%/marketing/screens/mockup-1-03-s.webp" type="image/webp" />
-                <source srcset="%PUBLIC_URL%/marketing/screens/mockup-1-03-s.png" type="image/png" /> 
-                <img class="img-fluid" src="%PUBLIC_URL%/marketing/screens/mockup-1-03-s.png" alt="Retrospected screenshot" />
+                <source srcset="/marketing/screens/mockup-1-03-s.webp" type="image/webp" />
+                <source srcset="/marketing/screens/mockup-1-03-s.png" type="image/png" /> 
+                <img class="img-fluid" src="/marketing/screens/mockup-1-03-s.png" alt="Retrospected screenshot" />
               </picture>
             </div>
           </div>
@@ -228,7 +223,7 @@
               <div class="single-feature mb-4">
                 <div class="icon-box-wrap d-flex align-items-center mb-2">
                   <div class="mr-3 icon-box">
-                    <img src="%PUBLIC_URL%/marketing/screens/browsers.png" alt="icon image" class="img-fluid" />
+                    <img src="/marketing/screens/browsers.png" alt="icon image" class="img-fluid" />
                   </div>
                   <p class="mb-0">Compatible with all modern browsers.</p>
                 </div>
@@ -236,7 +231,7 @@
               <div class="single-feature mb-4">
                 <div class="icon-box-wrap mb-2">
                   <div class="mr-3 icon-box">
-                    <img src="%PUBLIC_URL%/marketing/screens/ie-logo.png" alt="icon image" class="img-fluid" />
+                    <img src="/marketing/screens/ie-logo.png" alt="icon image" class="img-fluid" />
                   </div>
                   <p class="mb-0">
                     No, Internet Explorer 6 is not a modern browser.
@@ -247,7 +242,7 @@
               <div class="single-feature mb-4">
                 <div class="icon-box-wrap mb-2">
                   <div class="mr-3 icon-box">
-                    <img src="%PUBLIC_URL%/marketing/screens/ipad.png" alt="icon image" class="img-fluid" />
+                    <img src="/marketing/screens/ipad.png" alt="icon image" class="img-fluid" />
                   </div>
                   <p class="mb-0">
                     Entirely responsive, you can participate vith your iPhone
@@ -259,7 +254,7 @@
               <div class="single-feature mb-4">
                 <div class="icon-box-wrap mb-2">
                   <div class="mr-3 icon-box">
-                    <img src="%PUBLIC_URL%/marketing/screens/rocket.png" alt="icon image" class="img-fluid" />
+                    <img src="/marketing/screens/rocket.png" alt="icon image" class="img-fluid" />
                   </div>
                   <p class="mb-0">
                     The app feels native, because you deserve it.
@@ -272,9 +267,9 @@
           <div class="col-md-5">
             <div class="about-content-right">
               <picture class="img-fluid">
-                <source srcset="%PUBLIC_URL%/marketing/screens/mockup-2-02.webp" type="image/webp" />
-                <source srcset="%PUBLIC_URL%/marketing/screens/mockup-2-02-s.png" type="image/png" /> 
-                <img class="img-fluid" src="%PUBLIC_URL%/marketing/screens/mockup-2-02-s.png" alt="About us" />
+                <source srcset="/marketing/screens/mockup-2-02.webp" type="image/webp" />
+                <source srcset="/marketing/screens/mockup-2-02-s.png" type="image/png" /> 
+                <img class="img-fluid" src="/marketing/screens/mockup-2-02-s.png" alt="About us" />
               </picture>
             </div>
           </div>
@@ -288,9 +283,9 @@
           <div class="col-md-4">
             <div class="download-img">
               <picture class="img-fluid">
-                <source srcset="%PUBLIC_URL%/marketing/screens/screen-3-01.webp" type="image/webp" />
-                <source srcset="%PUBLIC_URL%/marketing/screens/screen-3-01-s.png" type="image/png" /> 
-                <img class="img-fluid" src="%PUBLIC_URL%/marketing/screens/screen-3-01-s.png" alt="iPad mockup" />
+                <source srcset="/marketing/screens/screen-3-01.webp" type="image/webp" />
+                <source srcset="/marketing/screens/screen-3-01-s.png" type="image/png" /> 
+                <img class="img-fluid" src="/marketing/screens/screen-3-01-s.png" alt="iPad mockup" />
               </picture>
             </div>
           </div>
@@ -537,7 +532,7 @@
               </div>
               <div class="col-lg-4">
                   <div class="position-relative" style="z-index: 10; margin: 40px 0">
-                      <img alt="Image placeholder" src="%PUBLIC_URL%/marketing/img/server-secure.svg" class="img-center img-fluid">
+                      <img alt="Image placeholder" src="/marketing/img/server-secure.svg" class="img-center img-fluid">
                   </div>
               </div>
               <div class="col-lg-4">
@@ -607,7 +602,7 @@
                   <div class="card text-center single-pricing-pack">
                       <div class="pt-4"><h5>Basic</h5></div>
                       <div class="pricing-img mt-4">
-                        <img src="%PUBLIC_URL%/marketing/img/pricing-free.svg" alt="pricing img" class="img-fluid">
+                        <img src="/marketing/img/pricing-free.svg" alt="pricing img" class="img-fluid">
                       </div>
                       <div class="card-header py-4 border-0 pricing-header">
                         <div class="h1 text-center mb-0"><span class="price font-weight-bolder">Free</span></div>
@@ -631,7 +626,7 @@
                   <div class="card  text-center single-pricing-pack">
                       <div class="pt-4"><h5>Pro Team</h5></div>
                       <div class="pricing-img mt-4">
-                          <img src="%PUBLIC_URL%/marketing/img/pricing-team.svg" alt="pricing img" class="img-fluid">
+                          <img src="/marketing/img/pricing-team.svg" alt="pricing img" class="img-fluid">
                       </div>
                       <div class="card-header py-4 border-0 pricing-header">
                           <div class="h1 text-center mb-0">$<span class="price font-weight-bolder">12.90</span></div>
@@ -655,7 +650,7 @@
                   <div class="card popular-price text-center single-pricing-pack">
                       <div class="pt-4"><h5>Pro Unlimited</h5></div>
                       <div class="pricing-img mt-4">
-                        <img src="%PUBLIC_URL%/marketing/img/pricing-unlimited.svg" alt="pricing img" class="img-fluid">
+                        <img src="/marketing/img/pricing-unlimited.svg" alt="pricing img" class="img-fluid">
                       </div>
                       <div class="card-header py-4 border-0 pricing-header">
                         <div class="h1 text-center mb-0">$<span class="price font-weight-bolder">49.95</span></div>
@@ -678,7 +673,7 @@
                 <div class="card text-center single-pricing-pack">
                     <div class="pt-4"><h5>Self-hosted</h5></div>
                     <div class="pricing-img mt-4">
-                      <img src="%PUBLIC_URL%/marketing/img/pricing-self-hosted.svg" alt="pricing img" class="img-fluid">
+                      <img src="/marketing/img/pricing-self-hosted.svg" alt="pricing img" class="img-fluid">
                     </div>
                     <div class="card-header py-4 border-0 pricing-header">
                         <div class="h1 text-center mb-0"><span class="price font-weight-bolder">$649</span></div>
@@ -765,9 +760,9 @@
             <div class="single-blog-card card border-0 shadow-sm">
               <span class="category position-absolute badge badge-pill badge-warning">Self Hosting</span>
               <picture class="card-img-top position-relative">
-                <source srcset="%PUBLIC_URL%/marketing/screens/new-feature-10.webp" type="image/webp" />
-                <source srcset="%PUBLIC_URL%/marketing/screens/new-feature-10.png" type="image/png" /> 
-                <img class="card-img-top position-relative" src="%PUBLIC_URL%/marketing/screens/new-feature-10.png" alt="blog" />
+                <source srcset="/marketing/screens/new-feature-10.webp" type="image/webp" />
+                <source srcset="/marketing/screens/new-feature-10.png" type="image/png" /> 
+                <img class="card-img-top position-relative" src="/marketing/screens/new-feature-10.png" alt="blog" />
               </picture>
               <div class="card-body">
                 <div class="post-meta mb-2">
@@ -787,9 +782,9 @@
             <div class="single-blog-card card border-0 shadow-sm">
               <span class="category position-absolute badge badge-pill badge-info">Accounts</span>
               <picture class="card-img-top position-relative">
-                <source srcset="%PUBLIC_URL%/marketing/screens/new-feature-08.webp" type="image/webp" />
-                <source srcset="%PUBLIC_URL%/marketing/screens/new-feature-08.png" type="image/png" /> 
-                <img class="card-img-top position-relative" src="%PUBLIC_URL%/marketing/screens/new-feature-08.png" alt="blog" />
+                <source srcset="/marketing/screens/new-feature-08.webp" type="image/webp" />
+                <source srcset="/marketing/screens/new-feature-08.png" type="image/png" /> 
+                <img class="card-img-top position-relative" src="/marketing/screens/new-feature-08.png" alt="blog" />
               </picture>
               <div class="card-body">
                 <div class="post-meta mb-2">
@@ -811,9 +806,9 @@
             <div class="single-blog-card card border-0 shadow-sm">
               <span class="category position-absolute badge badge-pill badge-danger">Security</span>
               <picture class="card-img-top position-relative">
-                <source srcset="%PUBLIC_URL%/marketing/screens/new-feature-09.webp" type="image/webp" />
-                <source srcset="%PUBLIC_URL%/marketing/screens/new-feature-09.png" type="image/png" /> 
-                <img class="card-img-top position-relative" src="%PUBLIC_URL%/marketing/screens/new-feature-09.png" alt="blog" />
+                <source srcset="/marketing/screens/new-feature-09.webp" type="image/webp" />
+                <source srcset="/marketing/screens/new-feature-09.png" type="image/png" /> 
+                <img class="card-img-top position-relative" src="/marketing/screens/new-feature-09.png" alt="blog" />
               </picture>
               <div class="card-body">
                 <div class="post-meta mb-2">
@@ -852,43 +847,43 @@
           <div class="col-md-12">
             <div class="owl-carousel owl-theme clients-carousel dot-indicator">
               <div class="item single-client">
-                <img src="%PUBLIC_URL%/marketing/screens/logos/deloitte.jpeg" alt="deloitte" class="client-img" />
+                <img src="/marketing/screens/logos/deloitte.jpeg" alt="deloitte" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="%PUBLIC_URL%/marketing/screens/logos/delta.jpeg" alt="delta" class="client-img" />
+                <img src="/marketing/screens/logos/delta.jpeg" alt="delta" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="%PUBLIC_URL%/marketing/screens/logos/expedia.jpeg" alt="expedia" class="client-img" />
+                <img src="/marketing/screens/logos/expedia.jpeg" alt="expedia" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="%PUBLIC_URL%/marketing/screens/logos/ibm.jpeg" alt="ibm" class="client-img" />
+                <img src="/marketing/screens/logos/ibm.jpeg" alt="ibm" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="%PUBLIC_URL%/marketing/screens/logos/natwest.jpeg" alt="natwest" class="client-img" />
+                <img src="/marketing/screens/logos/natwest.jpeg" alt="natwest" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="%PUBLIC_URL%/marketing/screens/logos/novartis.jpeg" alt="novartis" class="client-img" />
+                <img src="/marketing/screens/logos/novartis.jpeg" alt="novartis" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="%PUBLIC_URL%/marketing/screens/logos/pwc.jpeg" alt="pwc" class="client-img" />
+                <img src="/marketing/screens/logos/pwc.jpeg" alt="pwc" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="%PUBLIC_URL%/marketing/screens/logos/siemens.jpeg" alt="siemens" class="client-img" />
+                <img src="/marketing/screens/logos/siemens.jpeg" alt="siemens" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="%PUBLIC_URL%/marketing/screens/logos/target.jpeg" alt="target" class="client-img" />
+                <img src="/marketing/screens/logos/target.jpeg" alt="target" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="%PUBLIC_URL%/marketing/screens/logos/vodafone.jpeg" alt="vodafone" class="client-img" />
+                <img src="/marketing/screens/logos/vodafone.jpeg" alt="vodafone" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="%PUBLIC_URL%/marketing/screens/logos/adidas.jpeg" alt="adidas" class="client-img" />
+                <img src="/marketing/screens/logos/adidas.jpeg" alt="adidas" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="%PUBLIC_URL%/marketing/screens/logos/amazon.jpeg" alt="amazon" class="client-img" />
+                <img src="/marketing/screens/logos/amazon.jpeg" alt="amazon" class="client-img" />
               </div>
               <div class="item single-client">
-                <img src="%PUBLIC_URL%/marketing/screens/logos/barclays.jpeg" alt="barclays" class="client-img" />
+                <img src="/marketing/screens/logos/barclays.jpeg" alt="barclays" class="client-img" />
               </div>
             </div>
           </div>
@@ -898,12 +893,12 @@
   </div> -->
 
   <div class="shape-img subscribe-wrap marketing-content">
-    <img src="%PUBLIC_URL%/marketing/img/footer-top-shape.png" alt="footer shape" class="img-fluid" />
+    <img src="/marketing/img/footer-top-shape.png" alt="footer shape" class="img-fluid" />
   </div>
 
   <footer class="footer-section marketing-content">
     <div class="footer-top pt-150 pb-5 background-img-2" style="
-          background: url('%PUBLIC_URL%/marketing/screens/bottom-s.png') no-repeat center top / cover;
+          background: url('/marketing/screens/bottom-s.png') no-repeat center top / cover;
         ">
       <div class="container">
         <div class="row justify-content-between">
@@ -947,11 +942,13 @@
       </div>
     </div>
   </footer>
-  <script src="%PUBLIC_URL%/marketing/js/jquery-3.6.0.min.js" class="marketing"></script>
-  <script src="%PUBLIC_URL%/marketing/js/bootstrap.min.js" class="marketing"></script>
-  <script src="%PUBLIC_URL%/marketing/js/jquery.magnific-popup.min.js" class="marketing"></script>
-  <script src="%PUBLIC_URL%/marketing/js/owl.carousel.min.js" class="marketing"></script>
-  <script src="%PUBLIC_URL%/marketing/js/scripts.js" class="marketing"></script>
+  <script src="/marketing/js/jquery-3.6.0.min.js" class="marketing"></script>
+  <script src="/marketing/js/bootstrap.min.js" class="marketing"></script>
+  <script src="/marketing/js/jquery.magnific-popup.min.js" class="marketing"></script>
+  <script src="/marketing/js/owl.carousel.min.js" class="marketing"></script>
+  <script src="/marketing/js/scripts.js" class="marketing"></script>
+  <script type="module" src="/src/node.ts"></script>
+  <script type="module" src="/src/index.tsx"></script>
 </body>
 
 </html>

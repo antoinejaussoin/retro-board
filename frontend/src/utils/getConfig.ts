@@ -37,8 +37,8 @@ function getKey(
   noValue: string,
   defaultValue?: string
 ): string {
-  if (process.env[`REACT_APP_${key}`]) {
-    return process.env[`REACT_APP_${key}`] || '';
+  if (import.meta.env[`VITE_${key}`]) {
+    return import.meta.env[`VITE_${key}`] || '';
   }
   if (!!window.__env__[key] && window.__env__[key] !== noValue) {
     return window.__env__[key];
@@ -73,7 +73,7 @@ function getConfig(): Config {
     GiphyApiKey: giphyApiKey,
     StripeKey: stripeKey,
     defaultLanguage: defaultLanguage,
-    version: window.__env__['VERSION'],
+    version: APP_VERSION,
   };
 }
 

@@ -1,8 +1,8 @@
-import policy from './disclaimer.md';
+import disclaimer from './disclaimer.md';
 import GenericPolicy from './Policy';
 
 const DisclaimerPage = () => {
-  return <GenericPolicy url={policy} />;
+  return <GenericPolicy url={disclaimer} />;
 };
 
 export default DisclaimerPage;

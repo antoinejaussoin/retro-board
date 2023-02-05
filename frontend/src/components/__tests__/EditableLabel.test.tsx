@@ -1,10 +1,10 @@
-import 'jest';
+import { vi } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import EditableLabel from '../EditableLabel';
 
 describe('EditableLabel', () => {
   it('Should display the value by default', () => {
-    const onChangeHandler = jest.fn();
+    const onChangeHandler = vi.fn();
     const { getByLabelText } = render(
       <EditableLabel value="Foo" onChange={onChangeHandler} label="Example" />
     );
@@ -14,7 +14,7 @@ describe('EditableLabel', () => {
   });
 
   it('Should turn into a textbox and allow me to type on click', () => {
-    const onChangeHandler = jest.fn();
+    const onChangeHandler = vi.fn();
     const { container, getByLabelText } = render(
       <EditableLabel value="Foo" onChange={onChangeHandler} label="Example" />
     );

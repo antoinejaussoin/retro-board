@@ -1,8 +1,8 @@
-import policy from './cookies.md';
+import cookies from './cookies.md';
 import GenericPolicy from './Policy';
 
 const CookiesPolicyPage = () => {
-  return <GenericPolicy url={policy} />;
+  return <GenericPolicy url={cookies} />;
 };
 
 export default CookiesPolicyPage;

@@ -265,7 +265,6 @@ const PostItem = ({
                       onClick={toggleShowGiphyImage}
                     />
                   )}
-
                   {canCreateAction && (
                     <ActionButton
                       ariaLabel={t('Post.setActionButton')}

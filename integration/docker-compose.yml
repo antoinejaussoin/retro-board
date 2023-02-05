@@ -35,7 +35,7 @@ services:
     depends_on:
       - backend
     ports:
-      - '1800:80'
+      - '3000:80'
     restart: unless-stopped
     logging:
       driver: 'json-file'

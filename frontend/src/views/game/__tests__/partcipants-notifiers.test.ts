@@ -1,5 +1,4 @@
 import { Participant } from 'common';
-
 import {
   getAddedParticipants,
   getRemovedParticipants,
