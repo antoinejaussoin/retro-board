@@ -5,10 +5,19 @@ import svgrPlugin from 'vite-plugin-svgr';
 import inject from '@rollup/plugin-inject';
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
 import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill';
+import { ViteEjsPlugin } from 'vite-plugin-ejs';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), viteTsconfigPaths(), svgrPlugin()],
+  plugins: [
+    react(),
+    viteTsconfigPaths(),
+    svgrPlugin(),
+    ViteEjsPlugin((config) => ({
+      APP_VERSION: process.env.npm_package_version,
+      APP_ENV: config.mode,
+    })),
+  ],
   assetsInclude: ['**/*.md'],
   define: {
     APP_VERSION: JSON.stringify(process.env.npm_package_version),

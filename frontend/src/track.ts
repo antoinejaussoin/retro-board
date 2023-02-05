@@ -2,6 +2,7 @@ import ReactGA from 'react-ga';
 import { TrackingEvent } from 'common';
 import * as Sentry from '@sentry/browser';
 import config from './utils/getConfig';
+import { isProduction } from 'is-production';
 
 let sentryErrorCount = 0;
 
@@ -70,5 +71,5 @@ export const trackPageView = (path: string) => {
 };
 
 const isGAEnabled = () => {
-  return import.meta.env.NODE_ENV === 'production' && config.hasGA;
+  return isProduction() && config.hasGA;
 };
