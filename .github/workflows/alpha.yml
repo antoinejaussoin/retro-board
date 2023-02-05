@@ -94,10 +94,10 @@ jobs:
       - name: Run Integration Tests
         run: docker-compose -f ./integration/docker-compose.ci.alpha.yml up --exit-code-from cypress
       - uses: actions/upload-artifact@v3
+        if: always()
         with:
           name: Test videos
-          if: always()
-          path: e2e/cypress/videos
+          path: /e2e/cypress/videos
           retention-days: 14
           # if-no-files-found: ignore # 'warn' or 'ignore' are also available, defaults to `warn`
 
