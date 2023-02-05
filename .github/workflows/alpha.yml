@@ -96,6 +96,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: Test videos
+          if: always()
           path: e2e/cypress/videos
           retention-days: 14
           if-no-files-found: warn # 'warn' or 'ignore' are also available, defaults to `warn`
