@@ -97,7 +97,7 @@ jobs:
         if: always()
         with:
           name: Test videos
-          path: /e2e/cypress/videos
+          path: integration/cypress/videos
           retention-days: 14
           # if-no-files-found: ignore # 'warn' or 'ignore' are also available, defaults to `warn`
 
