@@ -1,8 +1,0 @@
-- DONE Fix MD files
-- DONE Giphy
-- DONE isEmail
-- DONE Remove webpack comments
-- DONE Check that REACT_APP_ keys are working
-- DONE Docker build / test
-- DONE Remove imports in tests
-- Index.html versions
