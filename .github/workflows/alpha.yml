@@ -54,10 +54,18 @@ jobs:
           tags: retrospected/frontend:alpha
           platforms: linux/amd64
           push: true
-      
+
+  integration:
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Run Integration Tests
         run: docker-compose -f ./integration/docker-compose.ci.alpha.yml up --exit-code-from cypress
 
+  trivy:
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Trivy - Frontend
         uses: aquasecurity/trivy-action@master
         with:
