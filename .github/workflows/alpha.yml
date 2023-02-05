@@ -87,7 +87,7 @@ jobs:
 
   integration:
     runs-on: ubuntu-latest
-    needs: [frontend, backend]
+    # needs: [frontend, backend]
 
     steps:
       - uses: actions/checkout@v3
