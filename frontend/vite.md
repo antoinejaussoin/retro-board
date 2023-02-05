@@ -1,7 +1,7 @@
 - DONE Fix MD files
-- Giphy
+- DONE Giphy
 - DONE isEmail
-- Remove webpack comments
-- Check that REACT_APP_ keys are working
+- DONE Remove webpack comments
+- DONE Check that REACT_APP_ keys are working
 - Docker build / test
 - DONE Remove imports in tests

@@ -9,6 +9,9 @@ import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfil
 export default defineConfig({
   plugins: [react(), viteTsconfigPaths(), svgrPlugin()],
   assetsInclude: ['**/*.md'],
+  define: {
+    APP_VERSION: JSON.stringify(process.env.npm_package_version),
+  },
   optimizeDeps: {
     esbuildOptions: {
       // Node.js global to browser globalThis

@@ -28,65 +28,28 @@ import useIsPro from 'auth/useIsPro';
 import ProButton from 'components/ProButton';
 import { useTranslation } from 'react-i18next';
 
-const Home = lazy(() => import('./views/Home' /* webpackChunkName: "home" */));
-const Game = lazy(() => import('./views/Game' /* webpackChunkName: "game" */));
-const LoginPage = lazy(
-  () => import('./views/login/LoginPage' /* webpackChunkName: "login" */)
-);
-const AccountPage = lazy(
-  () => import('./views/account/AccountPage' /* webpackChunkName: "account" */)
-);
-const CancelPage = lazy(
-  () => import('./views/subscribe/CancelPage' /* webpackChunkName: "cancel" */)
-);
-const SuccessPage = lazy(
-  () =>
-    import('./views/subscribe/SuccessPage' /* webpackChunkName: "success" */)
-);
+const Home = lazy(() => import('./views/Home'));
+const Game = lazy(() => import('./views/Game'));
+const LoginPage = lazy(() => import('./views/login/LoginPage'));
+const AccountPage = lazy(() => import('./views/account/AccountPage'));
+const CancelPage = lazy(() => import('./views/subscribe/CancelPage'));
+const SuccessPage = lazy(() => import('./views/subscribe/SuccessPage'));
 const SubscribePageOuter = lazy(
-  () =>
-    import(
-      './views/subscribe/SubscribePageOuter' /* webpackChunkName: "subscribe" */
-    )
+  () => import('./views/subscribe/SubscribePageOuter')
 );
-const ResetPasswordPage = lazy(
-  () => import('./views/Reset' /* webpackChunkName: "reset" */)
-);
-const ValidatePage = lazy(
-  () => import('./views/Validate' /* webpackChunkName: "validate" */)
-);
-const DisclaimerPage = lazy(
-  () =>
-    import('./views/policies/Disclaimer' /* webpackChunkName: "disclaimer" */)
-);
+const ResetPasswordPage = lazy(() => import('./views/Reset'));
+const ValidatePage = lazy(() => import('./views/Validate'));
+const DisclaimerPage = lazy(() => import('./views/policies/Disclaimer'));
 const AcceptableUsePolicyPage = lazy(
-  () =>
-    import(
-      './views/policies/AcceptableUse' /* webpackChunkName: "acceptable-use" */
-    )
+  () => import('./views/policies/AcceptableUse')
 );
-const CookiesPolicyPage = lazy(
-  () => import('./views/policies/Cookies' /* webpackChunkName: "cookies" */)
-);
-const TermsAndConditionsPage = lazy(
-  () => import('./views/policies/Terms' /* webpackChunkName: "terms" */)
-);
-const Invite = lazy(
-  () => import('./views/layout/Invite' /* webpackChunkName: "invite" */)
-);
-const PrivacyPolicyPage = lazy(
-  () => import('./views/policies/Privacy' /* webpackChunkName: "privacy" */)
-);
-const Panel = lazy(
-  () => import('./views/Panel' /* webpackChunkName: "panel" */)
-);
-const EncryptionDoc = lazy(
-  () =>
-    import('./views/home/Encryption' /* webpackChunkName: "encryption-doc" */)
-);
-const AdminPage = lazy(
-  () => import('./views/admin/AdminPage' /* webpackChunkName: "admin-page" */)
-);
+const CookiesPolicyPage = lazy(() => import('./views/policies/Cookies'));
+const TermsAndConditionsPage = lazy(() => import('./views/policies/Terms'));
+const Invite = lazy(() => import('./views/layout/Invite'));
+const PrivacyPolicyPage = lazy(() => import('./views/policies/Privacy'));
+const Panel = lazy(() => import('./views/Panel'));
+const EncryptionDoc = lazy(() => import('./views/home/Encryption'));
+const AdminPage = lazy(() => import('./views/admin/AdminPage'));
 
 const Title = styled(Typography)`
   color: white;

@@ -26,7 +26,7 @@ import { Palette } from '../../../../Theme';
 import { Post } from 'common';
 import { usePostUserPermissions } from '../usePostUserPermissions';
 import { countVotes, enumerateVotes } from '../../utils';
-// import GiphySearchBox from 'react-giphy-searchbox';
+import GiphySearchBox from 'react-giphy-searchbox';
 import useGiphy from '../../../../hooks/useGiphy';
 import config from '../../../../utils/getConfig';
 import useToggle from '../../../../hooks/useToggle';
@@ -265,7 +265,6 @@ const PostItem = ({
                       onClick={toggleShowGiphyImage}
                     />
                   )}
-
                   {canCreateAction && (
                     <ActionButton
                       ariaLabel={t('Post.setActionButton')}
@@ -359,10 +358,10 @@ const PostItem = ({
       >
         <Card>
           <CardContent>
-            {/* <GiphySearchBox
+            <GiphySearchBox
               apiKey={config.GiphyApiKey}
               onSelect={handleChooseGiphyEditor}
-            /> */}
+            />
           </CardContent>
         </Card>
       </Popover>
