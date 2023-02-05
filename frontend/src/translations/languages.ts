@@ -1,35 +1,20 @@
 import { Locale } from 'date-fns';
 import { StripeLocales } from 'common';
-const arDZ = () =>
-  import('date-fns/locale/ar-DZ' /* webpackChunkName: "date-fns-ar-DZ" */);
-const zhCN = () =>
-  import('date-fns/locale/zh-CN' /* webpackChunkName: "date-fns-zh-CN" */);
-const zhTW = () =>
-  import('date-fns/locale/zh-TW' /* webpackChunkName: "date-fns-zh-TW" */);
-const fr = () =>
-  import('date-fns/locale/fr' /* webpackChunkName: "date-fns-fr" */);
-const enGB = () =>
-  import('date-fns/locale/en-GB' /* webpackChunkName: "date-fns-en-GB" */);
-const nl = () =>
-  import('date-fns/locale/nl' /* webpackChunkName: "date-fns-nl" */);
-const de = () =>
-  import('date-fns/locale/de' /* webpackChunkName: "date-fns-de" */);
-const hu = () =>
-  import('date-fns/locale/hu' /* webpackChunkName: "date-fns-hu" */);
-const it = () =>
-  import('date-fns/locale/it' /* webpackChunkName: "date-fns-it" */);
-const ja = () =>
-  import('date-fns/locale/ja' /* webpackChunkName: "date-fns-ja" */);
-const pl = () =>
-  import('date-fns/locale/pl' /* webpackChunkName: "date-fns-pl" */);
-const ptBR = () =>
-  import('date-fns/locale/pt-BR' /* webpackChunkName: "date-fns-pt-BR" */);
-const pt = () =>
-  import('date-fns/locale/pt' /* webpackChunkName: "date-fns-pt" */);
-const uk = () =>
-  import('date-fns/locale/uk' /* webpackChunkName: "date-fns-uk" */);
-const es = () =>
-  import('date-fns/locale/es' /* webpackChunkName: "date-fns-es" */);
+const arDZ = () => import('date-fns/locale/ar-DZ');
+const zhCN = () => import('date-fns/locale/zh-CN');
+const zhTW = () => import('date-fns/locale/zh-TW');
+const fr = () => import('date-fns/locale/fr');
+const enGB = () => import('date-fns/locale/en-GB');
+const nl = () => import('date-fns/locale/nl');
+const de = () => import('date-fns/locale/de');
+const hu = () => import('date-fns/locale/hu');
+const it = () => import('date-fns/locale/it');
+const ja = () => import('date-fns/locale/ja');
+const pl = () => import('date-fns/locale/pl');
+const ptBR = () => import('date-fns/locale/pt-BR');
+const pt = () => import('date-fns/locale/pt');
+const uk = () => import('date-fns/locale/uk');
+const es = () => import('date-fns/locale/es');
 
 export interface Language {
   iso: string;

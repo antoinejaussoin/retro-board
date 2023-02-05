@@ -17,17 +17,13 @@ import { validate } from 'isemail';
 import UserContext from '../../Context';
 import useBackendCapabilities from 'global/useBackendCapabilities';
 import { useTranslation } from 'react-i18next';
+import { trackEvent } from 'track';
 
 type RegisterProps = {
   onClose: () => void;
 };
 
-const PasswordStrength = lazy(
-  () =>
-    import(
-      'react-password-strength-bar' /* webpackChunkName: "password-strength" */
-    )
-);
+const PasswordStrength = lazy(() => import('react-password-strength-bar'));
 
 const Register = ({ onClose }: RegisterProps) => {
   const { t } = useTranslation();
@@ -64,6 +60,7 @@ const Register = ({ onClose }: RegisterProps) => {
           return;
       }
     } else {
+      trackEvent('register/password');
       setIsSuccessful(true);
       if (response.loggedIn) {
         setUser(response.user);

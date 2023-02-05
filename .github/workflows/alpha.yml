@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [v4190/release]
+    branches: [v4192/ga4]
 
 jobs:
   build:

@@ -1,8 +1,6 @@
 import { lazy, Suspense } from 'react';
 
-const IconInner = lazy(
-  () => import('./IconInner' /* webpackChunkName: "icon" */)
-);
+const IconInner = lazy(() => import('./IconInner'));
 
 type IconProps = {
   icon: string | null;

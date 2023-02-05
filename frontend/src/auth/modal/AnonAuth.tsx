@@ -7,6 +7,7 @@ import { FullUser } from 'common';
 import Wrapper from './Wrapper';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from 'translations';
+import { trackEvent } from 'track';
 
 interface AnonAuthProps {
   onClose: () => void;
@@ -28,6 +29,7 @@ const AnonAuth = ({ onClose, onUser }: AnonAuthProps) => {
           setError('Your anonymous account is not valid.');
           return;
         }
+        trackEvent('register/anonymous');
         let updatedUser = await me();
         if (updatedUser?.language === null) {
           updatedUser = await updateLanguage(language.locale);

@@ -57,7 +57,7 @@
     "react-color": "2.19.3",
     "react-copy-to-clipboard": "5.1.0",
     "react-dom": "18.2.0",
-    "react-ga": "3.3.1",
+    "react-ga4": "^2.0.0",
     "react-giphy-searchbox": "1.5.4",
     "react-helmet": "6.1.0",
     "react-i18next": "^11.18.6",

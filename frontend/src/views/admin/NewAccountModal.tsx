@@ -22,12 +22,7 @@ type NewAccountModalProps = {
   onAdd: (user: FullUser) => void;
 };
 
-const PasswordStrength = lazy(
-  () =>
-    import(
-      'react-password-strength-bar' /* webpackChunkName: "password-strength" */
-    )
-);
+const PasswordStrength = lazy(() => import('react-password-strength-bar'));
 
 export function NewAccountModal({
   open,

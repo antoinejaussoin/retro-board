@@ -10,9 +10,7 @@ import { colors } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { DeleteForeverOutlined } from '@mui/icons-material';
 
-const IconPicker = lazy(
-  () => import('./IconPicker' /* webpackChunkName: "icon-picker" */)
-);
+const IconPicker = lazy(() => import('./IconPicker'));
 
 interface ColumnEditorProps {
   value: ColumnSettings;

@@ -215,6 +215,12 @@ export type TrackingEvent =
   | 'trial/modal/open'
   | 'ack/error'
   | 'ack/refresh'
+  | 'register/password'
+  | 'register/oauth'
+  | 'register/anonymous'
+  | 'subscribe/initial'
+  | 'subscribe/launch-stripe'
+  | 'subscribe/purchased'
   | 'language/change/';
 
 export type ColumnDefinitionType =

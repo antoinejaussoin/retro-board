@@ -1,5 +1,5 @@
-import ReactGA from 'react-ga';
-import { TrackingEvent } from 'common';
+import ReactGA from 'react-ga4';
+import { Plan, TrackingEvent } from 'common';
 import * as Sentry from '@sentry/browser';
 import config from './utils/getConfig';
 
@@ -63,9 +63,20 @@ export const trackEvent = (event: TrackingEvent) => {
   }
 };
 
+export const trackPurchase = (plan: Plan, valueUsd: number) => {
+  if (isGAEnabled()) {
+    ReactGA.event({
+      category: 'Event',
+      action: 'purchase',
+      value: valueUsd,
+      label: plan,
+    });
+  }
+};
+
 export const trackPageView = (path: string) => {
   if (isGAEnabled()) {
-    ReactGA.pageview(path);
+    ReactGA.send({ hitType: 'pageview', page: path });
   }
 };
 
