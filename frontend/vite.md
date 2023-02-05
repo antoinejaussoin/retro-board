@@ -3,6 +3,6 @@
 - DONE isEmail
 - DONE Remove webpack comments
 - DONE Check that REACT_APP_ keys are working
-- Docker build / test
+- DONE Docker build / test
 - DONE Remove imports in tests
 - Index.html versions

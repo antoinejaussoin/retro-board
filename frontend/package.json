@@ -40,6 +40,8 @@
     "crypto-js": "4.1.1",
     "date-fns": "2.29.3",
     "emoji-mart": "3.0.1",
+    "eslint": "^8.33.0",
+    "eslint-config-react-app": "^7.0.1",
     "flag-icons": "6.6.6",
     "i18next": "^21.9.2",
     "i18next-browser-languagedetector": "^6.1.5",
