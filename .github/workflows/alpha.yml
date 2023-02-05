@@ -57,13 +57,16 @@ jobs:
 
   integration:
     runs-on: ubuntu-latest
+    needs: build
 
     steps:
+      - uses: actions/checkout@v3
       - name: Run Integration Tests
         run: docker-compose -f ./integration/docker-compose.ci.alpha.yml up --exit-code-from cypress
 
   trivy:
     runs-on: ubuntu-latest
+    needs: build
 
     steps:
       - name: Trivy - Frontend
