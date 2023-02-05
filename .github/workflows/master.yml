@@ -5,7 +5,7 @@ on:
     branches: [master]
 
 jobs:
-frontend:
+  frontend:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -71,7 +71,7 @@ frontend:
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
 
-   documentation:
+  documentation:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
