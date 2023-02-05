@@ -97,9 +97,9 @@ jobs:
         with:
           name: Test videos
           if: always()
-          path: e2e/cypress/videos
+          path: integration/e2e/cypress/videos
           retention-days: 14
-          if-no-files-found: warn # 'warn' or 'ignore' are also available, defaults to `warn`
+          if-no-files-found: ignore # 'warn' or 'ignore' are also available, defaults to `warn`
 
   # trivy:
   #   runs-on: ubuntu-latest
