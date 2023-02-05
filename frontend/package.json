@@ -13,6 +13,7 @@
     "@mui/material": "5.10.16",
     "@mui/styles": "5.10.16",
     "@mui/x-data-grid": "5.17.13",
+    "@rollup/plugin-inject": "^5.0.3",
     "@sentry/browser": "7.22.0",
     "@stripe/react-stripe-js": "1.15.0",
     "@stripe/stripe-js": "1.44.1",

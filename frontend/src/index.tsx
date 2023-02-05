@@ -7,9 +7,9 @@ import { initialiseAnalytics, initialiseSentry } from './track';
 import * as serviceWorker from './serviceWorker';
 import 'emoji-mart/css/emoji-mart.css';
 
-window.process = {
-  env: import.meta.env,
-} as any;
+// window.process = {
+//   env: import.meta.env,
+// } as any;
 
 window.module = {
   hot: false,
