@@ -13,7 +13,7 @@ import {
   SubscriptionDeletedPayload,
 } from './types.js';
 import { plans, getProduct } from './products.js';
-import { updateUser } from '../db/actions/users.js';
+import { getUserByEmail, updateUser } from '../db/actions/users.js';
 import { registerLicence } from '../db/actions/licences.js';
 import { getIdentityFromRequest } from '../utils.js';
 import isValidDomain from '../security/is-valid-domain.js';
@@ -25,6 +25,7 @@ import {
   startTrial,
   getActiveSubscriptionWhereUserIsAdmin,
 } from '../db/actions/subscriptions.js';
+import { trackPurchase } from './../track/track.js';
 
 const stripe = new Stripe(config.STRIPE_SECRET, {
   apiVersion: '2022-11-15',
@@ -137,6 +138,7 @@ function stripeRouter(): Router {
         const customerEmail = session.customer_details?.email || null;
         const stripeCustomerId = session.customer! as string;
         const stripeSessionId = session.id;
+        const user = customerEmail ? await getUserByEmail(customerEmail) : null;
 
         const customer = (await stripe.customers.retrieve(
           stripeCustomerId
@@ -144,6 +146,20 @@ function stripeRouter(): Router {
         const customerName = customer.name;
 
         if (subEvent.data.object.payment_status === 'paid') {
+          if (session.line_items && session.line_items.data[0]) {
+            const lineItem = session.line_items.data[0];
+            trackPurchase(
+              stripeCustomerId,
+              user ? user.id : stripeCustomerId,
+              session.id,
+              (lineItem.price?.product as string | null) || lineItem.id,
+              lineItem.description,
+              lineItem.quantity || 0,
+              lineItem.currency,
+              lineItem.amount_total / 100
+            );
+          }
+
           if (
             product &&
             product.product === config.STRIPE_SELF_HOSTED_PRODUCT

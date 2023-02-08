@@ -121,6 +121,16 @@ export async function getUserByUsername(
   });
 }
 
+export async function getUserByEmail(
+  email: string
+): Promise<UserEntity | null> {
+  return await transaction(async (manager) => {
+    const userRepository = manager.withRepository(UserRepository);
+    const user = await userRepository.findOne({ where: { email } });
+    return user ? user : null;
+  });
+}
+
 export async function updateIdentity(
   identityId: string,
   updatedIdentity: Partial<UserIdentityEntity>

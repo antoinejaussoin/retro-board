@@ -66,6 +66,7 @@ import mung from 'express-mung';
 import { QueryFailedError } from 'typeorm';
 import { deleteAccount } from './db/actions/delete.js';
 import { noop } from 'lodash-es';
+import { trackPurchase } from './track/track.js';
 
 const realIpHeader = 'X-Forwarded-For';
 const sessionSecret = `${config.SESSION_SECRET!}-4.11.5`; // Increment to force re-auth
@@ -252,6 +253,16 @@ db().then(() => {
 
   // Slack
   app.use('/api/slack', slackRouter());
+
+  app.get('/api/test', heavyLoadLimiter, async (req, res) => {
+    const identity = await getIdentityFromRequest(req);
+    if (identity) {
+      trackPurchase('1', '2', '3', '4', 'Product Test', 1, 'EUR', 1);
+      res.status(200).send('Alles gut');
+    } else {
+      res.status(404).send();
+    }
+  });
 
   // Create session
   app.post('/api/create', heavyLoadLimiter, async (req, res) => {

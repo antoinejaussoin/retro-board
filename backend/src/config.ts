@@ -122,6 +122,8 @@ const config: BackendConfig = {
     'MAIL_ALLOW_SELF_SIGNED_CERTS',
     false
   ),
+  GA4_SECRET: defaults('GA4_SECRET', ''),
+  GA4_MEASUREMENT_ID: defaults('GA4_MEASUREMENT_ID', ''),
 };
 
 export default config;
