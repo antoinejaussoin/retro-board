@@ -1,0 +1,314 @@
+#flaticonExample ol,
+#flaticonExample ul {
+  list-style: none;
+}
+
+#flaticonExample blockquote,
+#flaticonExample q {
+  quotes: none;
+}
+
+#flaticonExample blockquote:before,
+#flaticonExample blockquote:after,
+#flaticonExample q:before,
+#flaticonExample q:after {
+  content: '';
+  content: none;
+}
+
+#flaticonExample table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+#flaticonExample {
+  font-family: 'Varela Round', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  color: #222;
+}
+
+#flaticonExample a {
+  color: #333;
+  border-bottom: 1px solid #a9fd00;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+#flaticonExample * {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#flaticonExample [class^='flaticon-']:before,
+#flaticonExample [class*=' flaticon-']:before,
+#flaticonExample [class^='flaticon-']:after,
+#flaticonExample [class*=' flaticon-']:after {
+  font-family: Flaticon;
+  font-size: 30px;
+  font-style: normal;
+  margin-left: 20px;
+  color: #333;
+}
+
+#flaticonExample .wrapper {
+  max-width: 600px;
+  margin: auto;
+  padding: 0 1em;
+}
+
+#flaticonExample .title {
+  font-size: 1.25em;
+  text-align: center;
+  margin-bottom: 1em;
+  text-transform: uppercase;
+}
+
+#flaticonExample header {
+  text-align: center;
+  background-color: #222;
+  color: #fff;
+  padding: 1em;
+}
+
+#flaticonExample header .logo {
+  width: 210px;
+  height: 38px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 1em;
+  border: none;
+}
+
+#flaticonExample header strong {
+  font-size: 1.95em;
+  font-weight: bold;
+  vertical-align: middle;
+  margin-top: 5px;
+  display: inline-block;
+}
+
+#flaticonExample .demo {
+  margin: 2em auto;
+  line-height: 1.25em;
+}
+
+#flaticonExample .demo ul li {
+  margin-bottom: 1em;
+}
+
+#flaticonExample .demo ul li .num {
+  color: #222;
+  border-radius: 20px;
+  display: inline-block;
+  width: 26px;
+  padding: 3px;
+  height: 26px;
+  text-align: center;
+  margin-right: 0.5em;
+  border: 1px solid #222;
+}
+
+#flaticonExample .demo ul li code {
+  background-color: #222;
+  border-radius: 4px;
+  padding: 0.25em 0.5em;
+  display: inline-block;
+  color: #fff;
+  font-family: Consolas, Monaco, Lucida Console, Liberation Mono,
+    DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+  font-weight: lighter;
+  margin-top: 1em;
+  font-size: 0.8em;
+  word-break: break-all;
+}
+
+#flaticonExample .demo ul li code.big {
+  padding: 1em;
+  font-size: 0.9em;
+}
+
+#flaticonExample .demo ul li code .red {
+  color: #ef3159;
+}
+
+#flaticonExample .demo ul li code .green {
+  color: #acff65;
+}
+
+#flaticonExample .demo ul li code .yellow {
+  color: #ffff99;
+}
+
+#flaticonExample .demo ul li code .blue {
+  color: #99d3ff;
+}
+
+#flaticonExample .demo ul li code .purple {
+  color: #a295ff;
+}
+
+#flaticonExample .demo ul li code .dots {
+  margin-top: 0.5em;
+  display: block;
+}
+
+#flaticonExample #glyphs {
+  border-bottom: 1px solid #ccc;
+  padding: 2em 0;
+  text-align: center;
+}
+
+#flaticonExample .glyph {
+  display: inline-block;
+  width: 9em;
+  margin: 1em;
+  text-align: center;
+  vertical-align: top;
+  background: #fff;
+}
+
+#flaticonExample .glyph .glyph-icon {
+  padding: 10px;
+  display: block;
+  font-family: 'Flaticon';
+  font-size: 64px;
+  line-height: 1;
+}
+
+#flaticonExample .glyph .glyph-icon:before {
+  font-size: 64px;
+  color: #222;
+  margin-left: 0;
+}
+
+#flaticonExample .class-name {
+  font-size: 0.65em;
+  background-color: #222;
+  color: #fff;
+  border-radius: 4px 4px 0 0;
+  padding: 0.5em;
+  color: #ffff99;
+  font-family: Consolas, Monaco, Lucida Console, Liberation Mono,
+    DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+}
+
+#flaticonExample .author-name {
+  font-size: 0.6em;
+  background-color: #fcfcfd;
+  border: 1px solid #dedee4;
+  border-top: 0;
+  border-radius: 0 0 4px 4px;
+  padding: 0.5em;
+}
+
+#flaticonExample .class-name:last-child {
+  font-size: 10px;
+  color: #888;
+}
+
+#flaticonExample .class-name:last-child a {
+  font-size: 10px;
+  color: #555;
+}
+
+#flaticonExample .class-name:last-child a:hover {
+  color: #a9fd00;
+}
+
+#flaticonExample .glyph > input {
+  display: block;
+  width: 100px;
+  margin: 5px auto;
+  text-align: center;
+  font-size: 12px;
+  cursor: text;
+}
+
+#flaticonExample .glyph > input.icon-input {
+  font-family: 'Flaticon';
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+#flaticonExample .attribution .title {
+  margin-top: 2em;
+}
+
+#flaticonExample .attribution textarea {
+  background-color: #fcfcfd;
+  padding: 1em;
+  border: none;
+  box-shadow: none;
+  border: 1px solid #dedee4;
+  border-radius: 4px;
+  resize: none;
+  width: 100%;
+  height: 150px;
+  font-size: 0.8em;
+  font-family: Consolas, Monaco, Lucida Console, Liberation Mono,
+    DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+  -webkit-appearance: none;
+}
+
+#flaticonExample .iconsuse {
+  margin: 2em auto;
+  text-align: center;
+  max-width: 1200px;
+}
+
+#flaticonExample .iconsuse:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+#flaticonExample .iconsuse .image {
+  float: left;
+  width: 25%;
+  padding: 0 1em;
+}
+
+#flaticonExample .iconsuse .image p {
+  margin-bottom: 1em;
+}
+
+#flaticonExample .iconsuse .image span {
+  display: block;
+  font-size: 0.65em;
+  background-color: #222;
+  color: #fff;
+  border-radius: 4px;
+  padding: 0.5em;
+  color: #ffff99;
+  margin-top: 1em;
+  font-family: Consolas, Monaco, Lucida Console, Liberation Mono,
+    DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+}
+
+#flaticonExample #footer {
+  text-align: center;
+  background-color: #4c5b5c;
+  color: #7c9192;
+  padding: 1em;
+}
+
+#flaticonExample #footer a {
+  border: none;
+  color: #a9fd00;
+  font-weight: normal;
+}
+
+@media (max-width: 960px) {
+  #flaticonExample .iconsuse .image {
+    width: 50%;
+  }
+}
+
+@media (max-width: 560px) {
+  #flaticonExample .iconsuse .image {
+    width: 100%;
+  }
+}

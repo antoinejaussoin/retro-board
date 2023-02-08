@@ -1,0 +1,25 @@
+---
+name: Logo
+menu: UI Components
+---
+
+import { Playground, PropsTable } from 'docz';
+
+import Logo from './';
+import DemoImage from '../../Image/images.png';
+
+# Logo
+
+## Basic Usage
+
+<Playground>
+  <Logo href="#" logoSrc={DemoImage} title="Logo" />
+</Playground>
+
+<Playground>
+  <Logo as="a" href="#" title="Logo" />
+</Playground>
+
+## Properties
+
+<PropsTable of={Logo} />

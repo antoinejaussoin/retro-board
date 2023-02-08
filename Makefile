@@ -23,6 +23,10 @@ local:
 	docker build -f ./backend/Dockerfile -t retrospected/backend:local ./backend
 	docker build -f ./frontend/Dockerfile -t retrospected/frontend:local ./frontend
 
+marketing-build:
+	docker build -f ./marketing/Dockerfile -t retrospected/marketing:local ./marketing
+	docker run -it --rm -p 3333:80 retrospected/marketing:local
+
 install-trivy:
 	brew install trivy
 

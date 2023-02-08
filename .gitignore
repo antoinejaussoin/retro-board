@@ -35,7 +35,7 @@ node_modules
 build
 persist
 configuration.json
-assets
+# assets
 stats
 .vscode
 .DS_Store

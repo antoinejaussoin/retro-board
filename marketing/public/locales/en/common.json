@@ -1,0 +1,156 @@
+{
+	"SEO": {
+		"title": "Retrospected",
+		"description": "Free Real-time Agile Retrospective Board for engineering teams"
+	},
+	"Banner": {
+		"heading": "Real-time Retrospectives. Done right. In seconds.",
+		"text": "Because Post-It notes aren't going to cut it.",
+		"tagline": "*No Credit card required",
+		"subscribeToday": "Try it for free"
+	},
+	"Nav": {
+		"home": "Home",
+		"howTo": "How To",
+		"features": "Features",
+		"testimonial": "Testimonials",
+		"pricing": "Pricing",
+		"faq": "FAQ",
+		"login": "Login Now",
+		"join": "Join Free"
+	},
+	"Clients": {
+		"main": "Join the hundreds of companies using our product"
+	},
+	"HowItWorks": {
+		"heading": "We are different because..."
+	},
+	"Testimonials": {
+		"heading": "What people say about us",
+		"1": {
+			"author": "Johnny Simpson",
+			"designation": "Head of Design",
+			"quote": "Each room is loaded with the most collaborative surfaces so you can quickly take notes, capture to-dos, and share ideas. Pick one of our stock themes, or create your custom theme with the editors."
+		},
+		"2": {
+			"author": "Johnny Simpson",
+			"designation": "Head of Design",
+			"quote": "Each room is loaded with the most collaborative surfaces so you can quickly take notes, capture to-dos, and share ideas. Pick one of our stock themes, or create your custom theme with the editors."
+		},
+		"3": {
+			"author": "Johnny Simpson",
+			"designation": "Head of Design",
+			"quote": "Each room is loaded with the most collaborative surfaces so you can quickly take notes, capture to-dos, and share ideas. Pick one of our stock themes, or create your custom theme with the editors."
+		},
+		"4": {
+			"author": "Johnny Simpson",
+			"designation": "Head of Design",
+			"quote": "Each room is loaded with the most collaborative surfaces so you can quickly take notes, capture to-dos, and share ideas. Pick one of our stock themes, or create your custom theme with the editors."
+		}
+	},
+	"Pricing": {
+		"heading": "Explore our exciting pricing",
+		"monthly": "Monthly",
+		"yearly": "Yearly",
+		"currency": "$",
+		"subscribe": "Subscribe Now",
+		"login": "Login Now",
+		"basic": {
+			"title": "Basic",
+			"price": 0,
+			"recurrence": "per month",
+			"features": [
+				"Unlimited Retrospectives",
+				"Unlimited Team Members",
+				"Unlimited Action Items",
+				"40 posts"
+			]
+		},
+		"pro": {
+			"title": "Pro",
+			"price": 12.90,
+			"recurrence": "per month",
+			"features": [
+				"Unlimited Retrospectives",
+				"Unlimited Team Members",
+				"Unlimited Action Items",
+				"Unlimited posts",
+				"20 users"
+			]
+		},
+		"unlimited": {
+			"title": "Unlimited",
+			"price": 49.95,
+			"recurrence": "per month",
+			"features": [
+				"Unlimited Retrospectives",
+				"Unlimited Team Members",
+				"Unlimited Action Items",
+				"Unlimited posts",
+				"Unlimited users"
+			]
+		},
+		"hosted": {
+			"title": "Self Hosted",
+			"price": 649,
+			"recurrence": "One-time fee",
+			"features": [
+				"Everything from Unlimited",
+				"All users are Pro by default",
+				"Awesome documentation"
+			]
+		}
+	},
+	"SelfHosted": {
+		"slogan": "Self Hosting",
+		"title": "Retrospected on your premises",
+		"desc": "Keep complete control of your data by self-hosting Retrospected. One-time fee, unlimited updates. Get up and running with our amazing documentation in no time.",
+		"features": [
+			"Complete control: your data stays on your premises",
+			"Easy to install",
+			"Administration Panel",
+			"All users are Pro",
+			"Free updates, forever"
+		],
+		"button": {
+			"link": "https://docs.retrospected.com",
+			"label": "Discover our documentation"
+		}
+	},
+	"Features": {
+		"heading": "Start a retrospective in seconds",
+		"description":"Starting or joining a retro is as easy as 1, 2, 3. It's friction-less.",
+		"feature1": "Feature 1",
+		"feature2": "Feature 2",
+		"feature3": "Feature 3",
+		"feature4": "Feature 4"
+	},
+	"Newsfeed": {
+		"heading": "What's new at Retrospected"
+	},
+	"FAQ": {
+		"heading": "Frequently Asked Questions",
+		"data": [
+			{"question": "What is love", "answer": "Baby don't hurt me no more"},
+			{"question": "What is the purpose of this?", "answer": "42, I think"}
+		]
+	},
+	"CTA": {
+		"heading": "Start a Retrospective now",
+		"description": "Join the thousands of users who are already using Retrospected",
+		"button": "Start a Retrospective",
+		"hint": "This will change your life!"
+	},
+	"Footer": {
+		"copyright": "Copyright © 2023 - Retrospected Ltd. All rights reserved.",
+		"about": "We create software with Love, from London, UK"
+	},
+	"Contact": {
+		"title": "Contact info",
+		"address": "Retrospected Ltd, London, UK",
+		"phone": "+44 (not used for now)",
+		"openingTime": "7 Days - 8am - 10pm",
+		"email": "support@retrospected.com"
+	}
+}
+	

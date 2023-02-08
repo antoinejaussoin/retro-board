@@ -1,0 +1,7 @@
+.env
+.env.example
+.env.local
+.next
+.node_modules
+Makefile
+yarn-error.log

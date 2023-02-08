@@ -1,0 +1,154 @@
+{
+	"SEO": {
+		"title": "Retrospected",
+		"description": "Retrospectives gratuites et temps-réel pour équipes agiles"
+	},
+	"Banner": {
+		"heading": "Des retrospectives fun & efficaces, des équipes performantes & motivées !",
+		"text": "Donnez une platforme moderne et simple à vos équipes, pour soutenir leur collaboration et leur amélioration continue",
+		"tagline": "*Aucune carte bancaire demandée",
+		"subscribeToday": "Essayer gratuitement"
+	},
+	"Nav": {
+		"home": "Accueil",
+		"howTo": "Comment ?",
+		"features": "Fonctionnalités",
+		"testimonial": "Témoignages",
+		"pricing": "Tarifs",
+		"faq": "FAQ",
+		"login": "Connexion",
+		"join": "Inscription"
+	},
+	"Clients": {
+		"main": "Rejoingnez les centaines d'entreprises qui nous ont fait confiance"
+	},
+	"HowItWorks": {
+		"heading": "Nous sommes différents, parce-que..."
+	},
+	"Testimonials": {
+		"heading": "Ce que les gens disent de nous",
+		"1": {
+			"author": "Jean LaPointe",
+			"designation": "Directeur Design",
+			"quote": "Retrospected nous est très utile, et blah blah blah, et encore du blah blah merci de remplir les trous"
+		},
+		"2": {
+			"author": "Jean LaPointe",
+			"designation": "Directeur Design",
+			"quote": "Retrospected nous est très utile, et blah blah blah, et encore du blah blah merci de remplir les trous"
+		},
+		"3": {
+			"author": "Jean LaPointe",
+			"designation": "Directeur Design",
+			"quote": "Retrospected nous est très utile, et blah blah blah, et encore du blah blah merci de remplir les trous"
+		},
+		"4": {
+			"author": "Jean LaPointe",
+			"designation": "Directeur Design",
+			"quote": "Retrospected nous est très utile, et blah blah blah, et encore du blah blah merci de remplir les trous"
+		}
+	},
+	"Pricing": {
+		"heading": "Nos prix",
+		"monthly": "Par mois",
+		"yearly": "Par an",
+		"currency": "€",
+		"subscribe": "Acheter maintenant",
+		"login": "Connectez-vous",
+		"basic": {
+			"title": "Basic",
+			"price": 0,
+			"features": [
+				"Retrospectives illimitées",
+				"Unlimited Team Members",
+				"Unlimited Action Items",
+				"40 posts"
+			]
+		},
+		"pro": {
+			"title": "Pro",
+			"price": 11.90,
+			"recurrence": "par mois",
+			"features": [
+				"Unlimited Retrospectives",
+				"Unlimited Team Members",
+				"Unlimited Action Items",
+				"Unlimited posts",
+				"20 users"
+			]
+		},
+		"unlimited": {
+			"title": "Unlimited",
+			"price": 49.95,
+			"recurrence": "par mois",
+			"features": [
+				"Unlimited Retrospectives",
+				"Unlimited Team Members",
+				"Unlimited Action Items",
+				"Unlimited posts",
+				"Unlimited users"
+			]
+		},
+		"hosted": {
+			"title": "Self Hosted",
+			"price": 599,
+			"recurrence": "une seule fois",
+			"features": [
+				"Everything from Unlimited",
+				"All users are Pro by default",
+				"Awesome documentation"
+			]
+		}
+	},
+	"SelfHosted": {
+		"slogan": "Self Hosting",
+		"title": "A TRADUIRE",
+		"desc": "Keep complete control of your data by self-hosting Retrospected. One-time fee, unlimited updates. Get up and running with our amazing documentation in no time.",
+		"features": [
+			"Complete control: your data stays on your premises",
+			"Easy to install",
+			"Administration Panel",
+			"All users are Pro",
+			"Free updates, forever"
+		],
+		"button": {
+			"link": "https://docs.retrospected.com",
+			"label": "Discover our documentation"
+		}
+	},
+	"Features": {
+		"heading": "Commencez une rétro en quelques secondes",
+		"description":"Starting or joining a retro is as easy as 1, 2, 3. It's friction-less.",
+		"feature1": "Fonctionalité 1",
+		"feature2": "Feature 2",
+		"feature3": "Feature 3",
+		"feature4": "Feature 4"
+	},
+	"Newsfeed": {
+		"heading": "Quoi de neuf à Retrospected ?"
+	},
+	"FAQ": {
+		"heading": "Vos Questions",
+		"data": [
+			{"question": "Pourquoi retrospected ?", "answer": "Parce-qu'on poutre"},
+			{"question": "Qu'est-ce que c'est ?", "answer": "C'est un truc qui fait des trucs"}
+		]
+	},
+	"CTA": {
+		"heading": "Commencez une Retrospective maintenant",
+		"description": "Join the thousands of users who are already using Retrospected",
+		"button": "Start a Retrospective",
+		"hint": "This will change your life!"
+	},
+	"Footer": {
+		"copyright": "Copyright © 2023 - Retrospected Ltd. Tout droits réservés.",
+		"about": "Nos logiciels sont développés avec amour par Retrospected Ltd à Londres"
+	},
+	"Contact": {
+		"title": "Contactez-nous",
+		"address": "Retrospected Ltd, London, UK",
+		"phone": "+44 (not used for now)",
+		"openingTime": "7j/7 - 8h - 22h",
+		"email": "support@retrospected.com"
+	}
+}

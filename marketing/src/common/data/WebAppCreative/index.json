@@ -1,0 +1,568 @@
+{
+  "menu_items": [
+    {
+      "label": "Home",
+      "path": "#home",
+      "offset": "70"
+    },
+    {
+      "label": "How To",
+      "path": "#how-to",
+      "offset": "70"
+    },
+    {
+      "label": "Features",
+      "path": "#features",
+      "offset": "70"
+    },
+    {
+      "label": "Testimonial",
+      "path": "#testimonial",
+      "offset": "70"
+    },
+    {
+      "label": "Pricing",
+      "path": "#pricing",
+      "offset": "70"
+    },
+    {
+      "label": "Faq",
+      "path": "#faq",
+      "offset": "70"
+    }
+  ],
+  "clients": [
+    {
+      "id": 1,
+      "logo": "../../assets/image/webAppCreative/clients/envato.png",
+      "alt": ""
+    },
+    {
+      "id": 2,
+      "logo": "../../assets/image/webAppCreative/clients/evernote.png",
+      "alt": ""
+    },
+    {
+      "id": 3,
+      "logo": "../../assets/image/webAppCreative/clients/forbes.png",
+      "alt": ""
+    },
+    {
+      "id": 4,
+      "logo": "../../assets/image/webAppCreative/clients/geekwire.png",
+      "alt": ""
+    },
+    {
+      "id": 5,
+      "logo": "../../assets/image/webAppCreative/clients/slack.png",
+      "alt": ""
+    },
+    {
+      "id": 6,
+      "logo": "../../assets/image/webAppCreative/clients/usa-today.png",
+      "alt": ""
+    }
+  ],
+  "howTos": [
+    {
+      "id": 1,
+      "icon": "../../assets/image/webAppCreative/icons/1.png",
+      "title": "Manage Smartly",
+      "text": "Stay on top of your task lists and stay in touch with what's happening",
+      "linkLabel": "Learn More",
+      "link": "#"
+    },
+    {
+      "id": 2,
+      "icon": "../../assets/image/webAppCreative/icons/2.png",
+      "title": "Monitor user Analytics",
+      "text": "Stay on top of your task lists and stay in touch with what's happening",
+      "linkLabel": "Learn More",
+      "link": "#"
+    },
+    {
+      "id": 3,
+      "icon": "../../assets/image/webAppCreative/icons/3.png",
+      "title": "Safe & Trusted",
+      "text": "Get the best DoorDash experience with live order tracking.",
+      "linkLabel": "Learn More",
+      "link": "#"
+    },
+    {
+      "id": 4,
+      "icon": "../../assets/image/webAppCreative/icons/4.png",
+      "title": "Fast Customer Support",
+      "text": "Get the best DoorDash experience with live order tracking.",
+      "linkLabel": "Learn More",
+      "link": "#"
+    }
+  ],
+  "analyticsTool": {
+    "slogan": "Audience source monitoring",
+    "title": "Advanced analytics tools to keep you in control & customizable",
+    "desc": "Pick one of our stock themes, or create your custom theme with the most advanced theme editor on any online survey building tool.",
+    "features": [
+      "Chat promt module supported",
+      "Enjoy unlimited features by paid plans",
+      "Manage ultimate conversation"
+    ],
+    "button": {
+      "link": "#",
+      "label": "Explore More"
+    }
+  },
+  "dashboard": {
+    "sectionTitle": "Get on the same page, fast.",
+    "sectionDesc": "Each room is loaded with collaborative surfaces so you can quickly take notes, capture to-dos, and share ideas. Pick one of our stock themes, or create your custom theme with the most advanced theme editor.",
+    "tabs": [
+      {
+        "id": 1,
+        "title": "Dashboard",
+        "content": {
+          "image": "../../assets/image/webAppCreative/dashboard-2.png"
+        }
+      },
+      {
+        "id": 2,
+        "title": "Whiteboard",
+        "content": {
+          "image": "../../assets/image/webAppCreative/dashboard-2.png"
+        }
+      },
+      {
+        "id": 3,
+        "title": "Transaction",
+        "content": {
+          "image": "../../assets/image/webAppCreative/dashboard-2.png"
+        }
+      },
+      {
+        "id": 4,
+        "title": "Float",
+        "content": {
+          "image": "../../assets/image/webAppCreative/dashboard-2.png"
+        }
+      }
+    ]
+  },
+  "testimonials": [
+    {
+      "id": 1,
+      "logo": "../../assets/image/webAppCreative/icons/5.png",
+      "author": "Johnny Simpson",
+      "designation": "Head of Design",
+      "quote": "Each room is loaded with the most collaborative surfaces so you can quickly take notes, capture to-dos, and share ideas. Pick one of our stock themes, or create your custom theme with the editors."
+    },
+    {
+      "id": 2,
+      "logo": "../../assets/image/webAppCreative/icons/6.png",
+      "author": "Deanna Hodges",
+      "designation": "Business HR Admin",
+      "quote": "We deliver on such an expansive with innovation agenda with so many theme projects going on at any time, it can be hard to maintain momentum. So We appreciate to work with them."
+    },
+    {
+      "id": 3,
+      "logo": "../../assets/image/webAppCreative/icons/7.png",
+      "author": "Gracelyn Mason",
+      "designation": "Senior Marketer",
+      "quote": "Flat item is loaded with the most of collaborative surfaces so you can do quickly take notes, capture to-dos, and share ideas. Pick one of our stock themes, or create your custom theme with statics."
+    },
+    {
+      "id": 4,
+      "logo": "../../assets/image/webAppCreative/icons/5.png",
+      "author": "Gracelyn Mason",
+      "designation": "Senior Marketer",
+      "quote": "Flat item is loaded with the most of collaborative surfaces so you can do quickly take notes, capture to-dos, and share ideas. Pick one of our stock themes, or create your custom theme with statics."
+    }
+  ],
+  "appIntegration": {
+    "sectionTitle": "Lets see what we integrate",
+    "sectionDesc": "We recently had to jump on 10+ different plugin across eight different countries to find the right owner and escalation process.",
+    "apps": [
+      {
+        "id": 1,
+        "icon": "../../assets/image/webAppCreative/icons/nginx.png",
+        "name": "nginx",
+        "bgColor": null,
+        "isBlurred": false
+      },
+      {
+        "id": 2,
+        "icon": "../../assets/image/webAppCreative/icons/google-cloud.png",
+        "name": "googleCloud",
+        "bgColor": "#fff",
+        "isBlurred": false
+      },
+      {
+        "id": 3,
+        "icon": "../../assets/image/webAppCreative/icons/slack.png",
+        "name": "slack",
+        "bgColor": null,
+        "isBlurred": false
+      },
+      {
+        "id": 4,
+        "icon": "../../assets/image/webAppCreative/icons/dropbox.png",
+        "name": "dropbox",
+        "bgColor": "#fff",
+        "isBlurred": false
+      },
+      {
+        "id": 5,
+        "icon": "../../assets/image/webAppCreative/icons/drive.png",
+        "name": "drive",
+        "bgColor": null,
+        "isBlurred": false
+      },
+      {
+        "id": 6,
+        "icon": "../../assets/image/webAppCreative/icons/asana.png",
+        "name": "asana",
+        "bgColor": null,
+        "isBlurred": false
+      },
+      {
+        "id": 7,
+        "icon": "../../assets/image/webAppCreative/icons/github.png",
+        "name": "github",
+        "bgColor": "#fff",
+        "isBlurred": false
+      },
+      {
+        "id": 8,
+        "icon": "../../assets/image/webAppCreative/icons/zeplin.png",
+        "name": "zeplin",
+        "bgColor": null,
+        "isBlurred": false
+      },
+      {
+        "id": 9,
+        "icon": "../../assets/image/webAppCreative/icons/nginx.png",
+        "name": "nginx",
+        "bgColor": null,
+        "isBlurred": true
+      },
+      {
+        "id": 10,
+        "icon": "../../assets/image/webAppCreative/icons/messenger.png",
+        "name": "messenger",
+        "bgColor": null,
+        "isBlurred": false
+      },
+      {
+        "id": 11,
+        "icon": "../../assets/image/webAppCreative/icons/zoom.png",
+        "name": "zoom",
+        "bgColor": null,
+        "isBlurred": false
+      },
+      {
+        "id": 12,
+        "icon": "../../assets/image/webAppCreative/icons/smashing-mag.png",
+        "name": "smashingMag",
+        "bgColor": "#fff",
+        "isBlurred": false
+      },
+      {
+        "id": 13,
+        "icon": "../../assets/image/webAppCreative/icons/fontawesome.png",
+        "name": "fontAwesome",
+        "bgColor": null,
+        "isBlurred": false
+      },
+      {
+        "id": 14,
+        "icon": "../../assets/image/webAppCreative/icons/drive.png",
+        "name": "google drive",
+        "bgColor": null,
+        "isBlurred": true
+      }
+    ]
+  },
+  "pricing": [
+    {
+      "id": 1,
+      "price": {
+        "monthly": 16,
+        "annual": 187
+      },
+      "currencySymbol": "$",
+      "isActive": false,
+      "title": "Starter Pack",
+      "desc": "Complete time tracking & proper reporting",
+      "icon": "../../assets/image/webAppCreative/icons/icecream.png",
+      "button": {
+        "label": "Start 6 month trial",
+        "link": "#"
+      },
+      "details": {
+        "label": "What’s include",
+        "link": "#"
+      }
+    },
+    {
+      "id": 2,
+      "price": {
+        "monthly": 29,
+        "annual": 338
+      },
+      "currencySymbol": "$",
+      "isActive": true,
+      "title": "Premium Pack",
+      "desc": "Effortless team with time management.",
+      "icon": "../../assets/image/webAppCreative/icons/donut.png",
+      "button": {
+        "label": "Start 6 month trial",
+        "link": "#"
+      },
+      "details": {
+        "label": "What’s include",
+        "link": "#"
+      }
+    },
+    {
+      "id": 3,
+      "price": {
+        "monthly": 35,
+        "annual": 405
+      },
+      "currencySymbol": "$",
+      "isActive": false,
+      "title": "Ultimate Pack",
+      "desc": "A custom plan for complex or large organization.",
+      "icon": "../../assets/image/webAppCreative/icons/pizza.png",
+      "button": {
+        "label": "Start 6 month trial",
+        "link": "#"
+      },
+      "details": {
+        "label": "What’s include",
+        "link": "#"
+      }
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "date": "June 3, 2020",
+      "image": {
+        "src": "../../assets/image/webAppCreative/post1.png",
+        "alt": ""
+      },
+      "title": "The three Fundamental Rules to Keep Your Website Goal Orientated",
+      "excerpt": {
+        "label": "Learn More",
+        "link": "#"
+      }
+    },
+    {
+      "id": 2,
+      "date": "Dec 8, 2020",
+      "image": {
+        "src": "../../assets/image/webAppCreative/post2.png",
+        "alt": ""
+      },
+      "title": "Five Common Mistakes Teams Make When Tracking Performance",
+      "excerpt": {
+        "label": "Learn More",
+        "link": "#"
+      }
+    },
+    {
+      "id": 3,
+      "date": "Dec 8, 2020",
+      "image": {
+        "src": "../../assets/image/webAppCreative/post3.png",
+        "alt": ""
+      },
+      "title": "Why You Might Want to Reconsider with Tracking First Meaningful Paint",
+      "excerpt": {
+        "label": "Learn More",
+        "link": "#"
+      }
+    }
+  ],
+  "faqs": [
+    {
+      "id": 1,
+      "title": "01. What is the process of project final delivery system?",
+      "description": "Our Customer Experience Team is available 7 days a week and we offer 2 ways to get in contact.Email and Chat. We try to reply quickly, so you need not to wait too long for a response!."
+    },
+    {
+      "id": 2,
+      "title": "02. What is payment process, believe in upfront?",
+      "description": "Please read the documentation carefully. We also have some online  video tutorials regarding this issue. If the problem remains, Please Open a ticket in the support forum."
+    },
+    {
+      "id": 3,
+      "title": "03. What is the process of project final delivery system?",
+      "description": "At first, Please check your internet connection. We also have some online  video tutorials regarding this issue. If the problem remains, Please Open a ticket in the support forum."
+    },
+    {
+      "id": 4,
+      "title": "04. Estimate project budget for categories?",
+      "description": "Our core members created this place for Designers, Developers, Product Owners, Marketing Managers, startup's, Freelancers and really for everyone who appreciates fine designs and well-crafted sites. We want to inspire and support you in the process of creating your own unique website projects."
+    },
+    {
+      "id": 5,
+      "title": "05. All about project customization & monetization",
+      "description": "We are giving the update of this theme continuously. You will receive an email Notification when we push an update. Always try to be updated with us."
+    }
+  ],
+  "footerTop": {
+    "about": {
+      "logo": {
+        "src": "../../assets/image/webAppCreative/logo.png",
+        "alt": "Web App Creative"
+      },
+      "text": "We run Advanced Search reports on the criteria you care about to see how work is progressing and where to focus your effort."
+    },
+    "widgets": [
+      {
+        "id": 2,
+        "title": "About Us",
+        "list": [
+          {
+            "id": 1,
+            "title": "Support Center",
+            "link": "#"
+          },
+          {
+            "id": 2,
+            "title": "Customer Support",
+            "link": "#"
+          },
+          {
+            "id": 3,
+            "title": "About Us",
+            "link": "#"
+          },
+          {
+            "id": 4,
+            "title": "Copyright",
+            "link": "#"
+          },
+          {
+            "id": 5,
+            "title": "Popular Campaign",
+            "link": "#"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Our Information",
+        "list": [
+          {
+            "id": 1,
+            "title": "Return Policy ",
+            "link": "#"
+          },
+          {
+            "id": 2,
+            "title": "Privacy Policy",
+            "link": "#"
+          },
+          {
+            "id": 3,
+            "title": "Terms & Conditions",
+            "link": "#"
+          },
+          {
+            "id": 4,
+            "title": "Site Map",
+            "link": "#"
+          },
+          {
+            "id": 5,
+            "title": "Store Hours",
+            "link": "#"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "My Account",
+        "list": [
+          {
+            "id": 1,
+            "title": "Press inquiries",
+            "link": "#"
+          },
+          {
+            "id": 2,
+            "title": "Social media ",
+            "link": "#"
+          },
+          {
+            "id": 3,
+            "title": "directories",
+            "link": "#"
+          },
+          {
+            "id": 4,
+            "title": "Images & B-roll",
+            "link": "#"
+          },
+          {
+            "id": 5,
+            "title": "Permissions",
+            "link": "#"
+          }
+        ]
+      }
+    ],
+    "contactInfo": {
+      "title": "Contact info",
+      "address": "Mohakhali DOHS, Amsterdam, Netherlands",
+      "phone": "+31 62 19 22 705",
+      "openingTime": "7 Days - 8am - 10pm",
+      "email": "info@redqteam.com"
+    }
+  },
+  "footer": {
+    "copyright": "Copyright © 2021 Superprops. All rights reserved",
+    "nav": [
+      {
+        "id": 1,
+        "title": "Support",
+        "link": "#"
+      },
+      {
+        "id": 2,
+        "title": "Hiring",
+        "link": "#"
+      },
+      {
+        "id": 3,
+        "title": "Privacy",
+        "link": "#"
+      },
+      {
+        "id": 4,
+        "title": "Terms",
+        "link": "#"
+      }
+    ],
+    "socialLinks": [
+      {
+        "id": 1,
+        "link": "http://facebook.com",
+        "icon": "../../assets/image/webAppCreative/facebook.png",
+        "label": "Facebook"
+      },
+      {
+        "id": 2,
+        "link": "http://twitter.com",
+        "icon": "../../assets/image/webAppCreative/twitter.png",
+        "label": "Twitter"
+      },
+      {
+        "id": 3,
+        "link": "http://dribbble.com",
+        "icon": "../../assets/image/webAppCreative/dribbble.png",
+        "label": "Dribbble"
+      }
+    ]
+  }
+}

@@ -104,6 +104,39 @@ jobs:
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
 
+  marketing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Read VERSION
+        id: package
+        uses: martinbeentjes/npm-get-version-action@master
+      - name: Echo VERSION
+        run: echo ${{ steps.package.outputs.current-version }}
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: all
+      - name: Setup BuildX
+        uses: docker/setup-buildx-action@v2
+        id: buildx
+        with:
+          install: true
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_NEW_USERNAME }}
+          password: ${{ secrets.DOCKER_NEW_PASSWORD }}
+      - name: Build and push Marketing
+        uses: docker/build-push-action@v4
+        with:
+          builder: ${{ steps.buildx.outputs.name }}
+          file: marketing/Dockerfile
+          context: marketing
+          tags: retrospected/marketing:${{ steps.package.outputs.current-version }}
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          push: true
+
   maintenance:
     runs-on: ubuntu-latest
     steps:
