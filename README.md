@@ -85,6 +85,10 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 4.19.2
+
+- Migration to Google Analytics V4
+
 ### Version 4.19.1
 
 - Hotfix: Issue with password account creation
