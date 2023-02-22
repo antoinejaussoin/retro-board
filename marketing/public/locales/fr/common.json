@@ -128,10 +128,14 @@
 		"heading": "Quoi de neuf à Retrospected ?"
 	},
 	"FAQ": {
-		"heading": "Vos Questions",
+		"heading": "Vos Questions (à traduire)",
 		"data": [
-			{"question": "Pourquoi retrospected ?", "answer": "Parce-qu'on poutre"},
-			{"question": "Qu'est-ce que c'est ?", "answer": "C'est un truc qui fait des trucs"}
+			{"question": "How are payments handled?", "answer": "Payments are handled by our partner, Stripe. No payment information is stored by Retrospected."},
+			{"question": "Do you give Pro licenses for free in some cases?", "answer": "If you are using this product as a charity, or you are in education, send us an email and we'll sort out a free license for you. Contact us."},
+			{"question": "Will I pay more for some features?", "answer": "We only have 2 tiers: Free and Pro. All features are unlocked when you subscribe to a Pro account."},
+			{"question": "Is it possible to pay yearly?", "answer": "You can! Simply select this option at checkout and you will get one month free per year."},
+			{"question": "Can I cancel my plan?", "answer": "Yes. The subscription can be stopped at any time, and will end at the end of your current billing month."},
+			{"question": "Is there any limit?", "answer": "There is no limit on the amount of data stored, subject to fair-use policy. On free accounts, you are limited to 40 posts."}
 		]
 	},
 	"CTA": {
