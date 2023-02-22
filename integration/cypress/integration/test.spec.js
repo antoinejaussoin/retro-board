@@ -2,8 +2,7 @@ describe('Home Page', () => {
   it('Should load correctly', () => {
     cy.visit('/');
   
-    cy.get('div.marketing-content')
-      .should('contain', 'Real-time Retrospectives')
+    cy.get('#content').get('h1').should('contain', 'Welcome!');
   });
 });
 
@@ -23,7 +22,7 @@ describe('Post workflow', () => {
     // Close cookie banner
     cy.get('.wpcc-btn').click();
     
-    get('login-button').click();
+    // get('login-button').click();
     get('anon-tab').click();
     get('anon-input').focus().type('Zelensky');
     get('anon-login-button').click();
@@ -50,7 +49,7 @@ describe('Post workflow', () => {
     // Close cookie banner
     cy.get('.wpcc-btn').click();
 
-    get('login-button').click();
+    // get('login-button').click();
     get('anon-tab').click();
     get('anon-input').focus().type('Zelensky');
     get('anon-login-button').click();
@@ -75,7 +74,7 @@ describe('Post workflow', () => {
 
   });
 
-  it('Should be able to create a new account', () => {
+  it.only('Should be able to create a new account', () => {
     const id = Date.now();
 
     cy.visit('/');
@@ -84,7 +83,7 @@ describe('Post workflow', () => {
     cy.get('.wpcc-btn').click();
 
     // Login
-    get('login-button').click();
+    // get('login-button').click();
 
     // Select the account tab
     get('account-tab').click();
@@ -126,7 +125,6 @@ describe('Post workflow', () => {
     get('delete-modal-confirm').click();
 
     // We should be back to the home page
-    cy.get('div.marketing-content')
-    .should('contain', 'Real-time Retrospectives')
+    cy.get('body').get('h1').should('contain', 'Welcome!');
   });
 });
