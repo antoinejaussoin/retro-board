@@ -85,6 +85,10 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 4.19.3 (hotfix)
+
+- Fix Pro account list
+
 ### Version 4.19.2
 
 - Migration to Google Analytics V4

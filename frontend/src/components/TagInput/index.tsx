@@ -39,4 +39,5 @@ const Container = styled.div`
   display: flex;
   gap: 5px;
   align-items: center;
+  flex-wrap: wrap;
 `;

@@ -1,6 +1,6 @@
 {
   "name": "@retrospected/frontend",
-  "version": "4.19.2",
+  "version": "4.19.3",
   "license": "GNU GPLv3",
   "private": true,
   "dependencies": {
