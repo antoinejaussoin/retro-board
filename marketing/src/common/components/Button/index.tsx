@@ -15,6 +15,15 @@ type ButtonProps = {
   isMaterial?: boolean;
   isLoading?: boolean;
   className?: string;
+  colors?:
+    | 'primary'
+    | 'secondary'
+    | 'warning'
+    | 'error'
+    | 'primaryWithBg'
+    | 'secondaryWithBg'
+    | 'warningWithBg'
+    | 'errorWithBg';
 };
 
 const Button = ({

@@ -16,7 +16,6 @@ import natwest from './natwest.png';
 import novartis from './novartis.png';
 import pwc from './pwc.png';
 import siemens from './siemens.png';
-import target from './target.png';
 import vodafone from './vodafone.png';
 import dbahn from './db.png';
 
@@ -93,6 +92,7 @@ const settings: Settings = {
 
 const Clients = () => {
   const { t } = useTranslation();
+
   return (
     <Section>
       <Container width="1400px">

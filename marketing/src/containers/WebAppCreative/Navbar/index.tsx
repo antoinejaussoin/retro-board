@@ -105,14 +105,14 @@ const Navbar = ({
               menuItems={menuItems}
               offset={-70}
             />
-            <Link href="#" legacyBehavior>
-              <a className="navbar_button navbar_button_one" href={appUrl}>
-                <Button {...button} title={t('Nav.login')} />
+            <Link href={`${appUrl}/subscribe`} legacyBehavior>
+              <a className="navbar_button navbar_button_one">
+                <Button {...button} title={t('Nav.subscribe')} />
               </a>
             </Link>
-            <Link href="#" legacyBehavior>
-              <a className="navbar_button navbar_button_two" href={appUrl}>
-                <Button {...button} title={t('Nav.join')} />
+            <Link href={appUrl!} legacyBehavior>
+              <a className="navbar_button navbar_button_two">
+                <Button {...button} title={t('Nav.login')} />
               </a>
             </Link>
             <Drawer

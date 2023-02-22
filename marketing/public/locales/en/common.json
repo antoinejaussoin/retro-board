@@ -16,8 +16,8 @@
 		"testimonial": "Testimonials",
 		"pricing": "Pricing",
 		"faq": "FAQ",
-		"login": "Login Now",
-		"join": "Join Free"
+		"subscribe": "Subscribe",
+		"login": "Login"
 	},
 	"Clients": {
 		"main": "Join the hundreds of companies using our product"

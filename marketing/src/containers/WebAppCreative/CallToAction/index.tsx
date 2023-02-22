@@ -27,9 +27,9 @@ const CallToAction = () => {
           <Heading content={t('CTA.heading')} />
           <Text content={t('CTA.description')} />
           <a href={appUrl}>
-            <Button title={t('CTA.button')!} />
+            <Button title={t('CTA.button')!} colors="secondaryWithBg" />
           </a>
-          <span>{t('CTA.hint')}</span>
+          {/* <span>{t('CTA.hint')}</span> */}
         </Content>
       </Container>
       <NextImage
