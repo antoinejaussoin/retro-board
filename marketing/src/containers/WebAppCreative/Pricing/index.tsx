@@ -95,7 +95,12 @@ const Pricing = () => {
           <button className={isMonthly ? 'active' : undefined}>
             {t('Pricing.monthly')}
           </button>
-          <span className="switcher" onClick={handleToggle} role="button">
+          <span
+            className="switcher"
+            onClick={handleToggle}
+            role="button"
+            title="Switch between monthly and yearly"
+          >
             <span
               className={`switcher-button ${isMonthly ? 'left' : 'right'}`}
             />

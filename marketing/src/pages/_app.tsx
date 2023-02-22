@@ -18,10 +18,7 @@ function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <meta charSet="utf-8" />
-        <meta
-          name="viewport"
-          content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width"
-        />
+        <meta name="viewport" content="initial-scale=1.0,width=device-width" />
         <meta name="apple-mobile-web-app-title" content="Retrospected" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta
