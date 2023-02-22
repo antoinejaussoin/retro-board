@@ -27,6 +27,7 @@ import useBackendCapabilities from './global/useBackendCapabilities';
 import useIsPro from 'auth/useIsPro';
 import ProButton from 'components/ProButton';
 import { useTranslation } from 'react-i18next';
+import { Welcome } from 'views/Welcome';
 
 const Home = lazy(() => import('./views/Home'));
 const Game = lazy(() => import('./views/Game'));
@@ -141,7 +142,7 @@ function App() {
       </AppBar>
       <Suspense fallback={<CodeSplitLoader />}>
         <Routes>
-          <Route path="/" element={user ? <Home /> : null} />
+          <Route path="/" element={user ? <Home /> : <Welcome />} />
           <Route path="game/:gameId/*" element={<Game />} />
           <Route path="validate" element={<ValidatePage />} />
           <Route path="reset" element={<ResetPasswordPage />} />
