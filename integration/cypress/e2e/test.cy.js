@@ -12,6 +12,7 @@ function get(name, rest) {
 }
 
 
+
 describe('Post workflow', () => {
   it('Should login and write a post', () => {
     cy.visit('/');
@@ -22,7 +23,7 @@ describe('Post workflow', () => {
     // Close cookie banner
     cy.get('.wpcc-btn').click();
     
-    // get('login-button').click();
+    get('login-button').click();
     get('anon-tab').click();
     get('anon-input').focus().type('Zelensky');
     get('anon-login-button').click();
@@ -49,7 +50,7 @@ describe('Post workflow', () => {
     // Close cookie banner
     cy.get('.wpcc-btn').click();
 
-    // get('login-button').click();
+    get('login-button').click();
     get('anon-tab').click();
     get('anon-input').focus().type('Zelensky');
     get('anon-login-button').click();
@@ -74,7 +75,7 @@ describe('Post workflow', () => {
 
   });
 
-  it.only('Should be able to create a new account', () => {
+  it('Should be able to create a new account', () => {
     const id = Date.now();
 
     cy.visit('/');
@@ -83,7 +84,7 @@ describe('Post workflow', () => {
     cy.get('.wpcc-btn').click();
 
     // Login
-    // get('login-button').click();
+    get('login-button').click();
 
     // Select the account tab
     get('account-tab').click();
@@ -98,6 +99,16 @@ describe('Post workflow', () => {
 
     // Register
     get('register-button').click();
+
+    cy.wait(2000);
+
+    cy.reload();
+
+    get('login-button').click();
+    get('account-tab').click();
+    get('account-login-input').focus().type(`vlad.zelensky.${id}@ukraine.ua`);
+    get('account-password-input').focus().type('A-str0ng-Pa33!çà');
+    get('account-login-button').click();
 
     // Create a new session, and add some messages
     get('new-session-button').click();

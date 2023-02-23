@@ -58,6 +58,7 @@ const Login = ({
           autoFocus
           startIcon={loading ? <CircularProgress size="1em" /> : null}
           disabled={!loginEmail || !loginPassword || loading}
+          data-cy="account-login-button"
         >
           {t('AccountLogin.loginButton')}
         </Button>
@@ -79,6 +80,7 @@ const Login = ({
         fullWidth
         style={{ marginTop: 20 }}
         leftIcon={<Email />}
+        inputProps={{ 'data-cy': 'account-login-input' }}
       />
       <Input
         value={loginPassword}
@@ -90,6 +92,7 @@ const Login = ({
         fullWidth
         style={{ marginTop: 20 }}
         leftIcon={<VpnKey />}
+        inputProps={{ 'data-cy': 'account-password-input' }}
       />
       <div style={{ marginTop: 20 }} />
       <Links>

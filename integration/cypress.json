@@ -1,6 +1,0 @@
-{
-	"baseUrl": "http://localhost:3000",
-	"env": {
-		"backend_delay": 0
-	}
-}
