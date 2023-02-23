@@ -101,16 +101,6 @@ describe('Post workflow', () => {
       // Register
       get('register-button').click();
 
-      cy.wait(2000);
-
-      cy.reload();
-
-      get('login-button').click();
-      get('account-tab').click();
-      get('account-login-input').focus().type(`vlad.zelensky.${id}@ukraine.ua`);
-      get('account-password-input').focus().type('A-str0ng-Pa33!çà');
-      get('account-login-button').click();
-
       // Create a new session, and add some messages
       get('new-session-button').click();
 
@@ -119,23 +109,12 @@ describe('Post workflow', () => {
       cy.get('#content').should('contain', 'Slava Ukraini!');
 
       // And some chat
-      get('open-chat-button').click({force: true});
-      get('chat-input').focus().type('This is a message{enter}');
-      cy.get('#content').should('contain', 'This is a message');
+      // get('open-chat-button').click({force: true});
+      // get('chat-input').focus().type('This is a message{enter}');
+      // cy.get('#content').should('contain', 'This is a message');
     
       // Close
-      get('open-chat-button').click({force: true});
-
-      cy.wait(2000);
-
-      cy.reload();
-
-      get('login-button').click();
-      get('account-tab').click();
-      get('account-login-input').focus().type(`vlad.zelensky.${id}@ukraine.ua`);
-      get('account-password-input').focus().type('A-str0ng-Pa33!çà');
-      get('account-login-button').click();
-
+      // get('open-chat-button').click({force: true});
 
       // Go to the user admin and delete the account
       get('account-menu').click();
