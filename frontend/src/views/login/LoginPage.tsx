@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
-import Login from '../../auth/modal/LoginModal';
+import LoginModal from '../../auth/modal/LoginModal';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ export default function LoginPage() {
   }, [navigate]);
   return (
     <Container>
-      <Login onClose={handleClose} />
+      <LoginModal onClose={handleClose} />
     </Container>
   );
 }

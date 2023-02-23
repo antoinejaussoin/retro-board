@@ -9,7 +9,7 @@ import LoginModal from './modal/LoginModal';
 import { logout } from '../api';
 import UserContext from './Context';
 import Avatar from '../components/Avatar';
-import { useNavigate } from 'react-router-dom';
+import { useMatch, useNavigate } from 'react-router-dom';
 import { Key, Logout, Star } from '@mui/icons-material';
 import { colors, Divider, ListItemIcon, ListItemText } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -27,6 +27,7 @@ const AccountMenu = () => {
   const openMenu = useCallback(() => setMenuOpen(true), []);
   const user = useUser();
   const isAdmin = useIsAdmin();
+  const isOnRoot = useMatch('/');
   const isNotAnon = user && user.accountType !== 'anonymous';
 
   const handleModalOpen = useCallback(
@@ -121,6 +122,11 @@ const AccountMenu = () => {
       </div>
     );
   }
+
+  if (isOnRoot) {
+    return null;
+  }
+
   return (
     <>
       <Button
