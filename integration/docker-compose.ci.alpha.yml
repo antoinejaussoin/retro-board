@@ -1,7 +1,7 @@
 version: '3'
 services:
   cypress:
-    image: "cypress/included:4.4.0"
+    image: "cypress/included:12.6.0"
     ipc: host
     depends_on:
       - frontend

@@ -11,3 +11,6 @@ local:
 	yarn
 	yarn test
 	docker-compose down
+
+alpha:
+	docker-compose -f ./docker-compose.ci.alpha.yml up --exit-code-from cypress
