@@ -126,6 +126,17 @@ describe('Post workflow', () => {
       // Close
       get('open-chat-button').click({force: true});
 
+      cy.wait(2000);
+
+      cy.reload();
+
+      get('login-button').click();
+      get('account-tab').click();
+      get('account-login-input').focus().type(`vlad.zelensky.${id}@ukraine.ua`);
+      get('account-password-input').focus().type('A-str0ng-Pa33!çà');
+      get('account-login-button').click();
+
+
       // Go to the user admin and delete the account
       get('account-menu').click();
       get('account-menu-account').click();
