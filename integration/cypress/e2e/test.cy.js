@@ -76,66 +76,68 @@ describe('Post workflow', () => {
   });
 
   it('Should be able to create a new account', () => {
-    const id = Date.now();
+    cy.session('create-account', () => {
+      const id = Date.now();
 
-    cy.visit('/');
+      cy.visit('/');
 
-    // Close cookie banner
-    cy.get('.wpcc-btn').click();
+      // Close cookie banner
+      cy.get('.wpcc-btn').click();
 
-    // Login
-    get('login-button').click();
+      // Login
+      get('login-button').click();
 
-    // Select the account tab
-    get('account-tab').click();
+      // Select the account tab
+      get('account-tab').click();
 
-    // Select register
-    get('register').click();
+      // Select register
+      get('register').click();
 
-    // Add some data
-    get('register-name').type('V Zelensky');
-    get('register-email').type(`vlad.zelensky.${id}@ukraine.ua`);
-    get('register-password').type('A-str0ng-Pa33!çà');
+      // Add some data
+      get('register-name').type('V Zelensky');
+      get('register-email').type(`vlad.zelensky.${id}@ukraine.ua`);
+      get('register-password').type('A-str0ng-Pa33!çà');
 
-    // Register
-    get('register-button').click();
+      // Register
+      get('register-button').click();
 
-    cy.wait(2000);
+      cy.wait(2000);
 
-    cy.reload();
+      cy.reload();
 
-    get('login-button').click();
-    get('account-tab').click();
-    get('account-login-input').focus().type(`vlad.zelensky.${id}@ukraine.ua`);
-    get('account-password-input').focus().type('A-str0ng-Pa33!çà');
-    get('account-login-button').click();
+      get('login-button').click();
+      get('account-tab').click();
+      get('account-login-input').focus().type(`vlad.zelensky.${id}@ukraine.ua`);
+      get('account-password-input').focus().type('A-str0ng-Pa33!çà');
+      get('account-login-button').click();
 
-    // Create a new session, and add some messages
-    get('new-session-button').click();
+      // Create a new session, and add some messages
+      get('new-session-button').click();
 
-    // And write a post
-    get('column-input').first().focus().type('Slava Ukraini!{enter}');
-    cy.get('#content').should('contain', 'Slava Ukraini!');
+      // And write a post
+      get('column-input').first().focus().type('Slava Ukraini!{enter}');
+      cy.get('#content').should('contain', 'Slava Ukraini!');
 
-    // And some chat
-    get('open-chat-button').click({force: true});
-    get('chat-input').focus().type('This is a message{enter}');
-    cy.get('#content').should('contain', 'This is a message');
-   
-    // Close
-    get('open-chat-button').click({force: true});
+      // And some chat
+      get('open-chat-button').click({force: true});
+      get('chat-input').focus().type('This is a message{enter}');
+      cy.get('#content').should('contain', 'This is a message');
+    
+      // Close
+      get('open-chat-button').click({force: true});
 
-    // Go to the user admin and delete the account
-    get('account-menu').click();
-    get('account-menu-account').click();
-    get('delete-account-button').click();
-    get('delete-modal-sessions').click();
-    get('delete-modal-posts').click();
-    get('delete-modal-votes').click();
-    get('delete-modal-delete-button').click();
-    get('delete-modal-confirm').click();
+      // Go to the user admin and delete the account
+      get('account-menu').click();
+      get('account-menu-account').click();
+      get('delete-account-button').click();
+      get('delete-modal-sessions').click();
+      get('delete-modal-posts').click();
+      get('delete-modal-votes').click();
+      get('delete-modal-delete-button').click();
+      get('delete-modal-confirm').click();
 
-    // We should be back to the home page
-    cy.get('body').get('h1').should('contain', 'Welcome!');
+      // We should be back to the home page
+      cy.get('body').get('h1').should('contain', 'Welcome!');
+    });
   });
 });
