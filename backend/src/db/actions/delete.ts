@@ -21,13 +21,28 @@ export async function deleteAccount(
   }
 
   return await transaction(async (manager) => {
-    await delMessages(manager, options.deleteSessions, user, anonymousAccount);
-    await delVisits(manager, options.deleteSessions, user, anonymousAccount);
-    await delVotes(manager, options.deleteVotes, user, anonymousAccount);
-    await delPosts(manager, options.deletePosts, user, anonymousAccount);
-    await delSessions(manager, options.deleteSessions, user, anonymousAccount);
-    await delUserAccount(manager, user);
-    return true;
+    try {
+      await delMessages(
+        manager,
+        options.deleteSessions,
+        user,
+        anonymousAccount
+      );
+      await delVisits(manager, options.deleteSessions, user, anonymousAccount);
+      await delVotes(manager, options.deleteVotes, user, anonymousAccount);
+      await delPosts(manager, options.deletePosts, user, anonymousAccount);
+      await delSessions(
+        manager,
+        options.deleteSessions,
+        user,
+        anonymousAccount
+      );
+      await delUserAccount(manager, user);
+      return true;
+    } catch (ex) {
+      console.log('Error while trying to delete account', ex);
+      throw ex;
+    }
   });
 }
 
