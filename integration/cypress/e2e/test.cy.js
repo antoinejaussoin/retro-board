@@ -109,12 +109,40 @@ describe('Post workflow', () => {
       cy.get('#content').should('contain', 'Slava Ukraini!');
 
       // And some chat
-      // get('open-chat-button').click({force: true});
-      // get('chat-input').focus().type('This is a message{enter}');
-      // cy.get('#content').should('contain', 'This is a message');
+      get('open-chat-button').click({force: true});
+      get('chat-input').focus().type('This is a message{enter}');
+      cy.get('#content').should('contain', 'This is a message');
     
       // Close
-      // get('open-chat-button').click({force: true});
+      get('open-chat-button').click({force: true});
+    });
+  });
+
+  it('Should be able to delete an account', () => {
+    cy.session('delete-account', () => {
+      const id = Date.now();
+
+      cy.visit('/');
+
+      // Close cookie banner
+      cy.get('.wpcc-btn').click();
+
+      // Login
+      // get('login-button').click();
+
+      // Select the account tab
+      get('account-tab').click();
+
+      // Select register
+      get('register').click();
+
+      // Add some data
+      get('register-name').type('V Zelensky');
+      get('register-email').type(`vlad.zelensky.${id}@ukraine.ua`);
+      get('register-password').type('A-str0ng-Pa33!çà');
+
+      // Register
+      get('register-button').click();
 
       // Go to the user admin and delete the account
       get('account-menu').click();
