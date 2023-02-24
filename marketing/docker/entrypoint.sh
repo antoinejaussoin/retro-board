@@ -19,6 +19,7 @@ for c in $(makeSedCommands); do
     COMMAND="$c $f"
     eval $COMMAND
   done
+  eval "$c ./server.js"
 done
 
 echo "Starting Nextjs"

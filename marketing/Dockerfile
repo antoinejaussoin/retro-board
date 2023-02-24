@@ -44,6 +44,7 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/docker/entrypoint.sh ./entrypoint.sh
 
 RUN ["chmod", "+x", "/app/entrypoint.sh"]
+RUN ["chown", "nextjs:nodejs", "/app"]
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
