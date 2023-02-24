@@ -11,7 +11,7 @@
 	},
 	"Nav": {
 		"home": "Zuhause",
-		"howTo": "Wie man",
+		"howTo": "Warum?",
 		"features": "Eigenschaften",
 		"testimonial": "Referenzen",
 		"pricing": "Preis",
@@ -23,80 +23,91 @@
 		"main": "Schließen Sie sich den Hunderten von Unternehmen mit unserem Produkt an"
 	},
 	"HowItWorks": {
-		"heading": "Wir sind anders, we..."
+		"heading": "Wir sind anders, we...",
+		"1": {
+			"title": "Wir sind schnell",
+			"text": "Sie können Ihr Retro mit einem Klick starten."
+		},
+		"2": {
+			"title": "Wir sind mehrsprachig",
+			"text": "Unsere App ist in 15 Sprachen verfügbar!"
+		},
+		"3": {
+			"title": "Wir sind anpassbar",
+			"text": "Sie können die App an Ihre Bedürfnisse anpassen. Spalten, Stimmen, Emojis, Sie benennen."
+		},
+		"4": {
+			"title": "Wir können selbst gehostet werden",
+			"text": "Wenn Sie die vollständige Kontrolle über Ihre Daten wollen, können Sie selbst Host Retrospektion."
+		}
 	},
 	"Testimonials": {
 		"heading": "Was die Leute über uns sagen",
 		"1": {
-			"author": "Johnny Simpson",
-			"designation": "Leiter des Designs",
-			"quote": "Jedes Zimmer ist mit den meisten kollaborativen Oberflächen beladen, so dass Sie schnell Notizen aufnehmen und Ideen austauschen können. Wählen Sie eines unserer Standardthemen oder erstellen Sie Ihr individuelles Design mit den Editoren."
+			"author": "Jean-Laurent Wotton",
+			"designation": "Manager",
+			"quote": "---"
 		},
 		"2": {
-			"author": "Johnny Simpson",
-			"designation": "Leiter des Designs",
-			"quote": "Jedes Zimmer ist mit den meisten kollaborativen Oberflächen beladen, so dass Sie schnell Notizen aufnehmen und Ideen austauschen können. Wählen Sie eines unserer Standardthemen oder erstellen Sie Ihr individuelles Design mit den Editoren."
+			"author": "Frank Becker",
+			"designation": "Liefer-Team-Gruppe",
+			"quote": "Ihr Text hier"
 		},
 		"3": {
-			"author": "Johnny Simpson",
-			"designation": "Leiter des Designs",
-			"quote": "Jedes Zimmer ist mit den meisten kollaborativen Oberflächen beladen, so dass Sie schnell Notizen aufnehmen und Ideen austauschen können. Wählen Sie eines unserer Standardthemen oder erstellen Sie Ihr individuelles Design mit den Editoren."
-		},
-		"4": {
-			"author": "Johnny Simpson",
-			"designation": "Leiter des Designs",
-			"quote": "Jedes Zimmer ist mit den meisten kollaborativen Oberflächen beladen, so dass Sie schnell Notizen aufnehmen und Ideen austauschen können. Wählen Sie eines unserer Standardthemen oder erstellen Sie Ihr individuelles Design mit den Editoren."
+			"author": "Allein-Klaire Allain",
+			"designation": "Senior Manager",
+			"quote": "Ich habe Retrospected am Ende jedes Sprints verwendet, um Feedback von meinem Team zu erhalten. Es ist als Werkzeug von unschätzbarem Wert und sehr einfach zu bedienen."
 		}
 	},
 	"Pricing": {
 		"heading": "Entdecken Sie unsere aufregenden Preise",
 		"monthly": "Monatlich",
 		"yearly": "Jährlich",
+		"perMonth": " / Monat",
+		"perYear": " / Jahr",
 		"currency": "$",
 		"subscribe": "Jetzt abonnieren",
 		"login": "Jetzt anmelden",
 		"basic": {
 			"title": "Einfache",
 			"price": 0,
-			"recurrence": "pro Monat",
+			"plus": "Ihre kostenlose Option",
 			"features": [
 				"Unbegrenzte Retrospektiven",
-				"Unbegrenzte Teammitglieder",
-				"Unbegrenzte Aktionselemente",
+				"Komplette Anpassung",
+				"Giphy-Integration",
+				"Anonyme Konten",
 				"40 Beiträge"
 			]
 		},
 		"pro": {
 			"title": "Pro",
 			"price": "12.9",
-			"recurrence": "pro Monat",
+			"plus": "Alles von Basic, plus:",
 			"features": [
-				"Unbegrenzte Retrospektiven",
-				"Unbegrenzte Teammitglieder",
-				"Unbegrenzte Aktionselemente",
 				"Unbegrenzte Beiträge",
+				"Volle Datenverschlüsselung",
+				"Private Sitzungen",
 				"20 Benutzer"
 			]
 		},
 		"unlimited": {
 			"title": "Unbegrenzt",
 			"price": "49.95",
-			"recurrence": "pro Monat",
+			"plus": "Alles von Pro, plus:",
 			"features": [
-				"Unbegrenzte Retrospektiven",
-				"Unbegrenzte Teammitglieder",
-				"Unbegrenzte Aktionselemente",
-				"Unbegrenzte Beiträge",
-				"Unbegrenzte Benutzer"
+				"Unbegrenzte Pro-Konten",
+				"Alle Benutzer Ihrer Domain sind Pro automatisch"
 			]
 		},
 		"hosted": {
 			"title": "Selbstgehostet",
 			"price": 649,
-			"recurrence": "Einmalige Gebühr",
+			"plus": "Alles von Unlimited, plus:",
 			"features": [
-				"Alles von Unlimited",
-				"Alle Benutzer sind standardmäßig Pro",
+				"Benutzer-Administrationstools",
+				"Alle Benutzer sind Pro-Benutzer",
+				"Lebenslange Updates",
 				"Großartige Dokumentation"
 			]
 		}
@@ -120,10 +131,22 @@
 	"Features": {
 		"heading": "Eine Retrospektive in Sekunden starten",
 		"description": "Ein Retro zu starten oder zu betreten ist so einfach wie 1, 2, 3.",
-		"feature1": "Funktion 1",
-		"feature2": "Funktion 2",
-		"feature3": "Merkmal 3",
-		"feature4": "Funktion 4"
+		"1": {
+			"title": "Reaktionsfähig",
+			"description": "Retrospected funktioniert über alle Gerätegrößen, von Ihrem iPhone bis zu einem 4K-Monitor."
+		},
+		"2": {
+			"title": "Anpassbar",
+			"description": "Retrospected ist hochgradig anpassbar. Sie können die Spalten ändern, das Abstimmungssystem, den Timer etc. optimieren."
+		},
+		"3": {
+			"title": "Sicher",
+			"description": "Es gibt 2 Sicherheitsfunktionen für Pro-Benutzer: die Fähigkeit, den Inhalt lokal zu verschlüsseln (im Browser), und die Fähigkeit, eine Sitzung so zu sperren, dass sie nur von bestimmten Benutzern gesehen werden kann."
+		},
+		"4": {
+			"title": "Mehrsprachig",
+			"description": "Retrospected kommt mit 15 Sprachen."
+		}
 	},
 	"Newsfeed": {
 		"heading": "Was ist neu bei Retrospected"
@@ -173,5 +196,9 @@
 		"phone": "+44 (nicht jetzt verwendet)",
 		"openingTime": "7 Tage - 8 - 22 Uhr",
 		"email": "support@retrospected.com"
+	},
+	"Integration": {
+		"heading": "Integrationen",
+		"description": "Retrospected integriert sich in die Werkzeuge, die Sie bereits verwenden."
 	}
 }

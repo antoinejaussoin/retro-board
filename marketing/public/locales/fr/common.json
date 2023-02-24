@@ -11,7 +11,7 @@
 	},
 	"Nav": {
 		"home": "Accueil",
-		"howTo": "Comment ?",
+		"howTo": "Pourquoi nous?",
 		"features": "Fonctionnalités",
 		"testimonial": "Témoignages",
 		"pricing": "Tarifs",
@@ -20,155 +20,171 @@
 		"login": "Connexion"
 	},
 	"Clients": {
-		"main": "Rejoingnez les centaines d'entreprises qui nous ont fait confiance"
+		"main": "Rejoignez les centaines d'entreprises qui nous ont fait confiance"
 	},
 	"HowItWorks": {
-		"heading": "Nous sommes différents, parce-que..."
+		"heading": "Nous sommes différents, parce-que...",
+		"1": {
+			"title": "Nous sommes rapide",
+			"text": "Vous pouvez commencer votre rétro en un clic."
+		},
+		"2": {
+			"title": "Nous sommes multilingues",
+			"text": "Notre application est disponible en 15 langues !"
+		},
+		"3": {
+			"title": "Nous sommes personnalisables",
+			"text": "Vous pouvez personnaliser l'application selon vos besoins. Colonnes, votes, émoticônes, etc."
+		},
+		"4": {
+			"title": "Vous pouvez héberger Retrospected sur vos serveurs",
+			"text": "Si vous voulez un contrôle total de vos données, vous pouvez héberger Retrospected."
+		}
 	},
 	"Testimonials": {
-		"heading": "Ce que les gens disent de nous",
+		"heading": "Ce que nos clients disent de nous",
 		"1": {
 			"author": "Jean-Laurent Wotton",
 			"designation": "Manager",
 			"quote": "---"
 		},
 		"2": {
-			"author": "FB",
-			"designation": "Directeur Design",
-			"quote": "--"
+			"author": "Frank Becker",
+			"designation": "Delivery Team Group",
+			"quote": "Your text here"
 		},
 		"3": {
 			"author": "Anne-Claire Allain",
 			"designation": "Senior Manager",
-			"quote": "I have been using Retrospected at the end of every sprint to gather feedback from my team. It has been invaluable as a tool, and very easy to use too."
+			"quote": "J'ai utilisé Retrospected à la fin de chaque sprint pour recueillir les commentaires de mon équipe. Il a été inestimable en tant qu'outil et très facile à utiliser."
 		}
 	},
 	"Pricing": {
-		"heading": "Nos prix",
+		"heading": "Nos tarifs",
 		"monthly": "Par mois",
 		"yearly": "Par an",
+		"perMonth": " / mois",
+		"perYear": " / an",
 		"currency": "€",
-		"subscribe": "Acheter maintenant",
+		"subscribe": "Je m'abonne",
 		"login": "Connectez-vous",
 		"basic": {
-			"title": "Basic",
+			"title": "Basique",
 			"price": 0,
-			"recurrence": "per month",
+			"plus": "Votre option gratuite",
 			"features": [
 				"Retrospectives illimitées",
-				"Unlimited Team Members",
-				"Unlimited Action Items",
-				"40 posts"
+				"Personnalisation totale",
+				"Intégration à Giphy",
+				"Comptes anonymes",
+				"40 publications"
 			]
 		},
 		"pro": {
 			"title": "Pro",
 			"price": "11.9",
-			"recurrence": "par mois",
+			"plus": "Basique, plus:",
 			"features": [
-				"Unlimited Retrospectives",
-				"Unlimited Team Members",
-				"Unlimited Action Items",
-				"Unlimited posts",
-				"20 users"
+				"Posts illimités",
+				"Chiffrement des données",
+				"Sessions privées",
+				"20 utilisateurs"
 			]
 		},
 		"unlimited": {
-			"title": "Unlimited",
+			"title": "Illimité",
 			"price": "49.95",
-			"recurrence": "par mois",
+			"plus": "Tout de Pro, plus :",
 			"features": [
-				"Unlimited Retrospectives",
-				"Unlimited Team Members",
-				"Unlimited Action Items",
-				"Unlimited posts",
-				"Unlimited users"
+				"Comptes Pro illimités",
+				"Tous les utilisateurs de votre domaine sont automatiquement Pro"
 			]
 		},
 		"hosted": {
-			"title": "Self Hosted",
+			"title": "Auto-hébergement",
 			"price": 599,
-			"recurrence": "une seule fois",
+			"plus": "Tout de Illimité, plus :",
 			"features": [
-				"Everything from Unlimited",
-				"All users are Pro by default",
-				"Awesome documentation"
+				"Outil de gestion des utilisateurs",
+				"Tous les utilisateurs sont des utilisateurs Pro",
+				"Mises à jour à vie",
+				"Une documentation géniale"
 			]
 		}
 	},
 	"SelfHosted": {
-		"slogan": "Self Hosting",
-		"title": "A TRADUIRE",
-		"desc": "Keep complete control of your data by self-hosting Retrospected. One-time fee, unlimited updates. Get up and running with our amazing documentation in no time.",
+		"slogan": "Auto-hébergement",
+		"title": "Retrospected sur votre serveur",
+		"desc": "Gardez un contrôle complet de vos données en auto-hébergeant Retrospected. Un seul paiement, des mises à jour illimitées. Installez Retrospected avec notre documentation en un rien de temps.",
 		"features": [
-			"Complete control: your data stays on your premises",
-			"Easy to install",
-			"Administration Panel",
-			"All users are Pro",
-			"Free updates, forever"
+			"Contrôle complet : vos données restent dans vos serveurs",
+			"Facile à installer",
+			"Panneau d'Administration",
+			"Tous les utilisateurs sont Pro",
+			"Mises à jour gratuites, pour toujours"
 		],
 		"button": {
 			"link": "https://docs.retrospected.com",
-			"label": "Discover our documentation"
+			"label": "Découvrez notre documentation"
 		}
 	},
 	"Features": {
 		"heading": "Commencez une rétro en quelques secondes",
 		"description": "Starting or joining a retro is as easy as 1, 2, 3. It's friction-less.",
 		"1": {
-			"title": "Responsive",
-			"description": "Retrospected works across all device sizes, from your iPhone to a 4K monitor."
+			"title": "Adaptatif",
+			"description": "Retrospected fonctionne sur toutes les tailles d'appareil, de votre iPhone à un moniteur 4K."
 		},
 		"2": {
-			"title": "Customisable",
-			"description": "Retrospected is highly customisable. You can change the columns, tweak the voting system, the timer etc."
+			"title": "Personnalisable",
+			"description": "Retrospected est hautement personnalisable. Vous pouvez changer les colonnes, modifier le système de vote, le minuteur, etc."
 		},
 		"3": {
 			"title": "Secure",
-			"description": "There are 2 security features for Pro users: the ability to encrypt the content locally (in browser), and the ability to lock a session so it can only be seen by specific users."
+			"description": "Il y a 2 fonctionnalités de sécurité pour les utilisateurs Pro : la possibilité de chiffrer le contenu localement (dans le navigateur), et la possibilité de verrouiller une session pour qu'elle ne soit visible que par des utilisateurs spécifiques."
 		},
 		"4": {
-			"title": "Multilingual",
-			"description": "Retrospected comes with 15 languages."
+			"title": "Multilingue",
+			"description": "Retrospected est traduit en 15 langues."
 		}
 	},
 	"Newsfeed": {
 		"heading": "Quoi de neuf à Retrospected ?"
 	},
 	"FAQ": {
-		"heading": "Vos Questions (à traduire)",
+		"heading": "Vos Questions",
 		"data": [
 			{
-				"question": "How are payments handled?",
-				"answer": "Payments are handled by our partner, Stripe. No payment information is stored by Retrospected."
+				"question": "Comment les paiements sont-ils gérés ?",
+				"answer": "Les paiements sont traités par notre partenaire, Stripe. Aucune information de paiement n'est stockée par Retrospected."
 			},
 			{
-				"question": "Do you give Pro licenses for free in some cases?",
-				"answer": "If you are using this product as a charity, or you are in education, send us an email and we'll sort out a free license for you. Contact us."
+				"question": "Est-ce que vous donnez des licences Pro gratuitement dans certains cas ?",
+				"answer": "Si vous utilisez ce produit dans le cadre d'un organisme caritatif, ou si vous êtes dans le domaine de l'éducation, envoyez-nous un courriel et nous vous enverrons une licence gratuite."
 			},
 			{
-				"question": "Will I pay more for some features?",
-				"answer": "We only have 2 tiers: Free and Pro. All features are unlocked when you subscribe to a Pro account."
+				"question": "Vais-je payer plus cher pour certaines fonctionnalités?",
+				"answer": "Nous n'avons que 2 niveaux : Gratuit et Pro. Toutes les fonctionnalités sont débloquées lorsque vous vous abonnez à un compte Pro."
 			},
 			{
-				"question": "Is it possible to pay yearly?",
-				"answer": "You can! Simply select this option at checkout and you will get one month free per year."
+				"question": "Est-il possible de payer annuellement ?",
+				"answer": "Vous pouvez ! Il suffit de sélectionner cette option au moment du paiement et vous obtiendrez un mois gratuit par an."
 			},
 			{
-				"question": "Can I cancel my plan?",
-				"answer": "Yes. The subscription can be stopped at any time, and will end at the end of your current billing month."
+				"question": "Puis-je annuler mon abonnement ?",
+				"answer": "Oui. L'abonnement peut être arrêté à tout moment, et prendra fin à la fin de votre mois de facturation en cours."
 			},
 			{
-				"question": "Is there any limit?",
-				"answer": "There is no limit on the amount of data stored, subject to fair-use policy. On free accounts, you are limited to 40 posts."
+				"question": "Y a-t-il une limite?",
+				"answer": "Il n'y a pas de limite sur le nombre de données stockées, sous réserve d'une politique d'utilisation équitable. Sur les comptes gratuits, vous êtes limité à 40 postes."
 			}
 		]
 	},
 	"CTA": {
 		"heading": "Commencez une Retrospective maintenant",
-		"description": "Join the thousands of users who are already using Retrospected",
-		"button": "Start a Retrospective",
-		"hint": "This will change your life!"
+		"description": "Rejoignez les milliers d'utilisateurs qui utilisent déjà Retrospected",
+		"button": "Démarrez une rétrospective",
+		"hint": "Cela va changer votre vie !"
 	},
 	"Footer": {
 		"copyright": "Copyright © 2023 - Retrospected Ltd. Tout droits réservés.",
@@ -176,9 +192,13 @@
 	},
 	"Contact": {
 		"title": "Contactez-nous",
-		"address": "Retrospected Ltd, London, UK",
-		"phone": "+44 (not used for now)",
+		"address": "Retrospected Ltd, Londres, Royaume-Uni",
+		"phone": "+44 (non utilisé pour le moment)",
 		"openingTime": "7j/7 - 8h - 22h",
 		"email": "support@retrospected.com"
+	},
+	"Integration": {
+		"heading": "Intégrations",
+		"description": "Retrospected s'intègre avec les outils que vous utilisez déjà."
 	}
 }

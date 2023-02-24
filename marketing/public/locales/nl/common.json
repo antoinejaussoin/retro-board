@@ -11,7 +11,7 @@
 	},
 	"Nav": {
 		"home": "Startpagina",
-		"howTo": "Hoe te",
+		"howTo": "Waarom ons?",
 		"features": "Eigenschappen",
 		"testimonial": "Beoordelingen",
 		"pricing": "Prijsstelling",
@@ -23,80 +23,91 @@
 		"main": "Doe mee met honderden bedrijven die ons product gebruiken"
 	},
 	"HowItWorks": {
-		"heading": "We zijn anders omdat..."
+		"heading": "We zijn anders omdat...",
+		"1": {
+			"title": "We zijn snel",
+			"text": "Je kunt je retro met één klik starten."
+		},
+		"2": {
+			"title": "We zijn meertalig",
+			"text": "Onze app is beschikbaar in 15 talen!"
+		},
+		"3": {
+			"title": "We zijn aanpasbaar",
+			"text": "U kunt de app aanpassen aan uw behoeften. Kolommen, stemmen, emojis, u kunt het noemen."
+		},
+		"4": {
+			"title": "We kunnen zelf gehost zijn",
+			"text": "Als u volledige controle over uw gegevens wilt, kunt u zelf Retrospecten uitvoeren."
+		}
 	},
 	"Testimonials": {
 		"heading": "Wat mensen over ons zeggen",
 		"1": {
-			"author": "Johnny Simpson",
-			"designation": "Hoofd ontwerp",
-			"quote": "Elke kamer wordt geladen met de meest samenwerkende oppervlakken, zodat u snel aantekeningen kunt maken, dingen kunt vastleggen en ideeën kunt delen. Kies een van onze standaard thema's, of maak een eigen thema met de editors."
+			"author": "Jean-Laurent Wotton",
+			"designation": "Beheerder",
+			"quote": "---"
 		},
 		"2": {
-			"author": "Johnny Simpson",
-			"designation": "Hoofd ontwerp",
-			"quote": "Elke kamer wordt geladen met de meest samenwerkende oppervlakken, zodat u snel aantekeningen kunt maken, dingen kunt vastleggen en ideeën kunt delen. Kies een van onze standaard thema's, of maak een eigen thema met de editors."
+			"author": "Frank Becker",
+			"designation": "Levering Team groep",
+			"quote": "Je tekst hier"
 		},
 		"3": {
-			"author": "Johnny Simpson",
-			"designation": "Hoofd ontwerp",
-			"quote": "Elke kamer wordt geladen met de meest samenwerkende oppervlakken, zodat u snel aantekeningen kunt maken, dingen kunt vastleggen en ideeën kunt delen. Kies een van onze standaard thema's, of maak een eigen thema met de editors."
-		},
-		"4": {
-			"author": "Johnny Simpson",
-			"designation": "Hoofd ontwerp",
-			"quote": "Elke kamer wordt geladen met de meest samenwerkende oppervlakken, zodat u snel aantekeningen kunt maken, dingen kunt vastleggen en ideeën kunt delen. Kies een van onze standaard thema's, of maak een eigen thema met de editors."
+			"author": "Anne-Claire Allaïne",
+			"designation": "Senior beheerder",
+			"quote": "Ik heb aan het einde van elke sprint Retrospected gebruikt om feedback van mijn team te ontvangen. Het is van onschatbare waarde geweest als instrument en ook zeer gemakkelijk te gebruiken."
 		}
 	},
 	"Pricing": {
 		"heading": "Ontdek onze spannende prijzen",
 		"monthly": "maandelijks",
 		"yearly": "Jaarlijks",
+		"perMonth": " / maand",
+		"perYear": " / jaar",
 		"currency": "$",
 		"subscribe": "Nu abonneren",
 		"login": "Nu inloggen",
 		"basic": {
 			"title": "Eenvoudig",
 			"price": 0,
-			"recurrence": "per maand",
+			"plus": "Jouw gratis optie",
 			"features": [
 				"Onbeperkte Retrospectieven",
-				"Onbeperkt teamleden",
-				"Onbeperkte actie items",
+				"Volledige aanpassing",
+				"Giphy integratie",
+				"Anonieme accounts",
 				"40 berichten"
 			]
 		},
 		"pro": {
 			"title": "Pro",
 			"price": "12.9",
-			"recurrence": "per maand",
+			"plus": "Alles van Basic, plus:",
 			"features": [
-				"Onbeperkte Retrospectieven",
-				"Onbeperkt teamleden",
-				"Onbeperkte actie items",
 				"Onbeperkt aantal berichten",
+				"Volledige data-encryptie",
+				"Privé sessies",
 				"20 gebruikers"
 			]
 		},
 		"unlimited": {
 			"title": "Onbeperkt",
 			"price": "49.95",
-			"recurrence": "per maand",
+			"plus": "Alles van Pro, plus:",
 			"features": [
-				"Onbeperkte Retrospectieven",
-				"Onbeperkt teamleden",
-				"Onbeperkte actie items",
-				"Onbeperkt aantal berichten",
-				"Onbeperkt aantal gebruikers"
+				"Onbeperkt Pro-Accounts",
+				"Alle gebruikers van uw domein zijn automatisch Pro"
 			]
 		},
 		"hosted": {
 			"title": "Zelf gehost",
 			"price": 649,
-			"recurrence": "Eenmalige vergoeding",
+			"plus": "Alles van ongelimiteerd, plus:",
 			"features": [
-				"Alles van Onbeperkt",
-				"Alle gebruikers zijn standaard Pro",
+				"Beheerfunctie van gebruikers",
+				"Alle gebruikers zijn Pro-gebruikers",
+				"Levenslange updates",
 				"Geweldige documentatie"
 			]
 		}
@@ -120,10 +131,22 @@
 	"Features": {
 		"heading": "Start een retrospectief in seconden",
 		"description": "Het starten of deelnemen aan een retro is zo eenvoudig als 1, 2, 3. Het is wrijvingsloos.",
-		"feature1": "Feature 1",
-		"feature2": "Functie 2",
-		"feature3": "Feature 3",
-		"feature4": "Functie 4"
+		"1": {
+			"title": "Responsief",
+			"description": "Retrospected werkt in alle formaten van je iPhone tot een 4K-monitor."
+		},
+		"2": {
+			"title": "Aanpasbaar",
+			"description": "Retrospected is zeer aanpasbaar. U kunt de kolommen, het stemsysteem aanpassen, de timer etc."
+		},
+		"3": {
+			"title": "Beveiligen",
+			"description": "Er zijn 2 beveiligingsfuncties voor Pro-gebruikers: de mogelijkheid om de inhoud lokaal (in browser) te versleutelen en de mogelijkheid om een sessie te vergrendelen zodat het alleen kan worden gezien door specifieke gebruikers."
+		},
+		"4": {
+			"title": "Meertaligheid",
+			"description": "Retrospected komt met 15 talen."
+		}
 	},
 	"Newsfeed": {
 		"heading": "Wat is er nieuw in Retrospected"
@@ -173,5 +196,9 @@
 		"phone": "+44 (niet gebruikt voor nu)",
 		"openingTime": "7 Dagen - 8am - 10.00 uur",
 		"email": "support@retrospected.com"
+	},
+	"Integration": {
+		"heading": "Integraties",
+		"description": "Integreert met Retrospecten met de gereedschappen die je al gebruikt."
 	}
 }
