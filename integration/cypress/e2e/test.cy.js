@@ -23,7 +23,6 @@ describe('Post workflow', () => {
     // Close cookie banner
     cy.get('.wpcc-btn').click();
     
-    // get('login-button').click();
     get('anon-tab').click();
     get('anon-input').focus().type('Zelensky');
     get('anon-login-button').click();
@@ -50,7 +49,6 @@ describe('Post workflow', () => {
     // Close cookie banner
     cy.get('.wpcc-btn').click();
 
-    // get('login-button').click();
     get('anon-tab').click();
     get('anon-input').focus().type('Zelensky');
     get('anon-login-button').click();
@@ -83,9 +81,6 @@ describe('Post workflow', () => {
 
       // Close cookie banner
       cy.get('.wpcc-btn').click();
-
-      // Login
-      // get('login-button').click();
 
       // Select the account tab
       get('account-tab').click();
@@ -126,9 +121,6 @@ describe('Post workflow', () => {
 
       // Close cookie banner
       cy.get('.wpcc-btn').click();
-
-      // Login
-      // get('login-button').click();
 
       // Select the account tab
       get('account-tab').click();
