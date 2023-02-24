@@ -183,6 +183,10 @@
 		"phone": "+44 (not used for now)",
 		"openingTime": "7 Days - 8am - 10pm",
 		"email": "support@retrospected.com"
+	},
+	"Integration": {
+		"heading": "Integrations",
+		"description": "Retrospected integrates with the tools you already use."
 	}
 }
 	
