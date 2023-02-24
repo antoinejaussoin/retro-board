@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [v5000/separate-app]
+    branches: [v5000/domains]
 
 jobs:
   frontend:
