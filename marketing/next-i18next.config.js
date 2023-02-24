@@ -1,18 +1,20 @@
+const subDomain = process.env.SUB_DOMAIN;
+
 module.exports = {
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'fr', 'de', 'nl'],
     domains: [
       {
-        domain: 'www-beta.retrospected.com',
+        domain: `${subDomain}.retrospected.com`,
         defaultLocale: 'en',
       },
       {
-        domain: 'www-beta.retrospected.fr',
+        domain: `${subDomain}.retrospected.fr`,
         defaultLocale: 'fr',
       },
       {
-        domain: 'www-beta.retrospected.de',
+        domain: `${subDomain}.retrospected.de`,
         defaultLocale: 'de',
       }
     ],

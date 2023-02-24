@@ -23,6 +23,7 @@ COPY . .
 
 ARG NEXT_PUBLIC_MEASUREMENT_ID=APP_NEXT_PUBLIC_MEASUREMENT_ID
 ARG NEXT_PUBLIC_APP_URL=APP_NEXT_PUBLIC_APP_URL
+ARG SUB_DOMAIN=www
 RUN yarn build
 
 # If using npm comment out above and use below instead
