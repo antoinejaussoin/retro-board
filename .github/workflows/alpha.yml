@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [v5000/xx]
+    branches: [v5000/twitter]
 
 jobs:
   frontend:

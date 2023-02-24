@@ -21,7 +21,6 @@
     "copy-templates": "copyfiles -u 0 src/**/*.html dist/"
   },
   "dependencies": {
-    "@passport-js/passport-twitter": "1.0.8",
     "@sendgrid/mail": "7.7.0",
     "@sentry/node": "7.36.0",
     "@types/bcryptjs": "2.4.2",
@@ -81,12 +80,13 @@
     "passport-microsoft": "1.0.0",
     "passport-okta-oauth20": "1.1.0",
     "passport-slack-oauth2": "1.1.1",
+    "passport-twitter": "^1.0.4",
     "pg": "8.9.0",
     "prettier": "2.8.3",
     "rate-limiter-flexible": "2.4.1",
     "redis": "3.1.2",
-    "rimraf": "4.1.2",
     "request": "^2.88.2",
+    "rimraf": "4.1.2",
     "scripty": "^2.1.1",
     "shortid": "2.2.16",
     "socket.io": "4.5.4",
