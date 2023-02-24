@@ -120,10 +120,22 @@
 	"Features": {
 		"heading": "Commencez une rétro en quelques secondes",
 		"description": "Starting or joining a retro is as easy as 1, 2, 3. It's friction-less.",
-		"feature1": "Fonctionalité 1",
-		"feature2": "Feature 2",
-		"feature3": "Feature 3",
-		"feature4": "Feature 4"
+		"1": {
+			"title": "Responsive",
+			"description": "Retrospected works across all device sizes, from your iPhone to a 4K monitor."
+		},
+		"2": {
+			"title": "Customisable",
+			"description": "Retrospected is highly customisable. You can change the columns, tweak the voting system, the timer etc."
+		},
+		"3": {
+			"title": "Secure",
+			"description": "There are 2 security features for Pro users: the ability to encrypt the content locally (in browser), and the ability to lock a session so it can only be seen by specific users."
+		},
+		"4": {
+			"title": "Multilingual",
+			"description": "Retrospected comes with 15 languages."
+		}
 	},
 	"Newsfeed": {
 		"heading": "Quoi de neuf à Retrospected ?"
