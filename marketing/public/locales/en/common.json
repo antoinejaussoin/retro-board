@@ -23,7 +23,23 @@
 		"main": "Join the hundreds of companies using our product"
 	},
 	"HowItWorks": {
-		"heading": "We are different because..."
+		"heading": "We are different because...",
+		"1": {
+			"title": "We are fast",
+			"text": "You can start your retro in one click."
+		},
+		"2": {
+			"title": "We are multilingual",
+			"text": "Our app is available in 15 languages!"
+		},
+		"3": {
+			"title": "We are customisable",
+			"text": "You can customise the app to your needs. Columns, votes, emojis, you name it."
+		},
+		"4": {
+			"title": "We can be self-hosted",
+			"text": "If you want complete control of your data, you can self-host Retrospected."	
+		}
 	},
 	"Testimonials": {
 		"heading": "What people say about us",

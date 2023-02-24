@@ -3,7 +3,7 @@ import React from 'react';
 // import { arrowRight } from 'react-icons-kit/feather/arrowRight';
 import Container from '../../../common/components/UI/Container';
 import NextImage from '../../../common/components/NextImage';
-import Link from '../../../common/components/Link';
+// import Link from '../../../common/components/Link';
 import Heading from '../../../common/components/Heading';
 import Text from '../../../common/components/Text';
 import Section, { SectionHeading, Grid, Item } from './howItWorks.style';
@@ -16,44 +16,24 @@ import { useTranslation } from 'next-i18next';
 type HowTo = {
   id: number;
   icon: any; // TODO
-  title: string;
-  text: string;
-  linkLabel: string;
-  link: string;
 };
 
 export const howTos: HowTo[] = [
   {
     id: 1,
     icon: icon1,
-    title: 'Manage Smartly',
-    text: `Stay on top of your task lists and stay in touch with what's happening`,
-    linkLabel: 'Learn More',
-    link: '#',
   },
   {
     id: 2,
     icon: icon2,
-    title: 'Monitor user Analytics',
-    text: `Stay on top of your task lists and stay in touch with what's happening`,
-    linkLabel: 'Learn More',
-    link: '#',
   },
   {
     id: 3,
     icon: icon3,
-    title: 'Safe & Trusted',
-    text: `Get the best DoorDash experience with live order tracking.`,
-    linkLabel: 'Learn More',
-    link: '#',
   },
   {
     id: 4,
     icon: icon4,
-    title: 'Fast Customer Support',
-    text: `Get the best DoorDash experience with live order tracking.`,
-    linkLabel: 'Learn More',
-    link: '#',
   },
 ];
 
@@ -71,12 +51,12 @@ const HowItWorks = () => {
               <figure>
                 <NextImage src={howTo.icon} alt="icon" />
               </figure>
-              <Heading as="h4" content={howTo.title} />
-              <Text content={howTo.text} />
-              <Link href={howTo.link}>
+              <Heading as="h4" content={t(`HowItWorks.${howTo.id}.title`)} />
+              <Text content={t(`HowItWorks.${howTo.id}.text`)} />
+              {/* <Link href={howTo.link}>
                 {howTo.linkLabel}
-                {/* <Icon icon={arrowRight} /> */}
-              </Link>
+                <Icon icon={arrowRight} />
+              </Link> */}
             </Item>
           ))}
         </Grid>
