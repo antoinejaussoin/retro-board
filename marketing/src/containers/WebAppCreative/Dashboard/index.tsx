@@ -26,14 +26,14 @@ type Dashboard = {
 
 export const dashboard: Dashboard[] = [
   {
+    id: 2,
+    image: feature2,
+  },
+  {
     id: 1,
     image: feature1,
     width: 1007,
     height: 592,
-  },
-  {
-    id: 2,
-    image: feature2,
   },
   {
     id: 3,
