@@ -1,4 +1,4 @@
-const subDomain = process.env.SUB_DOMAIN;
+const subDomain = process.env.NEXT_BACKEND_SUB_DOMAIN;
 
 module.exports = {
   i18n: {

@@ -132,8 +132,6 @@ jobs:
         with:
           builder: ${{ steps.buildx.outputs.name }}
           file: marketing/Dockerfile
-          build-args: |
-            SUB_DOMAIN=www-beta
           context: marketing
           tags: retrospected/marketing:canary
           platforms: linux/amd64,linux/arm64

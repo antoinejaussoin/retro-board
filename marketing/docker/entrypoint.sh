@@ -3,7 +3,7 @@
 # The first part wrapped in a function
 makeSedCommands() {
   printenv | \
-      grep  '^NEXT_PUBLIC' | \
+      grep  '^NEXT_' | \
       sed -r "s/=/ /g" | \
       xargs -n 2 sh -c 'echo "sed -i \"s#APP_$0#$1#g\""'
 }
