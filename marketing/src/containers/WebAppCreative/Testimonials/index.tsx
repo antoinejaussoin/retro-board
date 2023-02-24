@@ -13,10 +13,13 @@ import deloitte from './deloitte.png';
 import expedia from './expedia.png';
 import db from './db.png';
 import { useTranslation } from 'next-i18next';
+import NextImage from '@/common/components/NextImage';
+import { StaticImageData } from 'next/image';
+import styled from 'styled-components';
 
 type Testimonial = {
   id: number;
-  logo: any;
+  logo: StaticImageData;
 };
 
 export const testimonials: Testimonial[] = [
@@ -71,9 +74,9 @@ const Testimonials = () => {
           {testimonials.map((testimonial) => (
             <Item key={testimonial.id}>
               <div>
-                <figure>
-                  <Image src={testimonial.logo?.src} alt="logo" width={300} />
-                </figure>
+                <Figure>
+                  <NextImage src={testimonial.logo} alt="logo" />
+                </Figure>
                 <Text
                   as="blockquote"
                   content={t(`Testimonials.${testimonial.id}.quote`)}
@@ -95,5 +98,12 @@ const Testimonials = () => {
     </Section>
   );
 };
+
+const Figure = styled.figure`
+  img {
+    width: 100%;
+    height: 100%;
+  }
+`;
 
 export default Testimonials;

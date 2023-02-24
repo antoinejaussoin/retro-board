@@ -5,9 +5,6 @@ import Heading from '../../../common/components/Heading';
 import Button from '../../../common/components/Button';
 import Image from '../../../common/components/Image';
 import Text from '../../../common/components/Text';
-import icecream from '../../../common/assets/image/webAppCreative/icons/icecream.png';
-import donut from '../../../common/assets/image/webAppCreative/icons/donut.png';
-import pizza from '../../../common/assets/image/webAppCreative/icons/pizza.png';
 import pricingFree from './pricing-free.svg';
 import pricingPro from './pricing-team.svg';
 import pricingUnlimited from './pricing-unlimited.svg';
@@ -20,6 +17,9 @@ import {
   PriceTable,
 } from './pricing.style';
 import { useTranslation } from 'next-i18next';
+import NextImage from '@/common/components/NextImage';
+import { StaticImageData } from 'next/image';
+import styled from 'styled-components';
 
 type Pricing = {
   id: number;
@@ -27,7 +27,7 @@ type Pricing = {
   isActive: boolean;
   title: string;
   features: string;
-  icon: any;
+  icon: StaticImageData;
   isSubscribe: boolean;
   recurrent: boolean;
 };
@@ -176,9 +176,9 @@ const Pricing = () => {
                     <Text content={f} key={i} />
                   ))}
 
-                  <figure>
-                    <Image src={priceTable.icon?.src} alt={priceTable.title} />
-                  </figure>
+                  <Figure>
+                    <NextImage src={priceTable.icon} alt={t(`${key}.title`)} />
+                  </Figure>
                   <Button
                     title={
                       priceTable.isSubscribe
@@ -199,5 +199,12 @@ const Pricing = () => {
     </Section>
   );
 };
+
+const Figure = styled.figure`
+  img {
+    width: 100%;
+    height: 100%;
+  }
+`;
 
 export default Pricing;

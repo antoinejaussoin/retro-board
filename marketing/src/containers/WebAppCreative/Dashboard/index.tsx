@@ -15,27 +15,35 @@ import feature1 from './feature1.webp';
 import feature2 from './feature2.png';
 import feature3 from './feature3.png';
 import feature4 from './feature4.png';
+import { StaticImageData } from 'next/image';
 
-export const dashboard = {
-  tabs: [
-    {
-      id: 1,
-      image: feature1,
-    },
-    {
-      id: 2,
-      image: feature2,
-    },
-    {
-      id: 3,
-      image: feature3,
-    },
-    {
-      id: 4,
-      image: feature4,
-    },
-  ],
+type Dashboard = {
+  id: number;
+  image: StaticImageData;
+  width?: number;
+  height?: number;
 };
+
+export const dashboard: Dashboard[] = [
+  {
+    id: 1,
+    image: feature1,
+    width: 1007,
+    height: 592,
+  },
+  {
+    id: 2,
+    image: feature2,
+  },
+  {
+    id: 3,
+    image: feature3,
+  },
+  {
+    id: 4,
+    image: feature4,
+  },
+];
 
 const Dashboard = () => {
   const { t } = useTranslation();
@@ -49,13 +57,13 @@ const Dashboard = () => {
         <ReactTabs>
           <nav>
             <TabList>
-              {dashboard.tabs.map((tab) => (
+              {dashboard.map((tab) => (
                 <Tab key={tab.id}>{t(`Features.${tab.id}.title`)}</Tab>
               ))}
             </TabList>
           </nav>
 
-          {dashboard.tabs.map((tab) => (
+          {dashboard.map((tab) => (
             <TabPanel key={tab.id}>
               <Description>{t(`Features.${tab.id}.description`)}</Description>
               <Figure className="animate__animated animate__fadeInUp">
@@ -63,6 +71,9 @@ const Dashboard = () => {
                   src={tab.image}
                   alt={t(`Features.${tab.id}.title`)}
                   placeholder="blur"
+                  width={tab.width}
+                  height={tab.height}
+                  quality={50}
                 />
               </Figure>
             </TabPanel>

@@ -43,6 +43,7 @@ const Banner = () => {
               height={720}
               priority
               placeholder="blur"
+              quality={50}
             />
           </Figure>
         </BannerContentWrapper>
