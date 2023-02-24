@@ -2,10 +2,14 @@ import { useConfig } from '@/common/hooks/useConfig';
 import { Html, Head, Main, NextScript } from 'next/document';
 import Script from 'next/script';
 
-export default function Document() {
+type DocumentProps = {
+  locale: string;
+};
+
+export default function Document({ locale }: DocumentProps) {
   const config = useConfig();
   return (
-    <Html lang="en">
+    <Html lang={locale}>
       <Head>
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
@@ -24,7 +28,6 @@ export default function Document() {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            console.log('_document');
             gtag('config', '${config.measurementId}');
           `,
           }}
@@ -37,3 +40,9 @@ export default function Document() {
     </Html>
   );
 }
+
+export const getStaticProps = async ({ locale }: { locale?: string }) => ({
+  props: {
+    locale,
+  },
+});
