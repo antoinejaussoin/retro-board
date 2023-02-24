@@ -1,0 +1,11 @@
+"project_id" : "570085"
+"base_path" : "."
+"base_url" : "https://api.crowdin.com"
+"preserve_hierarchy": true
+
+files: [
+ {
+  "source" : "/public/locales/en/common.json",
+  "translation" : "/public/locales/%two_letters_code%/common.json"
+ }
+]

@@ -1,0 +1,177 @@
+{
+	"SEO": {
+		"title": "Retrospektiert",
+		"description": "Kostenloses Echtzeit-Agile Retrospektive Board für Ingenieurteams"
+	},
+	"Banner": {
+		"heading": "Echtzeit-Retrospektiven. Recht. In Sekunden.",
+		"text": "Weil Post-it-Notizen nicht geschnitten werden.",
+		"tagline": "*Keine Kreditkarte erforderlich",
+		"subscribeToday": "Kostenlos testen"
+	},
+	"Nav": {
+		"home": "Zuhause",
+		"howTo": "Wie man",
+		"features": "Eigenschaften",
+		"testimonial": "Referenzen",
+		"pricing": "Preis",
+		"faq": "FAQ",
+		"subscribe": "Abonnieren",
+		"login": "Anmelden"
+	},
+	"Clients": {
+		"main": "Schließen Sie sich den Hunderten von Unternehmen mit unserem Produkt an"
+	},
+	"HowItWorks": {
+		"heading": "Wir sind anders, we..."
+	},
+	"Testimonials": {
+		"heading": "Was die Leute über uns sagen",
+		"1": {
+			"author": "Johnny Simpson",
+			"designation": "Leiter des Designs",
+			"quote": "Jedes Zimmer ist mit den meisten kollaborativen Oberflächen beladen, so dass Sie schnell Notizen aufnehmen und Ideen austauschen können. Wählen Sie eines unserer Standardthemen oder erstellen Sie Ihr individuelles Design mit den Editoren."
+		},
+		"2": {
+			"author": "Johnny Simpson",
+			"designation": "Leiter des Designs",
+			"quote": "Jedes Zimmer ist mit den meisten kollaborativen Oberflächen beladen, so dass Sie schnell Notizen aufnehmen und Ideen austauschen können. Wählen Sie eines unserer Standardthemen oder erstellen Sie Ihr individuelles Design mit den Editoren."
+		},
+		"3": {
+			"author": "Johnny Simpson",
+			"designation": "Leiter des Designs",
+			"quote": "Jedes Zimmer ist mit den meisten kollaborativen Oberflächen beladen, so dass Sie schnell Notizen aufnehmen und Ideen austauschen können. Wählen Sie eines unserer Standardthemen oder erstellen Sie Ihr individuelles Design mit den Editoren."
+		},
+		"4": {
+			"author": "Johnny Simpson",
+			"designation": "Leiter des Designs",
+			"quote": "Jedes Zimmer ist mit den meisten kollaborativen Oberflächen beladen, so dass Sie schnell Notizen aufnehmen und Ideen austauschen können. Wählen Sie eines unserer Standardthemen oder erstellen Sie Ihr individuelles Design mit den Editoren."
+		}
+	},
+	"Pricing": {
+		"heading": "Entdecken Sie unsere aufregenden Preise",
+		"monthly": "Monatlich",
+		"yearly": "Jährlich",
+		"currency": "$",
+		"subscribe": "Jetzt abonnieren",
+		"login": "Jetzt anmelden",
+		"basic": {
+			"title": "Einfache",
+			"price": 0,
+			"recurrence": "pro Monat",
+			"features": [
+				"Unbegrenzte Retrospektiven",
+				"Unbegrenzte Teammitglieder",
+				"Unbegrenzte Aktionselemente",
+				"40 Beiträge"
+			]
+		},
+		"pro": {
+			"title": "Pro",
+			"price": "12.9",
+			"recurrence": "pro Monat",
+			"features": [
+				"Unbegrenzte Retrospektiven",
+				"Unbegrenzte Teammitglieder",
+				"Unbegrenzte Aktionselemente",
+				"Unbegrenzte Beiträge",
+				"20 Benutzer"
+			]
+		},
+		"unlimited": {
+			"title": "Unbegrenzt",
+			"price": "49.95",
+			"recurrence": "pro Monat",
+			"features": [
+				"Unbegrenzte Retrospektiven",
+				"Unbegrenzte Teammitglieder",
+				"Unbegrenzte Aktionselemente",
+				"Unbegrenzte Beiträge",
+				"Unbegrenzte Benutzer"
+			]
+		},
+		"hosted": {
+			"title": "Selbstgehostet",
+			"price": 649,
+			"recurrence": "Einmalige Gebühr",
+			"features": [
+				"Alles von Unlimited",
+				"Alle Benutzer sind standardmäßig Pro",
+				"Großartige Dokumentation"
+			]
+		}
+	},
+	"SelfHosted": {
+		"slogan": "Selbst-Hosting",
+		"title": "Wiederholt in Ihrem Haus",
+		"desc": "Halten Sie die volle Kontrolle über Ihre Daten durch Self-Hosting Retrospektion. Einmalige Gebühr, unbegrenzte Updates. Holen Sie sich mit unserer erstaunlichen Dokumentation in kürzester Zeit.",
+		"features": [
+			"Vollständige Kontrolle: Ihre Daten bleiben bei Ihnen vor Ort",
+			"Einfach zu installieren",
+			"Administrationsbereich",
+			"Alle Benutzer sind Pro",
+			"Kostenlose Updates, für immer"
+		],
+		"button": {
+			"link": "https://docs.retrospected.com",
+			"label": "Entdecken Sie unsere Dokumentation"
+		}
+	},
+	"Features": {
+		"heading": "Eine Retrospektive in Sekunden starten",
+		"description": "Ein Retro zu starten oder zu betreten ist so einfach wie 1, 2, 3.",
+		"feature1": "Funktion 1",
+		"feature2": "Funktion 2",
+		"feature3": "Merkmal 3",
+		"feature4": "Funktion 4"
+	},
+	"Newsfeed": {
+		"heading": "Was ist neu bei Retrospected"
+	},
+	"FAQ": {
+		"heading": "Häufig gestellte Fragen",
+		"data": [
+			{
+				"question": "Wie werden Zahlungen abgewickelt?",
+				"answer": "Zahlungen werden von unserem Partner Stripe abgewickelt."
+			},
+			{
+				"question": "Gibt es in manchen Fällen kostenlose Pro-Lizenzen?",
+				"answer": "Wenn Sie dieses Produkt als Wohltätigkeitsorganisation verwenden oder in der Ausbildung sind senden Sie uns eine E-Mail und wir kümmern uns um eine kostenlose Lizenz für Sie. Kontaktieren Sie uns."
+			},
+			{
+				"question": "Kann ich für einige Funktionen mehr bezahlen?",
+				"answer": "Wir haben nur 2 Stufen: Kostenlos und Pro. Alle Funktionen sind freigeschaltet, wenn Sie ein Pro-Konto abonnieren."
+			},
+			{
+				"question": "Ist es möglich, jährlich zu zahlen?",
+				"answer": "Wählen Sie diese Option einfach an der Kasse aus und Sie erhalten einen Monat gratis pro Jahr."
+			},
+			{
+				"question": "Kann ich meinen Plan kündigen?",
+				"answer": "Ja. Das Abonnement kann jederzeit beendet werden und endet am Ende Ihres aktuellen Rechnungsmonats."
+			},
+			{
+				"question": "Gibt es irgendwelche Grenzen?",
+				"answer": "Es gibt keine Begrenzung der gespeicherten Daten vorbehaltlich fairer Nutzungsbedingungen."
+			}
+		]
+	},
+	"CTA": {
+		"heading": "Retrospektive jetzt starten",
+		"description": "Tritt den Tausenden von Benutzern bei, die bereits Retrospected verwenden",
+		"button": "Eine Retrospektive starten",
+		"hint": "Das wird dein Leben ändern!"
+	},
+	"Footer": {
+		"copyright": "Copyright © 2023 - Retrospected Ltd. Alle Rechte vorbehalten.",
+		"about": "Wir erstellen Software mit Love, aus London, Großbritannien"
+	},
+	"Contact": {
+		"title": "Kontaktinformationen",
+		"address": "Retrospected Ltd, London, Großbritannien",
+		"phone": "+44 (nicht jetzt verwendet)",
+		"openingTime": "7 Tage - 8 - 22 Uhr",
+		"email": "support@retrospected.com"
+	}
+}

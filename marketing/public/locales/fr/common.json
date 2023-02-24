@@ -7,7 +7,7 @@
 		"heading": "Des retrospectives fun & efficaces, des équipes performantes & motivées !",
 		"text": "Donnez une platforme moderne et simple à vos équipes, pour soutenir leur collaboration et leur amélioration continue",
 		"tagline": "*Aucune carte bancaire demandée",
-		"subscribeToday": "Essayer gratuitement"
+		"subscribeToday": "Essayez gratuitement"
 	},
 	"Nav": {
 		"home": "Accueil",
@@ -16,8 +16,8 @@
 		"testimonial": "Témoignages",
 		"pricing": "Tarifs",
 		"faq": "FAQ",
-		"subscribe": "Achetez",
-		"login": "Connectez-vous"
+		"subscribe": "S'abonner",
+		"login": "Connexion"
 	},
 	"Clients": {
 		"main": "Rejoingnez les centaines d'entreprises qui nous ont fait confiance"
@@ -58,6 +58,7 @@
 		"basic": {
 			"title": "Basic",
 			"price": 0,
+			"recurrence": "per month",
 			"features": [
 				"Retrospectives illimitées",
 				"Unlimited Team Members",
@@ -67,7 +68,7 @@
 		},
 		"pro": {
 			"title": "Pro",
-			"price": 11.90,
+			"price": "11.9",
 			"recurrence": "par mois",
 			"features": [
 				"Unlimited Retrospectives",
@@ -79,7 +80,7 @@
 		},
 		"unlimited": {
 			"title": "Unlimited",
-			"price": 49.95,
+			"price": "49.95",
 			"recurrence": "par mois",
 			"features": [
 				"Unlimited Retrospectives",
@@ -118,7 +119,7 @@
 	},
 	"Features": {
 		"heading": "Commencez une rétro en quelques secondes",
-		"description":"Starting or joining a retro is as easy as 1, 2, 3. It's friction-less.",
+		"description": "Starting or joining a retro is as easy as 1, 2, 3. It's friction-less.",
 		"feature1": "Fonctionalité 1",
 		"feature2": "Feature 2",
 		"feature3": "Feature 3",
@@ -130,12 +131,30 @@
 	"FAQ": {
 		"heading": "Vos Questions (à traduire)",
 		"data": [
-			{"question": "How are payments handled?", "answer": "Payments are handled by our partner, Stripe. No payment information is stored by Retrospected."},
-			{"question": "Do you give Pro licenses for free in some cases?", "answer": "If you are using this product as a charity, or you are in education, send us an email and we'll sort out a free license for you. Contact us."},
-			{"question": "Will I pay more for some features?", "answer": "We only have 2 tiers: Free and Pro. All features are unlocked when you subscribe to a Pro account."},
-			{"question": "Is it possible to pay yearly?", "answer": "You can! Simply select this option at checkout and you will get one month free per year."},
-			{"question": "Can I cancel my plan?", "answer": "Yes. The subscription can be stopped at any time, and will end at the end of your current billing month."},
-			{"question": "Is there any limit?", "answer": "There is no limit on the amount of data stored, subject to fair-use policy. On free accounts, you are limited to 40 posts."}
+			{
+				"question": "How are payments handled?",
+				"answer": "Payments are handled by our partner, Stripe. No payment information is stored by Retrospected."
+			},
+			{
+				"question": "Do you give Pro licenses for free in some cases?",
+				"answer": "If you are using this product as a charity, or you are in education, send us an email and we'll sort out a free license for you. Contact us."
+			},
+			{
+				"question": "Will I pay more for some features?",
+				"answer": "We only have 2 tiers: Free and Pro. All features are unlocked when you subscribe to a Pro account."
+			},
+			{
+				"question": "Is it possible to pay yearly?",
+				"answer": "You can! Simply select this option at checkout and you will get one month free per year."
+			},
+			{
+				"question": "Can I cancel my plan?",
+				"answer": "Yes. The subscription can be stopped at any time, and will end at the end of your current billing month."
+			},
+			{
+				"question": "Is there any limit?",
+				"answer": "There is no limit on the amount of data stored, subject to fair-use policy. On free accounts, you are limited to 40 posts."
+			}
 		]
 	},
 	"CTA": {

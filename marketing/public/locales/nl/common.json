@@ -1,0 +1,177 @@
+{
+	"SEO": {
+		"title": "Retrospect",
+		"description": "Gratis Real-time Agile Retrospective Board voor technische teams"
+	},
+	"Banner": {
+		"heading": "Real-time Retrospectieven. Gereed. In seconden.",
+		"text": "Omdat de aantekeningen na het bericht niet zullen knippen.",
+		"tagline": "*Geen creditcard nodig",
+		"subscribeToday": "Probeer het gratis"
+	},
+	"Nav": {
+		"home": "Startpagina",
+		"howTo": "Hoe te",
+		"features": "Eigenschappen",
+		"testimonial": "Beoordelingen",
+		"pricing": "Prijsstelling",
+		"faq": "FAQ",
+		"subscribe": "Abonneren",
+		"login": "Aanmelden"
+	},
+	"Clients": {
+		"main": "Doe mee met honderden bedrijven die ons product gebruiken"
+	},
+	"HowItWorks": {
+		"heading": "We zijn anders omdat..."
+	},
+	"Testimonials": {
+		"heading": "Wat mensen over ons zeggen",
+		"1": {
+			"author": "Johnny Simpson",
+			"designation": "Hoofd ontwerp",
+			"quote": "Elke kamer wordt geladen met de meest samenwerkende oppervlakken, zodat u snel aantekeningen kunt maken, dingen kunt vastleggen en ideeën kunt delen. Kies een van onze standaard thema's, of maak een eigen thema met de editors."
+		},
+		"2": {
+			"author": "Johnny Simpson",
+			"designation": "Hoofd ontwerp",
+			"quote": "Elke kamer wordt geladen met de meest samenwerkende oppervlakken, zodat u snel aantekeningen kunt maken, dingen kunt vastleggen en ideeën kunt delen. Kies een van onze standaard thema's, of maak een eigen thema met de editors."
+		},
+		"3": {
+			"author": "Johnny Simpson",
+			"designation": "Hoofd ontwerp",
+			"quote": "Elke kamer wordt geladen met de meest samenwerkende oppervlakken, zodat u snel aantekeningen kunt maken, dingen kunt vastleggen en ideeën kunt delen. Kies een van onze standaard thema's, of maak een eigen thema met de editors."
+		},
+		"4": {
+			"author": "Johnny Simpson",
+			"designation": "Hoofd ontwerp",
+			"quote": "Elke kamer wordt geladen met de meest samenwerkende oppervlakken, zodat u snel aantekeningen kunt maken, dingen kunt vastleggen en ideeën kunt delen. Kies een van onze standaard thema's, of maak een eigen thema met de editors."
+		}
+	},
+	"Pricing": {
+		"heading": "Ontdek onze spannende prijzen",
+		"monthly": "maandelijks",
+		"yearly": "Jaarlijks",
+		"currency": "$",
+		"subscribe": "Nu abonneren",
+		"login": "Nu inloggen",
+		"basic": {
+			"title": "Eenvoudig",
+			"price": 0,
+			"recurrence": "per maand",
+			"features": [
+				"Onbeperkte Retrospectieven",
+				"Onbeperkt teamleden",
+				"Onbeperkte actie items",
+				"40 berichten"
+			]
+		},
+		"pro": {
+			"title": "Pro",
+			"price": "12.9",
+			"recurrence": "per maand",
+			"features": [
+				"Onbeperkte Retrospectieven",
+				"Onbeperkt teamleden",
+				"Onbeperkte actie items",
+				"Onbeperkt aantal berichten",
+				"20 gebruikers"
+			]
+		},
+		"unlimited": {
+			"title": "Onbeperkt",
+			"price": "49.95",
+			"recurrence": "per maand",
+			"features": [
+				"Onbeperkte Retrospectieven",
+				"Onbeperkt teamleden",
+				"Onbeperkte actie items",
+				"Onbeperkt aantal berichten",
+				"Onbeperkt aantal gebruikers"
+			]
+		},
+		"hosted": {
+			"title": "Zelf gehost",
+			"price": 649,
+			"recurrence": "Eenmalige vergoeding",
+			"features": [
+				"Alles van Onbeperkt",
+				"Alle gebruikers zijn standaard Pro",
+				"Geweldige documentatie"
+			]
+		}
+	},
+	"SelfHosted": {
+		"slogan": "Eigen hosting",
+		"title": "Retrospecteerd op uw werkplaats",
+		"desc": "Houd de volledige controle over uw gegevens door self-hosting Retrospected te houden. Eenmalige kosten, onbeperkte updates. Start snel onze geweldige documentatie in een handomdraai.",
+		"features": [
+			"Volledige controles: jouw gegevens blijven op je werkplaats",
+			"Makkelijk te installeren",
+			"Beheer paneel",
+			"Alle gebruikers zijn Pro",
+			"Gratis updates, voor altijd"
+		],
+		"button": {
+			"link": "https://docs.retrospected.com",
+			"label": "Ontdek onze documentatie"
+		}
+	},
+	"Features": {
+		"heading": "Start een retrospectief in seconden",
+		"description": "Het starten of deelnemen aan een retro is zo eenvoudig als 1, 2, 3. Het is wrijvingsloos.",
+		"feature1": "Feature 1",
+		"feature2": "Functie 2",
+		"feature3": "Feature 3",
+		"feature4": "Functie 4"
+	},
+	"Newsfeed": {
+		"heading": "Wat is er nieuw in Retrospected"
+	},
+	"FAQ": {
+		"heading": "Veelgestelde vragen (FAQ's)",
+		"data": [
+			{
+				"question": "Hoe worden betalingen behandeld?",
+				"answer": "Betalingen worden afgehandeld door onze partner, Stripe. Er wordt geen betalingsinformatie opgeslagen door Retrospected."
+			},
+			{
+				"question": "Geef je in sommige gevallen gratis Pro-licenties?",
+				"answer": "Als u dit product als liefdadigheid gebruikt, of u bent in opleiding, stuur ons een e-mail en we regelen een gratis licentie voor u. Contacteer ons."
+			},
+			{
+				"question": "Zal ik meer betalen voor sommige functies?",
+				"answer": "We hebben slechts 2 tiers: Gratis en Pro. Alle functies zijn ontgrendeld wanneer u zich abonneert op een Pro-account."
+			},
+			{
+				"question": "Is het mogelijk jaarlijks te betalen?",
+				"answer": "U kan! Selecteer deze optie bij het afrekenen en u krijgt één maand gratis per jaar."
+			},
+			{
+				"question": "Kan ik mijn abonnement annuleren?",
+				"answer": "Ja. Het abonnement kan op elk gewenst moment worden gestopt en zal eindigen aan het einde van uw huidige factureringsmaand."
+			},
+			{
+				"question": "Is er een limiet?",
+				"answer": "Er is geen limiet aan de hoeveelheid opgeslagen gegevens, afhankelijk van het beleid voor eerlijk gebruik. Voor gratis accounts bent u beperkt tot 40 posts."
+			}
+		]
+	},
+	"CTA": {
+		"heading": "Start nu een Retrospectief",
+		"description": "Sluit je aan bij de duizenden gebruikers die al Retrospected gebruiken",
+		"button": "Start een Retrospectief",
+		"hint": "Dit zal je leven veranderen!"
+	},
+	"Footer": {
+		"copyright": "Copyright © 2023 - Retrospected Ltd. Alle rechten voorbehouden.",
+		"about": "We maken software met Liefe, uit Londen, VK"
+	},
+	"Contact": {
+		"title": "Contact informatie",
+		"address": "Retrospected Ltd, Londen, VK",
+		"phone": "+44 (niet gebruikt voor nu)",
+		"openingTime": "7 Dagen - 8am - 10.00 uur",
+		"email": "support@retrospected.com"
+	}
+}
