@@ -18,6 +18,9 @@
       "title": "Retrospected is niet toegestaan"
     }
   },
+  "Welcome": {
+    "title": "Welkom! Gelieve in te loggen om te starten."
+  },
   "Home": {
     "welcome": "Welkom, {{name}}",
     "howDoesThatWork": "Hoe werkt dat?"

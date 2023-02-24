@@ -18,6 +18,9 @@
       "title": "Retrospected jest nielicencjonowany"
     }
   },
+  "Welcome": {
+    "title": "Witaj! Zaloguj się, aby rozpocząć."
+  },
   "Home": {
     "welcome": "Witaj, {{name}}",
     "howDoesThatWork": "Jak to działa?"

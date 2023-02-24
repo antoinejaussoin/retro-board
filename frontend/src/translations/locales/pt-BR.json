@@ -18,6 +18,9 @@
       "title": "Retrospectiva Não Autorizada"
     }
   },
+  "Welcome": {
+    "title": "Bem-vindo! Por favor, faça o login para começar."
+  },
   "Home": {
     "welcome": "Bem-vindo, {{name}}",
     "howDoesThatWork": "Como funciona isso?"

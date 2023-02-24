@@ -18,6 +18,9 @@
       "title": "Retrospected is unlicenced"
     }
   },
+  "Welcome": {
+    "title": "ようこそ！ログインしてください。"
+  },
   "Home": {
     "welcome": "ようこそ、 {{name}}",
     "howDoesThatWork": "それはどのように機能しますか?"

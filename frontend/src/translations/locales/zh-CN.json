@@ -18,6 +18,9 @@
       "title": "返回是未授权的"
     }
   },
+  "Welcome": {
+    "title": "欢迎！请登录以开始"
+  },
   "Home": {
     "welcome": "欢迎， {{name}}",
     "howDoesThatWork": "这是如何运作的？"

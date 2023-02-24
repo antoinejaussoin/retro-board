@@ -18,6 +18,9 @@
       "title": "Retrospected is Unlicenced"
     }
   },
+  "Welcome": {
+    "title": "Benvenuto! Effettua il login per iniziare."
+  },
   "Home": {
     "welcome": "Benvenuto, {{name}}",
     "howDoesThatWork": "Come funziona quello?"

@@ -18,6 +18,9 @@
       "title": "El retrospectivo está sin licencia"
     }
   },
+  "Welcome": {
+    "title": "¡Bienvenido! Inicie sesión para empezar."
+  },
   "Home": {
     "welcome": "Bienvenido, {{name}}",
     "howDoesThatWork": "¿Cómo funciona esto?"

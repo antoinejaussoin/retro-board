@@ -18,6 +18,9 @@
       "title": "追溯是未經許可的"
     }
   },
+  "Welcome": {
+    "title": ""
+  },
   "Home": {
     "welcome": "歡迎， {{name}}",
     "howDoesThatWork": "這是如何運作的？"

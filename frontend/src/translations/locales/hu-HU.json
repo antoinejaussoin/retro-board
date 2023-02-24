@@ -18,6 +18,9 @@
       "title": "Az utólag jogosítvány nélküli"
     }
   },
+  "Welcome": {
+    "title": ""
+  },
   "Home": {
     "welcome": "Isten hozott, {{name}}",
     "howDoesThatWork": "Hogyan működik?"

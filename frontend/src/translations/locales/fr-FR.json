@@ -18,6 +18,9 @@
       "title": "Retrospected est sans licence"
     }
   },
+  "Welcome": {
+    "title": "Bienvenue! Veuillez vous connecter pour commencer."
+  },
   "Home": {
     "welcome": "Bienvenue, {{name}}",
     "howDoesThatWork": "Comment cela fonctionne-t-il ?"
