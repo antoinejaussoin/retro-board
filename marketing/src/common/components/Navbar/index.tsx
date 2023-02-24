@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import NavbarStyle from './navbar.style';
 
 type NavbarProps = {
@@ -8,12 +7,7 @@ type NavbarProps = {
   navbarStyle?: any;
 };
 
-const Navbar = ({
-  className,
-  children,
-  navbarStyle,
-  ...props
-}: NavbarProps) => {
+const Navbar = ({ className, children, navbarStyle }: NavbarProps) => {
   const addAllClasses = ['reusecore__navbar'];
 
   // className prop checking
