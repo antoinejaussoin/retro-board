@@ -132,6 +132,8 @@ jobs:
         with:
           builder: ${{ steps.buildx.outputs.name }}
           file: marketing/Dockerfile
+          build-args: |
+            SUB_DOMAIN=www
           context: marketing
           tags: retrospected/marketing:${{ steps.package.outputs.current-version }}
           platforms: linux/amd64,linux/arm64
