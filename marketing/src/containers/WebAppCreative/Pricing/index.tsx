@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import { Icon } from 'react-icons-kit';
 import Fade from 'react-reveal/Fade';
-import { ic_keyboard_arrow_right } from 'react-icons-kit/md/ic_keyboard_arrow_right';
 import Container from '../../../common/components/UI/Container';
 import Heading from '../../../common/components/Heading';
 import Button from '../../../common/components/Button';
@@ -10,6 +8,10 @@ import Text from '../../../common/components/Text';
 import icecream from '../../../common/assets/image/webAppCreative/icons/icecream.png';
 import donut from '../../../common/assets/image/webAppCreative/icons/donut.png';
 import pizza from '../../../common/assets/image/webAppCreative/icons/pizza.png';
+import pricingFree from './pricing-free.svg';
+import pricingPro from './pricing-team.svg';
+import pricingUnlimited from './pricing-unlimited.svg';
+import pricingHosted from './pricing-self-hosted.svg';
 import {
   Section,
   SectionHeading,
@@ -37,7 +39,7 @@ export const pricing: Pricing[] = [
     isActive: false,
     title: 'Pricing.basic.title',
     features: 'Pricing.basic.features',
-    icon: icecream,
+    icon: pricingFree,
     isSubscribe: false,
     recurrent: true,
   },
@@ -47,7 +49,7 @@ export const pricing: Pricing[] = [
     isActive: false,
     title: 'Pricing.pro.title',
     features: 'Pricing.pro.features',
-    icon: donut,
+    icon: pricingPro,
     isSubscribe: true,
     recurrent: true,
   },
@@ -57,7 +59,7 @@ export const pricing: Pricing[] = [
     isActive: true,
     title: 'Pricing.unlimited.title',
     features: 'Pricing.unlimited.features',
-    icon: pizza,
+    icon: pricingUnlimited,
     isSubscribe: true,
     recurrent: true,
   },
@@ -67,14 +69,45 @@ export const pricing: Pricing[] = [
     isActive: false,
     title: 'Pricing.hosted.title',
     features: 'Pricing.hosted.features',
-    icon: pizza,
+    icon: pricingHosted,
     isSubscribe: true,
     recurrent: false,
   },
 ];
 
-function toPrice(price: string, factor: number) {
-  return (parseFloat(price) * factor).toFixed(2);
+function toPrice(
+  currency: string,
+  price: string,
+  yearly: boolean,
+  recurrent: boolean,
+  recurrentWord: string
+): React.ReactNode {
+  let p = (
+    <>
+      {currency +
+        (parseFloat(price) * (yearly && recurrent ? 11 : 1)).toFixed(2)}
+    </>
+  );
+
+  if (yearly && recurrent) {
+    p = (
+      <>
+        {p}
+        {<em>{recurrentWord}</em>}
+      </>
+    );
+  }
+
+  if (!yearly && recurrent) {
+    p = (
+      <>
+        {p}
+        {<em>{recurrentWord}</em>}
+      </>
+    );
+  }
+
+  return p;
 }
 
 const Pricing = () => {
@@ -112,6 +145,7 @@ const Pricing = () => {
         <Grid>
           {pricing.map((priceTable) => {
             const key = `Pricing.${priceTable.key}`;
+            const plus = t(`${key}.plus`);
             return (
               <Fade key={priceTable.id} up delay={priceTable.id * 100}>
                 <PriceTable
@@ -122,17 +156,19 @@ const Pricing = () => {
                   }
                 >
                   <Heading
-                    content={`${t('Pricing.currency')}${
-                      isMonthly
-                        ? toPrice(t(`${key}.price`)!, 1)
-                        : toPrice(
-                            t(`${key}.price`)!,
-                            priceTable.recurrent ? 11 : 1
-                          )
-                    }`}
+                    content={toPrice(
+                      t('Pricing.currency'),
+                      t(`${key}.price`),
+                      !isMonthly,
+                      priceTable.recurrent,
+                      isMonthly ? t(`Pricing.perMonth`) : t(`Pricing.perYear`)
+                    )}
                   />
-                  <Heading as="h6" content={t(`${key}.recurrence`)} />
                   <Heading as="h5" content={t(`${key}.title`)} />
+
+                  {plus ? (
+                    <Text content={plus} style={{ fontWeight: 'bold' }} />
+                  ) : null}
 
                   {(
                     t(`${key}.features`, { returnObjects: true }) as string[]

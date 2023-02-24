@@ -82,11 +82,15 @@ export const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 360px);
   justify-content: center;
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 2000px) {
     gap: 20px;
     grid-template-columns: repeat(4, 1fr);
   }
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 1400px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+  @media screen and (max-width: 500px) {
     grid-template-columns: 1fr;
     gap: 40px;
   }
@@ -97,7 +101,7 @@ export const PriceTable = styled.div`
   color: ${themeGet('colors.white')};
   box-shadow: 0px 25px 70px rgba(64, 106, 157, 0.06);
   border-radius: 30px;
-  padding: 45px 85px;
+  padding: 45px 35px;
   text-align: center;
   @media (max-width: 1024px) {
     padding: 45px;
@@ -181,5 +185,8 @@ export const PriceTable = styled.div`
     a {
       color: ${themeGet('colors.headingColor')};
     }
+  }
+  em {
+    font-size: 0.5rem;
   }
 `;

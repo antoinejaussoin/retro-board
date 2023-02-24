@@ -63,51 +63,51 @@
 		"heading": "Explore our exciting pricing",
 		"monthly": "Monthly",
 		"yearly": "Yearly",
+		"perMonth": " / month",
+		"perYear": " / year",
 		"currency": "$",
 		"subscribe": "Subscribe Now",
 		"login": "Login Now",
 		"basic": {
 			"title": "Basic",
 			"price": 0,
-			"recurrence": "per month",
+			"plus": "Your free option",
 			"features": [
 				"Unlimited Retrospectives",
-				"Unlimited Team Members",
-				"Unlimited Action Items",
+				"Full customisation",
+				"Giphy integration",
+				"Anonymous accounts",
 				"40 posts"
 			]
 		},
 		"pro": {
 			"title": "Pro",
 			"price": 12.90,
-			"recurrence": "per month",
+			"plus": "Everything from Basic, plus:",
 			"features": [
-				"Unlimited Retrospectives",
-				"Unlimited Team Members",
-				"Unlimited Action Items",
 				"Unlimited posts",
+				"Full data encryption",
+				"Private sessions",
 				"20 users"
 			]
 		},
 		"unlimited": {
 			"title": "Unlimited",
 			"price": 49.95,
-			"recurrence": "per month",
+			"plus": "Everything from Pro, plus:",
 			"features": [
-				"Unlimited Retrospectives",
-				"Unlimited Team Members",
-				"Unlimited Action Items",
-				"Unlimited posts",
-				"Unlimited users"
+				"Unlimited Pro Accounts",
+				"All users from your domain are Pro automatically"
 			]
 		},
 		"hosted": {
 			"title": "Self Hosted",
 			"price": 649,
-			"recurrence": "One-time fee",
+			"plus": "Everything from Unlimited, plus:",
 			"features": [
-				"Everything from Unlimited",
-				"All users are Pro by default",
+				"User administration tool",
+				"All users are Pro users",
+				"Lifetime updates",
 				"Awesome documentation"
 			]
 		}
