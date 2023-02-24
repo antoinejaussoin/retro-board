@@ -44,24 +44,19 @@
 	"Testimonials": {
 		"heading": "What people say about us",
 		"1": {
-			"author": "Johnny Simpson",
-			"designation": "Head of Design",
-			"quote": "Each room is loaded with the most collaborative surfaces so you can quickly take notes, capture to-dos, and share ideas. Pick one of our stock themes, or create your custom theme with the editors."
+			"author": "Jean-Laurent Wotton",
+			"designation": "Manager",
+			"quote": "---"
 		},
 		"2": {
-			"author": "Johnny Simpson",
-			"designation": "Head of Design",
-			"quote": "Each room is loaded with the most collaborative surfaces so you can quickly take notes, capture to-dos, and share ideas. Pick one of our stock themes, or create your custom theme with the editors."
+			"author": "Frank Becker",
+			"designation": "Delivery Team Group",
+			"quote": "Your text here"
 		},
 		"3": {
-			"author": "Johnny Simpson",
-			"designation": "Head of Design",
-			"quote": "Each room is loaded with the most collaborative surfaces so you can quickly take notes, capture to-dos, and share ideas. Pick one of our stock themes, or create your custom theme with the editors."
-		},
-		"4": {
-			"author": "Johnny Simpson",
-			"designation": "Head of Design",
-			"quote": "Each room is loaded with the most collaborative surfaces so you can quickly take notes, capture to-dos, and share ideas. Pick one of our stock themes, or create your custom theme with the editors."
+			"author": "Anne-Claire Allain",
+			"designation": "Senior Manager",
+			"quote": "I have been using Retrospected at the end of every sprint to gather feedback from my team. It has been invaluable as a tool, and very easy to use too."
 		}
 	},
 	"Pricing": {

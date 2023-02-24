@@ -10,9 +10,8 @@ import Section, {
   AuthorInfo,
 } from './testimonials.style';
 import deloitte from './deloitte.png';
-import delta from './delta.png';
 import expedia from './expedia.png';
-import siemens from './siemens.png';
+import db from './db.png';
 import { useTranslation } from 'next-i18next';
 
 type Testimonial = {
@@ -27,15 +26,11 @@ export const testimonials: Testimonial[] = [
   },
   {
     id: 2,
-    logo: delta,
+    logo: db,
   },
   {
     id: 3,
     logo: expedia,
-  },
-  {
-    id: 4,
-    logo: siemens,
   },
 ];
 

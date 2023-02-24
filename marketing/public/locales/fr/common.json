@@ -28,24 +28,19 @@
 	"Testimonials": {
 		"heading": "Ce que les gens disent de nous",
 		"1": {
-			"author": "Jean LaPointe",
-			"designation": "Directeur Design",
-			"quote": "Retrospected nous est très utile, et blah blah blah, et encore du blah blah merci de remplir les trous"
+			"author": "Jean-Laurent Wotton",
+			"designation": "Manager",
+			"quote": "---"
 		},
 		"2": {
-			"author": "Jean LaPointe",
+			"author": "FB",
 			"designation": "Directeur Design",
-			"quote": "Retrospected nous est très utile, et blah blah blah, et encore du blah blah merci de remplir les trous"
+			"quote": "--"
 		},
 		"3": {
-			"author": "Jean LaPointe",
-			"designation": "Directeur Design",
-			"quote": "Retrospected nous est très utile, et blah blah blah, et encore du blah blah merci de remplir les trous"
-		},
-		"4": {
-			"author": "Jean LaPointe",
-			"designation": "Directeur Design",
-			"quote": "Retrospected nous est très utile, et blah blah blah, et encore du blah blah merci de remplir les trous"
+			"author": "Anne-Claire Allain",
+			"designation": "Senior Manager",
+			"quote": "I have been using Retrospected at the end of every sprint to gather feedback from my team. It has been invaluable as a tool, and very easy to use too."
 		}
 	},
 	"Pricing": {
