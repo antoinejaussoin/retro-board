@@ -2,7 +2,7 @@ name: 'Marketing Build'
 
 on:
   push:
-    branches: [v5000/marketing-final]
+    branches: [v5000/domains]
 
 jobs:
   marketing:
