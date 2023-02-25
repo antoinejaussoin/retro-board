@@ -73,8 +73,8 @@ export const Description = styled.div`
   color: ${themeGet('colors.textColor')};
   font-family: 'Inter', sans-serif;
   font-size: 18px;
-  line-height: 2.22;
-  margin-bottom: 0;
+  line-height: 1.5;
+  margin-bottom: 20px;
   margin-top: 40px;
   margin-left: auto;
   margin-right: auto;
