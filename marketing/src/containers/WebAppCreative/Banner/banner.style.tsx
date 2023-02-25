@@ -2,10 +2,7 @@ import { rgba } from 'polished';
 import styled from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
 
-import dashboardPattern from '../../../common/assets/image/webAppCreative/dashboard-pattern.png';
-
 const Section = styled.section`
-  background: url(${dashboardPattern?.src}) no-repeat center bottom;
   position: relative;
   z-index: 0;
   @media (min-width: 768px) and (max-width: 1280px) {
@@ -148,7 +145,13 @@ export const Figure = styled.figure`
   margin: 30px 0 0;
   display: flex;
 
+  img.background {
+    z-index: 0;
+    position: absolute;
+  }
+
   img {
+    z-index: 1;
     width: 100%;
     height: 100%;
     object-fit: contain;

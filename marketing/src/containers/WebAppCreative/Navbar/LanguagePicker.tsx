@@ -18,14 +18,18 @@ export function LanguagePicker({}: {}) {
     e.preventDefault();
     e.stopPropagation();
     setOpen(false);
-    push('/', '/', { locale: loc });
+    push('/' + loc, '/' + loc, { locale: loc });
   };
 
   if (!locale || !locales) return null;
 
   return (
     <Container onClick={() => setOpen((o) => !o)}>
-      <CircleFlag countryCode={mappings[locale] ?? locale} height="35" />
+      <CircleFlag
+        countryCode={mappings[locale] ?? locale}
+        height={35}
+        width={35}
+      />
       <Hover open={open}>
         {locales.map((lang) => (
           <CircleFlag

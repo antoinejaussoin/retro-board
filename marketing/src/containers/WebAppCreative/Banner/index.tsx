@@ -12,6 +12,7 @@ import Section, {
 import screenshot from './mockup-1-02.webp';
 import { useTranslation } from 'next-i18next';
 import { useConfig } from '@/common/hooks/useConfig';
+import dashboardPattern from '../../../common/assets/image/webAppCreative/dashboard-pattern.png';
 
 const Banner = () => {
   const { t } = useTranslation('common');
@@ -36,6 +37,13 @@ const Banner = () => {
             </Subscribe>
           </BannerContent>
           <Figure className="animate__animated animate__fadeInUp animate__fast">
+            <NextImage
+              alt="Background image"
+              src={dashboardPattern}
+              placeholder="blur"
+              className="background"
+              quality={75}
+            />
             <NextImage
               src={screenshot}
               alt="dashboard"
