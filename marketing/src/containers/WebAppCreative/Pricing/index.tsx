@@ -15,6 +15,7 @@ import {
   SwitcherWrapper,
   Grid,
   PriceTable,
+  Features,
 } from './pricing.style';
 import { useTranslation } from 'next-i18next';
 import NextImage from '@/common/components/NextImage';
@@ -167,15 +168,17 @@ const Pricing = () => {
                   />
                   <Heading as="h5" content={t(`${key}.title`)} />
 
-                  {plus ? (
-                    <Text content={plus} style={{ fontWeight: 'bold' }} />
-                  ) : null}
+                  <Features>
+                    {plus ? (
+                      <Text content={plus} style={{ fontWeight: 'bold' }} />
+                    ) : null}
 
-                  {(
-                    t(`${key}.features`, { returnObjects: true }) as string[]
-                  ).map((f, i) => (
-                    <Text content={f} key={i} />
-                  ))}
+                    {(
+                      t(`${key}.features`, { returnObjects: true }) as string[]
+                    ).map((f, i) => (
+                      <Text content={f} key={i} />
+                    ))}
+                  </Features>
 
                   <Figure>
                     <NextImage src={priceTable.icon} alt={t(`${key}.title`)} />
