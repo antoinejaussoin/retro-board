@@ -123,6 +123,7 @@ const Pricing = () => {
       <Container width="1400px">
         <SectionHeading>
           <Heading content={t('Pricing.heading')} />
+          <Text content={t('Pricing.weAccept')} />
         </SectionHeading>
         <SwitcherWrapper>
           <button className={isMonthly ? 'active' : undefined}>

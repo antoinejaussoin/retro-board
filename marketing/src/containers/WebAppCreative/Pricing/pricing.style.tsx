@@ -35,6 +35,9 @@ export const SectionHeading = styled.div`
       font-size: 24px;
     }
   }
+  p {
+    color: ${themeGet('colors.white')};
+  }
 `;
 
 export const SwitcherWrapper = styled.div`
