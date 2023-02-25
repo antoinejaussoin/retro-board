@@ -42,7 +42,8 @@ const Banner = () => {
               src={dashboardPattern}
               placeholder="blur"
               className="background"
-              quality={75}
+              quality={50}
+              priority
             />
             <NextImage
               src={screenshot}
