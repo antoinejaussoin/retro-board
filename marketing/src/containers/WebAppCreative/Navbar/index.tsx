@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import Link from 'next/link';
 import NavbarWrapper from '../../../common/components/Navbar';
 import Drawer from '../../../common/components/Drawer';
 import Button from '../../../common/components/Button';
@@ -13,6 +12,8 @@ import logoImage from './logo.png';
 import { MenuItem } from '@/types';
 import { useTranslation } from 'next-i18next';
 import { useConfig } from '@/common/hooks/useConfig';
+import { LanguagePicker } from './LanguagePicker';
+import styled from 'styled-components';
 
 export const menuItems: MenuItem[] = [
   {
@@ -114,6 +115,9 @@ const Navbar = ({
             <a className="navbar_button navbar_button_two" href={appUrl!}>
               <Button {...button} title={t('Nav.login')} />
             </a>
+            <LanguageContainer>
+              <LanguagePicker />
+            </LanguageContainer>
             <Drawer
               width="420px"
               placement="right"
@@ -134,5 +138,12 @@ const Navbar = ({
     </NavbarWrapper>
   );
 };
+
+const LanguageContainer = styled.div`
+  margin-left: 25px;
+  margin-right: 25px;
+  position: relative;
+  top: 2px;
+`;
 
 export default Navbar;

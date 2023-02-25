@@ -2477,6 +2477,11 @@ react-aria-menubutton@^7.0.3:
     prop-types "^15.6.0"
     teeny-tap "^0.2.0"
 
+react-circle-flags@^0.0.18:
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/react-circle-flags/-/react-circle-flags-0.0.18.tgz#ab48b410435dd2bb4419cda6f59b4378019fbbec"
+  integrity sha512-3taT04bifZ2oSARDfoO4bMDfdIDfAxW6MeOaJ6fR17OcEn+/dGivE/nrtUYwfGKFp9/Sq92yo4FTT2I+DqAIqA==
+
 react-dom@18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.2.0.tgz#22aaf38708db2674ed9ada224ca4aa708d821e3d"

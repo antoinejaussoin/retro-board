@@ -36,6 +36,7 @@
     "react": "18.2.0",
     "react-anchor-link-smooth-scroll": "^1.0.12",
     "react-aria-menubutton": "^7.0.3",
+    "react-circle-flags": "^0.0.18",
     "react-dom": "18.2.0",
     "react-i18next": "^12.1.5",
     "react-icons-kit": "^2.0.0",
