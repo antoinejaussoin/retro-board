@@ -30,11 +30,11 @@ export const menuItems: MenuItem[] = [
     path: '#features',
     offset: '70',
   },
-  {
-    label: 'Nav.testimonial',
-    path: '#testimonial',
-    offset: '70',
-  },
+  // {
+  //   label: 'Nav.testimonial',
+  //   path: '#testimonial',
+  //   offset: '70',
+  // },
   {
     label: 'Nav.pricing',
     path: '#pricing',
