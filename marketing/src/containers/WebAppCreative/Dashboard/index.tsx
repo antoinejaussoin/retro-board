@@ -71,9 +71,12 @@ const Dashboard = () => {
                   src={tab.image}
                   alt={t(`Features.${tab.id}.title`)}
                   placeholder="blur"
-                  width={tab.width}
-                  height={tab.height}
-                  quality={50}
+                  fill
+                  style={{ objectFit: 'contain' }}
+                  // sizes="(max-width: 768px) 100vw,
+                  //         (max-width: 1200px) 50vw,
+                  //         33vw"
+                  quality={75}
                 />
               </Figure>
             </TabPanel>

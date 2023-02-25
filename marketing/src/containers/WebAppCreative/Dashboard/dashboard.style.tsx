@@ -61,11 +61,7 @@ export const SectionHeading = styled.div`
 `;
 
 export const Figure = styled.div`
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
+  aspect-ratio: 4/3;
 `;
 
 export const Description = styled.div`
