@@ -1,6 +1,7 @@
 import { useConfig } from '@/common/hooks/useConfig';
 import { Html, Head, Main, NextScript } from 'next/document';
 import Script from 'next/script';
+import { ServerStyleSheet } from 'styled-components';
 
 type DocumentProps = {
   locale: string;
@@ -39,6 +40,27 @@ export default function Document({ locale }: DocumentProps) {
       </body>
     </Html>
   );
+}
+
+export async function getInitialProps(ctx: any): Promise<any> {
+  const sheet = new ServerStyleSheet();
+  const originalRenderPage = ctx.renderPage;
+
+  try {
+    ctx.renderPage = () =>
+      originalRenderPage({
+        enhanceApp: (App: any) => (props: any) =>
+          sheet.collectStyles(<App {...props} />),
+      });
+
+    const initialProps = await getInitialProps(ctx);
+    return {
+      ...initialProps,
+      styles: [initialProps.styles, sheet.getStyleElement()],
+    };
+  } finally {
+    sheet.seal();
+  }
 }
 
 export const getStaticProps = async ({ locale }: { locale?: string }) => ({
