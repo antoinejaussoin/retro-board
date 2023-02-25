@@ -26,18 +26,18 @@
 		"heading": "Nous sommes différents, parce-que...",
 		"1": {
 			"title": "Nous sommes rapide",
-			"text": "Vous pouvez commencer votre rétro en un clic."
+			"text": "Commencez une rétrospective en un clic."
 		},
 		"2": {
-			"title": "Nous sommes multilingues",
-			"text": "Notre application est disponible en 15 langues !"
+			"title": "Notre interface multilingue",
+			"text": "Utilisez Retrospected dans l'une des 15 langues disponibles (dont le Français)."
 		},
 		"3": {
-			"title": "Nous sommes personnalisables",
-			"text": "Vous pouvez personnaliser l'application selon vos besoins. Colonnes, votes, émoticônes, etc."
+			"title": "Notre app personnalisable",
+			"text": "Personnalisez l'application à vos besoins : colonnes, votes, émoticônes, etc."
 		},
 		"4": {
-			"title": "Vous pouvez héberger Retrospected sur vos serveurs",
+			"title": "Héberger Retrospected sur vos serveurs (ou les nôtres)",
 			"text": "Si vous voulez un contrôle total de vos données, vous pouvez héberger Retrospected."
 		}
 	},
@@ -61,6 +61,7 @@
 	},
 	"Pricing": {
 		"heading": "Nos tarifs",
+		"weAccept": "Nous acceptons également les livres sterling et dollars américains",
 		"monthly": "Par mois",
 		"yearly": "Par an",
 		"perMonth": " / mois",
@@ -130,7 +131,7 @@
 	},
 	"Features": {
 		"heading": "Commencez une rétro en quelques secondes",
-		"description": "Starting or joining a retro is as easy as 1, 2, 3. It's friction-less.",
+		"description": "Créer ou rejoindre une rétro se fait en 2 clics.",
 		"1": {
 			"title": "Adaptatif",
 			"description": "Retrospected fonctionne sur toutes les tailles d'appareil, de votre iPhone à un moniteur 4K."
@@ -140,7 +141,7 @@
 			"description": "Retrospected est hautement personnalisable. Vous pouvez changer les colonnes, modifier le système de vote, le minuteur, etc."
 		},
 		"3": {
-			"title": "Secure",
+			"title": "Sécurisé",
 			"description": "Il y a 2 fonctionnalités de sécurité pour les utilisateurs Pro : la possibilité de chiffrer le contenu localement (dans le navigateur), et la possibilité de verrouiller une session pour qu'elle ne soit visible que par des utilisateurs spécifiques."
 		},
 		"4": {
