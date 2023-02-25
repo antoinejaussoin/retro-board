@@ -98,14 +98,18 @@ export const SupportedApps = styled.div`
       min-height: 60px;
     }
     img {
+      object-fit: contain;
       @media only screen and (max-width: 1024px) {
         max-width: 55px;
+        max-height: 55px;
       }
       @media only screen and (max-width: 768px) {
         max-width: 45px;
+        max-height: 45px;
       }
       @media only screen and (max-width: 480px) {
         max-width: 30px;
+        max-height: 30px;
       }
     }
   }
