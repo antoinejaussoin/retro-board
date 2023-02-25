@@ -20,12 +20,12 @@
 		"login": "Connexion"
 	},
 	"Clients": {
-		"main": "Rejoignez les centaines d'entreprises qui nous ont fait confiance"
+		"main": "Des centaines d'entreprises utilisent Retrospected"
 	},
 	"HowItWorks": {
-		"heading": "Nous sommes différents, parce-que...",
+		"heading": "Nos utilisateurs aiment ...",
 		"1": {
-			"title": "Nous sommes rapide",
+			"title": "Notre app intuitive et rapide",
 			"text": "Commencez une rétrospective en un clic."
 		},
 		"2": {
@@ -42,7 +42,7 @@
 		}
 	},
 	"Testimonials": {
-		"heading": "Ce que nos clients disent de nous",
+		"heading": "Nos utilisateurs aiment Retrospected",
 		"1": {
 			"author": "Jean-Laurent Wotton",
 			"designation": "Manager",
