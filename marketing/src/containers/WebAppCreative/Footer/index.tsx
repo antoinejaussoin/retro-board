@@ -206,7 +206,10 @@ const Footer = () => {
             <Heading as="h4" content={t('Contact.title')} />
             <InfoItem>
               <Icon icon={ic_place} size={24} />
-              <Text content={t('Contact.address')} />
+              <div>
+                <Text content={t('Contact.address')} />
+                <Text content="Registered in England & Wales: 13624961." />
+              </div>
             </InfoItem>
             {/* <InfoItem>
               <Icon icon={ic_phone} size={26} className="phone-icon" />
@@ -217,7 +220,9 @@ const Footer = () => {
             </InfoItem> */}
             <InfoItem>
               <Icon icon={paperPlane} size={22} />
-              <Text content={t('Contact.email')} />
+              <a href="mailto:support@retrospected.com">
+                <Text content={t('Contact.email')} />
+              </a>
             </InfoItem>
           </ContactInfo>
         </Grid>
