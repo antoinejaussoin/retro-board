@@ -144,6 +144,7 @@ export const Subscribe = styled.div`
 export const Figure = styled.figure`
   margin: 30px 0 0;
   display: flex;
+  aspect-ratio: 4 / 3;
 
   img.background {
     z-index: 0;

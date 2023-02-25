@@ -43,15 +43,15 @@ const Banner = () => {
               placeholder="blur"
               className="background"
               quality={50}
+              fill
               priority
             />
             <NextImage
               src={screenshot}
               alt="dashboard"
-              width={1280}
-              height={720}
               priority
               placeholder="blur"
+              fill
               quality={50}
             />
           </Figure>
