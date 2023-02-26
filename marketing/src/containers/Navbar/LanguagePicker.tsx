@@ -8,7 +8,7 @@ const mappings: Record<string, string> = {
 };
 
 export function LanguagePicker({}: {}) {
-  const { push, locale, locales } = useRouter();
+  const { push, locale, locales, pathname, asPath, query } = useRouter();
   const [open, setOpen] = useState(false);
 
   const handleChange = (
@@ -18,7 +18,8 @@ export function LanguagePicker({}: {}) {
     e.preventDefault();
     e.stopPropagation();
     setOpen(false);
-    push('/' + loc, '/' + loc, { locale: loc });
+
+    push({ pathname, query }, asPath, { locale: loc });
   };
 
   if (!locale || !locales) return null;
