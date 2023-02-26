@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
-import { Link as RouterLink } from 'react-router-dom';
 import { colors } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { useLanguage } from '../translations';
 import LanguagePicker from '../components/LanguagePicker';
@@ -17,11 +15,11 @@ interface Policy {
 }
 
 const policies: Policy[] = [
-  { name: 'Privacy policy', url: '/privacy' },
-  { name: 'Terms & Conditions', url: '/terms' },
-  { name: 'Disclaimer', url: '/disclaimer' },
-  { name: 'Cookies Policy', url: '/cookies' },
-  { name: 'Acceptable Use Policy', url: '/acceptable-use' },
+  { name: 'Privacy policy', url: '/legal/privacy' },
+  { name: 'Terms & Conditions', url: '/legal/terms' },
+  { name: 'Disclaimer', url: '/legal/disclaimer' },
+  { name: 'Cookies Policy', url: '/legal/cookies' },
+  { name: 'Acceptable Use Policy', url: '/legal/acceptable-use' },
 ];
 
 function Panel() {
@@ -62,11 +60,13 @@ function Panel() {
             <Policies>
               <Typography variant="h6">Legal Stuff</Typography>
               {policies.map((policy) => (
-                <PanelLink
-                  url={policy.url}
-                  name={policy.name}
+                <ExternalLink
+                  href={config.marketingRoot + policy.url}
+                  target="_blank"
                   key={policy.name}
-                />
+                >
+                  {policy.name}
+                </ExternalLink>
               ))}
             </Policies>
           </Typography>
@@ -79,27 +79,6 @@ function Panel() {
         </Bottom>
       </DrawerContent>
     </Drawer>
-  );
-}
-
-type PanelLinkProps = {
-  url: string;
-  name: string;
-};
-
-function PanelLink({ url, name }: PanelLinkProps) {
-  return (
-    <Link
-      component={RouterLink}
-      sx={{
-        textDecoration: 'none',
-        ':hover': { textDecoration: 'underline' },
-      }}
-      to={url}
-      color="inherit"
-    >
-      {name}
-    </Link>
   );
 }
 

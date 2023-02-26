@@ -5,6 +5,7 @@ interface HtmlConfig {
   STRIPE_KEY: string;
   DEFAULT_LANGUAGE: string;
   VERSION: string;
+  MARKETING_ROOT: string;
 }
 
 interface Config {
@@ -17,6 +18,7 @@ interface Config {
   StripeKey: string;
   defaultLanguage: string;
   version: string;
+  marketingRoot: string;
 }
 
 declare global {
@@ -33,6 +35,7 @@ function getKey(
     | 'SENTRY_URL'
     | 'GIPHY_API_KEY'
     | 'STRIPE_KEY'
+    | 'MARKETING_ROOT'
     | 'DEFAULT_LANGUAGE',
   noValue: string,
   defaultValue?: string
@@ -51,6 +54,7 @@ function getConfig(): Config {
   const sentryUrl = getKey('SENTRY_URL', 'NO_SENTRY');
   const giphyApiKey = getKey('GIPHY_API_KEY', 'NO_GIPHY');
   const stripeKey = getKey('STRIPE_KEY', 'NO_STRIPE');
+  const marketingRoot = getKey('MARKETING_ROOT', 'NO_MARKETING_ROOT');
   let defaultLanguage = getKey(
     'DEFAULT_LANGUAGE',
     'NO_DEFAULT_LANGUAGE',
@@ -74,6 +78,7 @@ function getConfig(): Config {
     StripeKey: stripeKey,
     defaultLanguage: defaultLanguage,
     version: APP_VERSION,
+    marketingRoot,
   };
 }
 

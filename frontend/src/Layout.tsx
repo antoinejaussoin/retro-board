@@ -40,14 +40,7 @@ const SubscribePageOuter = lazy(
 );
 const ResetPasswordPage = lazy(() => import('./views/Reset'));
 const ValidatePage = lazy(() => import('./views/Validate'));
-const DisclaimerPage = lazy(() => import('./views/policies/Disclaimer'));
-const AcceptableUsePolicyPage = lazy(
-  () => import('./views/policies/AcceptableUse')
-);
-const CookiesPolicyPage = lazy(() => import('./views/policies/Cookies'));
-const TermsAndConditionsPage = lazy(() => import('./views/policies/Terms'));
 const Invite = lazy(() => import('./views/layout/Invite'));
-const PrivacyPolicyPage = lazy(() => import('./views/policies/Privacy'));
 const Panel = lazy(() => import('./views/Panel'));
 const EncryptionDoc = lazy(() => import('./views/home/Encryption'));
 const AdminPage = lazy(() => import('./views/admin/AdminPage'));
@@ -153,11 +146,6 @@ function App() {
             <Route path="cancel" element={<CancelPage />} />
           </Route>
           <Route path="admin" element={<AdminPage />} />
-          <Route path="privacy" element={<PrivacyPolicyPage />} />
-          <Route path="terms" element={<TermsAndConditionsPage />} />
-          <Route path="cookies" element={<CookiesPolicyPage />} />
-          <Route path="acceptable-use" element={<AcceptableUsePolicyPage />} />
-          <Route path="disclaimer" element={<DisclaimerPage />} />
           <Route path="how-does-encryption-work" element={<EncryptionDoc />} />
         </Routes>
       </Suspense>

@@ -11,5 +11,6 @@ sed -i "s#NO_SENTRY#${SENTRY_URL:-}#g" /usr/share/nginx/html/index.html
 sed -i "s#NO_GIPHY#${GIPHY_API_KEY:-}#g" /usr/share/nginx/html/index.html
 sed -i "s#NO_STRIPE#${STRIPE_KEY:-}#g" /usr/share/nginx/html/index.html
 sed -i "s#NO_DEFAULT_LANGUAGE#${DEFAULT_LANGUAGE:-en-GB}#g" /usr/share/nginx/html/index.html
+sed -i "s#NO_MARKETING_ROOT#${MARKETING_ROOT:https://www.retrospected.com}#g" /usr/share/nginx/html/index.html
 
 exec "$@"
