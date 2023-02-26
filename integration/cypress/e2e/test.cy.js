@@ -1,6 +1,8 @@
 describe('Home Page', () => {
   it('Should load correctly', () => {
     cy.visit('/');
+
+    cy.wait(+Cypress.env('backend_delay'));
   
     cy.get('#content').get('h1').should('contain', 'Welcome!');
   });
@@ -39,12 +41,16 @@ describe('Post workflow', () => {
     // Reload the page
     cy.reload();
 
+    cy.wait(+Cypress.env('backend_delay'));
+
     // The post should still be there
     cy.get('#content').should('contain', 'Slava Ukraini!');
   });
 
   it('Should change language and translate the app', () => {
     cy.visit('/');
+
+    cy.wait(+Cypress.env('backend_delay'));
 
     // Close cookie banner
     cy.get('.wpcc-btn').click();
@@ -78,6 +84,8 @@ describe('Post workflow', () => {
       const id = Date.now();
 
       cy.visit('/');
+
+      cy.wait(+Cypress.env('backend_delay'));
 
       // Close cookie banner
       cy.get('.wpcc-btn').click();
@@ -119,6 +127,8 @@ describe('Post workflow', () => {
 
       cy.visit('/');
 
+      cy.wait(+Cypress.env('backend_delay'));
+
       // Close cookie banner
       cy.get('.wpcc-btn').click();
 
@@ -136,7 +146,7 @@ describe('Post workflow', () => {
       // Register
       get('register-button').click();
 
-      cy.wait(2000);
+      cy.wait(+Cypress.env('backend_delay'));
 
       // Go to the user admin and delete the account
       get('account-menu').click();
