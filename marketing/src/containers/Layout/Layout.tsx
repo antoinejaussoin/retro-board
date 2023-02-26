@@ -19,7 +19,6 @@ type HomePageProps = {
 };
 
 export default function Layout({ legals, menuItems, children }: HomePageProps) {
-  const { t } = useTranslation();
   return (
     <ThemeProvider theme={theme}>
       <Fragment>
@@ -41,5 +40,5 @@ export default function Layout({ legals, menuItems, children }: HomePageProps) {
 }
 
 const Content = styled.div`
-  margin-top: 150px;
+  margin-top: 108px;
 `;

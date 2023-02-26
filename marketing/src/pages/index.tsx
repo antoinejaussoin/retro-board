@@ -15,7 +15,6 @@ import {
   CombinedSection,
   CornerPattern,
 } from '../containers/webAppCreative.style';
-import 'animate.css';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import { getAllLegalDocuments, LegalDocumentMetadata } from '@/lib/getLegal';

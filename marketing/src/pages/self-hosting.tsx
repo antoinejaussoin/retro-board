@@ -1,21 +1,11 @@
-import React, { Fragment } from 'react';
-import Head from 'next/head';
-import { ThemeProvider } from 'styled-components';
-import Sticky from 'react-stickynode';
-import { DrawerProvider } from '../common/contexts/DrawerContext';
-import { theme } from '../common/theme/webAppCreative';
-import ResetCSS from '../common/assets/css/style';
-import Navbar from '../containers/Navbar';
-import Footer from '../containers/Footer';
-import {
-  GlobalStyle,
-  ContentWrapper,
-} from '../containers/webAppCreative.style';
-import 'animate.css';
+import React from 'react';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import AnalyticsTool from '@/containers/AnalyticsTool';
 import { getAllLegalDocuments, LegalDocumentMetadata } from '@/lib/getLegal';
+import Layout from '@/containers/Layout/Layout';
+import { MenuItem } from '@/types';
+import Head from 'next/head';
 
 export default function SelfHostingPage({
   legals,
@@ -24,28 +14,22 @@ export default function SelfHostingPage({
 }) {
   const { t } = useTranslation();
   return (
-    <ThemeProvider theme={theme}>
-      <Fragment>
-        <Head>
-          <title>{t('SEO.title')}</title>
-        </Head>
-
-        <ResetCSS />
-        <GlobalStyle />
-
-        <ContentWrapper>
-          <Sticky top={0} innerZ={9999} activeClass="sticky-nav-active">
-            <DrawerProvider>
-              <Navbar />
-            </DrawerProvider>
-          </Sticky>
-          <AnalyticsTool />
-          <Footer legals={legals} />
-        </ContentWrapper>
-      </Fragment>
-    </ThemeProvider>
+    <Layout menuItems={menuItems} legals={legals}>
+      <Head>
+        <title>{t('SelfHosted.title')}</title>
+      </Head>
+      <AnalyticsTool />
+    </Layout>
   );
 }
+
+export const menuItems: MenuItem[] = [
+  {
+    label: 'Nav.home',
+    path: '/',
+    offset: '70',
+  },
+];
 
 export async function getStaticProps({ locale }: { locale?: string }) {
   const legals = getAllLegalDocuments();
