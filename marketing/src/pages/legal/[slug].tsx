@@ -20,6 +20,7 @@ type Props = {
 
 export default function Legal({ document }: Props) {
   const router = useRouter();
+
   // const title = `${post.title} | Next.js Blog Example with ${CMS_NAME}`
   if (!router.isFallback && !document) {
     return <ErrorPage statusCode={404} />;
@@ -80,17 +81,22 @@ export async function getStaticProps({ params }: Params) {
   };
 }
 
-export async function getStaticPaths() {
+export async function getStaticPaths({ locales }: { locales: string[] }) {
   const posts = getAllPosts(['slug']);
 
   return {
-    paths: posts.map((post) => {
-      return {
-        params: {
-          slug: post.slug,
-        },
-      };
-    }),
+    paths: locales
+      .map((locale) => {
+        return posts.map((post) => {
+          return {
+            params: {
+              slug: post.slug,
+            },
+            locale,
+          };
+        });
+      })
+      .flat(),
     fallback: false,
   };
 }

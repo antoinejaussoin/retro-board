@@ -2,13 +2,14 @@ import fs from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
 
-const legalDirectory = join(process.cwd(), 'src/common/documents');
+const legalDirectory = join(process.cwd(), 'src/common/documents/legal');
 
 export function getPostSlugs() {
   return fs.readdirSync(legalDirectory);
 }
 
 export function getLegalByName(slug: string, fields: string[] = []) {
+  console.log('Getting slug ', slug);
   const realSlug = slug.replace(/\.md$/, '');
   const fullPath = join(legalDirectory, `${realSlug}.md`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
