@@ -170,6 +170,7 @@
 		"hint": "This will change your life!"
 	},
 	"Footer": {
+		"legal": "Legal Stuff",
 		"copyright": "Copyright © 2023 - Retrospected Ltd. All rights reserved.",
 		"about": "We create software with Love, from London, UK"
 	},

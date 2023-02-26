@@ -2,46 +2,34 @@ import fs from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
 
+export type LegalDocument = {
+  content: string;
+  title: string;
+  slug: string;
+};
+
 const legalDirectory = join(process.cwd(), 'src/common/documents/legal');
 
 export function getPostSlugs() {
   return fs.readdirSync(legalDirectory);
 }
 
-export function getLegalByName(slug: string, fields: string[] = []) {
+export function getLegalByName(slug: string): LegalDocument {
   const realSlug = slug.replace(/\.md$/, '');
   const fullPath = join(legalDirectory, `${realSlug}.md`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
 
-  type Items = {
-    [key: string]: string;
-  };
+  console.log('data: ', data);
 
-  const items: Items = {};
+  const document = { ...data, slug: realSlug, content } as LegalDocument;
 
-  // Ensure only the minimal needed data is exposed
-  fields.forEach((field) => {
-    if (field === 'slug') {
-      items[field] = realSlug;
-    }
-    if (field === 'content') {
-      items[field] = content;
-    }
-
-    if (typeof data[field] !== 'undefined') {
-      items[field] = data[field];
-    }
-  });
-
-  return items;
+  return document;
 }
 
-export function getAllPosts(fields: string[] = []) {
+export function getAllLegalDocuments() {
   const slugs = getPostSlugs();
-  const posts = slugs
-    .map((slug) => getLegalByName(slug, fields))
-    // sort posts by date in descending order
-    .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
+  const posts = slugs.map(getLegalByName);
+
   return posts;
 }

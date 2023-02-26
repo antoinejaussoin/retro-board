@@ -24,6 +24,12 @@ import facebook from '@/common/assets/image/webAppCreative/icons/facebook.png';
 import twitter from '@/common/assets/image/webAppCreative/icons/twitter.png';
 import dribbble from '@/common/assets/image/webAppCreative/icons/dribbble.png';
 import { useTranslation } from 'next-i18next';
+import { LegalDocument } from '@/lib/getLegal';
+import NextLink from 'next/link';
+
+type FooterProps = {
+  legals: LegalDocument[];
+};
 
 export const footerTop = {
   about: {
@@ -180,7 +186,7 @@ export const footer = {
   ],
 };
 
-const Footer = () => {
+export default function Footer({ legals }: FooterProps) {
   const { t } = useTranslation();
   return (
     <Section>
@@ -202,6 +208,18 @@ const Footer = () => {
               </ul>
             </FooterWidget>
           ))} */}
+          <FooterWidget>
+            <h4>{t('Footer.legal')}</h4>
+            <ul>
+              {legals.map((doc) => (
+                <li className="widgetListItem" key={doc.slug}>
+                  <NextLink href={`legal/${doc.slug}`}>
+                    <Link>{doc.title}</Link>
+                  </NextLink>
+                </li>
+              ))}
+            </ul>
+          </FooterWidget>
           <ContactInfo>
             <Heading as="h4" content={t('Contact.title')} />
             <InfoItem>
@@ -253,6 +271,4 @@ const Footer = () => {
       </Container>
     </Section>
   );
-};
-
-export default Footer;
+}

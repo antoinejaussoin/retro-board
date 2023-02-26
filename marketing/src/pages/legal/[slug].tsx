@@ -7,16 +7,15 @@ import ErrorPage from 'next/error';
 // import Layout from '../../components/layout'
 import Head from 'next/head';
 import markdownToHtml from '@/lib/mdToHtml';
-import { getAllPosts, getLegalByName } from '@/lib/getLegal';
+import {
+  getAllLegalDocuments,
+  getLegalByName,
+  LegalDocument,
+} from '@/lib/getLegal';
 import PostBody from '@/common/components/Markdown/PostBody';
 
-type Document = {
-  content: string;
-  title: string;
-};
-
 type Props = {
-  document: Document;
+  document: LegalDocument;
 };
 
 export default function Legal({ document }: Props) {
@@ -61,21 +60,13 @@ type Params = {
 };
 
 export async function getStaticProps({ params }: Params) {
-  const post = getLegalByName(params.slug, [
-    'title',
-    'date',
-    'slug',
-    'author',
-    'content',
-    'ogImage',
-    'coverImage',
-  ]);
-  const content = await markdownToHtml(post.content || '');
+  const document = getLegalByName(params.slug);
+  const content = await markdownToHtml(document.content || '');
 
   return {
     props: {
       document: {
-        ...post,
+        ...document,
         content,
       },
     },
@@ -83,9 +74,9 @@ export async function getStaticProps({ params }: Params) {
 }
 
 export async function getStaticPaths({ locales }: { locales: string[] }) {
-  const posts = getAllPosts(['slug']);
+  const posts = getAllLegalDocuments();
 
-  return {
+  const paths = {
     paths: locales
       .map((locale) => {
         return posts.map((post) => {
@@ -100,4 +91,8 @@ export async function getStaticPaths({ locales }: { locales: string[] }) {
       .flat(),
     fallback: false,
   };
+
+  console.log('Paths:', paths.paths);
+
+  return paths;
 }

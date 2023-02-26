@@ -27,8 +27,13 @@ import {
 import 'animate.css';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import { getAllLegalDocuments, LegalDocument } from '@/lib/getLegal';
 
-export default function HomePage() {
+type HomePageProps = {
+  legals: LegalDocument[];
+};
+
+export default function HomePage({ legals }: HomePageProps) {
   const { t } = useTranslation();
   return (
     <ThemeProvider theme={theme}>
@@ -60,15 +65,20 @@ export default function HomePage() {
           {/* <NewsFeed /> */}
           <Faq />
           <CallToAction />
-          <Footer />
+          <Footer legals={legals} />
         </ContentWrapper>
       </Fragment>
     </ThemeProvider>
   );
 }
 
-export const getStaticProps = async ({ locale }: { locale?: string }) => ({
-  props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common'])),
-  },
-});
+export async function getStaticProps({ locale }: { locale?: string }) {
+  const posts = getAllLegalDocuments();
+
+  return {
+    props: {
+      legals: posts,
+      ...(await serverSideTranslations(locale ?? 'en', ['common'])),
+    },
+  };
+}
