@@ -13,7 +13,6 @@ import { RecoilRoot } from 'recoil';
 import { Suspense } from 'react';
 import { CodeSplitLoader } from './CodeSplitLoader';
 import QuotaManager from './auth/QuotaManager';
-import GlobalProvider from './global/GlobalProvider';
 import { ConfirmProvider } from 'material-ui-confirm';
 
 function App() {
@@ -39,20 +38,18 @@ function App() {
           <ThemeProvider theme={theme}>
             <ConfirmProvider>
               <BrowserRouter>
-                <GlobalProvider>
-                  <AuthProvider>
-                    <LanguageProvider>
-                      <QuotaManager>
-                        <Global styles={globalCss} />
-                        <ErrorBoundary>
-                          <Suspense fallback={<CodeSplitLoader />}>
-                            <Layout />
-                          </Suspense>
-                        </ErrorBoundary>
-                      </QuotaManager>
-                    </LanguageProvider>
-                  </AuthProvider>
-                </GlobalProvider>
+                <AuthProvider>
+                  <LanguageProvider>
+                    <QuotaManager>
+                      <Global styles={globalCss} />
+                      <ErrorBoundary>
+                        <Suspense fallback={<CodeSplitLoader />}>
+                          <Layout />
+                        </Suspense>
+                      </ErrorBoundary>
+                    </QuotaManager>
+                  </LanguageProvider>
+                </AuthProvider>
               </BrowserRouter>
             </ConfirmProvider>
           </ThemeProvider>
