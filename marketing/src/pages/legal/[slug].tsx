@@ -12,6 +12,7 @@ import PostBody from '@/common/components/Markdown/PostBody';
 
 type Document = {
   content: string;
+  title: string;
 };
 
 type Props = {
@@ -21,7 +22,7 @@ type Props = {
 export default function Legal({ document }: Props) {
   const router = useRouter();
 
-  // const title = `${post.title} | Next.js Blog Example with ${CMS_NAME}`
+  const title = `${document.title} | Retrospected`;
   if (!router.isFallback && !document) {
     return <ErrorPage statusCode={404} />;
   }
@@ -35,7 +36,7 @@ export default function Legal({ document }: Props) {
     //       <>
     <article className="mb-32">
       <Head>
-        <title>Test</title>
+        <title>{title}</title>
         {/* <meta property="og:image" content={post.ogImage.url} /> */}
       </Head>
       {/* <PostHeader

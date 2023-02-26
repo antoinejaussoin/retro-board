@@ -9,7 +9,6 @@ export function getPostSlugs() {
 }
 
 export function getLegalByName(slug: string, fields: string[] = []) {
-  console.log('Getting slug ', slug);
   const realSlug = slug.replace(/\.md$/, '');
   const fullPath = join(legalDirectory, `${realSlug}.md`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
