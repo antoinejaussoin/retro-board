@@ -24,11 +24,11 @@ import facebook from '@/common/assets/image/webAppCreative/icons/facebook.png';
 import twitter from '@/common/assets/image/webAppCreative/icons/twitter.png';
 import dribbble from '@/common/assets/image/webAppCreative/icons/dribbble.png';
 import { useTranslation } from 'next-i18next';
-import { LegalDocument } from '@/lib/getLegal';
+import { LegalDocumentMetadata } from '@/lib/getLegal';
 import NextLink from 'next/link';
 
 type FooterProps = {
-  legals: LegalDocument[];
+  legals: LegalDocumentMetadata[];
 };
 
 export const footerTop = {

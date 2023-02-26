@@ -27,10 +27,10 @@ import {
 import 'animate.css';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
-import { getAllLegalDocuments, LegalDocument } from '@/lib/getLegal';
+import { getAllLegalDocuments, LegalDocumentMetadata } from '@/lib/getLegal';
 
 type HomePageProps = {
-  legals: LegalDocument[];
+  legals: LegalDocumentMetadata[];
 };
 
 export default function HomePage({ legals }: HomePageProps) {

@@ -2,10 +2,13 @@ import fs from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
 
-export type LegalDocument = {
-  content: string;
+export type LegalDocumentMetadata = {
   title: string;
   slug: string;
+};
+
+export type LegalDocument = LegalDocumentMetadata & {
+  content: string;
 };
 
 const legalDirectory = join(process.cwd(), 'src/common/documents/legal');
@@ -25,9 +28,11 @@ export function getLegalByName(slug: string): LegalDocument {
   return document;
 }
 
-export function getAllLegalDocuments() {
+export function getAllLegalDocuments(): LegalDocumentMetadata[] {
   const slugs = getPostSlugs();
-  const posts = slugs.map(getLegalByName);
+  const posts = slugs
+    .map(getLegalByName)
+    .map(({ title, slug }) => ({ title, slug }));
 
   return posts;
 }

@@ -4,7 +4,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import Sticky from 'react-stickynode';
 import 'animate.css';
 import { useTranslation } from 'next-i18next';
-import { LegalDocument } from '@/lib/getLegal';
+import { LegalDocumentMetadata } from '@/lib/getLegal';
 import ResetCSS from '@/common/assets/css/style';
 import { ContentWrapper, GlobalStyle } from '../webAppCreative.style';
 import { DrawerProvider } from '@/common/contexts/DrawerContext';
@@ -13,7 +13,7 @@ import { theme } from '@/common/theme/webAppCreative';
 import Footer from '../Footer';
 
 type HomePageProps = {
-  legals: LegalDocument[];
+  legals: LegalDocumentMetadata[];
   children: React.ReactNode;
 };
 

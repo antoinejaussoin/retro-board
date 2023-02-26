@@ -15,8 +15,13 @@ import 'animate.css';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import AnalyticsTool from '@/containers/AnalyticsTool';
+import { getAllLegalDocuments, LegalDocumentMetadata } from '@/lib/getLegal';
 
-export default function SelfHostingPage() {
+export default function SelfHostingPage({
+  legals,
+}: {
+  legals: LegalDocumentMetadata[];
+}) {
   const { t } = useTranslation();
   return (
     <ThemeProvider theme={theme}>
@@ -35,15 +40,20 @@ export default function SelfHostingPage() {
             </DrawerProvider>
           </Sticky>
           <AnalyticsTool />
-          <Footer />
+          <Footer legals={legals} />
         </ContentWrapper>
       </Fragment>
     </ThemeProvider>
   );
 }
 
-export const getStaticProps = async ({ locale }: { locale?: string }) => ({
-  props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common'])),
-  },
-});
+export async function getStaticProps({ locale }: { locale?: string }) {
+  const legals = getAllLegalDocuments();
+
+  return {
+    props: {
+      legals,
+      ...(await serverSideTranslations(locale ?? 'en', ['common'])),
+    },
+  };
+}

@@ -6,15 +6,15 @@ import {
   getAllLegalDocuments,
   getLegalByName,
   LegalDocument,
+  LegalDocumentMetadata,
 } from '@/lib/getLegal';
 import PostBody from '@/common/components/Markdown/PostBody';
 import Layout from '@/containers/Layout/Layout';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import styled from 'styled-components';
 
 type Props = {
   document: LegalDocument;
-  legals: LegalDocument[];
+  legals: LegalDocumentMetadata[];
 };
 
 export default function Legal({ document, legals }: Props) {
