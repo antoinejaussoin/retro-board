@@ -48,3 +48,10 @@ translate:
 	crowdin push sources
 	crowdin pre-translate --method=mt --engine-id=316468 -l=fr -l=nl -l=ar -l=de  -l=it -l=ja -l=uk
 	crowdin download
+
+run-local:
+	docker build -f ./frontend/Dockerfile -t retrospected/frontend:local ./frontend
+	docker run \
+	  --env BACKEND_HOST=localhost \
+    --env BACKEND_PORT=8081 \
+		-it --rm -p 3100:80 retrospected/frontend:local
