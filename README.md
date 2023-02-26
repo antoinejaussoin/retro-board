@@ -740,6 +740,8 @@ Special thanks to [@andresin87](https://github.com/andresin87) for pointing the 
 
 Another special thanks to Browserstack, as they allow me to test this project in other browsers.
 
+Thanks to [UnDraw](https://undraw.co/) for some of the illustrations.
+
 <a href="https://www.browserstack.com/"><img src="./content/browserstack.png" width="300" height="65"></a>
 
 Please make your PRs from the **develop** branch, not **master**.

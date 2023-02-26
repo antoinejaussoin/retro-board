@@ -8,10 +8,10 @@ import {
   LegalDocument,
   LegalDocumentMetadata,
 } from '@/lib/getLegal';
-import PostBody from '@/common/components/Markdown/PostBody';
 import Layout from '@/containers/Layout/Layout';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { MenuItem } from '@/types';
+import LegalContent from '@/containers/Legal/LegalContent';
 
 type Props = {
   document: LegalDocument;
@@ -39,7 +39,7 @@ export default function Legal({ document, legals }: Props) {
         <Head>
           <title>{title}</title>
         </Head>
-        <PostBody content={document.content} />
+        <LegalContent content={document.content} />
       </article>
     </Layout>
   );

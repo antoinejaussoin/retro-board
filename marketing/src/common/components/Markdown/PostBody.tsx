@@ -13,10 +13,6 @@ const PostBody = ({ content }: Props) => {
   );
 };
 
-const Container = styled.div`
-  margin: 30px;
-  padding: 20px;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
-`;
+const Container = styled.div``;
 
 export default PostBody;
