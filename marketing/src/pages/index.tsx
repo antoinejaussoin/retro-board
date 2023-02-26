@@ -73,11 +73,11 @@ export default function HomePage({ legals }: HomePageProps) {
 }
 
 export async function getStaticProps({ locale }: { locale?: string }) {
-  const posts = getAllLegalDocuments();
+  const legals = getAllLegalDocuments();
 
   return {
     props: {
-      legals: posts,
+      legals,
       ...(await serverSideTranslations(locale ?? 'en', ['common'])),
     },
   };

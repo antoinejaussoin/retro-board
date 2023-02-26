@@ -20,8 +20,6 @@ export function getLegalByName(slug: string): LegalDocument {
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
 
-  console.log('data: ', data);
-
   const document = { ...data, slug: realSlug, content } as LegalDocument;
 
   return document;

@@ -213,9 +213,7 @@ export default function Footer({ legals }: FooterProps) {
             <ul>
               {legals.map((doc) => (
                 <li className="widgetListItem" key={doc.slug}>
-                  <NextLink href={`legal/${doc.slug}`}>
-                    <Link>{doc.title}</Link>
-                  </NextLink>
+                  <NextLink href={`/legal/${doc.slug}`}>{doc.title}</NextLink>
                 </li>
               ))}
             </ul>
