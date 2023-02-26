@@ -230,8 +230,6 @@ app.get('/healthz', async (_, res) => {
   res.status(200).send();
 });
 
-app.use('/api/auth', heavyLoadLimiter, authRouter);
-
 io.use(function (socket, next) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   sessionMiddleware(socket.request as any, {} as any, next as any);
@@ -243,6 +241,9 @@ const port = config.BACKEND_PORT || 8081;
 db().then(() => {
   passportInit();
   game(io);
+
+  // Auth
+  app.use('/api/auth', heavyLoadLimiter, authRouter);
 
   // Stripe
   app.use('/api/stripe', stripeRouter());
@@ -423,23 +424,32 @@ db().then(() => {
           registerPayload.name,
           identity.emailVerification!
         );
+        const userView = await getUserView(identity.id);
+        if (userView) {
+          res.status(200).send({
+            loggedIn: false,
+            user: userView.toJson(),
+          });
+        } else {
+          res.status(500).send();
+        }
       } else {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        req.logIn(identity.toIds(), (err: any) => {
+        req.logIn(identity.toIds(), async (err: any) => {
           if (err) {
             console.log('Cannot login Error: ', err);
             res.status(500).send('Cannot login');
           }
+          const userView = await getUserView(identity.id);
+          if (userView) {
+            res.status(200).send({
+              loggedIn: true,
+              user: userView.toJson(),
+            });
+          } else {
+            res.status(500).send();
+          }
         });
-      }
-      const userView = await getUserView(identity.id);
-      if (userView) {
-        res.status(200).send({
-          loggedIn: !identity.emailVerification,
-          user: userView.toJson(),
-        });
-      } else {
-        res.status(500).send();
       }
     }
   });
