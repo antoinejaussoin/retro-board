@@ -2,7 +2,7 @@ const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
   env: {
-    backend_delay: 0,
+    backend_delay: 2000,
   },
   e2e: {
     // We've imported your old cypress plugins here.
