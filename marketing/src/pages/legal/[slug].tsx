@@ -11,11 +11,20 @@ import {
 import PostBody from '@/common/components/Markdown/PostBody';
 import Layout from '@/containers/Layout/Layout';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { MenuItem } from '@/types';
 
 type Props = {
   document: LegalDocument;
   legals: LegalDocumentMetadata[];
 };
+
+export const menuItems: MenuItem[] = [
+  {
+    label: 'Nav.home',
+    path: '/',
+    offset: '70',
+  },
+];
 
 export default function Legal({ document, legals }: Props) {
   const router = useRouter();
@@ -25,7 +34,7 @@ export default function Legal({ document, legals }: Props) {
     return <ErrorPage statusCode={404} />;
   }
   return (
-    <Layout legals={legals} menuItems={[]}>
+    <Layout legals={legals} menuItems={menuItems}>
       <article>
         <Head>
           <title>{title}</title>

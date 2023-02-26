@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
 import Scrollspy from 'react-scrollspy';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 
@@ -7,6 +6,7 @@ import { DrawerContext } from '../../contexts/DrawerContext';
 import NextImage from '../NextImage';
 import { MenuItem } from '@/types';
 import { useTranslation } from 'next-i18next';
+import Link from 'next/link';
 
 type ScrollSpyMenuProps = {
   /** className of the ScrollSpyMenu. */
@@ -35,7 +35,7 @@ type ScrollSpyMenuProps = {
   /** Name of the element of scrollable container that can be used with querySelector [optional]. */
   rootEl?: string;
 
-  drawerClose?: boolean;
+  drawer?: boolean;
 
   /**
    * Function to be executed when the active item has been updated [optional].
@@ -64,7 +64,7 @@ const RenderLinkWithIcon = ({ menu }: { menu: MenuItem }) => {
 const ScrollSpyMenu = ({
   className,
   menuItems,
-  drawerClose,
+  drawer,
   componentTag = 'ul',
   currentClassName = 'is-current',
   ...props
@@ -102,29 +102,38 @@ const ScrollSpyMenu = ({
       componentTag={componentTag}
       {...props}
     >
-      {menuItems.map((menu, index) => (
-        <li key={`menu-item-${index}`}>
-          {menu.staticLink ? (
-            <RenderLinkWithIcon menu={menu} />
-          ) : (
-            <>
-              {drawerClose ? (
-                <AnchorLink
-                  href={menu.path}
-                  offset={menu.offset}
-                  onClick={toggleDrawer}
-                >
-                  {t(menu.label)}
-                </AnchorLink>
-              ) : (
-                <AnchorLink href={menu.path} offset={menu.offset}>
-                  {t(menu.label)}
-                </AnchorLink>
-              )}
-            </>
-          )}
-        </li>
-      ))}
+      {menuItems.map((menu, index) => {
+        const isAnchor = menu.path.startsWith('#');
+        return (
+          <li key={`menu-item-${index}`}>
+            {menu.staticLink ? (
+              <RenderLinkWithIcon menu={menu} />
+            ) : (
+              <>
+                {drawer ? (
+                  <AnchorLink
+                    href={menu.path}
+                    offset={menu.offset}
+                    onClick={toggleDrawer}
+                  >
+                    {t(menu.label)}
+                  </AnchorLink>
+                ) : (
+                  <>
+                    {isAnchor ? (
+                      <AnchorLink href={menu.path} offset={menu.offset}>
+                        {t(menu.label)}
+                      </AnchorLink>
+                    ) : (
+                      <Link href={menu.path}>{t(menu.label)}</Link>
+                    )}
+                  </>
+                )}
+              </>
+            )}
+          </li>
+        );
+      })}
     </Scrollspy>
   );
 };
