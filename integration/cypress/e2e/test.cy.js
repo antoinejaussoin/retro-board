@@ -136,6 +136,8 @@ describe('Post workflow', () => {
       // Register
       get('register-button').click();
 
+      cy.wait(2000);
+
       // Go to the user admin and delete the account
       get('account-menu').click();
       get('account-menu-account').click();

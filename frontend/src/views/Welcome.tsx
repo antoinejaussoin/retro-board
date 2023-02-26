@@ -22,6 +22,9 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
+  margin-left: 40px;
+  margin-right: 40px;
+  text-align: center;
   font-weight: 100;
   font-size: 4em;
   @media screen and (max-width: 700px) {
