@@ -1,8 +1,8 @@
-import Container from '../../../common/components/UI/Container';
-import Heading from '../../../common/components/Heading';
-import Text from '../../../common/components/Text';
-import Button from '../../../common/components/Button';
-import NextImage from '../../../common/components/NextImage';
+import Container from '@/common/components/UI/Container';
+import Heading from '@/common/components/Heading';
+import Text from '@/common/components/Text';
+import Button from '@/common/components/Button';
+import NextImage from '@/common/components/NextImage';
 import Section, {
   BannerContentWrapper,
   BannerContent,
@@ -12,7 +12,7 @@ import Section, {
 import screenshot from './mockup-1-02.webp';
 import { useTranslation } from 'next-i18next';
 import { useConfig } from '@/common/hooks/useConfig';
-import dashboardPattern from '../../../common/assets/image/webAppCreative/dashboard-pattern.png';
+import dashboardPattern from '@/common/assets/image/webAppCreative/dashboard-pattern.png';
 
 const Banner = () => {
   const { t } = useTranslation('common');

@@ -2,11 +2,11 @@ import { Icon } from 'react-icons-kit';
 import { ic_place } from 'react-icons-kit/md/ic_place';
 import { ic_phone } from 'react-icons-kit/md/ic_phone';
 import { paperPlane } from 'react-icons-kit/fa/paperPlane';
-import Container from '../../../common/components/UI/Container';
-import Heading from '../../../common/components/Heading';
-import Image from '../../../common/components/Image';
-import Text from '../../../common/components/Text';
-import Link from '../../../common/components/Link';
+import Container from '@/common/components/UI/Container';
+import Heading from '@/common/components/Heading';
+import Image from '@/common/components/Image';
+import Text from '@/common/components/Text';
+import Link from '@/common/components/Link';
 import {
   Section,
   Grid,
@@ -20,9 +20,9 @@ import {
 } from './footer.style';
 import NextImage from '@/common/components/NextImage';
 import siteLogo from '../Navbar/logo.png';
-import facebook from '../../../common/assets/image/webAppCreative/icons/facebook.png';
-import twitter from '../../../common/assets/image/webAppCreative/icons/twitter.png';
-import dribbble from '../../../common/assets/image/webAppCreative/icons/dribbble.png';
+import facebook from '@/common/assets/image/webAppCreative/icons/facebook.png';
+import twitter from '@/common/assets/image/webAppCreative/icons/twitter.png';
+import dribbble from '@/common/assets/image/webAppCreative/icons/dribbble.png';
 import { useTranslation } from 'next-i18next';
 
 export const footerTop = {

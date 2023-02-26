@@ -1,9 +1,9 @@
 import styled, { createGlobalStyle, keyframes } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
-import bgPattern from '../../common/assets/image/webAppCreative/pattern3.png';
-import pattern5 from '../../common/assets/image/webAppCreative/pattern5.png';
-import pattern6 from '../../common/assets/image/webAppCreative/pattern6.png';
-import pattern7 from '../../common/assets/image/webAppCreative/pattern7.png';
+import bgPattern from '@/common/assets/image/webAppCreative/pattern3.png';
+import pattern5 from '@/common/assets/image/webAppCreative/pattern5.png';
+import pattern6 from '@/common/assets/image/webAppCreative/pattern6.png';
+import pattern7 from '@/common/assets/image/webAppCreative/pattern7.png';
 
 const Fade = keyframes`
   0% {
@@ -306,7 +306,8 @@ export const CombinedSection = styled.section`
 `;
 
 export const CornerPattern = styled.div`
-  background: url(${pattern5?.src}) left top no-repeat, url(${pattern6?.src}) right top no-repeat,
+  background: url(${pattern5?.src}) left top no-repeat,
+    url(${pattern6?.src}) right top no-repeat,
     url(${pattern7?.src}) right bottom no-repeat;
   position: absolute;
   left: 0;

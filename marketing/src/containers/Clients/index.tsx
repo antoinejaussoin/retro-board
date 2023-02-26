@@ -1,8 +1,8 @@
 import React from 'react';
 import Slider, { Settings } from 'react-slick';
-import Container from '../../../common/components/UI/Container';
-import NextImage from '../../../common/components/NextImage';
-import Text from '../../../common/components/Text';
+import Container from '@/common/components/UI/Container';
+import NextImage from '@/common/components/NextImage';
+import Text from '@/common/components/Text';
 import Section, { Title, SliderWrapper, Figure } from './clients.style';
 import { useTranslation } from 'next-i18next';
 import adidas from './adidas.png';

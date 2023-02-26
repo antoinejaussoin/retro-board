@@ -1,16 +1,16 @@
 import React from 'react';
 // import { Icon } from 'react-icons-kit'; TODO !!!!
 // import { arrowRight } from 'react-icons-kit/feather/arrowRight';
-import Container from '../../../common/components/UI/Container';
-import NextImage from '../../../common/components/NextImage';
-// import Link from '../../../common/components/Link';
-import Heading from '../../../common/components/Heading';
-import Text from '../../../common/components/Text';
+import Container from '@/common/components/UI/Container';
+import NextImage from '@/common/components/NextImage';
+// import Link from '@/common/components/Link';
+import Heading from '@/common/components/Heading';
+import Text from '@/common/components/Text';
 import Section, { SectionHeading, Grid, Item } from './howItWorks.style';
-import icon1 from '../../../common/assets/image/webAppCreative/icons/1.png';
-import icon2 from '../../../common/assets/image/webAppCreative/icons/2.png';
-import icon3 from '../../../common/assets/image/webAppCreative/icons/3.png';
-import icon4 from '../../../common/assets/image/webAppCreative/icons/4.png';
+import icon1 from '@/common/assets/image/webAppCreative/icons/1.png';
+import icon2 from '@/common/assets/image/webAppCreative/icons/2.png';
+import icon3 from '@/common/assets/image/webAppCreative/icons/3.png';
+import icon4 from '@/common/assets/image/webAppCreative/icons/4.png';
 import { useTranslation } from 'next-i18next';
 
 type HowTo = {

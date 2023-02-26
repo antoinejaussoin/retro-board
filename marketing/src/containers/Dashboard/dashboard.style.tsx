@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
 import { Tabs } from 'react-tabs';
-import pattern1 from '../../../common/assets/image/webAppCreative/pattern1.png';
-import pattern2 from '../../../common/assets/image/webAppCreative/pattern2.png';
+import pattern1 from '@/common/assets/image/webAppCreative/pattern1.png';
+import pattern2 from '@/common/assets/image/webAppCreative/pattern2.png';
 
 const Section = styled.section`
   background-color: #fff;

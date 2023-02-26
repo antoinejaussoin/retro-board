@@ -1,6 +1,6 @@
 import { useState, Fragment } from 'react';
-import Heading from '../../../common/components/Heading';
-import Container from '../../../common/components/UI/Container';
+import Heading from '@/common/components/Heading';
+import Container from '@/common/components/UI/Container';
 import { Icon } from 'react-icons-kit';
 import { plus } from 'react-icons-kit/entypo/plus';
 import { minus } from 'react-icons-kit/entypo/minus';

@@ -1,8 +1,8 @@
 import React from 'react';
-import Container from '../../../common/components/UI/Container';
-import Image from '../../../common/components/Image';
-import Heading from '../../../common/components/Heading';
-import Text from '../../../common/components/Text';
+import Container from '@/common/components/UI/Container';
+import Image from '@/common/components/Image';
+import Heading from '@/common/components/Heading';
+import Text from '@/common/components/Text';
 import Section, {
   SectionHeading,
   ReactSlick,

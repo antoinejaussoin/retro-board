@@ -1,9 +1,9 @@
-import Container from '../../../common/components/UI/Container';
-import Heading from '../../../common/components/Heading';
-import Text from '../../../common/components/Text';
+import Container from '@/common/components/UI/Container';
+import Heading from '@/common/components/Heading';
+import Text from '@/common/components/Text';
 import Section, { Content } from './cta.style';
-import bubble1 from '../../../common/assets/image/webAppCreative/cta-bubble-1.png';
-import bubble2 from '../../../common/assets/image/webAppCreative/cta-bubble-2.png';
+import bubble1 from '@/common/assets/image/webAppCreative/cta-bubble-1.png';
+import bubble2 from '@/common/assets/image/webAppCreative/cta-bubble-2.png';
 import { useTranslation } from 'next-i18next';
 import Button from '@/common/components/Button';
 import NextImage from '@/common/components/NextImage';

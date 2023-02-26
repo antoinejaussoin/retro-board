@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import Fade from 'react-reveal/Fade';
-import Container from '../../../common/components/UI/Container';
-import Heading from '../../../common/components/Heading';
-import Button from '../../../common/components/Button';
-import Image from '../../../common/components/Image';
-import Text from '../../../common/components/Text';
+import Container from '@/common/components/UI/Container';
+import Heading from '@/common/components/Heading';
+import Button from '@/common/components/Button';
+import Image from '@/common/components/Image';
+import Text from '@/common/components/Text';
 import pricingFree from './pricing-free.svg';
 import pricingPro from './pricing-team.svg';
 import pricingUnlimited from './pricing-unlimited.svg';
