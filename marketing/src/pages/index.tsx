@@ -1,12 +1,6 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Head from 'next/head';
-import { ThemeProvider } from 'styled-components';
-import Sticky from 'react-stickynode';
-import { DrawerProvider } from '../common/contexts/DrawerContext';
-import { theme } from '../common/theme/webAppCreative';
-import ResetCSS from '../common/assets/css/style';
 import Banner from '../containers/Banner';
-import Navbar from '../containers/Navbar';
 import Clients from '../containers/Clients';
 import HowItWorks from '../containers/HowItWorks';
 import AnalyticsTool from '../containers/AnalyticsTool';
@@ -17,10 +11,7 @@ import Pricing from '../containers/Pricing';
 import NewsFeed from '../containers/NewsFeed';
 import Faq from '../containers/Faq';
 import CallToAction from '../containers/CallToAction';
-import Footer from '../containers/Footer';
 import {
-  GlobalStyle,
-  ContentWrapper,
   CombinedSection,
   CornerPattern,
 } from '../containers/webAppCreative.style';
@@ -28,6 +19,8 @@ import 'animate.css';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import { getAllLegalDocuments, LegalDocumentMetadata } from '@/lib/getLegal';
+import { MenuItem } from '@/types';
+import Layout from '@/containers/Layout/Layout';
 
 type HomePageProps = {
   legals: LegalDocumentMetadata[];
@@ -36,41 +29,60 @@ type HomePageProps = {
 export default function HomePage({ legals }: HomePageProps) {
   const { t } = useTranslation();
   return (
-    <ThemeProvider theme={theme}>
-      <Fragment>
-        <Head>
-          <title>{t('SEO.title')}</title>
-        </Head>
-
-        <ResetCSS />
-        <GlobalStyle />
-
-        <ContentWrapper>
-          <Sticky top={0} innerZ={9999} activeClass="sticky-nav-active">
-            <DrawerProvider>
-              <Navbar />
-            </DrawerProvider>
-          </Sticky>
-          <Banner />
-          <Clients />
-          <HowItWorks />
-          <AnalyticsTool />
-          <Dashboard />
-          {/* <Testimonials /> */}
-          <CombinedSection>
-            <Integrations />
-            <Pricing />
-            <CornerPattern />
-          </CombinedSection>
-          {/* <NewsFeed /> */}
-          <Faq />
-          <CallToAction />
-          <Footer legals={legals} />
-        </ContentWrapper>
-      </Fragment>
-    </ThemeProvider>
+    <Layout menuItems={menuItems} legals={legals}>
+      <Head>
+        <title>{t('SEO.title')}</title>
+      </Head>
+      <Banner />
+      <Clients />
+      <HowItWorks />
+      <AnalyticsTool />
+      <Dashboard />
+      {/* <Testimonials /> */}
+      <CombinedSection>
+        <Integrations />
+        <Pricing />
+        <CornerPattern />
+      </CombinedSection>
+      {/* <NewsFeed /> */}
+      <Faq />
+      <CallToAction />
+    </Layout>
   );
 }
+
+export const menuItems: MenuItem[] = [
+  {
+    label: 'Nav.home',
+    path: '#home',
+    offset: '70',
+  },
+  {
+    label: 'Nav.howTo',
+    path: '#how-to',
+    offset: '70',
+  },
+  {
+    label: 'Nav.features',
+    path: '#features',
+    offset: '70',
+  },
+  // {
+  //   label: 'Nav.testimonial',
+  //   path: '#testimonial',
+  //   offset: '70',
+  // },
+  {
+    label: 'Nav.pricing',
+    path: '#pricing',
+    offset: '70',
+  },
+  {
+    label: 'Nav.faq',
+    path: '#faq',
+    offset: '70',
+  },
+];
 
 export async function getStaticProps({ locale }: { locale?: string }) {
   const legals = getAllLegalDocuments();

@@ -15,45 +15,13 @@ import { useConfig } from '@/common/hooks/useConfig';
 import { LanguagePicker } from './LanguagePicker';
 import styled from 'styled-components';
 
-export const menuItems: MenuItem[] = [
-  {
-    label: 'Nav.home',
-    path: '#home',
-    offset: '70',
-  },
-  {
-    label: 'Nav.howTo',
-    path: '#how-to',
-    offset: '70',
-  },
-  {
-    label: 'Nav.features',
-    path: '#features',
-    offset: '70',
-  },
-  // {
-  //   label: 'Nav.testimonial',
-  //   path: '#testimonial',
-  //   offset: '70',
-  // },
-  {
-    label: 'Nav.pricing',
-    path: '#pricing',
-    offset: '70',
-  },
-  {
-    label: 'Nav.faq',
-    path: '#faq',
-    offset: '70',
-  },
-];
-
 type NavbarProps = {
   navbarStyle?: any;
   logoStyle?: any;
   button?: any;
   row?: any;
   menuWrapper?: any;
+  items: MenuItem[];
 };
 
 const Navbar = ({
@@ -75,6 +43,7 @@ const Navbar = ({
     flexBox: true,
     alignItems: 'center',
   },
+  items,
 }: NavbarProps) => {
   const { state, dispatch } = useContext(DrawerContext);
   const { t } = useTranslation();
@@ -103,7 +72,7 @@ const Navbar = ({
           <Box {...menuWrapper} className="mainMenuWrapper">
             <ScrollSpyMenu
               className="main_menu"
-              menuItems={menuItems}
+              menuItems={items}
               offset={-70}
             />
             <a
@@ -127,7 +96,7 @@ const Navbar = ({
             >
               <ScrollSpyMenu
                 className="mobile_menu"
-                menuItems={menuItems}
+                menuItems={items}
                 drawerClose={true}
                 offset={-100}
               />

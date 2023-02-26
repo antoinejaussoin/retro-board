@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import Head from 'next/head';
 import styled, { ThemeProvider } from 'styled-components';
 import Sticky from 'react-stickynode';
 import 'animate.css';
@@ -11,28 +10,26 @@ import { DrawerProvider } from '@/common/contexts/DrawerContext';
 import Navbar from '../Navbar';
 import { theme } from '@/common/theme/webAppCreative';
 import Footer from '../Footer';
+import { MenuItem } from '@/types';
 
 type HomePageProps = {
   legals: LegalDocumentMetadata[];
+  menuItems: MenuItem[];
   children: React.ReactNode;
 };
 
-export default function Layout({ legals, children }: HomePageProps) {
+export default function Layout({ legals, menuItems, children }: HomePageProps) {
   const { t } = useTranslation();
   return (
     <ThemeProvider theme={theme}>
       <Fragment>
-        <Head>
-          <title>{t('SEO.title')}</title>
-        </Head>
-
         <ResetCSS />
         <GlobalStyle />
 
         <ContentWrapper>
           <Sticky top={0} innerZ={9999} activeClass="sticky-nav-active">
             <DrawerProvider>
-              <Navbar />
+              <Navbar items={menuItems} />
             </DrawerProvider>
           </Sticky>
           <Content>{children}</Content>

@@ -25,8 +25,8 @@ export default function Legal({ document, legals }: Props) {
     return <ErrorPage statusCode={404} />;
   }
   return (
-    <Layout legals={legals}>
-      <article className="mb-32">
+    <Layout legals={legals} menuItems={[]}>
+      <article>
         <Head>
           <title>{title}</title>
         </Head>
