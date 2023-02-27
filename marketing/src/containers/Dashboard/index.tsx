@@ -52,7 +52,7 @@ const Dashboard = () => {
       <Container width="1400px">
         <SectionHeading>
           <Heading content={t('Features.heading')} />
-          <Text content={t('Features.description')} />
+          {/* <Text content={t('Features.description')} /> */}
         </SectionHeading>
         <ReactTabs>
           <nav>
