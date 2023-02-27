@@ -1,6 +1,13 @@
 import React from 'react';
 // import { Icon } from 'react-icons-kit'; TODO !!!!
 // import { arrowRight } from 'react-icons-kit/feather/arrowRight';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faFaceSmileWink,
+  faLanguage,
+  faScrewdriverWrench,
+  faCloudArrowUp,
+} from '@fortawesome/free-solid-svg-icons';
 import Container from '@/common/components/UI/Container';
 import NextImage from '@/common/components/NextImage';
 // import Link from '@/common/components/Link';
@@ -15,25 +22,47 @@ import { useTranslation } from 'next-i18next';
 
 type HowTo = {
   id: number;
-  icon: any; // TODO
+  icon: React.ReactNode; // TODO
 };
+
+const iconSize = 60;
 
 export const howTos: HowTo[] = [
   {
     id: 1,
-    icon: icon1,
+    icon: (
+      <FontAwesomeIcon
+        icon={faFaceSmileWink}
+        color={'#FDD835'}
+        width={iconSize}
+      />
+    ),
   },
   {
     id: 2,
-    icon: icon2,
+    icon: (
+      <FontAwesomeIcon icon={faLanguage} color={'#4527A0'} width={iconSize} />
+    ),
   },
   {
     id: 3,
-    icon: icon3,
+    icon: (
+      <FontAwesomeIcon
+        icon={faScrewdriverWrench}
+        color={'#D81B60'}
+        width={iconSize}
+      />
+    ),
   },
   {
     id: 4,
-    icon: icon4,
+    icon: (
+      <FontAwesomeIcon
+        icon={faCloudArrowUp}
+        color={'#004D40'}
+        width={iconSize}
+      />
+    ),
   },
 ];
 
@@ -48,9 +77,7 @@ const HowItWorks = () => {
         <Grid>
           {howTos.map((howTo) => (
             <Item key={howTo.id}>
-              <figure>
-                <NextImage src={howTo.icon} alt="icon" />
-              </figure>
+              <figure>{howTo.icon}</figure>
               <Heading as="h4" content={t(`HowItWorks.${howTo.id}.title`)} />
               <Text content={t(`HowItWorks.${howTo.id}.text`)} />
               {/* <Link href={howTo.link}>
