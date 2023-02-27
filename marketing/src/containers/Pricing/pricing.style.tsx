@@ -108,7 +108,7 @@ export const PriceTable = styled.div`
   border-radius: 30px;
   padding: 45px 35px;
   text-align: center;
-  min-height: 770px;
+  min-height: 570px;
   @media (max-width: 1024px) {
     padding: 45px;
   }

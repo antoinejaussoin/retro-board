@@ -157,7 +157,9 @@ const Pricing = () => {
                       : 'animate__animated animate__fadeInUp'
                   }
                 >
+                  <Heading content={t(`${key}.title`)} />
                   <Heading
+                    as="h5"
                     content={toPrice(
                       t('Pricing.currency'),
                       t(`${key}.price`),
@@ -166,7 +168,6 @@ const Pricing = () => {
                       isMonthly ? t(`Pricing.perMonth`) : t(`Pricing.perYear`)
                     )}
                   />
-                  <Heading as="h5" content={t(`${key}.title`)} />
 
                   <Features>
                     {plus ? (
@@ -180,9 +181,9 @@ const Pricing = () => {
                     ))}
                   </Features>
 
-                  <Figure>
+                  {/* <Figure>
                     <NextImage src={priceTable.icon} alt={t(`${key}.title`)} />
-                  </Figure>
+                  </Figure> */}
                   <Button
                     title={
                       priceTable.isSubscribe
