@@ -4,7 +4,7 @@
 		"description": "Retrospectives gratuites et temps-réel pour équipes agiles"
 	},
 	"Banner": {
-		"heading": "Des retrospectives fun & efficaces, des équipes performantes & motivées !",
+		"heading": "Rétrospectives fun & efficaces =\nÉquipes performantes & motivées !",
 		"text": "Donnez une platforme moderne et simple à vos équipes, pour soutenir leur collaboration et leur amélioration continue",
 		"tagline": "*Aucune carte bancaire demandée",
 		"subscribeToday": "Essayez gratuitement"
@@ -188,6 +188,7 @@
 		"hint": "Cela va changer votre vie !"
 	},
 	"Footer": {
+		"legal": "Mentions légales",
 		"copyright": "Copyright © 2023 - Retrospected Ltd. Tout droits réservés.",
 		"about": "Nos logiciels sont développés avec amour par Retrospected Ltd à Londres"
 	},
