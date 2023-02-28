@@ -2,18 +2,19 @@ import styled from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
 
 const Section = styled.section`
+  // border: 1px solid green;
   padding-bottom: 60px;
   @media (min-width: 769px) and (max-width: 1024px) {
-    padding-top: 40px;
+    // padding-top: 40px;
   }
   @media (max-width: 1024px) {
     padding-bottom: 50px;
   }
   @media (max-width: 768px) {
-    padding-top: 40px;
+    // padding-top: 40px;
   }
   @media (max-width: 480px) {
-    padding-top: 40px;
+    // padding-top: 40px;
     padding-bottom: 40px;
   }
 `;
@@ -43,7 +44,7 @@ export const Figure = styled.figure`
 `;
 
 export const SliderWrapper = styled.div`
-  margin-top: 45px;
+  // margin-top: 45px;
   max-width: 1050px;
   margin-left: auto;
   margin-right: auto;

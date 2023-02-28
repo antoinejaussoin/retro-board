@@ -19,7 +19,7 @@ const Banner = () => {
   const { appUrl } = useConfig();
   return (
     <Section id="home">
-      <Container width="1400px">
+      <Container>
         <BannerContentWrapper>
           <BannerContent>
             <Heading
