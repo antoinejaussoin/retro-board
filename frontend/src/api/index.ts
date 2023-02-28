@@ -27,6 +27,10 @@ export async function createGame(): Promise<Session | null> {
   return await fetchPostGet<unknown, Session | null>('/api/create', null);
 }
 
+export async function createDemoGame(): Promise<Session | null> {
+  return await fetchPostGet<unknown, Session | null>('/api/demo', null);
+}
+
 export async function createEncryptedGame(
   encryptionKey: string
 ): Promise<Session | null> {

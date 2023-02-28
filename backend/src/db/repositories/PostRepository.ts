@@ -3,6 +3,7 @@ import SessionRepository from './SessionRepository.js';
 import { Post as JsonPost, defaultSession } from '../../common/index.js';
 import { cloneDeep } from 'lodash-es';
 import { getBaseRepository, saveAndReload } from './BaseRepository.js';
+import { DeepPartial } from 'typeorm';
 
 export default getBaseRepository(PostEntity).extend({
   async updateFromJson(
@@ -28,7 +29,7 @@ export default getBaseRepository(PostEntity).extend({
   async saveFromJson(
     sessionId: string,
     userId: string,
-    post: JsonPost
+    post: DeepPartial<JsonPost>
   ): Promise<PostEntity | undefined> {
     const session = await this.manager.findOne(SessionEntity, {
       where: { id: sessionId },

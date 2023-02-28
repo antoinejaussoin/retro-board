@@ -218,6 +218,7 @@ export type TrackingEvent =
   | 'register/password'
   | 'register/oauth'
   | 'register/anonymous'
+  | 'register/demo'
   | 'subscribe/initial'
   | 'subscribe/launch-stripe'
   | 'subscribe/purchased'

@@ -66,6 +66,7 @@ import mung from 'express-mung';
 import { QueryFailedError } from 'typeorm';
 import { deleteAccount } from './db/actions/delete.js';
 import { noop } from 'lodash-es';
+import { createDemoSession } from './db/actions/demo.js';
 
 const realIpHeader = 'X-Forwarded-For';
 const sessionSecret = `${config.SESSION_SECRET!}-4.11.5`; // Increment to force re-auth
@@ -265,6 +266,29 @@ db().then(() => {
             identity.user,
             payload.encryptedCheck
           );
+          res.status(200).send(session);
+        } catch (err: unknown) {
+          if (err instanceof QueryFailedError) {
+            reportQueryError(scope, err);
+          }
+          res.status(500).send();
+          throw err;
+        }
+      } else {
+        res
+          .status(401)
+          .send('You must be logged in in order to create a session');
+      }
+    });
+  });
+
+  // Create a demo session
+  app.post('/api/demo', heavyLoadLimiter, async (req, res) => {
+    const identity = await getIdentityFromRequest(req);
+    setScope(async (scope) => {
+      if (identity) {
+        try {
+          const session = await createDemoSession(identity.user);
           res.status(200).send(session);
         } catch (err: unknown) {
           if (err instanceof QueryFailedError) {

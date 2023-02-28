@@ -1,3 +1,4 @@
+import { DeepPartial } from 'typeorm';
 import { Post, PostGroup, Vote } from '../../common/index.js';
 import {
   PostRepository,
@@ -17,7 +18,7 @@ export async function getNumberOfPosts(userId: string): Promise<number> {
 export async function savePost(
   userId: string,
   sessionId: string,
-  post: Post
+  post: DeepPartial<Post>
 ): Promise<Post | null> {
   return await transaction(async (manager) => {
     const postRepository = manager.withRepository(PostRepository);

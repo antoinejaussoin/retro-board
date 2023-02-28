@@ -44,6 +44,7 @@ const Invite = lazy(() => import('./views/layout/Invite'));
 const Panel = lazy(() => import('./views/Panel'));
 const EncryptionDoc = lazy(() => import('./views/home/Encryption'));
 const AdminPage = lazy(() => import('./views/admin/AdminPage'));
+const Demo = lazy(() => import('./views/Demo'));
 
 const Title = styled(Typography)`
   color: white;
@@ -141,6 +142,7 @@ function App() {
           <Route path="reset" element={<ResetPasswordPage />} />
           <Route path="account" element={<AccountPage />} />
           <Route path="login" element={<LoginPage />} />
+          <Route path="demo" element={<Demo />} />
           <Route path="subscribe" element={<SubscribePageOuter />}>
             <Route path="success" element={<SuccessPage />} />
             <Route path="cancel" element={<CancelPage />} />
