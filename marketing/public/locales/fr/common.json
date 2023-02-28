@@ -102,7 +102,7 @@
 			]
 		},
 		"hosted": {
-			"title": "Auto-hébergement",
+			"title": "Hébergé",
 			"price": 599,
 			"plus": "Tout de Illimité, plus :",
 			"features": [
@@ -114,7 +114,7 @@
 		}
 	},
 	"SelfHosted": {
-		"slogan": "Hébergé",
+		"slogan": "Auto-hébergement",
 		"title": "Retrospected sur votre serveur",
 		"desc": "Gardez un contrôle complet de vos données en auto-hébergeant Retrospected. Un seul paiement, des mises à jour illimitées. Installez Retrospected avec notre documentation en un rien de temps.",
 		"features": [
