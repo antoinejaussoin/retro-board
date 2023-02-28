@@ -296,7 +296,9 @@ export const ContentWrapper = styled.div`
 `;
 
 export const CombinedSection = styled.section`
-  background-color: #373754; //  url($/{bgPattern?.src}) no-repeat center;
+  background-color: ${themeGet(
+    'colors.sectionBackgroundColor'
+  )}; //  url($/{bgPattern?.src}) no-repeat center;
   position: relative;
   z-index: 0;
   @media only screen and (max-width: 1024px) {

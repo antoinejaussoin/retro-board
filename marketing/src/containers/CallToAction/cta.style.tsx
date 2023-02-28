@@ -3,7 +3,7 @@ import { Wrapper, Menu } from 'react-aria-menubutton';
 import { themeGet } from '@styled-system/theme-get';
 
 const Section = styled.section`
-  background-color: #2c6fee;
+  background-color: ${themeGet('colors.sectionBackgroundColor')};
   padding-top: 60px;
   padding-bottom: 80px;
   position: relative;

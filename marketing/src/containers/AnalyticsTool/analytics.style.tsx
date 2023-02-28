@@ -5,7 +5,7 @@ import { themeGet } from '@styled-system/theme-get';
 import polygon from '@/common/assets/image/webAppCreative/polygon.png';
 
 const Section = styled(Parallax)`
-  background-color: #373754;
+  background-color: ${themeGet('colors.sectionBackgroundColor')};
   padding-top: 100px;
   padding-bottom: 100px;
   overflow: unset !important;
