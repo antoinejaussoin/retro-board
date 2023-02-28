@@ -61,7 +61,13 @@ export const SectionHeading = styled.div`
 `;
 
 export const Figure = styled.div`
-  aspect-ratio: 4/3;
+  aspect-ratio: 16/9;
+  height: calc(100vh - 400px);
+  margin: 0 auto;
+  img {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+      rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  }
 `;
 
 export const Description = styled.div`

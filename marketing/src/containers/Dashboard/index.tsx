@@ -72,10 +72,7 @@ const Dashboard = () => {
                   alt={t(`Features.${tab.id}.title`)}
                   placeholder="blur"
                   fill
-                  style={{ objectFit: 'contain' }}
-                  // sizes="(max-width: 768px) 100vw,
-                  //         (max-width: 1200px) 50vw,
-                  //         33vw"
+                  style={{ objectFit: 'cover' }}
                   quality={75}
                 />
               </Figure>
