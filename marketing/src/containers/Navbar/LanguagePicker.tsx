@@ -19,7 +19,7 @@ export function LanguagePicker({}: {}) {
     e.stopPropagation();
     setOpen(false);
 
-    push({ pathname, query }, asPath, { locale: loc });
+    push({ pathname, query }, asPath, { locale: loc, shallow: true });
   };
 
   if (!locale || !locales) return null;

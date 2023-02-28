@@ -61,7 +61,7 @@ const Navbar = ({
       <Container width="1400px">
         <Box {...row}>
           <Logo
-            href="#"
+            href="/"
             logoSrc={logoImage}
             title="SaaS Creative"
             logoStyle={logoStyle}
