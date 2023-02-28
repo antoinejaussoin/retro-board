@@ -1,6 +1,6 @@
 import styled, { createGlobalStyle, keyframes } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
-import bgPattern from '@/common/assets/image/webAppCreative/pattern3.png';
+// import bgPattern from '@/common/assets/image/webAppCreative/pattern3.png';
 import pattern5 from '@/common/assets/image/webAppCreative/pattern5.png';
 import pattern6 from '@/common/assets/image/webAppCreative/pattern6.png';
 import pattern7 from '@/common/assets/image/webAppCreative/pattern7.png';
@@ -296,7 +296,7 @@ export const ContentWrapper = styled.div`
 `;
 
 export const CombinedSection = styled.section`
-  background: #373754 url(${bgPattern?.src}) no-repeat center;
+  background-color: #373754; //  url($/{bgPattern?.src}) no-repeat center;
   position: relative;
   z-index: 0;
   @media only screen and (max-width: 1024px) {
