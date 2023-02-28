@@ -159,7 +159,7 @@ const Pricing = () => {
                 >
                   <Heading content={t(`${key}.title`)} />
                   <Heading
-                    as="h5"
+                    as="h3"
                     content={toPrice(
                       t('Pricing.currency'),
                       t(`${key}.price`),

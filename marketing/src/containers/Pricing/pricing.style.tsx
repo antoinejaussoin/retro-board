@@ -130,6 +130,10 @@ export const PriceTable = styled.div`
       margin-bottom: 15px;
     }
   }
+  h3 {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
   h5 {
     font-weight: 700;
     font-size: 18px;
@@ -186,6 +190,7 @@ export const PriceTable = styled.div`
   &.active {
     background-color: ${themeGet('colors.white')};
     h2,
+    h3,
     h5 {
       color: ${themeGet('colors.headingColor')};
     }
