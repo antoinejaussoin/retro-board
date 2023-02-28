@@ -2,11 +2,9 @@ import { Parallax } from 'react-parallax';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { themeGet } from '@styled-system/theme-get';
-import parallaxBg from '@/common/assets/image/webAppCreative/parallax-1.png';
 import polygon from '@/common/assets/image/webAppCreative/polygon.png';
 
 const Section = styled(Parallax)`
-  /* background: #373754 url(${parallaxBg?.src}) no-repeat fixed center center / cover; */
   background-color: #373754;
   padding-top: 100px;
   padding-bottom: 100px;

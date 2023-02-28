@@ -9,15 +9,15 @@ import Button from '@/common/components/Button';
 import Text from '@/common/components/Text';
 import Link from '@/common/components/Link';
 import Heading from '@/common/components/Heading';
-import analytics from './server-secure.svg';
+import analytics from './modified.svg';
 import Section, { Grid, Figure, Content, Features } from './analytics.style';
-import parallaxBg from '@/common/assets/image/webAppCreative/parallax-1.png';
+// import parallaxBg from '@/common/assets/image/webAppCreative/parallax-1.png';
 import { useTranslation } from 'next-i18next';
 
 const AnalyticsTool = () => {
   const { t } = useTranslation();
   return (
-    <Section bgImage={parallaxBg?.src} bgImageAlt="the cat" strength={200}>
+    <Section bgImageAlt="the cat" strength={200}>
       <Container width="1400px">
         <Grid>
           <Fade up>
