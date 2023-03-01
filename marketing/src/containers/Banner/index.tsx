@@ -10,12 +10,11 @@ import Section, {
   Figure,
   Buttons,
 } from './banner.style';
-import screenshot from './mockup-1-02.webp';
+import screenshot from './banner.png';
 import { useTranslation } from 'next-i18next';
 import { useConfig } from '@/common/hooks/useConfig';
 import dashboardPattern from '@/common/assets/image/webAppCreative/dashboard-pattern.png';
 import { useRouter } from 'next/router';
-import markdownToHtml from '@/lib/mdToHtml';
 import ReactMarkdown from 'react-markdown';
 import { Fragment } from 'react';
 
