@@ -28,30 +28,16 @@ export const BannerContentWrapper = styled.div`
 `;
 
 export const BannerContent = styled.div`
-  // padding-top: 210px;
-  // border: 1px solid blue;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  //max-width: 870px;
   margin: 0 auto;
   text-align: center;
 
   @media (max-width: 1024px) {
     margin-top: 100px;
   }
-  /* @media (max-width: 1024px) {
-    max-width: 660px;
-    padding-top: 170px;
-  }
-  @media (max-width: 768px) {
-    max-width: 550px;
-    padding-top: 150px;
-  }
-  @media (max-width: 480px) {
-    padding-top: 100px;
-  } */
   h2 {
     color: ${themeGet('colors.headingColor')};
     font-weight: 700;
@@ -87,19 +73,25 @@ export const BannerContent = styled.div`
 export const Buttons = styled.div`
   display: flex;
   gap: 20px;
+  margin-top: 30px;
+
+  @media only screen and (max-width: 480px) {
+    flex-direction: column;
+    gap: 10px;
+  }
 `;
 
 export const Subscribe = styled.div`
   display: flex;
   justify-content: center;
   max-width: 540px;
-  margin: 28px auto 0;
+  // margin: 28px auto 0;
   @media screen and (max-width: 1366px) {
     max-width: 80%;
   }
   @media only screen and (max-width: 768px) {
     max-width: 80%;
-    margin: 30px auto 0;
+    // margin: 30px auto 0;
   }
   @media only screen and (max-width: 480px) {
     max-width: initial;
@@ -156,7 +148,6 @@ export const Subscribe = styled.div`
       min-height: 50px;
     }
     @media only screen and (max-width: 480px) {
-      margin-top: 15px;
       min-height: 45px;
       width: 100%;
     }
