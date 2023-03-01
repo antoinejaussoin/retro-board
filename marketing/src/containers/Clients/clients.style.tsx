@@ -41,6 +41,10 @@ export const Figure = styled.figure`
   align-items: center;
   justify-content: center;
   opacity: 0.7;
+  filter: grayscale(100%) opacity(0.5);
+  :hover {
+    filter: none;
+  }
 `;
 
 export const SliderWrapper = styled.div`
