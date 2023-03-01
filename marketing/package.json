@@ -44,6 +44,7 @@
     "react-dom": "18.2.0",
     "react-i18next": "^12.1.5",
     "react-icons-kit": "^2.0.0",
+    "react-markdown": "^8.0.5",
     "react-parallax": "^3.5.1",
     "react-reveal": "^1.2.2",
     "react-scroll-motion": "^0.3.2",

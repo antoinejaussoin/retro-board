@@ -1,3 +1,4 @@
+import themeGet from '@styled-system/theme-get';
 import React from 'react';
 import styled from 'styled-components';
 import {
@@ -8,6 +9,12 @@ import {
   letterSpacing,
 } from 'styled-system';
 import { base, themed } from '../base';
+
+const Container = styled.div`
+  strong {
+    color: ${themeGet('colors.secondary')};
+  }
+`;
 
 const HeadingWrapper = styled('p')(
   base,
@@ -40,9 +47,11 @@ const Heading = ({
   fontWeight = 'bold',
   ...props
 }: HeadingProps) => (
-  <HeadingWrapper as={as} mt={mt} mb={mb} fontWeight={fontWeight} {...props}>
-    {content}
-  </HeadingWrapper>
+  <Container>
+    <HeadingWrapper as={as} mt={mt} mb={mb} fontWeight={fontWeight} {...props}>
+      {content}
+    </HeadingWrapper>
+  </Container>
 );
 
 export default Heading;

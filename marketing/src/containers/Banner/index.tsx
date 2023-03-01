@@ -15,6 +15,9 @@ import { useTranslation } from 'next-i18next';
 import { useConfig } from '@/common/hooks/useConfig';
 import dashboardPattern from '@/common/assets/image/webAppCreative/dashboard-pattern.png';
 import { useRouter } from 'next/router';
+import markdownToHtml from '@/lib/mdToHtml';
+import ReactMarkdown from 'react-markdown';
+import { Fragment } from 'react';
 
 const Banner = () => {
   const { locale } = useRouter();
@@ -27,11 +30,27 @@ const Banner = () => {
           <BannerContent>
             <Heading
               className="animate__animated animate__fadeInUp"
-              content={t('Banner.heading')}
+              content={
+                <ReactMarkdown
+                  components={{
+                    p: Fragment,
+                  }}
+                >
+                  {t('Banner.heading')}
+                </ReactMarkdown>
+              }
             />
             <Text
               className="animate__animated animate__fadeInUp"
-              content={t('Banner.text')}
+              content={
+                <ReactMarkdown
+                  components={{
+                    p: Fragment,
+                  }}
+                >
+                  {t('Banner.text')}
+                </ReactMarkdown>
+              }
             />
             <Buttons>
               <Subscribe className="animate__animated animate__fadeInUp">
