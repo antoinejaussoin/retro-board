@@ -34,7 +34,7 @@ export default function Demo() {
   }, [language.locale, setUser, changeLanguage]);
   return (
     <Container>
-      <h1>Hand tight...</h1>
+      <h1>Preparing demo...</h1>
     </Container>
   );
 }
