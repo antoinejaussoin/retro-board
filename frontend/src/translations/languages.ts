@@ -23,9 +23,10 @@ export interface Language {
   dateLocale: () => Promise<{ default: Locale }>;
   stripeLocale: StripeLocales;
   locale: string;
+  twoLetter: string;
 }
 
-export default [
+const languages: Language[] = [
   {
     dateLocale: enGB,
     iso: 'gb',
@@ -33,6 +34,7 @@ export default [
     englishName: 'English',
     stripeLocale: 'en-US',
     locale: 'en-GB',
+    twoLetter: 'en',
   },
   {
     dateLocale: fr,
@@ -41,6 +43,7 @@ export default [
     englishName: 'French',
     stripeLocale: 'fr-FR',
     locale: 'fr-FR',
+    twoLetter: 'fr',
   },
   {
     dateLocale: de,
@@ -49,6 +52,7 @@ export default [
     englishName: 'German',
     stripeLocale: 'de-DE',
     locale: 'de-DE',
+    twoLetter: 'de',
   },
   {
     dateLocale: es,
@@ -57,6 +61,7 @@ export default [
     englishName: 'Spanish',
     stripeLocale: 'es-ES',
     locale: 'es-ES',
+    twoLetter: 'es',
   },
   {
     dateLocale: arDZ,
@@ -65,6 +70,7 @@ export default [
     englishName: 'Arabic',
     stripeLocale: 'ar-AR',
     locale: 'ar-SA',
+    twoLetter: 'ar',
   },
   {
     dateLocale: zhCN,
@@ -73,6 +79,7 @@ export default [
     englishName: 'Chinese (Simplified)',
     stripeLocale: 'en-US',
     locale: 'zh-CN',
+    twoLetter: 'zh',
   },
   {
     dateLocale: zhTW,
@@ -81,6 +88,7 @@ export default [
     englishName: 'Chinese (Traditional)',
     stripeLocale: 'en-US',
     locale: 'zh-TW',
+    twoLetter: 'zh',
   },
   {
     dateLocale: nl,
@@ -89,6 +97,7 @@ export default [
     englishName: 'Dutch',
     stripeLocale: 'nl-NL',
     locale: 'nl-NL',
+    twoLetter: 'nl',
   },
   {
     dateLocale: hu,
@@ -97,6 +106,7 @@ export default [
     englishName: 'Hungarian',
     stripeLocale: 'en-US',
     locale: 'hu-HU',
+    twoLetter: 'hu',
   },
   {
     dateLocale: it,
@@ -105,6 +115,7 @@ export default [
     englishName: 'Italian',
     stripeLocale: 'it-IT',
     locale: 'it-IT',
+    twoLetter: 'it',
   },
   {
     dateLocale: ja,
@@ -113,6 +124,7 @@ export default [
     englishName: 'Japanese',
     stripeLocale: 'ja-JP',
     locale: 'ja-JP',
+    twoLetter: 'ja',
   },
   {
     dateLocale: pl,
@@ -121,6 +133,7 @@ export default [
     englishName: 'Polish',
     stripeLocale: 'en-US',
     locale: 'pl-PL',
+    twoLetter: 'pl',
   },
   {
     dateLocale: ptBR,
@@ -129,6 +142,7 @@ export default [
     englishName: 'Portuguese (Brazilian)',
     stripeLocale: 'pt-BR',
     locale: 'pt-BR',
+    twoLetter: 'pt',
   },
   {
     dateLocale: pt,
@@ -137,6 +151,7 @@ export default [
     englishName: 'Portuguese (Portugal)',
     stripeLocale: 'pt-PT',
     locale: 'pt-PT',
+    twoLetter: 'pt',
   },
   {
     dateLocale: uk,
@@ -145,5 +160,8 @@ export default [
     englishName: 'Ukrainian',
     stripeLocale: 'uk-UA',
     locale: 'uk-UA',
+    twoLetter: 'uk',
   },
-] as Language[];
+];
+
+export default languages;

@@ -155,7 +155,8 @@
       "description": "Isto irá excluir a publicação e todos os seus votos. Esta ação não pode ser desfeita.",
       "confirm": "Excluir esta publicação",
       "cancel": "Mudei de ideia"
-    }
+    },
+    "demo": "Bem-vindo a esta demonstração 🎉 Sinta-se livre para reproduzir ao redor e alterar as configurações. Você também pode fechar esta mensagem a qualquer momento."
   },
   "GameMenu": {
     "board": "Tabuleiro",

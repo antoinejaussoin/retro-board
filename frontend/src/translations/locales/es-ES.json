@@ -155,7 +155,8 @@
       "description": "Esto eliminará el mensaje y todos sus votos. Esta acción no se puede deshacer.",
       "confirm": "Eliminar esta publicación",
       "cancel": "He cambiado de opinión"
-    }
+    },
+    "demo": "Bienvenido a esta demo 🎉 No dudes en jugar y cambiar la configuración. También puedes cerrar este mensaje en cualquier momento."
   },
   "GameMenu": {
     "board": "Tablero",

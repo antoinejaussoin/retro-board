@@ -155,7 +155,8 @@
       "description": "",
       "confirm": "",
       "cancel": ""
-    }
+    },
+    "demo": ""
   },
   "GameMenu": {
     "board": "木板",

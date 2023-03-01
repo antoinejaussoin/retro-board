@@ -169,6 +169,7 @@ function GamePage() {
               <Board
                 columns={columns}
                 options={session.options}
+                demo={session.demo}
                 search={search}
                 onEdit={onEditPost}
                 onAddPost={onAddPost}

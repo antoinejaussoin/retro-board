@@ -257,5 +257,7 @@ export type StripeLocales =
   | 'ja-JP'
   | 'nl-NL'
   | 'pt-BR'
+  | 'pt-PT'
   | 'no-NO'
+  | 'uk-UA'
   | 'sv-S';

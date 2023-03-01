@@ -155,7 +155,8 @@
       "description": "Dit zal het bericht en al zijn stemmen verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
       "confirm": "Dit bericht verwijderen",
       "cancel": "Ik ben van gedachten veranderd"
-    }
+    },
+    "demo": "Welkom bij deze demo 🎉 Voel je vrij om te spelen en de instellingen aan te passen. Je kunt dit bericht op elk moment ook sluiten."
   },
   "GameMenu": {
     "board": "Bord",

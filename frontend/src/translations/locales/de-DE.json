@@ -155,7 +155,8 @@
       "description": "Dies löscht den Beitrag und alle seine Abstimmungen. Diese Aktion kann nicht rückgängig gemacht werden.",
       "confirm": "Diesen Beitrag löschen",
       "cancel": "Ich habe meine Meinung geändert"
-    }
+    },
+    "demo": "Willkommen zu dieser Demo 🎉 Fühlen Sie sich frei zu spielen und Einstellungen zu ändern. Sie können diese Nachricht auch jederzeit schließen."
   },
   "GameMenu": {
     "board": "Board",

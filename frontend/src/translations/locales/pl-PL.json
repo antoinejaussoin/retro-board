@@ -155,7 +155,8 @@
       "description": "Spowoduje to usunięcie wpisu i wszystkich jego głosów. Tej czynności nie można cofnąć.",
       "confirm": "Usuń ten post",
       "cancel": "Zmieniłem zdanie"
-    }
+    },
+    "demo": "Witaj w tym demo 🎉 Możesz grać i zmieniać ustawienia. Możesz również zamknąć tę wiadomość w dowolnym momencie."
   },
   "GameMenu": {
     "board": "Tablica",

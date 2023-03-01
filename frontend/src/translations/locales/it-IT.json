@@ -155,7 +155,8 @@
       "description": "Questo cancellerà il post e tutti i suoi voti. Questa azione non può essere annullata.",
       "confirm": "Elimina questo post",
       "cancel": "Ho cambiato idea"
-    }
+    },
+    "demo": "Benvenuto in questa demo 🎉 Sentiti libero di giocare e modificare le impostazioni. Puoi anche chiudere questo messaggio in qualsiasi momento."
   },
   "GameMenu": {
     "board": "Tavola",

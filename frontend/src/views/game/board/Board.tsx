@@ -18,11 +18,14 @@ import { getNext, getMiddle, getPrevious } from '../lexorank';
 import BoardHeader from './header/BoardHeader';
 import useSession from '../useSession';
 import Icon from 'components/Icon/Icon';
+import ClosableAlert from 'components/ClosableAlert';
+import { t } from 'i18next';
 
 interface GameModeProps {
   columns: ColumnContent[];
   options: SessionOptions;
   search: string;
+  demo: boolean;
   onRenameSession: (name: string) => void;
   onAddPost: (columnIndex: number, content: string, rank: string) => void;
   onAddGroup: (columnIndex: number, rank: string) => void;
@@ -88,6 +91,7 @@ function GameMode({
   columns,
   options,
   search,
+  demo,
 }: GameModeProps) {
   const { session } = useSession();
 
@@ -130,6 +134,11 @@ function GameMode({
 
   return (
     <Page>
+      {demo ? (
+        <ClosableAlert severity="info" closable>
+          {t('PostBoard.demo')}
+        </ClosableAlert>
+      ) : null}
       <BoardHeader
         onEditColumns={onEditColumns}
         onEditOptions={onEditOptions}

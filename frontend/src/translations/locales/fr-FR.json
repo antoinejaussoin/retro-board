@@ -155,7 +155,8 @@
       "description": "Vous allez supprimer le post et tous ses votes. Cette action est définitive.",
       "confirm": "Supprimer ce post",
       "cancel": "J'ai changé d'avis"
-    }
+    },
+    "demo": "Bienvenue dans cette démo 🎉 Faites comme chez vous et n'hésitez pas à modifier les réglages. Vous pouvez également fermer ce message à tout moment."
   },
   "GameMenu": {
     "board": "Board",

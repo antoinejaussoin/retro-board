@@ -155,7 +155,8 @@
       "description":"This will delete the post and all its votes. This action cannot be undone.",
       "confirm": "Delete this post",
       "cancel": "I have changed my mind"
-    }
+    },
+    "demo": "Welcome to this demo 🎉 Feel free to play around and change settings. You can also close this message at any time."
   },
   "GameMenu": {
     "board": "Board",
