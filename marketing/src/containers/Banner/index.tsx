@@ -8,13 +8,16 @@ import Section, {
   BannerContent,
   Subscribe,
   Figure,
+  Buttons,
 } from './banner.style';
 import screenshot from './mockup-1-02.webp';
 import { useTranslation } from 'next-i18next';
 import { useConfig } from '@/common/hooks/useConfig';
 import dashboardPattern from '@/common/assets/image/webAppCreative/dashboard-pattern.png';
+import { useRouter } from 'next/router';
 
 const Banner = () => {
+  const { locale } = useRouter();
   const { t } = useTranslation('common');
   const { appUrl } = useConfig();
   return (
@@ -30,11 +33,26 @@ const Banner = () => {
               className="animate__animated animate__fadeInUp"
               content={t('Banner.text')}
             />
-            <Subscribe className="animate__animated animate__fadeInUp">
-              <a href={appUrl}>
-                <Button title={t('Banner.subscribeToday')!} type="submit" />
-              </a>
-            </Subscribe>
+            <Buttons>
+              <Subscribe className="animate__animated animate__fadeInUp">
+                <a href={appUrl}>
+                  <Button title={t('Banner.subscribeToday')!} type="submit" />
+                </a>
+              </Subscribe>
+              <Subscribe className="animate__animated animate__fadeInUp">
+                <a
+                  href={appUrl + '/demo?lang=' + locale}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Button
+                    title={t('Banner.demo')!}
+                    variant="outlined"
+                    colors="secondary"
+                  />
+                </a>
+              </Subscribe>
+            </Buttons>
           </BannerContent>
           <Figure className="animate__animated animate__fadeInUp animate__fast">
             <NextImage

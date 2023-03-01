@@ -84,6 +84,11 @@ export const BannerContent = styled.div`
   }
 `;
 
+export const Buttons = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+
 export const Subscribe = styled.div`
   display: flex;
   justify-content: center;

@@ -19,7 +19,7 @@ const ButtonStyle = styled.button`
   font-size: ${themeGet('fontSizes.4', '16')}px;
   font-weight: ${themeGet('fontWeights.4', '500')};
   text-decoration: none;
-  text-transform: capitalize;
+  // text-transform: capitalize;
   padding-top: ${themeGet('space.2', '8')}px;
   padding-bottom: ${themeGet('space.2', '8')}px;
   padding-left: ${themeGet('space.4', '15')}px;

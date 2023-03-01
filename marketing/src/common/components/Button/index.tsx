@@ -15,6 +15,7 @@ type ButtonProps = {
   isMaterial?: boolean;
   isLoading?: boolean;
   className?: string;
+  variant?: 'textButton' | 'outlined' | 'fab' | 'extendedFab';
   colors?:
     | 'primary'
     | 'secondary'
