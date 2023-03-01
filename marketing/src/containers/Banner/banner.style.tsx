@@ -8,13 +8,9 @@ const Section = styled.section`
   @media (min-width: 768px) and (max-width: 1280px) {
     background-size: contain;
   }
-  @media (min-width: 1280px) {
-    // margin-bottom: 50px;
-  }
 `;
 
 export const BannerContentWrapper = styled.div`
-  // outline: 1px solid red;
   display: grid;
   grid-template-columns: 3fr 2fr;
   @media (min-width: 1025px) {
@@ -38,6 +34,10 @@ export const BannerContent = styled.div`
   @media (max-width: 1024px) {
     margin-top: 100px;
   }
+  @media (max-width: 400px) {
+    margin-top: 10px;
+  }
+
   h2 {
     color: ${themeGet('colors.headingColor')};
     font-weight: 700;
@@ -85,18 +85,18 @@ export const Subscribe = styled.div`
   display: flex;
   justify-content: center;
   max-width: 540px;
-  // margin: 28px auto 0;
+
   @media screen and (max-width: 1366px) {
     max-width: 80%;
   }
   @media only screen and (max-width: 768px) {
     max-width: 80%;
-    // margin: 30px auto 0;
   }
   @media only screen and (max-width: 480px) {
     max-width: initial;
     display: block;
   }
+
   .reusecore__input {
     width: 100%;
   }
@@ -155,11 +155,9 @@ export const Subscribe = styled.div`
 `;
 
 export const Figure = styled.figure`
-  // margin: 30px 0 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  // outline: 1px solid red;
 
   @media (max-width: 1024px) {
     aspect-ratio: 4 / 3;
@@ -179,9 +177,6 @@ export const Figure = styled.figure`
       margin-left: auto;
       margin-right: auto;
     }
-  }
-  @media (min-width: 768px) {
-    // margin-top: 80px;
   }
 `;
 
