@@ -26,7 +26,7 @@ const CallToAction = () => {
         <Content>
           <Heading content={t('CTA.heading')} />
           <Text content={t('CTA.description')} />
-          <a href={appUrl}>
+          <a href={appUrl} data-ga="cta-button">
             <Button title={t('CTA.button')!} colors="secondaryWithBg" />
           </a>
           {/* <span>{t('CTA.hint')}</span> */}

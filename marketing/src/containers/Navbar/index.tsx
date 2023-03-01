@@ -78,10 +78,15 @@ const Navbar = ({
             <a
               className="navbar_button navbar_button_one"
               href={`${appUrl}/subscribe`}
+              data-ga="subscribe-button"
             >
               <Button {...button} title={t('Nav.subscribe')} />
             </a>
-            <a className="navbar_button navbar_button_two" href={appUrl!}>
+            <a
+              className="navbar_button navbar_button_two"
+              href={appUrl!}
+              data-ga="login-button"
+            >
               <Button {...button} title={t('Nav.login')} />
             </a>
             <LanguageContainer>

@@ -35,8 +35,8 @@ const Banner = () => {
             />
             <Buttons>
               <Subscribe className="animate__animated animate__fadeInUp">
-                <a href={appUrl}>
-                  <Button title={t('Banner.subscribeToday')!} type="submit" />
+                <a href={appUrl} data-ga="try-button">
+                  <Button title={t('Banner.subscribeToday')!} />
                 </a>
               </Subscribe>
               <Subscribe className="animate__animated animate__fadeInUp">
@@ -44,6 +44,7 @@ const Banner = () => {
                   href={appUrl + '/demo?lang=' + locale}
                   target="_blank"
                   rel="noreferrer"
+                  data-ga="demo-button"
                 >
                   <Button
                     title={t('Banner.demo')!}
