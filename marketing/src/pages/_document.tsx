@@ -1,4 +1,3 @@
-import { useConfig } from '@/common/hooks/useConfig';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import Script from 'next/script';
 import { ServerStyleSheet } from 'styled-components';
@@ -41,7 +40,22 @@ export default class MyDocument extends Document {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Manrope:wght@400;500;700;800&display=swap"
           />
-          <GA />
+          <Script
+            strategy="afterInteractive"
+            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_MEASUREMENT_ID}`}
+          />
+          <Script
+            id="gtag"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_PUBLIC_MEASUREMENT_ID}');
+          `,
+            }}
+          />
         </Head>
         <body>
           <Main />
@@ -50,28 +64,4 @@ export default class MyDocument extends Document {
       </Html>
     );
   }
-}
-
-function GA() {
-  const config = useConfig();
-  return (
-    <>
-      <Script
-        strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${config.measurementId}`}
-      />
-      <Script
-        id="gtag"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${config.measurementId}');
-          `,
-        }}
-      />
-    </>
-  );
 }
