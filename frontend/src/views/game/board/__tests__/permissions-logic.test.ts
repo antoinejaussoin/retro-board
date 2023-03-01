@@ -78,6 +78,7 @@ const session = (options: SessionOptions, ...posts: Post[]): Session => ({
   messages: [],
   ready: [],
   timer: null,
+  demo: false,
 });
 
 describe('Session Permission Logic', () => {

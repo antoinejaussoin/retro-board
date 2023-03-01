@@ -30,6 +30,7 @@ export const initialSession: Session = {
   },
   ready: [],
   timer: null,
+  demo: false,
 };
 
 export function AllTheProviders({ children }: PropsWithChildren<{}>) {
