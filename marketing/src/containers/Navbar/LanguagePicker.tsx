@@ -24,7 +24,9 @@ export function LanguagePicker({}: {}) {
     e.stopPropagation();
     setOpen(false);
 
-    push({ pathname, query }, undefined, { locale: loc });
+    window.location.href = `/${loc}${asPath}`;
+
+    // push({ pathname, query }, undefined, { locale: loc });
   };
 
   if (!locale || !locales) return null;
