@@ -1,4 +1,4 @@
-import { SessionOptions, Session } from './types';
+import { SessionOptions, Session } from './types.js';
 
 export const defaultOptions: SessionOptions = {
   allowActions: true,
@@ -11,9 +11,9 @@ export const defaultOptions: SessionOptions = {
   allowGiphy: true,
   allowGrouping: true,
   allowReordering: true,
+  allowCancelVote: true,
   blurCards: false,
   newPostsFirst: true,
-  allowCancelVote: true,
   allowTimer: true,
   timerDuration: 15 * 60,
   readonlyOnTimerEnd: true,
@@ -35,4 +35,5 @@ export const defaultSession: Omit<Session, 'createdBy'> = {
   locked: false,
   ready: [],
   timer: null,
+  demo: false,
 };

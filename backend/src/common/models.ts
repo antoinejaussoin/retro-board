@@ -35,4 +35,5 @@ export const defaultSession: Omit<Session, 'createdBy'> = {
   locked: false,
   ready: [],
   timer: null,
+  demo: false,
 };

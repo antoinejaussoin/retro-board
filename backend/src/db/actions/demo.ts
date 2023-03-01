@@ -10,6 +10,7 @@ import { DeepPartial } from 'typeorm';
 export async function createDemoSession(author: UserEntity): Promise<Session> {
   const session = await createSession(author);
   session.name = 'My Retro Demo';
+  session.demo = true;
   session.options = {
     ...session.options,
     allowActions: true,
@@ -65,19 +66,14 @@ export async function createDemoSession(author: UserEntity): Promise<Session> {
   }
 
   await Promise.all([
-    createPost('I am enjoying our new retrospective board!', 0, 5),
-    createPost('I loved how we can vote on posts!', 0),
-    createPost('I wish I discovered this tool sooner', 1, 2, true),
+    createPost("I'm enjoying our new retrospective board!", 0, 5),
+    createPost('I love how we can vote on posts', 0),
+    createPost('I wish I discovered this tool sooner 😅', 1, 2, true),
     createPost(
       'Have you tried different settings? Click on "Customise" to see what you can do.',
       2
     ),
-    createPost(
-      'Have you tried Giphy by clicking on the yellow smiley face?',
-      2,
-      1,
-      true
-    ),
+    createPost('Try Giphy by clicking on the yellow smiley face!', 2, 1, true),
     createPost(
       'You can also share this URL with somebody else to collaborate on the same board.',
       2

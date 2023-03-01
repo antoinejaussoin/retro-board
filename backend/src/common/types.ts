@@ -10,6 +10,7 @@ export interface Session extends PostContainer, Entity {
   createdBy: User;
   ready: string[];
   timer: Date | null;
+  demo: boolean;
 }
 
 export interface SessionMetadata extends Entity {
