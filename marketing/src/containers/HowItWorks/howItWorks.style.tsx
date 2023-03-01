@@ -54,16 +54,11 @@ export const Grid = styled.div`
 export const Item = styled.div`
   text-align: center;
   figure {
-    margin: 0 0 40px;
-    min-height: 110px;
-    @media (min-width: 769px) and (max-width: 1024px) {
-      min-height: auto;
-      margin-bottom: 30px;
-    }
-    @media (max-width: 480px) {
-      margin-bottom: 20px;
-      min-height: auto;
-    }
+    height: 70px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   img {
     margin: 0 auto;
