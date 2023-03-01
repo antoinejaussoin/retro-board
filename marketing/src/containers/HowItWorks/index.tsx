@@ -9,20 +9,14 @@ import {
   faCloudArrowUp,
 } from '@fortawesome/free-solid-svg-icons';
 import Container from '@/common/components/UI/Container';
-import NextImage from '@/common/components/NextImage';
-// import Link from '@/common/components/Link';
 import Heading from '@/common/components/Heading';
 import Text from '@/common/components/Text';
 import Section, { SectionHeading, Grid, Item } from './howItWorks.style';
-import icon1 from '@/common/assets/image/webAppCreative/icons/1.png';
-import icon2 from '@/common/assets/image/webAppCreative/icons/2.png';
-import icon3 from '@/common/assets/image/webAppCreative/icons/3.png';
-import icon4 from '@/common/assets/image/webAppCreative/icons/4.png';
 import { useTranslation } from 'next-i18next';
 
 type HowTo = {
   id: number;
-  icon: React.ReactNode; // TODO
+  icon: React.ReactNode;
 };
 
 const iconSize = 60;
@@ -33,7 +27,7 @@ export const howTos: HowTo[] = [
     icon: (
       <FontAwesomeIcon
         icon={faFaceSmileWink}
-        color={'#FDD835'}
+        color={'#7986CB'}
         width={iconSize}
       />
     ),
@@ -41,7 +35,7 @@ export const howTos: HowTo[] = [
   {
     id: 2,
     icon: (
-      <FontAwesomeIcon icon={faLanguage} color={'#4527A0'} width={iconSize} />
+      <FontAwesomeIcon icon={faLanguage} color={'#4DB6AC'} width={iconSize} />
     ),
   },
   {
@@ -49,7 +43,7 @@ export const howTos: HowTo[] = [
     icon: (
       <FontAwesomeIcon
         icon={faScrewdriverWrench}
-        color={'#D81B60'}
+        color={'#AED581'}
         width={iconSize}
       />
     ),
@@ -59,7 +53,7 @@ export const howTos: HowTo[] = [
     icon: (
       <FontAwesomeIcon
         icon={faCloudArrowUp}
-        color={'#004D40'}
+        color={'#F06292'}
         width={iconSize}
       />
     ),
