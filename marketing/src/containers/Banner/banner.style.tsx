@@ -13,6 +13,7 @@ const Section = styled.section`
 export const BannerContentWrapper = styled.div`
   display: grid;
   grid-template-columns: 3fr 2fr;
+  gap: 30px;
   @media (min-width: 1025px) {
     min-height: min(calc(100vh - 260px), 900px);
   }
@@ -158,6 +159,7 @@ export const Figure = styled.figure`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0;
 
   @media (max-width: 1024px) {
     aspect-ratio: 4 / 3;
