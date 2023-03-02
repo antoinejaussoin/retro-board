@@ -85,7 +85,7 @@
 		"pro": {
 			"title": "Pro",
 			"price": "11.9",
-			"plus": "Basique, plus:",
+			"plus": "Plan Basique, plus:",
 			"features": [
 				"Posts illimités",
 				"Chiffrement des données",
@@ -96,7 +96,7 @@
 		"unlimited": {
 			"title": "Illimité",
 			"price": "49.95",
-			"plus": "Tout de Pro, plus :",
+			"plus": "Plan Pro, plus :",
 			"features": [
 				"Comptes Pro illimités",
 				"Tous les utilisateurs de votre domaine sont automatiquement Pro"
@@ -105,7 +105,7 @@
 		"hosted": {
 			"title": "Hébergé",
 			"price": 599,
-			"plus": "Tout de Illimité, plus :",
+			"plus": "Plan Illimité, plus :",
 			"features": [
 				"Outil de gestion des utilisateurs",
 				"Tous les utilisateurs sont des utilisateurs Pro",

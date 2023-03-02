@@ -5,7 +5,7 @@
 	},
 	"Banner": {
 		"heading": "You will **never forget** your first **retro**.",
-		"text": "Real-time, collaborative retrospectives done right. In seconds.",
+		"text": "Bring **continuous improvements** to your team with a **modern** and **easy to use** retrospective tool.",
 		"tagline": "*No Credit card required",
 		"subscribeToday": "Try it for free",
 		"demo": "1-Click Demo"
@@ -21,24 +21,24 @@
 		"login": "Login"
 	},
 	"Clients": {
-		"main": "Join the hundreds of companies using our product"
+		"main": "Join the hundreds of companies using Retrospected"
 	},
 	"HowItWorks": {
-		"heading": "We are different because...",
+		"heading": "Our users love...",
 		"1": {
-			"title": "We are fast",
-			"text": "You can start your retro in one click."
+			"title": "Our fast and easy-to-use interface",
+			"text": "Start a retrospective in one click."
 		},
 		"2": {
-			"title": "We are multilingual",
+			"title": "Our multilingual support",
 			"text": "Our app is available in 15 languages!"
 		},
 		"3": {
-			"title": "We are customisable",
+			"title": "Our customisation options",
 			"text": "You can customise the app to your needs. Columns, votes, emojis, you name it."
 		},
 		"4": {
-			"title": "We can be self-hosted",
+			"title": "Our self-hosting capability",
 			"text": "If you want complete control of your data, you can self-host Retrospected."	
 		}
 	},
@@ -61,7 +61,7 @@
 		}
 	},
 	"Pricing": {
-		"heading": "Explore our exciting pricing",
+		"heading": "Our Pricing",
 		"weAccept": "We also accept Euros and British Pounds",
 		"monthly": "Monthly",
 		"yearly": "Yearly",
