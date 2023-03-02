@@ -89,7 +89,11 @@ const Navbar = ({
               href={appUrl!}
               data-ga="login-button"
             >
-              <Button colors="primaryWithBg" title={t('Nav.login')!} />
+              <Button
+                colors="primaryWithBg"
+                title={t('Nav.login')!}
+                variant="outlined"
+              />
             </a>
             <LanguageContainer>
               <LanguagePicker />

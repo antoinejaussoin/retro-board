@@ -237,7 +237,6 @@ export const ContentWrapper = styled.div`
 
       button {
         border-radius: 8px;
-        color: white !important;
       }
 
       @media (max-width: 990px) {
@@ -276,7 +275,7 @@ export const ContentWrapper = styled.div`
       }
       .main_menu li:hover a,
       .main_menu li.is-current a {
-        color: #1089ff;
+        color: ${themeGet('colors.primary')};
       }
       .reusecore-drawer__handler {
         .hamburgMenu__bar {
@@ -284,11 +283,6 @@ export const ContentWrapper = styled.div`
             background-color: ${themeGet('colors.headingColor')};
           }
         }
-      }
-      .navbar_button_one button {
-        color: ${themeGet('colors.headingColor')};
-      }
-      .navbar_button_two button {
       }
     }
   }
