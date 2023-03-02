@@ -7,15 +7,16 @@ export const Section = styled.footer`
 `;
 
 export const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  gap: 30px;
+  > * {
+    flex: 1;
+  }
   @media screen and (max-width: 768px) {
-    gap: 30px 30px;
-    grid-template-columns: repeat(3, 1fr);
+    flex-direction: column;
   }
   @media screen and (max-width: 480px) {
-    gap: 20px 0px;
-    grid-template-columns: repeat(3, 50%);
+    gap: 20px;
   }
 `;
 
