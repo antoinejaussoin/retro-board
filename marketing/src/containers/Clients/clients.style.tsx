@@ -40,8 +40,7 @@ export const Figure = styled.figure`
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.7;
-  filter: grayscale(100%) opacity(0.5);
+  filter: grayscale(100%) opacity(0.9);
   :hover {
     filter: none;
   }

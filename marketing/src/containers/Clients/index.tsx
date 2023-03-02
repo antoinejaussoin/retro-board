@@ -13,7 +13,7 @@ import delta from './delta.png';
 import expedia from './expedia.png';
 import ibm from './ibm.png';
 import natwest from './natwest.png';
-import novartis from './novartis.png';
+// import novartis from './novartis.png';
 import pwc from './pwc.png';
 import siemens from './siemens.png';
 import vodafone from './vodafone.png';
@@ -30,8 +30,8 @@ const clients: ImageType[] = [
   delta,
   expedia,
   ibm,
-  natwest,
-  novartis,
+  // natwest,
+  // novartis,
   pwc,
   siemens,
   // target,

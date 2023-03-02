@@ -236,9 +236,8 @@ export const ContentWrapper = styled.div`
       margin-left: auto;
 
       button {
-        background-color: transparent;
-        color: ${themeGet('colors.headingColor')};
-        padding: 0;
+        border-radius: 8px;
+        color: white !important;
       }
 
       @media (max-width: 990px) {

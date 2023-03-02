@@ -59,6 +59,7 @@ export const Item = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 0.6;
   }
   img {
     margin: 0 auto;

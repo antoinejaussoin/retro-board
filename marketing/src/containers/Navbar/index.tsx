@@ -75,19 +75,19 @@ const Navbar = ({
               menuItems={items}
               offset={-70}
             />
-            <a
+            {/* <a
               className="navbar_button navbar_button_one"
               href={`${appUrl}/subscribe`}
               data-ga="subscribe-button"
             >
-              <Button {...button} title={t('Nav.subscribe')} />
-            </a>
+              <Button variant=''  title={t('Nav.subscribe')!} />
+            </a> */}
             <a
-              className="navbar_button navbar_button_two"
+              className="navbar_button navbar_button_one"
               href={appUrl!}
               data-ga="login-button"
             >
-              <Button {...button} title={t('Nav.login')} />
+              <Button colors="primaryWithBg" title={t('Nav.login')!} />
             </a>
             <LanguageContainer>
               <LanguagePicker />

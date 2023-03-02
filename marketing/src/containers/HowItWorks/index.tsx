@@ -13,6 +13,7 @@ import Heading from '@/common/components/Heading';
 import Text from '@/common/components/Text';
 import Section, { SectionHeading, Grid, Item } from './howItWorks.style';
 import { useTranslation } from 'next-i18next';
+import colors from '@/common/theme/webAppCreative/colors';
 
 type HowTo = {
   id: number;
@@ -27,7 +28,7 @@ export const howTos: HowTo[] = [
     icon: (
       <FontAwesomeIcon
         icon={faFaceSmileWink}
-        color={'#7986CB'}
+        color={colors.primary}
         width={iconSize}
       />
     ),
@@ -35,7 +36,11 @@ export const howTos: HowTo[] = [
   {
     id: 2,
     icon: (
-      <FontAwesomeIcon icon={faLanguage} color={'#4DB6AC'} width={iconSize} />
+      <FontAwesomeIcon
+        icon={faLanguage}
+        color={colors.primary}
+        width={iconSize}
+      />
     ),
   },
   {
@@ -43,7 +48,7 @@ export const howTos: HowTo[] = [
     icon: (
       <FontAwesomeIcon
         icon={faScrewdriverWrench}
-        color={'#AED581'}
+        color={colors.primary}
         width={iconSize}
       />
     ),
@@ -53,7 +58,7 @@ export const howTos: HowTo[] = [
     icon: (
       <FontAwesomeIcon
         icon={faCloudArrowUp}
-        color={'#F06292'}
+        color={colors.primary}
         width={iconSize}
       />
     ),

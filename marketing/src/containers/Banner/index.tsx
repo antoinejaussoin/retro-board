@@ -10,7 +10,7 @@ import Section, {
   Figure,
   Buttons,
 } from './banner.style';
-import screenshot from './mbair.png';
+import screenshot from './banner.png';
 import { useTranslation } from 'next-i18next';
 import { useConfig } from '@/common/hooks/useConfig';
 import dashboardPattern from '@/common/assets/image/webAppCreative/dashboard-pattern.png';
@@ -54,7 +54,10 @@ const Banner = () => {
             <Buttons>
               <Subscribe className="animate__animated animate__fadeInUp">
                 <a href={appUrl} data-ga="try-button">
-                  <Button title={t('Banner.subscribeToday')!} />
+                  <Button
+                    colors="secondaryWithBg"
+                    title={t('Banner.subscribeToday')!}
+                  />
                 </a>
               </Subscribe>
               <Subscribe className="animate__animated animate__fadeInUp">
