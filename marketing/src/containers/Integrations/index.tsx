@@ -4,9 +4,9 @@ import Text from '@/common/components/Text';
 import Heading from '@/common/components/Heading';
 import Section, { SectionHeading, SupportedApps } from './integration.style';
 import github from '@/common/assets/image/webAppCreative/icons/github.png';
-import googleCloud from '@/common/assets/image/webAppCreative/icons/google-cloud.png';
-import slack2 from '@/common/assets/image/webAppCreative/icons/slack.png';
-import twitter from '@/common/assets/image/webAppCreative/icons/twitter.png';
+import google from './google.png';
+import slack2 from './slack.png';
+import twitter from './twitter.png';
 import markdown from './markdown.png';
 import microsoft from './microsoft.png';
 import okta from './okta.png';
@@ -16,7 +16,7 @@ import styled from 'styled-components';
 export const appIntegration = [
   {
     id: 2,
-    icon: googleCloud,
+    icon: google,
     name: 'googleCloud',
     bgColor: '#fff',
     isBlurred: false,

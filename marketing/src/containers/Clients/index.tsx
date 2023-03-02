@@ -23,7 +23,7 @@ type ImageType = typeof vodafone;
 
 const clients: ImageType[] = [
   dbahn,
-  adidas,
+  // adidas,
   amazon,
   barclays,
   deloitte,
