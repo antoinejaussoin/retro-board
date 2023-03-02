@@ -26,6 +26,7 @@ import dribbble from '@/common/assets/image/webAppCreative/icons/dribbble.png';
 import { useTranslation } from 'next-i18next';
 import { LegalDocumentMetadata } from '@/lib/getLegal';
 import NextLink from 'next/link';
+import { Logo } from '@/common/components/Logo/Logo';
 
 type FooterProps = {
   legals: LegalDocumentMetadata[];
@@ -193,7 +194,7 @@ export default function Footer({ legals }: FooterProps) {
       <Container width="1400px">
         <Grid>
           <AboutUs>
-            <NextImage src={siteLogo} alt="Logo Retrospected" />
+            <Logo size={64} short />
             <Text content={t('Footer.about')} />
           </AboutUs>
           {/* {footerTop.widgets.map((item) => (

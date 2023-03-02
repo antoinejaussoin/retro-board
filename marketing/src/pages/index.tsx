@@ -56,11 +56,11 @@ export const menuItems: MenuItem[] = [
     path: '#home',
     offset: '70',
   },
-  {
-    label: 'Nav.howTo',
-    path: '#how-to',
-    offset: '70',
-  },
+  // {
+  //   label: 'Nav.howTo',
+  //   path: '#how-to',
+  //   offset: '70',
+  // },
   {
     label: 'Nav.features',
     path: '#features',
