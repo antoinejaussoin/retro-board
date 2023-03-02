@@ -32,7 +32,7 @@ export const Grid = styled.div`
   gap: 60px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  margin-top: 80px;
+  margin-top: 40px;
   @media (max-width: 1280px) {
     gap: 18px;
   }

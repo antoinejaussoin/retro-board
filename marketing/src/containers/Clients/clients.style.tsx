@@ -48,6 +48,7 @@ export const Figure = styled.figure`
 
 export const SliderWrapper = styled.div`
   // margin-top: 45px;
+
   max-width: 1050px;
   margin-left: auto;
   margin-right: auto;
@@ -78,7 +79,7 @@ export const SliderWrapper = styled.div`
     display: flex !important;
     align-items: center;
     justify-content: center;
-    margin-top: 30px;
+    margin-top: 5px;
     button {
       background-color: rgba(0, 0, 0, 0.2);
       border: 0;
