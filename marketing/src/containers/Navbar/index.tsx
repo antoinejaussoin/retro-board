@@ -70,7 +70,7 @@ const Navbar = ({
             width={32}
             height={32}
           /> */}
-          <Logo size={32} />
+          <Logo size={32} style={{ position: 'relative', top: 1 }} />
           <Box {...menuWrapper} className="mainMenuWrapper">
             <ScrollSpyMenu
               className="main_menu"
