@@ -92,7 +92,7 @@
     "rimraf": "4.1.2",
     "scripty": "^2.1.1",
     "shortid": "2.2.16",
-    "socket.io": "4.5.4",
+    "socket.io": "4.6.1",
     "socket.io-redis": "6.1.1",
     "stripe": "11.9.1",
     "ts-jest": "29.0.5",
