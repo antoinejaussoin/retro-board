@@ -1,12 +1,10 @@
 import React from 'react';
-// import { Icon } from 'react-icons-kit'; TODO !!!!
-// import { arrowRight } from 'react-icons-kit/feather/arrowRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faFaceSmileWink,
   faLanguage,
   faScrewdriverWrench,
   faCloudArrowUp,
+  faFaceSmile,
 } from '@fortawesome/free-solid-svg-icons';
 import Container from '@/common/components/UI/Container';
 import Heading from '@/common/components/Heading';
@@ -27,7 +25,7 @@ export const howTos: HowTo[] = [
     id: 1,
     icon: (
       <FontAwesomeIcon
-        icon={faFaceSmileWink}
+        icon={faFaceSmile}
         color={colors.primary}
         width={iconSize}
       />

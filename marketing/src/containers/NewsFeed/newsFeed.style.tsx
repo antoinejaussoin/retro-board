@@ -47,20 +47,27 @@ export const Grid = styled.div`
   }
 `;
 
+export const ImageContainer = styled.div`
+  height: 200px;
+  position: relative;
+  img {
+    border-radius: 12px;
+    object-fit: contain;
+  }
+`;
+
 export const Article = styled.article`
   transition: all 0.2s ease 0s;
   :hover {
     transform: translateY(-7px);
   }
-  img {
-    border-radius: 12px;
-  }
+
   p {
     font-family: Inter, sans-serif;
     font-weight: 500;
     font-size: 15px;
     line-height: 18px;
-    margin: 20px 0 0;
+    // margin: 20px 0 0;
   }
   h4 {
     font-weight: 700;

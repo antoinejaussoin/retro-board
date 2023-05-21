@@ -36,13 +36,6 @@ export const appIntegration = [
     isBlurred: false,
   },
   {
-    id: 8,
-    icon: twitter,
-    name: 'Twitter',
-    bgColor: '#fff',
-    isBlurred: false,
-  },
-  {
     id: 9,
     icon: markdown,
     name: 'Markdown',

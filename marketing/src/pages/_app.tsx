@@ -26,9 +26,17 @@ function App({ Component, pageProps }: AppProps) {
 
         <meta property="og:site_name" content="Retrospected" />
         <meta property="og:site" content="https://www.retrospected.com" />
-        <meta property="og:title" content="Retrospected.com" />
-        <meta property="og:description" content={t('SEO.description')!} />
-        <meta property="og:url" content="https://www.retrospected.com" />
+        <meta property="og:title" content="Retrospected.com" key="og:title" />
+        <meta
+          property="og:description"
+          content={t('SEO.description')!}
+          key="og:description"
+        />
+        <meta
+          property="og:url"
+          content="https://www.retrospected.com"
+          key="og:url"
+        />
 
         <link
           rel="apple-touch-icon"

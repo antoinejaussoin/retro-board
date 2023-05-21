@@ -60,15 +60,6 @@ const Navbar = ({
     <NavbarWrapper {...navbarStyle}>
       <Container width="1400px">
         <Box {...row}>
-          {/* <Logo
-            href="/"
-            logoSrc={logoImage}
-            title="SaaS Creative"
-            logoStyle={logoStyle}
-            className="main-logo"
-            width={32}
-            height={32}
-          /> */}
           <Link href="/">
             <Logo size={32} style={{ position: 'relative', top: 1 }} />
           </Link>

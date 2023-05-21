@@ -2,7 +2,7 @@ name: 'Marketing Build'
 
 on:
   push:
-    branches: [v502/cookie]
+    branches: [v520/blog]
 
 jobs:
   marketing:

@@ -64,6 +64,8 @@
 		"perYear": " / an",
 		"currency": "€",
 		"subscribe": "Je m'abonne",
+		"switchToYearly": "Obtenez un mois gratuit par an en prenant un abonnement annuel !",
+		"switchedToYearly": "Bravo, vous recevrez un mois gratuit chaque année",
 		"login": "Connectez-vous",
 		"basic": {
 			"title": "Basique",

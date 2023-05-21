@@ -29,15 +29,6 @@ export const GlobalStyle = createGlobalStyle`
     font-family: 'Manrope', sans-serif;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: 'Manrope', sans-serif;
-  }
-
   input, textarea {
     font-family: 'Inter', sans-serif;
   }

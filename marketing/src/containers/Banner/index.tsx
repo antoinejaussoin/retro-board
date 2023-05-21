@@ -10,7 +10,7 @@ import Section, {
   Figure,
   Buttons,
 } from './banner.style';
-import screenshot from './devices.png';
+import screenshot from './mockup.png';
 import { useTranslation } from 'next-i18next';
 import { useConfig } from '@/common/hooks/useConfig';
 import dashboardPattern from '@/common/assets/image/webAppCreative/dashboard-pattern.png';

@@ -7,6 +7,9 @@ const nextConfig = {
   output: 'standalone',
   compiler: {
     styledComponents: true,
+  },
+  images: {
+    domains: ['img.shields.io'],
   }
 }
 
