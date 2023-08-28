@@ -107,7 +107,6 @@ const Policies = styled.div`
   border-top: 1px solid grey;
   display: flex;
   flex-direction: column;
-  margin: -10px;
   padding: 20px 30px 30px 30px;
 
   a {
