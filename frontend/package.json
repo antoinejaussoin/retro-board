@@ -40,7 +40,7 @@
     "bowser": "2.11.0",
     "buffer": "6.0.3",
     "core-js": "3.31.1",
-    "crypto-js": "4.1.1",
+    "crypto-js": "4.2.0",
     "date-fns": "2.30.0",
     "emoji-mart": "3.0.1",
     "emotion": "^11.0.0",
