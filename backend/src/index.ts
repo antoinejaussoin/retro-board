@@ -130,7 +130,7 @@ function getActualIp(req: express.Request): string {
   if (headerValue) {
     return headerValue.split(',')[0];
   }
-  return req.ip;
+  return req.ip || '';
 }
 
 // Rate Limiter

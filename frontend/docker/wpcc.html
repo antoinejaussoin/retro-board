@@ -1,0 +1,28 @@
+<link rel="stylesheet" type="text/css" href="//wpcc.io/lib/1.0.2/cookieconsent.min.css" />
+  <script src="//wpcc.io/lib/1.0.2/cookieconsent.min.js"></script>
+  <script>
+    window.addEventListener("load", function () {
+      if (window && window.wpcc && window.wpcc.init) {
+        window.wpcc.init({
+          "border": "thin",
+          "corners": "small",
+          "colors": {
+            "popup": {
+              "background": "#1c1f4b",
+              "text": "#ffffff",
+              "border": "#afb3e4"
+            },
+            "button": {
+              "background": "#afb3e4",
+              "text": "#000000"
+            }
+          },
+          "position": "bottom",
+          "transparency": "15",
+          "content": {
+            "href": "https://www.retrospected.com/legal/cookies"
+          }
+        });
+      }
+    });
+  </script>
