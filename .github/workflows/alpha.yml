@@ -2,7 +2,7 @@ name: 'Alpha Build'
 
 on:
   push:
-    branches: [v541/wpcc]
+    branches: [541/wpcc]
 
 jobs:
   frontend:
