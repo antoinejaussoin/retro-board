@@ -97,6 +97,11 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 5.4.1
+
+- Add the ability to remove the Cookie Banner (GDPR) on Self-Hosted instances (which is now the case by default)
+- Upgrade dependencies (frontend)
+
 ### Version 5.4.0
 
 - Add the concept of a moderator, so the person creating the retro is not necessarily the person moderating it.
