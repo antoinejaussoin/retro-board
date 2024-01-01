@@ -121,8 +121,8 @@ describe('Post', () => {
 
     expect(deleteButton).toBeNull();
 
-    // expect(likeButton).toHaveTextContent('3');
-    // expect(dislikeButton).toHaveTextContent('2');
+    expect(likeButton).toHaveTextContent('3');
+    expect(dislikeButton).toHaveTextContent('2');
     act(() => {
       likeButton.click();
     });
