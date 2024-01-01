@@ -1,6 +1,7 @@
 import { vi } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import EditableLabel from '../EditableLabel';
+import { describe, expect, it } from 'vitest';
 
 describe('EditableLabel', () => {
   it('Should display the value by default', () => {

@@ -13,6 +13,7 @@ import {
   BackendCapabilities,
 } from 'common';
 import { v4 } from 'uuid';
+import { describe, expect, it } from 'vitest';
 
 const userBase: User = {
   photo: null,

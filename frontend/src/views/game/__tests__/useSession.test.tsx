@@ -3,6 +3,7 @@ import { AllTheProviders, initialSession } from '../../../testing/index';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { Post, Session } from 'common';
 import { cloneDeep } from 'lodash';
+import { describe, expect, it } from 'vitest';
 
 function post(id: string): Post {
   return {
