@@ -54,4 +54,5 @@ run-local:
 	docker run \
 	  --env BACKEND_HOST=localhost \
     --env BACKEND_PORT=8081 \
+		--env FRONTEND_SELF_HOSTED=true \
 		-it --rm -p 3100:80 retrospected/frontend:local

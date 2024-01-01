@@ -9,7 +9,16 @@ envsubst '${BACKEND_HOST} ${BACKEND_PORT}' < /etc/nginx/conf.d/default.conf.temp
 # Configure the frontend with environment variables
 CONFIG_FILE='/usr/share/nginx/html/config.tmp'
 HTML_FILE='/usr/share/nginx/html/index.html'
+WPCC_FILE='./wpcc.html'
 PREFIX='FRONTEND_'
+FRONTEND_SELF_HOSTED="${FRONTEND_SELF_HOSTED:-true}"
+
+echo "Self hosted: ${FRONTEND_SELF_HOSTED}"
+
+if [ "${FRONTEND_SELF_HOSTED}" = "false" ]; then
+		echo "Inserting WPCC"
+		sed -i -e "/WPCC/r ${WPCC_FILE}" ${HTML_FILE}
+fi
 
 # Creates a file with the environment variables that start with FRONTEND_
 echo "    window.__env__ = {" > "${CONFIG_FILE}"

@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
 import svgrPlugin from 'vite-plugin-svgr';
@@ -48,7 +48,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      plugins: [inject({ Buffer: ['buffer', 'Buffer'] })],
+      plugins: [inject({ Buffer: ['buffer', 'Buffer'] }) as any],
     },
   },
   server: {

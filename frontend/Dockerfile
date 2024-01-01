@@ -22,7 +22,6 @@ COPY --chown=node:node ./src ./src
 COPY --chown=node:node ./public ./public
 COPY --chown=node:node ./tsconfig.json ./tsconfig.json
 COPY --chown=node:node ./vite.config.ts ./vite.config.ts
-COPY --chown=node:node ./vitest.config.ts ./vitest.config.ts
 COPY --chown=node:node ./index.html ./index.html
 COPY --chown=node:node ./.env ./.env
 
@@ -37,6 +36,7 @@ RUN apt -y install jq
 COPY --from=Node /home/node/app/dist /usr/share/nginx/html
 COPY ./docker/nginx.conf.template /etc/nginx/conf.d/default.conf.template
 COPY ./docker/frontend-entrypoint.sh /
+COPY ./docker/wpcc.html /
 
 RUN ["chmod", "+x", "/frontend-entrypoint.sh"]
 ENTRYPOINT ["/frontend-entrypoint.sh"]

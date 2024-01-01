@@ -142,6 +142,7 @@ services:
       - '80:80' # Change the first 80 to whatever port you want to access Retrospected from
     environment:
       # -- Optional --
+      FRONTEND_SELF_HOSTED: 'true' # This should be the same on the backend side. True by default.
       FRONTEND_GOOGLE_ANALYTICS_ID: '' # Optional, Google Analytics ID (UA-1234456-7)
       FRONTEND_GOOGLE_AD_WORDS_ID: '' # Optional, Google Adwords ID (AW-1234456)
       FRONTEND_GOOGLE_AD_WORDS_CONVERSION_ID: '' # Optional, Google Adwords Event ID (AW-1234456/1234456)
