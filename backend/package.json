@@ -1,6 +1,6 @@
 {
   "name": "@retrospected/backend",
-  "version": "5.4.1",
+  "version": "5.4.2",
   "license": "GNU GPLv3",
   "private": true,
   "type": "module",
@@ -97,6 +97,7 @@
     "stripe": "12.14.0",
     "ts-jest": "29.1.1",
     "ts-node": "10.9.1",
+    "tsx": "^4.7.0",
     "typeorm": "0.3.17",
     "typeorm-naming-strategies": "4.1.0",
     "typescript": "5.1.6",

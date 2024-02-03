@@ -40,6 +40,11 @@ const hardcodedLicences: HardcodedLicence[] = [
     hash: '$2a$10$udpIRa0hWeurSsaXtM0iveT4geuQBuGvnNS9UqczkgxOYzHaPqau.',
     encryptedOwner: 'U2FsdGVkX1/DQ2JJ57C+LGM7XBLLg9NDxviOwRwj0pI=',
   },
+  {
+    // TQG / systemberatung.de
+    hash: '$2a$10$R1N5dO2kz78iG3wk6DPs1ODwY9YlHz7uWoIY1TjsasHb1mDOLDSdu',
+    encryptedOwner: 'U2FsdGVkX19/vrNOsM2pKKpKOf4ej7UUSfWHwNU9yeY=',
+  },
 ];
 
 export function isSelfHostedAndLicenced() {

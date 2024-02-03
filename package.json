@@ -1,6 +1,6 @@
 {
   "name": "retrospected",
-  "version": "5.4.1",
+  "version": "5.4.2",
   "description": "An agile retrospective board - Powering www.retrospected.com",
   "private": true,
   "scripts": {
