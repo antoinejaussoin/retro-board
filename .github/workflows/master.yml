@@ -177,11 +177,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Run Integration Tests
-        run: docker-compose -f ./integration/docker-compose.ci.master.yml up --exit-code-from cypress
+        run: docker compose -f ./integration/docker-compose.ci.master.yml up --exit-code-from cypress
       - uses: actions/upload-artifact@v3
         if: always()
         with:
           name: Test videos
           path: integration/cypress/videos
           retention-days: 14
-

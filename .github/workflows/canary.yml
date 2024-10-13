@@ -177,7 +177,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Run Integration Tests
-        run: docker-compose -f ./integration/docker-compose.ci.canary.yml up --exit-code-from cypress
+        run: docker compose -f ./integration/docker-compose.ci.canary.yml up --exit-code-from cypress
       - uses: actions/upload-artifact@v3
         if: always()
         with:
@@ -216,4 +216,3 @@ jobs:
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL'
-      
