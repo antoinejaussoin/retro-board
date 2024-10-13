@@ -1,7 +1,7 @@
-import { ColumnDefinition, ColumnDefinitionType } from 'common';
+import type { ColumnDefinition, ColumnDefinitionType } from 'common';
 import { v4 } from 'uuid';
 import keyBy from 'lodash/keyBy';
-import { ColumnSettings, Template, TranslationFunction } from './types';
+import type { ColumnSettings, Template, TranslationFunction } from './types';
 import { getTemplateColumns } from './templates';
 import isEqual from 'lodash/isEqual';
 

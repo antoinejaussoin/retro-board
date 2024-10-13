@@ -1,4 +1,4 @@
-import { Post } from 'common';
+import type { Post } from 'common';
 import { postPermissionLogic } from './board/permissions-logic';
 import { useCallback } from 'react';
 import useBackendCapabilities from 'global/useBackendCapabilities';

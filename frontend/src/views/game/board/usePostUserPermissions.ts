@@ -1,5 +1,5 @@
-import { Post } from 'common';
-import { postPermissionLogic, PostUserPermissions } from './permissions-logic';
+import type { Post } from 'common';
+import { postPermissionLogic, type PostUserPermissions } from './permissions-logic';
 import useUser from '../../../state/user/useUser';
 import useSession from '../useSession';
 import { useShouldLockSession } from '../useTimer';

@@ -1,5 +1,5 @@
 import { selector } from 'recoil';
-import { BackendCapabilities } from 'common';
+import type { BackendCapabilities } from 'common';
 import { fetchBackendCapabilities } from 'api';
 
 const defaultBackendCapabilities: BackendCapabilities = {

@@ -1,4 +1,4 @@
-import {
+import type {
   Session,
   SessionTemplate,
   SessionMetadata,

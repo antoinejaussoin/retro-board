@@ -1,4 +1,4 @@
-import { loadStripe, Stripe } from '@stripe/stripe-js';
+import { loadStripe, type Stripe } from '@stripe/stripe-js';
 import config from '../utils/getConfig';
 
 let stripePromise: Promise<Stripe | null>;

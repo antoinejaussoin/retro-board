@@ -5,7 +5,7 @@ import useSession from '../useSession';
 import { useShouldLockSession } from '../useTimer';
 import {
   sessionPermissionLogic,
-  SessionUserPermissions,
+  type SessionUserPermissions,
 } from './permissions-logic';
 
 export default function useSessionUserPermissions(): SessionUserPermissions {

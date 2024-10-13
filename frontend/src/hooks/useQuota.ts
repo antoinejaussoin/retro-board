@@ -1,4 +1,4 @@
-import { Quota } from 'common';
+import type { Quota } from 'common';
 import { useCallback, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
 import {

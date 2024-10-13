@@ -1,4 +1,4 @@
-import { BackendCapabilities, Post, Session, User, VoteType } from 'common';
+import type { BackendCapabilities, Post, Session, User, VoteType } from 'common';
 import some from 'lodash/some';
 
 export interface SessionUserPermissions {

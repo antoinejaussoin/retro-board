@@ -6,7 +6,7 @@ import { format } from 'date-fns';
 import useColumns from '../useColumns';
 import { useTranslation } from 'react-i18next';
 import { useSummary } from './useSummary';
-import { ColumnStatsItem, ActionItem } from './types';
+import type { ColumnStatsItem, ActionItem } from './types';
 import useSession from '../useSession';
 
 export default function useMarkdown() {

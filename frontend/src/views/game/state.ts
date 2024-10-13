@@ -1,4 +1,4 @@
-import { Participant, Session, UnauthorizedAccessPayload } from 'common';
+import type { Participant, Session, UnauthorizedAccessPayload } from 'common';
 import { atom } from 'recoil';
 
 export const ParticipantsState = atom<Participant[]>({

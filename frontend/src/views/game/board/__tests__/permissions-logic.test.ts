@@ -3,14 +3,14 @@ import {
   sessionPermissionLogic,
 } from '../permissions-logic';
 import {
-  Post,
-  Session,
-  User,
-  SessionOptions,
-  VoteType,
+  type Post,
+  type Session,
+  type User,
+  type SessionOptions,
+  type VoteType,
   defaultOptions,
-  VoteExtract,
-  BackendCapabilities,
+  type VoteExtract,
+  type BackendCapabilities,
 } from 'common';
 import { v4 } from 'uuid';
 import { describe, expect, it } from 'vitest';

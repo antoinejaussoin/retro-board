@@ -1,4 +1,4 @@
-import { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import { useState, useEffect, type Dispatch, type SetStateAction } from 'react';
 
 type UseStateFetchValue<T> = [
   T,

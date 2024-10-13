@@ -1,4 +1,4 @@
-import { PaletteColorOptions, createTheme } from '@mui/material/styles';
+import { type PaletteColorOptions, createTheme } from '@mui/material/styles';
 import { colors } from '@mui/material';
 import config from './utils/getConfig';
 

@@ -1,4 +1,4 @@
-import { ChangeUserNamePayload, FullUser, Quota } from 'common';
+import type { ChangeUserNamePayload, FullUser, Quota } from 'common';
 import { fetchGet, fetchPatch, fetchPostGet } from '../../api/fetch';
 
 export async function getPortalUrl(): Promise<string | null> {

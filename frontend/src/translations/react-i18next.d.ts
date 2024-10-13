@@ -1,5 +1,5 @@
 import 'react-i18next';
-import ns1 from './locales/en-GB.json';
+import type ns1 from './locales/en-GB.json';
 
 declare module 'react-i18next' {
   interface CustomTypeOptions {

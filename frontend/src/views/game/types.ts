@@ -1,5 +1,5 @@
-import { Post, PostGroup } from 'common';
-import { ColumnSettings } from '../../state/types';
+import type { Post, PostGroup } from 'common';
+import type { ColumnSettings } from '../../state/types';
 
 export interface ColumnContent extends ColumnSettings {
   index: number;

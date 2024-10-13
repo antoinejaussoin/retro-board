@@ -1,4 +1,4 @@
-import { Post, VoteType, PostGroup } from 'common';
+import type { Post, VoteType, PostGroup } from 'common';
 import groupBy from 'lodash/groupBy';
 import toPairs from 'lodash/toPairs';
 import sum from 'lodash/sum';

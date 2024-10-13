@@ -1,4 +1,4 @@
-import { Currency } from 'common';
+import type { Currency } from 'common';
 
 export interface CurrencyMetadata {
   value: Currency;

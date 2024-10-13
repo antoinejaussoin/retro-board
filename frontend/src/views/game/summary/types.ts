@@ -1,5 +1,5 @@
-import { Post, PostGroup, User } from 'common';
-import { ColumnContent } from '../types';
+import type { Post, PostGroup, User } from 'common';
+import type { ColumnContent } from '../types';
 
 export interface Stats {
   columns: ColumnStats[];

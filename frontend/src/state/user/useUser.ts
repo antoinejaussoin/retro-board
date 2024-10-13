@@ -1,4 +1,4 @@
-import { FullUser } from 'common';
+import type { FullUser } from 'common';
 import { useRecoilValue } from 'recoil';
 import { userState } from './user-state';
 

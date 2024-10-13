@@ -1,6 +1,6 @@
 import { getMovingEntities, calculateRank } from '../moving-logic';
-import { ColumnContent } from '../../types';
-import { Post, User, PostGroup } from 'common';
+import type { ColumnContent } from '../../types';
+import type { Post, User, PostGroup } from 'common';
 import { getMiddle, getNext, getPrevious } from '../../lexorank';
 import { describe, expect, it } from 'vitest';
 

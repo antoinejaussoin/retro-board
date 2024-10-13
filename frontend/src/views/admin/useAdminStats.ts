@@ -1,4 +1,4 @@
-import { AdminStats } from 'common';
+import type { AdminStats } from 'common';
 import { useEffect, useState } from 'react';
 import { fetchAdminStats } from './api';
 

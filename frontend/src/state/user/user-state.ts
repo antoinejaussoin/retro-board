@@ -1,5 +1,5 @@
 import { me } from 'api';
-import { FullUser } from 'common';
+import type { FullUser } from 'common';
 import { atom, selector } from 'recoil';
 
 const userDefaults = selector({

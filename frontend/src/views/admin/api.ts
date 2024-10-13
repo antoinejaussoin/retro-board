@@ -1,5 +1,5 @@
 import { fetchGet, fetchPatch, fetchPost } from '../../api/fetch';
-import {
+import type {
   AdminChangePasswordPayload,
   AdminStats,
   FullUser,

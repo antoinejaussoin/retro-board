@@ -1,10 +1,10 @@
 import ReactGA from 'react-ga4';
-import { Plan, TrackingEvent } from 'common';
+import type { Plan, TrackingEvent } from 'common';
 import * as Sentry from '@sentry/browser';
 import config from './utils/getConfig';
 import { isProduction } from 'is-production';
 import { noop } from 'lodash';
-import { InitOptions } from 'react-ga4/types/ga4';
+import type { InitOptions } from 'react-ga4/types/ga4';
 
 let sentryErrorCount = 0;
 

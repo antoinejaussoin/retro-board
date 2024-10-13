@@ -1,8 +1,8 @@
-import { BackendCapabilities, Post, PostGroup, Session, User } from 'common';
+import type { BackendCapabilities, Post, PostGroup, Session, User } from 'common';
 import sortBy from 'lodash/sortBy';
 import flattenDeep from 'lodash/flattenDeep';
-import { ColumnContent } from '../types';
-import { ColumnStats, ColumnStatsItem, Stats, ActionItem } from './types';
+import type { ColumnContent } from '../types';
+import type { ColumnStats, ColumnStatsItem, Stats, ActionItem } from './types';
 import { countVotes, countVotesForGroup } from '../utils';
 import { postPermissionLogic } from '../board/permissions-logic';
 import { useMemo } from 'react';

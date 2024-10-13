@@ -1,5 +1,5 @@
-import { ColumnDefinitionType } from 'common';
-import { Namespace, TFunction } from 'i18next';
+import type { ColumnDefinitionType } from 'common';
+import type { Namespace, TFunction } from 'i18next';
 
 export interface ColumnSettings {
   color: string;

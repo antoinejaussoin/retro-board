@@ -1,4 +1,4 @@
-import { Participant } from 'common';
+import type { Participant } from 'common';
 import difference from 'lodash/difference';
 
 function onlineIds(partipants: Participant[]) {

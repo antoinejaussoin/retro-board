@@ -1,4 +1,4 @@
-import { BackendCapabilities } from 'common';
+import type { BackendCapabilities } from 'common';
 import { useRecoilValue } from 'recoil';
 import { backendCapabilitiesState } from './state';
 

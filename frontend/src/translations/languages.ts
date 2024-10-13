@@ -1,5 +1,5 @@
-import { Locale } from 'date-fns';
-import { StripeLocales } from 'common';
+import type { Locale } from 'date-fns';
+import type { StripeLocales } from 'common';
 const arDZ = () => import('date-fns/locale/ar-DZ');
 const zhCN = () => import('date-fns/locale/zh-CN');
 const zhTW = () => import('date-fns/locale/zh-TW');

@@ -1,9 +1,9 @@
 import { useCallback, useMemo } from 'react';
-import languages, { Language } from './languages';
+import languages, { type Language } from './languages';
 import { useTranslation } from 'react-i18next';
 import { updateLanguage } from 'api';
 import { trackEvent } from 'track';
-import { TrackingEvent } from 'common';
+import type { TrackingEvent } from 'common';
 import useUser from 'state/user/useUser';
 import { useSetUser } from 'state/user/useSetUser';
 

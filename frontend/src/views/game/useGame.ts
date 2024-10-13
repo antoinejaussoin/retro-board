@@ -1,35 +1,35 @@
 import { useEffect, useMemo, useState, useCallback, useRef } from 'react';
 import {
   Actions,
-  Post,
-  PostGroup,
-  VoteType,
-  Participant,
-  UnauthorizedAccessPayload,
-  WsLikeUpdatePayload,
-  WsPostUpdatePayload,
-  WsDeletePostPayload,
-  WsDeleteGroupPayload,
-  VoteExtract,
-  WsReceiveLikeUpdatePayload,
-  WsErrorPayload,
-  WebsocketMessage,
-  Session,
-  WsGroupUpdatePayload,
-  Message,
-  WsUserReadyPayload,
-  ChatMessagePayload,
-  WsCancelVotesPayload,
-  WsReceiveCancelVotesPayload,
-  WsReceiveTimerStartPayload,
-  WsSaveSessionSettingsPayload,
-  SessionSettings,
-  AllSessionSettings,
+  type Post,
+  type PostGroup,
+  type VoteType,
+  type Participant,
+  type UnauthorizedAccessPayload,
+  type WsLikeUpdatePayload,
+  type WsPostUpdatePayload,
+  type WsDeletePostPayload,
+  type WsDeleteGroupPayload,
+  type VoteExtract,
+  type WsReceiveLikeUpdatePayload,
+  type WsErrorPayload,
+  type WebsocketMessage,
+  type Session,
+  type WsGroupUpdatePayload,
+  type Message,
+  type WsUserReadyPayload,
+  type ChatMessagePayload,
+  type WsCancelVotesPayload,
+  type WsReceiveCancelVotesPayload,
+  type WsReceiveTimerStartPayload,
+  type WsSaveSessionSettingsPayload,
+  type SessionSettings,
+  type AllSessionSettings,
 } from 'common';
 import { v4 } from 'uuid';
 import find from 'lodash/find';
 import { setScope, trackAction, trackEvent } from '../../track';
-import io, { Socket } from 'socket.io-client';
+import io, { type Socket } from 'socket.io-client';
 import { useUserMetadata } from '../../state/user/useUser';
 import { getMiddle, getNext } from './lexorank';
 import { useSnackbar } from 'notistack';
@@ -39,7 +39,7 @@ import {
   joinNames,
 } from './participants-notifiers';
 import { omit } from 'lodash';
-import { AckItem } from './types';
+import type { AckItem } from './types';
 import useMutableRead from '../../hooks/useMutableRead';
 import useParticipants from './useParticipants';
 import useUnauthorised from './useUnauthorised';
@@ -79,7 +79,7 @@ function sendFactory(
   sessionId: string,
   setAcks?: React.Dispatch<React.SetStateAction<AckItem[]>>,
 ) {
-  return function <T>(action: string, payload?: T) {
+  return <T>(action: string, payload?: T) => {
     if (socket) {
       const messagePayload: WebsocketMessage<T | undefined> = {
         sessionId,

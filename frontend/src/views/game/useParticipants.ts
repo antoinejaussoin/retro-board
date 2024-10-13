@@ -1,4 +1,4 @@
-import { Participant } from 'common';
+import type { Participant } from 'common';
 import { useRecoilState } from 'recoil';
 import { ParticipantsState } from './state';
 
