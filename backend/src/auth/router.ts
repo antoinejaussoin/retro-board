@@ -1,7 +1,11 @@
 import { mergeAnonymous } from '../db/actions/merge.js';
-import express, { NextFunction, Request, Response } from 'express';
+import express, {
+  type NextFunction,
+  type Request,
+  type Response,
+} from 'express';
 import passport from 'passport';
-import { UserIds } from '../utils.js';
+import type { UserIds } from '../utils.js';
 
 const router = express.Router();
 // Setting up the passport middleware for each of the OAuth providers
@@ -16,7 +20,7 @@ const microsoftAuth = passport.authenticate('microsoft');
 const oktaAuth = passport.authenticate('okta');
 
 function anonAuth(req: Request, res: Response, next: NextFunction) {
-  passport.authenticate('local', async function (err, user: UserIds | null) {
+  passport.authenticate('local', async (err, user: UserIds | null) => {
     res.setHeader('Content-Type', 'application/json');
 
     if (err) {
@@ -28,7 +32,7 @@ function anonAuth(req: Request, res: Response, next: NextFunction) {
 
     await mergeAnonymous(req, user.identityId);
 
-    req.logIn(user, function (err) {
+    req.logIn(user, (err) => {
       if (err) {
         return next(err);
       }
@@ -41,8 +45,8 @@ export const endOAuthHandler = (req: Request, res: Response) => {
   res.setHeader('Content-Type', 'application/json');
 
   const io = req.app.get('io');
-  io.in(req.session!.socketId).emit('auth', req.user);
-  req.logIn(req.user!, (err: unknown) => {
+  io.in(req.session.socketId).emit('auth', req.user);
+  req.logIn(req.user as UserIds, (err: unknown) => {
     if (err) {
       res.status(403).send().end();
     } else {

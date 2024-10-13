@@ -12,7 +12,7 @@ import type { Relation } from 'typeorm';
 import { LexoRank } from 'lexorank';
 import SessionEntity from './Session.js';
 import PostEntity from './Post.js';
-import { PostGroup } from '../../common/index.js';
+import type { PostGroup } from '../../common/index.js';
 import { UserEntity } from './UserIdentity.js';
 
 @Entity({ name: 'groups' })

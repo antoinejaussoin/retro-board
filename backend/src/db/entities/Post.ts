@@ -13,7 +13,7 @@ import SessionEntity from './Session.js';
 import VoteEntity from './Vote.js';
 import PostGroupEntity from './PostGroup.js';
 import { UserEntity } from './UserIdentity.js';
-import { Post } from 'common/types.js';
+import type { Post } from 'common/types.js';
 
 @Entity({ name: 'posts' })
 export default class PostEntity {

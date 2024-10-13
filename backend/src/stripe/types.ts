@@ -1,4 +1,4 @@
-import { Product, CreateSubscriptionPayload } from '../common/index.js';
+import type { Product, CreateSubscriptionPayload } from '../common/index.js';
 
 export interface InternalProduct extends Product {
   productId: string;

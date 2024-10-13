@@ -1,5 +1,5 @@
 import { PostGroupEntity } from '../entities/index.js';
-import { PostGroup as JsonPostGroup } from '../../common/index.js';
+import type { PostGroup as JsonPostGroup } from '../../common/index.js';
 import { cloneDeep } from 'lodash-es';
 import { getBaseRepository, saveAndReload } from './BaseRepository.js';
 
@@ -15,6 +15,7 @@ export default getBaseRepository(PostGroupEntity).extend({
       session: { id: sessionId },
       createdBy: { id: authorId },
     };
+    // biome-ignore lint/performance/noDelete: <explanation>
     delete groupWithoutPosts.posts;
 
     return await saveAndReload(this, groupWithoutPosts);

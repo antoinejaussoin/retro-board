@@ -1,4 +1,4 @@
-// biome-ignore lint/style/noNamespace: Temporary
+// xxbiome-ignore lint/style/noNamespace: Temporary
 declare namespace Express {
   type User = string;
 

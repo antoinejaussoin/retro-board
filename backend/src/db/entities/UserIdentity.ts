@@ -8,10 +8,10 @@ import {
   ManyToOne,
   ManyToMany,
 } from 'typeorm';
-import { Currency, User, UserIdentity } from '../../common/index.js';
+import type { Currency, User, UserIdentity } from '../../common/index.js';
 import type { AccountType } from '../../common/types.js';
 
-import { UserIds } from '../../utils.js';
+import type { UserIds } from '../../utils.js';
 import SessionEntity from './Session.js';
 import SessionTemplateEntity from './SessionTemplate.js';
 import TrackingEntity from './TrackingEntity.js';

@@ -1,8 +1,8 @@
 import config from '../config.js';
 import { Configuration, OpenAIApi } from 'openai';
 import { getAiChatSession, recordAiChatMessage } from '../db/actions/ai.js';
-import UserView from '../db/entities/UserView.js';
-import { CoachMessage } from '../common/types.js';
+import type UserView from '../db/entities/UserView.js';
+import type { CoachMessage } from '../common/types.js';
 import { last } from 'lodash-es';
 
 const systemMessage: CoachMessage = {
@@ -61,12 +61,16 @@ export async function dialog(
     model: 'gpt-4',
     messages: [systemMessage, ...messages],
   });
-  const answer = response.data.choices[0].message!;
-  if (messages.length) {
-    await recordAiChatMessage('user', last(messages)!.content, chat);
+  const answer = response.data.choices[0].message;
+  const lastMessage = last(messages);
+  if (lastMessage) {
+    await recordAiChatMessage('user', lastMessage.content, chat);
   }
-  await recordAiChatMessage('assistant', answer.content, chat);
-  return [...messages, answer];
+  if (answer) {
+    await recordAiChatMessage('assistant', answer.content, chat);
+  }
+
+  return [...(messages || []), answer].filter(Boolean) as CoachMessage[];
 }
 
 export function configure(): Configuration {

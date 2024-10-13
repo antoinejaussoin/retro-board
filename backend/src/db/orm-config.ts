@@ -1,5 +1,5 @@
 import config from '../config.js';
-import { DataSourceOptions } from 'typeorm';
+import type { DataSourceOptions } from 'typeorm';
 import {
   PostEntity,
   PostGroupEntity,
@@ -18,7 +18,7 @@ import {
 import LicenceEntity from './entities/Licence.js';
 import SessionOptionsEntity from './entities/SessionOptions.js';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
-import path from 'path';
+import path from 'node:path';
 import { getDirname, getFilename } from './../path-utils.js';
 import AiChatEntity from './entities/AiChat.js';
 import AiChatMessageEntity from './entities/AiChatMessage.js';

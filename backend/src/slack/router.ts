@@ -1,4 +1,4 @@
-import express, { Router } from 'express';
+import express, { type Router } from 'express';
 import fetch from 'node-fetch';
 import { createSessionFromSlack } from '../db/actions/sessions.js';
 import config from '../config.js';
@@ -34,7 +34,7 @@ export default function slackRouter(): Router {
       } else {
         await sendToSlack(
           msg.response_url,
-          `Unfortunately, we could not identify you on Retrospected. Try logging in with your Slack account at least once on Retrospected, so we can link your Retrospected account with your Slack account.`,
+          'Unfortunately, we could not identify you on Retrospected. Try logging in with your Slack account at least once on Retrospected, so we can link your Retrospected account with your Slack account.',
         );
       }
     } catch (err) {

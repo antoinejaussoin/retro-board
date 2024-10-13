@@ -1,16 +1,16 @@
-import sendGrid, { MailDataRequired } from '@sendgrid/mail';
+import sendGrid, { type MailDataRequired } from '@sendgrid/mail';
 import config from '../config.js';
-import { EmailSender } from './types.js';
+import type { EmailSender } from './types.js';
 
 if (config.SENDGRID_API_KEY) {
   sendGrid.setApiKey(config.SENDGRID_API_KEY);
 }
 
-export const sendGridSender: EmailSender = async function (
+export const sendGridSender: EmailSender = async (
   to: string,
   subject: string,
   body: string,
-): Promise<boolean> {
+): Promise<boolean> => {
   const msg: MailDataRequired = {
     to,
     from: {

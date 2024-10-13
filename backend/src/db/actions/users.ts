@@ -1,5 +1,5 @@
 import { UserEntity, UserView } from '../entities/index.js';
-import { EntityManager, In, Not } from 'typeorm';
+import { type EntityManager, In, Not } from 'typeorm';
 import {
   UserIdentityRepository,
   UserRepository,
@@ -10,7 +10,7 @@ import {
   UserIdentityEntity,
 } from '../entities/UserIdentity.js';
 import { transaction } from './transaction.js';
-import { AccountType, FullUser } from '../../common/index.js';
+import type { AccountType, FullUser } from '../../common/index.js';
 import { isSelfHostedAndLicenced } from '../../security/is-licenced.js';
 import { v4 } from 'uuid';
 import { hashPassword, comparePassword } from '../../encryption.js';
@@ -391,6 +391,6 @@ export function isUserPro(user: FullUser) {
   if (isSelfHostedAndLicenced()) {
     return true;
   }
-  const activeTrial = user && user.trial && new Date(user.trial) > new Date();
+  const activeTrial = user?.trial && new Date(user.trial) > new Date();
   return user && (user.pro || activeTrial);
 }

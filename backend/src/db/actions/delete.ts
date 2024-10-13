@@ -107,10 +107,9 @@ async function delVotes(
   if (hardDelete) {
     await repo.delete({ user: { id: user.id } });
     return true;
-  } else {
-    await repo.update({ user: { id: user.id } }, { user: anon.user });
-    return true;
   }
+  await repo.update({ user: { id: user.id } }, { user: anon.user });
+  return true;
 }
 
 async function delPosts(
@@ -137,11 +136,10 @@ async function delPosts(
     await repo.delete({ user: { id: user.id } });
     await groupRepo.delete({ user: { id: user.id } });
     return true;
-  } else {
-    await repo.update({ user: { id: user.id } }, { user: anon.user });
-    await groupRepo.update({ user: { id: user.id } }, { user: anon.user });
-    return true;
   }
+  await repo.update({ user: { id: user.id } }, { user: anon.user });
+  await groupRepo.update({ user: { id: user.id } }, { user: anon.user });
+  return true;
 }
 
 async function delSessions(
@@ -178,10 +176,9 @@ async function delSessions(
     );
     await repo.delete({ createdBy: { id: user.id } });
     return true;
-  } else {
-    await repo.update({ createdBy: { id: user.id } }, { createdBy: anon.user });
-    return true;
   }
+  await repo.update({ createdBy: { id: user.id } }, { createdBy: anon.user });
+  return true;
 }
 
 async function delUserAccount(manager: EntityManager, user: UserView) {

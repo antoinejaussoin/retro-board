@@ -1,5 +1,5 @@
 import { SessionTemplateEntity } from '../entities/index.js';
-import {
+import type {
   SessionTemplate as JsonSessionTemplate,
   ColumnDefinition as JsonColumnDefinition,
   SessionOptions as JsonSessionOptions,

@@ -1,6 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-import { BackendConfig } from './types.js';
+import fs from 'node:fs';
+import path from 'node:path';
+import type { BackendConfig } from './types.js';
 import dotenv from 'dotenv';
 import { getDirname } from './path-utils.js';
 
@@ -29,28 +29,28 @@ function defaults(key: string, defaultValue: string): string {
   if (process.env[key] === undefined) {
     return defaultValue;
   }
-  return process.env[key]!;
+  return process.env[key];
 }
 
 function defaultsBool(key: string, defaultValue: boolean): boolean {
   if (process.env[key] === undefined) {
     return defaultValue;
   }
-  return process.env[key]! === 'true';
+  return process.env[key] === 'true';
 }
 
 function defaultsNumber(key: string, defaultValue: number): number {
   if (process.env[key] === undefined) {
     return defaultValue;
   }
-  return parseInt(process.env[key]!);
+  return Number.parseInt(process.env[key]);
 }
 
 function defaultsUndefined(key: string): string | undefined {
   if (process.env[key] === undefined) {
     return undefined;
   }
-  return process.env[key]!;
+  return process.env[key];
 }
 
 const config: BackendConfig = {

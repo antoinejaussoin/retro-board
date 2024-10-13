@@ -1,20 +1,20 @@
 import {
-  UserEntity,
-  PostEntity,
-  PostGroupEntity,
-  ColumnDefinitionEntity,
-  SessionEntity,
-  SessionTemplateEntity,
+  type UserEntity,
+  type PostEntity,
+  type PostGroupEntity,
+  type ColumnDefinitionEntity,
+  type SessionEntity,
+  type SessionTemplateEntity,
   SessionView,
 } from '../entities/index.js';
 import {
-  Session,
+  type Session,
   defaultSession,
-  ColumnDefinition,
-  SessionOptions,
-  SessionMetadata,
-  AccessErrorType,
-  FullUser,
+  type ColumnDefinition,
+  type SessionOptions,
+  type SessionMetadata,
+  type AccessErrorType,
+  type FullUser,
 } from '../../common/index.js';
 import shortId from 'shortid';
 import { v4 } from 'uuid';
@@ -27,11 +27,11 @@ import {
   ColumnRepository,
 } from '../repositories/index.js';
 import { transaction } from './transaction.js';
-import { EntityManager, In } from 'typeorm';
+import { type EntityManager, In } from 'typeorm';
 import { getUserViewInner, isUserPro } from './users.js';
 import { uniq } from 'lodash-es';
 import MessageRepository from '../repositories/MessageRepository.js';
-import MessageEntity from '../entities/Message.js';
+import type MessageEntity from '../entities/Message.js';
 
 export async function createSessionFromSlack(
   slackUserId: string,
@@ -86,22 +86,21 @@ export async function createSession(
       );
       await storeVisitorInner(manager, newSession.id, author);
       return newSession;
-    } else {
-      const newSession = await sessionRepository.saveFromJson(
-        {
-          ...defaultSession,
-          columns: defaultSession.columns.map((c) => ({
-            ...c,
-            id: v4(),
-          })),
-          id,
-          encrypted: encryptionCheck || null,
-        },
-        author.id,
-      );
-      await storeVisitorInner(manager, newSession.id, author);
-      return newSession;
     }
+    const newSession = await sessionRepository.saveFromJson(
+      {
+        ...defaultSession,
+        columns: defaultSession.columns.map((c) => ({
+          ...c,
+          id: v4(),
+        })),
+        id,
+        encrypted: encryptionCheck || null,
+      },
+      author.id,
+    );
+    await storeVisitorInner(manager, newSession.id, author);
+    return newSession;
   });
 }
 
@@ -189,9 +188,8 @@ export async function getSession(sessionId: string): Promise<Session | null> {
         groups: groups.map((g) => g.toJson()),
         messages: messages.map((m) => m.toJson()),
       };
-    } else {
-      return null;
     }
+    return null;
   });
 }
 
@@ -232,26 +230,26 @@ export async function deleteSessions(
 
     try {
       await sessionRepository.query(
-        `delete from messages where session_id = $1;`,
+        'delete from messages where session_id = $1;',
         [sessionId],
       );
       await sessionRepository.query(
-        `delete from visitors where sessions_id = $1;`,
+        'delete from visitors where sessions_id = $1;',
         [sessionId],
       );
       await sessionRepository.query(
-        `delete from posts where session_id = $1;`,
+        'delete from posts where session_id = $1;',
         [sessionId],
       );
       await sessionRepository.query(
-        `delete from columns where session_id = $1;`,
+        'delete from columns where session_id = $1;',
         [sessionId],
       );
       await sessionRepository.query(
-        `delete from groups where session_id = $1;`,
+        'delete from groups where session_id = $1;',
         [sessionId],
       );
-      await sessionRepository.query(`delete from sessions where id = $1;`, [
+      await sessionRepository.query('delete from sessions where id = $1;', [
         sessionId,
       ]);
     } catch (err) {
@@ -432,8 +430,7 @@ async function storeVisitorInner(
   const sessionRepository = manager.withRepository(SessionRepository);
   const session = await getSessionWithVisitorsInner(manager, sessionId);
   if (
-    session &&
-    session.visitors &&
+    session?.visitors &&
     !session.visitors.map((v) => v.id).includes(user.id)
   ) {
     session.visitors.push(user);
@@ -482,9 +479,8 @@ export function isAllowed(
   if (session.locked && session.visitors && user && isUserPro(user)) {
     if (session.visitors.map((v) => v.id).includes(user.id)) {
       return { allowed: true };
-    } else {
-      return { allowed: false, reason: 'locked' };
     }
+    return { allowed: false, reason: 'locked' };
   }
   if (session.locked && !user) {
     return { allowed: false, reason: 'locked' };

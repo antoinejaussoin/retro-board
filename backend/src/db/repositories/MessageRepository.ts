@@ -1,5 +1,5 @@
 import { SessionEntity } from '../entities/index.js';
-import { Message as JsonMessage } from '../../common/index.js';
+import type { Message as JsonMessage } from '../../common/index.js';
 import { cloneDeep } from 'lodash-es';
 import { getBaseRepository, saveAndReload } from './BaseRepository.js';
 import MessageEntity from '../entities/Message.js';
@@ -23,8 +23,7 @@ export default getBaseRepository(MessageEntity).extend({
           id: sessionId,
         },
       });
-    } else {
-      throw new Error('No session found');
     }
+    throw new Error('No session found');
   },
 });

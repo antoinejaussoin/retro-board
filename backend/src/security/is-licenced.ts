@@ -1,8 +1,8 @@
-import { SelfHostedCheckPayload } from '../common/index.js';
+import type { SelfHostedCheckPayload } from '../common/index.js';
 import config from '../config.js';
 import fetch from 'node-fetch';
 import wait from '../utils.js';
-import { LicenceMetadata } from './../types.js';
+import type { LicenceMetadata } from './../types.js';
 import { comparePassword, decrypt } from '../encryption.js';
 import chalkTemplate from 'chalk-template';
 
@@ -103,20 +103,19 @@ async function isLicencedBase(): Promise<LicenceMetadata | null> {
     if (response.ok) {
       const result = (await response.json()) as LicenceMetadata;
       return result;
+    }
+    if (hardcodedLicence) {
+      return hardcodedLicence;
+    }
+    if (response.status === 403) {
+      console.error(
+        'The licence key is not recognised. If you have a valid licence, please contact support@retrospected.com for support.',
+      );
     } else {
-      if (hardcodedLicence) {
-        return hardcodedLicence;
-      }
-      if (response.status === 403) {
-        console.error(
-          'The licence key is not recognised. If you have a valid licence, please contact support@retrospected.com for support.',
-        );
-      } else {
-        console.error(
-          'Could not contact the licence server. If you have a valid licence, please contact support@retrospected.com for support.',
-        );
-        console.log(response.status, response.statusText);
-      }
+      console.error(
+        'Could not contact the licence server. If you have a valid licence, please contact support@retrospected.com for support.',
+      );
+      console.log(response.status, response.statusText);
     }
   } catch (err) {
     if (hardcodedLicence) {

@@ -8,7 +8,10 @@ import {
   Index,
 } from 'typeorm';
 import type { Relation } from 'typeorm';
-import { ColumnDefinition, ColumnDefinitionType } from '../../common/index.js';
+import type {
+  ColumnDefinition,
+  ColumnDefinitionType,
+} from '../../common/index.js';
 import SessionEntity from './Session.js';
 import SessionTemplateEntity from './SessionTemplate.js';
 

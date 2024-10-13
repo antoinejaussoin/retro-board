@@ -1,9 +1,9 @@
-import UserView from '../entities/UserView.js';
+import type UserView from '../entities/UserView.js';
 import AiChatEntity from '../entities/AiChat.js';
 import { transaction } from './transaction.js';
 import AiChatRepository from '../repositories/AiChatRepository.js';
 import { getUser } from './users.js';
-import { CoachMessage, CoachRole } from 'common/types.js';
+import type { CoachMessage, CoachRole } from 'common/types.js';
 import AiChatMessageRepository from '../repositories/AiChatMessageRepository.js';
 import AiChatMessageEntity from '../entities/AiChatMessage.js';
 import { v4 } from 'uuid';

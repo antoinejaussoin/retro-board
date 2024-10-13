@@ -1,8 +1,8 @@
 import { Column } from 'typeorm';
 import {
-  SessionOptions as JsonSessionOptions,
+  type SessionOptions as JsonSessionOptions,
   defaultOptions,
-  SessionOptions,
+  type SessionOptions,
 } from '../../common/index.js';
 
 export default class SessionOptionsEntity {

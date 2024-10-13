@@ -8,7 +8,7 @@ import {
   getRegisterTemplate,
   getSelfHostedWelcomeEmailTemplate,
 } from './template-loader.js';
-import { EmailSender } from './types.js';
+import type { EmailSender } from './types.js';
 
 function getSender(): EmailSender | null {
   if (config.SENDGRID_API_KEY) {
@@ -16,7 +16,9 @@ function getSender(): EmailSender | null {
       chalk`📨  {red SendGrid} is going to be used for {yellow emails}`,
     );
     return sendGridSender;
-  } else if (config.MAIL_SMTP_HOST) {
+  }
+
+  if (config.MAIL_SMTP_HOST) {
     console.log(chalk`📨  {red SMTP} is going to be used for {yellow emails}`);
     return smtpSender;
   }

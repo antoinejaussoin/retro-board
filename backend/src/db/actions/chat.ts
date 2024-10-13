@@ -1,4 +1,4 @@
-import { Message } from '../../common/index.js';
+import type { Message } from '../../common/index.js';
 import MessageRepository from '../repositories/MessageRepository.js';
 import { transaction } from './transaction.js';
 

@@ -1989,14 +1989,13 @@ export default function words(options?: Options): string[] {
   function word() {
     if (options && options.maxLength !== undefined && options.maxLength > 1) {
       return generateWordWithMaxLength();
-    } else {
-      return generateRandomWord();
     }
+    return generateRandomWord();
   }
 
   function generateWordWithMaxLength() {
     let rightSize = false;
-    let wordUsed;
+    let wordUsed = '';
     while (!rightSize) {
       wordUsed = generateRandomWord();
       if (
@@ -2019,11 +2018,12 @@ export default function words(options?: Options): string[] {
 
   // No arguments = generate one word
   if (typeof options === 'undefined') {
-    return [word()!];
+    return [word() as string];
   }
 
   // Just a number = return that many words
   if (typeof options === 'number') {
+    // biome-ignore lint/style/noParameterAssign: Temporary
     options = { exactly: options };
   }
 
@@ -2048,16 +2048,17 @@ export default function words(options?: Options): string[] {
     options.separator = ' ';
   }
 
-  const total = options.min! + randInt(options.max! + 1 - options.min!);
+  const total =
+    (options.min || 0) + randInt((options.max || 0) + 1 - (options.min || 0));
   const results: string[] | string = [];
   let token = '';
   let relativeIndex = 0;
 
   for (let i = 0; i < total * options.wordsPerString; i++) {
     if (relativeIndex === options.wordsPerString - 1) {
-      token += options.formatter(word()!, relativeIndex);
+      token += options.formatter(word(), relativeIndex);
     } else {
-      token += options.formatter(word()!, relativeIndex) + options.separator;
+      token += options.formatter(word(), relativeIndex) + options.separator;
     }
     relativeIndex++;
     if ((i + 1) % options.wordsPerString === 0) {

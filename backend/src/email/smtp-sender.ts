@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import config from '../config.js';
-import { EmailSender } from './types.js';
+import type { EmailSender } from './types.js';
 
 const transporter = nodemailer.createTransport({
   host: config.MAIL_SMTP_HOST,
@@ -17,11 +17,11 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const smtpSender: EmailSender = async function (
+export const smtpSender: EmailSender = async (
   to: string,
   subject: string,
   body: string,
-): Promise<boolean> {
+): Promise<boolean> => {
   try {
     const response = await transporter.sendMail({
       from: {

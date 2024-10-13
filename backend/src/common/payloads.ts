@@ -1,4 +1,4 @@
-import {
+import type {
   Plan,
   Currency,
   StripeLocales,

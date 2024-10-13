@@ -1,4 +1,4 @@
-import { OktaProfile as BaseOktaProfile } from 'passport-okta-oauth20';
+import type { OktaProfile as BaseOktaProfile } from 'passport-okta-oauth20';
 
 export interface BaseProfile {
   id: string;

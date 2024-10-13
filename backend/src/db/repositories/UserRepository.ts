@@ -1,5 +1,5 @@
 import { UserEntity } from '../entities/index.js';
-import { FullUser, User as JsonUser } from '../../common/index.js';
+import type { FullUser, User as JsonUser } from '../../common/index.js';
 import { addDays } from 'date-fns';
 import { getBaseRepository, saveAndReload } from './BaseRepository.js';
 

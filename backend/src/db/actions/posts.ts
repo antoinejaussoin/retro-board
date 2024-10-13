@@ -1,5 +1,5 @@
-import { DeepPartial } from 'typeorm';
-import { Post, PostGroup, Vote } from '../../common/index.js';
+import type { DeepPartial } from 'typeorm';
+import type { Post, PostGroup, Vote } from '../../common/index.js';
 import {
   PostRepository,
   PostGroupRepository,
@@ -150,17 +150,12 @@ export async function deletePostGroup(
         where: { id: sessionId },
         relations: ['visitors'],
       });
-      if (
-        session &&
-        session.visitors &&
-        session.visitors.find((v) => v.id === userId)
-      ) {
+      if (session?.visitors?.find((v) => v.id === userId)) {
         const result = await postGroupRepository.delete({ id: groupId });
         return !!result.affected;
-      } else {
-        console.error('The user is not a visitor, cannot delete group');
-        return false;
       }
+      console.error('The user is not a visitor, cannot delete group');
+      return false;
     } catch {
       return false;
     }

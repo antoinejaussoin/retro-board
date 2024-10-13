@@ -1,4 +1,4 @@
-import { Vote, VoteExtract, VoteType } from '../../common/index.js';
+import type { Vote, VoteExtract, VoteType } from '../../common/index.js';
 import { find } from 'lodash-es';
 import { v4 } from 'uuid';
 import {
@@ -20,7 +20,7 @@ export async function cancelVotes(
     const session = await sessionRepository.findOne({
       where: { id: sessionId },
     });
-    if (session && session.options.allowCancelVote) {
+    if (session?.options.allowCancelVote) {
       await voteRepository.delete({
         user: { id: userId },
         post: { id: postId },

@@ -9,7 +9,7 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { TemplateColumnDefinitionEntity } from './ColumnDefinition.js';
-import {
+import type {
   SessionOptions as JsonSessionOptions,
   SessionTemplate,
 } from '../../common/index.js';

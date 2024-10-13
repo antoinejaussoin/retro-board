@@ -1,4 +1,4 @@
-import { UserView } from '../entities/index.js';
+import type { UserView } from '../entities/index.js';
 import { getUserView } from './users.js';
 import { transaction } from './transaction.js';
 import {
@@ -9,7 +9,7 @@ import {
 } from '../repositories/index.js';
 import { deleteAccount } from './delete.js';
 import { getUserViewFromRequest } from '../../utils.js';
-import { Request } from 'express';
+import type { Request } from 'express';
 import AiChatRepository from '../repositories/AiChatRepository.js';
 
 export async function mergeAnonymous(req: Request, newUserIdentityId: string) {

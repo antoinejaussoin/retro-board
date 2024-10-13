@@ -1,4 +1,4 @@
-import { UserIds } from './utils.js';
+import type { UserIds } from './utils.js';
 
 declare module 'express-serve-static-core' {
   interface Request {

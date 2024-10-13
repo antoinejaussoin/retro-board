@@ -1,5 +1,5 @@
-import fs from 'fs/promises';
-import path from 'path';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import h from 'handlebars';
 import { getDirname } from './../path-utils.js';
 

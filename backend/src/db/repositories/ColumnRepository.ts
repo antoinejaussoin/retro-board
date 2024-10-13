@@ -1,5 +1,5 @@
 import { ColumnDefinitionEntity } from '../entities/index.js';
-import { ColumnDefinition as JsonColumnDefinition } from '../../common/index.js';
+import type { ColumnDefinition as JsonColumnDefinition } from '../../common/index.js';
 import { v4 } from 'uuid';
 import { getBaseRepository } from './BaseRepository.js';
 

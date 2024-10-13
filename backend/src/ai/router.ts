@@ -1,7 +1,7 @@
-import express, { Router } from 'express';
+import express, { type Router } from 'express';
 import { dialog } from './index.js';
 import { getUserViewFromRequest } from '../utils.js';
-import { AiChatPayload } from '../common/payloads.js';
+import type { AiChatPayload } from '../common/payloads.js';
 import { getAllowance } from '../db/actions/ai.js';
 
 export default function aiRouter(): Router {
@@ -22,11 +22,10 @@ export default function aiRouter(): Router {
       const response = await dialog(payload.id, user, payload.messages);
 
       return res.status(200).send(response);
-    } else {
-      return res
-        .status(402)
-        .send(`You have reached your monthly allowance of messages`);
     }
+    return res
+      .status(402)
+      .send('You have reached your monthly allowance of messages');
   });
 
   return router;

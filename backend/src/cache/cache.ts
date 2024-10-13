@@ -1,5 +1,5 @@
 import { addMilliseconds } from 'date-fns';
-import redis from 'redis';
+import type redis from 'redis';
 
 interface CacheEntry<T> {
   data: T;

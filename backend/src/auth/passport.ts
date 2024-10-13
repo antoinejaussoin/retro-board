@@ -1,5 +1,5 @@
 import passport from 'passport';
-import { Strategy as LocalStrategy, IVerifyOptions } from 'passport-local';
+import { Strategy as LocalStrategy, type IVerifyOptions } from 'passport-local';
 import { Strategy as TwitterStrategy } from 'passport-twitter';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as GithubStrategy } from 'passport-github2';
@@ -17,11 +17,11 @@ import {
   SLACK_CONFIG,
   OKTA_CONFIG,
 } from './config.js';
-import { AccountType } from '../common/index.js';
+import type { AccountType } from '../common/index.js';
 import chalk from 'chalk-template';
 import loginUser from './logins/password-user.js';
 import loginAnonymous from './logins/anonymous-user.js';
-import {
+import type {
   BaseProfile,
   TwitterProfile,
   GoogleProfile,
@@ -30,10 +30,10 @@ import {
   SlackProfile,
   OktaProfile,
 } from './types.js';
-import { registerUser, UserRegistration } from '../db/actions/users.js';
-import { serialiseIds, UserIds, deserialiseIds } from '../utils.js';
+import { registerUser, type UserRegistration } from '../db/actions/users.js';
+import { serialiseIds, type UserIds, deserialiseIds } from '../utils.js';
 import config from '../config.js';
-import { Request } from 'express';
+import type { Request } from 'express';
 import { mergeAnonymous } from '../db/actions/merge.js';
 
 export default () => {
@@ -76,7 +76,7 @@ export default () => {
           user = buildFromOktaProfile(profile as OktaProfile);
           break;
         default:
-          throw new Error('Unknown provider: ' + type);
+          throw new Error(`Unknown provider: ${type}`);
       }
 
       const callback = cb as unknown as (
@@ -123,8 +123,7 @@ export default () => {
       profile.displayName ||
       profile.username ||
       (profile.emails.length ? profile.emails[0].value : '');
-    const email =
-      profile.emails && profile.emails.length ? profile.emails[0] : null;
+    const email = profile.emails?.length ? profile.emails[0] : null;
 
     if (!email) {
       return null;

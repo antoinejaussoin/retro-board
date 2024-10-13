@@ -1,5 +1,5 @@
-import { InternalProduct } from './types.js';
-import { Plan } from '../common/index.js';
+import type { InternalProduct } from './types.js';
+import type { Plan } from '../common/index.js';
 import config from '../config.js';
 
 export const teamPlan: InternalProduct = {
@@ -46,5 +46,5 @@ export const selfHostedPlan: InternalProduct = {
 export const plans: InternalProduct[] = [teamPlan, companyPlan, selfHostedPlan];
 
 export function getProduct(plan: Plan): InternalProduct {
-  return plans.find((p) => p.plan === plan)!;
+  return plans.find((p) => p.plan === plan) as InternalProduct;
 }

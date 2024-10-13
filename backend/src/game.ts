@@ -170,9 +170,11 @@ export default (io: Server) => {
         .map((user) => ({ ...user, online: true }));
       const onlineParticipantsIds = onlineParticipants.map((p) => p.id);
 
-      const offlineParticipants: Participant[] = session
-        .visitors!.filter((op) => !onlineParticipantsIds.includes(op.id))
-        .map((op) => ({ ...op.toJson(), online: false }));
+      const offlineParticipants: Participant[] = session.visitors
+        ? session.visitors
+            .filter((op) => !onlineParticipantsIds.includes(op.id))
+            .map((op) => ({ ...op.toJson(), online: false }))
+        : [];
 
       sendToSelf<Participant[]>(socket, RECEIVE_CLIENT_LIST, [
         ...onlineParticipants,
