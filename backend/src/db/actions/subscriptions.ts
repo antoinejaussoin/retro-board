@@ -43,9 +43,8 @@ export async function cancelSubscription(
       SubscriptionRepository
     );
     try {
-      const existingSubscription = await subscriptionRepository.cancel(
-        stripeSubscriptionId
-      );
+      const existingSubscription =
+        await subscriptionRepository.cancel(stripeSubscriptionId);
       return existingSubscription;
     } catch (error) {
       console.error(error);
