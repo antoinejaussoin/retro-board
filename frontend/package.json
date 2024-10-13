@@ -105,5 +105,8 @@
   ],
   "devDependencies": {
     "@biomejs/biome": "1.9.3"
+  },
+  "resolutions": {
+    "vite": "5.4.8"
   }
 }
