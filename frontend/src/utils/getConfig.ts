@@ -58,9 +58,9 @@ function getKey(key: keyof Config): string {
 
 function getConfig(): Config {
   const config: Config = {} as Config;
-  ALL_KEYS.forEach((key) => {
+  for (const key of ALL_KEYS) {
     config[key] = getKey(key);
-  });
+  }
 
   // Special cases
   if (!config.DEFAULT_LANGUAGE || config.DEFAULT_LANGUAGE.length !== 5) {

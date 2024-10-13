@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 let CACHE: SessionMetadata[] = [];
 
-export default function usePreviousSessions(): [SessionMetadata[], Function] {
+export default function usePreviousSessions(): [SessionMetadata[], () => void] {
   const [sessions, setSessions] = useState<SessionMetadata[]>(CACHE);
   const user = useUser();
 

@@ -109,7 +109,7 @@ export async function addUser(
   password: string,
   language: string,
 ) {
-  return registerBase(name, email, password, language, `/api/user`);
+  return registerBase(name, email, password, language, '/api/user');
 }
 
 export async function register(
@@ -118,7 +118,7 @@ export async function register(
   password: string,
   language: string,
 ) {
-  return registerBase(name, email, password, language, `/api/register`);
+  return registerBase(name, email, password, language, '/api/register');
 }
 
 async function registerBase(
@@ -141,13 +141,15 @@ async function registerBase(
       body: JSON.stringify(payload),
     });
     if (response.ok) {
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       const { user, loggedIn } = (await response.json()) as any;
       return {
         user,
         error: null,
         loggedIn,
       };
-    } else if (response.status === 403) {
+    }
+    if (response.status === 403) {
       return {
         user: null,
         error: 'already-exists',
@@ -234,7 +236,7 @@ export async function deleteAccount(
   options: DeleteAccountPayload,
 ): Promise<boolean> {
   try {
-    return await fetchDelete(`/api/me`, options);
+    return await fetchDelete('/api/me', options);
   } catch (err) {
     return false;
   }
@@ -258,8 +260,9 @@ export async function getGiphyUrl(giphyId: string): Promise<string | null> {
       { credentials: 'omit' },
     );
     if (response.ok) {
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       const { data } = (await response.json()) as any;
-      return data && data.images ? data.images.downsized_medium.url : null;
+      return data?.images ? data.images.downsized_medium.url : null;
     }
     return null;
   } catch (error) {

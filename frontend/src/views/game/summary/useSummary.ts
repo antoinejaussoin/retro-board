@@ -1,4 +1,10 @@
-import type { BackendCapabilities, Post, PostGroup, Session, User } from 'common';
+import type {
+  BackendCapabilities,
+  Post,
+  PostGroup,
+  Session,
+  User,
+} from 'common';
 import sortBy from 'lodash/sortBy';
 import flattenDeep from 'lodash/flattenDeep';
 import type { ColumnContent } from '../types';
@@ -90,7 +96,7 @@ function groupToItem(
 
 function buildActions(columns: ColumnContent[]): ActionItem[] {
   return getAllPosts(columns).map((p) => ({
-    action: p.action!,
+    action: p.action as string,
     postContent: p.content,
     postId: p.id,
   }));

@@ -27,13 +27,12 @@ export function decrypt(encrypted: string | null, key: string | null): string {
     if (key) {
       try {
         const bytes = aes.decrypt(encrypted.replace(ENCRYPTED_PREFIX, ''), key);
-        var clear = stringify(bytes);
+        const clear = stringify(bytes);
 
         if (clear.startsWith(CHECK_PREFIX)) {
           return clear.replace(CHECK_PREFIX, '');
-        } else {
-          return CANT_DECRYPT;
         }
+        return CANT_DECRYPT;
       } catch {
         return CANT_DECRYPT;
       }

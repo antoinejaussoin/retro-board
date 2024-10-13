@@ -7,7 +7,7 @@ export default function usePortalUrl(): string | null {
   const user = useUser();
   useEffect(() => {
     async function fetchUrl() {
-      if (user && user.stripeId) {
+      if (user?.stripeId) {
         const url = await getPortalUrl();
         setUrl(url);
       }

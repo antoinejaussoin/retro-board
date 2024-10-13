@@ -364,6 +364,7 @@ function useGame(sessionId: string) {
       if (debug) {
         console.log('Receive Error: ', payload);
       }
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       enqueueSnackbar(t(`PostBoard.error_${payload.type}` as any), {
         variant: 'error',
       });
@@ -428,7 +429,6 @@ function useGame(sessionId: string) {
     sessionId,
     t,
     statusValue,
-    resetSession,
     receivePost,
     receiveChatMessage,
     receiveVote,
@@ -480,7 +480,7 @@ function useGame(sessionId: string) {
   // Callbacks
   const onAddPost = useCallback(
     (columnIndex: number, content: string, rank: string) => {
-      if (send) {
+      if (send && user) {
         const post: Post = {
           content,
           action: null,
@@ -488,7 +488,7 @@ function useGame(sessionId: string) {
           votes: [],
           id: v4(),
           column: columnIndex,
-          user: user!,
+          user,
           group: null,
           rank,
         };
@@ -588,13 +588,13 @@ function useGame(sessionId: string) {
 
   const onCombinePost = useCallback(
     (post1: Post, post2: Post) => {
-      if (send) {
+      if (send && user) {
         const destinationColumn = post2.column;
         const group: PostGroup = {
           id: v4(),
           label: 'My Group',
           column: post2.column,
-          user: user!,
+          user: user,
           posts: [],
           rank: getMiddle(),
         };
@@ -661,11 +661,11 @@ function useGame(sessionId: string) {
 
   const onLike = useCallback(
     (post: Post, like: boolean) => {
-      if (send) {
+      if (send && user) {
         const type: VoteType = like ? 'like' : 'dislike';
         const existingVote = find(
           post.votes,
-          (v) => v.type === type && v.userId === user!.id,
+          (v) => v.type === type && v.userId === user.id,
         );
         if (existingVote && !allowMultipleVotes) {
           return;
@@ -674,8 +674,8 @@ function useGame(sessionId: string) {
         const voteExtract: VoteExtract = {
           id: v4(),
           type,
-          userName: user!.name,
-          userId: user!.id,
+          userName: user.name,
+          userId: user.id,
         };
         const modifiedPost: Post = {
           ...post,
