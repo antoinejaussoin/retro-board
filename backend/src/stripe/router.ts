@@ -28,9 +28,11 @@ import {
 } from '../db/actions/subscriptions.js';
 import { trackPurchase } from './../track/track.js';
 
-const stripe = new Stripe(config.STRIPE_SECRET, {
-  apiVersion: '2024-09-30.acacia',
-} as Stripe.StripeConfig);
+const stripe = config.STRIPE_SECRET
+  ? new Stripe(config.STRIPE_SECRET, {
+      apiVersion: '2024-09-30.acacia',
+    } as Stripe.StripeConfig)
+  : null;
 
 function stripeRouter(): Router {
   const router = express.Router();
@@ -39,6 +41,9 @@ function stripeRouter(): Router {
     identity: UserIdentityEntity,
     locale: StripeLocales,
   ): Promise<string> {
+    if (!stripe) {
+      throw Error('Stripe is not configured');
+    }
     if (identity.accountType === 'anonymous') {
       throw Error('Anonymous account should not be able to pay');
     }
@@ -67,6 +72,9 @@ function stripeRouter(): Router {
   }
 
   router.post('/webhook', async (req, res) => {
+    if (!stripe) {
+      throw Error('Stripe is not configured');
+    }
     const signature = (req.headers['stripe-signature'] as string).trim();
     // Retrieve the event by verifying the signature using the raw body and secret.
     let event: Stripe.Event;
@@ -203,6 +211,9 @@ function stripeRouter(): Router {
   });
 
   router.post('/create-checkout-session', async (req, res) => {
+    if (!stripe) {
+      throw Error('Stripe is not configured');
+    }
     const payload = req.body as CreateSubscriptionPayload;
     const { yearly, ...actualPayload } = payload;
     const identity = await getIdentityFromRequest(req);
@@ -258,6 +269,9 @@ function stripeRouter(): Router {
   });
 
   router.get('/portal', async (req, res) => {
+    if (!stripe) {
+      throw Error('Stripe is not configured');
+    }
     const identity = await getIdentityFromRequest(req);
     if (identity?.user.stripeId) {
       try {
