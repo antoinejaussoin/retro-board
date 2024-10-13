@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 
 export default function useOnHover<T extends HTMLElement>(): [
   boolean,
-  React.RefObject<T>
+  React.RefObject<T>,
 ] {
   const ref = useRef<T>(null);
   const [hover, setHover] = useState(false);

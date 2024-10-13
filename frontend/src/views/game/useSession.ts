@@ -44,10 +44,10 @@ export default function useSession(): UseSession {
           : {
               ...session,
               posts: [...session.posts, post],
-            }
+            },
       );
     },
-    [setSession]
+    [setSession],
   );
 
   const receivePostGroup = useCallback(
@@ -58,10 +58,10 @@ export default function useSession(): UseSession {
           : {
               ...session,
               groups: [...session.groups, postGroup],
-            }
+            },
       );
     },
-    [setSession]
+    [setSession],
   );
 
   const receiveChatMessage = useCallback(
@@ -72,17 +72,17 @@ export default function useSession(): UseSession {
           : {
               ...session,
               messages: [...session.messages, message],
-            }
+            },
       );
     },
-    [setSession]
+    [setSession],
   );
 
   const receiveBoard = useCallback(
     (session: Session) => {
       setSession(session);
     },
-    [setSession]
+    [setSession],
   );
 
   const updatePost = useCallback(
@@ -105,7 +105,7 @@ export default function useSession(): UseSession {
         };
       });
     },
-    [setSession]
+    [setSession],
   );
 
   const updatePostGroup = useCallback(
@@ -128,7 +128,7 @@ export default function useSession(): UseSession {
         };
       });
     },
-    [setSession]
+    [setSession],
   );
 
   const receiveVote = useCallback(
@@ -155,7 +155,7 @@ export default function useSession(): UseSession {
         };
       });
     },
-    [setSession]
+    [setSession],
   );
 
   const cancelVotes = useCallback(
@@ -178,7 +178,7 @@ export default function useSession(): UseSession {
         };
       });
     },
-    [setSession]
+    [setSession],
   );
 
   const deletePost = useCallback(
@@ -189,10 +189,10 @@ export default function useSession(): UseSession {
           : {
               ...session,
               posts: session.posts.filter((p) => p.id !== postId),
-            }
+            },
       );
     },
-    [setSession]
+    [setSession],
   );
 
   const deletePostGroup = useCallback(
@@ -209,12 +209,12 @@ export default function useSession(): UseSession {
                       ...p,
                       group: null,
                     }
-                  : p
+                  : p,
               ),
-            }
+            },
       );
     },
-    [setSession]
+    [setSession],
   );
 
   const editSessionSettings = useCallback(
@@ -229,10 +229,10 @@ export default function useSession(): UseSession {
               columns: checkUndefined(updated.columns, session.columns),
               locked: checkUndefined(updated.locked, session.locked),
               moderator: checkUndefined(updated.moderator, session.moderator),
-            }
+            },
       );
     },
-    [setSession]
+    [setSession],
   );
 
   const lockSession = useCallback(
@@ -243,10 +243,10 @@ export default function useSession(): UseSession {
           : {
               ...session,
               locked,
-            }
+            },
       );
     },
-    [setSession]
+    [setSession],
   );
 
   const userReady = useCallback(
@@ -257,14 +257,16 @@ export default function useSession(): UseSession {
           : {
               ...session,
               ready: (
-                ready === undefined ? !session.ready.includes(userId) : ready
+                ready === undefined
+                  ? !session.ready.includes(userId)
+                  : ready
               )
                 ? [...session.ready, userId]
                 : session.ready.filter((id) => id !== userId),
-            }
+            },
       );
     },
-    [setSession]
+    [setSession],
   );
 
   return {

@@ -8,7 +8,7 @@ function onlineIds(partipants: Participant[]) {
 export function getAddedParticipants(
   userId: string,
   currentList: Participant[],
-  newList: Participant[]
+  newList: Participant[],
 ): Participant[] {
   if (!currentList.length) {
     return [];
@@ -24,7 +24,7 @@ export function getAddedParticipants(
 export function getRemovedParticipants(
   userId: string,
   currentList: Participant[],
-  newList: Participant[]
+  newList: Participant[],
 ): Participant[] {
   const currentIds = onlineIds(currentList);
   const newIds = onlineIds(newList);

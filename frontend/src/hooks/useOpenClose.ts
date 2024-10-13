@@ -5,7 +5,7 @@ type OpenCloseCallback = () => void;
 export default function useOpenClose(
   defaultValue: boolean,
   onOpen?: Function,
-  onClose?: Function
+  onClose?: Function,
 ): [boolean, OpenCloseCallback, OpenCloseCallback] {
   const [isOpen, setIsOpen] = useState(defaultValue);
   const open = useCallback(() => {

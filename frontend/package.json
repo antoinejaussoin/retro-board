@@ -44,9 +44,6 @@
     "date-fns": "2.30.0",
     "emoji-mart": "3.0.1",
     "emotion": "^11.0.0",
-    "eslint": "^8.56.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-config-react-app": "^7.0.1",
     "flag-icons": "7.1.0",
     "i18next": "23.7.13",
     "i18next-browser-languagedetector": "7.2.0",
@@ -85,7 +82,6 @@
     "vite": "5.0.10",
     "vite-plugin-checker": "^0.6.2",
     "vite-plugin-ejs": "1.7.0",
-    "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "4.2.0",
     "vite-tsconfig-paths": "4.2.3",
     "vitest": "1.1.1",
@@ -100,13 +96,13 @@
     "analyze": "source-map-explorer build/static/js/*",
     "watch": "tsc --watch --noEmit"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie <= 9",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "@biomejs/biome": "1.9.3"
+  }
 }

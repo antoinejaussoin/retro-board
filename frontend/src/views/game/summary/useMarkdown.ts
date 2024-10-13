@@ -26,9 +26,9 @@ export default function useMarkdown() {
           session.posts.map((p) => [
             p.user.name,
             ...p.votes.map((v) => v.userName),
-          ])
-        )
-      )
+          ]),
+        ),
+      ),
     ).join(', ');
     const numberOfVotes = session.posts.reduce((prev, cur) => {
       return prev + cur.votes.length;
@@ -79,7 +79,7 @@ function toItem(item: ColumnStatsItem, depth: number) {
   }) ${highlight}${toMultiline(item.content)}${highlight}`;
   if (item.post && item.post.action) {
     content += `\n${' '.repeat((depth + 1) * 2)}* **Action**: *${toMultiline(
-      item.post.action
+      item.post.action,
     )}*`;
   }
   item.children.forEach((child) => {

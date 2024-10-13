@@ -17,7 +17,7 @@ export default function useCrypto(): UseCryptoHook {
       }
       return encrypt(clear, key);
     },
-    [key, storeKey]
+    [key, storeKey],
   );
 
   const decryptCallback = useCallback(
@@ -28,7 +28,7 @@ export default function useCrypto(): UseCryptoHook {
       }
       return decrypted;
     },
-    [key, storeKey]
+    [key, storeKey],
   );
 
   return { encrypt: encryptCallback, decrypt: decryptCallback };

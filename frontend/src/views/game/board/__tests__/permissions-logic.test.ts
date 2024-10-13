@@ -65,7 +65,7 @@ function buildVotes(type: VoteType, users: User[], post: Post): VoteExtract[] {
         type,
         userId: user.id,
         userName: user.name,
-      } as VoteExtract)
+      }) as VoteExtract,
   );
 }
 
@@ -292,7 +292,7 @@ describe('Posts Permission Logic', () => {
         maxUpVotes: 2,
       },
       p1,
-      p2
+      p2,
     );
     const result = postPermissionLogic(p2, s, capabilities, currentUser, false);
     expect(result.canCreateAction).toBe(true);
@@ -313,7 +313,7 @@ describe('Posts Permission Logic', () => {
       },
       p1,
       p2,
-      p3
+      p3,
     );
     const result = postPermissionLogic(p3, s, capabilities, currentUser, false);
     expect(result.canCreateAction).toBe(true);
@@ -332,7 +332,7 @@ describe('Posts Permission Logic', () => {
         ...defaultOptions,
         allowActions: false,
       },
-      p
+      p,
     );
     const result = postPermissionLogic(p, s, capabilities, currentUser, false);
     expect(result.canCreateAction).toBe(false);
@@ -351,7 +351,7 @@ describe('Posts Permission Logic', () => {
         ...defaultOptions,
         allowActions: false,
       },
-      p
+      p,
     );
     const result = postPermissionLogic(p, s, capabilities, currentUser, false);
     expect(result.canCreateAction).toBe(false);
@@ -370,7 +370,7 @@ describe('Posts Permission Logic', () => {
         ...defaultOptions,
         allowSelfVoting: true,
       },
-      p
+      p,
     );
     const result = postPermissionLogic(p, s, capabilities, currentUser, false);
     expect(result.canCreateAction).toBe(true);
@@ -389,7 +389,7 @@ describe('Posts Permission Logic', () => {
         ...defaultOptions,
         allowMultipleVotes: true,
       },
-      p
+      p,
     );
     const result = postPermissionLogic(p, s, capabilities, currentUser, false);
     expect(result.canCreateAction).toBe(true);
@@ -409,7 +409,7 @@ describe('Posts Permission Logic', () => {
         allowMultipleVotes: true,
         maxUpVotes: 3,
       },
-      p
+      p,
     );
     const result = postPermissionLogic(p, s, capabilities, currentUser, false);
     expect(result.canCreateAction).toBe(true);
@@ -429,7 +429,7 @@ describe('Posts Permission Logic', () => {
         allowMultipleVotes: true,
         maxUpVotes: 3,
       },
-      p
+      p,
     );
     const result = postPermissionLogic(p, s, capabilities, currentUser, false);
     expect(result.canCreateAction).toBe(true);
@@ -449,7 +449,7 @@ describe('Posts Permission Logic', () => {
         allowMultipleVotes: true,
         maxDownVotes: 0,
       },
-      p
+      p,
     );
     const result = postPermissionLogic(p, s, capabilities, currentUser, false);
     expect(result.canCreateAction).toBe(true);
@@ -468,7 +468,7 @@ describe('Posts Permission Logic', () => {
         ...defaultOptions,
         allowGiphy: true,
       },
-      p
+      p,
     );
     const result = postPermissionLogic(p, s, capabilities, currentUser, false);
     expect(result.canUseGiphy).toBe(true);
@@ -481,7 +481,7 @@ describe('Posts Permission Logic', () => {
         ...defaultOptions,
         allowGiphy: false,
       },
-      p
+      p,
     );
     const result = postPermissionLogic(p, s, capabilities, currentUser, false);
     expect(result.canUseGiphy).toBe(false);
@@ -494,7 +494,7 @@ describe('Posts Permission Logic', () => {
         ...defaultOptions,
         allowReordering: true,
       },
-      p
+      p,
     );
     const result = postPermissionLogic(p, s, capabilities, currentUser, false);
     expect(result.canReorder).toBe(true);
@@ -507,7 +507,7 @@ describe('Posts Permission Logic', () => {
         ...defaultOptions,
         allowReordering: false,
       },
-      p
+      p,
     );
     const result = postPermissionLogic(p, s, capabilities, currentUser, false);
     expect(result.canReorder).toBe(false);
@@ -520,7 +520,7 @@ describe('Posts Permission Logic', () => {
         ...defaultOptions,
         blurCards: false,
       },
-      p
+      p,
     );
     const result = postPermissionLogic(p, s, capabilities, currentUser, false);
     expect(result.isBlurred).toBe(false);
@@ -533,7 +533,7 @@ describe('Posts Permission Logic', () => {
         ...defaultOptions,
         blurCards: true,
       },
-      p
+      p,
     );
     const result = postPermissionLogic(p, s, capabilities, currentUser, false);
     expect(result.isBlurred).toBe(true);
@@ -546,7 +546,7 @@ describe('Posts Permission Logic', () => {
         ...defaultOptions,
         blurCards: true,
       },
-      p
+      p,
     );
     const result = postPermissionLogic(p, s, capabilities, currentUser, false);
     expect(result.isBlurred).toBe(false);
@@ -559,7 +559,7 @@ describe('Posts Permission Logic', () => {
         ...defaultOptions,
         allowCancelVote: true,
       },
-      p
+      p,
     );
     const result = postPermissionLogic(p, s, capabilities, currentUser, false);
     expect(result.canCancelVote).toBe(true);
@@ -573,7 +573,7 @@ describe('Posts Permission Logic', () => {
         ...defaultOptions,
         allowCancelVote: true,
       },
-      p
+      p,
     );
     const result = postPermissionLogic(p, s, capabilities, currentUser, false);
     expect(result.canCancelVote).toBe(false);
@@ -586,7 +586,7 @@ describe('Posts Permission Logic', () => {
         ...defaultOptions,
         allowCancelVote: false,
       },
-      p
+      p,
     );
     const result = postPermissionLogic(p, s, capabilities, currentUser, false);
     expect(result.canCancelVote).toBe(false);
@@ -598,7 +598,7 @@ describe('Posts Permission Logic', () => {
       {
         ...defaultOptions,
       },
-      p
+      p,
     );
     const result = postPermissionLogic(p, s, capabilities, currentUser, false);
     expect(result.canShowAuthor).toBe(false);
@@ -611,7 +611,7 @@ describe('Posts Permission Logic', () => {
         ...defaultOptions,
         allowAuthorVisible: true,
       },
-      p
+      p,
     );
     const result = postPermissionLogic(p, s, capabilities, currentUser, false);
     expect(result.canShowAuthor).toBe(true);
@@ -624,7 +624,7 @@ describe('Posts Permission Logic', () => {
         ...defaultOptions,
         allowAuthorVisible: true,
       },
-      p
+      p,
     );
     const c: BackendCapabilities = {
       ...capabilities,
@@ -642,14 +642,14 @@ describe('Posts Permission Logic', () => {
         allowReordering: true,
         restrictReorderingToModerator: true,
       },
-      p
+      p,
     );
     const forOwner = postPermissionLogic(
       p,
       s,
       capabilities,
       currentUser,
-      false
+      false,
     );
     expect(forOwner.canReorder).toBe(true);
     const forAnotherUser = postPermissionLogic(
@@ -657,7 +657,7 @@ describe('Posts Permission Logic', () => {
       s,
       capabilities,
       anotherUser,
-      false
+      false,
     );
     expect(forAnotherUser.canReorder).toBe(false);
   });

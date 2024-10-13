@@ -15,7 +15,7 @@ export async function createCheckoutSession(
   currency: Currency,
   locale: StripeLocales,
   domain: string | null,
-  yearly: boolean
+  yearly: boolean,
 ): Promise<SessionIdResponse | null> {
   const payload: CreateSubscriptionPayload = {
     plan,
@@ -33,14 +33,14 @@ export async function createCheckoutSession(
 export async function startTrial(): Promise<SessionIdResponse | null> {
   return await fetchPostGet<void, SessionIdResponse | null>(
     '/api/stripe/start-trial',
-    null
+    null,
   );
 }
 
 export async function isValidDomain(domain: string): Promise<boolean> {
   const result = await fetchGet(
     `/api/stripe/domain/${encodeURIComponent(domain)}`,
-    false
+    false,
   );
   return result;
 }

@@ -20,8 +20,8 @@ export function enumerateVotes(post: Post, type: VoteType): VoteEnumeration[] {
   return toPairs(
     groupBy(
       post.votes.filter((v) => v.type === type),
-      (v) => v.userName
-    )
+      (v) => v.userName,
+    ),
   ).map((pair) => ({
     name: pair[0],
     count: pair[1].length,

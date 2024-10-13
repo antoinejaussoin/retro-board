@@ -27,7 +27,7 @@ export default theme;
 
 function convertToColor(
   value: string,
-  defaultColor: PaletteColorOptions
+  defaultColor: PaletteColorOptions,
 ): PaletteColorOptions {
   const parts = value.split(',');
   if (parts.length !== 14) {

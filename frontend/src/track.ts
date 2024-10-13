@@ -26,7 +26,7 @@ export const initialiseAnalytics = () => {
               },
             }
           : null,
-      ].filter(Boolean) as InitOptions[]
+      ].filter(Boolean) as InitOptions[],
     );
   }
 };
@@ -54,7 +54,7 @@ export const recordManualError = (message: string) => {
     if (sentryErrorCount > 100) {
       console.error(
         'Captured too many Sentry errors. Ignoring this one.',
-        sentryErrorCount
+        sentryErrorCount,
       );
     } else {
       Sentry.withScope((scope) => {

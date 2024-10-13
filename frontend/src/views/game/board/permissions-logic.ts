@@ -13,7 +13,7 @@ export function sessionPermissionLogic(
   session: Session | null,
   user: User | null,
   canDecrypt: boolean,
-  readonly: boolean
+  readonly: boolean,
 ): SessionUserPermissions {
   if (!session || !user) {
     return {
@@ -28,7 +28,7 @@ export function sessionPermissionLogic(
   const isOwner = isModerator || user.id === session.createdBy.id;
 
   const numberOfPosts = session.posts.filter(
-    (p) => p.user.id === user.id
+    (p) => p.user.id === user.id,
   ).length;
 
   const hasReachedMaxPosts =
@@ -73,7 +73,7 @@ export function postPermissionLogic(
   session: Session | null,
   capabilities: BackendCapabilities,
   user: User | null,
-  readonly: boolean
+  readonly: boolean,
 ): PostUserPermissions {
   if (!session) {
     return {
@@ -161,7 +161,7 @@ export function postPermissionLogic(
 export function numberOfVotes(
   type: VoteType,
   userId: string | number,
-  session: Session
+  session: Session,
 ) {
   return session.posts.reduce<number>((prev, cur) => {
     return (

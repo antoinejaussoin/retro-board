@@ -4,7 +4,7 @@ import { fetchGet, fetchPatch, fetchPostGet } from '../../api/fetch';
 export async function getPortalUrl(): Promise<string | null> {
   const response = await fetchGet<{ url: string } | null>(
     `/api/stripe/portal`,
-    null
+    null,
   );
   return response ? response.url : null;
 }
@@ -29,7 +29,7 @@ export async function updateUserName(name: string): Promise<FullUser | null> {
   const updated = await fetchPostGet<ChangeUserNamePayload, FullUser | null>(
     `/api/me/username`,
     null,
-    { name }
+    { name },
   );
   return updated;
 }

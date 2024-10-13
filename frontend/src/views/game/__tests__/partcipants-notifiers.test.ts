@@ -25,7 +25,7 @@ describe('Testing new participants notifier', () => {
     const result = getAddedParticipants(
       'zigby',
       [p('alice'), p('bob')],
-      [p('alice'), p('bob'), p('charlie')]
+      [p('alice'), p('bob'), p('charlie')],
     );
     expect(result).toHaveLength(1);
     expect(result[0].id).toBe('charlie');
@@ -35,7 +35,7 @@ describe('Testing new participants notifier', () => {
     const result = getAddedParticipants(
       'zigby',
       [p('alice'), p('bob')],
-      [p('alice'), p('bob'), p('charlie'), p('daniele')]
+      [p('alice'), p('bob'), p('charlie'), p('daniele')],
     );
     expect(result).toHaveLength(2);
     expect(result[0].id).toBe('charlie');
@@ -46,7 +46,7 @@ describe('Testing new participants notifier', () => {
     const result = getAddedParticipants(
       'zigby',
       [p('alice'), p('bob'), p('charlie', false)],
-      [p('alice'), p('bob'), p('charlie', true)]
+      [p('alice'), p('bob'), p('charlie', true)],
     );
     expect(result).toHaveLength(1);
     expect(result[0].id).toBe('charlie');
@@ -56,7 +56,7 @@ describe('Testing new participants notifier', () => {
     const result = getAddedParticipants(
       'zigby',
       [p('alice'), p('bob')],
-      [p('alice'), p('charlie'), p('daniele')]
+      [p('alice'), p('charlie'), p('daniele')],
     );
     expect(result).toHaveLength(2);
     expect(result[0].id).toBe('charlie');
@@ -67,7 +67,7 @@ describe('Testing new participants notifier', () => {
     const result = getAddedParticipants(
       'zigby',
       [p('alice'), p('bob')],
-      [p('alice')]
+      [p('alice')],
     );
     expect(result).toHaveLength(0);
   });
@@ -76,7 +76,7 @@ describe('Testing new participants notifier', () => {
     const result = getAddedParticipants(
       'zigby',
       [p('alice'), p('bob')],
-      [p('alice')]
+      [p('alice')],
     );
     expect(result).toHaveLength(0);
   });
@@ -85,7 +85,7 @@ describe('Testing new participants notifier', () => {
     const result = getAddedParticipants(
       'zigby',
       [p('alice'), p('bob')],
-      [p('alice'), p('bob'), p('charlie'), p('zigby')]
+      [p('alice'), p('bob'), p('charlie'), p('zigby')],
     );
     expect(result).toHaveLength(1);
     expect(result[0].id).toBe('charlie');
@@ -95,7 +95,7 @@ describe('Testing new participants notifier', () => {
     const result = getAddedParticipants(
       'zigby',
       [],
-      [p('alice'), p('bob'), p('charlie'), p('zigby')]
+      [p('alice'), p('bob'), p('charlie'), p('zigby')],
     );
     expect(result).toHaveLength(0);
   });
@@ -110,7 +110,7 @@ describe('Testing removed participants notifier', () => {
     const result = getRemovedParticipants(
       'zigby',
       [p('alice'), p('bob'), p('charlie')],
-      [p('alice'), p('bob')]
+      [p('alice'), p('bob')],
     );
     expect(result).toHaveLength(1);
     expect(result[0].id).toBe('charlie');
@@ -120,7 +120,7 @@ describe('Testing removed participants notifier', () => {
     const result = getRemovedParticipants(
       'zigby',
       [p('alice'), p('bob'), p('charlie'), p('daniele')],
-      [p('alice'), p('bob')]
+      [p('alice'), p('bob')],
     );
     expect(result).toHaveLength(2);
     expect(result[0].id).toBe('charlie');
@@ -131,7 +131,7 @@ describe('Testing removed participants notifier', () => {
     const result = getRemovedParticipants(
       'zigby',
       [p('alice'), p('bob'), p('charlie', true)],
-      [p('alice'), p('bob'), p('charlie', false)]
+      [p('alice'), p('bob'), p('charlie', false)],
     );
     expect(result).toHaveLength(1);
     expect(result[0].id).toBe('charlie');
@@ -141,7 +141,7 @@ describe('Testing removed participants notifier', () => {
     const result = getRemovedParticipants(
       'zigby',
       [p('alice'), p('charlie'), p('daniele')],
-      [p('alice'), p('bob')]
+      [p('alice'), p('bob')],
     );
     expect(result).toHaveLength(2);
     expect(result[0].id).toBe('charlie');
@@ -152,7 +152,7 @@ describe('Testing removed participants notifier', () => {
     const result = getRemovedParticipants(
       'zigby',
       [p('alice')],
-      [p('alice'), p('bob')]
+      [p('alice'), p('bob')],
     );
     expect(result).toHaveLength(0);
   });
@@ -161,7 +161,7 @@ describe('Testing removed participants notifier', () => {
     const result = getRemovedParticipants(
       'zigby',
       [p('alice'), p('bob'), p('charlie'), p('zigby')],
-      [p('alice'), p('bob')]
+      [p('alice'), p('bob')],
     );
     expect(result).toHaveLength(1);
     expect(result[0].id).toBe('charlie');
@@ -179,7 +179,7 @@ describe('Join names', () => {
 
   it('It should return the names comma separated if more', () => {
     expect(joinNames([p('alice'), p('bob'), p('charlie')])).toBe(
-      'alice, bob, charlie'
+      'alice, bob, charlie',
     );
   });
 });

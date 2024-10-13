@@ -2,7 +2,7 @@ import once from 'lodash/once';
 
 const logError = once(() => {
   console.warn(
-    'Your browser does not allow using local storage. Some settings will not be persisted between sessions.'
+    'Your browser does not allow using local storage. Some settings will not be persisted between sessions.',
   );
 });
 

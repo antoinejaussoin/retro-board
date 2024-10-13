@@ -8,7 +8,7 @@ function p(
   id: string,
   column: number,
   rank: string,
-  group: PostGroup | null = null
+  group: PostGroup | null = null,
 ): Post {
   return {
     id,
@@ -59,7 +59,7 @@ const game: ColumnContent[] = [
         getNext(getMiddle()),
         p('g01a', 0, getMiddle()),
         p('g01b', 0, getNext(getMiddle())),
-        p('g01c', 0, getNext(getNext(getMiddle())))
+        p('g01c', 0, getNext(getNext(getMiddle()))),
       ),
     ],
   },

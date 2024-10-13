@@ -8,47 +8,47 @@ describe('Search Match logic', () => {
 
   it('Should not be a match if the post is blurred', () => {
     expect(searchLogic('One little piggy', 'Bob Dylan', 'little', true)).toBe(
-      false
+      false,
     );
   });
 
   it('Should be a match if the search matches the content', () => {
     expect(searchLogic('One little piggy', 'Bob Dylan', 'little', false)).toBe(
-      true
+      true,
     );
 
     expect(searchLogic('One little piggy', 'Bob Dylan', 'LITTLE', false)).toBe(
-      true
+      true,
     );
   });
 
   it('Should NOT be a match if the search does not matches the content', () => {
     expect(searchLogic('One little piggy', 'Bob Dylan', 'big', false)).toBe(
-      false
+      false,
     );
 
     expect(searchLogic('One little piggy', 'Bob Dylan', 'litle', false)).toBe(
-      false
+      false,
     );
   });
 
   it('Should be a match if the search matches the author', () => {
     expect(searchLogic('One little piggy', 'Bob Dylan', 'dyl', false)).toBe(
-      true
+      true,
     );
 
     expect(searchLogic('One little piggy', 'Bob Dylan', 'bob d', false)).toBe(
-      true
+      true,
     );
   });
 
   it('Should NOT be a match if the search does not matches the author', () => {
     expect(searchLogic('One little piggy', 'Bob Dylan', 'John', false)).toBe(
-      false
+      false,
     );
 
     expect(searchLogic('One little piggy', 'Bob Dylan', 'Lenon', false)).toBe(
-      false
+      false,
     );
   });
 

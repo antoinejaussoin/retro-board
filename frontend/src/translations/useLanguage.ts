@@ -9,7 +9,7 @@ import { useSetUser } from 'state/user/useSetUser';
 
 type UseLanguageResult = [
   language: Language,
-  changeLanguage: (lng: string) => Promise<void>
+  changeLanguage: (lng: string) => Promise<void>,
 ];
 
 export default function useLanguage(): UseLanguageResult {
@@ -35,7 +35,7 @@ export default function useLanguage(): UseLanguageResult {
         }
       }
     },
-    [hasUser, setUser, i18n]
+    [hasUser, setUser, i18n],
   );
 
   return [language, handleChangeLanguage];

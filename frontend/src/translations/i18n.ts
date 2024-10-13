@@ -15,7 +15,7 @@ i18n
         .catch((error) => {
           callback(error, null);
         });
-    })
+    }),
   )
   .use(LanguageDetector)
   .use(initReactI18next)

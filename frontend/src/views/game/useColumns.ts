@@ -27,7 +27,7 @@ export default function useColumns() {
               index,
               posts: sortBy(
                 posts.filter((p) => p.column === index && p.group === null),
-                (p) => p.rank
+                (p) => p.rank,
               ),
               groups: groups
                 .filter((p) => p.column === index)
@@ -35,13 +35,13 @@ export default function useColumns() {
                   ...group,
                   posts: sortBy(
                     posts.filter((p) => !!p.group && p.group.id === group.id),
-                    (p) => p.rank
+                    (p) => p.rank,
                   ),
                 })),
               ...col,
-            } as ColumnContent)
+            }) as ColumnContent,
         ),
-    [posts, groups, cols, t]
+    [posts, groups, cols, t],
   );
   return columns;
 }

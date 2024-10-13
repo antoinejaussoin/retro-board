@@ -12,7 +12,7 @@ import { trackEvent } from '../track';
  * @param giphyId Giphy ID
  */
 export default function useGiphy(
-  giphyId: string | null
+  giphyId: string | null,
 ): [string | null, boolean, () => void] {
   const [url, setUrl] = useState<string | null>(null);
   const original = useOriginal(giphyId);

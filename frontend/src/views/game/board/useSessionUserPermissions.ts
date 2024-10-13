@@ -18,6 +18,6 @@ export default function useSessionUserPermissions(): SessionUserPermissions {
     session,
     user,
     canDecrypt,
-    isDisabled || shouldLockSession
+    isDisabled || shouldLockSession,
   );
 }

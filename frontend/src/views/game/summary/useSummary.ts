@@ -18,7 +18,7 @@ export function useSummary(columns: ColumnContent[]): Stats {
   const results = useMemo(() => {
     return {
       columns: columns.map((c) =>
-        calculateColumn(c, user, session, capabilities)
+        calculateColumn(c, user, session, capabilities),
       ),
       actions: buildActions(columns),
     };
@@ -31,10 +31,10 @@ function calculateColumn(
   column: ColumnContent,
   user: User | null,
   session: Session | null,
-  capabilities: BackendCapabilities
+  capabilities: BackendCapabilities,
 ): ColumnStats {
   const posts: ColumnStatsItem[] = column.posts.map((p) =>
-    postToItem(p, user, session, capabilities)
+    postToItem(p, user, session, capabilities),
   );
   const groups: ColumnStatsItem[] = column.groups
     .filter((g) => !!g.posts.length)
@@ -46,14 +46,14 @@ function postToItem(
   post: Post,
   user: User | null,
   session: Session | null,
-  capabilities: BackendCapabilities
+  capabilities: BackendCapabilities,
 ): ColumnStatsItem {
   const permissions = postPermissionLogic(
     post,
     session,
     capabilities,
     user,
-    false
+    false,
   );
   return {
     id: post.id,
@@ -71,7 +71,7 @@ function groupToItem(
   group: PostGroup,
   user: User | null,
   session: Session | null,
-  capabilities: BackendCapabilities
+  capabilities: BackendCapabilities,
 ): ColumnStatsItem {
   return {
     id: group.id,
@@ -80,7 +80,7 @@ function groupToItem(
     type: 'group',
     children: sortBy(
       group.posts.map((p) => postToItem(p, user, session, capabilities)),
-      sortingFunction
+      sortingFunction,
     ),
     likes: countVotesForGroup(group, 'like'),
     dislikes: countVotesForGroup(group, 'dislike'),
@@ -100,7 +100,9 @@ function getAllPosts(columns: ColumnContent[]): Post[] {
   return [
     ...flattenDeep(columns.map((c) => c.posts.filter((p) => !!p.action))),
     ...flattenDeep(
-      columns.map((c) => c.groups.map((g) => g.posts.filter((p) => !!p.action)))
+      columns.map((c) =>
+        c.groups.map((g) => g.posts.filter((p) => !!p.action)),
+      ),
     ),
   ];
 }

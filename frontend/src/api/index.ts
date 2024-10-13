@@ -32,7 +32,7 @@ export async function createDemoGame(): Promise<Session | null> {
 }
 
 export async function createEncryptedGame(
-  encryptionKey: string
+  encryptionKey: string,
 ): Promise<Session | null> {
   // We are not sending the encryption key to the backend, only an encrypted string
   // so we can check, client-side, that the key used by the user is the correct one.
@@ -40,7 +40,7 @@ export async function createEncryptedGame(
   return await fetchPostGet<{ encryptedCheck: string }, Session | null>(
     '/api/create',
     null,
-    { encryptedCheck }
+    { encryptedCheck },
   );
 }
 
@@ -55,7 +55,7 @@ export async function getProducts(): Promise<Product[] | null> {
 export async function fetchDefaultTemplate(): Promise<SessionTemplate | null> {
   return await fetchGet<SessionTemplate | null>(
     '/api/me/default-template',
-    null
+    null,
   );
 }
 
@@ -68,7 +68,7 @@ export async function logout() {
 }
 
 export async function anonymousLogin(
-  username: string
+  username: string,
 ): Promise<FullUser | null> {
   const anonymousUsername = getAnonymousUsername(username);
   const password = getAnonUserPassword(anonymousUsername);
@@ -85,7 +85,7 @@ export async function anonymousLogin(
 
 export async function accountLogin(
   email: string,
-  password: string
+  password: string,
 ): Promise<FullUser | null> {
   const success = await fetchPost('/api/auth/login', {
     username: email,
@@ -107,7 +107,7 @@ export async function addUser(
   name: string,
   email: string,
   password: string,
-  language: string
+  language: string,
 ) {
   return registerBase(name, email, password, language, `/api/user`);
 }
@@ -116,7 +116,7 @@ export async function register(
   name: string,
   email: string,
   password: string,
-  language: string
+  language: string,
 ) {
   return registerBase(name, email, password, language, `/api/register`);
 }
@@ -126,7 +126,7 @@ async function registerBase(
   email: string,
   password: string,
   language: string,
-  endpoint: string
+  endpoint: string,
 ): Promise<RegisterResponse> {
   const payload: RegisterPayload = {
     username: email,
@@ -167,13 +167,13 @@ async function registerBase(
 
 export async function verifyEmail(
   email: string,
-  code: string
+  code: string,
 ): Promise<FullUser | null> {
   const payload: ValidateEmailPayload = { email, code };
   return await fetchPostGet<ValidateEmailPayload, FullUser | null>(
     '/api/validate',
     null,
-    payload
+    payload,
   );
 }
 
@@ -185,13 +185,13 @@ export async function resetPassword(email: string): Promise<boolean> {
 export async function resetChangePassword(
   email: string,
   password: string,
-  code: string
+  code: string,
 ): Promise<FullUser | null> {
   const payload: ResetChangePasswordPayload = { email, password, code };
   return await fetchPostGet<ResetChangePasswordPayload, FullUser | null>(
     '/api/reset-password',
     null,
-    payload
+    payload,
   );
 }
 
@@ -217,12 +217,12 @@ function getAnonUserPassword(username: string) {
 }
 
 export async function updateLanguage(
-  language: string
+  language: string,
 ): Promise<FullUser | null> {
   return await fetchPostGet<{ language: string }, FullUser | null>(
     '/api/me/language',
     null,
-    { language }
+    { language },
   );
 }
 
@@ -231,7 +231,7 @@ export async function deleteSession(sessionId: string): Promise<boolean> {
 }
 
 export async function deleteAccount(
-  options: DeleteAccountPayload
+  options: DeleteAccountPayload,
 ): Promise<boolean> {
   try {
     return await fetchDelete(`/api/me`, options);
@@ -242,7 +242,7 @@ export async function deleteAccount(
 
 export async function deleteUser(
   user: FullUser,
-  options: DeleteAccountPayload
+  options: DeleteAccountPayload,
 ): Promise<boolean> {
   try {
     return await fetchDelete(`/api/user/${user.identityId}`, options);
@@ -255,7 +255,7 @@ export async function getGiphyUrl(giphyId: string): Promise<string | null> {
   try {
     const response = await fetch(
       `//api.giphy.com/v1/gifs/${giphyId}?api_key=${config.GIPHY_API_KEY}`,
-      { credentials: 'omit' }
+      { credentials: 'omit' },
     );
     if (response.ok) {
       const { data } = (await response.json()) as any;
@@ -271,6 +271,6 @@ export async function getGiphyUrl(giphyId: string): Promise<string | null> {
 export async function fetchBackendCapabilities(): Promise<BackendCapabilities | null> {
   return await fetchGet<BackendCapabilities | null>(
     '/api/admin/self-hosting',
-    null
+    null,
   );
 }

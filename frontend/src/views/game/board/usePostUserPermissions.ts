@@ -14,7 +14,7 @@ export function usePostUserPermissions(post: Post): PostUserPermissions {
 }
 
 export function usePostUserPermissionsNullable(
-  post?: Post
+  post?: Post,
 ): PostUserPermissions | undefined {
   const { session } = useSession();
   const readonly = useShouldLockSession();

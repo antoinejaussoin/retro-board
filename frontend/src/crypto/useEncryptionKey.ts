@@ -5,14 +5,14 @@ import { getStoredEncryptionKey, storeEncryptionKeyLocally } from './crypto';
 
 type UseEncryptionKeyValue = [
   value: string | null,
-  setValue: (key: string) => void
+  setValue: (key: string) => void,
 ];
 
 /**
  * Try to get the encryption key locally
  */
 export function useEncryptionKey(
-  sessionId: string | null = null
+  sessionId: string | null = null,
 ): UseEncryptionKeyValue {
   const { hash } = useLocation();
   const { session } = useSession();
@@ -22,7 +22,7 @@ export function useEncryptionKey(
     (key: string) => {
       storeEncryptionKeyLocally(actualSessionId, key);
     },
-    [actualSessionId]
+    [actualSessionId],
   );
 
   const result = useMemo((): UseEncryptionKeyValue => {

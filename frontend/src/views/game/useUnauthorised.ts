@@ -17,7 +17,7 @@ export default function useUnauthorised(): UseUnauthorised {
     (reason?: AccessErrorType, session?: Session) => {
       setUnauthorisedValue({ type: reason, session });
     },
-    [setUnauthorisedValue]
+    [setUnauthorisedValue],
   );
 
   const resetUnauthorised = useCallback(() => {

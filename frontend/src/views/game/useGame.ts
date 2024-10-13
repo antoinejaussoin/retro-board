@@ -77,7 +77,7 @@ const debug = !isProduction();
 function sendFactory(
   socket: Socket,
   sessionId: string,
-  setAcks?: React.Dispatch<React.SetStateAction<AckItem[]>>
+  setAcks?: React.Dispatch<React.SetStateAction<AckItem[]>>,
 ) {
   return function <T>(action: string, payload?: T) {
     if (socket) {
@@ -106,7 +106,7 @@ function useGame(sessionId: string) {
   const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
   const [status, setStatus] = useState<Status>(
-    user === undefined ? 'disconnected' : 'not-connected'
+    user === undefined ? 'disconnected' : 'not-connected',
   );
   const statusValue = useMutableRead(status);
   const [socket, setSocket] = useState<Socket | null>(null);
@@ -142,7 +142,7 @@ function useGame(sessionId: string) {
   // Send function, built with current socket, user and sessionId
   const send = useMemo(
     () => (socket ? sendFactory(socket, sessionId, setAcks) : null),
-    [socket, sessionId]
+    [socket, sessionId],
   );
 
   const reconnect = useCallback(() => {
@@ -304,7 +304,7 @@ function useGame(sessionId: string) {
           console.log('Delete post group: ', group);
         }
         deletePostGroup(group.groupId);
-      }
+      },
     );
 
     socket.on(
@@ -314,7 +314,7 @@ function useGame(sessionId: string) {
           console.log('Receive vote: ', postId, vote);
         }
         receiveVote(postId, vote);
-      }
+      },
     );
 
     socket.on(
@@ -324,7 +324,7 @@ function useGame(sessionId: string) {
           console.log('Receive cancel votes: ', postId, userId);
         }
         cancelVotes(postId, userId);
-      }
+      },
     );
 
     socket.on(Actions.RECEIVE_EDIT_POST, (post: Post | null) => {
@@ -357,7 +357,7 @@ function useGame(sessionId: string) {
           console.log('Receive unauthorized');
         }
         setUnauthorised(payload.type, payload.session);
-      }
+      },
     );
 
     socket.on(Actions.RECEIVE_ERROR, (payload: WsErrorPayload) => {
@@ -377,7 +377,7 @@ function useGame(sessionId: string) {
     socket.on(Actions.RECEIVE_RATE_LIMITED, () => {
       enqueueSnackbar(
         'You have been rate-limited, as you have sent too many messages in a short period of time.',
-        { variant: 'error' }
+        { variant: 'error' },
       );
     });
 
@@ -393,7 +393,7 @@ function useGame(sessionId: string) {
             variant: 'success',
           });
         }
-      }
+      },
     );
 
     socket.on(
@@ -403,7 +403,7 @@ function useGame(sessionId: string) {
           console.log('Receive timer start: ', duration);
         }
         setTimer(addSeconds(new Date(), duration));
-      }
+      },
     );
 
     socket.on(Actions.RECEIVE_TIMER_STOP, () => {
@@ -420,7 +420,7 @@ function useGame(sessionId: string) {
           console.log('Receive session settings', payload);
         }
         editSessionSettings(payload);
-      }
+      },
     );
   }, [
     socket,
@@ -456,7 +456,7 @@ function useGame(sessionId: string) {
       const added = getAddedParticipants(
         userId,
         previousParticipans,
-        participants
+        participants,
       );
       if (added.length) {
         enqueueSnackbar(t('Clients.joined', { users: joinNames(added) }), {
@@ -466,7 +466,7 @@ function useGame(sessionId: string) {
       const removed = getRemovedParticipants(
         userId,
         previousParticipans,
-        participants
+        participants,
       );
       if (removed.length) {
         enqueueSnackbar(t('Clients.left', { users: joinNames(removed) }), {
@@ -498,7 +498,7 @@ function useGame(sessionId: string) {
         trackAction(Actions.ADD_POST_SUCCESS);
       }
     },
-    [receivePost, send, user]
+    [receivePost, send, user],
   );
 
   const onChatMessage = useCallback(
@@ -516,7 +516,7 @@ function useGame(sessionId: string) {
         trackAction(Actions.CHAT_MESSAGE);
       }
     },
-    [user, receiveChatMessage, send]
+    [user, receiveChatMessage, send],
   );
 
   const onAddGroup = useCallback(
@@ -536,7 +536,7 @@ function useGame(sessionId: string) {
         trackAction(Actions.ADD_POST_GROUP_SUCCESS);
       }
     },
-    [receivePostGroup, send, user]
+    [receivePostGroup, send, user],
   );
 
   const onEditPost = useCallback(
@@ -547,7 +547,7 @@ function useGame(sessionId: string) {
         trackAction(Actions.EDIT_POST);
       }
     },
-    [updatePost, send]
+    [updatePost, send],
   );
 
   const onEditPostGroup = useCallback(
@@ -556,12 +556,12 @@ function useGame(sessionId: string) {
         updatePostGroup(group);
         send<WsGroupUpdatePayload>(
           Actions.EDIT_POST_GROUP,
-          toGroupUpdate(group)
+          toGroupUpdate(group),
         );
         trackAction(Actions.EDIT_POST_GROUP);
       }
     },
-    [updatePostGroup, send]
+    [updatePostGroup, send],
   );
 
   const onMovePost = useCallback(
@@ -569,7 +569,7 @@ function useGame(sessionId: string) {
       post: Post,
       destinationGroup: PostGroup | null,
       destinationColumn: number,
-      newRank: string
+      newRank: string,
     ) => {
       if (send) {
         const updatedPost: Post = {
@@ -583,7 +583,7 @@ function useGame(sessionId: string) {
         trackAction(Actions.MOVE_POST);
       }
     },
-    [updatePost, send]
+    [updatePost, send],
   );
 
   const onCombinePost = useCallback(
@@ -612,7 +612,7 @@ function useGame(sessionId: string) {
         updatePost(updatedPost1);
         send<WsPostUpdatePayload>(
           Actions.EDIT_POST,
-          toPostUpdate(updatedPost1)
+          toPostUpdate(updatedPost1),
         );
 
         const updatedPost2: Post = {
@@ -624,13 +624,13 @@ function useGame(sessionId: string) {
         updatePost(updatedPost2);
         send<WsPostUpdatePayload>(
           Actions.EDIT_POST,
-          toPostUpdate(updatedPost2)
+          toPostUpdate(updatedPost2),
         );
 
         trackAction(Actions.MOVE_POST);
       }
     },
-    [updatePost, user, receivePostGroup, send]
+    [updatePost, user, receivePostGroup, send],
   );
 
   const onDeletePost = useCallback(
@@ -643,7 +643,7 @@ function useGame(sessionId: string) {
         trackAction(Actions.DELETE_POST);
       }
     },
-    [deletePost, send]
+    [deletePost, send],
   );
 
   const onDeletePostGroup = useCallback(
@@ -656,7 +656,7 @@ function useGame(sessionId: string) {
         trackAction(Actions.DELETE_POST_GROUP);
       }
     },
-    [deletePostGroup, send]
+    [deletePostGroup, send],
   );
 
   const onLike = useCallback(
@@ -665,7 +665,7 @@ function useGame(sessionId: string) {
         const type: VoteType = like ? 'like' : 'dislike';
         const existingVote = find(
           post.votes,
-          (v) => v.type === type && v.userId === user!.id
+          (v) => v.type === type && v.userId === user!.id,
         );
         if (existingVote && !allowMultipleVotes) {
           return;
@@ -689,7 +689,7 @@ function useGame(sessionId: string) {
         trackAction(Actions.LIKE_SUCCESS);
       }
     },
-    [user, send, updatePost, allowMultipleVotes]
+    [user, send, updatePost, allowMultipleVotes],
   );
 
   const onCancelVotes = useCallback(
@@ -715,7 +715,7 @@ function useGame(sessionId: string) {
         trackAction(Actions.CANCEL_VOTES_SUCCESS);
       }
     },
-    [user, send, updatePost, allowCancelVotes]
+    [user, send, updatePost, allowCancelVotes],
   );
 
   const onChangeSession = useCallback(
@@ -729,7 +729,7 @@ function useGame(sessionId: string) {
         trackAction(Actions.SAVE_SESSION_SETTINGS);
       }
     },
-    [send, editSessionSettings]
+    [send, editSessionSettings],
   );
 
   const onLockSession = useCallback(
@@ -740,7 +740,7 @@ function useGame(sessionId: string) {
         trackAction(Actions.LOCK_SESSION);
       }
     },
-    [send, lockSession]
+    [send, lockSession],
   );
 
   const onUserReady = useCallback(() => {

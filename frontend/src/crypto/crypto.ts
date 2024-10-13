@@ -51,7 +51,7 @@ function getLocalStorageKey(sessionId: string | null): string | null {
 
 export function storeEncryptionKeyLocally(
   sessionId: string | null,
-  key: string
+  key: string,
 ) {
   const localStorageKey = getLocalStorageKey(sessionId);
   if (localStorageKey) {
@@ -60,7 +60,7 @@ export function storeEncryptionKeyLocally(
 }
 
 export function getStoredEncryptionKey(
-  sessionId: string | null
+  sessionId: string | null,
 ): string | null {
   const localStorageKey = getLocalStorageKey(sessionId);
   if (localStorageKey) {

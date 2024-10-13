@@ -46,7 +46,7 @@ export async function fetchGetText(url: string): Promise<string | null> {
 async function fetchPostPatchDelete<T>(
   verb: 'PATCH' | 'POST' | 'DELETE',
   url: string,
-  payload?: T
+  payload?: T,
 ): Promise<boolean> {
   try {
     const response = await fetch(url, {
@@ -69,14 +69,14 @@ export async function fetchPost<T>(url: string, payload?: T): Promise<boolean> {
 }
 export async function fetchPatch<T>(
   url: string,
-  payload?: T
+  payload?: T,
 ): Promise<boolean> {
   return fetchPostPatchDelete('PATCH', url, payload);
 }
 
 export async function fetchDelete<T>(
   url: string,
-  payload?: T
+  payload?: T,
 ): Promise<boolean> {
   return fetchPostPatchDelete('DELETE', url, payload);
 }
@@ -84,7 +84,7 @@ export async function fetchDelete<T>(
 export async function fetchPostGet<T, R>(
   url: string,
   defaultValue: R,
-  payload?: T
+  payload?: T,
 ): Promise<R> {
   try {
     const response = await fetch(url, {
