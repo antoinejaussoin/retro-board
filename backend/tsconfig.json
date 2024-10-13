@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "./dist",
     "target": "es6",
-    "module": "ESNext",
+    "module": "NodeNext",
     "incremental": true,
     "moduleResolution": "NodeNext",
     "allowJs": false,
@@ -21,7 +21,16 @@
     "inlineSources": true,
     "sourceRoot": "/",
     "lib": ["es2015", "es2017", "dom", "ESNext"],
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "typeRoots": [
+      "./src/@types",
+      "./node_modules/@types",
+    ],
+  },
+  "ts-node": {
+    "experimentalSpecifierResolution": "node",
+    "transpileOnly": true,
+    "esm": true,
   },
   "include": ["src", "./package.json"],
   "exclude": ["src/**/*.test.ts"]

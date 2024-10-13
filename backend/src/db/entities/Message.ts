@@ -6,8 +6,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Index,
-  Relation,
 } from 'typeorm';
+import type { Relation } from 'typeorm';
 import SessionEntity from './Session.js';
 import { Message } from '../../common/index.js';
 import { UserEntity } from './UserIdentity.js';

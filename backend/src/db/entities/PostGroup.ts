@@ -7,8 +7,8 @@ import {
   UpdateDateColumn,
   OneToMany,
   Index,
-  Relation,
 } from 'typeorm';
+import type { Relation } from 'typeorm';
 import { LexoRank } from 'lexorank';
 import SessionEntity from './Session.js';
 import PostEntity from './Post.js';

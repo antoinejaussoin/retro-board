@@ -6,9 +6,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Index,
-  Relation,
 } from 'typeorm';
-import { CoachRole } from '../../common/index.js';
+import type { Relation } from 'typeorm';
+import type { CoachRole } from '../../common/index.js';
 import AiChatEntity from './AiChat.js';
 
 @Entity({ name: 'ai_chat_messages' })

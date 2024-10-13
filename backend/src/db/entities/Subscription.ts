@@ -7,7 +7,7 @@ import {
   ManyToOne,
   Index,
 } from 'typeorm';
-import { Plan } from '../../common/index.js';
+import type { Plan } from '../../common/index.js';
 import { UserEntity } from './UserIdentity.js';
 
 @Entity({ name: 'subscriptions' })

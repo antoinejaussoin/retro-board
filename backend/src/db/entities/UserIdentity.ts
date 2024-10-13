@@ -8,12 +8,8 @@ import {
   ManyToOne,
   ManyToMany,
 } from 'typeorm';
-import {
-  AccountType,
-  Currency,
-  User,
-  UserIdentity,
-} from '../../common/index.js';
+import { Currency, User, UserIdentity } from '../../common/index.js';
+import type { AccountType } from '../../common/types.js';
 
 import { UserIds } from '../../utils.js';
 import SessionEntity from './Session.js';
@@ -122,7 +118,7 @@ export class UserIdentityEntity {
   })
   @Index()
   public user: UserEntity;
-  @Column({ default: 'anonymous' })
+  @Column({ default: 'anonymous', type: 'character varying' })
   public accountType: AccountType;
   @Column({ nullable: true, type: 'character varying' })
   public username: string | null;

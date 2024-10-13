@@ -1,5 +1,10 @@
 import { ViewEntity, ViewColumn } from 'typeorm';
-import { AccountType, FullUser, Currency, Plan } from '../../common/index.js';
+import type {
+  AccountType,
+  FullUser,
+  Currency,
+  Plan,
+} from '../../common/index.js';
 
 @ViewEntity({
   expression: `

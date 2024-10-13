@@ -6,9 +6,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Index,
-  Relation,
 } from 'typeorm';
-import { VoteType, Vote, VoteExtract } from '../../common/index.js';
+import type { Relation } from 'typeorm';
+import type { VoteType, Vote, VoteExtract } from '../../common/index.js';
 import PostEntity from './Post.js';
 import { UserEntity } from './UserIdentity.js';
 

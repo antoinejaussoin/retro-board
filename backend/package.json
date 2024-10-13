@@ -6,8 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "rimraf dist && tsc --build && yarn copy-templates",
-    "start": "nodemon --exec 'yarn fix & ts-node' --esm --files ./src/index.ts",
-    "foo": "nodemon --exec 'node --import ./ts-node.register.mjs ./src/test.ts'",
+    "start": "nodemon --exec 'yarn fix & node' --import ./ts-node.register.mjs ./src/index.ts",
     "create-migration": "scripty",
     "create-empty-migration": "scripty",
     "hardcode-licence": "scripty",
