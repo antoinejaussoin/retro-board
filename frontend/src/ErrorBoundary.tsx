@@ -29,7 +29,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 
   componentDidCatch(error: Error, errorInfo: any) {
     Sentry.withScope((scope) => {
-      scope.setLevel('error' as Sentry.Severity);
+      scope.setLevel('error');
       scope.setExtras(errorInfo);
       Sentry.captureException(error);
     });

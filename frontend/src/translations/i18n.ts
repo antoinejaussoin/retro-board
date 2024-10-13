@@ -1,4 +1,4 @@
-import i18n from 'i18next';
+import i18n, { type CallbackError } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import resourcesToBackend from 'i18next-resources-to-backend';
@@ -13,7 +13,7 @@ i18n
           callback(null, resources);
         })
         .catch((error) => {
-          callback(error, null);
+          callback(error as CallbackError, null);
         });
     }),
   )

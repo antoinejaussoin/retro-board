@@ -42,7 +42,7 @@ export const initialiseSentry = () => {
 
 export const setScope = (fn: (scope: Sentry.Scope | null) => void) => {
   if (hasSentry) {
-    Sentry.configureScope(fn);
+    Sentry.withScope(fn);
   } else {
     fn(null);
   }

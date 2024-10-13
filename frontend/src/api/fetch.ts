@@ -104,7 +104,7 @@ export async function fetchPostGet<T, R>(
 
 function logToSentry(error: unknown) {
   Sentry.withScope((scope) => {
-    scope.setLevel('error' as Sentry.Severity);
+    scope.setLevel('error');
     Sentry.captureException(error);
   });
 }

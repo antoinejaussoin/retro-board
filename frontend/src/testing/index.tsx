@@ -134,6 +134,7 @@ const customRender = (
 
 // re-export everything
 export * from '@testing-library/react';
+export * from '@testing-library/dom';
 
 // override render method
 export { customRender as render };

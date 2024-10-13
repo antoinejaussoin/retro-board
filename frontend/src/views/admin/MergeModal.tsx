@@ -54,7 +54,7 @@ export default function MergeModal({
             {users.map((u) => (
               <ListItem
                 disablePadding
-                selected={main === u}
+                // selected={main === u}
                 key={u.id}
                 onClick={() => {
                   if (u.accountType !== 'anonymous') {

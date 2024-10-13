@@ -27,12 +27,6 @@ import { RateLimiterMemory } from 'rate-limiter-flexible';
 import chalk from 'chalk-template';
 import moment from 'moment';
 import type { Server, Socket } from 'socket.io';
-import {
-  setScope,
-  reportQueryError,
-  throttledManualReport,
-  manualMessage,
-} from './sentry.js';
 import type { SessionEntity, UserView } from './db/entities/index.js';
 import { hasField } from './security/payload-checker.js';
 import {
@@ -212,7 +206,6 @@ export default (io: Server) => {
         details: null,
         type: errorType,
       });
-      manualMessage(errorType);
     } else {
       sendToAll<T>(socket, sessionId, action, data);
     }
@@ -696,43 +689,37 @@ export default (io: Server) => {
             )}}`,
           );
           await rateLimiter.consume(sid);
-          setScope(async (scope) => {
-            if (scope) {
-              scope.setUser({ id: ids?.userId });
-              scope.setExtra('action', action.type);
-              scope.setExtra('session', sid);
-            }
-            if (sid) {
-              const exists = await doesSessionExists(sid);
-              if (exists) {
-                try {
-                  if (action.onlyAuthor) {
-                    if (!ids || !(await wasSessionCreatedBy(sid, ids.userId))) {
-                      sendToSelf<WsErrorPayload>(socket, RECEIVE_ERROR, {
-                        type: 'action_unauthorised',
-                        details: null,
-                      });
-                      return;
-                    }
+
+          if (sid) {
+            const exists = await doesSessionExists(sid);
+            if (exists) {
+              try {
+                if (action.onlyAuthor) {
+                  if (!ids || !(await wasSessionCreatedBy(sid, ids.userId))) {
+                    sendToSelf<WsErrorPayload>(socket, RECEIVE_ERROR, {
+                      type: 'action_unauthorised',
+                      details: null,
+                    });
+                    return;
                   }
-                  await action.handler(ids, sid, data.payload, socket);
-                } catch (err) {
-                  if (err instanceof QueryFailedError) {
-                    reportQueryError(scope, err);
-                  }
-                  sendToSelf<WsErrorPayload>(socket, RECEIVE_ERROR, {
-                    type: 'unknown_error',
-                    details: null,
-                  });
                 }
-              } else {
+                await action.handler(ids, sid, data.payload, socket);
+              } catch (err) {
+                if (err instanceof QueryFailedError) {
+                  console.error(err);
+                }
                 sendToSelf<WsErrorPayload>(socket, RECEIVE_ERROR, {
-                  type: 'cannot_get_session',
+                  type: 'unknown_error',
                   details: null,
                 });
               }
+            } else {
+              sendToSelf<WsErrorPayload>(socket, RECEIVE_ERROR, {
+                type: 'cannot_get_session',
+                details: null,
+              });
             }
-          });
+          }
         } catch (_rejection) {
           // https://stackoverflow.com/questions/22110010/node-socket-io-anything-to-prevent-flooding/23548884
           console.error(
@@ -740,7 +727,6 @@ export default (io: Server) => {
               ids?.identityId
             }} and SID {yellow ${sid}}}`,
           );
-          throttledManualReport('websocket is being throttled', undefined);
           socket.emit(RECEIVE_RATE_LIMITED);
         }
       });

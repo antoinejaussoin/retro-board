@@ -28,6 +28,6 @@
     "transpileOnly": true,
     "esm": true,
   },
-  "include": ["src", "./package.json"],
+  "include": ["src", "./package.json", "instrument.mjs"],
   "exclude": ["src/**/*.test.ts"]
 }

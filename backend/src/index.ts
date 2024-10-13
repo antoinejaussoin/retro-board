@@ -21,14 +21,6 @@ import {
   getUserQuota,
 } from './utils.js';
 import { hashPassword } from './encryption.js';
-import {
-  initSentry,
-  setupSentryErrorHandler,
-  setupSentryRequestHandler,
-  setScope,
-  reportQueryError,
-  throttledManualReport,
-} from './sentry.js';
 import type {
   RegisterPayload,
   ValidateEmailPayload,
@@ -110,8 +102,6 @@ if (config.SELF_HOSTED) {
   );
 }
 
-initSentry();
-
 const app = express();
 app.use(cookieParser(sessionSecret));
 app.use(
@@ -147,12 +137,8 @@ const heavyLoadLimiter = rateLimit({
         req,
       )}} with options {yellow ${options.windowMs}/${options.max}}}`,
     );
-    throttledManualReport('A heavy load request has been rate limited', req);
   },
 });
-
-// Sentry
-setupSentryRequestHandler(app);
 
 // saveUninitialized: true allows us to attach the socket id to the session
 // before we have authenticated the user
@@ -278,50 +264,42 @@ db().then(() => {
   app.post('/api/create', heavyLoadLimiter, async (req, res) => {
     const identity = await getIdentityFromRequest(req);
     const payload: CreateSessionPayload = req.body;
-    setScope(async (scope) => {
-      if (identity) {
-        try {
-          const session = await createSession(
-            identity.user,
-            payload.encryptedCheck,
-          );
-          res.status(200).send(session);
-        } catch (err: unknown) {
-          if (err instanceof QueryFailedError) {
-            reportQueryError(scope, err);
-          }
-          res.status(500).send();
-          throw err;
-        }
-      } else {
-        res
-          .status(401)
-          .send('You must be logged in in order to create a session');
+
+    if (identity) {
+      try {
+        const session = await createSession(
+          identity.user,
+          payload.encryptedCheck,
+        );
+        res.status(200).send(session);
+      } catch (err: unknown) {
+        res.status(500).send();
+        throw err;
       }
-    });
+    } else {
+      res
+        .status(401)
+        .send('You must be logged in in order to create a session');
+    }
   });
 
   // Create a demo session
   app.post('/api/demo', heavyLoadLimiter, async (req, res) => {
     const identity = await getIdentityFromRequest(req);
-    setScope(async (scope) => {
-      if (identity) {
-        try {
-          const session = await createDemoSession(identity.user);
-          res.status(200).send(session);
-        } catch (err: unknown) {
-          if (err instanceof QueryFailedError) {
-            reportQueryError(scope, err);
-          }
-          res.status(500).send();
-          throw err;
-        }
-      } else {
-        res
-          .status(401)
-          .send('You must be logged in in order to create a session');
+
+    if (identity) {
+      try {
+        const session = await createDemoSession(identity.user);
+        res.status(200).send(session);
+      } catch (err: unknown) {
+        res.status(500).send();
+        throw err;
       }
-    });
+    } else {
+      res
+        .status(401)
+        .send('You must be logged in in order to create a session');
+    }
   });
 
   app.post('/api/logout', async (req, res, next) => {
@@ -689,8 +667,6 @@ db().then(() => {
       res.status(500).send('Something went wrong');
     }
   });
-
-  setupSentryErrorHandler(app);
 });
 
 httpServer.listen(port);
