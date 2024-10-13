@@ -3,7 +3,7 @@ import * as socketIo from 'socket.io';
 import { createAdapter } from 'socket.io-redis';
 import { createClient } from 'redis';
 import connectRedis from 'connect-redis';
-import http from 'http';
+import http from 'node:http';
 import chalk from 'chalk-template';
 import session from 'express-session';
 import passport from 'passport';
@@ -29,7 +29,7 @@ import {
   reportQueryError,
   throttledManualReport,
 } from './sentry.js';
-import {
+import type {
   RegisterPayload,
   ValidateEmailPayload,
   ResetPasswordPayload,

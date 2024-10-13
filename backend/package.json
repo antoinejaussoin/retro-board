@@ -47,8 +47,6 @@
     "@types/shortid": "0.0.32",
     "@types/socket.io-redis": "3.0.0",
     "@types/uuid": "10.0.0",
-    "@typescript-eslint/eslint-plugin": "6.1.0",
-    "@typescript-eslint/parser": "6.1.0",
     "bcryptjs": "2.4.3",
     "chalk": "5.3.0",
     "chalk-template": "^1.1.0",
@@ -58,9 +56,6 @@
     "crypto-js": "4.2.0",
     "date-fns": "2.30.0",
     "dotenv": "16.4.5",
-    "eslint": "8.45.0",
-    "eslint-config-prettier": "8.8.0",
-    "eslint-plugin-prettier": "5.0.0",
     "express": "4.18.2",
     "express-mung": "0.5.1",
     "express-rate-limit": "6.8.0",
@@ -85,7 +80,6 @@
     "passport-slack-oauth2": "1.2.0",
     "passport-twitter": "^1.0.4",
     "pg": "8.13.0",
-    "prettier": "3.3.3",
     "rate-limiter-flexible": "2.4.1",
     "redis": "3.1.2",
     "request": "^2.88.2",
@@ -111,5 +105,8 @@
   "nodemonConfig": {
     "watch": "./src/",
     "ext": "ts,tsx,json"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.3"
   }
 }
