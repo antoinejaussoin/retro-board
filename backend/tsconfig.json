@@ -21,11 +21,7 @@
     "inlineSources": true,
     "sourceRoot": "/",
     "lib": ["es2015", "es2017", "dom", "ESNext"],
-    "baseUrl": "src",
-    "typeRoots": [
-      "./src/@types",
-      "./node_modules/@types",
-    ],
+    "baseUrl": "src" 
   },
   "ts-node": {
     "experimentalSpecifierResolution": "node",
