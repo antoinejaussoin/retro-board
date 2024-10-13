@@ -1,8 +1,4 @@
-# This must be run with the Docker context set to the root folder of the repository
-# (the one with the yarn.lock file)
-
-FROM --platform=$BUILDPLATFORM node:lts-alpine as Node
-#FROM  node:16-alpine as Node
+FROM --platform=$BUILDPLATFORM node:lts-alpine AS node
 
 ENV NODE_ENV=production
 
@@ -33,7 +29,7 @@ RUN apt update
 RUN apt -y remove libfreetype6
 RUN apt -y install jq
 
-COPY --from=Node /home/node/app/dist /usr/share/nginx/html
+COPY --from=node /home/node/app/dist /usr/share/nginx/html
 COPY ./docker/nginx.conf.template /etc/nginx/conf.d/default.conf.template
 COPY ./docker/frontend-entrypoint.sh /
 COPY ./docker/wpcc.html /
