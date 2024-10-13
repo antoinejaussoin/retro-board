@@ -6,19 +6,11 @@ import inject from '@rollup/plugin-inject';
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
 import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill';
 import { ViteEjsPlugin } from 'vite-plugin-ejs';
-import checker from 'vite-plugin-checker';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
-    checker({
-      overlay: { initialIsOpen: false },
-      typescript: true,
-      eslint: {
-        lintCommand: 'eslint "./src/**/*.{ts,tsx}"',
-      },
-    }),
     viteTsconfigPaths(),
     svgrPlugin(),
     ViteEjsPlugin((config) => ({
