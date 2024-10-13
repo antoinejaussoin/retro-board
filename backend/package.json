@@ -7,6 +7,7 @@
   "scripts": {
     "build": "rimraf dist && tsc --build && yarn copy-templates",
     "start": "nodemon --exec 'yarn fix & ts-node' --esm --files ./src/index.ts",
+    "foo": "nodemon --exec 'node --import ./ts-node.register.mjs ./src/test.ts'",
     "create-migration": "scripty",
     "create-empty-migration": "scripty",
     "hardcode-licence": "scripty",
@@ -23,7 +24,7 @@
   "dependencies": {
     "@sendgrid/mail": "7.7.0",
     "@sentry/node": "7.60.0",
-    "@types/bcryptjs": "2.4.2",
+    "@types/bcryptjs": "^2.4.6",
     "@types/connect-redis": "0.0.20",
     "@types/cookie-parser": "^1.4.3",
     "@types/crypto-js": "^4.1.1",
