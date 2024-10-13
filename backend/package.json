@@ -94,7 +94,7 @@
     "shortid": "2.2.16",
     "socket.io": "4.8.0",
     "socket.io-redis": "6.1.1",
-    "stripe": "12.14.0",
+    "stripe": "17.2.0",
     "ts-jest": "29.2.5",
     "ts-node": "10.9.2",
     "tsx": "^4.19.1",
