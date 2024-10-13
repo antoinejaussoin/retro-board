@@ -29,12 +29,12 @@ export default function slackRouter(): Router {
       if (session) {
         await sendToSlack(
           msg.response_url,
-          `All done! You can start retrospecting here: ${config.BASE_URL}/game/${session.id}`
+          `All done! You can start retrospecting here: ${config.BASE_URL}/game/${session.id}`,
         );
       } else {
         await sendToSlack(
           msg.response_url,
-          `Unfortunately, we could not identify you on Retrospected. Try logging in with your Slack account at least once on Retrospected, so we can link your Retrospected account with your Slack account.`
+          `Unfortunately, we could not identify you on Retrospected. Try logging in with your Slack account at least once on Retrospected, so we can link your Retrospected account with your Slack account.`,
         );
       }
     } catch (err) {

@@ -15,7 +15,7 @@ export async function getRegisterTemplate(
   email: string,
   name: string,
   code: string,
-  domain: string
+  domain: string,
 ): Promise<string> {
   return getEmailBody({ email, name, code, domain }, 'register.template.html');
 }
@@ -24,11 +24,11 @@ export async function getPasswordResetTemplate(
   email: string,
   name: string,
   code: string,
-  domain: string
+  domain: string,
 ): Promise<string> {
   return getEmailBody(
     { email, name, code, domain },
-    'reset-password.template.html'
+    'reset-password.template.html',
   );
 }
 
@@ -38,10 +38,10 @@ export async function getSelfHostedWelcomeEmailTemplate(
   dbPassword: string,
   pgAdminPassword: string,
   sessionSecret: string,
-  email: string
+  email: string,
 ): Promise<string> {
   return getEmailBody(
     { email, name, key, dbPassword, pgAdminPassword, sessionSecret },
-    'self-hosted.template.html'
+    'self-hosted.template.html',
   );
 }

@@ -24,7 +24,7 @@ export async function getUser(userId: string): Promise<UserEntity | null> {
 }
 
 export async function getIdentity(
-  identityId: string
+  identityId: string,
 ): Promise<UserIdentityEntity | null> {
   return await transaction(async (manager) => {
     return getIdentityInner(manager, identityId);
@@ -43,7 +43,7 @@ export async function getAllNonDeletedUsers(): Promise<UserView[]> {
 
 async function getUserInner(
   manager: EntityManager,
-  userId: string
+  userId: string,
 ): Promise<UserEntity | null> {
   const userRepository = manager.withRepository(UserRepository);
   const user = await userRepository.findOne({
@@ -55,7 +55,7 @@ async function getUserInner(
 
 async function getIdentityInner(
   manager: EntityManager,
-  identityId: string
+  identityId: string,
 ): Promise<UserIdentityEntity | null> {
   const identityRepository = manager.withRepository(UserIdentityRepository);
   const user = await identityRepository.findOne({
@@ -68,7 +68,7 @@ async function getIdentityInner(
 }
 
 export async function getUserView(
-  identityId: string
+  identityId: string,
 ): Promise<UserView | null> {
   return await transaction(async (manager) => {
     return getUserViewInner(manager, identityId);
@@ -77,7 +77,7 @@ export async function getUserView(
 
 export async function getUserViewInner(
   manager: EntityManager,
-  identityId: string
+  identityId: string,
 ): Promise<UserView | null> {
   const userViewRepository = manager.getRepository(UserView);
   const user = await userViewRepository.findOne({ where: { identityId } });
@@ -98,7 +98,7 @@ export async function getRelatedUsers(userId: string): Promise<UserView[]> {
 }
 
 export async function getPasswordIdentity(
-  username: string
+  username: string,
 ): Promise<UserIdentityEntity | null> {
   return await transaction(async (manager) => {
     const identityRepository = manager.withRepository(UserIdentityRepository);
@@ -110,7 +110,7 @@ export async function getPasswordIdentity(
 }
 
 export async function getPasswordIdentityByUserId(
-  userId: string
+  userId: string,
 ): Promise<UserIdentityEntity | null> {
   return await transaction(async (manager) => {
     const identityRepository = manager.withRepository(UserIdentityRepository);
@@ -122,7 +122,7 @@ export async function getPasswordIdentityByUserId(
 }
 
 export async function getUserByUsername(
-  username: string
+  username: string,
 ): Promise<UserEntity | null> {
   return await transaction(async (manager) => {
     const identityRepository = manager.withRepository(UserIdentityRepository);
@@ -132,7 +132,7 @@ export async function getUserByUsername(
 }
 
 export async function getUserByEmail(
-  email: string
+  email: string,
 ): Promise<UserEntity | null> {
   return await transaction(async (manager) => {
     const userRepository = manager.withRepository(UserRepository);
@@ -143,7 +143,7 @@ export async function getUserByEmail(
 
 export async function updateIdentity(
   identityId: string,
-  updatedIdentity: Partial<UserIdentityEntity>
+  updatedIdentity: Partial<UserIdentityEntity>,
 ): Promise<UserView | null> {
   return await transaction(async (manager) => {
     try {
@@ -160,7 +160,7 @@ export async function updateIdentity(
 
 export async function updateUser(
   userId: string,
-  updatedUser: Partial<UserEntity>
+  updatedUser: Partial<UserEntity>,
 ): Promise<boolean> {
   return await transaction(async (manager) => {
     const userRepository = manager.withRepository(UserRepository);
@@ -175,7 +175,7 @@ export async function updateUser(
 
 export async function getIdentityByUsername(
   accountType: AccountType,
-  username: string
+  username: string,
 ): Promise<UserIdentityEntity | null> {
   return await transaction(async (manager) => {
     const repo = manager.withRepository(UserIdentityRepository);
@@ -212,7 +212,7 @@ export type TrackingInfo = {
 
 export async function associateUserWithAdWordsCampaign(
   user: UserView,
-  tracking: Partial<TrackingInfo>
+  tracking: Partial<TrackingInfo>,
 ) {
   return await transaction(async (manager) => {
     const userRepository = manager.withRepository(UserRepository);
@@ -240,7 +240,7 @@ export async function associateUserWithAdWordsCampaign(
 }
 
 export async function registerUser(
-  registration: UserRegistration
+  registration: UserRegistration,
 ): Promise<UserIdentityEntity> {
   return await transaction(async (manager) => {
     const userRepository = manager.withRepository(UserRepository);
@@ -250,7 +250,7 @@ export async function registerUser(
       manager,
       registration.username,
       registration.email,
-      registration.type
+      registration.type,
     );
     const user = identity.user;
 
@@ -279,7 +279,7 @@ export async function registerUser(
 
 export async function registerAnonymousUser(
   username: string,
-  password: string
+  password: string,
 ): Promise<UserIdentityEntity | null> {
   return await transaction(async (manager) => {
     const userRepository = manager.withRepository(UserRepository);
@@ -307,14 +307,14 @@ export async function registerAnonymousUser(
       const dbUser = await updateUserPassword(
         manager,
         existingIdentity.id,
-        hashedPassword
+        hashedPassword,
       );
       return dbUser;
     }
 
     const isPasswordCorrect = await comparePassword(
       password,
-      existingIdentity.password
+      existingIdentity.password,
     );
 
     return isPasswordCorrect ? existingIdentity : null;
@@ -325,7 +325,7 @@ async function getOrCreateIdentity(
   manager: EntityManager,
   username: string,
   email: string,
-  accountType: AccountType
+  accountType: AccountType,
 ): Promise<[identity: UserIdentityEntity, existing: boolean]> {
   const identityRepository = manager.withRepository(UserIdentityRepository);
   const identities = await identityRepository.find({
@@ -352,7 +352,7 @@ async function getOrCreateIdentity(
 
 async function getOrCreateUser(
   manager: EntityManager,
-  email: string
+  email: string,
 ): Promise<[identity: UserEntity, existing: boolean]> {
   const userRepository = manager.withRepository(UserRepository);
   const existingUser = await userRepository.findOne({
@@ -371,7 +371,7 @@ async function getOrCreateUser(
 async function updateUserPassword(
   manager: EntityManager,
   identityId: string,
-  password: string
+  password: string,
 ): Promise<UserIdentityEntity | null> {
   const identityRepo = manager.withRepository(UserIdentityRepository);
   const existingUser = await identityRepo.findOne({

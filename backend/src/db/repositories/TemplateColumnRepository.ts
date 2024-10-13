@@ -6,7 +6,7 @@ import { getBaseRepository } from './BaseRepository.js';
 export default getBaseRepository(TemplateColumnDefinitionEntity).extend({
   async saveFromJson(
     colDef: JsonColumnDefinition,
-    templateId: string
+    templateId: string,
   ): Promise<void> {
     await this.save({
       ...colDef,

@@ -7,11 +7,11 @@ import { canSendEmails } from '../../email/utils.js';
 
 export default async function registerPasswordUser(
   details: RegisterPayload,
-  skipValidation = false
+  skipValidation = false,
 ): Promise<UserIdentityEntity | null> {
   const existingIdentity = await getIdentityByUsername(
     'password',
-    details.username
+    details.username,
   );
   if (existingIdentity) {
     return null;

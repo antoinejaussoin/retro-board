@@ -5,11 +5,11 @@ import { Quota } from './common/index.js';
 import { getNumberOfPosts } from './db/actions/posts.js';
 
 export async function getUserViewFromRequest(
-  request: Request
+  request: Request,
 ): Promise<UserView | null> {
   if (request.user) {
     const userView = await getUserView(
-      (request.user as unknown as UserIds).identityId
+      (request.user as unknown as UserIds).identityId,
     );
     return userView;
   }
@@ -36,7 +36,7 @@ export async function getUserQuota(request: Request): Promise<Quota | null> {
 }
 
 export async function getIdentityFromRequest(
-  request: Request
+  request: Request,
 ): Promise<UserIdentityEntity | null> {
   if (request.user) {
     const ids = request.user;

@@ -32,11 +32,15 @@ export default class PostGroupEntity {
   @ManyToOne(() => UserEntity, { eager: true, cascade: true, nullable: false })
   @Index()
   public user: UserEntity;
-  @OneToMany(() => PostEntity, (post) => post.session, {
-    cascade: true,
-    nullable: false,
-    eager: false,
-  })
+  @OneToMany(
+    () => PostEntity,
+    (post) => post.session,
+    {
+      cascade: true,
+      nullable: false,
+      eager: false,
+    },
+  )
   public posts: PostEntity[] | undefined;
   @CreateDateColumn({ type: 'timestamp with time zone' })
   public created: Date | undefined;
@@ -59,7 +63,7 @@ export default class PostGroupEntity {
     session: Relation<SessionEntity>,
     column: number,
     label: string,
-    user: UserEntity
+    user: UserEntity,
   ) {
     this.id = id;
     this.session = session;

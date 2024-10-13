@@ -1,13 +1,14 @@
-import express, { Router } from 'express';
-import {
+import express from 'express';
+import type { Router } from 'express';
+import type {
   CreateSubscriptionPayload,
   Product,
   StripeLocales,
 } from '../common/index.js';
 import config from '../config.js';
 import Stripe from 'stripe';
-import { UserIdentityEntity } from '../db/entities/index.js';
-import {
+import type { UserIdentityEntity } from '../db/entities/index.js';
+import type {
   StripeEvent,
   CheckoutCompletedPayload,
   SubscriptionDeletedPayload,
@@ -28,7 +29,7 @@ import {
 import { trackPurchase } from './../track/track.js';
 
 const stripe = new Stripe(config.STRIPE_SECRET, {
-  apiVersion: '2022-11-15',
+  apiVersion: '2024-09-30.acacia',
 } as Stripe.StripeConfig);
 
 function stripeRouter(): Router {
@@ -36,7 +37,7 @@ function stripeRouter(): Router {
 
   async function getCustomerId(
     identity: UserIdentityEntity,
-    locale: StripeLocales
+    locale: StripeLocales,
   ): Promise<string> {
     if (identity.accountType === 'anonymous') {
       throw Error('Anonymous account should not be able to pay');
@@ -58,29 +59,29 @@ function stripeRouter(): Router {
         stripeId: customer.id,
       });
       return customer.id;
-    } else if (identity.user.stripeId) {
-      return identity.user.stripeId;
-    } else {
-      throw Error('Unspecified error');
     }
+    if (identity.user.stripeId) {
+      return identity.user.stripeId;
+    }
+    throw Error('Unspecified error');
   }
 
   router.post('/webhook', async (req, res) => {
     const signature = (req.headers['stripe-signature'] as string).trim();
     // Retrieve the event by verifying the signature using the raw body and secret.
-    let event;
+    let event: Stripe.Event;
 
     try {
       event = stripe.webhooks.constructEvent(
         req.buf,
         signature,
-        config.STRIPE_WEBHOOK_SECRET
+        config.STRIPE_WEBHOOK_SECRET,
       );
     } catch (err) {
       console.log(err);
       console.log('⚠️  Webhook signature verification failed.');
       console.log(
-        '⚠️  Check the env file and enter the correct webhook secret.'
+        '⚠️  Check the env file and enter the correct webhook secret.',
       );
       return res.sendStatus(400);
     }
@@ -105,81 +106,88 @@ function stripeRouter(): Router {
         // failed and to retrieve new card details.
         break;
       case 'customer.subscription.deleted':
-        console.log('Deleted Sub', event);
-        const cancelEvent =
-          event as unknown as StripeEvent<SubscriptionDeletedPayload>;
-        if (event.request != null) {
-          console.log('Manual cancellation');
-          // handle a subscription cancelled by your request
-          // from above.
-        } else {
-          console.log('Automatic cancellation');
-          // handle subscription cancelled automatically based
-          // upon your subscription settings.
+        {
+          console.log('Deleted Sub', event);
+          const cancelEvent =
+            event as unknown as StripeEvent<SubscriptionDeletedPayload>;
+          if (event.request != null) {
+            console.log('Manual cancellation');
+            // handle a subscription cancelled by your request
+            // from above.
+          } else {
+            console.log('Automatic cancellation');
+            // handle subscription cancelled automatically based
+            // upon your subscription settings.
+          }
+          await cancelSubscription(cancelEvent.data.object.id);
         }
-        await cancelSubscription(cancelEvent.data.object.id);
+
         break;
       case 'checkout.session.completed':
-        const subEvent =
-          event as unknown as StripeEvent<CheckoutCompletedPayload>;
+        {
+          const subEvent =
+            event as unknown as StripeEvent<CheckoutCompletedPayload>;
 
-        console.log('> checkout session completed');
+          console.log('> checkout session completed');
 
-        const session = await stripe.checkout.sessions.retrieve(
-          subEvent.data.object.id,
-          {
-            expand: ['line_items'],
-          }
-        );
+          const session = await stripe.checkout.sessions.retrieve(
+            subEvent.data.object.id,
+            {
+              expand: ['line_items'],
+            },
+          );
 
-        console.log('Checkout session completed: ', session);
-        console.log('Line item: ', session.line_items?.data[0]);
-        const product = session.line_items?.data[0].price;
-        const customerEmail = session.customer_details?.email || null;
-        const stripeCustomerId = session.customer! as string;
-        const stripeSessionId = session.id;
-        const user = customerEmail ? await getUserByEmail(customerEmail) : null;
+          console.log('Checkout session completed: ', session);
+          console.log('Line item: ', session.line_items?.data[0]);
+          const product = session.line_items?.data[0].price;
+          const customerEmail = session.customer_details?.email || null;
+          const stripeCustomerId = session.customer as string;
+          const stripeSessionId = session.id;
+          const user = customerEmail
+            ? await getUserByEmail(customerEmail)
+            : null;
 
-        const customer = (await stripe.customers.retrieve(
-          stripeCustomerId
-        )) as Stripe.Response<Stripe.Customer>;
-        const customerName = customer.name;
+          const customer = (await stripe.customers.retrieve(
+            stripeCustomerId,
+          )) as Stripe.Response<Stripe.Customer>;
+          const customerName = customer.name;
 
-        if (subEvent.data.object.payment_status === 'paid') {
-          if (session.line_items && session.line_items.data[0]) {
-            const lineItem = session.line_items.data[0];
-            trackPurchase(
-              stripeCustomerId,
-              user ? user.id : stripeCustomerId,
-              session.id,
-              (lineItem.price?.product as string | null) || lineItem.id,
-              lineItem.description,
-              lineItem.quantity || 0,
-              lineItem.currency,
-              lineItem.amount_total / 100
-            );
-          }
+          if (subEvent.data.object.payment_status === 'paid') {
+            if (session.line_items?.data[0]) {
+              const lineItem = session.line_items.data[0];
+              trackPurchase(
+                stripeCustomerId,
+                user ? user.id : stripeCustomerId,
+                session.id,
+                (lineItem.price?.product as string | null) || lineItem.id,
+                lineItem.description,
+                lineItem.quantity || 0,
+                lineItem.currency,
+                lineItem.amount_total / 100,
+              );
+            }
 
-          if (
-            product &&
-            product.product === config.STRIPE_SELF_HOSTED_PRODUCT
-          ) {
-            console.log(' >> Received payment for a Self Hosted product');
-            await registerLicence(
-              customerEmail,
-              customerName,
-              stripeCustomerId,
-              stripeSessionId
-            );
-          } else {
-            console.log(' >> Received payment for a regular subscription');
-            await activateSubscription(
-              subEvent.data.object.client_reference_id,
-              subEvent.data.object.subscription,
-              subEvent.data.object.metadata.plan,
-              subEvent.data.object.metadata.domain,
-              subEvent.data.object.metadata.currency
-            );
+            if (
+              product &&
+              product.product === config.STRIPE_SELF_HOSTED_PRODUCT
+            ) {
+              console.log(' >> Received payment for a Self Hosted product');
+              await registerLicence(
+                customerEmail,
+                customerName,
+                stripeCustomerId,
+                stripeSessionId,
+              );
+            } else {
+              console.log(' >> Received payment for a regular subscription');
+              await activateSubscription(
+                subEvent.data.object.client_reference_id,
+                subEvent.data.object.subscription,
+                subEvent.data.object.metadata.plan,
+                subEvent.data.object.metadata.domain,
+                subEvent.data.object.metadata.currency,
+              );
+            }
           }
         }
 
@@ -238,28 +246,27 @@ function stripeRouter(): Router {
         console.log(
           'Cannot create Stripe checkout session for customer ',
           customerId,
-          err
+          err,
         );
       }
     }
   });
 
   router.get('/products', (_, res) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const products: Product[] = plans.map(({ priceId, productId, ...p }) => p);
     res.status(200).send(products);
   });
 
   router.get('/portal', async (req, res) => {
     const identity = await getIdentityFromRequest(req);
-    if (identity && identity.user.stripeId) {
+    if (identity?.user.stripeId) {
       try {
         const session = await stripe.billingPortal.sessions.create({
           customer: identity.user.stripeId,
           return_url: `${config.BASE_URL}/account`,
         });
         res.status(200).send({ url: session.url });
-      } catch (err) {
+      } catch (_err) {
         console.error('Cannot find Stripe customer ', identity.user.stripeId);
         res.status(500).send();
       }
@@ -274,7 +281,7 @@ function stripeRouter(): Router {
     if (identity) {
       const subscription = await getActiveSubscriptionWhereUserIsAdmin(
         identity.user.id,
-        identity.user.email
+        identity.user.email,
       );
       if (subscription && subscription.plan === 'team') {
         return res.status(200).send(subscription.members);
@@ -289,7 +296,7 @@ function stripeRouter(): Router {
     if (identity) {
       const subscription = await getActiveSubscriptionWhereUserIsAdmin(
         identity.user.id,
-        identity.user.email
+        identity.user.email,
       );
       if (subscription && subscription.plan === 'team') {
         subscription.members = req.body as string[];
@@ -305,7 +312,7 @@ function stripeRouter(): Router {
     const identity = await getIdentityFromRequest(req);
     if (identity) {
       const subscription = await getActiveSubscriptionWhereUserIsOwner(
-        identity.user.id
+        identity.user.id,
       );
       if (subscription && subscription.plan === 'team') {
         subscription.admins = req.body as string[];

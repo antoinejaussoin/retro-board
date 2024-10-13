@@ -14,13 +14,17 @@ import { UserEntity } from './UserIdentity.js';
 export default class AiChatEntity {
   @PrimaryColumn({ primary: true, generated: false, unique: true })
   public id: string;
-  @OneToMany(() => AiChatMessageEntity, (message) => message.chat, {
-    cascade: true,
-    nullable: false,
-    eager: false,
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
+  @OneToMany(
+    () => AiChatMessageEntity,
+    (message) => message.chat,
+    {
+      cascade: true,
+      nullable: false,
+      eager: false,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    },
+  )
   public messages: AiChatMessageEntity[] | undefined;
   @ManyToOne(() => UserEntity, {
     eager: true,

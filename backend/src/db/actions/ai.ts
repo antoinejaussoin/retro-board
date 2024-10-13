@@ -14,7 +14,7 @@ import config from '../../config.js';
 export async function getAiChatSession(
   id: string,
   userView: UserView,
-  systemMessage: CoachMessage
+  systemMessage: CoachMessage,
 ): Promise<AiChatEntity> {
   return await transaction(async (manager) => {
     const repository = manager.withRepository(AiChatRepository);
@@ -34,8 +34,8 @@ export async function getAiChatSession(
           v4(),
           newChat,
           systemMessage.content,
-          systemMessage.role
-        )
+          systemMessage.role,
+        ),
       );
       return newChat;
     }
@@ -47,7 +47,7 @@ export async function getAiChatSession(
 export async function recordAiChatMessage(
   role: CoachRole,
   content: string | undefined,
-  chat: AiChatEntity
+  chat: AiChatEntity,
 ): Promise<void> {
   if (!content) {
     return;

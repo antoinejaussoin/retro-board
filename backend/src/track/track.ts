@@ -13,10 +13,10 @@ export function trackPurchase(
   userId: string,
   transactionId: string,
   productId: string,
-  productName: string,
+  productName: string | undefined,
   quantity: number,
   currency: string,
-  value: number
+  value: number,
 ) {
   const measurementId = config.GA4_MEASUREMENT_ID;
   const secret = config.GA4_SECRET;
@@ -67,7 +67,11 @@ export function trackPurchase(
           currency: currency,
           value: value,
           items: [
-            { item_id: productId, item_name: productName, quantity: quantity },
+            {
+              item_id: productId,
+              item_name: productName || 'unknown product',
+              quantity: quantity,
+            },
           ],
         },
       },
@@ -78,20 +82,16 @@ export function trackPurchase(
 
   request.post(
     {
-      url:
-        'https://www.google-analytics.com/mp/collect?api_secret=' +
-        secret +
-        '&measurement_id=' +
-        measurementId,
+      url: `https://www.google-analytics.com/mp/collect?api_secret=${secret}&measurement_id=${measurementId}`,
       body: JSON.stringify(payload),
     },
-    function (err, res) {
+    (err, res) => {
       console.log('Res: ', res.body);
       if (err) {
         console.error(err);
       } else {
         console.log('GA4 event sent successfully');
       }
-    }
+    },
   );
 }

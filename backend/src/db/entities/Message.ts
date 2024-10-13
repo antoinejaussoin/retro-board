@@ -42,7 +42,7 @@ export default class MessageEntity {
     id: string,
     session: Relation<SessionEntity>,
     content: string,
-    user: UserEntity
+    user: UserEntity,
   ) {
     this.id = id;
     this.session = session;

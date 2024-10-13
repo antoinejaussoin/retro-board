@@ -8,7 +8,7 @@ export default getBaseRepository(MessageEntity).extend({
   async saveFromJson(
     sessionId: string,
     userId: string,
-    message: JsonMessage
+    message: JsonMessage,
   ): Promise<MessageEntity | undefined> {
     const session = await this.manager.findOne(SessionEntity, {
       where: { id: sessionId },

@@ -13,7 +13,7 @@ export async function hashPassword(clearTextPassword: string): Promise<string> {
 
 export async function comparePassword(
   clearTextPassword: string,
-  hashedPassword: string
+  hashedPassword: string,
 ): Promise<boolean> {
   const match = await compare(clearTextPassword, hashedPassword);
   return match;

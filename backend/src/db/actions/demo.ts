@@ -36,7 +36,7 @@ export async function createDemoSession(author: UserEntity): Promise<Session> {
     content: string,
     column: number,
     votes = 0,
-    own = false
+    own = false,
   ) {
     rank = getNext(rank);
     const postData: DeepPartial<Post> = {
@@ -52,7 +52,7 @@ export async function createDemoSession(author: UserEntity): Promise<Session> {
     const post = (await savePost(
       own ? author.id : otherUserId,
       session.id,
-      postData
+      postData,
     ))!;
     for (let i = 0; i < votes; i++) {
       saveVote(otherUserId, '', post.id, {
@@ -71,12 +71,12 @@ export async function createDemoSession(author: UserEntity): Promise<Session> {
     createPost('I wish I discovered this tool sooner 😅', 1, 2, true),
     createPost(
       'Have you tried different settings? Click on "Customise" to see what you can do.',
-      2
+      2,
     ),
     createPost('Try Giphy by clicking on the yellow smiley face!', 2, 1, true),
     createPost(
       'You can also share this URL with somebody else to collaborate on the same board.',
-      2
+      2,
     ),
   ]);
 

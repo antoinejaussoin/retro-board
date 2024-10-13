@@ -1,5 +1,6 @@
-import express, { NextFunction, Response, Request } from 'express';
-import { Server } from 'socket.io';
+import express from 'express';
+import type { NextFunction, Response, Request } from 'express';
+import type { Server } from 'socket.io';
 import {
   getAllNonDeletedUsers,
   getPasswordIdentityByUserId,
@@ -7,7 +8,7 @@ import {
 } from '../db/actions/users.js';
 import config from '../config.js';
 import { isLicenced } from '../security/is-licenced.js';
-import {
+import type {
   AdminChangePasswordPayload,
   AdminStats,
   BackendCapabilities,
@@ -24,7 +25,7 @@ export default function getRouter(io: Server) {
   async function isSelfHostAdmin(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ) {
     const authIdentity = await getIdentityFromRequest(req);
     if (!authIdentity || authIdentity.user.email !== config.SELF_HOSTED_ADMIN) {
@@ -63,7 +64,7 @@ export default function getRouter(io: Server) {
     res.status(200).send(payload);
   });
 
-  router.get('/users', isSelfHostAdmin, async (req, res) => {
+  router.get('/users', isSelfHostAdmin, async (_req, res) => {
     const users = await getAllNonDeletedUsers();
     res.send(users.map((u) => u.toJson()));
   });

@@ -20,7 +20,7 @@ const transporter = nodemailer.createTransport({
 export const smtpSender: EmailSender = async function (
   to: string,
   subject: string,
-  body: string
+  body: string,
 ): Promise<boolean> {
   try {
     const response = await transporter.sendMail({

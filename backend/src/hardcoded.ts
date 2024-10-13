@@ -4,7 +4,7 @@ import chalk from 'chalk-template';
 
 if (!process.argv[2]) {
   console.log(
-    chalk`No company name provided. {red Please provide the company name as the first argument}.`
+    chalk`No company name provided. {red Please provide the company name as the first argument}.`,
   );
   process.exit(1);
 }
@@ -16,10 +16,10 @@ buildHardcodedLicence(key, company);
 
 export async function buildHardcodedLicence(
   licenceKey: string,
-  company: string
+  company: string,
 ): Promise<void> {
   console.log(
-    chalk`Building hardcoded licence for company: {yellow ${company}}`
+    chalk`Building hardcoded licence for company: {yellow ${company}}`,
   );
   console.log(chalk`Licence key to communicate to them: {yellow ${key}}`);
   const hash = await hashPassword(licenceKey);

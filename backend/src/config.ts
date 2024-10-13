@@ -76,7 +76,7 @@ const config: BackendConfig = {
   DISABLE_PASSWORD_LOGIN: defaultsBool('DISABLE_PASSWORD_LOGIN', false),
   DISABLE_PASSWORD_REGISTRATION: defaultsBool(
     'DISABLE_PASSWORD_REGISTRATION',
-    false
+    false,
   ),
   TWITTER_KEY: defaults('TWITTER_KEY', ''),
   TWITTER_SECRET: defaults('TWITTER_SECRET', ''),
@@ -120,7 +120,7 @@ const config: BackendConfig = {
   MAIL_PASSWORD: defaults('MAIL_PASSWORD', ''),
   MAIL_ALLOW_SELF_SIGNED_CERTS: defaultsBool(
     'MAIL_ALLOW_SELF_SIGNED_CERTS',
-    false
+    false,
   ),
   GA4_SECRET: defaults('GA4_SECRET', ''),
   GA4_MEASUREMENT_ID: defaults('GA4_MEASUREMENT_ID', ''),

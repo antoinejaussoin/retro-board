@@ -7,7 +7,7 @@ export default getBaseRepository(SubscriptionEntity).extend({
     stripeSubscriptionId: string,
     owner: UserEntity,
     plan: Plan,
-    domain: string | null
+    domain: string | null,
   ): Promise<SubscriptionEntity> {
     const existingSub = await this.findOne({
       where: { id: stripeSubscriptionId },
@@ -17,7 +17,7 @@ export default getBaseRepository(SubscriptionEntity).extend({
       const newSubscription = new SubscriptionEntity(
         stripeSubscriptionId,
         owner,
-        plan
+        plan,
       );
       newSubscription.domain = domain;
       newSubscription.active = true;

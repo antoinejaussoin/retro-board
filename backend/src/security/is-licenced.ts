@@ -62,7 +62,7 @@ export async function isLicenced(): Promise<LicenceMetadata | null> {
 }
 
 async function checkHardcodedLicence(
-  key: string
+  key: string,
 ): Promise<LicenceMetadata | null> {
   for (const hardcodedLicence of hardcodedLicences) {
     const match = await comparePassword(key, hardcodedLicence.hash);
@@ -98,7 +98,7 @@ async function isLicencedBase(): Promise<LicenceMetadata | null> {
         headers: {
           'Content-Type': 'application/json',
         },
-      }
+      },
     );
     if (response.ok) {
       const result = (await response.json()) as LicenceMetadata;
@@ -109,11 +109,11 @@ async function isLicencedBase(): Promise<LicenceMetadata | null> {
       }
       if (response.status === 403) {
         console.error(
-          'The licence key is not recognised. If you have a valid licence, please contact support@retrospected.com for support.'
+          'The licence key is not recognised. If you have a valid licence, please contact support@retrospected.com for support.',
         );
       } else {
         console.error(
-          'Could not contact the licence server. If you have a valid licence, please contact support@retrospected.com for support.'
+          'Could not contact the licence server. If you have a valid licence, please contact support@retrospected.com for support.',
         );
         console.log(response.status, response.statusText);
       }
@@ -123,7 +123,7 @@ async function isLicencedBase(): Promise<LicenceMetadata | null> {
       return hardcodedLicence;
     }
     console.error(
-      'Could not contact the licence server. If you have a valid licence, please contact support@retrospected.com for support.'
+      'Could not contact the licence server. If you have a valid licence, please contact support@retrospected.com for support.',
     );
     console.log(err);
   }

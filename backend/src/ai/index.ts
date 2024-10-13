@@ -53,7 +53,7 @@ When you are responding to questions:
 export async function dialog(
   chatId: string,
   user: UserView,
-  messages: CoachMessage[]
+  messages: CoachMessage[],
 ): Promise<CoachMessage[]> {
   const chat = await getAiChatSession(chatId, user, systemMessage);
   const api = new OpenAIApi(configure());

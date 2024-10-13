@@ -12,12 +12,12 @@ export async function activateSubscription(
   stripeSubscriptionId: string,
   plan: Plan,
   domain: string | null,
-  currency: Currency
+  currency: Currency,
 ): Promise<SubscriptionEntity> {
   return await transaction(async (manager) => {
     const userRepository = manager.withRepository(UserRepository);
     const subscriptionRepository = manager.withRepository(
-      SubscriptionRepository
+      SubscriptionRepository,
     );
     const user = await userRepository.findOne({ where: { id: userId } });
     if (!user) {
@@ -27,7 +27,7 @@ export async function activateSubscription(
       stripeSubscriptionId,
       user,
       plan,
-      domain
+      domain,
     );
     user.currency = currency;
     await userRepository.save(user);
@@ -36,11 +36,11 @@ export async function activateSubscription(
 }
 
 export async function cancelSubscription(
-  stripeSubscriptionId: string
+  stripeSubscriptionId: string,
 ): Promise<SubscriptionEntity | null> {
   return await transaction(async (manager) => {
     const subscriptionRepository = manager.withRepository(
-      SubscriptionRepository
+      SubscriptionRepository,
     );
     try {
       const existingSubscription =
@@ -54,11 +54,11 @@ export async function cancelSubscription(
 }
 
 export async function getActiveSubscriptionWhereUserIsOwner(
-  userId: string
+  userId: string,
 ): Promise<SubscriptionEntity | null> {
   return await transaction(async (manager) => {
     const subscriptionRepository = manager.withRepository(
-      SubscriptionRepository
+      SubscriptionRepository,
     );
     const subscriptions = await subscriptionRepository.find({
       where: {
@@ -80,11 +80,11 @@ export async function getActiveSubscriptionWhereUserIsOwner(
 
 export async function getActiveSubscriptionWhereUserIsAdmin(
   userId: string,
-  email: string | null
+  email: string | null,
 ): Promise<SubscriptionEntity | null> {
   return await transaction(async (manager) => {
     const subscriptionRepository = manager.withRepository(
-      SubscriptionRepository
+      SubscriptionRepository,
     );
 
     const ids = await subscriptionRepository.query(
@@ -94,7 +94,7 @@ where s.active = true
 and (s.owner_id = $1 or s.admins @> $2)
 order by s.updated desc
     `,
-      [userId, `{${email}}`]
+      [userId, `{${email}}`],
     );
 
     const subscriptions = await subscriptionRepository.find({
@@ -109,11 +109,11 @@ order by s.updated desc
 }
 
 export async function saveSubscription(
-  subscription: SubscriptionEntity
+  subscription: SubscriptionEntity,
 ): Promise<void> {
   return await transaction(async (manager) => {
     const subscriptionRepository = manager.withRepository(
-      SubscriptionRepository
+      SubscriptionRepository,
     );
     await subscriptionRepository.save(subscription);
   });

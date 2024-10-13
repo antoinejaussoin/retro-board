@@ -21,7 +21,7 @@ export function manualReport(message: string, request?: Request) {
     console.log(' ==> reporting to sentry');
     Sentry.captureEvent({
       message,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: Temporary
       request: request as any,
     });
   }
@@ -40,7 +40,7 @@ export function initSentry() {
       release: `backend@${version}`,
     });
     console.log(
-      chalk`{yellow 🐜  Using {red Sentry} for error reporting} {blue ${version}}`
+      chalk`{yellow 🐜  Using {red Sentry} for error reporting} {blue ${version}}`,
     );
   }
 }
@@ -67,7 +67,7 @@ export function setScope(fn: ConfigureScopeFn) {
 
 export function reportQueryError(
   scope: Sentry.Scope | null,
-  err: QueryFailedError
+  err: QueryFailedError,
 ) {
   if (err instanceof QueryFailedError && scope) {
     const queryError = err;
@@ -78,7 +78,7 @@ export function reportQueryError(
       'Query error: ',
       queryError.query,
       queryError.parameters,
-      err
+      err,
     );
   } else {
     console.error('Unknown error: ', err);

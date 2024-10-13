@@ -1,7 +1,7 @@
-import { DeleteAccountPayload } from '../../common/index.js';
-import { EntityManager } from 'typeorm';
+import type { DeleteAccountPayload } from '../../common/index.js';
+import type { EntityManager } from 'typeorm';
 import { v4 } from 'uuid';
-import { UserIdentityEntity, UserView } from '../entities/index.js';
+import type { UserIdentityEntity, UserView } from '../entities/index.js';
 import {
   PostGroupRepository,
   PostRepository,
@@ -13,7 +13,7 @@ import { registerAnonymousUser } from './users.js';
 
 export async function deleteAccount(
   user: UserView,
-  options: DeleteAccountPayload
+  options: DeleteAccountPayload,
 ): Promise<boolean> {
   const anonymousAccount = await createAnonymousAccount();
   if (!anonymousAccount) {
@@ -26,7 +26,7 @@ export async function deleteAccount(
         manager,
         options.deleteSessions,
         user,
-        anonymousAccount
+        anonymousAccount,
       );
       await delAiChat(manager, options.deletePosts, user, anonymousAccount);
       await delVisits(manager, options.deleteSessions, user, anonymousAccount);
@@ -36,7 +36,7 @@ export async function deleteAccount(
         manager,
         options.deleteSessions,
         user,
-        anonymousAccount
+        anonymousAccount,
       );
       await delUserAccount(manager, user);
       return true;
@@ -51,7 +51,7 @@ async function delMessages(
   manager: EntityManager,
   hardDelete: boolean,
   user: UserView,
-  anon: UserIdentityEntity
+  anon: UserIdentityEntity,
 ) {
   if (hardDelete) {
     await manager.query('delete from messages where user_id = $1', [user.id]);
@@ -67,7 +67,7 @@ async function delAiChat(
   manager: EntityManager,
   hardDelete: boolean,
   user: UserView,
-  anon: UserIdentityEntity
+  anon: UserIdentityEntity,
 ) {
   if (hardDelete) {
     await manager.query('delete from ai_chat where created_by_id = $1', [
@@ -76,7 +76,7 @@ async function delAiChat(
   } else {
     await manager.query(
       'update ai_chat set created_by_id = $1 where created_by_id = $2',
-      [anon.user.id, user.id]
+      [anon.user.id, user.id],
     );
   }
 }
@@ -85,14 +85,14 @@ async function delVisits(
   manager: EntityManager,
   hardDelete: boolean,
   user: UserView,
-  anon: UserIdentityEntity
+  anon: UserIdentityEntity,
 ) {
   if (hardDelete) {
     await manager.query('delete from visitors where users_id = $1', [user.id]);
   } else {
     await manager.query(
       'update visitors set users_id = $1 where users_id = $2',
-      [anon.user.id, user.id]
+      [anon.user.id, user.id],
     );
   }
 }
@@ -101,7 +101,7 @@ async function delVotes(
   manager: EntityManager,
   hardDelete: boolean,
   user: UserView,
-  anon: UserIdentityEntity
+  anon: UserIdentityEntity,
 ) {
   const repo = manager.withRepository(VoteRepository);
   if (hardDelete) {
@@ -117,7 +117,7 @@ async function delPosts(
   manager: EntityManager,
   hardDelete: boolean,
   user: UserView,
-  anon: UserIdentityEntity
+  anon: UserIdentityEntity,
 ) {
   const repo = manager.withRepository(PostRepository);
   const groupRepo = manager.withRepository(PostGroupRepository);
@@ -126,13 +126,13 @@ async function delPosts(
       `
 			delete from votes where post_id in (select id from posts where user_id = $1)
 			`,
-      [user.id]
+      [user.id],
     );
     await manager.query(
       `
 			update posts set group_id = null where group_id in (select id from groups where user_id = $1)
 			`,
-      [user.id]
+      [user.id],
     );
     await repo.delete({ user: { id: user.id } });
     await groupRepo.delete({ user: { id: user.id } });
@@ -148,7 +148,7 @@ async function delSessions(
   manager: EntityManager,
   hardDelete: boolean,
   user: UserView,
-  anon: UserIdentityEntity
+  anon: UserIdentityEntity,
 ) {
   const repo = manager.withRepository(SessionRepository);
   if (hardDelete) {
@@ -156,25 +156,25 @@ async function delSessions(
       `
 			delete from votes where post_id in (select id from posts where session_id in (select id from sessions where created_by_id = $1))
 			`,
-      [user.id]
+      [user.id],
     );
     await manager.query(
       `
 			delete from posts where session_id in (select id from sessions where created_by_id = $1)
 			`,
-      [user.id]
+      [user.id],
     );
     await manager.query(
       `
 			delete from groups where session_id in (select id from sessions where created_by_id = $1)
 			`,
-      [user.id]
+      [user.id],
     );
     await manager.query(
       `
 			delete from columns where session_id in (select id from sessions where created_by_id = $1)
 			`,
-      [user.id]
+      [user.id],
     );
     await repo.delete({ createdBy: { id: user.id } });
     return true;
@@ -189,11 +189,11 @@ async function delUserAccount(manager: EntityManager, user: UserView) {
     `
 		update users set default_template_id = null where default_template_id in (select id from templates where created_by_id = $1)
 		`,
-    [user.id]
+    [user.id],
   );
   await manager.query(
     'delete from templates_columns where template_id in (select id from templates where created_by_id = $1)',
-    [user.id]
+    [user.id],
   );
   await manager.query('delete from templates where created_by_id = $1', [
     user.id,

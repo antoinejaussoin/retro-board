@@ -10,7 +10,7 @@ export async function registerLicence(
   email: string | null,
   name: string | null | undefined,
   customerId: string,
-  sessionId: string
+  sessionId: string,
 ): Promise<boolean> {
   return await transaction(async (manager) => {
     const repository = manager.withRepository(LicenceRepository);
@@ -48,7 +48,7 @@ export async function validateLicence(key: string): Promise<boolean> {
 }
 
 export async function fetchLicence(
-  key: string
+  key: string,
 ): Promise<LicenceMetadata | null> {
   return await transaction(async (manager) => {
     const repository = manager.getRepository(LicenceEntity);

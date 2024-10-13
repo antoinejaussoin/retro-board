@@ -6,7 +6,7 @@ export function hasField<T>(field: string, obj: T): boolean {
 
   for (let i = 0; i < properties.length; i++) {
     const property = properties[i];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: Temporary
     const value = (obj as any)[properties[i]];
     if (property === field) {
       return true;

@@ -12,7 +12,7 @@ import { transaction } from './transaction.js';
 export async function cancelVotes(
   userId: string,
   sessionId: string,
-  postId: string
+  postId: string,
 ): Promise<void> {
   return await transaction(async (manager) => {
     const sessionRepository = manager.withRepository(SessionRepository);
@@ -33,7 +33,7 @@ export async function registerVote(
   userId: string,
   sessionId: string,
   postId: string,
-  type: VoteType
+  type: VoteType,
 ): Promise<VoteExtract | null> {
   return await transaction(async (manager) => {
     const sessionRepository = manager.withRepository(SessionRepository);
@@ -50,7 +50,7 @@ export async function registerVote(
     if (post && session && user) {
       const existingVote: Vote | undefined = find(
         post.votes,
-        (v) => v.user.id === user.id && v.type === type
+        (v) => v.user.id === user.id && v.type === type,
       );
 
       if (session.options.allowMultipleVotes || !existingVote) {

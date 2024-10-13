@@ -29,7 +29,7 @@ export default class LicenceEntity {
     email: string | null,
     key: string,
     customerId: string,
-    sessionId: string
+    sessionId: string,
   ) {
     this.id = id;
     this.email = email;

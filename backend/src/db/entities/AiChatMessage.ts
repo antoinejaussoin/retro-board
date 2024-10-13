@@ -35,7 +35,7 @@ export default class AiChatMessageEntity {
     id: string,
     chat: Relation<AiChatEntity>,
     content: string,
-    role: CoachRole
+    role: CoachRole,
   ) {
     this.id = id;
     this.chat = chat;

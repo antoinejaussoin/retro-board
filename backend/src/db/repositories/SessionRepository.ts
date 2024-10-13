@@ -6,7 +6,7 @@ import { getBaseRepository, saveAndReload } from './BaseRepository.js';
 export default getBaseRepository(SessionEntity).extend({
   async updateOptions(
     sessionId: string,
-    options: SessionOptions
+    options: SessionOptions,
   ): Promise<SessionOptions | null> {
     try {
       await this.save({
@@ -27,7 +27,7 @@ export default getBaseRepository(SessionEntity).extend({
   },
   async saveFromJson(
     session: Omit<JsonSession, 'createdBy' | 'moderator'>,
-    authorId: string
+    authorId: string,
   ): Promise<JsonSession> {
     const sessionWithoutPosts = {
       ...session,

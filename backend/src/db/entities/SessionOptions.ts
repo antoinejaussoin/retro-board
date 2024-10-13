@@ -79,7 +79,7 @@ export default class SessionOptionsEntity {
 }
 
 function getDefaultOptions(
-  options: Partial<JsonSessionOptions>
+  options: Partial<JsonSessionOptions>,
 ): JsonSessionOptions {
   return {
     ...defaultOptions,

@@ -52,7 +52,7 @@ export default () => {
       _accessToken: string,
       _refreshToken: string,
       anyProfile: TProfile,
-      cb: TCallback
+      cb: TCallback,
     ) => {
       const profile = anyProfile as unknown as BaseProfile;
       let user: UserRegistration | null;
@@ -81,7 +81,7 @@ export default () => {
 
       const callback = cb as unknown as (
         error: string | null,
-        user: UserIds | null
+        user: UserIds | null,
       ) => void;
 
       if (!user) {
@@ -101,7 +101,7 @@ export default () => {
   }
 
   function buildFromTwitterProfile(
-    profile: TwitterProfile
+    profile: TwitterProfile,
   ): UserRegistration | null {
     const email = profile.emails.length ? profile.emails[0].value : null;
     if (!email) {
@@ -117,7 +117,7 @@ export default () => {
   }
 
   function buildFromGitHubProfile(
-    profile: GitHubProfile
+    profile: GitHubProfile,
   ): UserRegistration | null {
     const displayName =
       profile.displayName ||
@@ -140,7 +140,7 @@ export default () => {
   }
 
   function buildFromGoogleProfile(
-    profile: GoogleProfile
+    profile: GoogleProfile,
   ): UserRegistration | null {
     const email = profile.emails.length ? profile.emails[0].value : null;
     if (!email) {
@@ -156,7 +156,7 @@ export default () => {
   }
 
   function buildFromSlackProfile(
-    profile: SlackProfile
+    profile: SlackProfile,
   ): UserRegistration | null {
     const email = profile.user.email;
 
@@ -172,7 +172,7 @@ export default () => {
   }
 
   function buildFromMicrosoftProfile(
-    profile: MicrosoftProfile
+    profile: MicrosoftProfile,
   ): UserRegistration | null {
     const email = profile.emails[0].value;
     return {
@@ -221,13 +221,13 @@ export default () => {
 
   if (MICROSOFT_CONFIG) {
     passport.use(
-      new MicrosoftStrategy(MICROSOFT_CONFIG, callback('microsoft'))
+      new MicrosoftStrategy(MICROSOFT_CONFIG, callback('microsoft')),
     );
     logSuccess('Microsoft');
   }
 
   if (OKTA_CONFIG) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: Temporary
     passport.use(new OktaStrategy(OKTA_CONFIG, callback('okta') as any));
     logSuccess('Okta');
   }
@@ -241,8 +241,8 @@ export default () => {
         done: (
           error: string | null,
           user?: UserIds,
-          options?: IVerifyOptions
-        ) => void
+          options?: IVerifyOptions,
+        ) => void,
       ) => {
         if (
           username.startsWith('ANONUSER__') &&
@@ -261,7 +261,7 @@ export default () => {
           const identity = await loginAnonymous(actualUsername, password);
           done(
             identity ? null : 'Anonymous account not valid',
-            identity ? identity.toIds() : undefined
+            identity ? identity.toIds() : undefined,
           );
         } else {
           // Regular account login
@@ -274,10 +274,10 @@ export default () => {
           const identity = await loginUser(username, password);
           done(
             !identity ? 'User cannot log in' : null,
-            identity ? identity.toIds() : undefined
+            identity ? identity.toIds() : undefined,
           );
         }
-      }
-    )
+      },
+    ),
   );
 };

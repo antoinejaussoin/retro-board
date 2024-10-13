@@ -31,7 +31,7 @@ export default getBaseRepository(UserEntity).extend({
 		u.id = $1 and
 		u2.email is not null
     `,
-      [userId]
+      [userId],
     );
     return ids.map((i) => i.id);
   },

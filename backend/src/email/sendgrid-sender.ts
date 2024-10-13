@@ -9,7 +9,7 @@ if (config.SENDGRID_API_KEY) {
 export const sendGridSender: EmailSender = async function (
   to: string,
   subject: string,
-  body: string
+  body: string,
 ): Promise<boolean> {
   const msg: MailDataRequired = {
     to,

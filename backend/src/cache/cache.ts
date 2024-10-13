@@ -14,12 +14,12 @@ export interface Cache {
 
 export function createCache(
   getFn: (key: string) => Promise<unknown>,
-  setFn: (key: string, value: unknown) => Promise<void>
+  setFn: (key: string, value: unknown) => Promise<void>,
 ): Cache {
   async function set<T>(
     key: string,
     value: T,
-    duration: number
+    duration: number,
   ): Promise<boolean> {
     const entry: CacheEntry<T> = {
       data: value,
@@ -52,7 +52,7 @@ export function inMemoryCache() {
     (key, value) => {
       _inMemoryCache.set(key, value);
       return Promise.resolve();
-    }
+    },
   );
 }
 
@@ -73,6 +73,6 @@ export function redisCache(client: redis.RedisClient) {
         client.set(key, JSON.stringify(value), () => {
           resolve();
         });
-      })
+      }),
   );
 }

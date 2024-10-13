@@ -7,7 +7,7 @@ export default getBaseRepository(PostGroupEntity).extend({
   async saveFromJson(
     sessionId: string,
     authorId: string,
-    group: Omit<JsonPostGroup, 'createdBy'>
+    group: Omit<JsonPostGroup, 'createdBy'>,
   ): Promise<PostGroupEntity | undefined> {
     const groupWithoutPosts = {
       ...cloneDeep(group),

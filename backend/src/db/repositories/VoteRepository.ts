@@ -6,7 +6,7 @@ export default getBaseRepository(VoteEntity).extend({
   async saveFromJson(
     postId: string,
     userId: string,
-    vote: JsonVote
+    vote: JsonVote,
   ): Promise<void> {
     try {
       await this.save({

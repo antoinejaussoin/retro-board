@@ -13,7 +13,7 @@ export default getBaseRepository(SessionTemplateEntity).extend({
     name: string,
     columns: JsonColumnDefinition[],
     options: JsonSessionOptions,
-    authorId: string
+    authorId: string,
   ): Promise<JsonSessionTemplate> {
     const template = {
       id: v4(),

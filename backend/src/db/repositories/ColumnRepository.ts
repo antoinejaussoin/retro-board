@@ -6,12 +6,12 @@ import { getBaseRepository } from './BaseRepository.js';
 export default getBaseRepository(ColumnDefinitionEntity).extend({
   async saveFromJson(
     colDef: JsonColumnDefinition,
-    sessionId: string
+    sessionId: string,
   ): Promise<void> {
     if (!sessionId) {
       console.error(
         'The session ID should not be null when saving columns',
-        sessionId
+        sessionId,
       );
     }
     const newColumn = {
@@ -24,7 +24,7 @@ export default getBaseRepository(ColumnDefinitionEntity).extend({
 
   async updateColumns(
     sessionId: string,
-    columns: JsonColumnDefinition[]
+    columns: JsonColumnDefinition[],
   ): Promise<JsonColumnDefinition[] | null> {
     try {
       await this.delete({ session: { id: sessionId } });

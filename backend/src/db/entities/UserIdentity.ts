@@ -54,9 +54,13 @@ export class UserEntity {
   @ManyToOne(() => SessionTemplateEntity, { nullable: true, eager: false })
   @Index()
   public defaultTemplate: SessionTemplateEntity | null | undefined;
-  @ManyToMany(() => SessionEntity, (session) => session.visitors, {
-    eager: false,
-  })
+  @ManyToMany(
+    () => SessionEntity,
+    (session) => session.visitors,
+    {
+      eager: false,
+    },
+  )
   public sessions: SessionEntity[] | undefined;
   @Column(() => TrackingEntity)
   public tracking: TrackingEntity;

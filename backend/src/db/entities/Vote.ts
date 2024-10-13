@@ -55,7 +55,7 @@ export default class VoteEntity {
     id: string,
     post: Relation<PostEntity>,
     user: UserEntity,
-    type: VoteType
+    type: VoteType,
   ) {
     this.id = id;
     this.post = post;

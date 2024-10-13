@@ -1,3 +1,4 @@
+// biome-ignore lint/style/noNamespace: Temporary
 declare namespace Express {
   type User = string;
 
@@ -11,7 +12,7 @@ declare namespace Express {
     passport: {
       user: User;
     };
-    destroy: (err: unknown) => void | Response<unknown, number>;
+    destroy: (err: unknown) => unknown | Response<unknown, number>;
   }
 }
 

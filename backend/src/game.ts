@@ -1,5 +1,5 @@
-import {
-  Actions,
+import { Actions } from './common/index.js';
+import type {
   Post,
   PostGroup,
   Participant,
@@ -26,14 +26,14 @@ import {
 import { RateLimiterMemory } from 'rate-limiter-flexible';
 import chalk from 'chalk-template';
 import moment from 'moment';
-import { Server, Socket } from 'socket.io';
+import type { Server, Socket } from 'socket.io';
 import {
   setScope,
   reportQueryError,
   throttledManualReport,
   manualMessage,
 } from './sentry.js';
-import { SessionEntity, UserView } from './db/entities/index.js';
+import type { SessionEntity, UserView } from './db/entities/index.js';
 import { hasField } from './security/payload-checker.js';
 import {
   getSession,
@@ -61,7 +61,8 @@ import {
 } from './db/actions/posts.js';
 import config from './config.js';
 import { cancelVotes, registerVote } from './db/actions/votes.js';
-import { deserialiseIds, UserIds } from './utils.js';
+import { deserialiseIds } from './utils.js';
+import type { UserIds } from './utils.js';
 import { QueryFailedError } from 'typeorm';
 import { saveChatMessage } from './db/actions/chat.js';
 import { startTimer, stopTimer } from './db/actions/timer.js';
@@ -128,10 +129,10 @@ export default (io: Server) => {
     socket: Socket,
     sessionId: string,
     action: string,
-    data: T
+    data: T,
   ) {
     console.log(
-      chalk`${d()}{green  ==> } ${s(action)} {grey ${JSON.stringify(data)}}`
+      chalk`${d()}{green  ==> } ${s(action)} {grey ${JSON.stringify(data)}}`,
     );
     if (hasField('password', data)) {
       console.error('The following object has a password property: ', data);
@@ -141,7 +142,7 @@ export default (io: Server) => {
 
   function sendToSelf<T>(socket: Socket, action: string, data: T) {
     console.log(
-      chalk`${d()}{green  --> } ${s(action)} {grey ${JSON.stringify(data)}}`
+      chalk`${d()}{green  --> } ${s(action)} {grey ${JSON.stringify(data)}}`,
     );
     if (hasField('password', data)) {
       console.error('The following object has a password property: ', data);
@@ -157,14 +158,14 @@ export default (io: Server) => {
       const onlineParticipants: Participant[] = sockets
         .map((socket, i) =>
           users[socket]
-            ? users[socket]!.toJson()
+            ? users[socket].toJson()
             : {
                 id: socket,
                 name: `(Spectator #${i})`,
                 email: null,
                 photo: null,
                 pro: null,
-              }
+              },
         )
         .map((user) => ({ ...user, online: true }));
       const onlineParticipantsIds = onlineParticipants.map((p) => p.id);
@@ -187,10 +188,10 @@ export default (io: Server) => {
   const recordUser = (
     session: SessionEntity,
     user: UserView,
-    socket: Socket
+    socket: Socket,
   ) => {
     const socketId = socket.id;
-    if (!users[socketId] || users[socketId]!.id !== user.id) {
+    if (!users[socketId] || users[socketId].id !== user.id) {
       users[socketId] = user || null;
     }
 
@@ -202,7 +203,7 @@ export default (io: Server) => {
     sessionId: string,
     action: string,
     errorType: WsErrorType,
-    data: T | null
+    data: T | null,
   ) {
     if (data === null) {
       sendToSelf<WsErrorPayload>(socket, RECEIVE_ERROR, {
@@ -223,7 +224,7 @@ export default (io: Server) => {
    */
   function checkUser(
     userIds: UserIds | null,
-    socket: Socket
+    socket: Socket,
   ): userIds is Exclude<UserIds, null> {
     if (!userIds) {
       sendToSelf<WsErrorPayload>(socket, RECEIVE_ERROR, {
@@ -239,7 +240,7 @@ export default (io: Server) => {
     userIds: UserIds | null,
     sessionId: string,
     post: Post,
-    socket: Socket
+    socket: Socket,
   ) => {
     if (checkUser(userIds, socket)) {
       const createdPost = await savePost(userIds.userId, sessionId, post);
@@ -248,7 +249,7 @@ export default (io: Server) => {
         sessionId,
         RECEIVE_POST,
         'cannot_save_post',
-        createdPost
+        createdPost,
       );
     }
   };
@@ -257,20 +258,20 @@ export default (io: Server) => {
     userIds: UserIds | null,
     sessionId: string,
     message: Message,
-    socket: Socket
+    socket: Socket,
   ) => {
     if (checkUser(userIds, socket)) {
       const createdMessage = await saveChatMessage(
         userIds.userId,
         sessionId,
-        message
+        message,
       );
       sendToAllOrError<Message>(
         socket,
         sessionId,
         RECEIVE_CHAT_MESSAGE,
         'cannot_record_chat_message',
-        createdMessage
+        createdMessage,
       );
     }
   };
@@ -279,20 +280,20 @@ export default (io: Server) => {
     userIds: UserIds | null,
     sessionId: string,
     group: PostGroup,
-    socket: Socket
+    socket: Socket,
   ) => {
     if (checkUser(userIds, socket)) {
       const createdGroup = await savePostGroup(
         userIds.userId,
         sessionId,
-        group
+        group,
       );
       sendToAllOrError<PostGroup>(
         socket,
         sessionId,
         RECEIVE_POST_GROUP,
         'cannot_save_group',
-        createdGroup
+        createdGroup,
       );
     }
   };
@@ -305,7 +306,7 @@ export default (io: Server) => {
     _userIds: UserIds | null,
     sessionId: string,
     _payload: undefined,
-    socket: Socket
+    socket: Socket,
   ) => {
     const session = await getSession(sessionId);
     if (session) {
@@ -322,7 +323,7 @@ export default (io: Server) => {
     userIds: UserIds | null,
     sessionId: string,
     _: WsUserData,
-    socket: Socket
+    socket: Socket,
   ) => {
     await socket.join(getRoom(sessionId));
     socket.data.sessionId = sessionId;
@@ -354,7 +355,7 @@ export default (io: Server) => {
               RECEIVE_TIMER_START,
               {
                 duration: differenceInSeconds(session.timer, new Date()),
-              }
+              },
             );
           }
         } else {
@@ -375,7 +376,7 @@ export default (io: Server) => {
         sendToSelf<UnauthorizedAccessPayload>(
           socket,
           RECEIVE_UNAUTHORIZED,
-          payload
+          payload,
         );
         socket.disconnect();
       }
@@ -385,8 +386,8 @@ export default (io: Server) => {
   const onLeaveSession = async (
     _userIds: UserIds | null,
     sessionId: string,
-    _data: void,
-    socket: Socket
+    _data: unknown,
+    socket: Socket,
   ) => {
     await socket.leave(getRoom(sessionId));
     const sessionEntity = await getSessionWithVisitors(sessionId);
@@ -398,8 +399,8 @@ export default (io: Server) => {
   const onUserReady = async (
     userIds: UserIds | null,
     sessionId: string,
-    _data: void,
-    socket: Socket
+    _data: unknown,
+    socket: Socket,
   ) => {
     if (checkUser(userIds, socket)) {
       const ready = await toggleReady(sessionId, userIds.userId);
@@ -416,7 +417,7 @@ export default (io: Server) => {
     userIds: UserIds | null,
     sessionId: string,
     data: WsDeletePostPayload,
-    socket: Socket
+    socket: Socket,
   ) => {
     if (checkUser(userIds, socket)) {
       const success = await deletePost(userIds.userId, sessionId, data.postId);
@@ -425,7 +426,7 @@ export default (io: Server) => {
         sessionId,
         RECEIVE_DELETE_POST,
         'cannot_delete_post',
-        success ? data : null
+        success ? data : null,
       );
     }
   };
@@ -434,20 +435,20 @@ export default (io: Server) => {
     userIds: UserIds | null,
     sessionId: string,
     data: WsDeleteGroupPayload,
-    socket: Socket
+    socket: Socket,
   ) => {
     if (checkUser(userIds, socket)) {
       const success = await deletePostGroup(
         userIds.userId,
         sessionId,
-        data.groupId
+        data.groupId,
       );
       sendToAllOrError<WsDeleteGroupPayload>(
         socket,
         sessionId,
         RECEIVE_DELETE_POST_GROUP,
         'cannot_delete_group',
-        success ? data : null
+        success ? data : null,
       );
     }
   };
@@ -456,14 +457,14 @@ export default (io: Server) => {
     userIds: UserIds | null,
     sessionId: string,
     data: WsLikeUpdatePayload,
-    socket: Socket
+    socket: Socket,
   ) => {
     if (checkUser(userIds, socket)) {
       const vote = await registerVote(
         userIds.userId,
         sessionId,
         data.postId,
-        data.type
+        data.type,
       );
 
       sendToAllOrError<WsReceiveLikeUpdatePayload>(
@@ -476,7 +477,7 @@ export default (io: Server) => {
               postId: data.postId,
               vote,
             }
-          : null
+          : null,
       );
     }
   };
@@ -485,7 +486,7 @@ export default (io: Server) => {
     userIds: UserIds | null,
     sessionId: string,
     data: WsCancelVotesPayload,
-    socket: Socket
+    socket: Socket,
   ) => {
     if (checkUser(userIds, socket)) {
       await cancelVotes(userIds.userId, sessionId, data.postId);
@@ -498,7 +499,7 @@ export default (io: Server) => {
         {
           postId: data.postId,
           userId: userIds.userId,
-        }
+        },
       );
     }
   };
@@ -507,7 +508,7 @@ export default (io: Server) => {
     _userIds: UserIds | null,
     sessionId: string,
     data: WsPostUpdatePayload,
-    socket: Socket
+    socket: Socket,
   ) => {
     const persistedPost = await updatePost(sessionId, data.post, data.groupId);
     sendToAllOrError<Post>(
@@ -515,7 +516,7 @@ export default (io: Server) => {
       sessionId,
       RECEIVE_EDIT_POST,
       'cannot_edit_post',
-      persistedPost
+      persistedPost,
     );
   };
 
@@ -523,20 +524,20 @@ export default (io: Server) => {
     userIds: UserIds | null,
     sessionId: string,
     data: WsGroupUpdatePayload,
-    socket: Socket
+    socket: Socket,
   ) => {
     if (checkUser(userIds, socket)) {
       const group = await updatePostGroup(
         userIds.userId,
         sessionId,
-        data.group
+        data.group,
       );
       sendToAllOrError<PostGroup>(
         socket,
         sessionId,
         RECEIVE_EDIT_POST_GROUP,
         'cannot_edit_group',
-        group
+        group,
       );
     }
   };
@@ -545,7 +546,7 @@ export default (io: Server) => {
     userIds: UserIds | null,
     sessionId: string,
     data: WsSaveSessionSettingsPayload,
-    socket: Socket
+    socket: Socket,
   ) => {
     if (data.settings.options !== undefined) {
       await updateOptions(sessionId, data.settings.options);
@@ -568,7 +569,7 @@ export default (io: Server) => {
         await saveTemplate(
           userIds.userId,
           data.settings.columns,
-          data.settings.options
+          data.settings.options,
         );
       }
     }
@@ -577,7 +578,7 @@ export default (io: Server) => {
       sessionId,
       RECEIVE_SESSION_SETTINGS,
       'cannot_save_session_settings',
-      data.settings
+      data.settings,
     );
   };
 
@@ -585,7 +586,7 @@ export default (io: Server) => {
     _userIds: UserIds | null,
     sessionId: string,
     locked: boolean,
-    socket: Socket
+    socket: Socket,
   ) => {
     await toggleSessionLock(sessionId, locked);
     sendToAll<boolean>(socket, sessionId, RECEIVE_LOCK_SESSION, locked);
@@ -595,7 +596,7 @@ export default (io: Server) => {
     userIds: UserIds | null,
     sessionId: string,
     _: unknown,
-    socket: Socket
+    socket: Socket,
   ) => {
     if (checkUser(userIds, socket)) {
       const duration = await startTimer(sessionId);
@@ -603,7 +604,7 @@ export default (io: Server) => {
         socket,
         sessionId,
         RECEIVE_TIMER_START,
-        { duration }
+        { duration },
       );
     }
   };
@@ -612,7 +613,7 @@ export default (io: Server) => {
     userIds: UserIds | null,
     sessionId: string,
     _: unknown,
-    socket: Socket
+    socket: Socket,
   ) => {
     if (checkUser(userIds, socket)) {
       await stopTimer(sessionId);
@@ -622,10 +623,10 @@ export default (io: Server) => {
 
   io.on('connection', async (socket) => {
     const ip =
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       (socket.handshake as any).headers['x-forwarded-for'] ||
       socket.handshake.address;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: Temporary
     const idsAsString: string | undefined = (socket.request as any).session
       ?.passport?.user;
 
@@ -636,15 +637,15 @@ export default (io: Server) => {
       d() +
         chalk`{blue Connection: {red New user connected} {grey ${
           socket.id
-        } ${ip} ${ids?.identityId ? ids?.identityId : 'anon'}}}`
+        } ${ip} ${ids?.identityId ? ids?.identityId : 'anon'}}}`,
     );
 
     type ActionHandler = (
       ids: UserIds | null,
       sessionId: string,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: Temporary
       data: any,
-      socket: Socket
+      socket: Socket,
     ) => Promise<void>;
 
     interface Action {
@@ -677,7 +678,7 @@ export default (io: Server) => {
       { type: LOCK_SESSION, handler: onLockSession, onlyAuthor: true },
     ];
 
-    actions.forEach((action) => {
+    for (const action of actions) {
       socket.on(action.type, async (data: WebsocketMessage<unknown>) => {
         const sid =
           action.type === LEAVE_SESSION
@@ -689,8 +690,8 @@ export default (io: Server) => {
         try {
           console.log(
             chalk`${d()}{red  <-- } ${s(action.type)} {grey ${JSON.stringify(
-              data
-            )}}`
+              data,
+            )}}`,
           );
           await rateLimiter.consume(sid);
           setScope(async (scope) => {
@@ -730,26 +731,28 @@ export default (io: Server) => {
               }
             }
           });
-        } catch (rejection) {
+        } catch (_rejection) {
           // https://stackoverflow.com/questions/22110010/node-socket-io-anything-to-prevent-flooding/23548884
           console.error(
-            chalk`${d()} {red Websocket has been rate limited for user {yellow ${ids?.identityId}} and SID {yellow ${sid}}}`
+            chalk`${d()} {red Websocket has been rate limited for user {yellow ${
+              ids?.identityId
+            }} and SID {yellow ${sid}}}`,
           );
           throttledManualReport('websocket is being throttled', undefined);
           socket.emit(RECEIVE_RATE_LIMITED);
         }
       });
-    });
+    }
 
     socket.on('disconnect', async () => {
       if (socket.data.sessionId) {
         console.log(
           chalk`${d()}{blue Disconnection: }{red User left} {grey ${
             socket.id
-          } ${ip}}`
+          } ${ip}}`,
         );
         const sessionEntity = await getSessionWithVisitors(
-          socket.data.sessionId
+          socket.data.sessionId,
         );
         if (sessionEntity) {
           sendClientList(sessionEntity, socket);

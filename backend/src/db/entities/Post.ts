@@ -45,11 +45,15 @@ export default class PostEntity {
   @ManyToOne(() => UserEntity, { eager: true, cascade: true, nullable: false })
   @Index()
   public user: UserEntity;
-  @OneToMany(() => VoteEntity, (vote) => vote.post, {
-    cascade: true,
-    nullable: false,
-    eager: true,
-  })
+  @OneToMany(
+    () => VoteEntity,
+    (vote) => vote.post,
+    {
+      cascade: true,
+      nullable: false,
+      eager: true,
+    },
+  )
   public votes: VoteEntity[] | undefined;
   @CreateDateColumn({ type: 'timestamp with time zone' })
   public created: Date | undefined;
@@ -78,7 +82,7 @@ export default class PostEntity {
     session: SessionEntity,
     column: number,
     content: string,
-    user: UserEntity
+    user: UserEntity,
   ) {
     this.id = id;
     this.session = session;

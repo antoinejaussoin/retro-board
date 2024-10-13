@@ -12,7 +12,7 @@ import {
 } from 'typeorm';
 import PostEntity from './Post.js';
 import { ColumnDefinitionEntity } from './ColumnDefinition.js';
-import {
+import type {
   SessionOptions as JsonSessionOptions,
   Session,
 } from '../../common/index.js';
@@ -34,35 +34,55 @@ export default class SessionEntity {
   @ManyToOne(() => UserEntity, { eager: true, cascade: true, nullable: false })
   @Index()
   public moderator: UserEntity;
-  @OneToMany(() => PostEntity, (post) => post.session, {
-    cascade: true,
-    nullable: false,
-    eager: false,
-  })
+  @OneToMany(
+    () => PostEntity,
+    (post) => post.session,
+    {
+      cascade: true,
+      nullable: false,
+      eager: false,
+    },
+  )
   public posts: PostEntity[] | undefined;
-  @OneToMany(() => PostGroupEntity, (group) => group.session, {
-    cascade: true,
-    nullable: false,
-    eager: false,
-  })
+  @OneToMany(
+    () => PostGroupEntity,
+    (group) => group.session,
+    {
+      cascade: true,
+      nullable: false,
+      eager: false,
+    },
+  )
   public groups: PostGroupEntity[] | undefined;
-  @OneToMany(() => ColumnDefinitionEntity, (colDef) => colDef.session, {
-    cascade: true,
-    nullable: false,
-    eager: false,
-  })
+  @OneToMany(
+    () => ColumnDefinitionEntity,
+    (colDef) => colDef.session,
+    {
+      cascade: true,
+      nullable: false,
+      eager: false,
+    },
+  )
   public columns: ColumnDefinitionEntity[] | undefined;
-  @OneToMany(() => MessageEntity, (post) => post.session, {
-    cascade: true,
-    nullable: false,
-    eager: false,
-  })
+  @OneToMany(
+    () => MessageEntity,
+    (post) => post.session,
+    {
+      cascade: true,
+      nullable: false,
+      eager: false,
+    },
+  )
   public messages: MessageEntity[] | undefined;
   @Column(() => SessionOptionsEntity)
   public options: SessionOptionsEntity;
   @Column({ nullable: true, type: 'character varying' })
   public encrypted: string | null;
-  @ManyToMany(() => UserEntity, (user) => user.sessions, { eager: false })
+  @ManyToMany(
+    () => UserEntity,
+    (user) => user.sessions,
+    { eager: false },
+  )
   @JoinTable({ name: 'visitors' })
   visitors: UserEntity[] | undefined;
   @Column({ default: false })
@@ -104,7 +124,7 @@ export default class SessionEntity {
     id: string,
     name: string | null,
     createdBy: UserEntity,
-    options: Partial<JsonSessionOptions>
+    options: Partial<JsonSessionOptions>,
   ) {
     this.id = id;
     this.name = name;
