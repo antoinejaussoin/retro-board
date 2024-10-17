@@ -5,6 +5,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "@biomejs/biome": "1.9.4",
     "@emotion/react": "11.13.3",
     "@emotion/styled": "11.13.0",
     "@esbuild-plugins/node-globals-polyfill": "0.2.3",
@@ -105,9 +106,6 @@
     "not ie <= 9",
     "not op_mini all"
   ],
-  "devDependencies": {
-    "@biomejs/biome": "1.9.3"
-  },
   "resolutions": {
     "vite": "5.4.8"
   }

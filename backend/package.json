@@ -21,6 +21,7 @@
     "copy-templates": "copyfiles -u 0 src/**/*.html dist/"
   },
   "dependencies": {
+    "@biomejs/biome": "1.9.4",
     "@sendgrid/mail": "8.1.3",
     "@sentry/node": "8.34.0",
     "@types/bcryptjs": "^2.4.6",
@@ -91,7 +92,6 @@
     "stripe": "17.2.0",
     "ts-jest": "29.2.5",
     "ts-node": "10.9.2",
-    "tsx": "^4.19.1",
     "typeorm": "0.3.17",
     "typeorm-naming-strategies": "4.1.0",
     "typescript": "5.6.3",
@@ -105,8 +105,5 @@
   "nodemonConfig": {
     "watch": "./src/",
     "ext": "ts,tsx,json"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "1.9.3"
   }
 }
