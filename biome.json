@@ -12,7 +12,7 @@
     "indentWidth": 2,
     "ignore": ["backend/src/db/migrations"]
   },
-  "organizeImports": { "enabled": true },
+  "organizeImports": { "enabled": false },
   "linter": {
     "enabled": true,
     "rules": {
