@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { Fragment } from 'react';
 import Link from 'next/link';
 import { ListWrapper } from './list.style';

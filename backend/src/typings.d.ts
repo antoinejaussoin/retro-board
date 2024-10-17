@@ -11,6 +11,5 @@ declare module 'express-serve-static-core' {
   }
 
   // That, unfortunately, doesn't quite work.
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface User extends UserIds {}
 }
