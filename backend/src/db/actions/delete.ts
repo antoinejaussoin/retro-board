@@ -1,6 +1,6 @@
+import type { DeleteAccountPayload } from '../../common/index.js';
 import type { EntityManager } from 'typeorm';
 import { v4 } from 'uuid';
-import type { DeleteAccountPayload } from '../../common/index.js';
 import type { UserIdentityEntity, UserView } from '../entities/index.js';
 import {
   PostGroupRepository,

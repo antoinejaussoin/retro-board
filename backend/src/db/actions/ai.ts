@@ -1,15 +1,15 @@
-import type { CoachMessage, CoachRole } from 'common/types.js';
-import { addDays } from 'date-fns';
-import { MoreThanOrEqual } from 'typeorm';
-import { v4 } from 'uuid';
-import config from '../../config.js';
-import AiChatEntity from '../entities/AiChat.js';
-import AiChatMessageEntity from '../entities/AiChatMessage.js';
 import type UserView from '../entities/UserView.js';
-import AiChatMessageRepository from '../repositories/AiChatMessageRepository.js';
-import AiChatRepository from '../repositories/AiChatRepository.js';
+import AiChatEntity from '../entities/AiChat.js';
 import { transaction } from './transaction.js';
+import AiChatRepository from '../repositories/AiChatRepository.js';
 import { getUser } from './users.js';
+import type { CoachMessage, CoachRole } from 'common/types.js';
+import AiChatMessageRepository from '../repositories/AiChatMessageRepository.js';
+import AiChatMessageEntity from '../entities/AiChatMessage.js';
+import { v4 } from 'uuid';
+import { MoreThanOrEqual } from 'typeorm';
+import { addDays } from 'date-fns';
+import config from '../../config.js';
 
 export async function getAiChatSession(
   id: string,

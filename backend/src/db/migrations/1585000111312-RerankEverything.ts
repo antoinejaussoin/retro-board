@@ -1,5 +1,5 @@
-import { LexoRank } from 'lexorank';
 import { MigrationInterface, QueryRunner } from 'typeorm';
+import { LexoRank } from 'lexorank';
 
 export class RerankEverything1585000111312 implements MigrationInterface {
   name = 'RerankEverything1585000111315';

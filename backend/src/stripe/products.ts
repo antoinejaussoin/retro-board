@@ -1,6 +1,6 @@
+import type { InternalProduct } from './types.js';
 import type { Plan } from '../common/index.js';
 import config from '../config.js';
-import type { InternalProduct } from './types.js';
 
 export const teamPlan: InternalProduct = {
   name: 'Pro Team',

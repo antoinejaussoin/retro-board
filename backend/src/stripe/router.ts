@@ -1,32 +1,32 @@
 import express from 'express';
 import type { Router } from 'express';
-import Stripe from 'stripe';
 import type {
   CreateSubscriptionPayload,
   Product,
   StripeLocales,
 } from '../common/index.js';
 import config from '../config.js';
+import Stripe from 'stripe';
+import type { UserIdentityEntity } from '../db/entities/index.js';
+import type {
+  StripeEvent,
+  CheckoutCompletedPayload,
+  SubscriptionDeletedPayload,
+} from './types.js';
+import { plans, getProduct } from './products.js';
+import { getUserByEmail, updateUser } from '../db/actions/users.js';
 import { registerLicence } from '../db/actions/licences.js';
+import { getIdentityFromRequest } from '../utils.js';
+import isValidDomain from '../security/is-valid-domain.js';
 import {
-  activateSubscription,
   cancelSubscription,
-  getActiveSubscriptionWhereUserIsAdmin,
+  activateSubscription,
   getActiveSubscriptionWhereUserIsOwner,
   saveSubscription,
   startTrial,
+  getActiveSubscriptionWhereUserIsAdmin,
 } from '../db/actions/subscriptions.js';
-import { getUserByEmail, updateUser } from '../db/actions/users.js';
-import type { UserIdentityEntity } from '../db/entities/index.js';
-import isValidDomain from '../security/is-valid-domain.js';
-import { getIdentityFromRequest } from '../utils.js';
 import { trackPurchase } from './../track/track.js';
-import { getProduct, plans } from './products.js';
-import type {
-  CheckoutCompletedPayload,
-  StripeEvent,
-  SubscriptionDeletedPayload,
-} from './types.js';
 
 const stripe = config.STRIPE_SECRET
   ? new Stripe(config.STRIPE_SECRET, {

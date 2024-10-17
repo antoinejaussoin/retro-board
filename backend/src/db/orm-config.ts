@@ -1,27 +1,27 @@
-import path from 'node:path';
-import type { DataSourceOptions } from 'typeorm';
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import config from '../config.js';
-import { getDirname, getFilename } from './../path-utils.js';
-import AiChatEntity from './entities/AiChat.js';
-import AiChatMessageEntity from './entities/AiChatMessage.js';
-import LicenceEntity from './entities/Licence.js';
-import SessionOptionsEntity from './entities/SessionOptions.js';
+import type { DataSourceOptions } from 'typeorm';
 import {
-  ColumnDefinitionEntity,
-  MessageEntity,
   PostEntity,
   PostGroupEntity,
   SessionEntity,
-  SessionTemplateEntity,
-  SessionView,
-  SubscriptionEntity,
-  TemplateColumnDefinitionEntity,
   UserEntity,
-  UserIdentityEntity,
-  UserView,
+  ColumnDefinitionEntity,
   VoteEntity,
+  SessionTemplateEntity,
+  TemplateColumnDefinitionEntity,
+  SubscriptionEntity,
+  MessageEntity,
+  UserView,
+  SessionView,
+  UserIdentityEntity,
 } from './entities/index.js';
+import LicenceEntity from './entities/Licence.js';
+import SessionOptionsEntity from './entities/SessionOptions.js';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import path from 'node:path';
+import { getDirname, getFilename } from './../path-utils.js';
+import AiChatEntity from './entities/AiChat.js';
+import AiChatMessageEntity from './entities/AiChatMessage.js';
 
 const fileName = getFilename(import.meta.url);
 

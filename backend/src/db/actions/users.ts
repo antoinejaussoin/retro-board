@@ -1,21 +1,21 @@
+import { UserEntity, UserView } from '../entities/index.js';
 import { type EntityManager, In, Not } from 'typeorm';
-import { v4 } from 'uuid';
-import type { AccountType, FullUser } from '../../common/index.js';
-import { comparePassword, hashPassword } from '../../encryption.js';
-import { isSelfHostedAndLicenced } from '../../security/is-licenced.js';
-import TrackingEntity from '../entities/TrackingEntity.js';
+import {
+  UserIdentityRepository,
+  UserRepository,
+} from '../repositories/index.js';
 import {
   ALL_FIELDS,
   ALL_IDENTITY_FIELDS as ALL_FIELDS_IDENTITY,
   UserIdentityEntity,
 } from '../entities/UserIdentity.js';
-import { UserEntity, UserView } from '../entities/index.js';
-import { saveAndReload } from '../repositories/BaseRepository.js';
-import {
-  UserIdentityRepository,
-  UserRepository,
-} from '../repositories/index.js';
 import { transaction } from './transaction.js';
+import type { AccountType, FullUser } from '../../common/index.js';
+import { isSelfHostedAndLicenced } from '../../security/is-licenced.js';
+import { v4 } from 'uuid';
+import { hashPassword, comparePassword } from '../../encryption.js';
+import { saveAndReload } from '../repositories/BaseRepository.js';
+import TrackingEntity from '../entities/TrackingEntity.js';
 
 export async function getUser(userId: string): Promise<UserEntity | null> {
   return await transaction(async (manager) => {

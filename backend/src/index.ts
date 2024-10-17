@@ -1,70 +1,70 @@
-import http from 'node:http';
-import chalk from 'chalk-template';
-import connectRedis from 'connect-redis';
-import cookieParser from 'cookie-parser';
 import express from 'express';
-import mung from 'express-mung';
-import rateLimit from 'express-rate-limit';
-import session from 'express-session';
-import { noop } from 'lodash-es';
-import passport from 'passport';
-import { createClient } from 'redis';
 import * as socketIo from 'socket.io';
 import { createAdapter } from 'socket.io-redis';
-import { QueryFailedError } from 'typeorm';
-import { v4 } from 'uuid';
-import adminRouter from './admin/router.js';
-import aiRouter from './ai/router.js';
-import passportInit from './auth/passport.js';
-import registerPasswordUser from './auth/register/register-user.js';
-import authRouter from './auth/router.js';
-import type {
-  ChangeUserNamePayload,
-  CreateSessionPayload,
-  DeleteAccountPayload,
-  RegisterPayload,
-  ResetChangePasswordPayload,
-  ResetPasswordPayload,
-  SelfHostedCheckPayload,
-  ValidateEmailPayload,
-} from './common/index.js';
-import config from './config.js';
-import { deleteAccount } from './db/actions/delete.js';
-import { createDemoSession } from './db/actions/demo.js';
-import { fetchLicence, validateLicence } from './db/actions/licences.js';
-import { mergeAnonymous } from './db/actions/merge.js';
-import {
-  createSession,
-  deleteSessions,
-  getDefaultTemplate,
-  previousSessions,
-} from './db/actions/sessions.js';
-import {
-  associateUserWithAdWordsCampaign,
-  getIdentityByUsername,
-  getPasswordIdentity,
-  getRelatedUsers,
-  getUserView,
-  updateIdentity,
-  updateUser,
-} from './db/actions/users.js';
-import type { TrackingInfo } from './db/actions/users.js';
+import { createClient } from 'redis';
+import connectRedis from 'connect-redis';
+import http from 'node:http';
+import chalk from 'chalk-template';
+import session from 'express-session';
+import passport from 'passport';
 import db from './db/index.js';
-import {
-  sendResetPassword,
-  sendVerificationEmail,
-} from './email/emailSender.js';
-import { hashPassword } from './encryption.js';
-import game from './game.js';
-import { isLicenced } from './security/is-licenced.js';
-import { hasField } from './security/payload-checker.js';
-import slackRouter from './slack/router.js';
+import config from './config.js';
+import passportInit from './auth/passport.js';
+import authRouter from './auth/router.js';
+import adminRouter from './admin/router.js';
 import stripeRouter from './stripe/router.js';
+import slackRouter from './slack/router.js';
+import game from './game.js';
 import {
   getIdentityFromRequest,
-  getUserQuota,
   getUserViewFromRequest,
+  getUserQuota,
 } from './utils.js';
+import { hashPassword } from './encryption.js';
+import type {
+  RegisterPayload,
+  ValidateEmailPayload,
+  ResetPasswordPayload,
+  ResetChangePasswordPayload,
+  CreateSessionPayload,
+  SelfHostedCheckPayload,
+  DeleteAccountPayload,
+  ChangeUserNamePayload,
+} from './common/index.js';
+import registerPasswordUser from './auth/register/register-user.js';
+import {
+  sendVerificationEmail,
+  sendResetPassword,
+} from './email/emailSender.js';
+import { v4 } from 'uuid';
+import {
+  createSession,
+  previousSessions,
+  deleteSessions,
+  getDefaultTemplate,
+} from './db/actions/sessions.js';
+import {
+  updateUser,
+  getUserView,
+  getPasswordIdentity,
+  updateIdentity,
+  getIdentityByUsername,
+  associateUserWithAdWordsCampaign,
+  getRelatedUsers,
+} from './db/actions/users.js';
+import type { TrackingInfo } from './db/actions/users.js';
+import { isLicenced } from './security/is-licenced.js';
+import rateLimit from 'express-rate-limit';
+import { fetchLicence, validateLicence } from './db/actions/licences.js';
+import { hasField } from './security/payload-checker.js';
+import mung from 'express-mung';
+import { QueryFailedError } from 'typeorm';
+import { deleteAccount } from './db/actions/delete.js';
+import { noop } from 'lodash-es';
+import { createDemoSession } from './db/actions/demo.js';
+import cookieParser from 'cookie-parser';
+import { mergeAnonymous } from './db/actions/merge.js';
+import aiRouter from './ai/router.js';
 
 const realIpHeader = 'X-Forwarded-For';
 const sessionSecret = `${config.SESSION_SECRET}-4.11.5`; // Increment to force re-auth

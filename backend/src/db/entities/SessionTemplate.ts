@@ -1,18 +1,18 @@
 import {
-  Column,
-  CreateDateColumn,
   Entity,
-  Index,
-  ManyToOne,
-  OneToMany,
+  Column,
   PrimaryColumn,
+  OneToMany,
+  Index,
+  CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
+import { TemplateColumnDefinitionEntity } from './ColumnDefinition.js';
 import type {
   SessionOptions as JsonSessionOptions,
   SessionTemplate,
 } from '../../common/index.js';
-import { TemplateColumnDefinitionEntity } from './ColumnDefinition.js';
 import SessionOptionsEntity from './SessionOptions.js';
 import { UserEntity } from './UserIdentity.js';
 

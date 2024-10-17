@@ -1,4 +1,4 @@
-import { isDisposable, isFree } from 'freemail';
+import { isFree, isDisposable } from 'freemail';
 
 export default function isValidDomain(domain: string) {
   const email = `foo@${domain}`;

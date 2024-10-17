@@ -1,6 +1,6 @@
-import { addDays } from 'date-fns';
-import type { FullUser, User as JsonUser } from '../../common/index.js';
 import { UserEntity } from '../entities/index.js';
+import type { FullUser, User as JsonUser } from '../../common/index.js';
+import { addDays } from 'date-fns';
 import { getBaseRepository, saveAndReload } from './BaseRepository.js';
 
 export default getBaseRepository(UserEntity).extend({

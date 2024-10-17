@@ -1,8 +1,8 @@
-import type { StrategyOptionsWithRequest as GitHubStrategy } from 'passport-github2';
+import type { IStrategyOptionWithRequest } from 'passport-twitter';
 import type { StrategyOptionsWithRequest as GoogleStrategyOptions } from 'passport-google-oauth20';
+import type { StrategyOptionsWithRequest as GitHubStrategy } from 'passport-github2';
 import type { MicrosoftStrategyOptionsWithRequest } from 'passport-microsoft';
 import type { OktaStrategyOptions } from 'passport-okta-oauth20';
-import type { IStrategyOptionWithRequest } from 'passport-twitter';
 import config from '../config.js';
 
 type MicrosoftStrategyOptionsWithTenant =

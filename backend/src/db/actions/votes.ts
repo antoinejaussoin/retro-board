@@ -1,6 +1,6 @@
+import type { Vote, VoteExtract, VoteType } from '../../common/index.js';
 import { find } from 'lodash-es';
 import { v4 } from 'uuid';
-import type { Vote, VoteExtract, VoteType } from '../../common/index.js';
 import {
   PostRepository,
   SessionRepository,

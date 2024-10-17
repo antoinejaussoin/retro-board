@@ -1,10 +1,10 @@
+import { mergeAnonymous } from '../db/actions/merge.js';
 import express, {
   type NextFunction,
   type Request,
   type Response,
 } from 'express';
 import passport from 'passport';
-import { mergeAnonymous } from '../db/actions/merge.js';
 import type { UserIds } from '../utils.js';
 
 const router = express.Router();

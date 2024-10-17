@@ -1,7 +1,7 @@
 import express, { type Router } from 'express';
 import fetch from 'node-fetch';
-import config from '../config.js';
 import { createSessionFromSlack } from '../db/actions/sessions.js';
+import config from '../config.js';
 
 type SlackSlashCommand = {
   token: string;

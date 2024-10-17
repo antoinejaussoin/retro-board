@@ -1,23 +1,23 @@
 import express from 'express';
-import type { NextFunction, Request, Response } from 'express';
+import type { NextFunction, Response, Request } from 'express';
 import type { Server } from 'socket.io';
+import {
+  getAllNonDeletedUsers,
+  getPasswordIdentityByUserId,
+  updateIdentity,
+} from '../db/actions/users.js';
+import config from '../config.js';
+import { isLicenced } from '../security/is-licenced.js';
 import type {
   AdminChangePasswordPayload,
   AdminStats,
   BackendCapabilities,
   MergeUsersPayload,
 } from '../common/index.js';
-import config from '../config.js';
-import { mergeUsers } from '../db/actions/merge.js';
-import {
-  getAllNonDeletedUsers,
-  getPasswordIdentityByUserId,
-  updateIdentity,
-} from '../db/actions/users.js';
-import { canSendEmails } from '../email/utils.js';
-import { hashPassword } from '../encryption.js';
-import { isLicenced } from '../security/is-licenced.js';
 import { getIdentityFromRequest } from '../utils.js';
+import { hashPassword } from '../encryption.js';
+import { canSendEmails } from '../email/utils.js';
+import { mergeUsers } from '../db/actions/merge.js';
 
 export default function getRouter(io: Server) {
   const router = express.Router();

@@ -1,11 +1,11 @@
 import {
-  Column,
-  CreateDateColumn,
   Entity,
-  Index,
-  ManyToOne,
+  Column,
   PrimaryColumn,
+  ManyToOne,
+  CreateDateColumn,
   UpdateDateColumn,
+  Index,
 } from 'typeorm';
 import type { Relation } from 'typeorm';
 import type { CoachRole } from '../../common/index.js';

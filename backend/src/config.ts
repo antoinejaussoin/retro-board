@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import type { BackendConfig } from './types.js';
 import dotenv from 'dotenv';
 import { getDirname } from './path-utils.js';
-import type { BackendConfig } from './types.js';
 
 function findDotEnvPath(): string | null {
   let current = getDirname(import.meta.url);

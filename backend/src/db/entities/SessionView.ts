@@ -1,5 +1,5 @@
-import { ViewColumn, ViewEntity } from 'typeorm';
-import type { SessionMetadata, User } from '../../common/index.js';
+import { ViewEntity, ViewColumn } from 'typeorm';
+import type { User, SessionMetadata } from '../../common/index.js';
 
 @ViewEntity({
   expression: `

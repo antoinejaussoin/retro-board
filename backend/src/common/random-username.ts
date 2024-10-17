@@ -1,7 +1,7 @@
 import {
+  uniqueNamesGenerator,
   adjectives,
   animals,
-  uniqueNamesGenerator,
 } from 'unique-names-generator';
 import { v4 } from 'uuid';
 

@@ -1,10 +1,10 @@
 import type { DeepPartial } from 'typeorm';
 import type { Post, PostGroup, Vote } from '../../common/index.js';
 import {
-  PostGroupRepository,
   PostRepository,
-  SessionRepository,
+  PostGroupRepository,
   VoteRepository,
+  SessionRepository,
 } from '../repositories/index.js';
 import { transaction } from './transaction.js';
 

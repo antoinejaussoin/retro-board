@@ -1,4 +1,4 @@
-import type { Session, SessionOptions } from './types.js';
+import type { SessionOptions, Session } from './types.js';
 
 export const defaultOptions: SessionOptions = {
   allowActions: true,

@@ -1,8 +1,8 @@
 import type { Request } from 'express';
+import type { UserView, UserIdentityEntity } from './db/entities/index.js';
+import { getUserView, getUser, getIdentity } from './db/actions/users.js';
 import type { Quota } from './common/index.js';
 import { getNumberOfPosts } from './db/actions/posts.js';
-import { getIdentity, getUser, getUserView } from './db/actions/users.js';
-import type { UserIdentityEntity, UserView } from './db/entities/index.js';
 
 export async function getUserViewFromRequest(
   request: Request,

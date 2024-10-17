@@ -1,19 +1,19 @@
-import type { Post } from 'common/types.js';
-import { LexoRank } from 'lexorank';
 import {
-  Column,
-  CreateDateColumn,
   Entity,
-  Index,
-  ManyToOne,
-  OneToMany,
+  Column,
   PrimaryColumn,
+  ManyToOne,
+  CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
+  Index,
 } from 'typeorm';
-import PostGroupEntity from './PostGroup.js';
+import { LexoRank } from 'lexorank';
 import SessionEntity from './Session.js';
-import { UserEntity } from './UserIdentity.js';
 import VoteEntity from './Vote.js';
+import PostGroupEntity from './PostGroup.js';
+import { UserEntity } from './UserIdentity.js';
+import type { Post } from 'common/types.js';
 
 @Entity({ name: 'posts' })
 export default class PostEntity {

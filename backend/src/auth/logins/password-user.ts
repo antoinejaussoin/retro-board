@@ -1,5 +1,5 @@
-import { getIdentityByUsername } from '../../db/actions/users.js';
 import type { UserIdentityEntity } from '../../db/entities/index.js';
+import { getIdentityByUsername } from '../../db/actions/users.js';
 import { comparePassword } from '../../encryption.js';
 
 export default async function loginUser(

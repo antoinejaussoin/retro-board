@@ -1,14 +1,14 @@
 import {
-  Column,
-  CreateDateColumn,
   Entity,
-  Index,
-  ManyToOne,
+  Column,
   PrimaryColumn,
+  ManyToOne,
+  CreateDateColumn,
   UpdateDateColumn,
+  Index,
 } from 'typeorm';
 import type { Relation } from 'typeorm';
-import type { Vote, VoteExtract, VoteType } from '../../common/index.js';
+import type { VoteType, Vote, VoteExtract } from '../../common/index.js';
 import PostEntity from './Post.js';
 import { UserEntity } from './UserIdentity.js';
 
