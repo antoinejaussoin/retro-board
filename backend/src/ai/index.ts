@@ -1,9 +1,9 @@
-import config from '../config.js';
+import { last } from 'lodash-es';
 import { Configuration, OpenAIApi } from 'openai';
+import type { CoachMessage } from '../common/types.js';
+import config from '../config.js';
 import { getAiChatSession, recordAiChatMessage } from '../db/actions/ai.js';
 import type UserView from '../db/entities/UserView.js';
-import type { CoachMessage } from '../common/types.js';
-import { last } from 'lodash-es';
 
 const systemMessage: CoachMessage = {
   role: 'system',

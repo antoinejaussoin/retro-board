@@ -1,24 +1,24 @@
 import {
-  Entity,
   Column,
-  PrimaryColumn,
-  OneToMany,
-  Index,
   CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
-  ManyToMany,
+  Entity,
+  Index,
   JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import PostEntity from './Post.js';
-import { ColumnDefinitionEntity } from './ColumnDefinition.js';
 import type {
   SessionOptions as JsonSessionOptions,
   Session,
 } from '../../common/index.js';
-import SessionOptionsEntity from './SessionOptions.js';
-import PostGroupEntity from './PostGroup.js';
+import { ColumnDefinitionEntity } from './ColumnDefinition.js';
 import MessageEntity from './Message.js';
+import PostEntity from './Post.js';
+import PostGroupEntity from './PostGroup.js';
+import SessionOptionsEntity from './SessionOptions.js';
 import { UserEntity } from './UserIdentity.js';
 
 @Entity({ name: 'sessions' })

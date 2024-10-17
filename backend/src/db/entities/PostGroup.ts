@@ -1,18 +1,18 @@
+import { LexoRank } from 'lexorank';
 import {
-  Entity,
   Column,
-  PrimaryColumn,
-  ManyToOne,
   CreateDateColumn,
-  UpdateDateColumn,
-  OneToMany,
+  Entity,
   Index,
+  ManyToOne,
+  OneToMany,
+  PrimaryColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import type { Relation } from 'typeorm';
-import { LexoRank } from 'lexorank';
-import SessionEntity from './Session.js';
-import PostEntity from './Post.js';
 import type { PostGroup } from '../../common/index.js';
+import PostEntity from './Post.js';
+import SessionEntity from './Session.js';
 import { UserEntity } from './UserIdentity.js';
 
 @Entity({ name: 'groups' })

@@ -1,6 +1,7 @@
+import type { Request } from 'express';
+import { getUserViewFromRequest } from '../../utils.js';
 import type { UserView } from '../entities/index.js';
-import { getUserView } from './users.js';
-import { transaction } from './transaction.js';
+import AiChatRepository from '../repositories/AiChatRepository.js';
 import {
   PostGroupRepository,
   PostRepository,
@@ -8,9 +9,8 @@ import {
   VoteRepository,
 } from '../repositories/index.js';
 import { deleteAccount } from './delete.js';
-import { getUserViewFromRequest } from '../../utils.js';
-import type { Request } from 'express';
-import AiChatRepository from '../repositories/AiChatRepository.js';
+import { transaction } from './transaction.js';
+import { getUserView } from './users.js';
 
 export async function mergeAnonymous(req: Request, newUserIdentityId: string) {
   const anonymousUser = await getUserViewFromRequest(req);

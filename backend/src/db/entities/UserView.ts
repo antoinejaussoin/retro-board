@@ -1,8 +1,8 @@
-import { ViewEntity, ViewColumn } from 'typeorm';
+import { ViewColumn, ViewEntity } from 'typeorm';
 import type {
   AccountType,
-  FullUser,
   Currency,
+  FullUser,
   Plan,
 } from '../../common/index.js';
 

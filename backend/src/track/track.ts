@@ -1,6 +1,6 @@
-import config from './../config.js';
-import request from 'request';
 import chalkTemplate from 'chalk-template';
+import request from 'request';
+import config from './../config.js';
 
 export function trackPurchase(
   /**

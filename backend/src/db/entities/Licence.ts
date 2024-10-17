@@ -1,10 +1,10 @@
 import {
-  Entity,
   Column,
-  PrimaryColumn,
   CreateDateColumn,
-  UpdateDateColumn,
+  Entity,
   Index,
+  PrimaryColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity({ name: 'licences' })

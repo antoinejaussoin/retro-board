@@ -1,40 +1,40 @@
 import passport from 'passport';
-import { Strategy as LocalStrategy, type IVerifyOptions } from 'passport-local';
-import { Strategy as TwitterStrategy } from 'passport-twitter';
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as GithubStrategy } from 'passport-github2';
-import { Strategy as SlackStrategy } from 'passport-slack-oauth2';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { type IVerifyOptions, Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as MicrosoftStrategy } from 'passport-microsoft';
 import passportOkta from 'passport-okta-oauth20';
+import { Strategy as SlackStrategy } from 'passport-slack-oauth2';
+import { Strategy as TwitterStrategy } from 'passport-twitter';
 
 const { Strategy: OktaStrategy } = passportOkta;
 
-import {
-  TWITTER_CONFIG,
-  GOOGLE_CONFIG,
-  GITHUB_CONFIG,
-  MICROSOFT_CONFIG,
-  SLACK_CONFIG,
-  OKTA_CONFIG,
-} from './config.js';
-import type { AccountType } from '../common/index.js';
 import chalk from 'chalk-template';
-import loginUser from './logins/password-user.js';
+import type { Request } from 'express';
+import type { AccountType } from '../common/index.js';
+import config from '../config.js';
+import { mergeAnonymous } from '../db/actions/merge.js';
+import { type UserRegistration, registerUser } from '../db/actions/users.js';
+import { type UserIds, deserialiseIds, serialiseIds } from '../utils.js';
+import {
+  GITHUB_CONFIG,
+  GOOGLE_CONFIG,
+  MICROSOFT_CONFIG,
+  OKTA_CONFIG,
+  SLACK_CONFIG,
+  TWITTER_CONFIG,
+} from './config.js';
 import loginAnonymous from './logins/anonymous-user.js';
+import loginUser from './logins/password-user.js';
 import type {
   BaseProfile,
-  TwitterProfile,
-  GoogleProfile,
   GitHubProfile,
+  GoogleProfile,
   MicrosoftProfile,
-  SlackProfile,
   OktaProfile,
+  SlackProfile,
+  TwitterProfile,
 } from './types.js';
-import { registerUser, type UserRegistration } from '../db/actions/users.js';
-import { serialiseIds, type UserIds, deserialiseIds } from '../utils.js';
-import config from '../config.js';
-import type { Request } from 'express';
-import { mergeAnonymous } from '../db/actions/merge.js';
 
 export default () => {
   passport.serializeUser<string>((user, cb) => {

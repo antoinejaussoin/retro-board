@@ -1,37 +1,37 @@
+import { uniq } from 'lodash-es';
+import shortId from 'shortid';
+import { type EntityManager, In } from 'typeorm';
+import { v4 } from 'uuid';
 import {
-  type UserEntity,
+  type AccessErrorType,
+  type ColumnDefinition,
+  type FullUser,
+  type Session,
+  type SessionMetadata,
+  type SessionOptions,
+  defaultSession,
+} from '../../common/index.js';
+import type MessageEntity from '../entities/Message.js';
+import {
+  type ColumnDefinitionEntity,
   type PostEntity,
   type PostGroupEntity,
-  type ColumnDefinitionEntity,
   type SessionEntity,
   type SessionTemplateEntity,
   SessionView,
+  type UserEntity,
 } from '../entities/index.js';
+import MessageRepository from '../repositories/MessageRepository.js';
 import {
-  type Session,
-  defaultSession,
-  type ColumnDefinition,
-  type SessionOptions,
-  type SessionMetadata,
-  type AccessErrorType,
-  type FullUser,
-} from '../../common/index.js';
-import shortId from 'shortid';
-import { v4 } from 'uuid';
-import {
-  UserRepository,
+  ColumnRepository,
+  PostGroupRepository,
+  PostRepository,
   SessionRepository,
   SessionTemplateRepository,
-  PostRepository,
-  PostGroupRepository,
-  ColumnRepository,
+  UserRepository,
 } from '../repositories/index.js';
 import { transaction } from './transaction.js';
-import { type EntityManager, In } from 'typeorm';
 import { getUserViewInner, isUserPro } from './users.js';
-import { uniq } from 'lodash-es';
-import MessageRepository from '../repositories/MessageRepository.js';
-import type MessageEntity from '../entities/Message.js';
 
 export async function createSessionFromSlack(
   slackUserId: string,

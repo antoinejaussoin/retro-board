@@ -1,6 +1,6 @@
-import { encrypt, hashPassword } from './encryption.js';
-import { v4 as uuid } from 'uuid';
 import chalk from 'chalk-template';
+import { v4 as uuid } from 'uuid';
+import { encrypt, hashPassword } from './encryption.js';
 
 if (!process.argv[2]) {
   console.log(

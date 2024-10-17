@@ -1,10 +1,10 @@
+import chalkTemplate from 'chalk-template';
+import fetch from 'node-fetch';
 import type { SelfHostedCheckPayload } from '../common/index.js';
 import config from '../config.js';
-import fetch from 'node-fetch';
+import { comparePassword, decrypt } from '../encryption.js';
 import wait from '../utils.js';
 import type { LicenceMetadata } from './../types.js';
-import { comparePassword, decrypt } from '../encryption.js';
-import chalkTemplate from 'chalk-template';
 
 let licenced: LicenceMetadata | null = null;
 

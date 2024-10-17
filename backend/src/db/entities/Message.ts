@@ -1,15 +1,15 @@
 import {
-  Entity,
   Column,
-  PrimaryColumn,
-  ManyToOne,
   CreateDateColumn,
-  UpdateDateColumn,
+  Entity,
   Index,
+  ManyToOne,
+  PrimaryColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import type { Relation } from 'typeorm';
-import SessionEntity from './Session.js';
 import type { Message } from '../../common/index.js';
+import SessionEntity from './Session.js';
 import { UserEntity } from './UserIdentity.js';
 
 @Entity({ name: 'messages' })

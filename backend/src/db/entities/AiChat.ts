@@ -1,11 +1,11 @@
 import {
-  Entity,
-  PrimaryColumn,
-  Index,
   CreateDateColumn,
-  UpdateDateColumn,
+  Entity,
+  Index,
   ManyToOne,
   OneToMany,
+  PrimaryColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import AiChatMessageEntity from './AiChatMessage.js';
 import { UserEntity } from './UserIdentity.js';

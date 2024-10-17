@@ -1,6 +1,6 @@
-import { PostGroupEntity } from '../entities/index.js';
-import type { PostGroup as JsonPostGroup } from '../../common/index.js';
 import { cloneDeep } from 'lodash-es';
+import type { PostGroup as JsonPostGroup } from '../../common/index.js';
+import { PostGroupEntity } from '../entities/index.js';
 import { getBaseRepository, saveAndReload } from './BaseRepository.js';
 
 export default getBaseRepository(PostGroupEntity).extend({

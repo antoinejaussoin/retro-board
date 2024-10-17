@@ -1,12 +1,12 @@
 import {
-  Entity,
   Column,
-  PrimaryColumn,
-  Index,
   CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
+  Entity,
+  Index,
   ManyToMany,
+  ManyToOne,
+  PrimaryColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import type { Currency, User, UserIdentity } from '../../common/index.js';
 import type { AccountType } from '../../common/types.js';

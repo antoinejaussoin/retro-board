@@ -1,11 +1,11 @@
+import type { DeepPartial } from 'typeorm';
 import { v4 } from 'uuid';
 import type { Post, Session } from '../../common/types.js';
 import type { UserEntity } from '../../db/entities/UserIdentity.js';
+import { getMiddle, getNext } from '../../lexorank.js';
 import { savePost, saveVote } from './posts.js';
 import { createSession, getSession, saveSession } from './sessions.js';
-import { getNext, getMiddle } from '../../lexorank.js';
 import { registerAnonymousUser } from './users.js';
-import type { DeepPartial } from 'typeorm';
 
 export async function createDemoSession(author: UserEntity): Promise<Session> {
   const session = await createSession(author);

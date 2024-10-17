@@ -1,8 +1,8 @@
 import express, { type Router } from 'express';
-import { dialog } from './index.js';
-import { getUserViewFromRequest } from '../utils.js';
 import type { AiChatPayload } from '../common/payloads.js';
 import { getAllowance } from '../db/actions/ai.js';
+import { getUserViewFromRequest } from '../utils.js';
+import { dialog } from './index.js';
 
 export default function aiRouter(): Router {
   const router = express.Router();

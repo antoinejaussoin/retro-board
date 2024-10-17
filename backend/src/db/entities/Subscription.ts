@@ -1,11 +1,11 @@
 import {
-  Entity,
   Column,
-  PrimaryColumn,
   CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
+  Entity,
   Index,
+  ManyToOne,
+  PrimaryColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import type { Plan } from '../../common/index.js';
 import { UserEntity } from './UserIdentity.js';
