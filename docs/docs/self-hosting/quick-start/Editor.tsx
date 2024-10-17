@@ -11,7 +11,7 @@ import { FieldToggle } from './Toggle';
 import { Accordion } from './Accordion';
 
 function getRandomPassword() {
-  return generate(4).join('-');
+  return (generate(4) as string[]).join('-');
 }
 
 export default function Editor() {
