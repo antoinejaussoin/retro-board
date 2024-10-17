@@ -4,7 +4,7 @@
   "description": "An agile retrospective board - Powering www.retrospected.com",
   "private": true,
   "scripts": {
-    "lint": "cd frontend && yarn lint && cd ../backend && yarn lint",
+    "lint": "yarn biome ci",
     "clean": "del ./{frontend,backend,common,maintenance}/yarn.lock && del ./yarn.lock && del ./{frontend,backend,common,maintenance}/node_modules && del ./node_modules",
     "frontend": "cd frontend && yarn start && cd ..",
     "backend": "cd backend && yarn start && cd ..",

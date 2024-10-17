@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'node:fs';
 import { basename, join } from 'node:path';
 import matter from 'gray-matter';
 import { groupBy, sortBy, values } from 'lodash-es';

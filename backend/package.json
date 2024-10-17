@@ -14,8 +14,9 @@
     "revert": "typeorm-ts-node-esm -d src/db/index.ts migration:revert",
     "lint": "biome lint",
     "test": "yarn jest",
+    "ci-lint": "biome ci",
     "ci-test": "CI=true yarn test",
-    "fix": "biome lint --write",
+    "fix": "biome check --write",
     "backend-production": "yarn migrate-production && cd ./dist/src && node --import ../instrument.mjs index.js",
     "migrate-production": "typeorm -d dist/src/db/index.js migration:run",
     "copy-templates": "copyfiles -u 0 src/**/*.html dist/"

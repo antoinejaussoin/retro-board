@@ -1,4 +1,4 @@
-name: 'Tests & Linting'
+name: "Tests & Linting"
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
           node-version: 20
       - run: yarn
       - run: yarn ci-test
-      - run: yarn lint
+      - run: yarn ci-lint
       - run: yarn build
   test-backend:
     runs-on: ubuntu-latest
@@ -33,7 +33,7 @@ jobs:
           node-version: 20
       - run: yarn
       - run: yarn ci-test
-      - run: yarn lint
+      - run: yarn ci-lint
       - run: yarn build
   test-marketing:
     runs-on: ubuntu-latest
@@ -46,7 +46,7 @@ jobs:
         with:
           node-version: 20
       - run: yarn
-      - run: yarn lint
+      - run: yarn ci-lint
       - run: yarn build
   test-docs:
     runs-on: ubuntu-latest

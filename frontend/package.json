@@ -96,6 +96,7 @@
     "build": "NODE_ENV=production tsc && vite build",
     "lint": "biome lint",
     "test": "vitest",
+    "ci-lint": "biome ci",
     "ci-test": "CI=true yarn test",
     "analyze": "source-map-explorer build/static/js/*",
     "watch": "tsc --watch --noEmit"
