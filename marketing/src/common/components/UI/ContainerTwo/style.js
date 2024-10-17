@@ -10,11 +10,13 @@ const ContainerWrapper = styled.div`
       max-width: none !important;
     `};
   ${(props) =>
-    (props.noGutter &&
-      css`
+    (
+      props.noGutter &&
+        css`
         padding-left: 0;
         padding-right: 0;
-      `) ||
+      `
+    ) ||
     css`
       padding-left: 30px;
       padding-right: 30px;

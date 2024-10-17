@@ -9,11 +9,11 @@ class DateRangePickerBox extends Component {
   constructor(props) {
     super(props);
     const { item } = this.props;
-    let date,
-      startDate,
-      endDate = null;
-    const separator = item && item.separator ? item.separator : '-';
-    const dateFormat = item && item.format ? item.format : 'llll';
+    let date;
+    let startDate;
+    let endDate = null;
+    const separator = item?.separator ? item.separator : '-';
+    const dateFormat = item?.format ? item.format : 'llll';
     if (date) {
       const dates = date.split(` ${separator} `);
       startDate = moment(dates[0], dateFormat);

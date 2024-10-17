@@ -36,7 +36,7 @@ export const base = compose(
   alignSelf,
   borders,
   borderColor,
-  display
+  display,
 );
 
 base.propTypes = {

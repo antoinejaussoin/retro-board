@@ -11,7 +11,6 @@ export function localeToDateFns(locale: string): Locale {
       return de;
     case 'nl':
       return nl;
-    case 'en':
     default:
       return en;
   }

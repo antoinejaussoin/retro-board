@@ -6,7 +6,7 @@ import { base, themed } from '../base';
 const LinkWrapper = styled('a')(
   { textDecoration: 'none', alignItems: 'center' },
   base,
-  themed('Link')
+  themed('Link'),
 );
 
 const Link = ({ children, ...props }) => (

@@ -11,7 +11,8 @@ const handleChange = (props) => {
 //Main Component
 const RangeBox = ({ className, labelText, labelPosition, type, ...props }) => {
   const { min, max } = props;
-  let initValue, lastValue;
+  let initValue;
+  let lastValue;
   initValue = min ? min : 0;
   lastValue = max ? max : 100;
 

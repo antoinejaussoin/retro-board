@@ -8,11 +8,11 @@ const Rating = ({ rating }) => {
   for (let i = 0; i < 5; i++) {
     if (i < rating) {
       totalRating.push(
-        <Icon key={`rating-key${i}`} icon={star} className="star" />
+        <Icon key={`rating-key${i}`} icon={star} className="star" />,
       );
     } else {
       totalRating.push(
-        <Icon key={`rating-key${i}`} icon={starO} className="star-o" />
+        <Icon key={`rating-key${i}`} icon={starO} className="star-o" />,
       );
     }
   }

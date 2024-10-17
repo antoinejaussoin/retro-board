@@ -37,9 +37,6 @@ import dribbble from '@/common/assets/image/webAppCreative/icons/dribbble.png';
 
 export const clients = [envato, evernote, forbes, geekwire, slack, usaToday];
 
-
-
-
 export const pricing = [
   {
     id: 1,
@@ -128,7 +125,8 @@ export const posts = [
     id: 3,
     date: 'Dec 8, 2020',
     image: post3,
-    title: `Why You Might Want to Reconsider with Tracking First Meaningful Paint`,
+    title:
+      'Why You Might Want to Reconsider with Tracking First Meaningful Paint',
     excerpt: {
       label: 'Learn More',
       link: '#',

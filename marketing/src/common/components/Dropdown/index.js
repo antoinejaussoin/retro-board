@@ -40,12 +40,11 @@ const DropdownMenu = (props) => {
           className={className}
           dropdownDirection={dropdownDirection}
         >
-          {dropdownItems &&
-            dropdownItems.map((item, index) => (
-              <DropdownMenuItemWrapper key={index} onClick={handleToggle}>
-                {item}
-              </DropdownMenuItemWrapper>
-            ))}
+          {dropdownItems?.map((item, index) => (
+            <DropdownMenuItemWrapper key={index} onClick={handleToggle}>
+              {item}
+            </DropdownMenuItemWrapper>
+          ))}
         </DropdownMenuItemsWrapper>
       )}
     </DropdownMenuWrapper>

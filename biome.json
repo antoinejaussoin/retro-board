@@ -3,7 +3,7 @@
   "vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
   "files": {
     "ignoreUnknown": false,
-    "ignore": ["dist/**/*"],
+    "ignore": ["dist/**/*", ".next/**/*"],
     "include": ["src/**/*.js", "src/**/*.ts"]
   },
   "formatter": { "enabled": true, "indentStyle": "space", "indentWidth": 2, "ignore": ["backend/src/db/migrations"] },
@@ -13,7 +13,7 @@
     "rules": {
       "recommended": true
     },
-    "ignore": ["backend/src/db/migrations"]
+    "ignore": ["backend/src/db/migrations", "marketing/src/common"]
   },
   "javascript": { "formatter": { "quoteStyle": "single" } },
   "overrides": [

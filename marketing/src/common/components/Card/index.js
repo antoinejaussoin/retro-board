@@ -27,7 +27,7 @@ const CardWrapper = styled('div')(
   backgroundRepeat,
   opacity,
   cards,
-  themed('Card')
+  themed('Card'),
 );
 
 const Card = ({ children, ...props }) => (

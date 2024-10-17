@@ -4,6 +4,7 @@ const getRealHeight = (node: HTMLElement) => ({
   opacity: 1,
 });
 const getCurrentHeight = (node: HTMLElement) => ({ height: node.offsetHeight });
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const skipOpacityTransition = (_: unknown, event: any) =>
   event.propertyName === 'height';
 

@@ -10,7 +10,7 @@ const ImageWrapper = styled('img')(
     height: 'auto',
   },
   base,
-  themed('Image')
+  themed('Image'),
 );
 
 const Image = ({ src, alt, ...props }) => (

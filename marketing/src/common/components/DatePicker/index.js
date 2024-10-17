@@ -8,7 +8,7 @@ import DatePickerStyle from './datepicker.style';
 class DatePicker extends Component {
   constructor(props) {
     super(props);
-    let date = null;
+    const date = null;
     this.state = {
       focused: false,
       date,
@@ -66,7 +66,7 @@ class DatePicker extends Component {
 
     // DatePicker Props List
     const datePickerPropsOptions = {
-      id: item && item.id ? item.id : 'unique_id',
+      id: item?.id ? item.id : 'unique_id',
       date,
       focused,
       placeholder,

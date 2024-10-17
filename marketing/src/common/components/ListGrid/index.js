@@ -70,7 +70,7 @@ const ListGrid = ({
     limits.push(i);
   }
   // const grabPostNumber = data.length;
-  let showButton = postCount < totalPost;
+  const showButton = postCount < totalPost;
 
   return (
     <>
@@ -89,15 +89,12 @@ const ListGrid = ({
             ))}
           </>
         ) : null}
-        {loading && (
-          <>
-            {limits.map((index) => (
-              <Box width={columnWidth} key={index} {...componentContainerStyle}>
-                {placeholder ? placeholder : <Text content="Loading ..." />}
-              </Box>
-            ))}
-          </>
-        )}
+        {loading &&
+          limits.map((index) => (
+            <Box width={columnWidth} key={index} {...componentContainerStyle}>
+              {placeholder ? placeholder : <Text content="Loading ..." />}
+            </Box>
+          ))}
       </Box>
       {postCount < totalPost && (
         <LoadMore

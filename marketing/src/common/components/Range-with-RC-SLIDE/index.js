@@ -66,10 +66,12 @@ const RangeBox = (props) => {
     handleChangefunc,
     ...others
   } = props;
-  const defaultThresholdInit =
-    rangeDefaultValue && rangeDefaultValue[0] ? rangeDefaultValue[0] : 0;
-  const defaultThresholdLast =
-    rangeDefaultValue && rangeDefaultValue[1] ? rangeDefaultValue[1] : 0;
+  const defaultThresholdInit = rangeDefaultValue?.[0]
+    ? rangeDefaultValue[0]
+    : 0;
+  const defaultThresholdLast = rangeDefaultValue?.[1]
+    ? rangeDefaultValue[1]
+    : 0;
   const toolTipConfig = {
     placement,
     prefixCls: 'reusecore__rc_slider_tooltip rc-slider-tooltip',
@@ -91,7 +93,13 @@ const RangeBox = (props) => {
   );
 };
 
-export default function RangeWithRCSlide({ className, labelText, labelPosition, type, ...props }) {
+export default function RangeWithRCSlide({
+  className,
+  labelText,
+  labelPosition,
+  type,
+  ...props
+}) {
   // Add all classs to an array
   const addAllClasses = ['reusecore__rangebox'];
   // Add label position class

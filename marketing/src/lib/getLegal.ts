@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { join } from 'path';
+import { join } from 'node:path';
 import matter from 'gray-matter';
 
 export type LegalDocumentMetadata = {

@@ -25,7 +25,7 @@ const Tab = ({ active, className, children }) => {
     <TabWrapper className={addAllClasses.join(' ')}>
       <TabMenu className="tab_menu">
         {children.map((element, index) => {
-          let activeClass = index === state.active ? 'active' : '';
+          const activeClass = index === state.active ? 'active' : '';
           return (
             <MenuItem
               key={index}
