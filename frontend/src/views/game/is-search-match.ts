@@ -1,8 +1,8 @@
 import type { Post } from 'common';
-import { postPermissionLogic } from './board/permissions-logic';
-import { useCallback } from 'react';
 import useBackendCapabilities from 'global/useBackendCapabilities';
+import { useCallback } from 'react';
 import useUser from 'state/user/useUser';
+import { postPermissionLogic } from './board/permissions-logic';
 import useSession from './useSession';
 
 type SearchPredicate = (post: Post) => boolean;

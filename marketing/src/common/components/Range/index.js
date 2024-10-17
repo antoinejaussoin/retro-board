@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import RangeBoxStyle from './range.style';
+import React, { Fragment } from 'react';
 import Rheostat from 'rheostat';
+import RangeBoxStyle from './range.style';
 import 'rheostat/initialize';
 
 const handleChange = (props) => {

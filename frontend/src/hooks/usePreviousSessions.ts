@@ -1,7 +1,7 @@
 import type { SessionMetadata } from 'common';
-import useUser from '../state/user/useUser';
+import { useCallback, useEffect, useState } from 'react';
 import { fetchPreviousSessions } from '../api';
-import { useState, useEffect, useCallback } from 'react';
+import useUser from '../state/user/useUser';
 
 let CACHE: SessionMetadata[] = [];
 

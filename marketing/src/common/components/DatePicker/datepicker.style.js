@@ -1,10 +1,10 @@
-import styled from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
+import styled from 'styled-components';
 import { base } from '../base';
 
-import ThemedStyleSheet from 'react-with-styles/lib/ThemedStyleSheet';
-import aphroditeInterface from 'react-with-styles-interface-aphrodite';
 import DefaultTheme from 'react-dates/lib/theme/DefaultTheme';
+import aphroditeInterface from 'react-with-styles-interface-aphrodite';
+import ThemedStyleSheet from 'react-with-styles/lib/ThemedStyleSheet';
 
 ThemedStyleSheet.registerInterface(aphroditeInterface);
 ThemedStyleSheet.registerTheme(DefaultTheme);

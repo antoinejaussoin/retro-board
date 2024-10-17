@@ -1,5 +1,5 @@
-import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Fragment, Component } from 'react';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import DatePickerStyle from './datepicker.style';

@@ -1,8 +1,8 @@
-import { getMovingEntities, calculateRank } from '../moving-logic';
-import type { ColumnContent } from '../../types';
-import type { Post, User, PostGroup } from 'common';
-import { getMiddle, getNext, getPrevious } from '../../lexorank';
+import type { Post, PostGroup, User } from 'common';
 import { describe, expect, it } from 'vitest';
+import { getMiddle, getNext, getPrevious } from '../../lexorank';
+import type { ColumnContent } from '../../types';
+import { calculateRank, getMovingEntities } from '../moving-logic';
 
 function p(
   id: string,

@@ -1,14 +1,14 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import {
-  AccordionWrapper,
+  AccordionBodyWrapper,
+  AccordionItemButtonWrapper,
   AccordionItemWrapper,
   AccordionTitleWrapper,
-  AccordionItemButtonWrapper,
-  AccordionBodyWrapper,
+  AccordionWrapper,
+  CloseIcon,
   IconWrapper,
   OpenIcon,
-  CloseIcon,
 } from './accordion.style';
 
 const Accordion = ({

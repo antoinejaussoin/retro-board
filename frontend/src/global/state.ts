@@ -1,6 +1,6 @@
-import { selector } from 'recoil';
-import type { BackendCapabilities } from 'common';
 import { fetchBackendCapabilities } from 'api';
+import type { BackendCapabilities } from 'common';
+import { selector } from 'recoil';
 
 const defaultBackendCapabilities: BackendCapabilities = {
   adminEmail: '',

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import ComponentWrapper from './radioGroup.style';
 
 const RadioGroup = ({ className, name, value, items, onUpdate }) => {

@@ -1,10 +1,10 @@
 import type {
+  Message,
   Post,
   PostGroup,
   Session,
-  VoteExtract,
-  Message,
   SessionSettings,
+  VoteExtract,
 } from 'common';
 import { findIndex } from 'lodash';
 import { useCallback } from 'react';

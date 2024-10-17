@@ -1,19 +1,19 @@
 import {
-  postPermissionLogic,
-  sessionPermissionLogic,
-} from '../permissions-logic';
-import {
+  type BackendCapabilities,
   type Post,
   type Session,
-  type User,
   type SessionOptions,
+  type User,
+  type VoteExtract,
   type VoteType,
   defaultOptions,
-  type VoteExtract,
-  type BackendCapabilities,
 } from 'common';
 import { v4 } from 'uuid';
 import { describe, expect, it } from 'vitest';
+import {
+  postPermissionLogic,
+  sessionPermissionLogic,
+} from '../permissions-logic';
 
 const userBase: User = {
   photo: null,

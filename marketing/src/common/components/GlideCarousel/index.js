@@ -1,6 +1,6 @@
-import React, { Fragment, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import Glide from '@glidejs/glide';
+import PropTypes from 'prop-types';
+import React, { Fragment, useEffect } from 'react';
 import '@glidejs/glide/dist/css/glide.core.min.css';
 
 import GlideWrapper, {

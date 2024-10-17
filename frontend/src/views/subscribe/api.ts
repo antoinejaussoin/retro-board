@@ -1,7 +1,7 @@
 import type {
   CreateSubscriptionPayload,
-  Plan,
   Currency,
+  Plan,
   StripeLocales,
 } from 'common';
 import { fetchGet, fetchPostGet } from '../../api/fetch';

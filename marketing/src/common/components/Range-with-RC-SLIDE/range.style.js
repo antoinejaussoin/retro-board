@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
+import styled from 'styled-components';
 import { base } from '../base';
 
 const RangeBoxStyle = styled.div``;

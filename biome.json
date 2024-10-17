@@ -6,7 +6,12 @@
     "ignore": ["dist/**/*", ".next/**/*"],
     "include": ["src/**/*.js", "src/**/*.ts"]
   },
-  "formatter": { "enabled": true, "indentStyle": "space", "indentWidth": 2, "ignore": ["backend/src/db/migrations"] },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "ignore": ["backend/src/db/migrations"]
+  },
   "organizeImports": { "enabled": true },
   "linter": {
     "enabled": true,
@@ -22,7 +27,7 @@
       "linter": {
         "rules": {
           "correctness": {
-						"noUndeclaredVariables": "off"
+            "noUndeclaredVariables": "off"
           }
         }
       }

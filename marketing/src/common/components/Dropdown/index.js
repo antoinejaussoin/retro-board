@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
-  DropdownMenuWrapper,
-  DropdownMenuItemsWrapper,
   DropdownMenuItemWrapper,
+  DropdownMenuItemsWrapper,
+  DropdownMenuWrapper,
 } from './dropdown.style';
 
 const DropdownMenu = (props) => {

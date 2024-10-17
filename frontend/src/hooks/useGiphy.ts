@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getGiphyUrl } from '../api';
-import useOriginal from './useOriginal';
 import { trackEvent } from '../track';
+import useOriginal from './useOriginal';
 
 /**
  * Implements logic to show or hide the Gipy Image.

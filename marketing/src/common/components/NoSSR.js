@@ -1,5 +1,5 @@
-import { Fragment } from 'react';
 import dynamic from 'next/dynamic';
+import { Fragment } from 'react';
 
 const NoSSR = ({ children }) => children;
 

@@ -1,25 +1,25 @@
 import type {
-  Session,
-  SessionTemplate,
-  SessionMetadata,
-  RegisterPayload,
-  ValidateEmailPayload,
-  ResetPasswordPayload,
-  ResetChangePasswordPayload,
-  FullUser,
-  Product,
   BackendCapabilities,
   DeleteAccountPayload,
+  FullUser,
+  Product,
+  RegisterPayload,
+  ResetChangePasswordPayload,
+  ResetPasswordPayload,
+  Session,
+  SessionMetadata,
+  SessionTemplate,
+  ValidateEmailPayload,
 } from 'common';
-import config from '../utils/getConfig';
 import { v4 } from 'uuid';
 import { CHECK_PREFIX, encrypt } from '../crypto/crypto';
+import config from '../utils/getConfig';
 import { getItem, setItem } from '../utils/localStorage';
 import {
+  fetchDelete,
   fetchGet,
   fetchPost,
   fetchPostGet,
-  fetchDelete,
   requestConfig,
 } from './fetch';
 

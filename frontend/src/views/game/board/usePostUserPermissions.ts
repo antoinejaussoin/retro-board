@@ -1,12 +1,12 @@
 import type { Post } from 'common';
-import {
-  postPermissionLogic,
-  type PostUserPermissions,
-} from './permissions-logic';
+import useBackendCapabilities from 'global/useBackendCapabilities';
 import useUser from '../../../state/user/useUser';
 import useSession from '../useSession';
 import { useShouldLockSession } from '../useTimer';
-import useBackendCapabilities from 'global/useBackendCapabilities';
+import {
+  type PostUserPermissions,
+  postPermissionLogic,
+} from './permissions-logic';
 
 export function usePostUserPermissions(post: Post): PostUserPermissions {
   const { session } = useSession();

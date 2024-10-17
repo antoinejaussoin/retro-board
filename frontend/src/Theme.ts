@@ -1,5 +1,5 @@
-import { type PaletteColorOptions, createTheme } from '@mui/material/styles';
 import { colors } from '@mui/material';
+import { type PaletteColorOptions, createTheme } from '@mui/material/styles';
 import config from './utils/getConfig';
 
 const theme = createTheme({

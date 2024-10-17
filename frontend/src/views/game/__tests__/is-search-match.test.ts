@@ -1,5 +1,5 @@
-import { searchLogic } from '../is-search-match';
 import { describe, expect, it } from 'vitest';
+import { searchLogic } from '../is-search-match';
 
 describe('Search Match logic', () => {
   it('Should be a match if there is no search (as everything matches)', () => {

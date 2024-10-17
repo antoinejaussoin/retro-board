@@ -1,13 +1,13 @@
-import { useMemo } from 'react';
-import flatten from 'lodash/flatten';
-import sortedUniq from 'lodash/sortedUniq';
-import sortBy from 'lodash/sortBy';
 import { format } from 'date-fns';
-import useColumns from '../useColumns';
+import flatten from 'lodash/flatten';
+import sortBy from 'lodash/sortBy';
+import sortedUniq from 'lodash/sortedUniq';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSummary } from './useSummary';
-import type { ColumnStatsItem, ActionItem } from './types';
+import useColumns from '../useColumns';
 import useSession from '../useSession';
+import type { ActionItem, ColumnStatsItem } from './types';
+import { useSummary } from './useSummary';
 
 export default function useMarkdown() {
   const { session } = useSession();

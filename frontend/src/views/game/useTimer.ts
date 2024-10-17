@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
-import { TimerState } from './state';
 import { useHasRunOut } from './TimerProvider';
+import { TimerState } from './state';
 import useSession from './useSession';
 
 export function useTimer() {

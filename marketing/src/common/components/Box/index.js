@@ -1,10 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import {
-  flexWrap,
-  flexDirection,
   alignItems,
+  flexDirection,
+  flexWrap,
   justifyContent,
 } from 'styled-system';
 import { base, themed } from '../base';

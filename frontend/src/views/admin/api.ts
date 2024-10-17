@@ -1,10 +1,10 @@
-import { fetchGet, fetchPatch, fetchPost } from '../../api/fetch';
 import type {
   AdminChangePasswordPayload,
   AdminStats,
   FullUser,
   MergeUsersPayload,
 } from 'common';
+import { fetchGet, fetchPatch, fetchPost } from '../../api/fetch';
 
 export async function changePassword(userId: string, password: string) {
   return await fetchPatch<AdminChangePasswordPayload>('/api/admin/user', {

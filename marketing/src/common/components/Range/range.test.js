@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
+import { string } from 'postcss-selector-parser';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import sinon from 'sinon';
 import RangeBox from './index';
-import { string } from 'postcss-selector-parser';
 
 describe('<RangeBox /> Component', () => {
   // const minProps = {

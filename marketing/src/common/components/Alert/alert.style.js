@@ -1,8 +1,8 @@
+import { themeGet } from '@styled-system/theme-get';
 import styled from 'styled-components';
 import { variant } from 'styled-system';
-import { themeGet } from '@styled-system/theme-get';
-import { colorStyle } from '../customVariant';
 import { base } from '../base';
+import { colorStyle } from '../customVariant';
 
 const AlertStyle = styled.div`
   /* Alert default style */

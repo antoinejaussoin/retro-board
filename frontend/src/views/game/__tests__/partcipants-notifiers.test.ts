@@ -1,10 +1,10 @@
 import type { Participant } from 'common';
+import { describe, expect, it } from 'vitest';
 import {
   getAddedParticipants,
   getRemovedParticipants,
   joinNames,
 } from '../participants-notifiers';
-import { describe, expect, it } from 'vitest';
 
 function p(id: string, online = true): Participant {
   return {

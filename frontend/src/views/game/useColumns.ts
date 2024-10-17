@@ -1,9 +1,9 @@
-import { useMemo } from 'react';
-import sortBy from 'lodash/sortBy';
-import { useTranslation } from 'react-i18next';
-import type { ColumnContent } from './types';
-import { extrapolate } from '../../state/columns';
 import type { ColumnDefinition, Post, PostGroup } from 'common';
+import sortBy from 'lodash/sortBy';
+import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { extrapolate } from '../../state/columns';
+import type { ColumnContent } from './types';
 import useSession from './useSession';
 
 const emptyPosts: Post[] = [];

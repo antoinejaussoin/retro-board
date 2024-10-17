@@ -5,16 +5,16 @@ import type {
   Session,
   User,
 } from 'common';
-import sortBy from 'lodash/sortBy';
+import useBackendCapabilities from 'global/useBackendCapabilities';
 import flattenDeep from 'lodash/flattenDeep';
-import type { ColumnContent } from '../types';
-import type { ColumnStats, ColumnStatsItem, Stats, ActionItem } from './types';
-import { countVotes, countVotesForGroup } from '../utils';
-import { postPermissionLogic } from '../board/permissions-logic';
+import sortBy from 'lodash/sortBy';
 import { useMemo } from 'react';
 import useUser from '../../../state/user/useUser';
+import { postPermissionLogic } from '../board/permissions-logic';
+import type { ColumnContent } from '../types';
 import useSession from '../useSession';
-import useBackendCapabilities from 'global/useBackendCapabilities';
+import { countVotes, countVotesForGroup } from '../utils';
+import type { ActionItem, ColumnStats, ColumnStatsItem, Stats } from './types';
 
 export function useSummary(columns: ColumnContent[]): Stats {
   const { session } = useSession();

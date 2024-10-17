@@ -1,19 +1,19 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import styled from 'styled-components';
 import {
-  borders,
-  borderColor,
-  borderRadius,
-  boxShadow,
   backgroundImage,
-  backgroundSize,
   backgroundPosition,
   backgroundRepeat,
+  backgroundSize,
+  borderColor,
+  borderRadius,
+  borders,
+  boxShadow,
   opacity,
 } from 'styled-system';
-import { cards } from '../customVariant';
 import { base, themed } from '../base';
+import { cards } from '../customVariant';
 
 const CardWrapper = styled('div')(
   base,

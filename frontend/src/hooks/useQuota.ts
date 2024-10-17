@@ -2,9 +2,9 @@ import type { Quota } from 'common';
 import { useCallback, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
 import {
-  quotaState,
   DEFAULT_QUOTA,
   LOCAL_STORAGE_POSTS_KEY,
+  quotaState,
 } from '../auth/QuotaManager';
 import useUser from '../state/user/useUser';
 import { setItem } from '../utils/localStorage';

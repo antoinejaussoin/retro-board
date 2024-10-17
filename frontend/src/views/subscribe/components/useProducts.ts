@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import type { Product } from 'common';
+import { useEffect, useState } from 'react';
 import { getProducts } from '../../../api';
 
 export default function useProducts(): Product[] {

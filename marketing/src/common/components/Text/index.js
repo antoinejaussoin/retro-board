@@ -1,12 +1,12 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import styled from 'styled-components';
 import {
   fontFamily,
   fontWeight,
-  textAlign,
-  lineHeight,
   letterSpacing,
+  lineHeight,
+  textAlign,
 } from 'styled-system';
 import { base, themed } from '../base';
 

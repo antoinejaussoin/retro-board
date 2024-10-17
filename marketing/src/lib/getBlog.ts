@@ -1,7 +1,7 @@
 import fs from 'fs';
+import { basename, join } from 'node:path';
 import matter from 'gray-matter';
-import { join, basename } from 'node:path';
-import { groupBy, values, sortBy } from 'lodash-es';
+import { groupBy, sortBy, values } from 'lodash-es';
 
 export type BlogMetadataGroup = {
   slug: string;

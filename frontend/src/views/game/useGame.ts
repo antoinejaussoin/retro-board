@@ -1,54 +1,54 @@
-import { useEffect, useMemo, useState, useCallback, useRef } from 'react';
 import {
   Actions,
+  type AllSessionSettings,
+  type ChatMessagePayload,
+  type Message,
+  type Participant,
   type Post,
   type PostGroup,
-  type VoteType,
-  type Participant,
+  type Session,
+  type SessionSettings,
   type UnauthorizedAccessPayload,
+  type VoteExtract,
+  type VoteType,
+  type WebsocketMessage,
+  type WsCancelVotesPayload,
+  type WsDeleteGroupPayload,
+  type WsDeletePostPayload,
+  type WsErrorPayload,
+  type WsGroupUpdatePayload,
   type WsLikeUpdatePayload,
   type WsPostUpdatePayload,
-  type WsDeletePostPayload,
-  type WsDeleteGroupPayload,
-  type VoteExtract,
-  type WsReceiveLikeUpdatePayload,
-  type WsErrorPayload,
-  type WebsocketMessage,
-  type Session,
-  type WsGroupUpdatePayload,
-  type Message,
-  type WsUserReadyPayload,
-  type ChatMessagePayload,
-  type WsCancelVotesPayload,
   type WsReceiveCancelVotesPayload,
+  type WsReceiveLikeUpdatePayload,
   type WsReceiveTimerStartPayload,
   type WsSaveSessionSettingsPayload,
-  type SessionSettings,
-  type AllSessionSettings,
+  type WsUserReadyPayload,
 } from 'common';
-import { v4 } from 'uuid';
+import { addSeconds } from 'date-fns';
+import { isProduction } from 'is-production';
+import { omit } from 'lodash';
 import find from 'lodash/find';
-import { setScope, trackAction, trackEvent } from '../../track';
-import io, { type Socket } from 'socket.io-client';
-import { useUserMetadata } from '../../state/user/useUser';
-import { getMiddle, getNext } from './lexorank';
 import { useSnackbar } from 'notistack';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSetRecoilState } from 'recoil';
+import io, { type Socket } from 'socket.io-client';
+import { v4 } from 'uuid';
+import useMutableRead from '../../hooks/useMutableRead';
+import { useUserMetadata } from '../../state/user/useUser';
+import { setScope, trackAction, trackEvent } from '../../track';
+import { getMiddle, getNext } from './lexorank';
 import {
   getAddedParticipants,
   getRemovedParticipants,
   joinNames,
 } from './participants-notifiers';
-import { omit } from 'lodash';
-import type { AckItem } from './types';
-import useMutableRead from '../../hooks/useMutableRead';
-import useParticipants from './useParticipants';
-import useUnauthorised from './useUnauthorised';
-import useSession from './useSession';
-import { useTranslation } from 'react-i18next';
-import { useSetRecoilState } from 'recoil';
 import { TimerState } from './state';
-import { addSeconds } from 'date-fns';
-import { isProduction } from 'is-production';
+import type { AckItem } from './types';
+import useParticipants from './useParticipants';
+import useSession from './useSession';
+import useUnauthorised from './useUnauthorised';
 
 export type Status =
   /**

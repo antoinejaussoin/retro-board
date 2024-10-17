@@ -1,17 +1,17 @@
 import styled from 'styled-components';
 import {
-  fontSize,
-  fontWeight,
+  borderRadius,
   boxShadow,
   color,
-  space,
-  borderRadius,
-  width,
-  maxWidth,
-  minWidth,
+  fontSize,
+  fontWeight,
   height,
   maxHeight,
+  maxWidth,
   minHeight,
+  minWidth,
+  space,
+  width,
 } from 'styled-system';
 
 const TooltipStyle = styled.span`

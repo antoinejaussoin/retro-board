@@ -1,9 +1,9 @@
 import type { ColumnDefinition, ColumnDefinitionType } from 'common';
-import { v4 } from 'uuid';
-import keyBy from 'lodash/keyBy';
-import type { ColumnSettings, Template, TranslationFunction } from './types';
-import { getTemplateColumns } from './templates';
 import isEqual from 'lodash/isEqual';
+import keyBy from 'lodash/keyBy';
+import { v4 } from 'uuid';
+import { getTemplateColumns } from './templates';
+import type { ColumnSettings, Template, TranslationFunction } from './types';
 
 export function buildDefaults(
   template: Template,

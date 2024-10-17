@@ -1,6 +1,6 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ReactSelect from 'react-select';
-import PropTypes from 'prop-types';
 import SelectStyle from './select.style';
 
 const Select = ({ className, labelText, labelPosition, ...props }) => {

@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
 import Link from 'next/link';
+import React, { Fragment } from 'react';
 import { ListWrapper } from './list.style';
 
 const List = ({ className, icon, text, link, ...props }) => (

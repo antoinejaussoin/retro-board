@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
+import React, { Fragment } from 'react';
 import 'rc-slider/assets/index.css';
 import RangeBoxStyle from './range.style';
 

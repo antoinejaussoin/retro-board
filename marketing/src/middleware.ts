@@ -1,6 +1,6 @@
 import { addYears } from 'date-fns';
 import type { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies';
-import { NextResponse, type NextRequest } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import parse from 'url-parse';
 
 // https://www.retrospected.com/?campaignid=19686942887&creative=648178043912&device=c&keyword=retro
