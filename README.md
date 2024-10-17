@@ -98,6 +98,12 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 5.5.0
+
+- Migrate from ESLint and Pretter to Biome, a single tool for linting, formatting and more
+- Upgrade dependencies across the board
+- Fix an issue with running the backend in development mode with ts-node and recent versions of Node
+
 ### Version 5.4.1
 
 - Add the ability to remove the Cookie Banner (GDPR) on Self-Hosted instances (which is now the case by default)
