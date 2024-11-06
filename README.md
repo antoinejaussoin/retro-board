@@ -98,6 +98,10 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 5.5.1
+
+- Hardcode a licence for the Ministère de l'intérieur (France) for their self-hosted instance
+
 ### Version 5.5.0
 
 - Migrate from ESLint and Pretter to Biome, a single tool for linting, formatting and more

@@ -45,6 +45,12 @@ const hardcodedLicences: HardcodedLicence[] = [
     hash: '$2a$10$R1N5dO2kz78iG3wk6DPs1ODwY9YlHz7uWoIY1TjsasHb1mDOLDSdu',
     encryptedOwner: 'U2FsdGVkX19/vrNOsM2pKKpKOf4ej7UUSfWHwNU9yeY=',
   },
+  {
+    // Ministère de l'intérieur
+    hash: '$2a$10$gRfPyZCnZ6Vj3i7sn9W2YOmTF6QRBq9ha5d.52xpo6vW0htyagnB2',
+    encryptedOwner:
+      'U2FsdGVkX1+HbvAW4sVZW4V5U22S/FY1uwbp/ks1JJnn2bc/iwbaGYcRrS5UCBer',
+  },
 ];
 
 export function isSelfHostedAndLicenced() {
