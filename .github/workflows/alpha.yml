@@ -30,7 +30,7 @@ jobs:
           file: frontend/Dockerfile
           context: frontend
           tags: retrospected/frontend:alpha
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: true
 
   backend:
@@ -58,7 +58,7 @@ jobs:
           file: backend/Dockerfile
           context: backend
           tags: retrospected/backend:alpha
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: true
 
   marketing:
@@ -86,7 +86,7 @@ jobs:
           file: marketing/Dockerfile
           context: marketing
           tags: retrospected/marketing:alpha
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: true
 
   documentation:
@@ -114,7 +114,7 @@ jobs:
           file: docs/Dockerfile
           context: docs
           tags: retrospected/docs:alpha
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: true
 
   integration:
