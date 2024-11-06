@@ -32,6 +32,8 @@
     "@use-it/event-listener": "^0.1.7",
     "animate.css": "^4.1.1",
     "date-fns": "^2.30.0",
+    "eslint": "8.45.0",
+    "eslint-config-next": "13.4.12",
     "fs": "^0.0.1-security",
     "gray-matter": "^4.0.3",
     "i18next": "^23.2.11",
