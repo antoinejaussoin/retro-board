@@ -1,8 +1,8 @@
-name: 'Alpha Build'
+name: "Alpha Build"
 
 on:
   push:
-    branches: [v543/deps]
+    branches: [v552/fix-docker-build]
 
 jobs:
   frontend:
@@ -14,13 +14,10 @@ jobs:
         uses: martinbeentjes/npm-get-version-action@master
       - name: Echo VERSION
         run: echo ${{ steps.package.outputs.current-version }}
-      - name: Setup QEMU
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
-        with:
-          platforms: all
-      - name: Setup BuildX
-        uses: docker/setup-qemu-action@v3
-        id: buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
@@ -33,7 +30,7 @@ jobs:
           file: frontend/Dockerfile
           context: frontend
           tags: retrospected/frontend:alpha
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: true
 
   backend:
@@ -45,13 +42,10 @@ jobs:
         uses: martinbeentjes/npm-get-version-action@master
       - name: Echo VERSION
         run: echo ${{ steps.package.outputs.current-version }}
-      - name: Setup QEMU
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
-        with:
-          platforms: all
-      - name: Setup BuildX
-        uses: docker/setup-qemu-action@v3
-        id: buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
@@ -64,7 +58,7 @@ jobs:
           file: backend/Dockerfile
           context: backend
           tags: retrospected/backend:alpha
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: true
 
   marketing:
@@ -76,13 +70,10 @@ jobs:
         uses: martinbeentjes/npm-get-version-action@master
       - name: Echo VERSION
         run: echo ${{ steps.package.outputs.current-version }}
-      - name: Setup QEMU
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
-        with:
-          platforms: all
-      - name: Setup BuildX
-        uses: docker/setup-qemu-action@v3
-        id: buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
@@ -95,7 +86,7 @@ jobs:
           file: marketing/Dockerfile
           context: marketing
           tags: retrospected/marketing:alpha
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: true
 
   documentation:
@@ -107,13 +98,10 @@ jobs:
         uses: martinbeentjes/npm-get-version-action@master
       - name: Echo VERSION
         run: echo ${{ steps.package.outputs.current-version }}
-      - name: Setup QEMU
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
-        with:
-          platforms: all
-      - name: Setup BuildX
-        uses: docker/setup-qemu-action@v3
-        id: buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
@@ -126,7 +114,7 @@ jobs:
           file: docs/Dockerfile
           context: docs
           tags: retrospected/docs:alpha
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: true
 
   integration:
@@ -152,26 +140,26 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: retrospected/frontend:alpha
-          format: 'table'
-          exit-code: '1'
+          format: "table"
+          exit-code: "1"
           ignore-unfixed: true
-          vuln-type: 'os,library'
-          severity: 'CRITICAL'
+          vuln-type: "os,library"
+          severity: "CRITICAL"
       - name: Trivy - Backend
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: retrospected/backend:alpha
-          format: 'table'
-          exit-code: '1'
+          format: "table"
+          exit-code: "1"
           ignore-unfixed: true
-          vuln-type: 'os,library'
-          severity: 'CRITICAL'
+          vuln-type: "os,library"
+          severity: "CRITICAL"
       - name: Trivy - Marketing
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: retrospected/marketing:alpha
-          format: 'table'
-          exit-code: '1'
+          format: "table"
+          exit-code: "1"
           ignore-unfixed: true
-          vuln-type: 'os,library'
-          severity: 'CRITICAL'
+          vuln-type: "os,library"
+          severity: "CRITICAL"
