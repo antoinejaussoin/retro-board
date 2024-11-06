@@ -1,7 +1,7 @@
 # This must be run with the Docker context set to the root folder of the repository
 # (the one with the yarn.lock file)
 
-FROM --platform=$BUILDPLATFORM node:20-alpine as Node
+FROM --platform=$BUILDPLATFORM node:20-alpine AS node
 
 ENV NODE_ENV=production
 
@@ -30,7 +30,7 @@ RUN yarn build
 
 FROM nginx:alpine
 
-COPY --from=Node /home/node/app/build /usr/share/nginx/html
+COPY --from=node /home/node/app/build /usr/share/nginx/html
 COPY ./docker/nginx.conf /etc/nginx/conf.d/default.conf
 
 CMD ["nginx", "-g", "daemon off;"]
