@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/node";
-import packageJson from './package.json' assert { type: 'json' };
+import packageJson from './package.json' with { type: 'json' };
 
 const { version } = packageJson;
 const useSentry = !!process.env.SENTRY_URL&& process.env.SENTRY_URL!== 'NO_SENTRY';
