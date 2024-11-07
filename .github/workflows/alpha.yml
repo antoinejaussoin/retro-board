@@ -2,7 +2,7 @@ name: "Alpha Build"
 
 on:
   push:
-    branches: [v552/fix-docker-build]
+    branches: [v552/integration]
 
 jobs:
   frontend:

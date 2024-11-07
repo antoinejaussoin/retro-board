@@ -4,6 +4,9 @@ WORKDIR /usr/src/backend
 
 ENV NODE_ENV=production
 
+RUN apk update
+RUN apk add curl
+
 COPY ./yarn.lock ./
 COPY ./package.json ./
 
