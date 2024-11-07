@@ -153,9 +153,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Run Integration Tests
         run: docker compose -f ./integration/docker-compose.ci.master.yml up --exit-code-from cypress
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: Test videos
-          path: integration/cypress/videos
+          path: integration/cypress/videos/
           retention-days: 14
