@@ -98,6 +98,11 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 5.5.2
+
+- Fix integration tests by adding a health check so that the frontend does not start before the backend is ready
+- Remove Trivy from the CI pipeline, as it was just not working at all
+
 ### Version 5.5.1
 
 - Hardcode a licence for the Ministère de l'intérieur (France) for their self-hosted instance
