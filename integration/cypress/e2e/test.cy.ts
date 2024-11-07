@@ -20,6 +20,9 @@ describe('Post workflow', () => {
   it('Should allow to login as anonymous and write a post', () => {
     cy.visit('/');
 
+    // Wait for the page to load (and the server to be ready)
+    cy.get('#content').get('h1', { timeout }).should('contain', 'Welcome!');
+
     // Login anonymously
     get('login-anonymous').click();
 
