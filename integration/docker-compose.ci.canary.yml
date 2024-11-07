@@ -29,6 +29,11 @@ services:
     image: retrospected/backend:canary
     depends_on:
       - redis
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3201/healthz"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
     environment:
       SELF_HOSTED_ADMIN: 'your@email.com'
       DB_PASSWORD: some-password
@@ -43,7 +48,8 @@ services:
   frontend:
     image: retrospected/frontend:canary
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     restart: unless-stopped
     logging:
       driver: 'json-file'
