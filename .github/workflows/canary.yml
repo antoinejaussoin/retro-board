@@ -165,7 +165,7 @@ jobs:
     needs: [frontend, backend, marketing]
     steps:
       - name: Trivy - Frontend
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@0.28.0
         with:
           image-ref: retrospected/frontend:canary
           format: "table"
@@ -174,7 +174,7 @@ jobs:
           vuln-type: "os,library"
           severity: "CRITICAL"
       - name: Trivy - Backend
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@0.28.0
         with:
           image-ref: retrospected/backend:canary
           format: "table"
@@ -183,7 +183,7 @@ jobs:
           vuln-type: "os,library"
           severity: "CRITICAL"
       - name: Trivy - Marketing
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@0.28.0
         with:
           image-ref: retrospected/marketing:canary
           format: "table"

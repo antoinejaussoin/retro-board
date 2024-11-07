@@ -2,7 +2,7 @@ name: "Integration only (test)"
 
 on:
   push:
-    branches: [v552/integrationx]
+    branches: [v552/integration]
 
 jobs:
   integration:
