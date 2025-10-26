@@ -7,7 +7,8 @@ import http from 'node:http';
 import chalk from 'chalk-template';
 import session from 'express-session';
 import passport from 'passport';
-import db from './db/index.js';
+import { initializeConnections } from './db/connection.js';
+import { healthCheckHandler } from './db/health-check.js';
 import config from './config.js';
 import passportInit from './auth/passport.js';
 import authRouter from './auth/router.js';
@@ -58,7 +59,7 @@ import rateLimit from 'express-rate-limit';
 import { fetchLicence, validateLicence } from './db/actions/licences.js';
 import { hasField } from './security/payload-checker.js';
 import mung from 'express-mung';
-import { QueryFailedError } from 'typeorm';
+import { isDatabaseError, getUserFriendlyMessage } from './db/error-handler.js';
 import { deleteAccount } from './db/actions/delete.js';
 import { noop } from 'lodash-es';
 import { createDemoSession } from './db/actions/demo.js';
@@ -227,10 +228,8 @@ app.get('/api/ping', (_req, res) => {
   res.send('pong');
 });
 
-// Liveliness Probe
-app.get('/healthz', async (_, res) => {
-  res.status(200).send();
-});
+// Liveliness Probe (includes database health check)
+app.get('/healthz', healthCheckHandler);
 
 io.use(function (socket, next) {
   // biome-ignore lint/complexity/useArrowFunction: <explanation>
@@ -241,7 +240,7 @@ io.use(function (socket, next) {
 app.set('io', io);
 const port = config.BACKEND_PORT || 8081;
 
-db().then(() => {
+initializeConnections().then(() => {
   passportInit();
   game(io);
 
