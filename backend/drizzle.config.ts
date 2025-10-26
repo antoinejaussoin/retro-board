@@ -15,6 +15,4 @@ export default defineConfig({
   },
   verbose: true,
   strict: true,
-  // Use snake_case naming to match TypeORM strategy
-  casing: 'snake_case',
 });

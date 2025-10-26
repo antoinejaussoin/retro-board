@@ -16,6 +16,8 @@
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
+    "migration:report": "node --loader ts-node/esm src/db/migration-tracker.ts",
+    "migration:snapshot": "node --loader ts-node/esm src/db/create-transition-snapshot.ts",
     "lint": "biome lint",
     "test": "yarn jest",
     "ci-lint": "biome ci",
