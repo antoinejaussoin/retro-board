@@ -28,7 +28,7 @@ You can (and you should) of course change these values to more secure passwords.
 
 ### Install the Ingress settings
 
-- `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml`
+- `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/mandatory.yaml`
 - `minikube addons enable ingress`
 
 More information here: https://kubernetes.github.io/ingress-nginx/deploy/#minikube

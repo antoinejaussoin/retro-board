@@ -1,7 +1,7 @@
 # Retrospected
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/antoinejaussoin/retro-board)
-[![Master Build](https://github.com/antoinejaussoin/retro-board/actions/workflows/master.yml/badge.svg)](https://github.com/antoinejaussoin/retro-board/actions/workflows/master.yml)
+[![Main Build](https://github.com/antoinejaussoin/retro-board/actions/workflows/main.yml/badge.svg)](https://github.com/antoinejaussoin/retro-board/actions/workflows/main.yml)
 [![Canary Build](https://github.com/antoinejaussoin/retro-board/actions/workflows/canary.yml/badge.svg)](https://github.com/antoinejaussoin/retro-board/actions/workflows/canary.yml)
 [![Alpha Build](https://github.com/antoinejaussoin/retro-board/actions/workflows/alpha.yml/badge.svg)](https://github.com/antoinejaussoin/retro-board/actions/workflows/alpha.yml)
 
@@ -866,4 +866,4 @@ Thanks to [UnDraw](https://undraw.co/) for some of the illustrations.
 
 <a href="https://www.browserstack.com/"><img src="./content/browserstack.png" width="300" height="65"></a>
 
-Please make your PRs from the **develop** branch, not **master**.
+Please make your PRs from the **develop** branch, not **main**.
