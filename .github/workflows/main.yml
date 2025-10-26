@@ -1,8 +1,8 @@
-name: "Master Build"
+name: "Main Build"
 
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   frontend:
@@ -152,7 +152,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run Integration Tests
-        run: docker compose -f ./integration/docker-compose.ci.master.yml up --exit-code-from cypress
+        run: docker compose -f ./integration/docker-compose.ci.main.yml up --exit-code-from cypress
       - uses: actions/upload-artifact@v4
         if: always()
         with:
