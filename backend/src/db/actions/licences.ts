@@ -1,8 +1,12 @@
 import { transaction } from './transaction.js';
+import { drizzleTransaction } from '../drizzle-transaction.js';
 import LicenceEntity from '../entities/Licence.js';
 import { v4 } from 'uuid';
 import { sendSelfHostWelcome } from '../../email/emailSender.js';
 import { LicenceRepository } from '../repositories/index.js';
+import { licencesRepository } from '../repositories/drizzle/index.js';
+import * as schema from '../schema/index.js';
+import { eq } from 'drizzle-orm';
 import type { LicenceMetadata } from './../../types.js';
 import { saveAndReload } from '../repositories/BaseRepository.js';
 
@@ -12,19 +16,21 @@ export async function registerLicence(
   customerId: string,
   sessionId: string,
 ): Promise<boolean> {
-  return await transaction(async (manager) => {
-    const repository = manager.withRepository(LicenceRepository);
+  return await drizzleTransaction(async (tx) => {
     const key = v4();
-    const licence = new LicenceEntity(v4(), email, key, customerId, sessionId);
+    const licenceData = {
+      id: v4(),
+      email: email,
+      key: key,
+      stripeCustomerId: customerId,
+      stripeSessionId: sessionId,
+    };
     try {
-      const savedLicence = await saveAndReload(repository, licence);
-      if (savedLicence) {
-        if (email) {
-          await sendSelfHostWelcome(email, name || '', key);
-        }
-        return true;
+      await licencesRepository.insert(licenceData, tx);
+      if (email) {
+        await sendSelfHostWelcome(email, name || '', key);
       }
-      return false;
+      return true;
     } catch (err) {
       console.log('Error while saving the licence: ', err);
       return false;
@@ -33,13 +39,13 @@ export async function registerLicence(
 }
 
 export async function validateLicence(key: string): Promise<boolean> {
-  return await transaction(async (manager) => {
-    const repository = manager.getRepository(LicenceEntity);
+  return await drizzleTransaction(async (tx) => {
     try {
-      const found = await repository.count({
-        where: { key },
-      });
-      return found > 0;
+      const count = await licencesRepository.count(
+        eq(schema.licences.key, key),
+        tx,
+      );
+      return count > 0;
     } catch (err) {
       console.log('Error while retrieving the licence: ', err);
       return false;

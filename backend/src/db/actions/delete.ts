@@ -9,6 +9,10 @@ import {
   VoteRepository,
 } from '../repositories/index.js';
 import { transaction } from './transaction.js';
+import { drizzleTransaction } from '../drizzle-transaction.js';
+import { getDrizzleConnection } from '../connection.js';
+import { sql } from 'drizzle-orm';
+import type { DrizzleTransaction } from '../drizzle-transaction.js';
 import { registerAnonymousUser } from './users.js';
 
 export async function deleteAccount(
@@ -20,25 +24,15 @@ export async function deleteAccount(
     throw new Error('Could not create a anonymous account');
   }
 
-  return await transaction(async (manager) => {
+  return await drizzleTransaction(async (tx) => {
     try {
-      await delMessages(
-        manager,
-        options.deleteSessions,
-        user,
-        anonymousAccount,
-      );
-      await delAiChat(manager, options.deletePosts, user, anonymousAccount);
-      await delVisits(manager, options.deleteSessions, user, anonymousAccount);
-      await delVotes(manager, options.deleteVotes, user, anonymousAccount);
-      await delPosts(manager, options.deletePosts, user, anonymousAccount);
-      await delSessions(
-        manager,
-        options.deleteSessions,
-        user,
-        anonymousAccount,
-      );
-      await delUserAccount(manager, user);
+      await delMessages(tx, options.deleteSessions, user, anonymousAccount);
+      await delAiChat(tx, options.deletePosts, user, anonymousAccount);
+      await delVisits(tx, options.deleteSessions, user, anonymousAccount);
+      await delVotes(tx, options.deleteVotes, user, anonymousAccount);
+      await delPosts(tx, options.deletePosts, user, anonymousAccount);
+      await delSessions(tx, options.deleteSessions, user, anonymousAccount);
+      await delUserAccount(tx, user);
       return true;
     } catch (ex) {
       console.log('Error while trying to delete account', ex);
@@ -48,160 +42,178 @@ export async function deleteAccount(
 }
 
 async function delMessages(
-  manager: EntityManager,
+  tx: DrizzleTransaction,
   hardDelete: boolean,
   user: UserView,
   anon: UserIdentityEntity,
 ) {
+  const db = tx;
   if (hardDelete) {
-    await manager.query('delete from messages where user_id = $1', [user.id]);
+    await db.execute(sql`delete from messages where user_id = ${user.id}`);
   } else {
-    await manager.query('update messages set user_id = $1 where user_id = $2', [
-      anon.user.id,
-      user.id,
-    ]);
+    await db.execute(
+      sql`update messages set user_id = ${anon.user.id} where user_id = ${user.id}`,
+    );
   }
 }
 
 async function delAiChat(
-  manager: EntityManager,
+  tx: DrizzleTransaction,
   hardDelete: boolean,
   user: UserView,
   anon: UserIdentityEntity,
 ) {
+  const db = tx;
   if (hardDelete) {
-    await manager.query('delete from ai_chat where created_by_id = $1', [
-      user.id,
-    ]);
+    await db.execute(sql`delete from ai_chat where created_by_id = ${user.id}`);
   } else {
-    await manager.query(
-      'update ai_chat set created_by_id = $1 where created_by_id = $2',
-      [anon.user.id, user.id],
+    await db.execute(
+      sql`update ai_chat set created_by_id = ${anon.user.id} where created_by_id = ${user.id}`,
     );
   }
 }
 
 async function delVisits(
-  manager: EntityManager,
+  tx: DrizzleTransaction,
   hardDelete: boolean,
   user: UserView,
   anon: UserIdentityEntity,
 ) {
+  const db = tx;
   if (hardDelete) {
-    await manager.query('delete from visitors where users_id = $1', [user.id]);
+    await db.execute(sql`delete from visitors where users_id = ${user.id}`);
   } else {
-    await manager.query(
-      'update visitors set users_id = $1 where users_id = $2',
-      [anon.user.id, user.id],
+    await db.execute(
+      sql`update visitors set users_id = ${anon.user.id} where users_id = ${user.id}`,
     );
   }
 }
 
 async function delVotes(
-  manager: EntityManager,
+  tx: DrizzleTransaction,
   hardDelete: boolean,
   user: UserView,
   anon: UserIdentityEntity,
 ) {
-  const repo = manager.withRepository(VoteRepository);
   if (hardDelete) {
-    await repo.delete({ user: { id: user.id } });
+    // For hard delete, we need to delete votes where user_id matches
+    const db = tx;
+    await db.execute(sql`delete from votes where user_id = ${user.id}`);
     return true;
   }
-  await repo.update({ user: { id: user.id } }, { user: anon.user });
+  // For soft delete, update votes to anonymous user
+  const db = tx;
+  await db.execute(
+    sql`update votes set user_id = ${anon.user.id} where user_id = ${user.id}`,
+  );
   return true;
 }
 
 async function delPosts(
-  manager: EntityManager,
+  tx: DrizzleTransaction,
   hardDelete: boolean,
   user: UserView,
   anon: UserIdentityEntity,
 ) {
-  const repo = manager.withRepository(PostRepository);
-  const groupRepo = manager.withRepository(PostGroupRepository);
+  const db = tx;
   if (hardDelete) {
-    await manager.query(
-      `
-			delete from votes where post_id in (select id from posts where user_id = $1)
-			`,
-      [user.id],
-    );
-    await manager.query(
-      `
-			update posts set group_id = null where group_id in (select id from groups where user_id = $1)
-			`,
-      [user.id],
-    );
-    await repo.delete({ user: { id: user.id } });
-    await groupRepo.delete({ user: { id: user.id } });
+    // Delete votes for posts by this user
+    await db.execute(sql`
+      delete from votes where post_id in (select id from posts where user_id = ${user.id})
+    `);
+    // Update posts to remove group references for groups by this user
+    await db.execute(sql`
+      update posts set group_id = null where group_id in (select id from post_groups where user_id = ${user.id})
+    `);
+    // Delete posts by this user
+    await db.execute(sql`delete from posts where user_id = ${user.id}`);
+    // Delete post groups by this user
+    await db.execute(sql`delete from post_groups where user_id = ${user.id}`);
     return true;
   }
-  await repo.update({ user: { id: user.id } }, { user: anon.user });
-  await groupRepo.update({ user: { id: user.id } }, { user: anon.user });
+  // Soft delete: update posts and groups to anonymous user
+  await db.execute(
+    sql`update posts set user_id = ${anon.user.id} where user_id = ${user.id}`,
+  );
+  await db.execute(
+    sql`update post_groups set user_id = ${anon.user.id} where user_id = ${user.id}`,
+  );
   return true;
 }
 
 async function delSessions(
-  manager: EntityManager,
+  tx: DrizzleTransaction,
   hardDelete: boolean,
   user: UserView,
   anon: UserIdentityEntity,
 ) {
-  const repo = manager.withRepository(SessionRepository);
+  const db = tx;
   if (hardDelete) {
-    await manager.query(
-      `
-			delete from votes where post_id in (select id from posts where session_id in (select id from sessions where created_by_id = $1))
-			`,
-      [user.id],
+    // Delete votes for posts in sessions created by this user
+    await db.execute(sql`
+      delete from votes where post_id in (
+        select id from posts where session_id in (
+          select id from sessions where created_by_id = ${user.id}
+        )
+      )
+    `);
+    // Delete posts in sessions created by this user
+    await db.execute(sql`
+      delete from posts where session_id in (
+        select id from sessions where created_by_id = ${user.id}
+      )
+    `);
+    // Delete groups in sessions created by this user
+    await db.execute(sql`
+      delete from post_groups where session_id in (
+        select id from sessions where created_by_id = ${user.id}
+      )
+    `);
+    // Delete columns in sessions created by this user
+    await db.execute(sql`
+      delete from column_definitions where session_id in (
+        select id from sessions where created_by_id = ${user.id}
+      )
+    `);
+    // Delete sessions created by this user
+    await db.execute(
+      sql`delete from sessions where created_by_id = ${user.id}`,
     );
-    await manager.query(
-      `
-			delete from posts where session_id in (select id from sessions where created_by_id = $1)
-			`,
-      [user.id],
-    );
-    await manager.query(
-      `
-			delete from groups where session_id in (select id from sessions where created_by_id = $1)
-			`,
-      [user.id],
-    );
-    await manager.query(
-      `
-			delete from columns where session_id in (select id from sessions where created_by_id = $1)
-			`,
-      [user.id],
-    );
-    await repo.delete({ createdBy: { id: user.id } });
     return true;
   }
-  await repo.update({ createdBy: { id: user.id } }, { createdBy: anon.user });
+  // Soft delete: update sessions to anonymous user
+  await db.execute(
+    sql`update sessions set created_by_id = ${anon.user.id} where created_by_id = ${user.id}`,
+  );
   return true;
 }
 
-async function delUserAccount(manager: EntityManager, user: UserView) {
-  await manager.query(
-    `
-		update users set default_template_id = null where default_template_id in (select id from templates where created_by_id = $1)
-		`,
-    [user.id],
+async function delUserAccount(tx: DrizzleTransaction, user: UserView) {
+  const db = tx;
+  // Update users to remove default template references
+  await db.execute(sql`
+    update users set default_template_id = null where default_template_id in (
+      select id from session_templates where created_by_id = ${user.id}
+    )
+  `);
+  // Delete template columns (if any)
+  await db.execute(sql`
+    delete from template_columns where template_id in (
+      select id from session_templates where created_by_id = ${user.id}
+    )
+  `);
+  // Delete templates
+  await db.execute(
+    sql`delete from session_templates where created_by_id = ${user.id}`,
   );
-  await manager.query(
-    'delete from templates_columns where template_id in (select id from templates where created_by_id = $1)',
-    [user.id],
+  // Delete subscriptions
+  await db.execute(sql`delete from subscriptions where owner_id = ${user.id}`);
+  // Delete user identities
+  await db.execute(
+    sql`delete from users_identities where user_id = ${user.id}`,
   );
-  await manager.query('delete from templates where created_by_id = $1', [
-    user.id,
-  ]);
-  await manager.query('delete from subscriptions where owner_id = $1', [
-    user.id,
-  ]);
-  await manager.query('delete from users_identities where user_id = $1', [
-    user.id,
-  ]);
-  await manager.query('delete from users where id = $1', [user.id]);
+  // Delete user
+  await db.execute(sql`delete from users where id = ${user.id}`);
 }
 
 async function createAnonymousAccount() {

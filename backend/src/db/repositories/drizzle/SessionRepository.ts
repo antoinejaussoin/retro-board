@@ -80,12 +80,14 @@ export class DrizzleSessionRepository extends DrizzleBaseRepository<
     sessionId: string,
     name: string,
     tx?: DrizzleTransaction,
-  ): Promise<void> {
+  ): Promise<boolean> {
     const db = this.getDb(tx);
     const session = await this.findById(sessionId, tx);
     if (session) {
       await db.update(sessions).set({ name }).where(eq(sessions.id, sessionId));
+      return true;
     }
+    return false;
   }
 
   /**

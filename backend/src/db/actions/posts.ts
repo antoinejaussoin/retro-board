@@ -7,11 +7,23 @@ import {
   SessionRepository,
 } from '../repositories/index.js';
 import { transaction } from './transaction.js';
+import { drizzleTransaction } from '../drizzle-transaction.js';
+import {
+  drizzlePostRepository,
+  postsRepository,
+  postGroupsRepository,
+  votesRepository,
+  sessionsRepository,
+  visitorsRepository,
+  drizzlePostGroupRepository,
+  drizzleVoteRepository,
+} from '../repositories/drizzle/index.js';
+import * as schema from '../schema/index.js';
+import { eq, and } from 'drizzle-orm';
 
 export async function getNumberOfPosts(userId: string): Promise<number> {
-  return await transaction(async (manager) => {
-    const postRepository = manager.withRepository(PostRepository);
-    return await postRepository.count({ where: { user: { id: userId } } });
+  return await drizzleTransaction(async (tx) => {
+    return await postsRepository.count(eq(schema.posts.userId, userId), tx);
   });
 }
 
@@ -20,13 +32,16 @@ export async function savePost(
   sessionId: string,
   post: DeepPartial<Post>,
 ): Promise<Post | null> {
-  return await transaction(async (manager) => {
-    const postRepository = manager.withRepository(PostRepository);
-    const entity = await postRepository.saveFromJson(sessionId, userId, post);
+  return await drizzleTransaction(async (tx) => {
+    const entity = await drizzlePostRepository.saveFromJson(
+      sessionId,
+      userId,
+      post,
+      tx,
+    );
     if (entity) {
-      return entity.toJson();
+      return entity as unknown as Post;
     }
-
     return null;
   });
 }
@@ -36,26 +51,29 @@ export async function updatePost(
   postData: Omit<Omit<Omit<Post, 'votes'>, 'user'>, 'group'>,
   groupId: string | null,
 ): Promise<Post | null> {
-  return await transaction(async (manager) => {
-    const postRepository = manager.withRepository(PostRepository);
-    const entity = await postRepository.findOne({
-      where: {
-        id: postData.id,
-        session: { id: sessionId },
-      },
-    });
-    if (entity) {
-      const post = entity.toJson();
-      post.content = postData.content;
-      post.action = postData.action;
-      post.giphy = postData.giphy;
-      post.column = postData.column;
-      post.group = (groupId ? { id: groupId } : null) as PostGroup;
-      post.rank = postData.rank;
-      const persisted = await postRepository.updateFromJson(sessionId, post);
-      return persisted ? persisted.toJson() : null;
+  return await drizzleTransaction(async (tx) => {
+    const existing = await postsRepository.findById(postData.id, tx);
+    if (existing) {
+      const updatedPost = {
+        id: existing.id,
+        content: postData.content,
+        action: postData.action,
+        giphy: postData.giphy,
+        column: postData.column,
+        rank: postData.rank,
+        user: { id: existing.userId } as any,
+        group: groupId ? { id: groupId } : null,
+        votes: [],
+        created: existing.created,
+        updated: new Date(),
+      } as unknown as Post;
+      const result = await drizzlePostRepository.updateFromJson(
+        sessionId,
+        updatedPost as unknown as Post,
+        tx,
+      );
+      return result as unknown as Post;
     }
-
     return null;
   });
 }
@@ -65,15 +83,15 @@ export async function savePostGroup(
   sessionId: string,
   group: PostGroup,
 ): Promise<PostGroup | null> {
-  return await transaction(async (manager) => {
-    const postGroupRepository = manager.withRepository(PostGroupRepository);
-    const entity = await postGroupRepository.saveFromJson(
+  return await drizzleTransaction(async (tx) => {
+    const entity = await drizzlePostGroupRepository.saveFromJson(
       sessionId,
       userId,
       group,
+      tx,
     );
     if (entity) {
-      return entity.toJson();
+      return entity as unknown as PostGroup;
     }
     return null;
   });
@@ -84,24 +102,25 @@ export async function updatePostGroup(
   sessionId: string,
   groupData: Omit<Omit<PostGroup, 'user'>, 'posts'>,
 ) {
-  return await transaction(async (manager) => {
-    const postGroupRepository = manager.withRepository(PostGroupRepository);
-    const entity = await postGroupRepository.findOne({
-      where: { id: groupData.id, session: { id: sessionId } },
-    });
-    if (entity) {
-      const group = entity.toJson();
-      group.column = groupData.column;
-      group.label = groupData.label;
-      group.rank = groupData.rank;
-      const persisted = await postGroupRepository.saveFromJson(
+  return await drizzleTransaction(async (tx) => {
+    const existing = await postGroupsRepository.findById(groupData.id, tx);
+    if (existing) {
+      const updatedGroup = {
+        id: existing.id,
+        label: groupData.label,
+        column: groupData.column,
+        rank: groupData.rank,
+        user: { id: existing.userId } as any,
+        posts: [],
+      } as unknown as PostGroup;
+      const result = await drizzlePostGroupRepository.saveFromJson(
         sessionId,
         userId,
-        group,
+        updatedGroup,
+        tx,
       );
-      return persisted ? persisted.toJson() : null;
+      return result as unknown as PostGroup;
     }
-
     return null;
   });
 }
@@ -112,9 +131,8 @@ export async function saveVote(
   postId: string,
   vote: Vote,
 ): Promise<void> {
-  return await transaction(async (manager) => {
-    const voteRepository = manager.withRepository(VoteRepository);
-    await voteRepository.saveFromJson(postId, userId, vote);
+  return await drizzleTransaction(async (tx) => {
+    await drizzleVoteRepository.saveFromJson(postId, userId, vote, tx);
   });
 }
 
@@ -123,14 +141,13 @@ export async function deletePost(
   _: string,
   postId: string,
 ): Promise<boolean> {
-  return await transaction(async (manager) => {
+  return await drizzleTransaction(async (tx) => {
     try {
-      const postRepository = manager.withRepository(PostRepository);
-      const result = await postRepository.delete({
-        id: postId,
-        user: { id: userId },
-      });
-      return !!result.affected;
+      const deleted = await postsRepository.deleteWhere(
+        and(eq(schema.posts.id, postId), eq(schema.posts.userId, userId)),
+        tx,
+      );
+      return deleted.length > 0;
     } catch {
       return false;
     }
@@ -142,17 +159,22 @@ export async function deletePostGroup(
   sessionId: string,
   groupId: string,
 ): Promise<boolean> {
-  return await transaction(async (manager) => {
+  return await drizzleTransaction(async (tx) => {
     try {
-      const postGroupRepository = manager.withRepository(PostGroupRepository);
-      const sessionRepository = manager.withRepository(SessionRepository);
-      const session = await sessionRepository.findOne({
-        where: { id: sessionId },
-        relations: ['visitors'],
-      });
-      if (session?.visitors?.find((v) => v.id === userId)) {
-        const result = await postGroupRepository.delete({ id: groupId });
-        return !!result.affected;
+      // Check if user is a visitor of the session
+      const visitor = await visitorsRepository.findAll(
+        and(
+          eq(schema.visitors.sessionsId, sessionId),
+          eq(schema.visitors.usersId, userId),
+        ),
+        tx,
+      );
+      if (visitor.length > 0) {
+        const deleted = await postGroupsRepository.deleteWhere(
+          eq(schema.postGroups.id, groupId),
+          tx,
+        );
+        return deleted.length > 0;
       }
       console.error('The user is not a visitor, cannot delete group');
       return false;

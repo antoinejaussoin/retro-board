@@ -6,20 +6,14 @@
 
 import { db } from './drizzle.js';
 import type { DrizzleDB } from './drizzle.js';
-import type { PgTransaction } from 'drizzle-orm/pg-core';
-import type { NodePgQueryResultHKT } from 'drizzle-orm/node-postgres';
 
 // Type for the transaction context
-export type DrizzleTransaction = PgTransaction<
-  NodePgQueryResultHKT,
-  Record<string, never>,
-  any
->;
+export type DrizzleTransaction = Parameters<
+  Parameters<DrizzleDB['transaction']>[0]
+>[0];
 
 // Type for the transaction callback
-type TransactionCallback<T> = (
-  tx: DrizzleTransaction | DrizzleDB,
-) => Promise<T>;
+type TransactionCallback<T> = (tx: DrizzleTransaction) => Promise<T>;
 
 /**
  * Execute a callback within a database transaction

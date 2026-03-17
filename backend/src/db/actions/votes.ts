@@ -8,23 +8,28 @@ import {
   VoteRepository,
 } from '../repositories/index.js';
 import { transaction } from './transaction.js';
+import { drizzleTransaction } from '../drizzle-transaction.js';
+import {
+  sessionsRepository,
+  usersRepository,
+  postsRepository,
+  drizzleVoteRepository,
+} from '../repositories/drizzle/index.js';
+import * as schema from '../schema/index.js';
+import { eq, and } from 'drizzle-orm';
 
 export async function cancelVotes(
   userId: string,
   sessionId: string,
   postId: string,
 ): Promise<void> {
-  return await transaction(async (manager) => {
-    const sessionRepository = manager.withRepository(SessionRepository);
-    const voteRepository = manager.withRepository(VoteRepository);
-    const session = await sessionRepository.findOne({
-      where: { id: sessionId },
-    });
-    if (session?.options.allowCancelVote) {
-      await voteRepository.delete({
-        user: { id: userId },
-        post: { id: postId },
-      });
+  return await drizzleTransaction(async (tx) => {
+    const session = await sessionsRepository.findById(sessionId, tx);
+    if (session?.allowCancelVote) {
+      await drizzleVoteRepository.deleteWhere(
+        and(eq(schema.votes.userId, userId), eq(schema.votes.postId, postId)),
+        tx,
+      );
     }
   });
 }
@@ -35,35 +40,32 @@ export async function registerVote(
   postId: string,
   type: VoteType,
 ): Promise<VoteExtract | null> {
-  return await transaction(async (manager) => {
-    const sessionRepository = manager.withRepository(SessionRepository);
-    const userRepository = manager.withRepository(UserRepository);
-    const voteRepository = manager.withRepository(VoteRepository);
-    const postRepository = manager.withRepository(PostRepository);
-    const user = await userRepository.findOne({ where: { id: userId } });
-    const post = await postRepository.findOne({
-      where: { id: postId, session: { id: sessionId } },
-    });
-    const session = await sessionRepository.findOne({
-      where: { id: sessionId },
-    });
-    if (post && session && user) {
-      const existingVote: Vote | undefined = find(
-        post.votes,
-        (v) => v.user.id === user.id && v.type === type,
+  return await drizzleTransaction(async (tx) => {
+    const user = await usersRepository.findById(userId, tx);
+    const post = await postsRepository.findById(postId, tx);
+    const session = await sessionsRepository.findById(sessionId, tx);
+    if (post && session && user && post.sessionId === sessionId) {
+      // Check existing vote
+      const existingVotes = await drizzleVoteRepository.findAll(
+        and(
+          eq(schema.votes.postId, postId),
+          eq(schema.votes.userId, userId),
+          eq(schema.votes.type, type),
+        ),
+        tx,
       );
 
-      if (session.options.allowMultipleVotes || !existingVote) {
+      if (session.allowMultipleVotes || existingVotes.length === 0) {
         const vote: Vote = {
           id: v4(),
-          user: user.toJson(),
+          user: { id: user.id, name: user.name } as any,
           type,
         };
-        await voteRepository.saveFromJson(postId, userId, vote);
+        await drizzleVoteRepository.saveFromJson(postId, userId, vote, tx);
         return {
           id: vote.id,
-          userName: vote.user.name,
-          userId: vote.user.id,
+          userName: user.name,
+          userId: user.id,
           type: vote.type,
         };
       }

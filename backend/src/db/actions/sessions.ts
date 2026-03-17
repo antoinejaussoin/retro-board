@@ -27,6 +27,22 @@ import {
   ColumnRepository,
 } from '../repositories/index.js';
 import { transaction } from './transaction.js';
+import { drizzleTransaction } from '../drizzle-transaction.js';
+import {
+  drizzleSessionRepository,
+  usersRepository,
+  postsRepository,
+  postGroupsRepository,
+  columnDefinitionsRepository,
+  messagesRepository,
+  sessionTemplatesRepository,
+  sessionsRepository,
+  drizzleSessionTemplateRepository,
+  drizzleUserRepository,
+  type DrizzleTransaction,
+} from '../repositories/drizzle/index.js';
+import * as schema from '../schema/index.js';
+import { eq, asc, desc } from 'drizzle-orm';
 import { type EntityManager, In } from 'typeorm';
 import { getUserViewInner, isUserPro } from './users.js';
 import { uniq } from 'lodash-es';
@@ -110,16 +126,11 @@ export async function createCustom(
   setDefault: boolean,
   author: UserEntity,
 ): Promise<Session> {
-  return await transaction(async (manager) => {
-    const userRepository = manager.withRepository(UserRepository);
-    const sessionRepository = manager.withRepository(SessionRepository);
-    const templateRepository = manager.withRepository(
-      SessionTemplateRepository,
-    );
+  return await drizzleTransaction(async (tx) => {
     const id = shortId();
-    const session = await sessionRepository.findOne({ where: { id } });
+    const session = await sessionsRepository.findById(id, tx);
     if (!session) {
-      const newSession = await sessionRepository.saveFromJson(
+      const newSession = await drizzleSessionRepository.saveFromJson(
         {
           ...defaultSession,
           id,
@@ -127,16 +138,23 @@ export async function createCustom(
           columns,
         },
         author.id,
+        tx,
       );
 
       if (setDefault) {
-        const defaultTemplate = await templateRepository.saveFromJson(
-          'Default Template',
-          columns,
-          options,
+        const defaultTemplate =
+          await drizzleSessionTemplateRepository.saveFromJson(
+            'Default Template',
+            columns,
+            options,
+            author.id,
+            tx,
+          );
+        await drizzleUserRepository.persistTemplate(
           author.id,
+          defaultTemplate.id,
+          tx,
         );
-        await userRepository.persistTemplate(author.id, defaultTemplate.id);
       }
 
       return newSession;
@@ -147,9 +165,12 @@ export async function createCustom(
 }
 
 export async function doesSessionExists(sessionId: string): Promise<boolean> {
-  return await transaction(async (manager) => {
-    const sessionRepository = manager.withRepository(SessionRepository);
-    return (await sessionRepository.count({ where: { id: sessionId } })) === 1;
+  return await drizzleTransaction(async (tx) => {
+    const count = await sessionsRepository.count(
+      eq(schema.sessions.id, sessionId),
+      tx,
+    );
+    return count === 1;
   });
 }
 
@@ -197,9 +218,8 @@ export async function saveSession(
   userId: string,
   session: Session,
 ): Promise<void> {
-  return await transaction(async (manager) => {
-    const sessionRepository = manager.withRepository(SessionRepository);
-    await sessionRepository.saveFromJson(session, userId);
+  return await drizzleTransaction(async (tx) => {
+    await drizzleSessionRepository.saveFromJson(session, userId, tx);
   });
 }
 
@@ -311,9 +331,8 @@ export async function updateOptions(
   sessionId: string,
   options: SessionOptions,
 ): Promise<SessionOptions | null> {
-  return await transaction(async (manager) => {
-    const sessionRepository = manager.withRepository(SessionRepository);
-    return await sessionRepository.updateOptions(sessionId, options);
+  return await drizzleTransaction(async (tx) => {
+    return await drizzleSessionRepository.updateOptions(sessionId, options, tx);
   });
 }
 
@@ -332,19 +351,15 @@ export async function saveTemplate(
   columns: ColumnDefinition[],
   options: SessionOptions,
 ) {
-  return await transaction(async (manager) => {
-    const userRepository = manager.withRepository(UserRepository);
-    const templateRepository = manager.withRepository(
-      SessionTemplateRepository,
-    );
-
-    const defaultTemplate = await templateRepository.saveFromJson(
+  return await drizzleTransaction(async (tx) => {
+    const defaultTemplate = await drizzleSessionTemplateRepository.saveFromJson(
       'Default Template',
       columns,
       options,
       userId,
+      tx,
     );
-    await userRepository.persistTemplate(userId, defaultTemplate.id);
+    await drizzleUserRepository.persistTemplate(userId, defaultTemplate.id, tx);
   });
 }
 
@@ -352,18 +367,9 @@ export async function updateName(
   sessionId: string,
   name: string,
 ): Promise<boolean> {
-  return await transaction(async (manager) => {
+  return await drizzleTransaction(async (tx) => {
     try {
-      const sessionRepository = manager.withRepository(SessionRepository);
-      const session = await sessionRepository.findOne({
-        where: { id: sessionId },
-      });
-      if (session) {
-        session.name = name;
-        await sessionRepository.save(session);
-        return true;
-      }
-      return false;
+      return await drizzleSessionRepository.updateName(sessionId, name, tx);
     } catch {
       return false;
     }

@@ -14,6 +14,9 @@ import * as schema from '../../schema/index.js';
 import { drizzleSessionRepository } from './SessionRepository.js';
 import { drizzleUserRepository } from './UserRepository.js';
 import { drizzlePostRepository } from './PostRepository.js';
+import { drizzlePostGroupRepository } from './PostGroupRepository.js';
+import { drizzleVoteRepository } from './VoteRepository.js';
+import { drizzleSessionTemplateRepository } from './SessionTemplateRepository.js';
 
 // Re-export base repository and transaction type
 export { DrizzleBaseRepository, type DrizzleTransaction };
@@ -23,6 +26,9 @@ export {
   drizzleSessionRepository,
   drizzleUserRepository,
   drizzlePostRepository,
+  drizzlePostGroupRepository,
+  drizzleVoteRepository,
+  drizzleSessionTemplateRepository,
 };
 
 // Create repositories for all entities

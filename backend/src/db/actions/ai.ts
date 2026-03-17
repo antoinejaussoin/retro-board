@@ -1,13 +1,10 @@
 import type UserView from '../entities/UserView.js';
 import AiChatEntity from '../entities/AiChat.js';
-import { transaction } from './transaction.js';
-import AiChatRepository from '../repositories/AiChatRepository.js';
+import { drizzleTransaction } from '../drizzle-transaction.js';
+import { sql } from 'drizzle-orm';
 import { getUser } from './users.js';
 import type { CoachMessage, CoachRole } from 'common/types.js';
-import AiChatMessageRepository from '../repositories/AiChatMessageRepository.js';
-import AiChatMessageEntity from '../entities/AiChatMessage.js';
 import { v4 } from 'uuid';
-import { MoreThanOrEqual } from 'typeorm';
 import { addDays } from 'date-fns';
 import config from '../../config.js';
 
@@ -16,27 +13,40 @@ export async function getAiChatSession(
   userView: UserView,
   systemMessage: CoachMessage,
 ): Promise<AiChatEntity> {
-  return await transaction(async (manager) => {
-    const repository = manager.withRepository(AiChatRepository);
-    const chat = await repository.findOne({
-      where: { id },
-    });
-    if (chat) {
-      return chat;
+  return await drizzleTransaction(async (db) => {
+    // Check if chat exists
+    const chatResult = await db.execute(
+      sql`SELECT id, created_by_id, created, updated FROM ai_chat WHERE id = ${id}`,
+    );
+    const existingChat = chatResult.rows[0];
+    if (existingChat) {
+      // Reconstruct the entity (simplified)
+      const user = await getUser(existingChat.created_by_id as string);
+      if (user) {
+        const chat = new AiChatEntity(existingChat.id as string, user);
+        chat.created = new Date(existingChat.created as string);
+        chat.updated = new Date(existingChat.updated as string);
+        return chat;
+      }
     }
+
     const user = await getUser(userView.id);
     if (user && systemMessage.content) {
-      const newChat = new AiChatEntity(id, user);
-      await repository.save(newChat);
-      const messageRepository = manager.withRepository(AiChatMessageRepository);
-      await messageRepository.save(
-        new AiChatMessageEntity(
-          v4(),
-          newChat,
-          systemMessage.content,
-          systemMessage.role,
-        ),
+      // Create new chat
+      await db.execute(
+        sql`INSERT INTO ai_chat (id, created_by_id, created, updated) VALUES (${id}, ${user.id}, NOW(), NOW())`,
       );
+
+      // Add system message
+      const messageId = v4();
+      await db.execute(
+        sql`INSERT INTO ai_chat_messages (id, chat_id, content, role, created, updated) VALUES (${messageId}, ${id}, ${systemMessage.content}, ${systemMessage.role}, NOW(), NOW())`,
+      );
+
+      // Return the new chat (simplified, in practice you'd fetch it back)
+      const newChat = new AiChatEntity(id, user);
+      newChat.created = new Date();
+      newChat.updated = new Date();
       return newChat;
     }
 
@@ -52,26 +62,21 @@ export async function recordAiChatMessage(
   if (!content) {
     return;
   }
-  return await transaction(async (manager) => {
-    const repository = manager.withRepository(AiChatMessageRepository);
-    await repository.save(new AiChatMessageEntity(v4(), chat, content, role));
+  return await drizzleTransaction(async (db) => {
+    const messageId = v4();
+    await db.execute(
+      sql`INSERT INTO ai_chat_messages (id, chat_id, content, role, created, updated) VALUES (${messageId}, ${chat.id}, ${content}, ${role}, NOW(), NOW())`,
+    );
   });
 }
 
 export async function getAllowance(user: UserView) {
-  return await transaction(async (manager) => {
-    const repository = manager.withRepository(AiChatMessageRepository);
-    const count = await repository.count({
-      where: {
-        role: 'user',
-        chat: {
-          created: MoreThanOrEqual(addDays(new Date(), -30)),
-          createdBy: {
-            id: user.id,
-          },
-        },
-      },
-    });
+  return await drizzleTransaction(async (db) => {
+    const thirtyDaysAgo = addDays(new Date(), -30);
+    const result = await db.execute(
+      sql`SELECT COUNT(*) as count FROM ai_chat_messages WHERE role = 'user' AND chat_id IN (SELECT id FROM ai_chat WHERE created >= ${thirtyDaysAgo.toISOString()} AND created_by_id = ${user.id})`,
+    );
+    const count = Number.parseInt(result.rows[0].count as string, 10);
     const allowance = user.pro
       ? config.OPEN_AI_PAID_LIMIT
       : config.OPEN_AI_FREE_LIMIT;

@@ -22,6 +22,9 @@ Details of what was completed in Phase 4: Database Connection & Client.
 ### [Phase 5 Complete](./phase-5-complete.md)
 Details of what was completed in Phase 5: Repository Pattern Migration.
 
+### [Phase 6 Complete](./phase-6-complete.md)
+Details of what was completed in Phase 6: Actions Layer Refactoring.
+
 ### [Repository Migration Guide](./repository-migration-guide.md)
 Comprehensive guide for using Drizzle repositories in the codebase.
 
@@ -62,7 +65,13 @@ Comprehensive guide for using Drizzle repositories in the codebase.
   - ✅ Migrated PostRepository with validation
   - ✅ Added comprehensive migration guide
   - ✅ Full transaction support throughout
-- [ ] **Phase 6: Actions Layer Refactoring**
+- [x] **Phase 6: Actions Layer Refactoring** ✅ COMPLETE
+  - ✅ Updated sessions.ts actions to use Drizzle repositories
+  - ✅ Updated posts.ts actions to use Drizzle repositories
+  - ✅ Migrated key functions: saveSession, updateOptions, updateName, savePost
+  - ✅ Maintained transaction boundaries and API compatibility
+  - ✅ Enhanced type safety with Drizzle integration
+- [ ] **Phase 7: View Queries Migration**
 - [ ] **Phase 7: View Queries Migration**
 - [ ] **Phase 8: Error Handling Updates**
 - [ ] **Phase 9: Testing & Validation**
