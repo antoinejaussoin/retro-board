@@ -9,18 +9,28 @@ import theme from './Theme';
 import Layout from './Layout';
 import ErrorBoundary from './ErrorBoundary';
 import { SnackbarProvider } from 'notistack';
-import { RecoilRoot } from 'recoil';
 import { Suspense } from 'react';
 import { CodeSplitLoader } from './CodeSplitLoader';
 import QuotaManager from './auth/QuotaManager';
 import { ConfirmProvider } from 'material-ui-confirm';
 import { FullScreenLoader } from 'components/loaders/FullScreenLoader';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { SidePanelProvider } from './views/panel/SidePanelContext';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5,
+      retry: 1,
+    },
+  },
+});
 
 function App() {
   return (
     <HelmetProvider>
     <ThemeProvider theme={theme}>
-      <RecoilRoot>
+      <QueryClientProvider client={queryClient}>
         <Suspense fallback={<FullScreenLoader />}>
           <Helmet>
             <meta property="og:title" content="Retrospected.com" />
@@ -43,12 +53,14 @@ function App() {
                 <AuthProvider>
                   <LanguageProvider>
                     <QuotaManager>
-                      <Global styles={globalCss} />
-                      <ErrorBoundary>
-                        <Suspense fallback={<CodeSplitLoader />}>
-                          <Layout />
-                        </Suspense>
-                      </ErrorBoundary>
+                      <SidePanelProvider>
+                        <Global styles={globalCss} />
+                        <ErrorBoundary>
+                          <Suspense fallback={<CodeSplitLoader />}>
+                            <Layout />
+                          </Suspense>
+                        </ErrorBoundary>
+                      </SidePanelProvider>
                     </QuotaManager>
                   </LanguageProvider>
                 </AuthProvider>
@@ -56,7 +68,7 @@ function App() {
             </ConfirmProvider>
           </SnackbarProvider>
         </Suspense>
-      </RecoilRoot>
+      </QueryClientProvider>
     </ThemeProvider>
     </HelmetProvider>
   );

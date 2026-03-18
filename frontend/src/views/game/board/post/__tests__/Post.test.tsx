@@ -1,12 +1,12 @@
 import { noop, groupBy, values } from 'lodash-es';
-import { render, fireEvent } from '../../../../../testing';
+import { AllTheProviders } from '../../../../../testing';
 import PostItem from '../Post';
 import { Post, User, VoteExtract, VoteType } from 'common';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import theme from '../../../../../Theme';
 import { SnackbarProvider } from 'notistack';
-import { act } from '@testing-library/react';
+import { act, render, fireEvent } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
 const u = (name: string): User => ({
@@ -26,7 +26,8 @@ const renderWithRouter = (children: React.ReactNode) =>
           </Routes>
         </MemoryRouter>
       </ThemeProvider>
-    </SnackbarProvider>
+    </SnackbarProvider>,
+    { wrapper: AllTheProviders }
   );
 
 function buildVotes(type: VoteType, users: User[], post: Post): VoteExtract[] {

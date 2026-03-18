@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren, Suspense, useState } from 'react';
 import { render, RenderOptions, RenderResult } from '@testing-library/react';
 import { vi } from 'vitest';
 import { BackendCapabilities, FullUser, Session, defaultOptions } from 'common';
@@ -8,9 +8,7 @@ import {
   DroppableProvided,
   DroppableStateSnapshot,
 } from '@hello-pangea/dnd';
-import useSession from '../views/game/useSession';
-import { RecoilRoot } from 'recoil';
-import { userState } from 'state/user/user-state';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const user: FullUser = {
   id: 'John Doe',
@@ -92,29 +90,43 @@ vi.mock('../api/index', () => {
     fetchBackendCapabilities: () => {
       return Promise.resolve(capabilities);
     },
+    me: () => {
+      return Promise.resolve(user);
+    },
   };
 });
 
+function createTestQueryClient() {
+  return new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+        gcTime: Infinity,
+        staleTime: Infinity,
+      },
+    },
+  });
+}
+
 export function AllTheProviders({ children }: PropsWithChildren<{}>) {
+  const [queryClient] = useState(() => {
+    const client = createTestQueryClient();
+    client.setQueryData(['user'], user);
+    client.setQueryData(['backend-capabilities'], capabilities);
+    client.setQueryData(['game-session'], initialSession);
+    return client;
+  });
+
   return (
-    <RecoilRoot
-      initializeState={(snap) => {
-        snap.set(userState, user);
-      }}
-    >
-      {/* <I18nextProvider i18n={i18n}> */}
-      <Inner>{children}</Inner>
-      {/* </I18nextProvider> */}
-    </RecoilRoot>
+    <QueryClientProvider client={queryClient}>
+      <Suspense fallback={null}>
+        <Inner>{children}</Inner>
+      </Suspense>
+    </QueryClientProvider>
   );
 }
 
 export default function Inner({ children }: PropsWithChildren<{}>) {
-  const { receiveBoard } = useSession();
-
-  useEffect(() => {
-    receiveBoard(initialSession);
-  }, [receiveBoard]);
   return (
     <DragDropContext onDragEnd={() => {}}>
       <Droppable droppableId="test">

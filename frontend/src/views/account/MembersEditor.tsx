@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
-import useStateFetch from '../../hooks/useStateFetch';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { fetchGet } from '../../api/fetch';
 import { updateMembers } from './api';
 import { validate } from 'email/validate';
 import styled from '@emotion/styled';
@@ -25,9 +26,18 @@ function isNotFull(members: string[] | null): boolean {
 function MembersEditor() {
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
-  const [members, setMembers] = useStateFetch<string[] | null>(
-    '/api/stripe/members',
-    null
+  const queryClient = useQueryClient();
+  const { data: members = null } = useQuery({
+    queryKey: ['members'],
+    queryFn: () => fetchGet<string[] | null>('/api/stripe/members', null),
+  });
+  const setMembers = useCallback(
+    (updater: (prev: string[] | null) => string[] | null) => {
+      queryClient.setQueryData<string[] | null>(['members'], (old) =>
+        updater(old ?? null),
+      );
+    },
+    [queryClient],
   );
   const handleAdd = useCallback(
     (value: string) => {
