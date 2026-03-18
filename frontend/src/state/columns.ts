@@ -1,6 +1,5 @@
 import type { ColumnDefinition, ColumnDefinitionType } from 'common';
-import isEqual from 'lodash/isEqual';
-import keyBy from 'lodash/keyBy';
+import { isEqual, keyBy } from 'lodash-es';
 import { v4 } from 'uuid';
 import { getTemplateColumns } from './templates';
 import type { ColumnSettings, Template, TranslationFunction } from './types';

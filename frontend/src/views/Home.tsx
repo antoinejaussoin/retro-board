@@ -16,7 +16,7 @@ import { createGame, createEncryptedGame, deleteSession } from '../api';
 import { Page } from '../components/Page';
 import usePreviousSessions from '../hooks/usePreviousSessions';
 import useUser from '../state/user/useUser';
-import shortid from 'shortid';
+import { nanoid } from 'nanoid';
 import { storeEncryptionKeyLocally } from '../crypto/crypto';
 import ProButton from '../components/ProButton';
 import { useSnackbar } from 'notistack';
@@ -63,7 +63,7 @@ function Home() {
   }, [navigate, enqueueSnackbar]);
 
   const createEncryptedSession = useCallback(async () => {
-    const key = shortid();
+    const key = nanoid(10);
     const session = await createEncryptedGame(key);
     if (session) {
       storeEncryptionKeyLocally(session.id, key);

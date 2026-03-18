@@ -6,7 +6,7 @@ import type {
   SessionSettings,
   VoteExtract,
 } from 'common';
-import { findIndex } from 'lodash';
+import { findIndex } from 'lodash-es';
 import { useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 import { SessionState } from './state';

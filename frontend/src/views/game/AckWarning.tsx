@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import { useEffect, useState } from 'react';
-import throttle from 'lodash/throttle';
+import { throttle } from 'lodash-es';
 import { AckItem } from './types';
 import { recordManualError, trackEvent } from '../../track';
 import { useCallback } from 'react';

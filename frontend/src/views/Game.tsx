@@ -7,7 +7,7 @@ import {
   useNavigate,
   Routes,
 } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import CircularProgress from '@mui/material/CircularProgress';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';

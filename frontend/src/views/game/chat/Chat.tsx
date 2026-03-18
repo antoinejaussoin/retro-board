@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import Input from './Input';
 import ChatMessage from './Message';
 import { useCallback, useMemo } from 'react';
-import { sortBy } from 'lodash';
+import { sortBy } from 'lodash-es';
 import { useTranslation } from 'react-i18next';
 import useCrypto from 'crypto/useCrypto';
 

@@ -27,8 +27,7 @@ import {
 } from 'common';
 import { addSeconds } from 'date-fns';
 import { isProduction } from 'is-production';
-import { omit } from 'lodash';
-import find from 'lodash/find';
+import { omit, find } from 'lodash-es';
 import { useSnackbar } from 'notistack';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';

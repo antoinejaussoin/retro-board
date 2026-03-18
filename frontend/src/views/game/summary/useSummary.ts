@@ -6,8 +6,7 @@ import type {
   User,
 } from 'common';
 import useBackendCapabilities from 'global/useBackendCapabilities';
-import flattenDeep from 'lodash/flattenDeep';
-import sortBy from 'lodash/sortBy';
+import { flattenDeep, sortBy } from 'lodash-es';
 import { useMemo } from 'react';
 import useUser from '../../../state/user/useUser';
 import { postPermissionLogic } from '../board/permissions-logic';

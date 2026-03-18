@@ -2,7 +2,7 @@ import useSession from '../useSession';
 import { AllTheProviders, initialSession } from '../../../testing/index';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { Post, Session } from 'common';
-import { cloneDeep } from 'lodash';
+import { cloneDeep } from 'lodash-es';
 import { describe, expect, it } from 'vitest';
 
 function post(id: string): Post {

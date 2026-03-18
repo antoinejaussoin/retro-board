@@ -1,5 +1,5 @@
 import config from '../config.js';
-import { Configuration, OpenAIApi } from 'openai';
+import OpenAI from 'openai';
 import { getAiChatSession, recordAiChatMessage } from '../db/actions/ai.js';
 import type UserView from '../db/entities/UserView.js';
 import type { CoachMessage } from '../common/types.js';
@@ -56,12 +56,12 @@ export async function dialog(
   messages: CoachMessage[],
 ): Promise<CoachMessage[]> {
   const chat = await getAiChatSession(chatId, user, systemMessage);
-  const api = new OpenAIApi(configure());
-  const response = await api.createChatCompletion({
+  const api = new OpenAI({ apiKey: config.OPEN_AI_API_KEY });
+  const response = await api.chat.completions.create({
     model: 'gpt-4',
     messages: [systemMessage, ...messages],
   });
-  const answer = response.data.choices[0].message;
+  const answer = response.choices[0].message;
   const lastMessage = last(messages);
   if (lastMessage) {
     await recordAiChatMessage('user', lastMessage.content, chat);
@@ -71,12 +71,4 @@ export async function dialog(
   }
 
   return [...(messages || []), answer].filter(Boolean) as CoachMessage[];
-}
-
-export function configure(): Configuration {
-  const configuration = new Configuration({
-    apiKey: config.OPEN_AI_API_KEY,
-  });
-
-  return configuration;
 }

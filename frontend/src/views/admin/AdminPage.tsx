@@ -12,7 +12,7 @@ import useModal from 'hooks/useModal';
 import { NewAccountModal } from './NewAccountModal';
 import Input from 'components/Input';
 import { DeleteAccount } from './DeleteAccount';
-import { uniq } from 'lodash';
+import { uniq } from 'lodash-es';
 import MergeModal from './MergeModal';
 import { mergeUsers } from './api';
 import { Stats } from './Stats';

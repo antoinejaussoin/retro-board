@@ -1,6 +1,4 @@
-import noop from 'lodash/noop';
-import groupBy from 'lodash/groupBy';
-import values from 'lodash/values';
+import { noop, groupBy, values } from 'lodash-es';
 import { render, fireEvent } from '../../../../../testing';
 import PostItem from '../Post';
 import { Post, User, VoteExtract, VoteType } from 'common';

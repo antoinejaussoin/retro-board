@@ -1,5 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Global } from '@emotion/react';
 import { ThemeProvider } from '@mui/material';
 import globalCss from './GlobalStyles';
@@ -18,6 +18,7 @@ import { FullScreenLoader } from 'components/loaders/FullScreenLoader';
 
 function App() {
   return (
+    <HelmetProvider>
     <ThemeProvider theme={theme}>
       <RecoilRoot>
         <Suspense fallback={<FullScreenLoader />}>
@@ -57,6 +58,7 @@ function App() {
         </Suspense>
       </RecoilRoot>
     </ThemeProvider>
+    </HelmetProvider>
   );
 }
 
