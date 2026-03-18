@@ -10,8 +10,8 @@ export function useTimer() {
   const { data: timer = null } = useQuery<Date | null>({
     queryKey: TIMER_QUERY_KEY,
     queryFn: () => null,
-    gcTime: Infinity,
-    staleTime: Infinity,
+    gcTime: Number.POSITIVE_INFINITY,
+    staleTime: Number.POSITIVE_INFINITY,
   });
   return timer;
 }

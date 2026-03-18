@@ -35,8 +35,8 @@ export default function useSession(): UseSession {
   const { data: session = null } = useQuery<Session | null>({
     queryKey: SESSION_QUERY_KEY,
     queryFn: () => null,
-    gcTime: Infinity,
-    staleTime: Infinity,
+    gcTime: Number.POSITIVE_INFINITY,
+    staleTime: Number.POSITIVE_INFINITY,
   });
 
   const setSession = useCallback(

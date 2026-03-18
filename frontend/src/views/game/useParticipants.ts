@@ -14,13 +14,16 @@ export default function useParticipants(): UseParticipantsReturn {
   const { data: participants = [] } = useQuery<Participant[]>({
     queryKey: PARTICIPANTS_QUERY_KEY,
     queryFn: () => [],
-    gcTime: Infinity,
-    staleTime: Infinity,
+    gcTime: Number.POSITIVE_INFINITY,
+    staleTime: Number.POSITIVE_INFINITY,
   });
 
   const updateParticipants = useCallback(
     (participants: Participant[]) => {
-      queryClient.setQueryData<Participant[]>(PARTICIPANTS_QUERY_KEY, participants);
+      queryClient.setQueryData<Participant[]>(
+        PARTICIPANTS_QUERY_KEY,
+        participants,
+      );
     },
     [queryClient],
   );
