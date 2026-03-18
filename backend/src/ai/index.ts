@@ -3,6 +3,7 @@ import OpenAI from 'openai';
 import { getAiChatSession, recordAiChatMessage } from '../db/actions/ai.js';
 import type UserView from '../db/entities/UserView.js';
 import type { CoachMessage } from '../common/types.js';
+import type { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { last } from 'lodash-es';
 
 const systemMessage: CoachMessage = {
@@ -59,7 +60,7 @@ export async function dialog(
   const api = new OpenAI({ apiKey: config.OPEN_AI_API_KEY });
   const response = await api.chat.completions.create({
     model: 'gpt-4',
-    messages: [systemMessage, ...messages],
+    messages: [systemMessage, ...messages] as ChatCompletionMessageParam[],
   });
   const answer = response.choices[0].message;
   const lastMessage = last(messages);
@@ -67,7 +68,7 @@ export async function dialog(
     await recordAiChatMessage('user', lastMessage.content, chat);
   }
   if (answer) {
-    await recordAiChatMessage('assistant', answer.content, chat);
+    await recordAiChatMessage('assistant', answer.content ?? undefined, chat);
   }
 
   return [...(messages || []), answer].filter(Boolean) as CoachMessage[];

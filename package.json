@@ -4,14 +4,14 @@
   "description": "An agile retrospective board - Powering www.retrospected.com",
   "private": true,
   "scripts": {
-    "lint": "yarn biome ci",
-    "clean": "del ./{frontend,backend,common,maintenance}/yarn.lock && del ./yarn.lock && del ./{frontend,backend,common,maintenance}/node_modules && del ./node_modules",
-    "frontend": "cd frontend && yarn start && cd ..",
-    "backend": "cd backend && yarn start && cd ..",
+    "lint": "npx biome ci",
+    "clean": "del ./{frontend,backend,common,maintenance}/package-lock.json && del ./package-lock.json && del ./{frontend,backend,common,maintenance}/node_modules && del ./node_modules",
+    "frontend": "cd frontend && npm start && cd ..",
+    "backend": "cd backend && npm start && cd ..",
     "stripe-login": "stripe login",
     "stripe-listen": "stripe listen --forward-to localhost:3000/api/stripe/webhook",
     "bump": ". ./scripts/bump.sh",
-    "mig": "cd backend && yarn migrate"
+    "mig": "cd backend && npm run migrate"
   },
   "repository": {
     "type": "git",

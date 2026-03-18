@@ -57,7 +57,7 @@ It features the following technologies:
 - [React Beautiful DND](https://github.com/atlassian/react-beautiful-dnd) to allow re-ordering and grouping by drag-and-drop
 - [Vitest](https://vitest.dev), for Unit Testing
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro), for Integration Tests
-- [Yarn](https://yarnpkg.com/en/), replacing NPM
+- [NPM](https://www.npmjs.com/), the Node Package Manager
 - [Docker](https://docker.com), for easy deployment
 - [Kubernetes](https://kubernetes.io/), to scale Retrospected for its 10M+ users (not)
 - [GitHub Actions](https://github.com/features/actions), for Continuous Integration and Deployment (CI/CD)
