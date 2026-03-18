@@ -2,7 +2,6 @@ import { memo, useCallback } from 'react';
 import styled from '@emotion/styled';
 import { SessionOptions, SessionSettings } from 'common';
 import Typography from '@mui/material/Typography';
-import { makeStyles } from '@mui/styles';
 import { useTranslation } from 'react-i18next';
 import useRemainingVotes from './useRemainingVotes';
 import useCanReveal from './useCanReveal';
@@ -30,18 +29,8 @@ interface BoardHeaderProps {
   onLockSession: (locked: boolean) => void;
 }
 
-const useStyles = makeStyles({
-  sessionName: {
-    fontWeight: 300,
-  },
-  container: {
-    marginTop: 20,
-  },
-});
-
 function BoardHeader({ onChangeSession, onLockSession }: BoardHeaderProps) {
   const { t } = useTranslation();
-  const classes = useStyles();
   const [key] = useEncryptionKey();
   const remainingVotes = useRemainingVotes();
   const user = useUser();
@@ -121,7 +110,7 @@ function BoardHeader({ onChangeSession, onLockSession }: BoardHeaderProps) {
           </ClosableAlert>
         ) : null}
       </Alerts>
-      <Header className={classes.container}>
+      <Header style={{ marginTop: 20 }}>
         <LeftOptions>
           {canReveal ? <RevealButton onClick={handleReveal} /> : null}
           {canModifyOptions ? (
@@ -136,7 +125,6 @@ function BoardHeader({ onChangeSession, onLockSession }: BoardHeaderProps) {
           <Typography
             variant="h5"
             align="center"
-            className={classes.sessionName}
             style={{ fontWeight: 300 }}
           >
             <EditableLabel

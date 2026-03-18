@@ -42,7 +42,7 @@
   },
   "homepage": "https://www.retrospected.com",
   "dependencies": {
-    "del-cli": "6.0.0",
-    "@biomejs/biome": "1.9.4"
+    "@biomejs/biome": "1.9.4",
+    "del-cli": "6.0.0"
   }
 }

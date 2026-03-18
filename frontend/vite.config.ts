@@ -2,9 +2,7 @@ import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
 import svgrPlugin from 'vite-plugin-svgr';
-import inject from '@rollup/plugin-inject';
-import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
-import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import { ViteEjsPlugin } from 'vite-plugin-ejs';
 
 // https://vitejs.dev/config/
@@ -13,6 +11,10 @@ export default defineConfig({
     react(),
     viteTsconfigPaths(),
     svgrPlugin(),
+    nodePolyfills({
+      include: ['buffer', 'process'],
+      globals: { Buffer: true, process: true, global: true },
+    }),
     ViteEjsPlugin((config) => ({
       APP_VERSION: process.env.npm_package_version,
       APP_ENV: config.mode,
@@ -21,27 +23,6 @@ export default defineConfig({
   assetsInclude: ['**/*.md'],
   define: {
     APP_VERSION: JSON.stringify(process.env.npm_package_version),
-  },
-  optimizeDeps: {
-    esbuildOptions: {
-      // Node.js global to browser globalThis
-      define: {
-        global: 'globalThis',
-      },
-      // Enable esbuild polyfill plugins
-      plugins: [
-        NodeGlobalsPolyfillPlugin({
-          process: true,
-          buffer: true,
-        }),
-        NodeModulesPolyfillPlugin(),
-      ],
-    },
-  },
-  build: {
-    rollupOptions: {
-      plugins: [inject({ Buffer: ['buffer', 'Buffer'] }) as any],
-    },
   },
   server: {
     port: 3000,

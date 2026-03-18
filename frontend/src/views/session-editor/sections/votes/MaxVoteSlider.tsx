@@ -1,7 +1,8 @@
 import { useCallback } from 'react';
 import styled from '@emotion/styled';
 import Slider from '@mui/material/Slider';
-import { Mark } from '@mui/base';
+
+type Mark = { value: number; label: string };
 
 interface MaxVoteSliderProps {
   value: number | null;
