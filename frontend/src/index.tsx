@@ -11,7 +11,7 @@ import { init } from 'emoji-mart';
 init({ data });
 
 // Hack because a dependency requires module.hot to be defined
-window.module = {
+(window as any).module = {
   hot: false,
 } as any;
 
