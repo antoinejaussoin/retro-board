@@ -1,6 +1,6 @@
 # This must be run with the Docker context set to the root folder of the repository
 
-FROM --platform=$BUILDPLATFORM node:20-alpine AS node
+FROM --platform=$BUILDPLATFORM node:24-alpine AS node
 
 ENV NODE_ENV=production
 
