@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "lint": "npx biome ci",
-    "clean": "del ./{frontend,backend,common,maintenance}/package-lock.json && del ./package-lock.json && del ./{frontend,backend,common,maintenance}/node_modules && del ./node_modules",
+    "clean": "del ./{frontend,backend,common,maintenance,marketing}/package-lock.json && del ./package-lock.json && del ./{frontend,backend,common,maintenance,marketing}/node_modules && del ./node_modules",
     "frontend": "cd frontend && npm start && cd ..",
     "backend": "cd backend && npm start && cd ..",
     "stripe-login": "stripe login",
