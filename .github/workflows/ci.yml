@@ -17,8 +17,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm ci
-      - run: npm install @biomejs/cli-linux-x64@1.9.4 --no-save
+      - run: npm install
       - run: npm run ci-test
       - run: npm run ci-lint
       - run: npm run build
@@ -32,8 +31,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm ci
-      - run: npm install @biomejs/cli-linux-x64@1.9.4 --no-save
+      - run: npm install
       - run: npm run ci-test
       - run: npm run ci-lint
       - run: npm run build
@@ -47,8 +45,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm ci
-      - run: npm install @biomejs/cli-linux-x64@1.9.4 --no-save
+      - run: npm install
       - run: npm run ci-lint
       - run: npm run build
   test-docs:
@@ -61,6 +58,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm ci
+      - run: npm install
       - run: npm run typecheck
       - run: npm run build
