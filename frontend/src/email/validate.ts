@@ -1,5 +1,5 @@
-import { validate as validateBase } from 'isemail';
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function validate(email: string): boolean {
-  return validateBase(email);
+  return emailRegex.test(email);
 }
