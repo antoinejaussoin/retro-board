@@ -79,7 +79,6 @@
     "vite-plugin-ejs": "1.7.0",
     "vite-plugin-node-polyfills": "^0.25.0",
     "vite-plugin-svgr": "^4.5.0",
-    "vite-tsconfig-paths": "^6.0.0",
     "vitest": "^4.0.0",
     "whatwg-fetch": "3.6.20"
   },

@@ -1,6 +1,5 @@
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
-import viteTsconfigPaths from 'vite-tsconfig-paths';
 import svgrPlugin from 'vite-plugin-svgr';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import { ViteEjsPlugin } from 'vite-plugin-ejs';
@@ -9,17 +8,18 @@ import { ViteEjsPlugin } from 'vite-plugin-ejs';
 export default defineConfig({
   plugins: [
     react(),
-    viteTsconfigPaths(),
     svgrPlugin(),
     nodePolyfills({
       include: ['buffer', 'process'],
-      globals: { Buffer: true, process: true, global: true },
     }),
     ViteEjsPlugin((config) => ({
       APP_VERSION: process.env.npm_package_version,
       APP_ENV: config.mode,
     })),
   ],
+  resolve: {
+    tsconfigPaths: true,
+  },
   assetsInclude: ['**/*.md'],
   define: {
     APP_VERSION: JSON.stringify(process.env.npm_package_version),
