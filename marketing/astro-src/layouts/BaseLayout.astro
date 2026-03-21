@@ -23,24 +23,24 @@ const measurementId = import.meta.env.PUBLIC_MEASUREMENT_ID;
 const adWordsId = import.meta.env.PUBLIC_GOOGLE_AD_WORDS_ID;
 const adWordsDomains = import.meta.env.PUBLIC_GOOGLE_AD_WORDS_DOMAINS || '';
 ---
-    <meta name="viewport" content="initial-scale=1.0,width=device-width" />
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="apple-mobile-web-app-title" content="Retrospected" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="HandheldFriendly" content="true" />
     <meta http-equiv="cleartype" content="on" />
-<!doctype html>
-<html lang={locale}>
-    <meta property="og:site" content="https://www.retrospected.com" />
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="msapplication-TileColor" content="#ffc40d" />
     <meta name="theme-color" content="#ffffff" />
+    <meta property="og:site" content="https://www.retrospected.com" />
     <meta property="og:site_name" content="Retrospected" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <meta property="og:url" content={currentUrl} />
+    <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Manrope:wght@400;500;700;800&family=Source+Serif+4:wght@200;400;700&display=swap"
     />

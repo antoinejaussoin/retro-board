@@ -16,6 +16,9 @@ export type ImageProps = Omit<
   width?: number;
   height?: number;
   fill?: boolean;
+  placeholder?: 'blur' | 'empty';
+  priority?: boolean;
+  blurDataURL?: string;
   quality?: number;
   unoptimized?: boolean;
 };
@@ -31,19 +34,22 @@ export default function Image({
   width,
   height,
   style,
+  placeholder: _placeholder,
+  priority: _priority,
+  blurDataURL: _blurDataURL,
+  quality: _quality,
+  unoptimized: _unoptimized,
   ...props
 }: ImageProps) {
   const resolvedSrc = resolveSrc(src);
-  const resolvedWidth = width ?? (typeof src === 'object' ? src.width : undefined);
-  const resolvedHeight =
-    height ?? (typeof src === 'object' ? src.height : undefined);
+  const dimensions = resolveDimensions(src, width, height);
 
   return (
     <img
       src={resolvedSrc}
       alt={alt}
-      width={fill ? undefined : resolvedWidth}
-      height={fill ? undefined : resolvedHeight}
+      width={fill ? undefined : dimensions.width}
+      height={fill ? undefined : dimensions.height}
       style={
         fill
           ? {
@@ -58,4 +64,40 @@ export default function Image({
       {...props}
     />
   );
+}
+
+function resolveDimensions(
+  source: string | StaticImageData,
+  width?: number,
+  height?: number,
+) {
+  if (typeof source !== 'object') {
+    return { width, height };
+  }
+
+  const intrinsicWidth = source.width;
+  const intrinsicHeight = source.height;
+
+  if (width && height) {
+    return { width, height };
+  }
+
+  if (width && intrinsicWidth && intrinsicHeight) {
+    return {
+      width,
+      height: Math.round((width / intrinsicWidth) * intrinsicHeight),
+    };
+  }
+
+  if (height && intrinsicWidth && intrinsicHeight) {
+    return {
+      width: Math.round((height / intrinsicHeight) * intrinsicWidth),
+      height,
+    };
+  }
+
+  return {
+    width: width ?? intrinsicWidth,
+    height: height ?? intrinsicHeight,
+  };
 }
