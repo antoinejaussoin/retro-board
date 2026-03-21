@@ -6,7 +6,7 @@ interface VoteButtonProps {
   showTooltip: boolean;
   canVote: boolean;
   count: number;
-  icon: JSX.Element;
+  icon: React.JSX.Element;
   ariaLabel: string;
   onClick: () => void;
 }

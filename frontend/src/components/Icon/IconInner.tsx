@@ -1,10 +1,13 @@
-import { Emoji } from 'emoji-mart';
-
 type IconProps = {
   icon: string | null;
   size?: number;
 };
 
 export default function IconInner({ icon, size }: IconProps) {
-  return <Emoji emoji={icon || 'grey_question'} size={size || 24} />;
+  const shortcodes = icon
+    ? icon.startsWith(':')
+      ? icon
+      : `:${icon}:`
+    : ':grey_question:';
+  return <em-emoji shortcodes={shortcodes} size={`${size || 24}px`} />;
 }

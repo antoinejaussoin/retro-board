@@ -1,4 +1,4 @@
-FROM node:20-alpine AS base
+FROM node:24-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -7,8 +7,8 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY package.json yarn.lock ./
-RUN yarn --frozen-lockfile
+COPY package.json package-lock.json ./
+RUN npm ci
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -27,10 +27,7 @@ ARG NEXT_PUBLIC_GOOGLE_AD_WORDS_ID=APP_NEXT_PUBLIC_GOOGLE_AD_WORDS_ID
 ARG NEXT_PUBLIC_GOOGLE_AD_WORDS_CONVERSION_ID=APP_NEXT_PUBLIC_GOOGLE_AD_WORDS_CONVERSION_ID
 ARG NEXT_PUBLIC_GOOGLE_AD_WORDS_DOMAINS=APP_NEXT_PUBLIC_GOOGLE_AD_WORDS_DOMAINS
 ARG NEXT_PUBLIC_COOKIE_DOMAIN=APP_NEXT_PUBLIC_COOKIE_DOMAIN
-RUN yarn build
-
-# If using npm comment out above and use below instead
-# RUN npm run build
+RUN npm run build
 
 # Production image, copy all the files and run next
 FROM base AS runner

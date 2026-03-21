@@ -4,7 +4,7 @@ import TextField, { StandardTextFieldProps } from '@mui/material/TextField';
 
 interface InputProps extends StandardTextFieldProps {
   onChangeValue: (value: string) => void;
-  leftIcon?: JSX.Element;
+  leftIcon?: React.JSX.Element;
 }
 
 const Input = ({ onChangeValue, leftIcon, ...props }: InputProps) => {

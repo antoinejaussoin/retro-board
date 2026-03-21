@@ -6,10 +6,9 @@ import type {
   SessionSettings,
   VoteExtract,
 } from 'common';
-import { findIndex } from 'lodash';
+import { findIndex } from 'lodash-es';
 import { useCallback } from 'react';
-import { useRecoilState } from 'recoil';
-import { SessionState } from './state';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 interface UseSession {
   session: Session | null;
@@ -29,8 +28,28 @@ interface UseSession {
   cancelVotes: (postId: string, userId: string) => void;
 }
 
+const SESSION_QUERY_KEY = ['game-session'] as const;
+
 export default function useSession(): UseSession {
-  const [session, setSession] = useRecoilState(SessionState);
+  const queryClient = useQueryClient();
+  const { data: session = null } = useQuery<Session | null>({
+    queryKey: SESSION_QUERY_KEY,
+    queryFn: () => null,
+    gcTime: Number.POSITIVE_INFINITY,
+    staleTime: Number.POSITIVE_INFINITY,
+  });
+
+  const setSession = useCallback(
+    (updater: Session | null | ((prev: Session | null) => Session | null)) => {
+      queryClient.setQueryData<Session | null>(SESSION_QUERY_KEY, (old) => {
+        if (typeof updater === 'function') {
+          return updater(old ?? null);
+        }
+        return updater;
+      });
+    },
+    [queryClient],
+  );
 
   const resetSession = useCallback(() => {
     setSession(null);

@@ -1,10 +1,18 @@
-import { useRecoilValue } from 'recoil';
+import { useQuery } from '@tanstack/react-query';
 import { useHasRunOut } from './TimerProvider';
-import { TimerState } from './state';
 import useSession from './useSession';
 
+const TIMER_QUERY_KEY = ['game-timer'] as const;
+
+export { TIMER_QUERY_KEY };
+
 export function useTimer() {
-  const timer = useRecoilValue(TimerState);
+  const { data: timer = null } = useQuery<Date | null>({
+    queryKey: TIMER_QUERY_KEY,
+    queryFn: () => null,
+    gcTime: Number.POSITIVE_INFINITY,
+    staleTime: Number.POSITIVE_INFINITY,
+  });
   return timer;
 }
 

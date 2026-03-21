@@ -7,7 +7,7 @@ import {
   useNavigate,
   Routes,
 } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import CircularProgress from '@mui/material/CircularProgress';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
@@ -27,6 +27,7 @@ import SearchBar from './game/SearchBar';
 import GameFooter from './game/footer/GameFooter';
 import AckWarning from './game/AckWarning';
 import useUnauthorised from './game/useUnauthorised';
+import { UnauthorisedProvider } from './game/UnauthorisedContext';
 import useSession from './game/useSession';
 import TimerProvider from './game/TimerProvider';
 
@@ -276,4 +277,12 @@ const ParticipantContainer = styled.div`
   background-color: white;
 `;
 
-export default GamePage;
+function GamePageWrapper() {
+  return (
+    <UnauthorisedProvider>
+      <GamePage />
+    </UnauthorisedProvider>
+  );
+}
+
+export default GamePageWrapper;

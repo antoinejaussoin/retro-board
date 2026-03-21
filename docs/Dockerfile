@@ -1,7 +1,6 @@
 # This must be run with the Docker context set to the root folder of the repository
-# (the one with the yarn.lock file)
 
-FROM --platform=$BUILDPLATFORM node:20-alpine AS node
+FROM --platform=$BUILDPLATFORM node:24-alpine AS node
 
 ENV NODE_ENV=production
 
@@ -12,21 +11,21 @@ COPY ./package.json ./
 COPY ./babel.config.js ./
 COPY ./docusaurus.config.js ./
 COPY ./sidebars.js ./
-COPY ./yarn.lock ./
+COPY ./package-lock.json ./
 COPY ./tsconfig.json ./
 
 RUN chown -R node:node /home/node/app
 
 USER node
 
-RUN yarn --network-timeout 1000000 install
+RUN npm ci
 
 COPY --chown=node:node ./src ./src
 COPY --chown=node:node ./blog ./blog
 COPY --chown=node:node ./docs ./docs
 COPY --chown=node:node ./static ./static
 
-RUN yarn build
+RUN npm run build
 
 FROM nginx:alpine
 

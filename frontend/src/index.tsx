@@ -5,10 +5,13 @@ import './translations/i18n';
 import App from './App';
 import { initialiseAnalytics, initialiseSentry } from './track';
 import * as serviceWorker from './serviceWorker';
-import 'emoji-mart/css/emoji-mart.css';
+import data from '@emoji-mart/data';
+import { init } from 'emoji-mart';
+
+init({ data });
 
 // Hack because a dependency requires module.hot to be defined
-window.module = {
+(window as any).module = {
   hot: false,
 } as any;
 

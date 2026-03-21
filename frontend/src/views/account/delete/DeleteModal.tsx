@@ -14,7 +14,7 @@ import {
   Button,
   colors,
 } from '@mui/material';
-import { noop } from 'lodash';
+import { noop } from 'lodash-es';
 import { useCallback, useState } from 'react';
 import styled from '@emotion/styled';
 import { DeleteAccountPayload, FullUser } from 'common';

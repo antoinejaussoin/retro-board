@@ -5,9 +5,9 @@ import { PropsWithChildren } from 'react';
 interface ActionButtonProps {
   tooltip: React.ReactElement | string | number;
   ariaLabel: string;
-  icon: JSX.Element;
+  icon: React.JSX.Element;
   disabled?: boolean;
-  innerRef?: React.RefObject<HTMLButtonElement>;
+  innerRef?: React.RefObject<HTMLButtonElement | null>;
   onClick: () => void;
 }
 

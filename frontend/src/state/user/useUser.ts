@@ -1,10 +1,9 @@
 import type { FullUser } from 'common';
-import { useRecoilValue } from 'recoil';
-import { userState } from './user-state';
+import { useUserQuery } from './useUserQuery';
 
 function useUser(): FullUser | null {
-  const user = useRecoilValue(userState);
-  return user;
+  const { data } = useUserQuery();
+  return data;
 }
 
 interface UseUserMetadataReturn {
