@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LegacyLegalPage from '../../../src/pages/legal/[slug]';
+import markdownToHtml from '../../../src/lib/mdToHtml';
+import { getAllLegalDocuments, getLegalByName } from '../../../src/lib/getLegal';
+import { renderLegacyPage } from '../../compat/legacy-render';
+import { defaultLocale } from '../../lib/locales';
+
+export function getStaticPaths() {
+  return getAllLegalDocuments().map((entry) => ({ params: { slug: entry.slug } }));
+}
+
+const locale = defaultLocale;
+const { slug } = Astro.params;
+
+if (!slug) {
+  throw new Error('Missing legal slug');
+}
+
+const legals = getAllLegalDocuments();
+const sourceDocument = getLegalByName(slug);
+const document = {
+  ...sourceDocument,
+  content: await markdownToHtml(sourceDocument.content || ''),
+};
+const rendered = renderLegacyPage({
+  component: LegacyLegalPage,
+  props: { document, legals },
+  locale,
+  asPath: `/legal/${slug}`,
+  pathname: `/legal/${slug}`,
+});
+---
+
+<BaseLayout
+  locale={locale}
+  pathname={`/legal/${document.slug}`}
+  title={`${document.title} | Retrospected`}
+  description={document.title}
+  headStyles={rendered.styles}
+>
+  <div set:html={rendered.html}></div>
+</BaseLayout>

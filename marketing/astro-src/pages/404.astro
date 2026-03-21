@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Legacy404Page from '../../src/pages/404';
+import { renderLegacyPage } from '../compat/legacy-render';
+import { getText, loadDictionaryWithFallback } from '../lib/dictionary';
+import { defaultLocale } from '../lib/locales';
+
+const locale = defaultLocale;
+const dictionary = loadDictionaryWithFallback(locale);
+const rendered = renderLegacyPage({
+  component: Legacy404Page,
+  props: {},
+  locale,
+  asPath: '/404',
+  pathname: '/404',
+});
+---
+
+<BaseLayout
+  locale={locale}
+  pathname="/404"
+  title={`404 | Retrospected`}
+  description={getText(dictionary, '404.text')}
+  headStyles={rendered.styles}
+>
+  <div set:html={rendered.html}></div>
+</BaseLayout>

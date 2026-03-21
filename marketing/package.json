@@ -6,10 +6,15 @@
     "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start",
-    "ci-lint": "biome ci"
+    "ci-lint": "biome ci",
+    "astro:dev": "astro dev --port 3001",
+    "astro:build": "astro build",
+    "astro:preview": "astro preview --port 3001",
+    "astro:check": "astro check"
   },
   "dependencies": {
     "@biomejs/biome": "1.9.4",
+    "@astrojs/react": "^4.4.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
@@ -31,6 +36,7 @@
     "@types/url-parse": "^1.4.8",
     "@use-it/event-listener": "^0.1.7",
     "animate.css": "^4.1.1",
+    "astro": "^6.0.8",
     "date-fns": "^2.30.0",
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.12",
@@ -69,6 +75,7 @@
     "url-parse": "^1.5.10"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.8",
     "@types/node": "20.4.3"
   }
 }

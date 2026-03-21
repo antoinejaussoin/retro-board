@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LegacyHomePage from '../../src/pages/index';
+import { getAllBlogsForLocale } from '../../src/lib/getBlog';
+import { getAllLegalDocuments } from '../../src/lib/getLegal';
+import { renderLegacyPage } from '../compat/legacy-render';
+import { loadDictionaryWithFallback, getText } from '../lib/dictionary';
+import { defaultLocale } from '../lib/locales';
+
+const locale = defaultLocale;
+const dictionary = loadDictionaryWithFallback(locale);
+const legals = getAllLegalDocuments();
+const blogs = getAllBlogsForLocale(locale);
+const rendered = renderLegacyPage({
+  component: LegacyHomePage,
+  props: { legals, blogs, locale },
+  locale,
+  asPath: '/',
+  pathname: '/',
+});
+---
+
+<BaseLayout
+  locale={locale}
+  pathname="/"
+  title={getText(dictionary, 'SEO.title')}
+  description={getText(dictionary, 'SEO.description')}
+  headStyles={rendered.styles}
+>
+  <div set:html={rendered.html}></div>
+</BaseLayout>

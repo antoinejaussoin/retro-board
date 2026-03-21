@@ -19,6 +19,12 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/containers/Banner/index.tsx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    ".astro/types.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/containers/Banner/index.tsx"
+  ],
+  "exclude": ["node_modules", "dist"]
 }

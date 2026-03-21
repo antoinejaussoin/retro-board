@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LegacyHomePage from '../../../src/pages/index';
+import { getAllBlogsForLocale } from '../../../src/lib/getBlog';
+import { getAllLegalDocuments } from '../../../src/lib/getLegal';
+import { renderLegacyPage } from '../../compat/legacy-render';
+import { getText, loadDictionaryWithFallback } from '../../lib/dictionary';
+import { getNonDefaultLocales, type SupportedLocale } from '../../lib/locales';
+
+export function getStaticPaths() {
+  return getNonDefaultLocales().map((locale) => ({ params: { locale } }));
+}
+
+const locale = Astro.params.locale as SupportedLocale;
+const dictionary = loadDictionaryWithFallback(locale);
+const legals = getAllLegalDocuments();
+const blogs = getAllBlogsForLocale(locale);
+const rendered = renderLegacyPage({
+  component: LegacyHomePage,
+  props: { legals, blogs, locale },
+  locale,
+  asPath: `/${locale}`,
+  pathname: '/',
+});
+---
+
+<BaseLayout
+  locale={locale}
+  pathname="/"
+  title={getText(dictionary, 'SEO.title')}
+  description={getText(dictionary, 'SEO.description')}
+  headStyles={rendered.styles}
+>
+  <div set:html={rendered.html}></div>
+</BaseLayout>

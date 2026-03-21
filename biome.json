@@ -4,7 +4,7 @@
   "files": {
     "ignoreUnknown": false,
     "ignore": ["dist/**/*", ".next/**/*"],
-    "include": ["src/**/*.js", "src/**/*.ts"]
+    "include": ["src/**/*.js", "src/**/*.ts", "astro-src/**/*.ts"]
   },
   "formatter": {
     "enabled": true,

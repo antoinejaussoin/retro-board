@@ -1,0 +1,135 @@
+---
+import '../../src/common/assets/css/flaticon.css';
+import '../../src/common/assets/css/react-slick.css';
+import '../../src/common/assets/css/rc-collapse.css';
+import '../../src/common/assets/css/rc-drawer.css';
+import 'animate.css';
+import { supportedLocales, type SupportedLocale, withLocale } from '../lib/locales';
+
+interface Props {
+  locale: SupportedLocale;
+  pathname: string;
+  title: string;
+  description: string;
+  headStyles?: string;
+}
+
+const { locale, pathname, title, description, headStyles = '' } = Astro.props;
+const currentUrl = new URL(
+  withLocale(locale, pathname),
+  import.meta.env.PUBLIC_APP_URL || 'https://www.retrospected.com',
+).toString();
+const measurementId = import.meta.env.PUBLIC_MEASUREMENT_ID;
+const adWordsId = import.meta.env.PUBLIC_GOOGLE_AD_WORDS_ID;
+const adWordsDomains = import.meta.env.PUBLIC_GOOGLE_AD_WORDS_DOMAINS || '';
+---
+    <meta name="viewport" content="initial-scale=1.0,width=device-width" />
+    <meta name="apple-mobile-web-app-title" content="Retrospected" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="HandheldFriendly" content="true" />
+    <meta http-equiv="cleartype" content="on" />
+<!doctype html>
+<html lang={locale}>
+    <meta property="og:site" content="https://www.retrospected.com" />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="msapplication-TileColor" content="#ffc40d" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta property="og:site_name" content="Retrospected" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <meta property="og:url" content={currentUrl} />
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Manrope:wght@400;500;700;800&family=Source+Serif+4:wght@200;400;700&display=swap"
+    />
+    <link
+      rel="mask-icon"
+      href="/safari-pinned-tab.svg"
+      color="#5bbad5"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/favicon-16x16.png"
+    />
+    <link rel="manifest" href="/site.webmanifest" />
+    <title>{title}</title>
+    {headStyles && <style is:global set:html={headStyles}></style>}
+    {
+      measurementId && (
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}></script>
+      )
+    }
+    {
+      measurementId && (
+        <script
+          is:inline
+          define:vars={{ measurementId, adWordsId, adWordsDomains }}
+        >
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', measurementId);
+          if (adWordsId) {
+            gtag('config', adWordsId);
+          }
+          gtag('set', 'linker', { domains: (adWordsDomains || '').split(',') });
+        </script>
+      )
+    }
+    {
+      supportedLocales.map((entryLocale) => (
+        <link
+          rel="alternate"
+          hreflang={entryLocale}
+          href={new URL(
+            withLocale(entryLocale, pathname),
+            import.meta.env.PUBLIC_APP_URL || 'https://www.retrospected.com',
+          ).toString()}
+        />
+      ))
+    }
+    <slot name="head" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style>
+  :global(html) {
+    box-sizing: border-box;
+    -ms-overflow-style: scrollbar;
+  }
+
+  :global(*),
+  :global(*::before),
+  :global(*::after) {
+    box-sizing: inherit;
+  }
+
+  :global(body) {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  :global(.source-serif-4) {
+    font-family: 'Source Serif 4', serif;
+  }
+</style>

@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LegacyBlogPage from '../../../../src/pages/blog/[slug]';
+import { getAllBlogsForLocale, getBlogBySlug } from '../../../../src/lib/getBlog';
+import { getAllLegalDocuments } from '../../../../src/lib/getLegal';
+import { renderLegacyPage } from '../../../compat/legacy-render';
+import { getNonDefaultLocales, type SupportedLocale } from '../../../lib/locales';
+
+export function getStaticPaths() {
+  return getNonDefaultLocales().flatMap((locale) =>
+    getAllBlogsForLocale(locale).map((blog) => ({
+      params: { locale, slug: blog.slug },
+    })),
+  );
+}
+
+const locale = Astro.params.locale as SupportedLocale;
+const { slug } = Astro.params;
+
+if (!slug) {
+  throw new Error('Missing blog slug');
+}
+
+const document = getBlogBySlug(slug, locale);
+const legals = getAllLegalDocuments();
+const rendered = renderLegacyPage({
+  component: LegacyBlogPage,
+  props: { document, legals },
+  locale,
+  asPath: `/${locale}/blog/${slug}`,
+  pathname: `/blog/${slug}`,
+});
+---
+
+<BaseLayout
+  locale={locale}
+  pathname={`/blog/${document.slug}`}
+  title={`${document.title} | Retrospected`}
+  description={document.subtitle}
+  headStyles={rendered.styles}
+>
+  <meta slot="head" name="author" content={document.author} />
+  <meta slot="head" name="date" content={document.date} />
+  <meta slot="head" name="keywords" content={document.keywords} />
+  <meta slot="head" property="og:type" content="article" />
+  <meta slot="head" property="article:author" content={document.author} />
+  <meta slot="head" property="og:image" content={document.cover} />
+  <div set:html={rendered.html}></div>
+</BaseLayout>

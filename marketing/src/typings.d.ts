@@ -1,3 +1,9 @@
 declare module '@redq/reuse-modal';
 declare module 'react-reveal';
 declare module 'react-reveal/Fade';
+declare module 'react-reveal/Fade.js';
+declare module 'react-scrollspy/lib/scrollspy.js';
+declare module 'react-slick/lib/slider.js';
+declare module 'react-anchor-link-smooth-scroll/lib/anchor-link.js';
+declare module 'styled-components/dist/styled-components.cjs.js';
+declare module '@styled-system/theme-get/dist/index.esm.js';

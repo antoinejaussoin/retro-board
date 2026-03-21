@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Wrapper, Menu } from 'react-aria-menubutton';
 import { themeGet } from '@styled-system/theme-get';
 
 const Section = styled.section`
@@ -97,54 +96,6 @@ export const Content = styled.div`
   }
   button {
     border-radius: 8px;
-  }
-`;
-
-export const DownloadButton = styled(Wrapper)`
-  background-color: ${themeGet('colors.white')};
-  color: ${themeGet('colors.headingColor')};
-  display: inline-flex;
-  align-items: center;
-  border-radius: 8px;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.33;
-  letter-spacing: -0.16px;
-  min-height: 65px;
-  padding: 0 40px;
-  position: relative;
-  @media (min-width: 1025px) and (max-width: 1280px) {
-    font-size: 16px;
-    min-height: 55px;
-    padding: 0 25px;
-  }
-  @media (max-width: 768px) {
-    font-size: 16px;
-    min-height: 50px;
-    padding: 0 20px;
-  }
-  @media (max-width: 480px) {
-    padding: 0 30px;
-  }
-`;
-
-export const DownloadOptions = styled(Menu)`
-  background-color: #fff;
-  box-shadow: 0px 3px 8px 0px rgb(43 83 135 / 8%);
-  border-radius: 8px;
-  position: absolute;
-  top: 100%;
-  width: 100%;
-  left: 0;
-  margin-top: 10px;
-  padding: 10px 0;
-  li {
-    cursor: pointer;
-    padding: 10px;
-    transition: all 0.25s ease 0s;
-    :hover {
-      background-color: rgba(0, 0, 0, 0.08);
-    }
   }
 `;
 
