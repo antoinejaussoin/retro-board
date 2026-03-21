@@ -14,6 +14,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "types": ["astro/client"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
@@ -22,8 +23,10 @@
   "include": [
     "next-env.d.ts",
     ".astro/types.d.ts",
+    "astro-src/env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "**/*.astro",
     "src/containers/Banner/index.tsx"
   ],
   "exclude": ["node_modules", "dist"]
