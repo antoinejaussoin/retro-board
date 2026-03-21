@@ -28,7 +28,9 @@ export function loadDictionary(locale: SupportedLocale): Dictionary {
     'common.json',
   );
 
-  const dictionary = JSON.parse(fs.readFileSync(filePath, 'utf8')) as Dictionary;
+  const dictionary = JSON.parse(
+    fs.readFileSync(filePath, 'utf8'),
+  ) as Dictionary;
   dictionaryCache.set(locale, dictionary);
   return dictionary;
 }
@@ -53,7 +55,9 @@ export function getText(dictionary: Dictionary, path: string, fallback = path) {
 
 export function getTextList(dictionary: Dictionary, path: string) {
   const value = getDictionaryValue(dictionary, path);
-  return Array.isArray(value) ? value.filter((item) => typeof item === 'string') : [];
+  return Array.isArray(value)
+    ? value.filter((item) => typeof item === 'string')
+    : [];
 }
 
 export function loadDictionaryWithFallback(locale: SupportedLocale) {

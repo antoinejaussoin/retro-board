@@ -18,7 +18,9 @@ export type MarketingHomeData = {
   legals: LegalDocumentMetadata[];
 };
 
-export async function getHomeData(locale: SupportedLocale): Promise<MarketingHomeData> {
+export async function getHomeData(
+  locale: SupportedLocale,
+): Promise<MarketingHomeData> {
   return {
     blogs: getAllBlogsForLocale(locale).slice(0, 3),
     legals: getAllLegalDocuments(),
