@@ -1,9 +1,11 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import LegacyBlogPage from '../../../../src/pages/blog/[slug]';
+import LegacyPageIsland from '../../../compat/legacy-page-island';
 import { getAllBlogsForLocale, getBlogBySlug } from '../../../../src/lib/getBlog';
 import { getAllLegalDocuments } from '../../../../src/lib/getLegal';
 import { renderLegacyPage } from '../../../compat/legacy-render';
+import { loadDictionaryWithFallback } from '../../../lib/dictionary';
 import { getNonDefaultLocales, type SupportedLocale } from '../../../lib/locales';
 
 export function getStaticPaths() {
@@ -15,6 +17,7 @@ export function getStaticPaths() {
 }
 
 const locale = Astro.params.locale as SupportedLocale;
+const dictionary = loadDictionaryWithFallback(locale);
 const { slug } = Astro.params;
 
 if (!slug) {
@@ -45,5 +48,13 @@ const rendered = renderLegacyPage({
   <meta slot="head" property="og:type" content="article" />
   <meta slot="head" property="article:author" content={document.author} />
   <meta slot="head" property="og:image" content={document.cover} />
-  <div set:html={rendered.html}></div>
+  <LegacyPageIsland
+    page="blog"
+    pageProps={{ document, legals }}
+    locale={locale}
+    dictionary={dictionary}
+    asPath={`/${locale}/blog/${slug}`}
+    pathname={`/blog/${slug}`}
+    client:load
+  />
 </BaseLayout>

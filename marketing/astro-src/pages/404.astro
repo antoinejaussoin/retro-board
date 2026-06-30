@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Legacy404Page from '../../src/pages/404';
+import LegacyPageIsland from '../compat/legacy-page-island';
 import { renderLegacyPage } from '../compat/legacy-render';
 import { getText, loadDictionaryWithFallback } from '../lib/dictionary';
 import { defaultLocale } from '../lib/locales';
@@ -23,5 +24,13 @@ const rendered = renderLegacyPage({
   description={getText(dictionary, '404.text')}
   headStyles={rendered.styles}
 >
-  <div set:html={rendered.html}></div>
+  <LegacyPageIsland
+    page="404"
+    pageProps={{}}
+    locale={locale}
+    dictionary={dictionary}
+    asPath="/404"
+    pathname="/404"
+    client:load
+  />
 </BaseLayout>

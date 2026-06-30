@@ -1,9 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LegacyLegalPage from '../../../src/pages/legal/[slug]';
+import LegacyPageIsland from '../../compat/legacy-page-island';
 import markdownToHtml from '../../../src/lib/mdToHtml';
 import { getAllLegalDocuments, getLegalByName } from '../../../src/lib/getLegal';
 import { renderLegacyPage } from '../../compat/legacy-render';
+import { loadDictionaryWithFallback } from '../../lib/dictionary';
 import { defaultLocale } from '../../lib/locales';
 
 export function getStaticPaths() {
@@ -11,6 +13,7 @@ export function getStaticPaths() {
 }
 
 const locale = defaultLocale;
+const dictionary = loadDictionaryWithFallback(locale);
 const { slug } = Astro.params;
 
 if (!slug) {
@@ -39,5 +42,13 @@ const rendered = renderLegacyPage({
   description={document.title}
   headStyles={rendered.styles}
 >
-  <div set:html={rendered.html}></div>
+  <LegacyPageIsland
+    page="legal"
+    pageProps={{ document, legals }}
+    locale={locale}
+    dictionary={dictionary}
+    asPath={`/legal/${slug}`}
+    pathname={`/legal/${slug}`}
+    client:load
+  />
 </BaseLayout>

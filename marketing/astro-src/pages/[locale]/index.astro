@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LegacyHomePage from '../../../src/pages/index';
+import LegacyPageIsland from '../../compat/legacy-page-island';
 import { getAllBlogsForLocale } from '../../../src/lib/getBlog';
 import { getAllLegalDocuments } from '../../../src/lib/getLegal';
 import { renderLegacyPage } from '../../compat/legacy-render';
@@ -31,5 +32,103 @@ const rendered = renderLegacyPage({
   description={getText(dictionary, 'SEO.description')}
   headStyles={rendered.styles}
 >
-  <div set:html={rendered.html}></div>
+  <LegacyPageIsland
+    page="home"
+    pageProps={{ legals, blogs, locale }}
+    locale={locale}
+    dictionary={dictionary}
+    asPath={`/${locale}`}
+    pathname="/"
+    client:load
+  />
+  <script is:inline>
+    (() => {
+      const initPricingFallback = () => {
+        const root = document.querySelector('[data-pricing-root]');
+
+        if (!root || root.dataset.pricingFallbackReady === 'true') {
+          return;
+        }
+
+        const toggle = root.querySelector('[data-pricing-toggle]');
+        const knob = root.querySelector('[data-pricing-toggle-knob]');
+        const monthlyButton = root.querySelector('[data-pricing-mode="monthly"]');
+        const yearlyButton = root.querySelector('[data-pricing-mode="yearly"]');
+        const banner = root.querySelector('[data-pricing-banner] span');
+        const cards = Array.from(root.querySelectorAll('[data-pricing-card]'));
+
+        if (!toggle || !knob || !monthlyButton || !yearlyButton || !banner || cards.length === 0) {
+          return;
+        }
+
+        const currency = root.dataset.pricingCurrency || '$';
+        const freeWord = root.dataset.pricingFree || 'Free';
+        const monthlyWord = root.dataset.pricingMonthlyWord || ' / month';
+        const yearlyWord = root.dataset.pricingYearlyWord || ' / year';
+        const monthlyBanner = root.dataset.pricingMonthlyBanner || '';
+        const yearlyBanner = root.dataset.pricingYearlyBanner || '';
+        let isMonthly = monthlyButton.classList.contains('active');
+
+        const render = () => {
+          monthlyButton.classList.toggle('active', isMonthly);
+          yearlyButton.classList.toggle('active', !isMonthly);
+          knob.className = `switcher-button ${isMonthly ? 'left' : 'right'}`;
+          banner.textContent = isMonthly
+            ? `🎁 ${monthlyBanner}`
+            : `${yearlyBanner} 🎉`;
+
+          cards.forEach((card) => {
+            const price = Number.parseFloat(card.dataset.pricingPrice || '0');
+            const recurrent = card.dataset.pricingRecurrent === 'true';
+            const subscribe = card.dataset.pricingSubscribe === 'true';
+            const amount = card.querySelector('[data-pricing-amount]');
+            const period = card.querySelector('[data-pricing-period]');
+            const originalWrapper = card.querySelector('[data-pricing-original-wrapper]');
+            const original = card.querySelector('[data-pricing-original]');
+
+            if (amount) {
+              amount.textContent = price === 0
+                ? freeWord
+                : `${currency}${(price * (!isMonthly && recurrent ? 11 : 1)).toFixed(2)}`;
+            }
+
+            if (period) {
+              period.textContent = isMonthly ? monthlyWord : yearlyWord;
+            }
+
+            if (original && originalWrapper) {
+              original.textContent = `${currency}${(price * 12).toFixed(2)}`;
+              originalWrapper.style.visibility = !isMonthly && recurrent && subscribe
+                ? 'visible'
+                : 'hidden';
+            }
+          });
+        };
+
+        toggle.addEventListener('click', () => {
+          isMonthly = !isMonthly;
+          render();
+        });
+
+        monthlyButton.addEventListener('click', () => {
+          isMonthly = true;
+          render();
+        });
+
+        yearlyButton.addEventListener('click', () => {
+          isMonthly = false;
+          render();
+        });
+
+        root.dataset.pricingFallbackReady = 'true';
+        render();
+      };
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPricingFallback, { once: true });
+      } else {
+        initPricingFallback();
+      }
+    })();
+  </script>
 </BaseLayout>

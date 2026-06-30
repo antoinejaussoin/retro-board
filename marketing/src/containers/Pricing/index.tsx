@@ -17,7 +17,6 @@ import {
   Features,
   FreeDescription,
   StrikethroughPrice,
-  StrikethroughPricePlaceholder,
 } from './pricing.style';
 import { useTranslation } from 'next-i18next';
 import { StaticImageData } from 'next/image';
@@ -92,58 +91,81 @@ function toPrice(
   const price = parseFloat(priceStr);
 
   if (price === 0) {
-    return <>{freeWord}</>;
+    return <span data-pricing-amount>{freeWord}</span>;
   }
 
-  let p = <>{currency + (price * (yearly && recurrent ? 11 : 1)).toFixed(2)}</>;
+  const amount = currency + (price * (yearly && recurrent ? 11 : 1)).toFixed(2);
 
-  if (recurrent) {
-    p = (
-      <>
-        {p}
-        {<em>{recurrentWord}</em>}
-      </>
-    );
-  }
-
-  return p;
+  return (
+    <>
+      <span data-pricing-amount>{amount}</span>
+      {recurrent ? <em data-pricing-period>{recurrentWord}</em> : null}
+    </>
+  );
 }
 
 const Pricing = () => {
   const [isMonthly, setIsMonthly] = useState(true);
   const { t } = useTranslation();
   const { appUrl } = useConfig();
+  const currency = t('Pricing.currency');
+  const freeWord = t('Pricing.free');
+  const monthlyWord = t('Pricing.perMonth');
+  const yearlyWord = t('Pricing.perYear');
+  const monthlyBanner = t('Pricing.switchToYearly');
+  const yearlyBanner = t('Pricing.switchedToYearly');
 
   const handleToggle = () => {
     setIsMonthly(!isMonthly);
   };
 
   return (
-    <Section id="pricing">
+    <Section
+      id="pricing"
+      data-pricing-root
+      data-pricing-currency={currency}
+      data-pricing-free={freeWord}
+      data-pricing-monthly-word={monthlyWord}
+      data-pricing-yearly-word={yearlyWord}
+      data-pricing-monthly-banner={monthlyBanner}
+      data-pricing-yearly-banner={yearlyBanner}
+    >
       <Container width="1400px">
         <SectionHeading>
           <Heading content={t('Pricing.heading')} />
           <Text content={t('Pricing.weAccept')} />
         </SectionHeading>
         <SwitcherWrapper>
-          <button className={isMonthly ? 'active' : undefined}>
+          <button
+            type="button"
+            data-pricing-mode="monthly"
+            className={isMonthly ? 'active' : undefined}
+            onClick={() => setIsMonthly(true)}
+          >
             {t('Pricing.monthly')}
           </button>
           <span
             className="switcher"
+            data-pricing-toggle
             onClick={handleToggle}
             role="button"
             title="Switch between monthly and yearly"
           >
             <span
+              data-pricing-toggle-knob
               className={`switcher-button ${isMonthly ? 'left' : 'right'}`}
             />
           </span>
-          <button className={!isMonthly ? 'active' : undefined}>
+          <button
+            type="button"
+            data-pricing-mode="yearly"
+            className={!isMonthly ? 'active' : undefined}
+            onClick={() => setIsMonthly(false)}
+          >
             {t('Pricing.yearly')}
           </button>
         </SwitcherWrapper>
-        <FreeDescription>
+        <FreeDescription data-pricing-banner>
           {isMonthly ? (
             <span>🎁 {t('Pricing.switchToYearly')}</span>
           ) : (
@@ -157,6 +179,10 @@ const Pricing = () => {
             return (
               <Fade key={priceTable.id} up delay={priceTable.id * 100}>
                 <PriceTable
+                  data-pricing-card
+                  data-pricing-price={t(`${key}.price`)}
+                  data-pricing-recurrent={String(priceTable.recurrent)}
+                  data-pricing-subscribe={String(priceTable.isSubscribe)}
                   className={
                     priceTable.isActive
                       ? 'active animate__animated animate__fadeInUp'
@@ -175,22 +201,21 @@ const Pricing = () => {
                       t(`Pricing.free`)
                     )}
                   />
-                  {!isMonthly &&
-                  priceTable.recurrent &&
-                  priceTable.isSubscribe ? (
-                    <StrikethroughPrice>
-                      <span>
-                        {toOriginalPrice(
-                          t('Pricing.currency'),
-                          t(`${key}.price`)
-                        )}
-                      </span>
-                    </StrikethroughPrice>
-                  ) : (
-                    <StrikethroughPricePlaceholder>
-                      &nbsp;
-                    </StrikethroughPricePlaceholder>
-                  )}
+                  <StrikethroughPrice
+                    data-pricing-original-wrapper
+                    style={{
+                      visibility:
+                        !isMonthly &&
+                        priceTable.recurrent &&
+                        priceTable.isSubscribe
+                          ? 'visible'
+                          : 'hidden',
+                    }}
+                  >
+                    <span data-pricing-original>
+                      {toOriginalPrice(currency, t(`${key}.price`))}
+                    </span>
+                  </StrikethroughPrice>
 
                   <Features>
                     {plus ? (

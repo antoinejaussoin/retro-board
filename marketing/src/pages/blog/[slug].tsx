@@ -3,7 +3,6 @@ import ErrorPage from 'next/error';
 import Head from 'next/head';
 import {
   BlogDocument,
-  BlogMetadata,
   getAllBlogsForLocale,
   getBlogBySlug,
 } from '@/lib/getBlog';
@@ -12,11 +11,11 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { MenuItem } from '@/types';
 import BlogContent from '@/containers/blog/BlogContent';
 import styled from 'styled-components';
-import { getAllLegalDocuments } from '@/lib/getLegal';
+import { getAllLegalDocuments, LegalDocumentMetadata } from '@/lib/getLegal';
 
 type Props = {
   document: BlogDocument;
-  legals: BlogMetadata[];
+  legals: LegalDocumentMetadata[];
 };
 
 export const menuItems: MenuItem[] = [
