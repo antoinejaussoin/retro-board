@@ -3,42 +3,42 @@ import Avatar, { AvatarTypeMap } from '@mui/material/Avatar';
 import Badge from '@mui/material/Badge';
 import md5 from 'md5';
 import { DefaultComponentProps } from '@mui/material/OverridableComponent';
-import styled from '@emotion/styled';
-import { keyframes } from '@emotion/react';
+import { createStyles, withStyles } from '@mui/styles';
 
 interface AvatarProps extends DefaultComponentProps<AvatarTypeMap<{}, 'div'>> {
   user: User | null;
   online?: boolean;
 }
 
-const ripple = keyframes`
-  0% {
-    transform: scale(.8);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(2.4);
-    opacity: 0;
-  }
-`;
-
-const StyledBadge = styled(Badge)`
-  & .MuiBadge-badge {
-    background-color: #44b700;
-    color: #44b700;
-    &::after {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 75%;
-      height: 75%;
-      border-radius: 50%;
-      animation: ${ripple} 1.2s infinite ease-in-out;
-      border: 1px solid currentColor;
-      content: '';
-    }
-  }
-`;
+const StyledBadge = withStyles((theme) =>
+  createStyles({
+    badge: {
+      backgroundColor: '#44b700',
+      color: '#44b700',
+      '&::after': {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '75%',
+        height: '75%',
+        borderRadius: '50%',
+        animation: '$ripple 1.2s infinite ease-in-out',
+        border: '1px solid currentColor',
+        content: '""',
+      },
+    },
+    '@keyframes ripple': {
+      '0%': {
+        transform: 'scale(.8)',
+        opacity: 1,
+      },
+      '100%': {
+        transform: 'scale(2.4)',
+        opacity: 0,
+      },
+    },
+  })
+)(Badge);
 
 const getGravatar = (user: User | null) => {
   if (user && user.photo) {

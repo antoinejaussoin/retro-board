@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import LoginContent from 'auth/modal/LoginContent';
-import { noop } from 'lodash-es';
+import { noop } from 'lodash';
 import { useTranslation } from 'react-i18next';
 
 export function Welcome() {

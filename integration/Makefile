@@ -8,8 +8,8 @@ local:
 	docker build -f ../frontend/Dockerfile -t retrospected/frontend:local ../frontend
 	docker-compose down
 	docker-compose up -d
-	npm install
-	npm test
+	yarn
+	yarn test
 	docker-compose down
 
 local-compose:

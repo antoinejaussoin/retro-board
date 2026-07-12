@@ -4,7 +4,7 @@ import { Color, colors, IconButton } from '@mui/material';
 import { SessionOptions } from 'common';
 import { differenceInSeconds } from 'date-fns';
 import useModal from 'hooks/useModal';
-import { noop } from 'lodash-es';
+import { noop } from 'lodash';
 import { useConfirm } from 'material-ui-confirm';
 import { useCallback, useEffect, useState, memo } from 'react';
 import { useTranslation } from 'react-i18next';

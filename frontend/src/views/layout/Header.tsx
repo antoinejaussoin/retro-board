@@ -2,7 +2,7 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Button, useMediaQuery, useTheme } from '@mui/material';
+import { Button, Hidden } from '@mui/material';
 import useIsPro from 'auth/useIsPro';
 import ProButton from 'components/ProButton';
 import styled from '@emotion/styled';
@@ -22,8 +22,6 @@ export function Header() {
   const user = useUser();
   const isPro = useIsPro();
   const navigate = useNavigate();
-  const theme = useTheme();
-  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
   const displayGoPro = !isPro && user && user.accountType !== 'anonymous';
   const goToHome = useCallback(() => navigate('/'), [navigate]);
   const { toggle: togglePanel } = useSidePanel();
@@ -59,14 +57,16 @@ export function Header() {
         <ProPillContainer>
           <ProPill small />
         </ProPillContainer>
-        {displayGoPro && isMdUp ? (
-          <GoProContainer>
-            <ProButton>
-              <Button variant="contained" color="secondary">
-                ⭐️ Go Pro!
-              </Button>
-            </ProButton>
-          </GoProContainer>
+        {displayGoPro ? (
+          <Hidden mdDown>
+            <GoProContainer>
+              <ProButton>
+                <Button variant="contained" color="secondary">
+                  ⭐️ Go Pro!
+                </Button>
+              </ProButton>
+            </GoProContainer>
+          </Hidden>
         ) : null}
         <Spacer />
         {user ? <AiButton /> : null}

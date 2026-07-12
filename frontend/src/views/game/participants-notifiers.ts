@@ -1,5 +1,5 @@
 import type { Participant } from 'common';
-import { difference } from 'lodash-es';
+import difference from 'lodash/difference';
 
 function onlineIds(partipants: Participant[]) {
   return partipants.filter((p) => p.online).map((p) => p.id);

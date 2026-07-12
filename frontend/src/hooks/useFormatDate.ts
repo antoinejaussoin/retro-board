@@ -2,7 +2,7 @@ import {
   type Locale,
   formatDistanceToNow as formatDistanceToNowBase,
 } from 'date-fns';
-import { enGB as englishLocale } from 'date-fns/locale/en-GB';
+import englishLocale from 'date-fns/locale/en-GB';
 import { useEffect, useState } from 'react';
 import { useLanguage } from '../translations';
 
@@ -24,7 +24,7 @@ export function useDateLocale() {
   useEffect(() => {
     async function load() {
       const locale = await language.dateLocale();
-      setLocale(locale);
+      setLocale(locale.default);
     }
     load();
   }, [language]);

@@ -1,4 +1,4 @@
-import { some, values } from 'lodash-es';
+import { some, values } from 'lodash';
 import useBackendCapabilities from './useBackendCapabilities';
 
 export default function useOAuthAvailabilities() {

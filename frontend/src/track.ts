@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/browser';
 import type { Plan, TrackingEvent } from 'common';
 import { isProduction } from 'is-production';
-import { noop } from 'lodash-es';
+import { noop } from 'lodash';
 import ReactGA from 'react-ga4';
 import type { InitOptions } from 'react-ga4/types/ga4';
 import config from './utils/getConfig';

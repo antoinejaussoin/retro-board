@@ -1,5 +1,7 @@
 import { format } from 'date-fns';
-import { flatten, sortBy, sortedUniq } from 'lodash-es';
+import flatten from 'lodash/flatten';
+import sortBy from 'lodash/sortBy';
+import sortedUniq from 'lodash/sortedUniq';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import useColumns from '../useColumns';

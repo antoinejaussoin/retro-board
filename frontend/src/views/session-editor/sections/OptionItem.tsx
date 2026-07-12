@@ -4,7 +4,7 @@ import { Alert } from '@mui/material';
 import { colors } from '@mui/material';
 
 type OptionItemProps = {
-  children: React.JSX.Element;
+  children: JSX.Element;
   help: string;
   label: string;
   wide?: boolean;

@@ -1,8 +1,8 @@
 import useSession from '../useSession';
 import { AllTheProviders, initialSession } from '../../../testing/index';
-import { renderHook, act, waitFor } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react-hooks';
 import { Post, Session } from 'common';
-import { cloneDeep } from 'lodash-es';
+import { cloneDeep } from 'lodash';
 import { describe, expect, it } from 'vitest';
 
 function post(id: string): Post {
@@ -38,33 +38,29 @@ describe('useSession', () => {
   });
 
   describe('Renaming a session', () => {
-    it('Should rename the session correctly', async () => {
+    it('Should rename the session correctly', () => {
       const context = render();
       expect(context.current.session?.name).toBe('My Retro');
       act(() => {
         context.current.editSessionSettings({ name: 'Something else' });
       });
-      await waitFor(() => {
-        expect(context.current.session?.name).toBe('Something else');
-      });
+      expect(context.current.session?.name).toBe('Something else');
     });
   });
 
   describe('Resetting a session', () => {
-    it('Should set the session to null', async () => {
+    it('Should set the session to null', () => {
       const context = render();
       expect(context.current.session).not.toBeNull();
       act(() => {
         context.current.resetSession();
       });
-      await waitFor(() => {
-        expect(context.current.session).toBeNull();
-      });
+      expect(context.current.session).toBeNull();
     });
   });
 
   describe('Receiving a new post', () => {
-    it('Should append the post at the end of the list', async () => {
+    it('Should append the post at the end of the list', () => {
       const context = render((session) => ({
         ...session,
         posts: [post('1'), post('2'), post('3')],
@@ -72,15 +68,13 @@ describe('useSession', () => {
       act(() => {
         context.current.receivePost(post('4'));
       });
-      await waitFor(() => {
-        expect(context.current.session?.posts.length).toBe(4);
-      });
+      expect(context.current.session?.posts.length).toBe(4);
       expect(context.current.session?.posts[3].id).toBe('4');
     });
   });
 
   describe('Updating post', () => {
-    it('Should replace the correct post', async () => {
+    it('Should replace the correct post', () => {
       const context = render((session) => ({
         ...session,
         posts: [post('1'), post('2'), post('3')],
@@ -91,9 +85,7 @@ describe('useSession', () => {
           content: 'bar',
         });
       });
-      await waitFor(() => {
-        expect(context.current.session?.posts.length).toBe(3);
-      });
+      expect(context.current.session?.posts.length).toBe(3);
       expect(context.current.session?.posts[1].id).toBe('2');
       expect(context.current.session?.posts[0].content).toBe('foo');
       expect(context.current.session?.posts[1].content).toBe('bar');
@@ -102,7 +94,7 @@ describe('useSession', () => {
   });
 
   describe('Deleting a post', () => {
-    it('Should delete the correct post', async () => {
+    it('Should delete the correct post', () => {
       const context = render((session) => ({
         ...session,
         posts: [post('1'), post('2'), post('3')],
@@ -110,9 +102,7 @@ describe('useSession', () => {
       act(() => {
         context.current.deletePost('2');
       });
-      await waitFor(() => {
-        expect(context.current.session?.posts.length).toBe(2);
-      });
+      expect(context.current.session?.posts.length).toBe(2);
       expect(context.current.session?.posts[0].id).toBe('1');
       expect(context.current.session?.posts[1].id).toBe('3');
     });

@@ -25,7 +25,7 @@ import type {
 } from './common/index.js';
 import { RateLimiterMemory } from 'rate-limiter-flexible';
 import chalk from 'chalk-template';
-import { format } from 'date-fns';
+import moment from 'moment';
 import type { Server, Socket } from 'socket.io';
 import type { SessionEntity, UserView } from './db/entities/index.js';
 import { hasField } from './security/payload-checker.js';
@@ -115,7 +115,7 @@ const s = (str: string) => chalk`{blue ${str.replace('retrospected/', '')}}`;
 
 export default (io: Server) => {
   const users: Users = {};
-  const d = () => chalk`{yellow [${format(new Date(), 'd/M HH:mm:ss')}]} `;
+  const d = () => chalk`{yellow [${moment().format('D/M HH:mm:ss')}]} `;
 
   const getRoom = (sessionId: string) => `board-${sessionId}`;
 

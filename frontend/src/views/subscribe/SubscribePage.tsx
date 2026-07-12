@@ -17,7 +17,7 @@ import { useEffect } from 'react';
 import { useLanguage } from '../../translations';
 import { useTranslation } from 'react-i18next';
 import useProducts from './components/useProducts';
-import { find } from 'lodash-es';
+import { find } from 'lodash';
 import { trackEvent } from 'track';
 
 function guessDomain(user: FullUser): string {

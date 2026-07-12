@@ -16,7 +16,7 @@ import {
   type AccessErrorType,
   type FullUser,
 } from '../../common/index.js';
-import { nanoid } from 'nanoid';
+import shortId from 'shortid';
 import { v4 } from 'uuid';
 import {
   UserRepository,
@@ -58,7 +58,7 @@ export async function createSession(
   return await transaction(async (manager) => {
     const userRepository = manager.withRepository(UserRepository);
     const sessionRepository = manager.withRepository(SessionRepository);
-    const id = nanoid(10);
+    const id = shortId();
     const userWithDefaultTemplate = await userRepository.findOne({
       where: { id: author.id },
       relations: ['defaultTemplate', 'defaultTemplate.columns'],
@@ -116,7 +116,7 @@ export async function createCustom(
     const templateRepository = manager.withRepository(
       SessionTemplateRepository,
     );
-    const id = nanoid(10);
+    const id = shortId();
     const session = await sessionRepository.findOne({ where: { id } });
     if (!session) {
       const newSession = await sessionRepository.saveFromJson(

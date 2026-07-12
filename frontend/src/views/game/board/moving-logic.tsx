@@ -1,6 +1,6 @@
 import { ColumnContent } from '../types';
 import { Post, PostGroup } from 'common';
-import { flattenDeep } from 'lodash-es';
+import flattenDeep from 'lodash/flattenDeep';
 import { getMiddle, getPrevious, getNext, getBetween } from '../lexorank';
 
 interface MovingEntities {

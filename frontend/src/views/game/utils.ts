@@ -1,5 +1,7 @@
 import type { Post, PostGroup, VoteType } from 'common';
-import { groupBy, sum, toPairs } from 'lodash-es';
+import groupBy from 'lodash/groupBy';
+import sum from 'lodash/sum';
+import toPairs from 'lodash/toPairs';
 
 export function countVotes(post: Post, type: VoteType): number {
   return post.votes.filter((v) => v.type === type).length;

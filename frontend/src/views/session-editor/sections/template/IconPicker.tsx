@@ -1,8 +1,7 @@
 import { useCallback, useRef } from 'react';
 import { Button, Popover } from '@mui/material';
 import styled from '@emotion/styled';
-import data from '@emoji-mart/data';
-import Picker from '@emoji-mart/react';
+import { Picker, EmojiData } from 'emoji-mart';
 import useModal from 'hooks/useModal';
 import Icon from 'components/Icon/Icon';
 
@@ -15,9 +14,9 @@ const IconPicker = ({ value, onChange }: IconPickerProps) => {
   const ref = useRef<HTMLButtonElement>(null);
   const [opened, open, close] = useModal();
   const handleChange = useCallback(
-    (emoji: { shortcodes: string }) => {
-      if (emoji.shortcodes) {
-        onChange(emoji.shortcodes);
+    (emoji: EmojiData) => {
+      if (emoji.colons) {
+        onChange(emoji.colons);
         close();
       }
     },
@@ -42,7 +41,7 @@ const IconPicker = ({ value, onChange }: IconPickerProps) => {
           horizontal: 'left',
         }}
       >
-        <Picker data={data} onEmojiSelect={handleChange} />
+        <Picker onSelect={handleChange} />
       </Popover>
     </Container>
   );

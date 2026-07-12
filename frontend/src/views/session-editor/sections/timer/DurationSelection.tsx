@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
+import { Mark } from '@mui/base';
 import { Slider } from '@mui/material';
-
-type Mark = { value: number; label: string };
 import { isProduction } from 'is-production';
 import { useCallback } from 'react';
 

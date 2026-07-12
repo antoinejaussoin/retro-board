@@ -2,8 +2,7 @@ import { Alert, Button, Checkbox } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { FullUser } from 'common';
 import useUser from '../../state/user/useUser';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { fetchGet } from '../../api/fetch';
+import useStateFetch from '../../hooks/useStateFetch';
 import { useCallback, useMemo, useState } from 'react';
 import styled from '@emotion/styled';
 import ChangePassword from './ChangePassword';
@@ -13,7 +12,7 @@ import useModal from 'hooks/useModal';
 import { NewAccountModal } from './NewAccountModal';
 import Input from 'components/Input';
 import { DeleteAccount } from './DeleteAccount';
-import { uniq } from 'lodash-es';
+import { uniq } from 'lodash';
 import MergeModal from './MergeModal';
 import { mergeUsers } from './api';
 import { Stats } from './Stats';
@@ -21,19 +20,7 @@ import { Stats } from './Stats';
 export default function AdminPage() {
   const user = useUser();
   const backend = useBackendCapabilities();
-  const queryClient = useQueryClient();
-  const { data: users = [] } = useQuery({
-    queryKey: ['admin-users'],
-    queryFn: () => fetchGet<FullUser[]>('/api/admin/users', []),
-  });
-  const setUsers = useCallback(
-    (updater: (prev: FullUser[]) => FullUser[]) => {
-      queryClient.setQueryData<FullUser[]>(['admin-users'], (old) =>
-        updater(old ?? []),
-      );
-    },
-    [queryClient],
-  );
+  const [users, setUsers] = useStateFetch<FullUser[]>('/api/admin/users', []);
   const [addOpened, handleAddOpen, handleAddClose] = useModal();
   const [mergeOpened, handleOpenMerge, handleCloseMerge] = useModal();
   const [search, setSearch] = useState('');

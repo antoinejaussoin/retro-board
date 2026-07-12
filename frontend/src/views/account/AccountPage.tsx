@@ -22,7 +22,7 @@ import useBackendCapabilities from 'global/useBackendCapabilities';
 import AdminsEditor from './AdminEditor';
 import Tag from 'components/TagInput/Tag';
 import LoginContent from 'auth/modal/LoginContent';
-import { noop } from 'lodash-es';
+import { noop } from 'lodash';
 import { NameEditor } from 'molecules/NameEditor';
 
 function AccountPage() {

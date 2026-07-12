@@ -1,6 +1,13 @@
 import type { Quota } from 'common';
-import { useContext } from 'react';
-import { QuotaContext } from '../auth/QuotaManager';
+import { useCallback, useMemo } from 'react';
+import { useRecoilState } from 'recoil';
+import {
+  DEFAULT_QUOTA,
+  LOCAL_STORAGE_POSTS_KEY,
+  quotaState,
+} from '../auth/QuotaManager';
+import useUser from '../state/user/useUser';
+import { setItem } from '../utils/localStorage';
 
 type QuotaResult = {
   quota: Quota | null;
@@ -8,6 +15,28 @@ type QuotaResult = {
 };
 
 export default function useQuota(): QuotaResult {
-  const { quota, increment } = useContext(QuotaContext);
-  return { quota, increment };
+  const user = useUser();
+  const [quota, setQuota] = useRecoilState(quotaState);
+
+  const increment = useCallback(() => {
+    setQuota((old) => {
+      const newQuota = old
+        ? {
+            ...old,
+            posts: old.posts + 1,
+          }
+        : {
+            quota: DEFAULT_QUOTA,
+            posts: 1,
+          };
+      if (user && user.accountType === 'anonymous') {
+        setItem(LOCAL_STORAGE_POSTS_KEY, newQuota.posts.toString());
+      }
+      return newQuota;
+    });
+  }, [setQuota, user]);
+
+  const result = useMemo(() => ({ quota, increment }), [quota, increment]);
+
+  return result;
 }

@@ -1,4 +1,4 @@
-import { once } from 'lodash-es';
+import once from 'lodash/once';
 
 const logError = once(() => {
   console.warn(

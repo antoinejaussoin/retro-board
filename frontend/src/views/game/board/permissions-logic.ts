@@ -5,7 +5,7 @@ import type {
   User,
   VoteType,
 } from 'common';
-import { some } from 'lodash-es';
+import some from 'lodash/some';
 
 export interface SessionUserPermissions {
   canCreatePost: boolean;

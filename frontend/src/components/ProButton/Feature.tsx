@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 interface FeatureProps {
-  icon: React.JSX.Element;
+  icon: JSX.Element;
   title: string;
   color: string;
   description: string;

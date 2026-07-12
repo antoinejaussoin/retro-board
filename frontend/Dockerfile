@@ -1,17 +1,18 @@
-FROM --platform=$BUILDPLATFORM node:24-alpine AS node
+FROM --platform=$BUILDPLATFORM node:22-alpine AS node
 
 ENV NODE_ENV=production
 
 WORKDIR /home/node/app
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
-COPY ./package.json ./package-lock.json ./
+COPY ./package.json ./
+COPY ./yarn.lock ./
 
 RUN chown -R node:node /home/node/app
 
 USER node
 
-RUN npm ci
+RUN yarn --network-timeout 1000000 install
 
 COPY --chown=node:node ./src ./src
 COPY --chown=node:node ./public ./public
@@ -20,7 +21,7 @@ COPY --chown=node:node ./vite.config.ts ./vite.config.ts
 COPY --chown=node:node ./index.html ./index.html
 COPY --chown=node:node ./.env ./.env
 
-RUN npm run build
+RUN yarn build
 
 FROM nginx:latest
 

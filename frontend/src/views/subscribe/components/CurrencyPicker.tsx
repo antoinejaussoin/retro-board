@@ -1,4 +1,4 @@
-import { noop } from 'lodash-es';
+import noop from 'lodash/noop';
 import { Currency } from 'common';
 import 'flag-icons/css/flag-icons.min.css';
 import { currencies } from './types';

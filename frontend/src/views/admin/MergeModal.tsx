@@ -13,7 +13,7 @@ import {
   ListSubheader,
 } from '@mui/material';
 import { FullUser } from 'common';
-import { noop } from 'lodash-es';
+import { noop } from 'lodash';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 
