@@ -1,6 +1,6 @@
 import express from 'express';
 import * as socketIo from 'socket.io';
-import { createAdapter } from 'socket.io-redis';
+import { createAdapter } from '@socket.io/redis-adapter';
 import { createClient } from 'redis';
 import connectRedis from 'connect-redis';
 import http from 'node:http';
@@ -169,7 +169,7 @@ if (config.REDIS_ENABLED) {
 
   if (config.REDIS_FOR_SOCKETIO_ENABLED) {
     const subClient = redisClient.duplicate();
-    io.adapter(createAdapter({ pubClient: redisClient, subClient }));
+    io.adapter(createAdapter(redisClient, subClient));
     console.log(
       chalk`💾  {red Redis} for {yellow Socket.IO} was {blue activated}`,
     );
