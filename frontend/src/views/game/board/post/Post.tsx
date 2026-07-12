@@ -99,7 +99,7 @@ const PostItem = ({
   const [giphyImageUrl, showGiphyImage, toggleShowGiphyImage] = useGiphy(
     post.giphy
   );
-  const postElement = useRef(null);
+  const postElement = useRef<HTMLButtonElement>(null);
   const [actionsToggled, toggleAction] = useToggle(false);
   const [showGiphyEditor, setShowGiphyEditor] = useState(false);
   const confirm = useConfirm();

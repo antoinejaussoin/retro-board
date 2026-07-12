@@ -7,7 +7,7 @@ interface ActionButtonProps {
   ariaLabel: string;
   icon: JSX.Element;
   disabled?: boolean;
-  innerRef?: React.RefObject<HTMLButtonElement>;
+  innerRef?: React.RefObject<HTMLButtonElement | null>;
   onClick: () => void;
 }
 

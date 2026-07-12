@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import styled from '@emotion/styled';
 import Slider from '@mui/material/Slider';
-import { Mark } from '@mui/base';
+import type { Mark } from '../../mark';
 
 interface MaxPostsSliderProps {
   value: number | null;

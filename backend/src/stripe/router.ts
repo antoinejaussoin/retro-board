@@ -30,7 +30,7 @@ import { trackPurchase } from './../track/track.js';
 
 const stripe = config.STRIPE_SECRET
   ? new Stripe(config.STRIPE_SECRET, {
-      apiVersion: '2024-09-30.acacia',
+      apiVersion: '2025-02-24.acacia',
     } as Stripe.StripeConfig)
   : null;
 
@@ -168,7 +168,7 @@ function stripeRouter(): Router {
                 user ? user.id : stripeCustomerId,
                 session.id,
                 (lineItem.price?.product as string | null) || lineItem.id,
-                lineItem.description,
+                lineItem.description ?? undefined,
                 lineItem.quantity || 0,
                 lineItem.currency,
                 lineItem.amount_total / 100,

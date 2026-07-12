@@ -1,9 +1,13 @@
 import type { FullUser } from 'common';
-import { useRecoilValue } from 'recoil';
-import { userState } from './user-state';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { fetchCurrentUser } from './user-state';
+import { queryKeys } from '../queryKeys';
 
 function useUser(): FullUser | null {
-  const user = useRecoilValue(userState);
+  const { data: user } = useSuspenseQuery({
+    queryKey: queryKeys.user,
+    queryFn: fetchCurrentUser,
+  });
   return user;
 }
 

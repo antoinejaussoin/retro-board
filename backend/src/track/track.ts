@@ -1,5 +1,4 @@
 import config from './../config.js';
-import request from 'request';
 import chalkTemplate from 'chalk-template';
 
 export function trackPurchase(
@@ -80,18 +79,20 @@ export function trackPurchase(
 
   console.log('Sending to GA: ', JSON.stringify(payload, null, 2));
 
-  request.post(
+  fetch(
+    `https://www.google-analytics.com/mp/collect?api_secret=${secret}&measurement_id=${measurementId}`,
     {
-      url: `https://www.google-analytics.com/mp/collect?api_secret=${secret}&measurement_id=${measurementId}`,
+      method: 'POST',
       body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/json' },
     },
-    (err, res) => {
-      console.log('Res: ', res.body);
-      if (err) {
-        console.error(err);
-      } else {
-        console.log('GA4 event sent successfully');
-      }
-    },
-  );
+  )
+    .then(async (res) => {
+      const body = await res.text();
+      console.log('Res: ', body);
+      console.log('GA4 event sent successfully');
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 }

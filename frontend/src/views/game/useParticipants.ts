@@ -1,6 +1,5 @@
 import type { Participant } from 'common';
-import { useRecoilState } from 'recoil';
-import { ParticipantsState } from './state';
+import { useGameStore } from './state';
 
 interface UseParticipantsReturn {
   participants: Participant[];
@@ -8,7 +7,8 @@ interface UseParticipantsReturn {
 }
 
 export default function useParticipants(): UseParticipantsReturn {
-  const [participants, updateParticipants] = useRecoilState(ParticipantsState);
+  const participants = useGameStore((s) => s.participants);
+  const updateParticipants = useGameStore((s) => s.setParticipants);
 
   return { participants, updateParticipants };
 }

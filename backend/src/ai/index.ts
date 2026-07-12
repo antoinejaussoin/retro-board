@@ -1,5 +1,6 @@
 import config from '../config.js';
-import { Configuration, OpenAIApi } from 'openai';
+import OpenAI from 'openai';
+import type { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { getAiChatSession, recordAiChatMessage } from '../db/actions/ai.js';
 import type UserView from '../db/entities/UserView.js';
 import type { CoachMessage } from '../common/types.js';
@@ -50,33 +51,44 @@ When you are responding to questions:
 `,
 };
 
+function toChatMessages(
+  messages: CoachMessage[],
+): ChatCompletionMessageParam[] {
+  return messages.map((message) => ({
+    role: message.role as ChatCompletionMessageParam['role'],
+    content: message.content ?? '',
+  })) as ChatCompletionMessageParam[];
+}
+
 export async function dialog(
   chatId: string,
   user: UserView,
   messages: CoachMessage[],
 ): Promise<CoachMessage[]> {
   const chat = await getAiChatSession(chatId, user, systemMessage);
-  const api = new OpenAIApi(configure());
-  const response = await api.createChatCompletion({
+  const api = configure();
+  const response = await api.chat.completions.create({
     model: 'gpt-4',
-    messages: [systemMessage, ...messages],
+    messages: toChatMessages([systemMessage, ...messages]),
   });
-  const answer = response.data.choices[0].message;
+  const answer = response.choices[0].message;
   const lastMessage = last(messages);
   if (lastMessage) {
     await recordAiChatMessage('user', lastMessage.content, chat);
   }
-  if (answer) {
+  if (answer?.content) {
     await recordAiChatMessage('assistant', answer.content, chat);
   }
 
-  return [...(messages || []), answer].filter(Boolean) as CoachMessage[];
+  const coachAnswer: CoachMessage | null = answer?.content
+    ? { role: 'assistant', content: answer.content }
+    : null;
+
+  return [...(messages || []), coachAnswer].filter(Boolean) as CoachMessage[];
 }
 
-export function configure(): Configuration {
-  const configuration = new Configuration({
+export function configure(): OpenAI {
+  return new OpenAI({
     apiKey: config.OPEN_AI_API_KEY,
   });
-
-  return configuration;
 }

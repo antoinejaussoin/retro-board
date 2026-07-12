@@ -1,6 +1,4 @@
-import { useCallback } from 'react';
-import { useRecoilState } from 'recoil';
-import { PanelToggledState } from './state';
+import { usePanelStore } from './state';
 
 interface UseSidePanelResult {
   opened: boolean;
@@ -8,14 +6,11 @@ interface UseSidePanelResult {
 }
 
 export default function useSidePanel(): UseSidePanelResult {
-  const [value, setValue] = useRecoilState(PanelToggledState);
-
-  const toggle = useCallback(() => {
-    setValue((v) => !v);
-  }, [setValue]);
+  const opened = usePanelStore((s) => s.opened);
+  const toggle = usePanelStore((s) => s.toggle);
 
   return {
-    opened: value,
+    opened,
     toggle,
   };
 }
