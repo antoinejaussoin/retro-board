@@ -11,11 +11,12 @@ import Section, {
   Buttons,
 } from './banner.style';
 import screenshot from './mockup.png';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import { useConfig } from '@/common/hooks/useConfig';
 import dashboardPattern from '@/common/assets/image/webAppCreative/dashboard-pattern.png';
 import { useRouter } from 'next/router';
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdownImport from 'react-markdown';
+const ReactMarkdown = ReactMarkdownImport as any;
 import { Fragment, useState } from 'react';
 import styled from 'styled-components';
 import { YouTubePlayer } from './YouTubePlayer';
@@ -36,7 +37,7 @@ const Banner = () => {
                 content={
                   <ReactMarkdown
                     components={{
-                      p: Fragment,
+                      p: Fragment as any,
                     }}
                   >
                     {t('Banner.heading')}
@@ -48,7 +49,7 @@ const Banner = () => {
                 content={
                   <ReactMarkdown
                     components={{
-                      p: Fragment,
+                      p: Fragment as any,
                     }}
                   >
                     {t('Banner.text')}

@@ -7,7 +7,7 @@ import { minus } from 'react-icons-kit/entypo/minus';
 import Section, { SectionHeading, RcCollapse } from './faq.style';
 import { Panel } from 'rc-collapse';
 import motion from './motion-util';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 
 type FAQ = {
   question: string;

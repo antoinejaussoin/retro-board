@@ -10,7 +10,7 @@ import twitter from './twitter.png';
 import markdown from './markdown.png';
 import microsoft from './microsoft.png';
 import okta from './okta.png';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import styled from 'styled-components';
 
 export const appIntegration = [

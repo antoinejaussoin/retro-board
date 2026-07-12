@@ -8,7 +8,7 @@ import Container from '@/common/components/UI/Container';
 import { DrawerContext } from '@/common/contexts/DrawerContext';
 import ScrollSpyMenu from '@/common/components/ScrollSpyMenu';
 import { MenuItem } from '@/types';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import { useConfig } from '@/common/hooks/useConfig';
 import { LanguagePicker } from './LanguagePicker';
 import styled from 'styled-components';

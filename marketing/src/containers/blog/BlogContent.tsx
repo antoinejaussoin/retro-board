@@ -1,6 +1,7 @@
 import { BlogDocument } from '@/lib/getBlog';
 import Image from 'next/image';
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdownImport from 'react-markdown';
+const ReactMarkdown = ReactMarkdownImport as any;
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import styled from 'styled-components';
@@ -60,7 +61,7 @@ export default function BlogContent({ document }: BlogContentProps) {
 }
 
 function ImageRenderer({ src, alt }: ImageElement) {
-  if (!src) {
+  if (!src || typeof src !== 'string') {
     return null;
   }
   const actualSource = src.split(',')[0];

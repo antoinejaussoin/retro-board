@@ -1,7 +1,7 @@
 import React from 'react';
 import NextLink from 'next/link';
 import { Icon } from 'react-icons-kit';
-import Fade from 'react-reveal/Fade';
+import Fade from '@/shims/Fade';
 import { arrowRight } from 'react-icons-kit/feather/arrowRight';
 import Container from '@/common/components/UI/Container';
 import Heading from '@/common/components/Heading';
@@ -14,7 +14,7 @@ import {
   Article,
   ImageContainer,
 } from './newsFeed.style';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import { BlogMetadata } from '@/lib/getBlog';
 import { format, parse } from 'date-fns';
 import { localeToDateFns } from '@/common/i18n/locale-for-datefns';

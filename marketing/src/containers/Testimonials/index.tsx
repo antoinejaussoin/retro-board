@@ -12,7 +12,7 @@ import Section, {
 import deloitte from './deloitte.png';
 import expedia from './expedia.png';
 import db from './db.png';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import NextImage from '@/common/components/NextImage';
 import { StaticImageData } from 'next/image';
 import styled from 'styled-components';

@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import Sticky from 'react-stickynode';
 import 'animate.css';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import { LegalDocumentMetadata } from '@/lib/getLegal';
 import ResetCSS from '@/common/assets/css/style';
 import { ContentWrapper, GlobalStyle } from '../webAppCreative.style';

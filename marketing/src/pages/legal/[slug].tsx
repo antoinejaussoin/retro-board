@@ -9,7 +9,7 @@ import {
   LegalDocumentMetadata,
 } from '@/lib/getLegal';
 import Layout from '@/containers/Layout/Layout';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { serverSideTranslations } from 'next-i18next/pages/serverSideTranslations';
 import { MenuItem } from '@/types';
 import LegalContent from '@/containers/Legal/LegalContent';
 

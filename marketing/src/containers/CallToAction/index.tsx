@@ -4,7 +4,7 @@ import Text from '@/common/components/Text';
 import Section, { Content } from './cta.style';
 import bubble1 from '@/common/assets/image/webAppCreative/cta-bubble-1.png';
 import bubble2 from '@/common/assets/image/webAppCreative/cta-bubble-2.png';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import Button from '@/common/components/Button';
 import NextImage from '@/common/components/NextImage';
 import { useConfig } from '@/common/hooks/useConfig';

@@ -10,7 +10,7 @@ import Container from '@/common/components/UI/Container';
 import Heading from '@/common/components/Heading';
 import Text from '@/common/components/Text';
 import Section, { SectionHeading, Grid, Item } from './howItWorks.style';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import colors from '@/common/theme/webAppCreative/colors';
 
 type HowTo = {

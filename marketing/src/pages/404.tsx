@@ -1,5 +1,5 @@
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/pages/serverSideTranslations';
+import { useTranslation } from 'next-i18next/pages';
 import styled from 'styled-components';
 import Link from 'next/link';
 import bg from '../containers/404/bg.gif';

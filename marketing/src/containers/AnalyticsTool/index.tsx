@@ -1,5 +1,5 @@
 import React from 'react';
-import Fade from 'react-reveal/Fade';
+import Fade from '@/shims/Fade';
 import { Icon } from 'react-icons-kit';
 import { check } from 'react-icons-kit/feather/check';
 import { ic_keyboard_arrow_right } from 'react-icons-kit/md/ic_keyboard_arrow_right';
@@ -11,7 +11,7 @@ import Link from '@/common/components/Link';
 import Heading from '@/common/components/Heading';
 import analytics from './modified.svg';
 import Section, { Grid, Figure, Content, Features } from './analytics.style';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import NextLink from 'next/link';
 
 const AnalyticsTool = () => {

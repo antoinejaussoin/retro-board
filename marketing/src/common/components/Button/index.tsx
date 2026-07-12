@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import ButtonStyle from './button.style';
+const AnyButtonStyle = ButtonStyle as any;
 import Loader from '../Loader';
 
 type ButtonProps = {
@@ -60,20 +61,20 @@ const Button = ({
   }
 
   // Checking button loading state
-  const buttonIcon =
+  const buttonIcon: React.ReactNode =
     isLoading !== false ? (
       <Fragment>
         {loader ? loader : <Loader loaderColor={loaderColor || '#30C56D'} />}
       </Fragment>
-    ) : (
-      icon && <span className="btn-icon">{icon}</span>
-    );
+    ) : icon ? (
+      <span className="btn-icon">{icon}</span>
+    ) : null;
 
   // set icon position
   const position = iconPosition || 'right';
 
   return (
-    <ButtonStyle
+    <AnyButtonStyle
       type={type}
       className={addAllClasses.join(' ')}
       // icon={icon}
@@ -82,10 +83,10 @@ const Button = ({
       onClick={onClick}
       {...props}
     >
-      {position === 'left' && buttonIcon}
-      {title && <span className="btn-text">{title}</span>}
-      {position === 'right' && buttonIcon}
-    </ButtonStyle>
+      {position === 'left' ? buttonIcon : null}
+      {title ? <span className="btn-text">{title}</span> : null}
+      {position === 'right' ? buttonIcon : null}
+    </AnyButtonStyle>
   );
 };
 

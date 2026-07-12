@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
-import Scrollspy from 'react-scrollspy';
+import ScrollspyImport from 'react-scrollspy';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
+
+const Scrollspy = ScrollspyImport as any;
 
 import { DrawerContext } from '../../contexts/DrawerContext';
 import NextImage from '../NextImage';
 import { MenuItem } from '@/types';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import Link from 'next/link';
 
 type ScrollSpyMenuProps = {

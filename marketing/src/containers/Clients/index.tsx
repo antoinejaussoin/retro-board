@@ -4,7 +4,7 @@ import Container from '@/common/components/UI/Container';
 import NextImage from '@/common/components/NextImage';
 import Text from '@/common/components/Text';
 import Section, { Title, SliderWrapper, Figure } from './clients.style';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import adidas from './adidas.png';
 import amazon from './amazon.png';
 import barclays from './barclays.png';

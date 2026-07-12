@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Fade from 'react-reveal/Fade';
+import Fade from '@/shims/Fade';
 import Container from '@/common/components/UI/Container';
 import Heading from '@/common/components/Heading';
 import Button from '@/common/components/Button';
@@ -19,7 +19,7 @@ import {
   StrikethroughPrice,
   StrikethroughPricePlaceholder,
 } from './pricing.style';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import { StaticImageData } from 'next/image';
 import { useConfig } from '@/common/hooks/useConfig';
 
