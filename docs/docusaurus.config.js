@@ -10,10 +10,15 @@ const darkCodeTheme = require('prism-react-renderer').themes.dracula;
     url: 'https://docs.retrospected.com',
     baseUrl: '/',
     onBrokenLinks: 'throw',
-    onBrokenMarkdownLinks: 'warn',
     favicon: 'img/favicon.ico',
     organizationName: 'antoinejaussoin', // Usually your GitHub org/user name.
     projectName: 'retro-board', // Usually your repo name.
+
+    markdown: {
+      hooks: {
+        onBrokenMarkdownLinks: 'warn',
+      },
+    },
 
     presets: [
       [
