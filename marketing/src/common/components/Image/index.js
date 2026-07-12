@@ -13,8 +13,8 @@ const ImageWrapper = styled('img')(
   themed('Image'),
 );
 
-const Image = ({ src, alt, ...props }) => (
-  <ImageWrapper src={src} alt={alt} {...props} />
+const Image = ({ src, alt, m = 0, ...props }) => (
+  <ImageWrapper src={src} alt={alt} m={m} {...props} />
 );
 
 export default Image;
@@ -22,8 +22,4 @@ export default Image;
 Image.propTypes = {
   src: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
-};
-
-Image.defaultProps = {
-  m: 0,
 };

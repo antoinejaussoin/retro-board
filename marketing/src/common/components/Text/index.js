@@ -20,8 +20,10 @@ const TextWrapper = styled('p')(
   themed('Text'),
 );
 
-const Text = ({ content, ...props }) => (
-  <TextWrapper {...props}>{content}</TextWrapper>
+const Text = ({ content, as = 'p', mt = 0, mb = '1rem', ...props }) => (
+  <TextWrapper as={as} mt={mt} mb={mb} {...props}>
+    {content}
+  </TextWrapper>
 );
 
 export default Text;
@@ -79,10 +81,4 @@ Text.propTypes = {
     ),
   ]),
   ...base.propTypes,
-};
-
-Text.defaultProps = {
-  as: 'p',
-  mt: 0,
-  mb: '1rem',
 };

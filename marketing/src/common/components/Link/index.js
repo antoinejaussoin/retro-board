@@ -9,8 +9,16 @@ const LinkWrapper = styled('a')(
   themed('Link'),
 );
 
-const Link = ({ children, ...props }) => (
-  <LinkWrapper {...props}>{children}</LinkWrapper>
+const Link = ({
+  children,
+  as = 'a',
+  m = 0,
+  display = 'inline-flex',
+  ...props
+}) => (
+  <LinkWrapper as={as} m={m} display={display} {...props}>
+    {children}
+  </LinkWrapper>
 );
 
 export default Link;
@@ -19,10 +27,4 @@ Link.propTypes = {
   as: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   children: PropTypes.any.isRequired,
   ...base.propTypes,
-};
-
-Link.defaultProps = {
-  as: 'a',
-  m: 0,
-  display: 'inline-flex',
 };

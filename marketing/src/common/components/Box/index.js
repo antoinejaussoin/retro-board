@@ -24,8 +24,10 @@ const BoxWrapper = styled('div')(
     ),
 );
 
-const Box = ({ children, ...props }) => (
-  <BoxWrapper {...props}>{children}</BoxWrapper>
+const Box = ({ children, as = 'div', ...props }) => (
+  <BoxWrapper as={as} {...props}>
+    {children}
+  </BoxWrapper>
 );
 
 export default Box;
@@ -142,8 +144,4 @@ Box.propTypes = {
       PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     ),
   ]),
-};
-
-Box.defaultProps = {
-  as: 'div',
 };

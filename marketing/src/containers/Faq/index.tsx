@@ -1,11 +1,10 @@
-import { useState, Fragment } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import Heading from '@/common/components/Heading';
 import Container from '@/common/components/UI/Container';
 import { Icon } from 'react-icons-kit';
 import { plus } from 'react-icons-kit/entypo/plus';
 import { minus } from 'react-icons-kit/entypo/minus';
 import Section, { SectionHeading, RcCollapse } from './faq.style';
-import { Panel } from 'rc-collapse';
 import motion from './motion-util';
 import { useTranslation } from 'next-i18next/pages';
 
@@ -19,9 +18,28 @@ const Faq = () => {
   const faqs = t('FAQ.data', { returnObjects: true }) as FAQ[];
   const [activeKey, setActiveKey] = useState<React.Key | React.Key[]>(0);
 
-  const onChange = (activeKey: React.Key | React.Key[]) => {
-    setActiveKey(activeKey);
+  const onChange = (key: React.Key | React.Key[]) => {
+    setActiveKey(key);
   };
+
+  const items = useMemo(
+    () =>
+      (faqs ?? []).map((faq, id) => ({
+        key: String(id),
+        showArrow: false,
+        label: (
+          <Fragment>
+            <Heading as="h4" content={faq.question} />
+            <span className="icon">
+              <Icon icon={minus} size={20} className="minus" />
+              <Icon icon={plus} size={20} className="plus" />
+            </span>
+          </Fragment>
+        ),
+        children: faq.answer,
+      })),
+    [faqs]
+  );
 
   return (
     <Section id="faq">
@@ -30,30 +48,12 @@ const Faq = () => {
           <Heading content={t('FAQ.heading')} />
         </SectionHeading>
         <RcCollapse
-          collapsible={undefined}
-          accordion={true}
+          accordion
           activeKey={activeKey}
           onChange={onChange}
           openMotion={motion}
-        >
-          {faqs?.map((faq, id) => (
-            <Panel
-              key={id}
-              showArrow={false}
-              header={
-                <Fragment>
-                  <Heading as="h4" content={faq.question} />
-                  <span className="icon">
-                    <Icon icon={minus} size={20} className="minus" />
-                    <Icon icon={plus} size={20} className="plus" />
-                  </span>
-                </Fragment>
-              }
-            >
-              {faq.answer}
-            </Panel>
-          ))}
-        </RcCollapse>
+          items={items}
+        />
       </Container>
     </Section>
   );
