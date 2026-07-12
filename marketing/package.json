@@ -69,6 +69,6 @@
     "url-parse": "^1.5.10"
   },
   "devDependencies": {
-    "@types/node": "20.4.3"
+    "@types/node": "24.13.3"
   }
 }
