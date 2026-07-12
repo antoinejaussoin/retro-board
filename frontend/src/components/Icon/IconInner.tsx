@@ -1,4 +1,5 @@
-import { Emoji } from 'emoji-mart';
+import { useEffect } from 'react';
+import { emojiElementProps, initEmojiMart } from './emoji-mart';
 
 type IconProps = {
   icon: string | null;
@@ -6,5 +7,15 @@ type IconProps = {
 };
 
 export default function IconInner({ icon, size }: IconProps) {
-  return <Emoji emoji={icon || 'grey_question'} size={size || 24} />;
+  useEffect(() => {
+    void initEmojiMart();
+  }, []);
+
+  const emojiProps = emojiElementProps(icon);
+  const px = size || 24;
+
+  return (
+    // emoji-mart v5 web component (React 19-safe; v3 mutated props)
+    <em-emoji {...emojiProps} size={`${px}px`} set="native" />
+  );
 }

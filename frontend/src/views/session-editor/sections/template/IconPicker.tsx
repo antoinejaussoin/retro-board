@@ -1,27 +1,39 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { Button, Popover } from '@mui/material';
 import styled from '@emotion/styled';
-import { Picker, EmojiData } from 'emoji-mart';
+import data from '@emoji-mart/data';
+import Picker from '@emoji-mart/react';
 import useModal from 'hooks/useModal';
 import Icon from 'components/Icon/Icon';
+import { initEmojiMart } from 'components/Icon/emoji-mart';
 
 interface IconPickerProps {
   value: string | null;
   onChange: (value: string) => void;
 }
 
+type EmojiSelectPayload = {
+  id: string;
+};
+
 const IconPicker = ({ value, onChange }: IconPickerProps) => {
   const ref = useRef<HTMLButtonElement>(null);
   const [opened, open, close] = useModal();
+
+  useEffect(() => {
+    void initEmojiMart();
+  }, []);
+
   const handleChange = useCallback(
-    (emoji: EmojiData) => {
-      if (emoji.colons) {
-        onChange(emoji.colons);
+    (emoji: EmojiSelectPayload) => {
+      if (emoji.id) {
+        onChange(emoji.id);
         close();
       }
     },
     [onChange, close]
   );
+
   return (
     <Container>
       <Button
@@ -41,7 +53,7 @@ const IconPicker = ({ value, onChange }: IconPickerProps) => {
           horizontal: 'left',
         }}
       >
-        <Picker onSelect={handleChange} />
+        <Picker data={data} onEmojiSelect={handleChange} theme="light" />
       </Popover>
     </Container>
   );
