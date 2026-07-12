@@ -2,7 +2,7 @@ import {
   type Locale,
   formatDistanceToNow as formatDistanceToNowBase,
 } from 'date-fns';
-import englishLocale from 'date-fns/locale/en-GB';
+import { enGB } from 'date-fns/locale/en-GB';
 import { useEffect, useState } from 'react';
 import { useLanguage } from '../translations';
 
@@ -19,12 +19,12 @@ export default function useFormatDate() {
 
 export function useDateLocale() {
   const [language] = useLanguage();
-  const [locale, setLocale] = useState<Locale>(() => englishLocale);
+  const [locale, setLocale] = useState<Locale>(() => enGB);
 
   useEffect(() => {
     async function load() {
-      const locale = await language.dateLocale();
-      setLocale(locale.default);
+      const nextLocale = await language.dateLocale();
+      setLocale(nextLocale);
     }
     load();
   }, [language]);

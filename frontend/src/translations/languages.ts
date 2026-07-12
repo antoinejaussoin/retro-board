@@ -1,26 +1,19 @@
 import type { StripeLocales } from 'common';
 import type { Locale } from 'date-fns';
-const arDZ = () => import('date-fns/locale/ar-DZ');
-const zhCN = () => import('date-fns/locale/zh-CN');
-const zhTW = () => import('date-fns/locale/zh-TW');
-const fr = () => import('date-fns/locale/fr');
-const enGB = () => import('date-fns/locale/en-GB');
-const nl = () => import('date-fns/locale/nl');
-const de = () => import('date-fns/locale/de');
-const hu = () => import('date-fns/locale/hu');
-const it = () => import('date-fns/locale/it');
-const ja = () => import('date-fns/locale/ja');
-const pl = () => import('date-fns/locale/pl');
-const ptBR = () => import('date-fns/locale/pt-BR');
-const pt = () => import('date-fns/locale/pt');
-const uk = () => import('date-fns/locale/uk');
-const es = () => import('date-fns/locale/es');
+
+async function loadLocale(
+  loader: () => Promise<Record<string, Locale>>,
+  exportName: string,
+): Promise<Locale> {
+  const mod = await loader();
+  return mod[exportName];
+}
 
 export interface Language {
   iso: string;
   name: string;
   englishName: string;
-  dateLocale: () => Promise<{ default: Locale }>;
+  dateLocale: () => Promise<Locale>;
   stripeLocale: StripeLocales;
   locale: string;
   twoLetter: string;
@@ -28,7 +21,7 @@ export interface Language {
 
 const languages: Language[] = [
   {
-    dateLocale: enGB,
+    dateLocale: () => loadLocale(() => import('date-fns/locale/en-GB'), 'enGB'),
     iso: 'gb',
     name: 'English',
     englishName: 'English',
@@ -37,7 +30,7 @@ const languages: Language[] = [
     twoLetter: 'en',
   },
   {
-    dateLocale: fr,
+    dateLocale: () => loadLocale(() => import('date-fns/locale/fr'), 'fr'),
     iso: 'fr',
     name: 'Français',
     englishName: 'French',
@@ -46,7 +39,7 @@ const languages: Language[] = [
     twoLetter: 'fr',
   },
   {
-    dateLocale: de,
+    dateLocale: () => loadLocale(() => import('date-fns/locale/de'), 'de'),
     iso: 'de',
     name: 'Deutsch',
     englishName: 'German',
@@ -55,7 +48,7 @@ const languages: Language[] = [
     twoLetter: 'de',
   },
   {
-    dateLocale: es,
+    dateLocale: () => loadLocale(() => import('date-fns/locale/es'), 'es'),
     iso: 'es',
     name: 'Español',
     englishName: 'Spanish',
@@ -64,7 +57,7 @@ const languages: Language[] = [
     twoLetter: 'es',
   },
   {
-    dateLocale: arDZ,
+    dateLocale: () => loadLocale(() => import('date-fns/locale/ar-DZ'), 'arDZ'),
     iso: 'ae',
     name: 'عربي',
     englishName: 'Arabic',
@@ -73,7 +66,7 @@ const languages: Language[] = [
     twoLetter: 'ar',
   },
   {
-    dateLocale: zhCN,
+    dateLocale: () => loadLocale(() => import('date-fns/locale/zh-CN'), 'zhCN'),
     iso: 'cn',
     name: '簡中',
     englishName: 'Chinese (Simplified)',
@@ -82,7 +75,7 @@ const languages: Language[] = [
     twoLetter: 'zh',
   },
   {
-    dateLocale: zhTW,
+    dateLocale: () => loadLocale(() => import('date-fns/locale/zh-TW'), 'zhTW'),
     iso: 'tw',
     name: '繁中',
     englishName: 'Chinese (Traditional)',
@@ -91,7 +84,7 @@ const languages: Language[] = [
     twoLetter: 'zh',
   },
   {
-    dateLocale: nl,
+    dateLocale: () => loadLocale(() => import('date-fns/locale/nl'), 'nl'),
     iso: 'nl',
     name: 'Nederlands',
     englishName: 'Dutch',
@@ -100,7 +93,7 @@ const languages: Language[] = [
     twoLetter: 'nl',
   },
   {
-    dateLocale: hu,
+    dateLocale: () => loadLocale(() => import('date-fns/locale/hu'), 'hu'),
     iso: 'hu',
     name: 'Magyar',
     englishName: 'Hungarian',
@@ -109,7 +102,7 @@ const languages: Language[] = [
     twoLetter: 'hu',
   },
   {
-    dateLocale: it,
+    dateLocale: () => loadLocale(() => import('date-fns/locale/it'), 'it'),
     iso: 'it',
     name: 'Italiano',
     englishName: 'Italian',
@@ -118,7 +111,7 @@ const languages: Language[] = [
     twoLetter: 'it',
   },
   {
-    dateLocale: ja,
+    dateLocale: () => loadLocale(() => import('date-fns/locale/ja'), 'ja'),
     iso: 'jp',
     name: '日本語',
     englishName: 'Japanese',
@@ -127,7 +120,7 @@ const languages: Language[] = [
     twoLetter: 'ja',
   },
   {
-    dateLocale: pl,
+    dateLocale: () => loadLocale(() => import('date-fns/locale/pl'), 'pl'),
     iso: 'pl',
     name: 'Polski',
     englishName: 'Polish',
@@ -136,7 +129,7 @@ const languages: Language[] = [
     twoLetter: 'pl',
   },
   {
-    dateLocale: ptBR,
+    dateLocale: () => loadLocale(() => import('date-fns/locale/pt-BR'), 'ptBR'),
     iso: 'br',
     name: 'Português Brasileiro',
     englishName: 'Portuguese (Brazilian)',
@@ -145,7 +138,7 @@ const languages: Language[] = [
     twoLetter: 'pt',
   },
   {
-    dateLocale: pt,
+    dateLocale: () => loadLocale(() => import('date-fns/locale/pt'), 'pt'),
     iso: 'pt',
     name: 'Português',
     englishName: 'Portuguese (Portugal)',
@@ -154,7 +147,7 @@ const languages: Language[] = [
     twoLetter: 'pt',
   },
   {
-    dateLocale: uk,
+    dateLocale: () => loadLocale(() => import('date-fns/locale/uk'), 'uk'),
     iso: 'ua',
     name: 'Yкраїнський',
     englishName: 'Ukrainian',

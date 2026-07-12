@@ -44,7 +44,7 @@
     "buffer": "6.0.3",
     "core-js": "3.38.1",
     "crypto-js": "4.2.0",
-    "date-fns": "2.30.0",
+    "date-fns": "4.4.0",
     "emoji-mart": "3.0.1",
     "emotion": "^11.0.0",
     "flag-icons": "7.2.3",
