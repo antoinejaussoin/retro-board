@@ -51,6 +51,7 @@
     "react-is": "19.2.3",
     "react-markdown": "9",
     "react-parallax": "^3.5.1",
+    "react-reveal": "1.2.2",
     "react-scroll-motion": "^0.3.2",
     "react-scrollspy": "^3.4.3",
     "react-slick": "^0.29.0",

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Fade from '@/shims/Fade';
+import Fade from 'react-reveal/Fade';
 import Container from '@/common/components/UI/Container';
 import Heading from '@/common/components/Heading';
 import Button from '@/common/components/Button';
