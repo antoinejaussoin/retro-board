@@ -10,7 +10,7 @@
     "@emotion/styled": "11.14.1",
     "@esbuild-plugins/node-globals-polyfill": "0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "0.2.2",
-    "@hello-pangea/dnd": "16.5.0",
+    "@hello-pangea/dnd": "18.0.1",
     "@mui/base": "5.0.0-beta.58",
     "@mui/icons-material": "6.5.0",
     "@mui/material": "6.5.0",
