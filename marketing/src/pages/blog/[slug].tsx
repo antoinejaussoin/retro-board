@@ -8,7 +8,7 @@ import {
   getBlogBySlug,
 } from '@/lib/getBlog';
 import Layout from '@/containers/Layout/Layout';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { serverSideTranslations } from 'next-i18next/pages/serverSideTranslations';
 import { MenuItem } from '@/types';
 import BlogContent from '@/containers/blog/BlogContent';
 import styled from 'styled-components';

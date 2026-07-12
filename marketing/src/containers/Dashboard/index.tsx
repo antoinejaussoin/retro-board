@@ -10,7 +10,7 @@ import Section, {
   Description,
   Figure,
 } from './dashboard.style';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import feature1 from './feature1.webp';
 import feature2 from './feature2.png';
 import feature3 from './feature3.png';

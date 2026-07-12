@@ -1,7 +1,8 @@
-import de from 'date-fns/locale/de';
-import en from 'date-fns/locale/en-GB';
-import fr from 'date-fns/locale/fr';
-import nl from 'date-fns/locale/nl';
+import type { Locale } from 'date-fns';
+import { de } from 'date-fns/locale/de';
+import { enGB } from 'date-fns/locale/en-GB';
+import { fr } from 'date-fns/locale/fr';
+import { nl } from 'date-fns/locale/nl';
 
 export function localeToDateFns(locale: string): Locale {
   switch (locale) {
@@ -12,6 +13,6 @@ export function localeToDateFns(locale: string): Locale {
     case 'nl':
       return nl;
     default:
-      return en;
+      return enGB;
   }
 }

@@ -19,7 +19,7 @@ import {
   StrikethroughPrice,
   StrikethroughPricePlaceholder,
 } from './pricing.style';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import { StaticImageData } from 'next/image';
 import { useConfig } from '@/common/hooks/useConfig';
 

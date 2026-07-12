@@ -15,8 +15,8 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@docusaurus/core": "3.5.2",
-    "@docusaurus/preset-classic": "3.5.2",
+    "@docusaurus/core": "3.10.2",
+    "@docusaurus/preset-classic": "3.10.2",
     "@svgr/webpack": "8.1.0",
     "@types/random-words": "1.1.4",
     "@types/react-copy-to-clipboard": "5.0.7",
@@ -34,12 +34,12 @@
     "url-loader": "4.1.1"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.5.2",
+    "@docusaurus/module-type-aliases": "3.10.2",
     "@tsconfig/docusaurus": "2.0.3",
-    "@types/react": "18.3.11",
+    "@types/react": "18.3.12",
     "@types/react-helmet": "6.1.11",
     "@types/react-router-dom": "5.3.3",
-    "typescript": "5.6.3"
+    "typescript": "5.9.3"
   },
   "browserslist": {
     "production": [

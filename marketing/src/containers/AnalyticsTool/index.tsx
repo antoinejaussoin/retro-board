@@ -11,7 +11,7 @@ import Link from '@/common/components/Link';
 import Heading from '@/common/components/Heading';
 import analytics from './modified.svg';
 import Section, { Grid, Figure, Content, Features } from './analytics.style';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import NextLink from 'next/link';
 
 const AnalyticsTool = () => {

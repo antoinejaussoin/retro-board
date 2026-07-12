@@ -1,66 +1,29 @@
 import { BlogDocument } from '@/lib/getBlog';
 import Image from 'next/image';
-import ReactMarkdown from 'react-markdown';
+import Markdown, { type Components, type ExtraProps } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import styled from 'styled-components';
 import BlogTitle from './BlogTitle';
 import { sourceSerifPro } from '@/common/fonts/Fonts';
+import type { ComponentPropsWithoutRef } from 'react';
 
 type BlogContentProps = {
   document: BlogDocument;
 };
 
-type ImageElement = React.DetailedHTMLProps<
-  React.ImgHTMLAttributes<HTMLImageElement>,
-  HTMLImageElement
->;
+type MarkdownImageProps = ComponentPropsWithoutRef<'img'> & ExtraProps;
 
-const renderers = {
-  img: (image: ImageElement) => {
-    if (!image.src) {
-      return null;
-    }
-    return <ImageRenderer {...image} />;
-  },
-  image: (image: any) => {
-    return <ImageRenderer {...image} />;
-  },
-  paragraph: (paragraph: any) => {
-    const { node } = paragraph;
+type MarkdownParagraphProps = ComponentPropsWithoutRef<'p'> & ExtraProps;
 
-    if (node.children[0].tagName === 'img') {
-      const image = node.children[0];
-      return <ImageRenderer {...image.properties} />;
-    }
-
-    return <p>{paragraph.children}</p>;
-  },
-};
-
-export default function BlogContent({ document }: BlogContentProps) {
-  return (
-    <>
-      <Article className={sourceSerifPro.className} dropcap={document.dropcap}>
-        <BlogTitle document={document} />
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          rehypePlugins={[rehypeRaw]}
-          components={{
-            img: renderers.img,
-            image: renderers.image,
-            p: renderers.paragraph,
-          }}
-        >
-          {document.content}
-        </ReactMarkdown>
-      </Article>
-    </>
-  );
-}
-
-function ImageRenderer({ src, alt }: ImageElement) {
-  if (!src) {
+function ImageRenderer({
+  src,
+  alt,
+}: {
+  src?: string | Blob;
+  alt?: string | null;
+}) {
+  if (!src || typeof src !== 'string') {
     return null;
   }
   const actualSource = src.split(',')[0];
@@ -70,13 +33,51 @@ function ImageRenderer({ src, alt }: ImageElement) {
   return (
     <ImageContainer>
       <Image
-        src={actualSource!}
-        alt={alt!}
+        src={actualSource}
+        alt={alt ?? ''}
         fill={!width && !height}
         width={width}
         height={height}
       />
     </ImageContainer>
+  );
+}
+
+const markdownComponents: Components = {
+  img: ({ src, alt }: MarkdownImageProps) => (
+    <ImageRenderer src={src} alt={alt} />
+  ),
+  p: ({ children, node }: MarkdownParagraphProps) => {
+    const firstChild = node?.children?.[0];
+    if (
+      firstChild &&
+      'tagName' in firstChild &&
+      firstChild.tagName === 'img' &&
+      'properties' in firstChild
+    ) {
+      const properties = firstChild.properties as {
+        src?: string;
+        alt?: string;
+      };
+      return <ImageRenderer src={properties.src} alt={properties.alt} />;
+    }
+
+    return <p>{children}</p>;
+  },
+};
+
+export default function BlogContent({ document }: BlogContentProps) {
+  return (
+    <Article className={sourceSerifPro.className} dropcap={document.dropcap}>
+      <BlogTitle document={document} />
+      <Markdown
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeRaw]}
+        components={markdownComponents}
+      >
+        {document.content}
+      </Markdown>
+    </Article>
   );
 }
 

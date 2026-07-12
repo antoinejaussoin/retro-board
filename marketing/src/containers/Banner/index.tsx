@@ -11,14 +11,24 @@ import Section, {
   Buttons,
 } from './banner.style';
 import screenshot from './mockup.png';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import { useConfig } from '@/common/hooks/useConfig';
 import dashboardPattern from '@/common/assets/image/webAppCreative/dashboard-pattern.png';
 import { useRouter } from 'next/router';
-import ReactMarkdown from 'react-markdown';
-import { Fragment, useState } from 'react';
+import Markdown, { type Components } from 'react-markdown';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { YouTubePlayer } from './YouTubePlayer';
+
+const unwrapParagraph: Components['p'] = ({ children }) => <>{children}</>;
+
+const markdownComponents: Components = {
+  p: unwrapParagraph,
+};
+
+function InlineMarkdown({ children }: { children: string }) {
+  return <Markdown components={markdownComponents}>{children}</Markdown>;
+}
 
 const Banner = () => {
   const { locale } = useRouter();
@@ -34,25 +44,13 @@ const Banner = () => {
               <Heading
                 className="animate__animated animate__fadeInUp"
                 content={
-                  <ReactMarkdown
-                    components={{
-                      p: Fragment,
-                    }}
-                  >
-                    {t('Banner.heading')}
-                  </ReactMarkdown>
+                  <InlineMarkdown>{t('Banner.heading')}</InlineMarkdown>
                 }
               />
               <Text
                 className="animate__animated animate__fadeInUp"
                 content={
-                  <ReactMarkdown
-                    components={{
-                      p: Fragment,
-                    }}
-                  >
-                    {t('Banner.text')}
-                  </ReactMarkdown>
+                  <InlineMarkdown>{t('Banner.text')}</InlineMarkdown>
                 }
               />
               <Buttons>

@@ -23,7 +23,7 @@ import siteLogo from '../Navbar/logo.png';
 import facebook from '@/common/assets/image/webAppCreative/icons/facebook.png';
 import twitter from '@/common/assets/image/webAppCreative/icons/twitter.png';
 import dribbble from '@/common/assets/image/webAppCreative/icons/dribbble.png';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import { LegalDocumentMetadata } from '@/lib/getLegal';
 import NextLink from 'next/link';
 import { Logo } from '@/common/components/Logo/Logo';

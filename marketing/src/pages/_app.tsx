@@ -1,5 +1,5 @@
 import type { AppProps } from 'next/app';
-import { appWithTranslation, useTranslation } from 'next-i18next';
+import { appWithTranslation, useTranslation } from 'next-i18next/pages';
 import '../common/assets/css/flaticon.css';
 import '../common/assets/css/react-slick.css';
 import '../common/assets/css/rc-collapse.css';

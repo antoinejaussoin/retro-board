@@ -14,7 +14,7 @@ import {
   Article,
   ImageContainer,
 } from './newsFeed.style';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import { BlogMetadata } from '@/lib/getBlog';
 import { format, parse } from 'date-fns';
 import { localeToDateFns } from '@/common/i18n/locale-for-datefns';

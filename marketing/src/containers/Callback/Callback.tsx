@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import phoneIcon from './phone.svg';
 import Image from 'next/image';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 
 const LINK = 'https://forms.gle/tKpjtu1rLk9qqTBE7';
 
