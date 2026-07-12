@@ -1,6 +1,11 @@
-import { atom } from 'recoil';
+import { create } from 'zustand';
 
-export const PanelToggledState = atom<boolean>({
-  key: 'PANEL_TOGGLED',
-  default: false,
-});
+type PanelStore = {
+  opened: boolean;
+  toggle: () => void;
+};
+
+export const usePanelStore = create<PanelStore>((set) => ({
+  opened: false,
+  toggle: () => set((state) => ({ opened: !state.opened })),
+}));

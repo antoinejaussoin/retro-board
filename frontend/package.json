@@ -74,7 +74,6 @@
     "react-router-dom": "6.30.3",
     "react-scroll-to-bottom": "4.2.0",
     "react-social-login-buttons": "3.9.1",
-    "recoil": "0.7.7",
     "rehype-raw": "6.1.1",
     "shortid": "2.2.16",
     "socket.io-client": "4.8.3",

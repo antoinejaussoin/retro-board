@@ -1,8 +1,7 @@
 import { fetchBackendCapabilities } from 'api';
 import type { BackendCapabilities } from 'common';
-import { selector } from 'recoil';
 
-const defaultBackendCapabilities: BackendCapabilities = {
+export const defaultBackendCapabilities: BackendCapabilities = {
   adminEmail: '',
   licenced: true,
   selfHosted: false,
@@ -23,15 +22,7 @@ const defaultBackendCapabilities: BackendCapabilities = {
   ai: false,
 };
 
-export const backendCapabilitiesState = selector<BackendCapabilities>({
-  key: 'BACKEND_CAPABILITIES',
-  get: async () => {
-    const data = await fetchBackendCapabilities();
-
-    if (data) {
-      return data;
-    }
-
-    return defaultBackendCapabilities;
-  },
-});
+export async function loadBackendCapabilities(): Promise<BackendCapabilities> {
+  const data = await fetchBackendCapabilities();
+  return data ?? defaultBackendCapabilities;
+}

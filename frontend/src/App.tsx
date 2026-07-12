@@ -9,17 +9,18 @@ import theme from './Theme';
 import Layout from './Layout';
 import ErrorBoundary from './ErrorBoundary';
 import { SnackbarProvider } from 'notistack';
-import { RecoilRoot } from 'recoil';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import { CodeSplitLoader } from './CodeSplitLoader';
 import QuotaManager from './auth/QuotaManager';
 import { ConfirmProvider } from 'material-ui-confirm';
 import { FullScreenLoader } from 'components/loaders/FullScreenLoader';
+import { queryClient } from './queryClient';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <RecoilRoot>
+      <QueryClientProvider client={queryClient}>
         <Suspense fallback={<FullScreenLoader />}>
           <Helmet>
             <meta property="og:title" content="Retrospected.com" />
@@ -55,7 +56,7 @@ function App() {
             </ConfirmProvider>
           </SnackbarProvider>
         </Suspense>
-      </RecoilRoot>
+      </QueryClientProvider>
     </ThemeProvider>
   );
 }

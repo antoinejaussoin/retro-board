@@ -8,8 +8,7 @@ import type {
 } from 'common';
 import { findIndex } from 'lodash';
 import { useCallback } from 'react';
-import { useRecoilState } from 'recoil';
-import { SessionState } from './state';
+import { useGameStore } from './state';
 
 interface UseSession {
   session: Session | null;
@@ -30,7 +29,8 @@ interface UseSession {
 }
 
 export default function useSession(): UseSession {
-  const [session, setSession] = useRecoilState(SessionState);
+  const session = useGameStore((s) => s.session);
+  const setSession = useGameStore((s) => s.setSession);
 
   const resetSession = useCallback(() => {
     setSession(null);

@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import { render, RenderOptions, RenderResult } from '@testing-library/react';
 import { vi } from 'vitest';
 import { BackendCapabilities, FullUser, Session, defaultOptions } from 'common';
@@ -9,8 +9,8 @@ import {
   DroppableStateSnapshot,
 } from '@hello-pangea/dnd';
 import useSession from '../views/game/useSession';
-import { RecoilRoot } from 'recoil';
-import { userState } from 'state/user/user-state';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { queryKeys } from 'state/queryKeys';
 
 const user: FullUser = {
   id: 'John Doe',
@@ -86,26 +86,37 @@ const capabilities: BackendCapabilities = {
   selfHosted: false,
   slackClientId: 'xxx',
 };
-// fetchBackendCapabilities
+
 vi.mock('../api/index', () => {
   return {
     fetchBackendCapabilities: () => {
       return Promise.resolve(capabilities);
     },
+    me: () => {
+      return Promise.resolve(user);
+    },
   };
 });
 
+function createTestQueryClient() {
+  const client = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
+  client.setQueryData(queryKeys.user, user);
+  client.setQueryData(queryKeys.backendCapabilities, capabilities);
+  return client;
+}
+
 export function AllTheProviders({ children }: PropsWithChildren<{}>) {
+  const [client] = useState(() => createTestQueryClient());
   return (
-    <RecoilRoot
-      initializeState={(snap) => {
-        snap.set(userState, user);
-      }}
-    >
-      {/* <I18nextProvider i18n={i18n}> */}
+    <QueryClientProvider client={client}>
       <Inner>{children}</Inner>
-      {/* </I18nextProvider> */}
-    </RecoilRoot>
+    </QueryClientProvider>
   );
 }
 
@@ -129,12 +140,10 @@ export default function Inner({ children }: PropsWithChildren<{}>) {
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 const customRender = (
   ui: React.ReactElement<any>,
-  options?: Omit<RenderOptions, 'queries'>
+  options?: Omit<RenderOptions, 'queries'>,
 ): RenderResult => render(ui, { wrapper: AllTheProviders, ...options });
 
-// re-export everything
 export * from '@testing-library/react';
 export * from '@testing-library/dom';
 
-// override render method
 export { customRender as render };

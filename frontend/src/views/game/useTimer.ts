@@ -1,11 +1,9 @@
-import { useRecoilValue } from 'recoil';
 import { useHasRunOut } from './TimerProvider';
-import { TimerState } from './state';
+import { useGameStore } from './state';
 import useSession from './useSession';
 
 export function useTimer() {
-  const timer = useRecoilValue(TimerState);
-  return timer;
+  return useGameStore((s) => s.timer);
 }
 
 export function useShouldLockSession() {

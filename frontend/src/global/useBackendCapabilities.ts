@@ -1,7 +1,12 @@
 import type { BackendCapabilities } from 'common';
-import { useRecoilValue } from 'recoil';
-import { backendCapabilitiesState } from './state';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { loadBackendCapabilities } from './state';
+import { queryKeys } from 'state/queryKeys';
 
 export default function useBackendCapabilities(): BackendCapabilities {
-  return useRecoilValue(backendCapabilitiesState);
+  const { data } = useSuspenseQuery({
+    queryKey: queryKeys.backendCapabilities,
+    queryFn: loadBackendCapabilities,
+  });
+  return data;
 }
