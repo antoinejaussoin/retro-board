@@ -1,4 +1,4 @@
-import { inMemoryCache } from '../cache';
+import { createCache, inMemoryCache } from '../cache';
 
 const { set, get, invalidate } = inMemoryCache();
 
@@ -42,5 +42,38 @@ describe('Cache - Invalidate', () => {
     await invalidate('invalidated');
     const result = await get('invalidated');
     expect(result).toBe(null);
+  });
+});
+
+describe('Cache - Async storage', () => {
+  it('Should wait for storage before reporting success', async () => {
+    let finishWrite!: () => void;
+    const write = new Promise<void>((resolve) => {
+      finishWrite = resolve;
+    });
+    const cache = createCache(
+      async () => null,
+      () => write,
+    );
+    let settled = false;
+    const saved = cache.set('delayed', 'value', 10000);
+    void saved.then(() => {
+      settled = true;
+    });
+    await Promise.resolve();
+    expect(settled).toBe(false);
+    finishWrite();
+    await expect(saved).resolves.toBe(true);
+  });
+
+  it('Should propagate a storage failure', async () => {
+    const error = new Error('Synthetic write failed');
+    const write = Promise.reject(error);
+    void write.catch(() => {});
+    const cache = createCache(
+      async () => null,
+      () => write,
+    );
+    await expect(cache.set('failed', 'value', 10000)).rejects.toBe(error);
   });
 });
