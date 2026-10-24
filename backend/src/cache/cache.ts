@@ -25,7 +25,7 @@ export function createCache(
       data: value,
       expires: addMilliseconds(new Date(), duration).valueOf(),
     };
-    setFn(key, entry);
+    await setFn(key, entry);
     return true;
   }
 
