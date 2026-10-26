@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM node:24-alpine AS node
+FROM --platform=$BUILDPLATFORM node:24.22.1-alpine AS node
 
 ENV NODE_ENV=production
 
@@ -23,7 +23,7 @@ COPY --chown=node:node ./.env ./.env
 
 RUN yarn build
 
-FROM nginx:latest
+FROM nginx:1.31.8
 
 RUN apt update
 RUN apt -y remove libfreetype6
