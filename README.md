@@ -45,7 +45,7 @@ It features the following technologies:
 - [Emotion](https://emotion.sh/docs/introduction)
 - [Multilingual](https://stackoverflow.com/questions/33413880/react-redux-and-multilingual-internationalization-apps-architecture) / Internationalization
 - [Postgres](https://www.postgresql.org/)
-- [Node 18 (LTS)](https://nodejs.org/en/)
+- [Node 24 (LTS)](https://nodejs.org/en/)
 - [Passport](http://www.passportjs.org/) for seamless OAuth authentication with:
   - Google
   - Twitter
