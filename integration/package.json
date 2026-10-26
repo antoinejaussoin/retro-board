@@ -1,6 +1,6 @@
 {
   "name": "@retrospected/integration",
-  "version": "5.5.2",
+  "version": "5.5.3",
   "description": "Integrations tests",
   "main": "index.js",
   "directories": {
