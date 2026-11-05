@@ -23,9 +23,12 @@ local:
 	docker build -f ./backend/Dockerfile -t retrospected/backend:local ./backend
 	docker build -f ./frontend/Dockerfile -t retrospected/frontend:local ./frontend
 
+up:
+	docker compose -f docker-compose.local.yml up --build
+
 marketing-build:
 	docker build -f ./marketing/Dockerfile -t retrospected/marketing:local ./marketing
-	docker run -it --rm -p 3333:80 retrospected/marketing:local
+	docker run -it --rm -p 3333:3000 retrospected/marketing:local
 
 translate:
 	crowdin push sources

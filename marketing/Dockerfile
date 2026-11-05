@@ -1,4 +1,5 @@
-FROM node:24.22.1-alpine AS base
+FROM node:26.13.0-alpine AS base
+RUN npm install -g yarn@1.22.22
 
 # Install dependencies only when needed
 FROM base AS deps

@@ -1,7 +1,7 @@
 # This must be run with the Docker context set to the root folder of the repository
 # (the one with the yarn.lock file)
 
-FROM --platform=$BUILDPLATFORM node:24.22.1-alpine AS node
+FROM --platform=$BUILDPLATFORM node:26.13.0-alpine AS node
 
 ENV NODE_ENV=production
 
@@ -15,6 +15,7 @@ COPY ./sidebars.js ./
 COPY ./yarn.lock ./
 COPY ./tsconfig.json ./
 
+RUN npm install -g yarn@1.22.22
 RUN chown -R node:node /home/node/app
 
 USER node
