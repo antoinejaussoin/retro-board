@@ -1,5 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import {
   faLanguage,
   faScrewdriverWrench,
@@ -20,47 +21,25 @@ type HowTo = {
 
 const iconSize = 60;
 
+// Font Awesome's stylesheet (bundled by the Next 15 production build) sets
+// `.svg-inline--fa { height: 1em }`, which squashes a width-only icon down
+// to the body font size. An inline height wins over that rule.
+function FeatureIcon({ icon }: { icon: IconDefinition }) {
+  return (
+    <FontAwesomeIcon
+      icon={icon}
+      color={colors.primary}
+      width={iconSize}
+      style={{ width: iconSize, height: 'auto' }}
+    />
+  );
+}
+
 export const howTos: HowTo[] = [
-  {
-    id: 1,
-    icon: (
-      <FontAwesomeIcon
-        icon={faFaceSmile}
-        color={colors.primary}
-        width={iconSize}
-      />
-    ),
-  },
-  {
-    id: 2,
-    icon: (
-      <FontAwesomeIcon
-        icon={faLanguage}
-        color={colors.primary}
-        width={iconSize}
-      />
-    ),
-  },
-  {
-    id: 3,
-    icon: (
-      <FontAwesomeIcon
-        icon={faScrewdriverWrench}
-        color={colors.primary}
-        width={iconSize}
-      />
-    ),
-  },
-  {
-    id: 4,
-    icon: (
-      <FontAwesomeIcon
-        icon={faCloudArrowUp}
-        color={colors.primary}
-        width={iconSize}
-      />
-    ),
-  },
+  { id: 1, icon: <FeatureIcon icon={faFaceSmile} /> },
+  { id: 2, icon: <FeatureIcon icon={faLanguage} /> },
+  { id: 3, icon: <FeatureIcon icon={faScrewdriverWrench} /> },
+  { id: 4, icon: <FeatureIcon icon={faCloudArrowUp} /> },
 ];
 
 const HowItWorks = () => {
