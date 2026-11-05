@@ -2,7 +2,7 @@
 
 ## Runtime baseline
 
-- **Node 24 LTS** (`.nvmrc`, CI `setup-node`, Docker `node:24-alpine`)
+- **Node 26 LTS** (`.nvmrc`, CI `setup-node`, Docker `node:26-alpine`)
 
 ## Deps to not update
 
