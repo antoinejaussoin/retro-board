@@ -1,0 +1,118 @@
+# Build and run the full stack from this repo:
+#   docker compose -f docker-compose.local.yml up --build
+#
+# App        http://localhost:1800
+# Marketing  http://localhost:3333
+# Docs       http://localhost:1802
+# Maintenance http://localhost:1803
+# API        http://localhost:3201
+# pgAdmin    http://localhost:1801
+
+name: retro-board-local
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: retroboard
+    volumes:
+      - database:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d retroboard']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      DB_HOST: postgres
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: retroboard
+      REDIS_HOST: redis
+      REDIS_ENABLED: 'true'
+      SESSION_SECRET: local-dev-secret
+      SELF_HOSTED: 'true'
+      SELF_HOSTED_ADMIN: admin@localhost
+      BASE_URL: http://localhost:1800
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - '3201:3201'
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:3201/healthz']
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+    environment:
+      BACKEND_HOST: backend
+      BACKEND_PORT: 3201
+      FRONTEND_SELF_HOSTED: 'true'
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - '1800:80'
+    restart: unless-stopped
+
+  marketing:
+    build:
+      context: ./marketing
+    ports:
+      - '3333:3000'
+    restart: unless-stopped
+
+  docs:
+    build:
+      context: ./docs
+    ports:
+      - '1802:80'
+    restart: unless-stopped
+
+  maintenance:
+    build:
+      context: ./maintenance
+    ports:
+      - '1803:80'
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@localhost
+      PGADMIN_DEFAULT_PASSWORD: admin
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - '1801:80'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    restart: unless-stopped
+
+volumes:
+  database:
+  pgadmin:
