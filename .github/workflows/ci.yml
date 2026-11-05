@@ -17,10 +17,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: yarn
-      - run: yarn ci-test
-      - run: yarn ci-lint
-      - run: yarn build
+      - run: npm ci
+      - run: npm run ci-test
+      - run: npm run ci-lint
+      - run: npm run build
   test-backend:
     runs-on: ubuntu-latest
     defaults:
@@ -31,10 +31,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: yarn
-      - run: yarn ci-test
-      - run: yarn ci-lint
-      - run: yarn build
+      - run: npm ci
+      - run: npm run ci-test
+      - run: npm run ci-lint
+      - run: npm run build
   test-marketing:
     runs-on: ubuntu-latest
     defaults:
@@ -45,9 +45,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: yarn
-      - run: yarn ci-lint
-      - run: yarn build
+      - run: npm ci
+      - run: npm run ci-lint
+      - run: npm run build
   test-docs:
     runs-on: ubuntu-latest
     defaults:
@@ -58,6 +58,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: yarn
-      - run: yarn typecheck
-      - run: yarn build
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build

@@ -7,15 +7,16 @@ ENV NODE_ENV=production
 RUN apk update
 RUN apk add curl
 
-COPY ./yarn.lock ./
+COPY ./package-lock.json ./
 COPY ./package.json ./
+COPY ./.npmrc ./
 
-RUN yarn --network-timeout 1000000 install
+RUN npm ci --include=dev --fetch-timeout=1000000
 
 COPY ./ ./
 
-RUN yarn build
+RUN npm run build
 RUN rm -rf ./src
 
 EXPOSE ${BACKEND_PORT}
-CMD [ "yarn", "backend-production" ]
+CMD [ "npm", "run", "backend-production" ]

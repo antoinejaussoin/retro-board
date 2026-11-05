@@ -2,6 +2,5 @@
 .env.example
 .env.local
 .next
-.node_modules
+node_modules
 Makefile
-yarn-error.log

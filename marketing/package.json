@@ -39,7 +39,7 @@
     "i18next": "^23.2.11",
     "lodash-es": "^4.17.21",
     "next": "13.4.12",
-    "next-i18next": "^14.0.0",
+    "next-i18next": "14.0.0",
     "polished": "^4.2.2",
     "rc-collapse": "^3.7.0",
     "rc-drawer": "^6.3.0",
