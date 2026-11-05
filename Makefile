@@ -25,7 +25,7 @@ local:
 
 marketing-build:
 	docker build -f ./marketing/Dockerfile -t retrospected/marketing:local ./marketing
-	docker run -it --rm -p 3333:80 retrospected/marketing:local
+	docker run -it --rm -p 3333:3000 retrospected/marketing:local
 
 translate:
 	crowdin push sources
