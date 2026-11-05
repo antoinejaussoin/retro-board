@@ -6,6 +6,7 @@ ENV NODE_ENV=production
 
 RUN apk update
 RUN apk add curl
+RUN npm install -g yarn@1.22.22
 
 COPY ./yarn.lock ./
 COPY ./package.json ./

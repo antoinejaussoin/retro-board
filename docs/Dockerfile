@@ -15,6 +15,7 @@ COPY ./sidebars.js ./
 COPY ./yarn.lock ./
 COPY ./tsconfig.json ./
 
+RUN npm install -g yarn@1.22.22
 RUN chown -R node:node /home/node/app
 
 USER node
