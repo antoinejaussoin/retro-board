@@ -54,13 +54,14 @@ function Home() {
     if (session) {
       trackEvent('home/create/default');
       trackAdWordsConversion();
+      await refreshPreviousSessions();
       navigate('/game/' + session.id);
     } else {
       enqueueSnackbar('Something went wrong when creating the session', {
         variant: 'error',
       });
     }
-  }, [navigate, enqueueSnackbar]);
+  }, [navigate, enqueueSnackbar, refreshPreviousSessions]);
 
   const createEncryptedSession = useCallback(async () => {
     const key = shortid();
@@ -69,6 +70,7 @@ function Home() {
       storeEncryptionKeyLocally(session.id, key);
       trackEvent('home/create/encrypted');
       trackAdWordsConversion();
+      await refreshPreviousSessions();
       navigate(`/game/${session.id}#${key}`);
     } else {
       enqueueSnackbar(
@@ -76,7 +78,7 @@ function Home() {
         { variant: 'error' }
       );
     }
-  }, [navigate, enqueueSnackbar]);
+  }, [navigate, enqueueSnackbar, refreshPreviousSessions]);
 
   const handleDeleteSession = useCallback(
     async (session: SessionMetadata) => {

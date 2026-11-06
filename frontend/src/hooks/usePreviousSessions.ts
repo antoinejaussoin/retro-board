@@ -1,28 +1,31 @@
 import type { SessionMetadata } from 'common';
-import { useCallback, useEffect, useState } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useCallback } from 'react';
 import { fetchPreviousSessions } from '../api';
+import { queryKeys } from '../state/queryKeys';
 import useUser from '../state/user/useUser';
 
-let CACHE: SessionMetadata[] = [];
-
-export default function usePreviousSessions(): [SessionMetadata[], () => void] {
-  const [sessions, setSessions] = useState<SessionMetadata[]>(CACHE);
+export default function usePreviousSessions(): [
+  SessionMetadata[],
+  () => Promise<void>,
+] {
   const user = useUser();
+  const queryClient = useQueryClient();
+  const { data: sessions = [] } = useQuery({
+    queryKey: queryKeys.previousSessions,
+    queryFn: fetchPreviousSessions,
+    enabled: !!user,
+  });
 
   const refresh = useCallback(async () => {
-    if (user) {
-      const previousSessions = await fetchPreviousSessions();
-      setSessions(previousSessions);
-      CACHE = previousSessions;
-    } else {
-      setSessions([]);
-      CACHE = [];
+    if (!user) {
+      queryClient.setQueryData(queryKeys.previousSessions, []);
+      return;
     }
-  }, [user]);
+    await queryClient.invalidateQueries({
+      queryKey: queryKeys.previousSessions,
+    });
+  }, [queryClient, user]);
 
-  useEffect(() => {
-    refresh();
-  }, [refresh]);
-
-  return [sessions, refresh];
+  return [user ? sessions : [], refresh];
 }
