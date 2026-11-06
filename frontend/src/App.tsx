@@ -1,5 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Global } from '@emotion/react';
 import { ThemeProvider } from '@mui/material';
 import globalCss from './GlobalStyles';
@@ -19,45 +19,47 @@ import { queryClient } from './queryClient';
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <QueryClientProvider client={queryClient}>
-        <Suspense fallback={<FullScreenLoader />}>
-          <Helmet>
-            <meta property="og:title" content="Retrospected.com" />
-            <meta
-              property="og:description"
-              content="Real-time Agile Retrospective Board for development teams"
-            />
-            <meta property="og:url" content="https://app.retrospected.com" />
-          </Helmet>
-          <SnackbarProvider
-            maxSnack={3}
-            autoHideDuration={3000}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'center',
-            }}
-          >
-            <ConfirmProvider>
-              <BrowserRouter>
-                <AuthProvider>
-                  <LanguageProvider>
-                    <QuotaManager>
-                      <Global styles={globalCss} />
-                      <ErrorBoundary>
-                        <Suspense fallback={<CodeSplitLoader />}>
-                          <Layout />
-                        </Suspense>
-                      </ErrorBoundary>
-                    </QuotaManager>
-                  </LanguageProvider>
-                </AuthProvider>
-              </BrowserRouter>
-            </ConfirmProvider>
-          </SnackbarProvider>
-        </Suspense>
-      </QueryClientProvider>
-    </ThemeProvider>
+    <HelmetProvider>
+      <ThemeProvider theme={theme}>
+        <QueryClientProvider client={queryClient}>
+          <Suspense fallback={<FullScreenLoader />}>
+            <Helmet>
+              <meta property="og:title" content="Retrospected.com" />
+              <meta
+                property="og:description"
+                content="Real-time Agile Retrospective Board for development teams"
+              />
+              <meta property="og:url" content="https://app.retrospected.com" />
+            </Helmet>
+            <SnackbarProvider
+              maxSnack={3}
+              autoHideDuration={3000}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+            >
+              <ConfirmProvider>
+                <BrowserRouter>
+                  <AuthProvider>
+                    <LanguageProvider>
+                      <QuotaManager>
+                        <Global styles={globalCss} />
+                        <ErrorBoundary>
+                          <Suspense fallback={<CodeSplitLoader />}>
+                            <Layout />
+                          </Suspense>
+                        </ErrorBoundary>
+                      </QuotaManager>
+                    </LanguageProvider>
+                  </AuthProvider>
+                </BrowserRouter>
+              </ConfirmProvider>
+            </SnackbarProvider>
+          </Suspense>
+        </QueryClientProvider>
+      </ThemeProvider>
+    </HelmetProvider>
   );
 }
 

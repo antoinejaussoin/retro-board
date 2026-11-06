@@ -1,9 +1,9 @@
-import { createButton, createSvgIcon } from 'react-social-login-buttons';
+import { createButton } from 'react-social-login-buttons';
 import { colors } from '@mui/material';
 
 const config = {
   activeStyle: { background: colors.grey[100] },
-  icon: createSvgIcon(Icon),
+  icon: Icon,
   style: { background: 'white', color: 'black' },
   text: 'Login with Slack',
 };
@@ -13,19 +13,18 @@ const SlackLoginButton = createButton(config);
 export default SlackLoginButton;
 
 interface IconProps {
-  width: number | string;
-  height: number | string;
+  size: number | string;
   color: string;
 }
 
-function Icon({ width = 24, height = 24, color }: IconProps) {
+function Icon({ size, color }: IconProps) {
   return (
     <svg
       enableBackground="new 0 0 2447.6 2452.5"
       viewBox="0 0 2447.6 2452.5"
       fill={color}
-      width={width}
-      height={height}
+      width={size}
+      height={size}
       xmlns="http://www.w3.org/2000/svg"
     >
       <g clipRule="evenodd" fillRule="evenodd">

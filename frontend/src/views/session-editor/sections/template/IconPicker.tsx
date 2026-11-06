@@ -2,9 +2,9 @@ import { useCallback, useEffect, useRef } from 'react';
 import { Button, Popover } from '@mui/material';
 import styled from '@emotion/styled';
 import data from '@emoji-mart/data';
-import Picker from '@emoji-mart/react';
 import useModal from 'hooks/useModal';
 import Icon from 'components/Icon/Icon';
+import EmojiMartPicker from 'components/Icon/EmojiMartPicker';
 import { initEmojiMart } from 'components/Icon/emoji-mart';
 
 interface IconPickerProps {
@@ -53,7 +53,11 @@ const IconPicker = ({ value, onChange }: IconPickerProps) => {
           horizontal: 'left',
         }}
       >
-        <Picker data={data} onEmojiSelect={handleChange} theme="light" />
+        <EmojiMartPicker
+          data={data}
+          onEmojiSelect={handleChange}
+          theme="light"
+        />
       </Popover>
     </Container>
   );

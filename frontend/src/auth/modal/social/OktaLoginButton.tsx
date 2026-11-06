@@ -1,9 +1,9 @@
-import { createButton, createSvgIcon } from 'react-social-login-buttons';
+import { createButton } from 'react-social-login-buttons';
 import { colors } from '@mui/material';
 
 const config = {
   activeStyle: { background: colors.grey[100] },
-  icon: createSvgIcon(Icon),
+  icon: Icon,
   style: { background: 'white', color: 'black' },
   text: 'Login with Okta',
 };
@@ -13,11 +13,11 @@ const OktaLoginButton = createButton(config);
 export default OktaLoginButton;
 
 interface IconProps {
-  width: number | string;
-  height: number | string;
+  size: number | string;
+  color: string;
 }
 
-function Icon({ width = 24, height = 24 }: IconProps) {
+function Icon({ size, color }: IconProps) {
   return (
     <svg
       version="1.1"
@@ -26,8 +26,9 @@ function Icon({ width = 24, height = 24 }: IconProps) {
       x="0px"
       y="0px"
       viewBox="0 0 400 134.7"
-      width={width}
-      height={height}
+      width={size}
+      height={size}
+      fill={color}
     >
       <g>
         <g>
