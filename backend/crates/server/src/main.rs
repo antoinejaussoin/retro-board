@@ -16,6 +16,7 @@ mod domains;
 mod email;
 mod http;
 mod licence;
+mod log;
 mod models;
 mod oauth;
 mod session;
@@ -42,8 +43,12 @@ use crate::state::{limiters, AppState};
 
 #[tokio::main]
 async fn main() {
+    let filter = tracing_subscriber::EnvFilter::try_from_default_env()
+        .unwrap_or_else(|_| tracing_subscriber::EnvFilter::new("info"));
     tracing_subscriber::fmt()
-        .with_env_filter(tracing_subscriber::EnvFilter::from_default_env())
+        .with_env_filter(filter)
+        .with_ansi(true)
+        .with_target(false)
         .init();
     let config = Config::from_env();
     if let Err(error) = run(config).await {
@@ -58,14 +63,13 @@ async fn run(config: Config) -> Result<(), Box<dyn std::error::Error>> {
         .connect(&config.database_url())
         .await?;
     let applied = retrospected_migrations::run(&pool).await?;
-    tracing::info!(applied, "migrations complete");
     let sessions = crate::session::SessionStore::connect(&config).await?;
     let licence = licence::resolve(&config).await;
-    if let Some(licence) = &licence {
-        tracing::info!(owner = %licence.owner, "this software is licenced");
-    } else {
-        tracing::warn!("this software is not licenced");
-    }
+    log::banner(
+        &config,
+        licence.as_ref().map(|licence| licence.owner.as_str()),
+        applied,
+    );
     let (http_limit, ws_limit) = limiters(&config);
     let io_slot = Arc::new(OnceLock::new());
     let state = AppState {
@@ -89,7 +93,6 @@ async fn run(config: Config) -> Result<(), Box<dyn std::error::Error>> {
             .with_state(state.clone())
             .with_adapter::<RedisAdapter<_>>(adapter)
             .build_layer();
-        tracing::info!("socket.io redis adapter enabled");
         let _ = io_slot.set(Arc::new(io.clone()));
         ws::register(&io)
             .await
@@ -123,8 +126,8 @@ where
         .layer(layer)
         .with_state(state);
     let address = SocketAddr::from(([0, 0, 0, 0], port));
-    tracing::info!(%address, "listening");
     let listener = tokio::net::TcpListener::bind(address).await?;
+    log::listening(port);
     axum::serve(
         listener,
         app.into_make_service_with_connect_info::<SocketAddr>(),
@@ -138,10 +141,13 @@ async fn session_middleware(
     mut request: Request,
     next: Next,
 ) -> Response {
+    let method = request.method().to_string();
+    let path = request.uri().path().to_owned();
     let headers = request.headers().clone();
     let session = http::attach_session(&state, &headers).await;
     request.extensions_mut().insert(session.clone());
     let response = next.run(request).await;
+    log::http(&method, &path, response.status().as_u16());
     let id = session.lock().await.id.clone();
     http::with_cookie(&state, &id, response)
 }

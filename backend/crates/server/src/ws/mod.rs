@@ -47,6 +47,7 @@ where
     io.ns(
         "/",
         move |socket: SocketRef<A>, State(state): State<AppState>| {
+            log_connection(&socket, &state);
             let presence = presence.clone();
             let ids = ids_from_socket(&state, &socket);
             socket.extensions.insert(WsIds(ids.clone()));
@@ -61,6 +62,7 @@ where
                         state,
                         value,
                         false,
+                        "retrospected/posts/add/success",
                         |state, ids, session_id, payload, socket| {
                             Box::pin(posts::add_post(state, ids, session_id, payload, socket))
                         },
@@ -149,6 +151,8 @@ where
               _: socketioxide::socket::DisconnectReason| {
             let presence = presence_disconnect.clone();
             async move {
+                let ip = peer_ip(socket.req_parts());
+                crate::log::ws_disconnect(&socket.id.to_string(), &ip);
                 if let Some(session_id) = socket
                     .extensions
                     .get::<BoardRoom>()
@@ -179,7 +183,7 @@ fn bind<A>(
     socket.on(
         event,
         move |socket: SocketRef<A>, Data(value): Data<Value>, State(state): State<AppState>| {
-            on_message(socket, state, value, only_author, handler);
+            on_message(socket, state, value, only_author, event, handler);
         },
     );
 }
@@ -189,6 +193,7 @@ fn on_message<A>(
     state: AppState,
     value: Value,
     only_author: bool,
+    event: &'static str,
     handler: fn(
         AppState,
         Option<(String, String)>,
@@ -200,12 +205,13 @@ fn on_message<A>(
     A: Adapter + DefinedAdapter + 'static,
 {
     tokio::spawn(async move {
+        crate::log::ws_in(event, &value);
         let ack = value
             .get("ack")
             .and_then(Value::as_str)
             .unwrap_or("")
             .to_owned();
-        let _ = socket.emit(ACK, &ack);
+        emit_self(&socket, ACK, &ack);
         let session_id = if value.get("payload").is_some() {
             value
                 .get("sessionId")
@@ -232,7 +238,8 @@ fn on_message<A>(
             return;
         }
         if !state.ws_limit.allow(&session_id).await {
-            let _ = socket.emit(RECEIVE_RATE_LIMITED, &json!({}));
+            crate::log::ws_limited(&session_id);
+            emit_self(&socket, RECEIVE_RATE_LIMITED, &json!({}));
             return;
         }
         if !db::session_exists(&state.db, &session_id)
@@ -308,7 +315,16 @@ pub(super) fn emit_error<A: Adapter>(
     kind: &'static str,
     details: Option<String>,
 ) {
-    let _ = socket.emit(RECEIVE_ERROR, &WsError { kind, details });
+    emit_self(socket, RECEIVE_ERROR, &WsError { kind, details });
+}
+
+pub(super) fn emit_self<A: Adapter>(
+    socket: &SocketRef<A>,
+    event: &str,
+    data: &impl serde::Serialize,
+) {
+    crate::log::ws_out(event, data, false);
+    let _ = socket.emit(event, data);
 }
 
 pub(super) fn room(session_id: &str) -> String {
@@ -321,9 +337,57 @@ pub(super) async fn broadcast<A: Adapter>(
     event: &str,
     data: &impl serde::Serialize,
 ) {
+    crate::log::ws_out(event, data, true);
     if let Err(error) = socket.to(room(session_id)).emit(event, data).await {
         tracing::debug!(%error, "board broadcast failed");
     }
+}
+
+fn peer_ip(parts: &axum::http::request::Parts) -> String {
+    parts
+        .headers
+        .get("x-forwarded-for")
+        .and_then(|value| value.to_str().ok())
+        .and_then(|value| value.split(',').next())
+        .map(str::trim)
+        .filter(|value| !value.is_empty())
+        .map(str::to_owned)
+        .or_else(|| {
+            parts
+                .extensions
+                .get::<std::net::SocketAddr>()
+                .map(|addr| addr.ip().to_string())
+        })
+        .unwrap_or_else(|| "-".into())
+}
+
+fn log_connection<A: Adapter>(socket: &SocketRef<A>, state: &AppState) {
+    let id = socket.id.to_string();
+    let ip = peer_ip(socket.req_parts());
+    let cookie = socket
+        .req_parts()
+        .headers
+        .get(axum::http::header::COOKIE)
+        .and_then(|value| value.to_str().ok())
+        .map(str::to_owned);
+    let state = state.clone();
+    tokio::spawn(async move {
+        let who = if let Some(cookie) = cookie.as_deref() {
+            if let Some(sid) = state.sessions.from_cookie(Some(cookie)) {
+                state
+                    .sessions
+                    .load(&sid)
+                    .await
+                    .and_then(|session| session.user_ids())
+                    .map(|(_, identity)| identity)
+            } else {
+                None
+            }
+        } else {
+            None
+        };
+        crate::log::ws_connect(&id, &ip, who.as_deref().unwrap_or("anon"));
+    });
 }
 
 mod groups;
@@ -412,7 +476,7 @@ pub(super) async fn send_clients_simple<A: Adapter>(
             }
         }
     }
-    let _ = socket.emit(RECEIVE_CLIENT_LIST, &list);
+    emit_self(socket, RECEIVE_CLIENT_LIST, &list);
     broadcast(socket, session_id, RECEIVE_CLIENT_LIST, &list).await;
 }
 

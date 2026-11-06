@@ -4,8 +4,8 @@ use socketioxide::extract::SocketRef;
 use uuid::Uuid;
 
 use super::{
-    broadcast, emit_error, room, send_clients_simple, user_summary, BoardRoom, OnlineUser,
-    RECEIVE_BOARD, RECEIVE_CHAT, RECEIVE_LOCK_SESSION, RECEIVE_SESSION_SETTINGS,
+    broadcast, emit_error, emit_self, room, send_clients_simple, user_summary, BoardRoom,
+    OnlineUser, RECEIVE_BOARD, RECEIVE_CHAT, RECEIVE_LOCK_SESSION, RECEIVE_SESSION_SETTINGS,
     RECEIVE_TIMER_START, RECEIVE_TIMER_STOP, RECEIVE_UNAUTHORIZED, RECEIVE_USER_READY,
 };
 use crate::db::{self};
@@ -102,7 +102,7 @@ pub(super) fn request_board<A: Adapter>(
     Box::pin(async move {
         match db::load_board(&state.db, &session_id).await {
             Ok(Some(board)) => {
-                let _ = socket.emit(RECEIVE_BOARD, &board);
+                emit_self(&socket, RECEIVE_BOARD, &board);
             }
             _ => emit_error(&socket, "cannot_get_session", None),
         }
@@ -137,7 +137,8 @@ pub(super) fn join<A: Adapter>(
             } else {
                 None
             };
-            let _ = socket.emit(
+            emit_self(
+                &socket,
                 RECEIVE_UNAUTHORIZED,
                 &json!({ "type": reason, "session": board }),
             );
@@ -151,9 +152,13 @@ pub(super) fn join<A: Adapter>(
         if let Ok(Some(board)) = db::load_board(&state.db, &session_id).await {
             if let Some(timer) = board.timer {
                 let duration = (timer - chrono::Utc::now()).num_seconds();
-                let _ = socket.emit(RECEIVE_TIMER_START, &json!({ "duration": duration }));
+                emit_self(
+                    &socket,
+                    RECEIVE_TIMER_START,
+                    &json!({ "duration": duration }),
+                );
             }
-            let _ = socket.emit(RECEIVE_BOARD, &board);
+            emit_self(&socket, RECEIVE_BOARD, &board);
         }
         send_clients_simple(&state, &socket, &session_id).await;
     })
