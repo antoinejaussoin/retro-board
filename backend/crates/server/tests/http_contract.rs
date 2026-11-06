@@ -165,18 +165,37 @@ async fn http_contract() {
     assert_eq!(me["name"], "Ada");
     assert_eq!(me["accountType"], "anonymous");
 
-    let created: Value = client
+    // The home page starts a retro with Content-Type: application/json and no body.
+    let created = client
         .post(format!("{}/api/create", server.base))
         .header("cookie", &cookie)
-        .json(&serde_json::json!({}))
+        .header("content-type", "application/json")
+        .body("")
         .send()
         .await
-        .unwrap()
-        .json()
-        .await
         .unwrap();
+    assert_eq!(
+        created.status(),
+        200,
+        "starting a retro must accept an empty JSON body, got {}",
+        created.status()
+    );
+    let created: Value = created.json().await.unwrap();
     let session_id = created["id"].as_str().unwrap().to_owned();
     assert_eq!(created["columns"].as_array().unwrap().len(), 3);
+    assert!(created["encrypted"].is_null());
+
+    let encrypted = client
+        .post(format!("{}/api/create", server.base))
+        .header("cookie", &cookie)
+        .header("content-type", "application/json")
+        .body(r#"{"encryptedCheck":"check-value"}"#)
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(encrypted.status(), 200);
+    let encrypted: Value = encrypted.json().await.unwrap();
+    assert_eq!(encrypted["encrypted"], "check-value");
 
     let email = format!("ada-{}@example.com", std::process::id());
     let registered: Value = client
