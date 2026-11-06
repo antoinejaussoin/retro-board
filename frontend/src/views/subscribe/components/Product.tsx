@@ -1,9 +1,7 @@
-import styled from '@emotion/styled';
-import { colors } from '@mui/material';
-import Paper from '@mui/material/Paper';
 import { useCallback } from 'react';
 import { Product, Currency } from 'common';
 import { useTranslation } from 'react-i18next';
+import { cn } from 'ui/cn';
 
 interface ProductDisplayProps {
   product: Product;
@@ -32,100 +30,51 @@ function ProductDisplay({
       : product[currency] / 100;
 
   return (
-    <Container onClick={handleOrder} selected={selected}>
-      <Paper elevation={selected ? 24 : 2}>
-        <Header>{product.name}</Header>
-        <Description>{t(`Products.${product.plan}`)}</Description>
-        <Seats>
-          {product.seats
-            ? t('Products.users', { users: product.seats })
-            : `${t('Products.unlimited_seats')} 🎉`}
-        </Seats>
-
-        <Total>
-          {price.toFixed(2)} {currency.toUpperCase()}
-          {product.recurring ? (
-            <PerMonth>
-              / {yearly ? t('Products.year') : t('Products.month')}
-            </PerMonth>
-          ) : null}
-        </Total>
-        <PickMe>
-          <PickMeButton>
-            {product.recurring
-              ? t('SubscribeModal.subscribeButton')
-              : t('SubscribeModal.payButton')}
-          </PickMeButton>
-        </PickMe>
-      </Paper>
-    </Container>
+    <button
+      type="button"
+      onClick={handleOrder}
+      className={cn(
+        'group flex h-full w-full max-w-sm flex-col overflow-hidden rounded-3xl border-2 bg-cream text-left shadow-card transition-colors sm:w-[300px]',
+        selected
+          ? 'border-primary-600'
+          : 'border-line hover:border-primary-300',
+      )}
+    >
+      <div className="px-6 pt-6 text-center text-2xl font-medium tracking-tight">
+        {product.name}
+      </div>
+      <div className="flex-1 bg-paper px-6 py-4 text-sm leading-6 text-muted">
+        {t(`Products.${product.plan}`)}
+      </div>
+      <div className="flex h-14 items-center justify-center text-lg font-medium text-primary-700">
+        {product.seats
+          ? t('Products.users', { users: product.seats })
+          : `${t('Products.unlimited_seats')} 🎉`}
+      </div>
+      <div className="bg-primary-700 px-6 py-3 text-center text-2xl font-medium text-white">
+        {price.toFixed(2)} {currency.toUpperCase()}
+        {product.recurring ? (
+          <span className="text-sm font-normal">
+            / {yearly ? t('Products.year') : t('Products.month')}
+          </span>
+        ) : null}
+      </div>
+      <div className="p-5">
+        <div
+          className={cn(
+            'rounded-full border border-primary-700 px-4 py-2 text-center text-lg font-medium transition-colors',
+            selected
+              ? 'bg-primary-700 text-white'
+              : 'text-primary-700 group-hover:bg-primary-700 group-hover:text-white',
+          )}
+        >
+          {product.recurring
+            ? t('SubscribeModal.subscribeButton')
+            : t('SubscribeModal.payButton')}
+        </div>
+      </div>
+    </button>
   );
 }
-
-const Container = styled.div<{ selected: boolean }>`
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
-  width: 300px;
-  border-radius: 5px;
-  border: 3px solid
-    ${(props) => (props.selected ? colors.deepPurple[500] : colors.grey[50])};
-`;
-
-const Header = styled.div`
-  padding: 20px;
-  text-align: center;
-  font-size: 2em;
-  font-weight: 100;
-`;
-
-const Description = styled.div`
-  padding: 20px;
-  background-color: ${colors.grey[100]};
-  color: ${colors.grey[700]};
-  flex: 1;
-`;
-
-const Seats = styled.div`
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5em;
-  font-weight: 300;
-  color: ${colors.deepPurple[500]};
-`;
-
-const Total = styled.div`
-  background-color: ${colors.deepPurple[500]};
-  color: white;
-  text-align: center;
-  font-size: 2em;
-  font-weight: 300;
-  padding: 10px 0;
-`;
-
-const PerMonth = styled.span`
-  font-size: 0.4em;
-`;
-
-const PickMe = styled.div`
-  padding: 20px;
-`;
-
-const PickMeButton = styled.div`
-  border: 1px solid ${colors.deepPurple[500]};
-  color: ${colors.deepPurple[500]};
-  border-radius: 10px;
-  font-size: 1.5em;
-  font-weight: 100;
-  text-align: center;
-  padding: 5px;
-
-  :hover {
-    background-color: ${colors.deepPurple[500]};
-    color: white;
-  }
-`;
 
 export default ProductDisplay;

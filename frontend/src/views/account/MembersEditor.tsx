@@ -3,10 +3,9 @@ import { useCallback } from 'react';
 import { queryKeys } from '../../state/queryKeys';
 import { getMembers, updateMembers } from './api';
 import { validate } from 'email/validate';
-import styled from '@emotion/styled';
-import { Alert } from '@mui/material';
+import { Alert } from 'ui/alert';
 import { useTranslation } from 'react-i18next';
-import { useSnackbar } from 'notistack';
+import { useSnackbar } from 'ui/toast';
 import TagInput from '../../components/TagInput';
 
 const MAX_MEMBERS = 19;
@@ -42,7 +41,7 @@ function MembersEditor() {
         });
       }
     },
-    [members, queryClient, enqueueSnackbar]
+    [members, queryClient, enqueueSnackbar],
   );
   const handleRemove = useCallback(
     (value: string) => {
@@ -53,7 +52,7 @@ function MembersEditor() {
         enqueueSnackbar(`${value} has been removed.`, { variant: 'info' });
       }
     },
-    [members, queryClient, enqueueSnackbar]
+    [members, queryClient, enqueueSnackbar],
   );
   const handleValidate = useCallback(
     async (value: string) => {
@@ -63,7 +62,7 @@ function MembersEditor() {
         doesNotExist(members, value)
       );
     },
-    [members]
+    [members],
   );
 
   if (members === null) {
@@ -71,15 +70,15 @@ function MembersEditor() {
   }
 
   return (
-    <Container>
+    <div className="flex flex-col gap-3">
       {!isNotFull(members) ? (
-        <Alert severity="warning" style={{ marginBottom: 10 }}>
+        <Alert severity="warning">
           {t('AccountPage.subscription.membersEditor.limitReached', {
             limit: MAX_MEMBERS + 1,
           })}
         </Alert>
       ) : (
-        <Alert severity="info" style={{ marginBottom: 10 }}>
+        <Alert severity="info">
           {t('AccountPage.subscription.membersEditor.info', {
             limit: MAX_MEMBERS,
           })}
@@ -92,11 +91,8 @@ function MembersEditor() {
         onRemove={handleRemove}
         onValidate={handleValidate}
       />
-    </Container>
+    </div>
   );
 }
-const Container = styled.div`
-  margin-top: 20px;
-`;
 
 export default MembersEditor;

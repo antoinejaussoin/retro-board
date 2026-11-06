@@ -1,18 +1,18 @@
-import {
-  Button,
-  colors,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from '@mui/material';
-import { Alert } from '@mui/material';
-import { useSnackbar } from 'notistack';
+import { KeyRound } from 'lucide-react';
 import { useCallback, useState } from 'react';
 import { FullUser } from 'common';
 import Input from '../../components/Input';
 import { changePassword } from './api';
-import { Key } from '@mui/icons-material';
+import { Alert } from 'ui/alert';
+import { Button } from 'ui/button';
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogFooter,
+  DialogTitle,
+} from 'ui/dialog';
+import { useSnackbar } from 'ui/toast';
 
 type ChangePasswordProps = {
   user: FullUser;
@@ -42,34 +42,36 @@ export default function ChangePassword({ user }: ChangePasswordProps) {
   }, [enqueueSnackbar, user, newPassword]);
   return (
     <>
-      <Button onClick={handleOpenModal} startIcon={<Key />}>
+      <Button variant="ghost" size="sm" onClick={handleOpenModal}>
+        <KeyRound className="size-4" />
         Change Password
       </Button>
       <Dialog onClose={handleCloseModal} open={showModal}>
-        <DialogTitle>Change password for {user.email}</DialogTitle>
-        <Alert severity="warning">
-          You are about to change the password for user {user.name} (
-          {user.email}). Please make sure the user is happy with that.
-        </Alert>
-
-        <DialogContent>
-          <Input
-            type="password"
-            value={newPassword}
-            onChangeValue={setNewPassword}
-            placeholder="New password"
-            fullWidth
-          />
+        <DialogContent size="sm">
+          <DialogTitle>Change password for {user.email}</DialogTitle>
+          <DialogBody className="flex flex-col gap-4">
+            <Alert severity="warning">
+              You are about to change the password for user {user.name} (
+              {user.email}). Please make sure the user is happy with that.
+            </Alert>
+            <Input
+              type="password"
+              value={newPassword}
+              onChangeValue={setNewPassword}
+              placeholder="New password"
+              fullWidth
+            />
+          </DialogBody>
+          <DialogFooter>
+            <Button
+              variant="danger"
+              onClick={handlePasswordChange}
+              disabled={!newPassword}
+            >
+              Change Password
+            </Button>
+          </DialogFooter>
         </DialogContent>
-        <DialogActions>
-          <Button
-            style={{ backgroundColor: colors.red[500], color: 'white' }}
-            onClick={handlePasswordChange}
-            disabled={!newPassword}
-          >
-            Change Password
-          </Button>
-        </DialogActions>
       </Dialog>
     </>
   );

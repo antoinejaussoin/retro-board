@@ -1,6 +1,4 @@
-import styled from '@emotion/styled';
-import { colors } from '@mui/material';
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 
 interface StepProps {
   index: number;
@@ -15,61 +13,19 @@ export default function Step({
   children,
 }: PropsWithChildren<StepProps>) {
   return (
-    <Container>
-      <Index>{index}</Index>
-      <Main>
-        <Header>
-          <Title>{title}</Title>
-          <Description>{description}</Description>
-        </Header>
-        <Content>{children}</Content>
-      </Main>
-    </Container>
+    <section className="flex items-start gap-4 rounded-3xl border border-line bg-cream p-6">
+      <div className="text-3xl font-medium tracking-tight text-muted sm:text-5xl">
+        {index}
+      </div>
+      <div className="min-w-0 flex-1">
+        <header className="pb-4">
+          <h2 className="text-2xl font-medium tracking-tight">{title}</h2>
+          {description ? (
+            <p className="mt-1 text-sm leading-6 text-muted">{description}</p>
+          ) : null}
+        </header>
+        <div>{children}</div>
+      </div>
+    </section>
   );
 }
-
-const Container = styled.div`
-  border: 1px solid ${colors.grey[200]};
-  border-radius: 10px;
-  margin: 10px;
-  padding: 20px;
-  display: flex;
-
-  @media screen and (max-width: 450px) {
-    padding: 5px;
-  }
-`;
-
-const Index = styled.div`
-  align-self: center;
-  font-size: 4em;
-  font-weight: 100;
-  margin-right: 20px;
-  color: ${colors.grey[500]};
-
-  @media screen and (max-width: 600px) {
-    font-size: 1.5em;
-    margin-right: 5px;
-    align-self: flex-start;
-  }
-`;
-
-const Main = styled.div``;
-
-const Header = styled.div`
-  padding-bottom: 20px;
-`;
-
-const Title = styled.div`
-  font-size: 2em;
-  font-weight: 100;
-  padding-bottom: 10px;
-
-  @media screen and (max-width: 600px) {
-    font-size: 1.5em;
-  }
-`;
-
-const Description = styled.div``;
-
-const Content = styled.div``;

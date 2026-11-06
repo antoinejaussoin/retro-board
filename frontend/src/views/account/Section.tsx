@@ -1,6 +1,5 @@
-import { colors } from '@mui/material';
-import styled from '@emotion/styled';
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
+import { cn } from 'ui/cn';
 
 interface SectionProps {
   title?: string;
@@ -13,40 +12,23 @@ export default function Section({
   children,
 }: PropsWithChildren<SectionProps>) {
   return (
-    <Container danger={!!danger}>
-      <Title>{title}</Title>
-      <Content>{children}</Content>
-    </Container>
+    <section
+      className={cn(
+        'flex flex-col gap-4 rounded-3xl border bg-cream p-6',
+        danger ? 'border-red-500' : 'border-line',
+      )}
+    >
+      {title ? (
+        <h2
+          className={cn(
+            'text-2xl font-medium tracking-tight',
+            danger && 'text-red-600',
+          )}
+        >
+          {title}
+        </h2>
+      ) : null}
+      {children}
+    </section>
   );
 }
-
-const Container = styled.section<{ danger: boolean }>`
-  border: 1px solid
-    ${(props) => (props.danger ? colors.red[500] : colors.grey[200])};
-  border-radius: 10px;
-  margin: 10px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-
-  @media screen and (max-width: 450px) {
-    padding: 5px;
-  }
-
-  header {
-    color: ${(props) => (props.danger ? colors.red[500] : 'inherit')};
-  }
-`;
-
-const Title = styled.header`
-  font-size: 2em;
-  font-weight: 100;
-  margin-bottom: 20px;
-  display: block;
-
-  @media screen and (max-width: 600px) {
-    font-size: 1.3em;
-  }
-`;
-
-const Content = styled.div``;

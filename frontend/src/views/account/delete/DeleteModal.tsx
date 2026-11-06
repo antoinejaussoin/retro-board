@@ -1,31 +1,29 @@
-import { Dashboard, Note, Person, ThumbUpOutlined } from '@mui/icons-material';
+import { LayoutDashboard, StickyNote, ThumbsUp, User } from 'lucide-react';
 import {
-  Dialog,
-  DialogContent,
-  useMediaQuery,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListSubheader,
-  ListItemText,
-  ListItemSecondaryAction,
-  Switch,
-  DialogActions,
-  Button,
-  colors,
-} from '@mui/material';
-import { noop } from 'lodash';
-import { useCallback, useState } from 'react';
-import styled from '@emotion/styled';
+  useCallback,
+  useState,
+  type PropsWithChildren,
+  type ReactNode,
+} from 'react';
 import { DeleteAccountPayload, FullUser } from 'common';
 import { deleteAccount, deleteUser, logout } from '../../../api';
 import { useNavigate } from 'react-router';
-import { useConfirm } from 'material-ui-confirm';
-import { useSnackbar } from 'notistack';
+import { useConfirm } from 'ui/confirm';
+import { useSnackbar } from 'ui/toast';
 import { useTranslation } from 'react-i18next';
 import { trackEvent } from '../../../track';
 import useUser from 'state/user/useUser';
 import { useSetUser } from 'state/user/useSetUser';
+import { useMediaQuery } from 'hooks/useMediaQuery';
+import { Button } from 'ui/button';
+import { cn } from 'ui/cn';
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogFooter,
+  DialogTitle,
+} from 'ui/dialog';
 
 type DeleteModalProps = {
   open: boolean;
@@ -63,19 +61,18 @@ export function DeleteModal({
     };
     const buttonProps = {
       color: 'error',
-      variant: 'contained',
       'data-cy': 'delete-modal-confirm',
     };
     confirm({
       title: t('AccountPage.deleteAccount.modal.confirm.title'),
       description: t('AccountPage.deleteAccount.modal.confirm.description'),
       confirmationText: t(
-        'AccountPage.deleteAccount.modal.confirm.confirmation'
+        'AccountPage.deleteAccount.modal.confirm.confirmation',
       ),
       cancellationText: t(
-        'AccountPage.deleteAccount.modal.confirm.cancellation'
+        'AccountPage.deleteAccount.modal.confirm.cancellation',
       ),
-      confirmationButtonProps: buttonProps as any,
+      confirmationButtonProps: buttonProps,
     })
       .then(async () => {
         trackEvent('account/gdpr/delete-account');
@@ -88,7 +85,7 @@ export function DeleteModal({
           } else {
             enqueueSnackbar(
               'Deleting your account failed. Please contact support: support@retrospected.com',
-              { variant: 'error' }
+              { variant: 'error' },
             );
             onClose();
           }
@@ -97,7 +94,7 @@ export function DeleteModal({
           if (success) {
             enqueueSnackbar(
               `User ${user.name} (${user.email}) has been deleted.`,
-              { variant: 'success' }
+              { variant: 'success' },
             );
             if (onDelete) {
               onDelete(user);
@@ -133,93 +130,87 @@ export function DeleteModal({
   }
 
   return (
-    <Dialog
-      fullScreen={fullScreen}
-      maxWidth="sm"
-      fullWidth
-      open={open}
-      onClose={onClose}
-    >
-      <DialogContent>
-        <List
-          subheader={
-            <ListSubheader>
-              {t('AccountPage.deleteAccount.modal.subheader')}
-            </ListSubheader>
-          }
-        >
-          <DeleteItem checked disabled icon={<Person />}>
-            {t('AccountPage.deleteAccount.modal.deleteAccount')} ({user.email})
-          </DeleteItem>
-          <DeleteItem
-            checked={deleteSessions}
-            onToggle={setDeleteSessions}
-            icon={<Dashboard />}
-            cy="delete-modal-sessions"
+    <Dialog open={open} onClose={onClose}>
+      <DialogContent size="sm" fullScreen={fullScreen}>
+        <DialogTitle>
+          {t('AccountPage.deleteAccount.modal.subheader')}
+        </DialogTitle>
+        <DialogBody>
+          <div className="flex flex-col">
+            <DeleteItem checked disabled icon={<User className="size-5" />}>
+              {t('AccountPage.deleteAccount.modal.deleteAccount')} ({user.email})
+            </DeleteItem>
+            <DeleteItem
+              checked={deleteSessions}
+              onToggle={setDeleteSessions}
+              icon={<LayoutDashboard className="size-5" />}
+              cy="delete-modal-sessions"
+            >
+              <p>{t('AccountPage.deleteAccount.modal.deleteSessions.main')}</p>
+              {deleteSessions ? (
+                <p className="text-red-700">
+                  {t('AccountPage.deleteAccount.modal.deleteSessions.selected')}
+                </p>
+              ) : (
+                <p className="text-emerald-700">
+                  <b>{t('AccountPage.deleteAccount.modal.recommended')}</b> -{' '}
+                  {t(
+                    'AccountPage.deleteAccount.modal.deleteSessions.unselected',
+                  )}
+                </p>
+              )}
+            </DeleteItem>
+            <DeleteItem
+              checked={deletePosts}
+              onToggle={setDeletePosts}
+              icon={<StickyNote className="size-5" />}
+              cy="delete-modal-posts"
+            >
+              <p>{t('AccountPage.deleteAccount.modal.deletePosts.main')}</p>
+              {deletePosts ? (
+                <p className="text-red-700">
+                  {t('AccountPage.deleteAccount.modal.deletePosts.selected')}
+                </p>
+              ) : (
+                <p className="text-emerald-700">
+                  <b>{t('AccountPage.deleteAccount.modal.recommended')}</b> -{' '}
+                  {t('AccountPage.deleteAccount.modal.deletePosts.unselected')}
+                </p>
+              )}
+            </DeleteItem>
+            <DeleteItem
+              checked={deleteVotes}
+              onToggle={setDeleteVotes}
+              icon={<ThumbsUp className="size-5" />}
+              cy="delete-modal-votes"
+            >
+              <p>{t('AccountPage.deleteAccount.modal.deleteVotes.main')}</p>
+              {deleteVotes ? (
+                <p className="text-red-700">
+                  {t('AccountPage.deleteAccount.modal.deleteVotes.selected')}
+                </p>
+              ) : (
+                <p className="text-emerald-700">
+                  <b>{t('AccountPage.deleteAccount.modal.recommended')}</b> -{' '}
+                  {t('AccountPage.deleteAccount.modal.deleteVotes.unselected')}
+                </p>
+              )}
+            </DeleteItem>
+          </div>
+        </DialogBody>
+        <DialogFooter>
+          <Button
+            variant="danger"
+            onClick={handleDelete}
+            data-cy="delete-modal-delete-button"
           >
-            <p>{t('AccountPage.deleteAccount.modal.deleteSessions.main')}</p>
-            {deleteSessions ? (
-              <Red>
-                {t('AccountPage.deleteAccount.modal.deleteSessions.selected')}
-              </Red>
-            ) : (
-              <Green>
-                <b>{t('AccountPage.deleteAccount.modal.recommended')}</b> -{' '}
-                {t('AccountPage.deleteAccount.modal.deleteSessions.unselected')}
-              </Green>
-            )}
-          </DeleteItem>
-          <DeleteItem
-            checked={deletePosts}
-            onToggle={setDeletePosts}
-            icon={<Note />}
-            cy="delete-modal-posts"
-          >
-            <p>{t('AccountPage.deleteAccount.modal.deletePosts.main')}</p>
-            {deletePosts ? (
-              <Red>
-                {t('AccountPage.deleteAccount.modal.deletePosts.selected')}
-              </Red>
-            ) : (
-              <Green>
-                <b>{t('AccountPage.deleteAccount.modal.recommended')}</b> -{' '}
-                {t('AccountPage.deleteAccount.modal.deletePosts.unselected')}
-              </Green>
-            )}
-          </DeleteItem>
-          <DeleteItem
-            checked={deleteVotes}
-            onToggle={setDeleteVotes}
-            icon={<ThumbUpOutlined />}
-            cy="delete-modal-votes"
-          >
-            <p>{t('AccountPage.deleteAccount.modal.deleteVotes.main')}</p>
-            {deleteVotes ? (
-              <Red>
-                {t('AccountPage.deleteAccount.modal.deleteVotes.selected')}
-              </Red>
-            ) : (
-              <Green>
-                <b>{t('AccountPage.deleteAccount.modal.recommended')}</b> -{' '}
-                {t('AccountPage.deleteAccount.modal.deleteVotes.unselected')}
-              </Green>
-            )}
-          </DeleteItem>
-        </List>
+            {t('AccountPage.deleteAccount.modal.deleteAccountButton')}
+          </Button>
+          <Button variant="ghost" onClick={onClose}>
+            {t('AccountPage.deleteAccount.modal.cancelButton')}
+          </Button>
+        </DialogFooter>
       </DialogContent>
-      <DialogActions>
-        <Button
-          color="error"
-          variant="contained"
-          onClick={handleDelete}
-          data-cy="delete-modal-delete-button"
-        >
-          {t('AccountPage.deleteAccount.modal.deleteAccountButton')}
-        </Button>
-        <Button onClick={onClose}>
-          {t('AccountPage.deleteAccount.modal.cancelButton')}
-        </Button>
-      </DialogActions>
     </Dialog>
   );
 }
@@ -227,7 +218,7 @@ export function DeleteModal({
 type DeleteItemProps = {
   disabled?: boolean;
   checked: boolean;
-  icon: React.ReactNode;
+  icon: ReactNode;
   cy?: string;
   onToggle?: (value: boolean) => void;
 };
@@ -239,38 +230,55 @@ function DeleteItem({
   checked,
   cy,
   onToggle,
-}: React.PropsWithChildren<DeleteItemProps>) {
+}: PropsWithChildren<DeleteItemProps>) {
   return (
-    <ListItem>
-      <ListItemIcon>{icon}</ListItemIcon>
-      <ListItemText
-        primary={<ContentContainer>{children}</ContentContainer>}
-        style={{ paddingRight: 20 }}
+    <div className="flex items-start gap-3 border-b border-line py-3 last:border-b-0">
+      <span className="mt-0.5 text-muted">{icon}</span>
+      <div className="min-w-0 flex-1 text-sm [&_p]:m-0">{children}</div>
+      <Switch
+        disabled={disabled}
+        checked={checked}
+        cy={cy}
+        onCheckedChange={(value) => (onToggle ? onToggle(value) : undefined)}
       />
-      <ListItemSecondaryAction>
-        <Switch
-          edge="end"
-          disabled={disabled}
-          checked={checked}
-          data-cy={cy}
-          onChange={(_, v) => (onToggle ? onToggle(v) : noop)}
-        />
-      </ListItemSecondaryAction>
-    </ListItem>
+    </div>
   );
 }
 
-const Green = styled.p`
-  color: ${colors.green[700]};
-`;
-
-const Red = styled.p`
-  color: ${colors.red[700]};
-`;
-
-const ContentContainer = styled.div`
-  > p {
-    margin: 0;
-    padding: 0;
-  }
-`;
+function Switch({
+  checked,
+  disabled,
+  cy,
+  onCheckedChange,
+}: {
+  checked: boolean;
+  disabled?: boolean;
+  cy?: string;
+  onCheckedChange?: (value: boolean) => void;
+}) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      disabled={disabled}
+      data-cy={cy}
+      onClick={() => {
+        if (onCheckedChange) {
+          onCheckedChange(!checked);
+        }
+      }}
+      className={cn(
+        'relative mt-0.5 inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors disabled:cursor-not-allowed disabled:opacity-50',
+        checked ? 'bg-primary-700' : 'bg-stone-300',
+      )}
+    >
+      <span
+        className={cn(
+          'inline-block size-5 rounded-full bg-cream shadow transition-transform',
+          checked ? 'translate-x-5' : 'translate-x-0.5',
+        )}
+      />
+    </button>
+  );
+}

@@ -1,8 +1,8 @@
-import { Delete } from '@mui/icons-material';
-import { Button } from '@mui/material';
+import { Trash2 } from 'lucide-react';
 import { FullUser } from 'common';
 import useModal from 'hooks/useModal';
 import { useCallback } from 'react';
+import { Button } from 'ui/button';
 import { DeleteModal } from 'views/account/delete/DeleteModal';
 
 type DeleteAccountProps = {
@@ -18,12 +18,18 @@ export function DeleteAccount({ user, onDelete }: DeleteAccountProps) {
       onDelete(user);
       handleDeleteClose();
     },
-    [onDelete, handleDeleteClose]
+    [onDelete, handleDeleteClose],
   );
 
   return (
     <>
-      <Button color="error" startIcon={<Delete />} onClick={handleDeleteOpen}>
+      <Button
+        variant="ghost"
+        size="sm"
+        className="text-red-700"
+        onClick={handleDeleteOpen}
+      >
+        <Trash2 className="size-4" />
         Delete
       </Button>
       <DeleteModal

@@ -1,20 +1,21 @@
+import { Mail, User, KeyRound } from 'lucide-react';
 import { Suspense, useCallback, useState, useMemo, lazy } from 'react';
-import Button from '@mui/material/Button';
-import {
-  Alert,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from '@mui/material';
 import { useLanguage } from '../../translations';
 import Input from '../../components/Input';
-import { Person, Email, VpnKey } from '@mui/icons-material';
 import { addUser } from '../../api';
 import { validate } from 'email/validate';
 import useBackendCapabilities from 'global/useBackendCapabilities';
 import { FullUser } from 'common';
 import { useTranslation } from 'react-i18next';
+import { Alert } from 'ui/alert';
+import { Button } from 'ui/button';
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogFooter,
+  DialogTitle,
+} from 'ui/dialog';
 
 type NewAccountModalProps = {
   open: boolean;
@@ -50,7 +51,7 @@ export function NewAccountModal({
       registerName,
       registerEmail,
       registerPassword,
-      language.locale
+      language.locale,
     );
     if (response.error) {
       switch (response.error) {
@@ -85,90 +86,88 @@ export function NewAccountModal({
     );
   }
 
+  const emailInvalid = !validEmail && registerEmail.length > 0;
+
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Create a new user</DialogTitle>
-      <DialogContent>
-        {isSuccessful ? (
-          <Alert severity="success">{t('Register.messageSuccess')}</Alert>
-        ) : (
-          <>
-            {generalError ? (
-              <Alert severity="error" style={{ marginTop: 10 }}>
-                {generalError}
-              </Alert>
-            ) : null}
+      <DialogContent size="md">
+        <DialogTitle>Create a new user</DialogTitle>
+        <DialogBody>
+          {isSuccessful ? (
+            <Alert severity="success">{t('Register.messageSuccess')}</Alert>
+          ) : (
+            <div className="flex flex-col gap-4">
+              {generalError ? (
+                <Alert severity="error">{generalError}</Alert>
+              ) : null}
 
-            <Input
-              value={registerName}
-              onChangeValue={setRegisterName}
-              title="Your user's name (i.e. John Doe)"
-              placeholder="John Doe"
-              variant="standard"
-              fullWidth
-              style={{ marginTop: 20 }}
-              leftIcon={<Person />}
-              required
-            />
-            <Input
-              value={registerEmail}
-              onChangeValue={setRegisterEmail}
-              title="Your user's email"
-              placeholder="john.doe@acme.com"
-              variant="standard"
-              fullWidth
-              style={{ marginTop: 20 }}
-              leftIcon={<Email />}
-              required
-              error={!validEmail && registerEmail.length > 0}
-              helperText={
-                !validEmail && registerEmail.length > 0
-                  ? t('Register.errorInvalidEmail')
-                  : undefined
-              }
-            />
-            <Input
-              value={registerPassword}
-              onChangeValue={setRegisterPassword}
-              title="Your user's password"
-              placeholder="P@ssw0rd"
-              variant="standard"
-              type="password"
-              fullWidth
-              style={{ marginTop: 20 }}
-              leftIcon={<VpnKey />}
-              required
-            />
-            <Suspense fallback={<span />}>
-              <PasswordStrength
-                onChangeScore={setPasswordScore}
-                password={registerPassword}
-                shortScoreWord={t('AuthCommon.passwordScoreWords')[0]}
-                scoreWords={
-                  t('AuthCommon.passwordScoreWords', {
-                    returnObjects: true,
-                  }) as string[]
-                }
+              <Input
+                value={registerName}
+                onChangeValue={setRegisterName}
+                title="Your user's name (i.e. John Doe)"
+                placeholder="John Doe"
+                fullWidth
+                leftIcon={<User className="size-4" />}
+                required
               />
-            </Suspense>
-          </>
-        )}
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose} color="secondary">
-          Close
-        </Button>
-        {!isSuccessful ? (
-          <Button
-            onClick={handleRegistration}
-            color="primary"
-            autoFocus
-            disabled={!validEmail || passwordScore < 3 || !validName}
-          >
-            Add User
+              <div>
+                <Input
+                  value={registerEmail}
+                  onChangeValue={setRegisterEmail}
+                  title="Your user's email"
+                  placeholder="john.doe@acme.com"
+                  fullWidth
+                  leftIcon={<Mail className="size-4" />}
+                  required
+                  aria-invalid={emailInvalid}
+                  className={emailInvalid ? 'border-red-400' : undefined}
+                />
+                {emailInvalid ? (
+                  <p className="mt-1 text-sm text-red-700">
+                    {t('Register.errorInvalidEmail')}
+                  </p>
+                ) : null}
+              </div>
+              <Input
+                value={registerPassword}
+                onChangeValue={setRegisterPassword}
+                title="Your user's password"
+                placeholder="P@ssw0rd"
+                type="password"
+                fullWidth
+                leftIcon={<KeyRound className="size-4" />}
+                required
+              />
+              <Suspense fallback={<span />}>
+                <PasswordStrength
+                  onChangeScore={setPasswordScore}
+                  password={registerPassword}
+                  shortScoreWord={t('AuthCommon.passwordScoreWords')[0]}
+                  scoreWords={
+                    t('AuthCommon.passwordScoreWords', {
+                      returnObjects: true,
+                    }) as string[]
+                  }
+                />
+              </Suspense>
+            </div>
+          )}
+        </DialogBody>
+        <DialogFooter>
+          <Button variant="ghost" onClick={onClose}>
+            Close
           </Button>
-        ) : undefined}
-      </DialogActions>
+          {!isSuccessful ? (
+            <Button
+              onClick={handleRegistration}
+              autoFocus
+              disabled={!validEmail || passwordScore < 3 || !validName}
+            >
+              Add User
+            </Button>
+          ) : undefined}
+        </DialogFooter>
+      </DialogContent>
     </Dialog>
   );
 }

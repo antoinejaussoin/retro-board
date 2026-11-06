@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
-import styled from '@emotion/styled';
-import Button from '@mui/material/Button';
+import { Button } from 'ui/button';
 
 interface QuantitySelectorProps {
   value: number;
@@ -34,34 +33,28 @@ function QuantitySelector({
   const canPlus = value + step <= max;
   const canMinus = value - step >= min;
   return (
-    <Container>
-      <Buttons>
-        <Button disabled={!canMinus} onClick={handleMinus}>
-          -
-        </Button>
-      </Buttons>
-      <Value>{value}&nbsp;seats</Value>
-      <Buttons>
-        <Button disabled={!canPlus} onClick={handlePlus}>
-          +
-        </Button>
-      </Buttons>
-    </Container>
+    <div className="my-5 flex items-center justify-center gap-4">
+      <Button
+        variant="outline"
+        size="sm"
+        disabled={!canMinus}
+        onClick={handleMinus}
+      >
+        -
+      </Button>
+      <div className="text-3xl font-medium tracking-tight">
+        {value}&nbsp;seats
+      </div>
+      <Button
+        variant="outline"
+        size="sm"
+        disabled={!canPlus}
+        onClick={handlePlus}
+      >
+        +
+      </Button>
+    </div>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 20px;
-`;
-
-const Value = styled.div`
-  font-size: 2em;
-  font-weight: 100;
-`;
-
-const Buttons = styled.div``;
 
 export default QuantitySelector;

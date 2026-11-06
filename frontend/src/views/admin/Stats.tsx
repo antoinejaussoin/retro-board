@@ -1,44 +1,17 @@
-import styled from '@emotion/styled';
-import { Typography } from '@mui/material';
 import { useAdminStats } from './useAdminStats';
 
 export function Stats() {
   const stats = useAdminStats();
 
   return (
-    <Container>
-      <Signal />
-      <Typography variant="body2">
+    <div className="flex items-center gap-2.5 text-sm">
+      <span className="relative flex size-2.5">
+        <span className="absolute inline-flex size-full animate-ping rounded-full bg-[#44b700] opacity-75" />
+        <span className="relative inline-flex size-2.5 rounded-full bg-[#44b700]" />
+      </span>
+      <span>
         Connected Users: <b>{stats?.clients}</b>
-      </Typography>
-    </Container>
+      </span>
+    </div>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: center;
-`;
-
-const Signal = styled.div`
-  background-color: #44b700;
-  color: #44b700;
-  width: 10px;
-  height: 10px;
-
-  border-radius: 50%;
-  animation: ripple 1.2s infinite ease-in-out;
-  content: '';
-
-  @keyframes ripple {
-    0% {
-      transform: scale(0.8);
-      opacity: 1;
-    }
-    100% {
-      transform: scale(1.4);
-      opacity: 0;
-    }
-  }
-`;

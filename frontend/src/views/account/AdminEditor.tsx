@@ -1,8 +1,7 @@
 import { useCallback } from 'react';
 import { validate } from 'email/validate';
-import styled from '@emotion/styled';
 import { useTranslation } from 'react-i18next';
-import { useSnackbar } from 'notistack';
+import { useSnackbar } from 'ui/toast';
 import TagInput from '../../components/TagInput';
 
 type AdminsEditorProps = {
@@ -30,11 +29,11 @@ function AdminsEditor({ admins, onChange }: AdminsEditorProps) {
           t('AccountPage.subscription.adminsEditor.added', { email: value }),
           {
             variant: 'success',
-          }
+          },
         );
       }
     },
-    [admins, onChange, enqueueSnackbar, t]
+    [admins, onChange, enqueueSnackbar, t],
   );
   const handleRemove = useCallback(
     (value: string) => {
@@ -44,17 +43,17 @@ function AdminsEditor({ admins, onChange }: AdminsEditorProps) {
           t('AccountPage.subscription.adminsEditor.removed', { email: value }),
           {
             variant: 'success',
-          }
+          },
         );
       }
     },
-    [admins, onChange, enqueueSnackbar, t]
+    [admins, onChange, enqueueSnackbar, t],
   );
   const handleValidate = useCallback(
     async (value: string) => {
       return isValidEmail(value) && doesNotExist(admins, value);
     },
-    [admins]
+    [admins],
   );
 
   if (admins === null) {
@@ -62,19 +61,14 @@ function AdminsEditor({ admins, onChange }: AdminsEditorProps) {
   }
 
   return (
-    <Container>
-      <TagInput
-        placeholder="Email"
-        values={admins}
-        onAdd={handleAdd}
-        onRemove={handleRemove}
-        onValidate={handleValidate}
-      />
-    </Container>
+    <TagInput
+      placeholder="Email"
+      values={admins}
+      onAdd={handleAdd}
+      onRemove={handleRemove}
+      onValidate={handleValidate}
+    />
   );
 }
-const Container = styled.div`
-  margin-top: 20px;
-`;
 
 export default AdminsEditor;
