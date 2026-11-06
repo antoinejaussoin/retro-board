@@ -63,10 +63,8 @@ async fn boot() -> Server {
         "postgres",
         &format!("CREATE DATABASE \"{db}\" OWNER postgres"),
     );
-    let bin =
-        PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../target/debug/retrospected-server");
     let port = 3400 + (std::process::id() % 1000);
-    let child = Command::new(bin)
+    let mut child = Command::new(server_bin())
         .env("DB_HOST", "127.0.0.1")
         .env("DB_PASSWORD", "postgres")
         .env("DB_NAME", &db)
@@ -96,7 +94,20 @@ async fn boot() -> Server {
         }
         tokio::time::sleep(Duration::from_millis(200)).await;
     }
+    let _ = child.kill();
+    let _ = child.wait();
     panic!("backend did not become healthy");
+}
+
+fn server_bin() -> PathBuf {
+    let path =
+        PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../target/debug/retrospected-server");
+    assert!(
+        path.is_file(),
+        "missing server binary at {}; run cargo build -p retrospected-server before cargo test",
+        path.display()
+    );
+    path
 }
 
 fn cookie_from(response: &reqwest::Response) -> String {

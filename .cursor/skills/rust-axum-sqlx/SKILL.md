@@ -49,7 +49,7 @@ The backend is a faithful port of the TypeScript service. Match existing HTTP pa
 
 ## Tests
 
-- Black-box tests in `backend/crates/api-tests` use `API_BASE_URL` and real Postgres 16 plus Redis.
+- Black-box tests in `backend/crates/server/tests` spawn the server binary against real Postgres 16 and Redis.
 - Read email verification codes from the database.
 - Migration tests compare a normalized `pg_dump --schema-only` and the set of `(timestamp, name)` rows against the TypeORM output.
 - Tests must pass against the Rust server. Failures are fixed in Rust, not by changing the frontend or the user-facing compose files.

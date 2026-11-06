@@ -52,11 +52,9 @@ fn psql(db: &str, sql: &str) {
 }
 
 fn spawn(db: &str, port: u16) -> Node {
-    let bin =
-        PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../target/debug/retrospected-server");
     let log = std::fs::File::create(format!("/tmp/retro-io-{port}.log")).expect("log");
     let log_err = log.try_clone().expect("log");
-    let child = Command::new(bin)
+    let child = Command::new(server_bin())
         .env("DB_HOST", "127.0.0.1")
         .env("DB_PASSWORD", "postgres")
         .env("DB_NAME", db)
@@ -95,6 +93,17 @@ async fn wait_healthy(base: &str) {
     let port = base.rsplit_once(':').map(|(_, port)| port).unwrap_or("");
     let log = std::fs::read_to_string(format!("/tmp/retro-io-{port}.log")).unwrap_or_default();
     panic!("backend {base} did not become healthy\n{log}");
+}
+
+fn server_bin() -> PathBuf {
+    let path =
+        PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../target/debug/retrospected-server");
+    assert!(
+        path.is_file(),
+        "missing server binary at {}; run cargo build -p retrospected-server before cargo test",
+        path.display()
+    );
+    path
 }
 
 fn cookie_of(response: &reqwest::Response) -> String {
@@ -160,7 +169,7 @@ async fn post_on_one_node_reaches_the_other() {
         assert!(install.success(), "socket.io-client install failed");
     }
     let check = Command::new("node")
-        .arg(PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("socket-check.mjs"))
+        .arg(PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/socket-check.mjs"))
         .arg(&harness.nodes[0].base)
         .arg(&harness.nodes[1].base)
         .arg(&cookie)

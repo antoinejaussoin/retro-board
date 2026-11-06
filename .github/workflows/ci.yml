@@ -60,6 +60,7 @@ jobs:
           components: rustfmt, clippy
       - run: cargo fmt --check
       - run: cargo clippy -p retrospected-server -p retrospected-migrations --all-targets -- -D warnings
+      - run: cargo build -p retrospected-server
       - run: cargo test --workspace
   test-marketing:
     runs-on: ubuntu-latest

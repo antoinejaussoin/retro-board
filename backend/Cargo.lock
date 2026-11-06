@@ -1652,15 +1652,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "retrospected-api-tests"
-version = "5.5.3"
-dependencies = [
- "reqwest",
- "serde_json",
- "tokio",
-]
-
-[[package]]
 name = "retrospected-migrations"
 version = "5.5.3"
 dependencies = [
