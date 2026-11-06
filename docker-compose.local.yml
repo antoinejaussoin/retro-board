@@ -102,7 +102,7 @@ services:
   pgadmin:
     image: dpage/pgadmin4:latest
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@localhost
+      PGADMIN_DEFAULT_EMAIL: admin@retrospected.com
       PGADMIN_DEFAULT_PASSWORD: admin
     depends_on:
       postgres:
