@@ -281,7 +281,11 @@
     "noPosts": "Nincsenek megjeleníthető bejegyzések",
     "copyAsMarkdown": "Másolja az összefoglalót Markdown néven",
     "copyAsRichText": "Másolja ki az összefoglalót Rich Text formátumban",
-    "copySuccessful": "Sikeresen másolta az összefoglalót a vágólapra"
+    "copySuccessful": "Sikeresen másolta az összefoglalót a vágólapra",
+    "summarise": "Összefoglalás MI-vel",
+    "summarising": "Összefoglalás…",
+    "aiSummaryTitle": "MI-összefoglaló",
+    "aiSummaryHelp": "Készítsen rövid összefoglalót erről a retrospektívről. A másoláskor ez is bekerül az összefoglalóba."
   },
   "SessionName": {
     "defaultSessionName": "Retro"

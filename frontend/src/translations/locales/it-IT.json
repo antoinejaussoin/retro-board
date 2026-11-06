@@ -281,7 +281,11 @@
     "noPosts": "Non ci sono post da mostrare",
     "copyAsMarkdown": "Copia il sommario come Markdown",
     "copyAsRichText": "Copia il sommario come Rich Text",
-    "copySuccessful": "Hai copiato con successo il testo nella clipboard"
+    "copySuccessful": "Hai copiato con successo il testo nella clipboard",
+    "summarise": "Riassumi con l'IA",
+    "summarising": "Riepilogo in corso…",
+    "aiSummaryTitle": "Riepilogo IA",
+    "aiSummaryHelp": "Genera un breve riepilogo di questa retrospettiva. È incluso quando copi il riepilogo."
   },
   "SessionName": {
     "defaultSessionName": "La mia Retrospective"

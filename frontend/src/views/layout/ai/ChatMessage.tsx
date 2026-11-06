@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
 import { colors } from '@mui/material';
+import type { ReactNode } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 type ChatMessageProps = {
-  message: React.ReactNode;
+  message: string | ReactNode;
   own?: boolean;
 };
 
@@ -12,7 +14,13 @@ export default function ChatMessage({
 }: ChatMessageProps) {
   return (
     <MessageContainer own={own}>
-      <MessageContent own={own}>{message}</MessageContent>
+      <MessageContent own={own}>
+        {typeof message === 'string' ? (
+          <ReactMarkdown>{message}</ReactMarkdown>
+        ) : (
+          message
+        )}
+      </MessageContent>
     </MessageContainer>
   );
 }
@@ -26,11 +34,41 @@ const MessageContainer = styled.div<{ own: boolean }>`
 `;
 
 const MessageContent = styled.div<{ own: boolean }>`
-  white-space: pre-wrap;
-  text-align: ${(props) => (props.own ? 'right' : 'left')};
+  text-align: left;
   padding: 15px;
   border-radius: 10px;
   background-color: ${(props) => (props.own ? colors.blue[400] : '#f0f0f0')};
   color: ${(props) => (props.own ? 'white' : 'black')};
   line-height: 1.4rem;
+  p,
+  ul,
+  ol,
+  pre,
+  blockquote {
+    margin: 0 0 0.6em;
+  }
+  p:last-child,
+  ul:last-child,
+  ol:last-child,
+  pre:last-child,
+  blockquote:last-child {
+    margin-bottom: 0;
+  }
+  ul,
+  ol {
+    padding-inline-start: 1.2em;
+  }
+  a {
+    color: inherit;
+  }
+  code {
+    font-size: 0.9em;
+  }
+  pre {
+    overflow-x: auto;
+    padding: 8px;
+    border-radius: 6px;
+    background: ${(props) =>
+      props.own ? 'rgba(0, 0, 0, 0.15)' : 'rgba(0, 0, 0, 0.06)'};
+  }
 `;

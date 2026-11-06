@@ -275,7 +275,11 @@
     "noPosts": "Es gibt keine Beiträge",
     "copyAsMarkdown": "Zusammenfassung als Markdown kopieren",
     "copyAsRichText": "Zusammenfassung als Rich Text kopieren",
-    "copySuccessful": "Sie haben Ihre Zusammenfassung erfolgreich in Ihre Zwischenablage kopiert"
+    "copySuccessful": "Sie haben Ihre Zusammenfassung erfolgreich in Ihre Zwischenablage kopiert",
+    "summarise": "Mit KI zusammenfassen",
+    "summarising": "Wird zusammengefasst…",
+    "aiSummaryTitle": "KI-Zusammenfassung",
+    "aiSummaryHelp": "Erstellen Sie eine kurze Zusammenfassung dieser Retrospektive. Sie ist enthalten, wenn Sie die Zusammenfassung kopieren."
   },
   "SessionName": {
     "defaultSessionName": "Meine Retrospektive"

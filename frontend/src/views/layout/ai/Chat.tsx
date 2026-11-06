@@ -33,7 +33,7 @@ export function Chat({
         <ScrollContainer followButtonClassName="follow">
           {messages.map((m, index) => (
             <ChatMessage
-              message={m.content}
+              message={m.content ?? ''}
               own={m.role === 'user'}
               key={index}
             />

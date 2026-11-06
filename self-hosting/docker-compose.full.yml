@@ -75,7 +75,7 @@ services:
 
       # -- AI - Anthropic: Set these to enable AI capabilities. This is optional. --
       ANTHROPIC_API_KEY: '' # API key from https://platform.claude.com/settings/keys
-      ANTHROPIC_MODEL: claude-sonnet-5-5 # Optional. Defaults to claude-sonnet-5-5 when unset.
+      ANTHROPIC_MODEL: claude-haiku-5-5 # Optional. Defaults to claude-haiku-5-5 when unset.
       AI_FREE_LIMIT: 5 # Number of AI calls per rolling month, per user, for non-Pro accounts
       AI_PAID_LIMIT: 1000 # Number of AI calls per rolling month, per user, for Pro accounts
 

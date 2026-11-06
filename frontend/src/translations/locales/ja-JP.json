@@ -281,7 +281,11 @@
     "noPosts": "表示する項目がありません",
     "copyAsMarkdown": "概要をマークダウンとしてコピー",
     "copyAsRichText": "要約をリッチテキストとしてコピー",
-    "copySuccessful": "クリップボードにサマリーをコピーしました"
+    "copySuccessful": "クリップボードにサマリーをコピーしました",
+    "summarise": "AIで要約",
+    "summarising": "要約しています…",
+    "aiSummaryTitle": "AIサマリー",
+    "aiSummaryHelp": "このレトロスペクティブの短い要約を作成します。サマリーをコピーすると、この要約も含まれます。"
   },
   "SessionName": {
     "defaultSessionName": "新しいレトロスペクティブ"

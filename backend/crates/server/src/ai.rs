@@ -7,7 +7,10 @@ use thiserror::Error;
 pub const SYSTEM: &str = "You are an online agile coach, helping users to improve their online retrospectives, using Retrospected. Users are part of a remote team and are not physically in the same room. Always introduce yourself as an agile coach that can help users improve their online retrospectives and make the most out of Retrospected.";
 
 /// Model used when `ANTHROPIC_MODEL` is unset.
-pub const DEFAULT_MODEL: &str = "claude-sonnet-5-5";
+pub const DEFAULT_MODEL: &str = "claude-haiku-5-5";
+
+/// Sonnet 5.5 cannot turn thinking off with `disabled`; it uses `between_tools`.
+const SONNET_5_5: &str = "claude-sonnet-5-5";
 
 const API_URL: &str = "https://api.anthropic.com/v1/messages";
 const API_VERSION: &str = "2026-10-21";
@@ -74,9 +77,12 @@ fn request_body(model: &str, messages: &[CoachMessage]) -> serde_json::Value {
     if !system.is_empty() {
         body["system"] = serde_json::Value::String(system);
     }
-    // Sonnet 5.5 thinks unless asked not to. `between_tools` keeps a tool-free
+    // Both defaults think unless asked not to. Turning it off keeps a tool-free
     // chat as plain text, so later turns do not need signed thinking blocks.
     if model == DEFAULT_MODEL {
+        body["thinking"] = serde_json::json!({"type": "disabled"});
+        body["output_config"] = serde_json::json!({"effort": "medium"});
+    } else if model == SONNET_5_5 {
         body["thinking"] = serde_json::json!({"type": "between_tools"});
         body["output_config"] = serde_json::json!({"effort": "medium"});
     }
@@ -243,7 +249,7 @@ mod tests {
         );
         assert_eq!(body["system"], "Be brief.");
         assert_eq!(body["model"], DEFAULT_MODEL);
-        assert_eq!(body["thinking"]["type"], "between_tools");
+        assert_eq!(body["thinking"]["type"], "disabled");
         assert_eq!(body["output_config"]["effort"], "medium");
         assert_eq!(
             body["messages"],
@@ -256,10 +262,12 @@ mod tests {
     }
 
     #[test]
-    fn other_models_omit_the_sonnet_thinking_override() {
-        let body = request_body("claude-haiku-5-5", &[message("user", Some("Hello"))]);
-        assert!(body.get("thinking").is_none());
-        assert!(body.get("output_config").is_none());
+    fn sonnet_5_5_uses_between_tools_and_other_models_omit_it() {
+        let sonnet = request_body("claude-sonnet-5-5", &[message("user", Some("Hello"))]);
+        assert_eq!(sonnet["thinking"]["type"], "between_tools");
+        let other = request_body("claude-sonnet-4-6", &[message("user", Some("Hello"))]);
+        assert!(other.get("thinking").is_none());
+        assert!(other.get("output_config").is_none());
     }
 
     #[test]

@@ -281,7 +281,11 @@
     "noPosts": "Não há nenhuma postagem para exibir",
     "copyAsMarkdown": "Copiar o resumo como Markdown",
     "copyAsRichText": "Copiar o resumo como Rich Text",
-    "copySuccessful": "Você copiou o seu resumo para a área de transferência"
+    "copySuccessful": "Você copiou o seu resumo para a área de transferência",
+    "summarise": "Resumir com IA",
+    "summarising": "Resumindo…",
+    "aiSummaryTitle": "Resumo de IA",
+    "aiSummaryHelp": "Gere um breve resumo desta retrospectiva. Ele é incluído quando você copia o resumo."
   },
   "SessionName": {
     "defaultSessionName": "Meu Retrospectivo"

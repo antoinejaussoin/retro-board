@@ -281,7 +281,11 @@
     "noPosts": "لا توجد مشاركات للعرض",
     "copyAsMarkdown": "نسخ الملخص كـ Markdown",
     "copyAsRichText": "نسخ الملخص في النص الغني",
-    "copySuccessful": "تم نسخ ملخصك بنجاح في الحافظة الخاصة بك"
+    "copySuccessful": "تم نسخ ملخصك بنجاح في الحافظة الخاصة بك",
+    "summarise": "لخّص بالذكاء الاصطناعي",
+    "summarising": "جارٍ التلخيص…",
+    "aiSummaryTitle": "ملخص الذكاء الاصطناعي",
+    "aiSummaryHelp": "أنشئ ملخصًا قصيرًا لهذه المراجعة. يُضمَّن عند نسخ الملخص."
   },
   "SessionName": {
     "defaultSessionName": "جلسة جديدة"

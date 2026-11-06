@@ -203,7 +203,11 @@
     "noPosts": "Здесь пока пусто",
     "copyAsMarkdown": "Скопировать как Markdown",
     "copyAsRichText": "Скопировать как RTF",
-    "copySuccessful": "Копирование завершено"
+    "copySuccessful": "Копирование завершено",
+    "summarise": "Суммировать с ИИ",
+    "summarising": "Суммирование…",
+    "aiSummaryTitle": "Резюме ИИ",
+    "aiSummaryHelp": "Составьте краткое резюме этой ретроспективы. Оно будет включено, когда вы копируете резюме."
   },
   "SessionName": {
     "defaultSessionName": "Наша ретроспектива"

@@ -281,7 +281,11 @@
     "noPosts": "目前无任何内容",
     "copyAsMarkdown": "将摘要复制为Markdown",
     "copyAsRichText": "复制摘要为富文本",
-    "copySuccessful": "您已成功复制您的摘要到剪贴板"
+    "copySuccessful": "您已成功复制您的摘要到剪贴板",
+    "summarise": "用 AI 总结",
+    "summarising": "正在总结…",
+    "aiSummaryTitle": "AI 总结",
+    "aiSummaryHelp": "生成这次回顾的简短总结。复制摘要时会包含这份总结。"
   },
   "SessionName": {
     "defaultSessionName": "我的回顾"

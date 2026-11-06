@@ -281,7 +281,11 @@
     "noPosts": "Er zijn geen retropunten om te tonen",
     "copyAsMarkdown": "Kopieer de samenvatting als Markdown",
     "copyAsRichText": "Kopieer de samenvatting als rich-text",
-    "copySuccessful": "Je hebt de samenvatting succesvol naar het klembord gekopieerd"
+    "copySuccessful": "Je hebt de samenvatting succesvol naar het klembord gekopieerd",
+    "summarise": "Samenvatten met AI",
+    "summarising": "Bezig met samenvatten…",
+    "aiSummaryTitle": "AI-samenvatting",
+    "aiSummaryHelp": "Genereer een korte samenvatting van deze retrospective. Deze wordt meegenomen wanneer je de samenvatting kopieert."
   },
   "SessionName": {
     "defaultSessionName": "Mijn Retrospective"

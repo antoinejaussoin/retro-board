@@ -281,7 +281,11 @@
     "noPosts": "Nie ma wpisów do wyświetlenia",
     "copyAsMarkdown": "Skopiuj podsumowanie jako Markdown",
     "copyAsRichText": "Skopiuj podsumowanie jako bogaty tekst",
-    "copySuccessful": "Pomyślnie skopiowałeś swoje podsumowanie do schowka"
+    "copySuccessful": "Pomyślnie skopiowałeś swoje podsumowanie do schowka",
+    "summarise": "Podsumuj z pomocą AI",
+    "summarising": "Podsumowywanie…",
+    "aiSummaryTitle": "Podsumowanie AI",
+    "aiSummaryHelp": "Wygeneruj krótki opis tej retrospektywy. Zostanie on dołączony, gdy skopiujesz podsumowanie."
   },
   "SessionName": {
     "defaultSessionName": "Moja Retrospektywa"

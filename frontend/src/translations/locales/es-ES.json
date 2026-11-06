@@ -281,7 +281,11 @@
     "noPosts": "No hay publicaciones que mostrar",
     "copyAsMarkdown": "Copiar el resumen como Markdown",
     "copyAsRichText": "Copiar el resumen como texto enriquecido",
-    "copySuccessful": "Has copiado correctamente tu resumen en tu portapapeles"
+    "copySuccessful": "Has copiado correctamente tu resumen en tu portapapeles",
+    "summarise": "Resumir con IA",
+    "summarising": "Resumiendo…",
+    "aiSummaryTitle": "Resumen de IA",
+    "aiSummaryHelp": "Genera un breve resumen de esta retrospectiva. Se incluye al copiar el resumen."
   },
   "SessionName": {
     "defaultSessionName": "Mi retrospectiva"
