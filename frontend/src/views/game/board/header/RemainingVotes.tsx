@@ -1,11 +1,10 @@
-import styled from '@emotion/styled';
-import { Palette } from '../../../../Theme';
-import Badge from '@mui/material/Badge';
-import Tooltip from '@mui/material/Tooltip';
-import { ThumbUpOutlined, ThumbDownOutlined } from '@mui/icons-material';
-import useSession from '../../useSession';
+import { ThumbsDown, ThumbsUp } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { TranslationFunction } from 'state/types';
+import { cn } from 'ui/cn';
+import { Tooltip } from 'ui/tooltip';
+import { Palette } from '../../../../Theme';
+import useSession from '../../useSession';
 
 interface RemainingVotesProps {
   up: number | null;
@@ -22,35 +21,47 @@ const RemainingVotes = ({ up, down }: RemainingVotesProps) => {
   }
 
   return (
-    <Container>
+    <div className="flex justify-end gap-5 pb-2.5 sm:pb-0">
       {up !== null && !hideUpVotes ? (
-        <Tooltip placement="bottom" title={getTooltip(t, up, 'up')}>
-          <Badge
-            badgeContent={up.toString()}
-            color={up > 0 ? 'primary' : 'error'}
-          >
-            <ThumbUpOutlined style={{ color: Palette.positive }} />
-          </Badge>
+        <Tooltip content={getTooltip(t, up, 'up')} side="bottom">
+          <span className="relative inline-flex">
+            <ThumbsUp className="size-6" style={{ color: Palette.positive }} />
+            <Count value={up} />
+          </span>
         </Tooltip>
       ) : null}
       {down !== null && !hideDownVotes ? (
-        <Tooltip placement="bottom" title={getTooltip(t, down, 'down')}>
-          <Badge
-            badgeContent={down.toString()}
-            color={down > 0 ? 'primary' : 'error'}
-          >
-            <ThumbDownOutlined style={{ color: Palette.negative }} />
-          </Badge>
+        <Tooltip content={getTooltip(t, down, 'down')} side="bottom">
+          <span className="relative inline-flex">
+            <ThumbsDown
+              className="size-6"
+              style={{ color: Palette.negative }}
+            />
+            <Count value={down} />
+          </span>
         </Tooltip>
       ) : null}
-    </Container>
+    </div>
   );
 };
+
+function Count({ value }: { value: number }) {
+  return (
+    <span
+      className={cn(
+        'absolute -top-2 -right-3 flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-medium text-white',
+        value > 0 ? 'bg-primary-700' : 'bg-red-600',
+      )}
+    >
+      {value}
+    </span>
+  );
+}
 
 function getTooltip(
   t: TranslationFunction,
   value: number,
-  type: 'up' | 'down'
+  type: 'up' | 'down',
 ) {
   if (value === 0) {
     return t('Post.voteRemainingNone', {
@@ -67,16 +78,5 @@ function getTooltip(
     type: type === 'up' ? t('Post.upVote') : t('Post.downVote'),
   });
 }
-
-const Container = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  > * {
-    margin-right: 20px;
-  }
-  @media (max-width: 500px) {
-    padding-bottom: 10px;
-  }
-`;
 
 export default RemainingVotes;

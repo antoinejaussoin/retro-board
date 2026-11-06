@@ -1,18 +1,18 @@
-import {
-  FormatBold,
-  FormatItalic,
-  FormatListBulleted,
-  Title,
-} from '@mui/icons-material';
-import { Box, IconButton, TextField, Typography } from '@mui/material';
+import { Bold, Heading, Italic, List } from 'lucide-react';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
+import { cn } from 'ui/cn';
+import { IconButton } from 'ui/icon-button';
+import { fieldClass } from 'ui/input';
 
 interface SummaryMarkdownEditorProps {
   value: string;
   onChange: (value: string) => void;
 }
+
+const markdownClass =
+  'text-sm leading-6 [&_h1]:mb-2 [&_h1]:text-xl [&_h2]:mb-2 [&_h2]:text-lg [&_h3]:mb-1 [&_h3]:font-semibold [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:my-2 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5';
 
 export function SummaryMarkdownEditor({
   value,
@@ -40,68 +40,53 @@ export function SummaryMarkdownEditor({
   };
 
   return (
-    <Box>
-      <Box sx={{ display: 'flex', gap: 0.5, marginBottom: 1 }}>
+    <div>
+      <div className="mb-2 flex gap-1">
         <IconButton
-          size="small"
+          className="size-8"
           aria-label={t('SummaryBoard.bold')}
           onClick={() => apply('**', '**', t('SummaryBoard.bold'))}
         >
-          <FormatBold fontSize="small" />
+          <Bold className="size-4" />
         </IconButton>
         <IconButton
-          size="small"
+          className="size-8"
           aria-label={t('SummaryBoard.italic')}
           onClick={() => apply('*', '*', t('SummaryBoard.italic'))}
         >
-          <FormatItalic fontSize="small" />
+          <Italic className="size-4" />
         </IconButton>
         <IconButton
-          size="small"
+          className="size-8"
           aria-label={t('SummaryBoard.heading')}
           onClick={() => apply('## ', '', t('SummaryBoard.heading'))}
         >
-          <Title fontSize="small" />
+          <Heading className="size-4" />
         </IconButton>
         <IconButton
-          size="small"
+          className="size-8"
           aria-label={t('SummaryBoard.list')}
           onClick={() => apply('- ', '', t('SummaryBoard.list'))}
         >
-          <FormatListBulleted fontSize="small" />
+          <List className="size-4" />
         </IconButton>
-      </Box>
-      <Box
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
-          gap: 2,
-        }}
-      >
-        <TextField
-          inputRef={input}
-          multiline
-          minRows={8}
-          fullWidth
+      </div>
+      <div className="grid gap-4 md:grid-cols-2">
+        <textarea
+          ref={input}
+          rows={8}
           value={value}
           onChange={(event) => onChange(event.target.value)}
           aria-label={t('SummaryBoard.edit')}
+          className={cn(fieldClass, 'min-h-48 py-2')}
         />
-        <Box
-          sx={{
-            border: 1,
-            borderColor: 'divider',
-            borderRadius: 1,
-            padding: 2,
-            overflow: 'auto',
-          }}
-        >
-          <Typography variant="caption" color="text.secondary">
-            {t('SummaryBoard.preview')}
-          </Typography>
-          <ReactMarkdown>{value}</ReactMarkdown>
-        </Box>
-      </Box>
-    </Box>
+        <div className="overflow-auto rounded-xl border border-line p-4">
+          <p className="mb-2 text-xs text-muted">{t('SummaryBoard.preview')}</p>
+          <div className={markdownClass}>
+            <ReactMarkdown>{value}</ReactMarkdown>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

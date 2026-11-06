@@ -1,21 +1,14 @@
-import { PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react';
-import { PostGroup } from 'common';
-import styled from '@emotion/styled';
 import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
-import { isPostDragData } from './drag';
-import { colors } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
-import {
-  Delete,
-  KeyboardArrowDown,
-  KeyboardArrowRight,
-  Message,
-} from '@mui/icons-material';
-import EditableLabel from '../../../components/EditableLabel';
-import { Alert, AlertTitle } from '@mui/material';
+import { PostGroup } from 'common';
+import { ChevronDown, ChevronRight, MessageCircle, Trash2 } from 'lucide-react';
+import { type PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import EditableLabel from '../../../components/EditableLabel';
 import useCrypto from '../../../crypto/useCrypto';
-import { Badge } from '@mui/material';
+import { cn } from 'ui/cn';
+import { Alert } from 'ui/alert';
+import { IconButton } from 'ui/icon-button';
+import { isPostDragData } from './drag';
 
 interface GroupProps {
   group: PostGroup;
@@ -38,7 +31,7 @@ export default function Group({
     (label: string) => {
       onEditLabel(encrypt(label));
     },
-    [onEditLabel, encrypt]
+    [onEditLabel, encrypt],
   );
   const handleDelete = useCallback(() => {
     onDelete(group);
@@ -63,91 +56,76 @@ export default function Group({
     });
   }, [group.id]);
   return (
-        <GroupContainer
-          ref={containerRef}
-          draggingOver={draggingOver}
-        >
-          <Header collapsed={collapsed}>
-            <Label>
-              <EditableLabel
-                wrapText
-                value={decrypt(group.label)}
-                onChange={handleEditLabel}
-                readOnly={readonly}
-              />
-            </Label>
-            <ActionsContainer>
-              {collapsed ? (
-                <Badge
-                  badgeContent={group.posts.length.toString()}
-                  color={group.posts.length ? 'primary' : 'secondary'}
-                  style={{ marginRight: 10 }}
-                >
-                  <Message />
-                </Badge>
-              ) : null}
-              {!collapsed ? (
-                <IconButton onClick={handleDelete} size="large">
-                  <Delete />
-                </IconButton>
-              ) : null}
-              <IconButton onClick={toggleCollapse} size="large">
-                {collapsed ? <KeyboardArrowRight /> : <KeyboardArrowDown />}
-              </IconButton>
-            </ActionsContainer>
-          </Header>
-          {!collapsed ? (
-            <Content>
-              <div>{children}</div>
-              {group.posts.length === 0 ? (
-                <NoPosts>
-                  <Alert severity="info">
-                    <AlertTitle>{t('Group.emptyGroupTitle')}</AlertTitle>
-                    {t('Group.emptyGroupContent')}
-                  </Alert>
-                </NoPosts>
-              ) : null}
-            </Content>
+    <div
+      ref={containerRef}
+      className={cn(
+        'relative my-2.5 flex flex-col rounded-xl border border-dashed border-line',
+        draggingOver && 'bg-stone-200',
+      )}
+    >
+      <div
+        className={cn(
+          'flex items-center gap-1',
+          collapsed ? 'bg-paper px-2.5 py-1 text-muted' : 'bg-stone-100 px-2.5 py-2',
+        )}
+      >
+        <div className="ml-2 min-w-0 flex-1">
+          <EditableLabel
+            wrapText
+            value={decrypt(group.label)}
+            onChange={handleEditLabel}
+            readOnly={readonly}
+          />
+        </div>
+        <div className="flex items-center">
+          {collapsed ? (
+            <span className="relative mr-2 inline-flex">
+              <MessageCircle className="size-5" />
+              <span
+                className={cn(
+                  'absolute -top-2 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[10px] font-medium text-white',
+                  group.posts.length ? 'bg-primary-700' : 'bg-secondary-600',
+                )}
+              >
+                {group.posts.length}
+              </span>
+            </span>
           ) : null}
-        </GroupContainer>
+          {!collapsed ? (
+            <IconButton
+              onClick={handleDelete}
+              aria-label="Delete group"
+              className="size-9"
+            >
+              <Trash2 className="size-4" />
+            </IconButton>
+          ) : null}
+          <IconButton
+            onClick={toggleCollapse}
+            aria-expanded={!collapsed}
+            aria-label={collapsed ? 'Expand group' : 'Collapse group'}
+            className="size-9"
+          >
+            {collapsed ? (
+              <ChevronRight className="size-4" />
+            ) : (
+              <ChevronDown className="size-4" />
+            )}
+          </IconButton>
+        </div>
+      </div>
+      {!collapsed ? (
+        <div className="flex min-h-[100px] flex-col">
+          <div>{children}</div>
+          {group.posts.length === 0 ? (
+            <div className="m-6">
+              <Alert severity="info" title={t('Group.emptyGroupTitle')}>
+                {t('Group.emptyGroupContent')}
+              </Alert>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
+    </div>
   );
 }
-
-const GroupContainer = styled.div<{ draggingOver: boolean }>`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  border: 1px dashed lightgray;
-  border-radius: 10px;
-  margin: 10px 0;
-  background-color: ${(props) =>
-    props.draggingOver ? colors.grey[200] : 'unset'};
-`;
-
-const Header = styled.div<{ collapsed: boolean }>`
-  display: flex;
-  align-items: center;
-  background-color: ${(props) =>
-    props.collapsed ? colors.grey[50] : colors.grey[100]};
-  padding: ${(props) => (props.collapsed ? '3px 10px' : '10px')};
-  color: ${(props) => (props.collapsed ? colors.grey[500] : 'inherit')};
-`;
-
-const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-height: 100px;
-`;
-
-const Label = styled.div`
-  margin-left: 30px;
-  flex: 1;
-`;
-
-const ActionsContainer = styled.div``;
-
-const NoPosts = styled.div`
-  justify-self: center;
-  color: grey;
-  margin: 30px;
-`;

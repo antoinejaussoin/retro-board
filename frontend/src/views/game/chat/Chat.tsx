@@ -1,12 +1,11 @@
 import { Message } from 'common';
+import useCrypto from 'crypto/useCrypto';
+import { sortBy } from 'lodash';
+import { useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import ScrollToBottom from 'react-scroll-to-bottom';
-import styled from '@emotion/styled';
 import Input from './Input';
 import ChatMessage from './Message';
-import { useCallback, useMemo } from 'react';
-import { sortBy } from 'lodash';
-import { useTranslation } from 'react-i18next';
-import useCrypto from 'crypto/useCrypto';
 
 type ChatProps = {
   messages: Message[];
@@ -23,41 +22,25 @@ export default function Chat({ messages, onMessage }: ChatProps) {
     (msg: string) => {
       onMessage(encrypt(msg));
     },
-    [encrypt, onMessage]
+    [encrypt, onMessage],
   );
   return (
-    <Container data-cy="chat-container">
-      <ScrollContainer>
-        <Messages>
+    <div
+      data-cy="chat-container"
+      className="flex h-full min-h-0 flex-1 flex-col"
+    >
+      <ScrollToBottom className="min-h-0 flex-1">
+        <div className="flex flex-col gap-2 px-3 py-3">
           {sortedMessages.map((m) => (
             <ChatMessage message={m} key={m.id} />
           ))}
-        </Messages>
-      </ScrollContainer>
+        </div>
+      </ScrollToBottom>
       <Input
         placeholder={t('Chat.writeAMessage')!}
         onNewMessage={handleInput}
         cy="chat-input"
       />
-    </Container>
+    </div>
   );
 }
-
-const ScrollContainer = styled(ScrollToBottom)`
-  height: calc(100vh - 200px);
-  flex: 1 1 auto;
-`;
-
-const Container = styled.div`
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Messages = styled.div`
-  flex: 1 1 auto;
-  overflow-y: scroll;
-  > * {
-    margin: 10px;
-  }
-`;

@@ -1,14 +1,16 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  useMediaQuery,
-} from '@mui/material';
 import { SessionOptions } from 'common';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from '../../../hooks/useMediaQuery';
 import TimerSection from 'views/session-editor/sections/timer/TimerSection';
+import { Button } from 'ui/button';
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogFooter,
+  DialogTitle,
+} from 'ui/dialog';
 
 type TimerSettingsModalProps = {
   options: SessionOptions;
@@ -27,30 +29,27 @@ export function TimerSettingsModal({
   const [settings, setSettings] = useState(options);
   const { t } = useTranslation();
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      fullWidth
-      fullScreen={fullScreen}
-      keepMounted={false}
-    >
-      <DialogContent>
-        <TimerSection options={settings} onChange={setSettings} />
+    <Dialog open={open} onClose={onClose}>
+      <DialogContent fullScreen={fullScreen} size="lg">
+        <DialogTitle className="sr-only">
+          {t('Customize.timerCategory')}
+        </DialogTitle>
+        <DialogBody>
+          <TimerSection options={settings} onChange={setSettings} />
+        </DialogBody>
+        <DialogFooter>
+          <Button variant="ghost" onClick={onClose}>
+            {t('Generic.cancel')}
+          </Button>
+          <Button
+            onClick={() => {
+              onChange(settings);
+            }}
+          >
+            {t('Generic.ok')}
+          </Button>
+        </DialogFooter>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose} variant="text">
-          {t('Generic.cancel')}
-        </Button>
-        <Button
-          onClick={() => {
-            onChange(settings);
-          }}
-          color="primary"
-          variant="contained"
-        >
-          {t('Generic.ok')}
-        </Button>
-      </DialogActions>
     </Dialog>
   );
 }
