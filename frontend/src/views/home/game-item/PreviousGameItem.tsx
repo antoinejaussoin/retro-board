@@ -67,7 +67,7 @@ const PreviousGameItem = ({
             <Top>
               <LastUpdated>
                 {formatDistanceToNow(
-                  Date.parse(session.created as unknown as string),
+                  Date.parse(session.created),
                   true
                 )}
                 &nbsp;

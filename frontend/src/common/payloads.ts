@@ -1,11 +1,11 @@
+import type { Session } from './generated';
 import type {
   AccessErrorType,
   CoachMessage,
   Currency,
   Plan,
-  Session,
   StripeLocales,
-} from './types.js';
+} from './types';
 
 export interface RegisterPayload {
   name: string;

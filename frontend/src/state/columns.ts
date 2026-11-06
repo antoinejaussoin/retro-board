@@ -30,16 +30,22 @@ export function toColumnDefinitions(
 }
 
 export function extrapolate(
-  colDef: ColumnSettings,
+  colDef: {
+    color: string;
+    label: string;
+    icon: string | null;
+    type: string;
+  },
   translations: TranslationFunction,
 ): ColumnSettings {
   const defaults = getTemplateColumnByType(translations);
-  const defaultDef = defaults(colDef.type);
+  const type = colDef.type as ColumnDefinitionType;
+  const defaultDef = defaults(type);
   return {
     color: colDef.color || defaultDef.color,
     label: colDef.label || defaultDef.label,
-    icon: (colDef.icon as string | null) || defaultDef.icon,
-    type: colDef.type,
+    icon: colDef.icon || defaultDef.icon,
+    type,
   };
 }
 

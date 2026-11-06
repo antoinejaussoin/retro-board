@@ -505,7 +505,7 @@ function useGame(sessionId: string) {
       if (send && user) {
         const message: Message = {
           content,
-          created: new Date(),
+          created: new Date().toISOString(),
           id: v4(),
           user,
         };
