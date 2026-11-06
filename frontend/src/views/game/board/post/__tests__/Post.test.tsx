@@ -66,7 +66,6 @@ describe('Post', () => {
     renderWithRouter(
       <PostItem
         post={post}
-        index={1}
         onEditGiphy={noop}
         onDelete={noop}
         onDislike={noop}
@@ -82,7 +81,6 @@ describe('Post', () => {
     const { getByLabelText } = renderWithRouter(
       <PostItem
         post={post}
-        index={1}
         onEditGiphy={noop}
         onDelete={noop}
         onDislike={noop}
@@ -104,7 +102,6 @@ describe('Post', () => {
     const { getByLabelText, queryByText } = renderWithRouter(
       <PostItem
         post={post}
-        index={1}
         onEditGiphy={noop}
         onDelete={deleteHandler}
         onDislike={dislikeHandler}
@@ -146,7 +143,6 @@ describe('Post', () => {
     const { getByLabelText } = renderWithRouter(
       <PostItem
         post={customPost}
-        index={1}
         onEditGiphy={noop}
         onDelete={noop}
         onDislike={noop}
@@ -180,7 +176,6 @@ describe('Post', () => {
     const { getByLabelText, queryByLabelText } = renderWithRouter(
       <PostItem
         post={customPost}
-        index={1}
         onEditGiphy={noop}
         onDelete={noop}
         onDislike={noop}

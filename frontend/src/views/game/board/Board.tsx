@@ -1,11 +1,7 @@
-import { useCallback } from 'react';
+import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { Post, PostGroup, SessionOptions, SessionSettings } from 'common';
-import {
-  DragDropContext,
-  DropResult,
-  ResponderProvided,
-} from '@hello-pangea/dnd';
+import { monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import Column from './Column';
 import { Page } from '../../../components/Page';
 import { ColumnContent } from '../types';
@@ -14,6 +10,14 @@ import {
   getCombiningEntities,
   calculateRank,
 } from './moving-logic';
+import {
+  edgeOf,
+  indexBeside,
+  insertionIndex,
+  isListDropData,
+  isPostDragData,
+  isPostDropData,
+} from './drag';
 import { getNext, getMiddle, getPrevious } from '../lexorank';
 import BoardHeader from './header/BoardHeader';
 import useSession from '../useSession';
@@ -86,38 +90,72 @@ function GameMode({
 }: GameModeProps) {
   const { session } = useSession();
 
-  const handleOnDragEnd = useCallback(
-    (result: DropResult, _provided: ResponderProvided) => {
-      if (result.destination) {
-        const entities = getMovingEntities(
-          result.draggableId,
-          result.destination.droppableId,
-          result.destination.index,
-          columns
-        );
-        if (entities) {
-          const newRank = calculateRank(entities.previous, entities.next);
-          onMovePost(
-            entities.post,
-            entities.targetGroup,
-            entities.targetColumn,
-            newRank
+  useEffect(() => {
+    return monitorForElements({
+      canMonitor: ({ source }) => isPostDragData(source.data),
+      onDrop({ source, location }) {
+        const target = location.current.dropTargets[0];
+        if (!target || !isPostDragData(source.data)) {
+          return;
+        }
+        const postId = source.data.postId;
+        if (isPostDropData(target.data) && target.data.postId !== postId) {
+          const edge = edgeOf(target.element, location.current.input.clientY);
+          if (edge === 'center') {
+            const entities = getCombiningEntities(
+              postId,
+              target.data.postId,
+              columns
+            );
+            if (entities) {
+              onCombinePost(entities.post1, entities.post2);
+            }
+            return;
+          }
+          const parent = location.current.dropTargets.find((candidate) =>
+            isListDropData(candidate.data)
           );
+          if (parent && isListDropData(parent.data)) {
+            const entities = getMovingEntities(
+              postId,
+              parent.data.targetId,
+              indexBeside(parent.element, target.element, edge, postId),
+              columns
+            );
+            if (entities) {
+              onMovePost(
+                entities.post,
+                entities.targetGroup,
+                entities.targetColumn,
+                calculateRank(entities.previous, entities.next)
+              );
+            }
+          }
+          return;
         }
-      }
-      if (result.combine) {
-        const entities = getCombiningEntities(
-          result.draggableId,
-          result.combine.draggableId,
-          columns
-        );
-        if (entities) {
-          onCombinePost(entities.post1, entities.post2);
+        if (isListDropData(target.data)) {
+          const entities = getMovingEntities(
+            postId,
+            target.data.targetId,
+            insertionIndex(
+              target.element,
+              location.current.input.clientY,
+              postId
+            ),
+            columns
+          );
+          if (entities) {
+            onMovePost(
+              entities.post,
+              entities.targetGroup,
+              entities.targetColumn,
+              calculateRank(entities.previous, entities.next)
+            );
+          }
         }
-      }
-    },
-    [onMovePost, onCombinePost, columns]
-  );
+      },
+    });
+  }, [columns, onCombinePost, onMovePost]);
 
   if (!session) {
     return <span>Loading...</span>;
@@ -134,8 +172,7 @@ function GameMode({
         onChangeSession={onChangeSession}
         onLockSession={onLockSession}
       />
-      <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Columns numberOfColumns={columns.length}>
+      <Columns numberOfColumns={columns.length}>
           {columns.map((column) => (
             <Column
               key={column.index}
@@ -165,8 +202,7 @@ function GameMode({
               onDeleteGroup={onDeleteGroup}
             />
           ))}
-        </Columns>
-      </DragDropContext>
+      </Columns>
     </Page>
   );
 }
