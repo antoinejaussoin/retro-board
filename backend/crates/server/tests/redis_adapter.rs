@@ -56,6 +56,8 @@ fn spawn(db: &str, port: u16) -> Node {
     let log_err = log.try_clone().expect("log");
     let child = Command::new(server_bin())
         .env("DB_HOST", "127.0.0.1")
+        .env("DB_PORT", "5432")
+        .env("DB_USER", "postgres")
         .env("DB_PASSWORD", "postgres")
         .env("DB_NAME", db)
         .env("REDIS_ENABLED", "true")

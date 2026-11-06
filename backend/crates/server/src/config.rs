@@ -1,6 +1,20 @@
 //! Environment configuration. Names and defaults match the TypeScript server.
 
+use std::collections::HashMap;
 use std::env;
+use std::sync::OnceLock;
+
+/// Values from the nearest `.env`, loaded once at startup.
+///
+/// Process environment variables win, so Docker and tests keep the values they set.
+static DOTENV: OnceLock<HashMap<String, String>> = OnceLock::new();
+
+/// Read the closest `.env`, starting at the working directory and walking up.
+///
+/// Missing files are ignored. `cargo run` from `backend/` picks up `backend/.env`.
+pub fn load_dotenv() {
+    let _ = DOTENV.set(read_nearest_dotenv());
+}
 
 /// Runtime configuration loaded from the environment.
 #[derive(Clone, Debug)]
@@ -176,45 +190,124 @@ impl Config {
     }
 }
 
+fn env_raw(key: &str) -> Option<String> {
+    match env::var(key) {
+        Ok(value) => Some(value),
+        Err(_) => DOTENV.get().and_then(|values| values.get(key).cloned()),
+    }
+}
+
 fn env_str(key: &str, default: &str) -> String {
-    env::var(key).unwrap_or_else(|_| default.to_owned())
+    env_raw(key).unwrap_or_else(|| default.to_owned())
 }
 
 fn env_opt(key: &str) -> Option<String> {
-    env::var(key).ok().filter(|value| !value.is_empty())
+    env_raw(key).filter(|value| !value.is_empty())
 }
 
 fn env_bool(key: &str, default: bool) -> bool {
-    match env::var(key) {
-        Ok(value) => value == "true",
-        Err(_) => default,
+    match env_raw(key) {
+        Some(value) => value == "true",
+        None => default,
     }
 }
 
 fn env_u16(key: &str, default: u16) -> u16 {
-    env::var(key)
-        .ok()
+    env_raw(key)
         .and_then(|value| value.parse().ok())
         .unwrap_or(default)
 }
 
 fn env_u32(key: &str, default: u32) -> u32 {
-    env::var(key)
-        .ok()
+    env_raw(key)
         .and_then(|value| value.parse().ok())
         .unwrap_or(default)
 }
 
 fn env_u64(key: &str, default: u64) -> u64 {
-    env::var(key)
-        .ok()
+    env_raw(key)
         .and_then(|value| value.parse().ok())
         .unwrap_or(default)
 }
 
 fn env_f64(key: &str, default: f64) -> f64 {
-    env::var(key)
-        .ok()
+    env_raw(key)
         .and_then(|value| value.parse().ok())
         .unwrap_or(default)
+}
+
+fn read_nearest_dotenv() -> HashMap<String, String> {
+    let Ok(mut dir) = env::current_dir() else {
+        return HashMap::new();
+    };
+    loop {
+        let path = dir.join(".env");
+        if path.is_file() {
+            return std::fs::read_to_string(&path)
+                .map(|contents| parse_dotenv(&contents))
+                .unwrap_or_default();
+        }
+        if !dir.pop() {
+            return HashMap::new();
+        }
+    }
+}
+
+/// Parse `KEY=value` lines. Later duplicates replace earlier ones.
+fn parse_dotenv(contents: &str) -> HashMap<String, String> {
+    let mut values = HashMap::new();
+    for line in contents.lines() {
+        let Some((key, value)) = parse_dotenv_line(line) else {
+            continue;
+        };
+        values.insert(key, value);
+    }
+    values
+}
+
+fn parse_dotenv_line(line: &str) -> Option<(String, String)> {
+    let line = line.trim().strip_prefix('\u{feff}').unwrap_or(line.trim());
+    if line.is_empty() || line.starts_with('#') {
+        return None;
+    }
+    let line = line.strip_prefix("export ").unwrap_or(line);
+    let (key, value) = line.split_once('=')?;
+    let key = key.trim();
+    if key.is_empty() || key.contains(char::is_whitespace) {
+        return None;
+    }
+    Some((key.to_owned(), unquote(value.trim())))
+}
+
+fn unquote(value: &str) -> String {
+    let mut chars = value.chars();
+    let Some(open) = chars.next() else {
+        return String::new();
+    };
+    let Some(close) = chars.next_back() else {
+        return value.to_owned();
+    };
+    if (open == '"' || open == '\'') && open == close {
+        return value[open.len_utf8()..value.len() - close.len_utf8()].to_owned();
+    }
+    value.to_owned()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::parse_dotenv;
+
+    #[test]
+    fn parse_dotenv_keeps_assignments_and_skips_comments() {
+        let values = parse_dotenv(
+            "\n# comment\nDB_HOST=localhost\nexport DB_PORT=5432\nDB_PASSWORD=\"postgres\"\n\n",
+        );
+        assert_eq!(values.get("DB_HOST").map(String::as_str), Some("localhost"));
+        assert_eq!(values.get("DB_PORT").map(String::as_str), Some("5432"));
+        assert_eq!(
+            values.get("DB_PASSWORD").map(String::as_str),
+            Some("postgres")
+        );
+        assert!(!values.contains_key("# comment"));
+    }
 }
