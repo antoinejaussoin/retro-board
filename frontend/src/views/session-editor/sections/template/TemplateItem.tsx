@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { getTemplateColumns } from 'state';
 import { Template, TemplateDefinition } from 'state/types';
 import Icon from 'components/Icon/Icon';
-import { colors } from '@mui/material';
+import { tokens } from 'tokens';
 
 type TemplateItemProps = {
   definition: TemplateDefinition;
@@ -41,15 +41,19 @@ const Item = styled.div<{ selected: boolean }>`
   flex-direction: column;
   align-items: center;
   padding: 10px;
-  border-radius: 5px;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  background-color: ${(p) => (p.selected ? colors.deepPurple[700] : null)};
-  color: ${(p) => (p.selected ? colors.grey[50] : colors.grey[900])};
+  border-radius: 10px;
+  border: 1px solid ${tokens.border};
+  background-color: ${(props) =>
+    props.selected ? 'var(--rs-accent-dark)' : tokens.paper};
+  color: ${(props) =>
+    props.selected ? 'var(--rs-accent-contrast)' : tokens.ink};
   min-width: 185px;
 
   :hover {
-    background-color: ${colors.deepPurple[50]};
-    color: ${colors.grey[700]};
+    background-color: ${(props) =>
+      props.selected ? 'var(--rs-accent-dark)' : 'var(--rs-accent-wash)'};
+    color: ${(props) =>
+      props.selected ? 'var(--rs-accent-contrast)' : tokens.ink};
   }
 `;
 

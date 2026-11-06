@@ -15,7 +15,6 @@ import { AvatarGroup } from '@mui/material';
 import CustomAvatar from '../../../components/Avatar';
 import ItemStat from '../ItemStat';
 import styled from '@emotion/styled';
-import useOnHover from '../../../hooks/useOnHover';
 import { useTranslation } from 'react-i18next';
 import { DeleteForever } from '@mui/icons-material';
 import { useEncryptionKey } from '../../../crypto/useEncryptionKey';
@@ -23,6 +22,7 @@ import useFormatDate from '../../../hooks/useFormatDate';
 import { decrypt } from '../../../crypto/crypto';
 import EncryptedLock from './EncryptedLock';
 import PrivateSessionIcon from './PrivateSessionIcon';
+import { tokens } from 'tokens';
 
 interface PreviousGameItemProps {
   session: SessionMetadata;
@@ -38,7 +38,6 @@ const PreviousGameItem = ({
   const { t } = useTranslation();
   const [encryptionKey] = useEncryptionKey(session.id);
   const formatDistanceToNow = useFormatDate();
-  const [hover, hoverRef] = useOnHover<HTMLDivElement>();
   const handleClick = useCallback(() => {
     onClick(session, encryptionKey);
   }, [onClick, session, encryptionKey]);
@@ -61,7 +60,7 @@ const PreviousGameItem = ({
 
   return (
     <>
-      <Card onClick={handleClick} raised={hover} ref={hoverRef}>
+      <Card onClick={handleClick} elevation={0}>
         <CardContent>
           <Typography color="textSecondary" gutterBottom component="div">
             <Top>
@@ -171,6 +170,12 @@ const PreviousGameItem = ({
 const Card = styled(CardBase)`
   width: 500px;
   cursor: pointer;
+  background: ${tokens.paper};
+  transition: box-shadow 0.15s ease;
+
+  :hover {
+    box-shadow: ${tokens.shadow};
+  }
 
   @media screen and (max-width: 500px) {
     width: calc(100vw - 40px);

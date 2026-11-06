@@ -1,7 +1,7 @@
 import { BrowserRouter } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Global } from '@emotion/react';
-import { ThemeProvider } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import globalCss from './GlobalStyles';
 import AuthProvider from './auth/AuthProvider';
 import LanguageProvider from './translations/LanguageProvider';
@@ -44,6 +44,7 @@ function App() {
                   <AuthProvider>
                     <LanguageProvider>
                       <QuotaManager>
+                        <CssBaseline />
                         <Global styles={globalCss} />
                         <ErrorBoundary>
                           <Suspense fallback={<CodeSplitLoader />}>

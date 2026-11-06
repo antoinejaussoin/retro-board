@@ -1,11 +1,9 @@
 import styled from '@emotion/styled';
 
 export const Page = styled.main`
-  margin: 0px 50px 50px 50px;
+  margin: 8px 32px 80px;
+
   @media screen and (max-width: 600px) {
-    margin: 10px;
-    margin-bottom: 80px;
-    margin-top: 0px;
+    margin: 8px 12px 80px;
   }
-  margin-bottom: 80px;
 `;

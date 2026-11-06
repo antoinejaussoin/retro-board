@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { colors } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
 import Typography from '@mui/material/Typography';
 import { useLanguage } from '../translations';
@@ -8,6 +7,7 @@ import ParticipantsList from './panel/ParticipantsList';
 import config from '../utils/getConfig';
 import useSidePanel from './panel/useSidePanel';
 import { useMatch } from 'react-router-dom';
+import { tokens } from '../tokens';
 
 interface Policy {
   name: string;
@@ -78,7 +78,7 @@ function Panel() {
           </Typography>
           <Typography
             component="div"
-            style={{ color: colors.grey[700], textAlign: 'center' }}
+            style={{ color: tokens.muted, textAlign: 'center' }}
           >
             <Content>Version {config.VERSION}</Content>
           </Typography>
@@ -104,14 +104,23 @@ const Content = styled.div`
 `;
 
 const Policies = styled.div`
-  border-top: 1px solid grey;
+  border-top: 1px solid ${tokens.border};
   display: flex;
   flex-direction: column;
-  padding: 20px 30px 30px 30px;
+  padding: 16px 24px 20px;
+
+  h6 {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: ${tokens.muted};
+  }
 
   a {
     font-size: 0.9em;
-    color: grey;
+    color: ${tokens.ink};
+    margin-top: 6px;
   }
 `;
 

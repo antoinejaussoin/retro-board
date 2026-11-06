@@ -32,9 +32,10 @@ export default function Wrapper({
 
 const Container = styled.div``;
 const TitleContainer = styled.div`
-  font-weight: 100;
-  font-size: 1.6em;
-  margin: 20px 0;
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+  margin: 12px 0 16px;
   display: flex;
   align-items: center;
 `;

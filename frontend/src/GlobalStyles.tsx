@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { tokens } from './tokens';
 
 const GlobalStyle = css`
   @font-face {
@@ -8,23 +9,33 @@ const GlobalStyle = css`
 
   html {
     touch-action: manipulation;
-    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    font-family: ${tokens.font};
+    background-color: ${tokens.canvas};
   }
 
   body {
     margin: 0;
     padding: 0;
-    background-color: white;
-    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    background-color: ${tokens.canvas};
+    color: ${tokens.ink};
+    font-family: ${tokens.font};
   }
 
   #content {
-    background-color: white;
+    background-color: ${tokens.canvas};
   }
 
   button:focus,
   select:focus {
     outline: none;
+  }
+
+  button:focus-visible,
+  select:focus-visible,
+  a:focus-visible,
+  [role='button']:focus-visible {
+    outline: 2px solid var(--rs-accent);
+    outline-offset: 2px;
   }
 `;
 

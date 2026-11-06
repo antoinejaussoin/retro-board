@@ -2,7 +2,6 @@ import { memo, useCallback } from 'react';
 import styled from '@emotion/styled';
 import { SessionOptions, SessionSettings } from 'common';
 import Typography from '@mui/material/Typography';
-import { makeStyles } from '@mui/styles';
 import { useTranslation } from 'react-i18next';
 import useRemainingVotes from './useRemainingVotes';
 import useCanReveal from './useCanReveal';
@@ -30,18 +29,8 @@ interface BoardHeaderProps {
   onLockSession: (locked: boolean) => void;
 }
 
-const useStyles = makeStyles({
-  sessionName: {
-    fontWeight: 300,
-  },
-  container: {
-    marginTop: 20,
-  },
-});
-
 function BoardHeader({ onChangeSession, onLockSession }: BoardHeaderProps) {
   const { t } = useTranslation();
-  const classes = useStyles();
   const [key] = useEncryptionKey();
   const remainingVotes = useRemainingVotes();
   const user = useUser();
@@ -121,7 +110,7 @@ function BoardHeader({ onChangeSession, onLockSession }: BoardHeaderProps) {
           </ClosableAlert>
         ) : null}
       </Alerts>
-      <Header className={classes.container}>
+      <Header>
         <LeftOptions>
           {canReveal ? <RevealButton onClick={handleReveal} /> : null}
           {canModifyOptions ? (
@@ -133,12 +122,7 @@ function BoardHeader({ onChangeSession, onLockSession }: BoardHeaderProps) {
           ) : null}
         </LeftOptions>
         <Title>
-          <Typography
-            variant="h5"
-            align="center"
-            className={classes.sessionName}
-            style={{ fontWeight: 300 }}
-          >
+          <Typography variant="h5" align="center" style={{ fontWeight: 500 }}>
             <EditableLabel
               wrapText
               placeholder={t('SessionName.defaultSessionName')!}
@@ -177,7 +161,8 @@ const Alerts = styled.div`
 `;
 
 const Header = styled.div`
-  margin-bottom: 50px;
+  margin-top: 20px;
+  margin-bottom: 28px;
   display: grid;
   justify-items: center;
   align-items: center;

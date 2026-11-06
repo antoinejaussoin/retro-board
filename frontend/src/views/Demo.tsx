@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { colors } from '@mui/material';
 import { anonymousLogin, createDemoGame, me, updateLanguage } from 'api';
 import useUser from 'state/user/useUser';
 import { useEffect } from 'react';
@@ -70,14 +69,15 @@ function getLanguage(twoLetter: string): Language {
 }
 
 const Container = styled.div`
-  background-color: ${colors.deepPurple[400]};
+  background-color: var(--rs-accent);
   display: flex;
   align-items: center;
   justify-content: center;
   height: calc(100vh - 60px);
 
   h1 {
-    color: white;
+    color: var(--rs-accent-contrast);
     font-size: 3rem;
+    font-weight: 600;
   }
 `;

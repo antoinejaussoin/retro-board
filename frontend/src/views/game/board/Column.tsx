@@ -4,7 +4,6 @@ import Input from '@mui/material/Input';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import { colors } from '@mui/material';
 import { CreateNewFolder, SubdirectoryArrowLeft } from '@mui/icons-material';
 import PostItem from './post/Post';
 import { Post, PostGroup } from 'common';
@@ -91,10 +90,15 @@ const Column: React.FC<ColumnProps> = ({
   }, [handleAdd, content]);
 
   return (
-    <ColumnWrapper>
+    <ColumnWrapper $color={color}>
+      <ColumnHeading>
+        <ColorDot $color={color} />
+        <ColumnTitle>{question}</ColumnTitle>
+      </ColumnHeading>
       <Add>
         <Input
-          placeholder={question}
+          disableUnderline
+          placeholder=""
           onChange={onContentChange}
           value={content}
           onKeyDown={handleAddKeyboard}
@@ -113,7 +117,7 @@ const Column: React.FC<ColumnProps> = ({
               </EnterIcon>
             </InputAdornment>
           }
-          inputProps={{ 'data-cy': 'column-input' }}
+          inputProps={{ 'data-cy': 'column-input', 'aria-label': question }}
         />
         {permissions.canCreateGroup ? (
           <AddGroup>
@@ -234,12 +238,43 @@ function isEnter(code: string) {
   return code === 'Enter' || code === 'NumpadEnter';
 }
 
-const ColumnWrapper = styled.div`
+const ColumnWrapper = styled.div<{ $color: string }>`
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin-bottom: 10px;
-  padding: 0 5px;
+  margin: 0 6px 10px;
+  padding: 12px 10px 8px;
+  border-radius: 12px;
+  background-color: color-mix(
+    in srgb,
+    ${(props) => props.$color} 78%,
+    var(--rs-canvas)
+  );
+  min-width: 0;
+`;
+
+const ColumnHeading = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 4px 10px;
+`;
+
+const ColorDot = styled.span<{ $color: string }>`
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+  flex: none;
+  background: color-mix(in srgb, ${(props) => props.$color} 55%, #1c1917);
+  box-shadow: inset 0 0 0 1px rgba(28, 25, 23, 0.12);
+`;
+
+const ColumnTitle = styled.h2`
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
 `;
 
 const PostsWrapper = styled.div<{
@@ -247,9 +282,13 @@ const PostsWrapper = styled.div<{
   draggingColor: string;
 }>`
   background-color: ${(props) =>
-    props.draggingOver ? props.draggingColor : 'unset'};
+    props.draggingOver
+      ? `color-mix(in srgb, ${props.draggingColor} 45%, white)`
+      : 'transparent'};
+  border-radius: 10px;
   flex: 1;
   min-height: 100px;
+  transition: background-color 0.15s ease;
 `;
 
 const Groups = styled.div``;
@@ -257,9 +296,11 @@ const Groups = styled.div``;
 const Add = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
-  position: relative;
-  left: 10px;
+  margin-bottom: 12px;
+  padding: 2px 4px;
+  background: var(--rs-paper);
+  border: 1px solid var(--rs-border);
+  border-radius: 10px;
 
   > :first-of-type {
     flex: 1;
@@ -270,17 +311,11 @@ const Add = styled.div`
 `;
 
 const AddGroup = styled.div`
-  position: relative;
-  top: 3px;
-  border-left: 1px solid ${colors.grey[300]};
-  margin-left: 12px;
-  height: 25px;
+  border-left: 1px solid var(--rs-border);
+  margin-left: 4px;
+  height: 28px;
   display: flex;
   align-items: center;
-  > * {
-    position: relative;
-    top: -2px;
-  }
 `;
 
 const EnterIcon = styled.div`
@@ -288,11 +323,11 @@ const EnterIcon = styled.div`
   align-items: center;
   cursor: pointer;
   > * {
-    color: ${colors.grey[500]};
+    color: var(--rs-muted);
   }
   :hover {
     > * {
-      color: ${colors.deepPurple[500]};
+      color: var(--rs-accent);
     }
   }
 `;

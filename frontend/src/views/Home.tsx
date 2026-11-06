@@ -27,6 +27,7 @@ import SplitButton from 'components/SplitButton/SplitButton';
 import SearchBar from './game/SearchBar';
 import { NameEditor } from 'molecules/NameEditor';
 import { SetupProPrompt } from './home/SetupProPrompt';
+import { tokens } from 'tokens';
 
 function Home() {
   const navigate = useNavigate();
@@ -186,10 +187,13 @@ const MainHeader = styled.h1`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  font-weight: 100;
-  font-size: 4em;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: ${tokens.ink};
+  font-size: 2.75rem;
+  margin-bottom: 8px;
   @media screen and (max-width: 800px) {
-    font-size: 2em;
+    font-size: 2rem;
   }
 `;
 
@@ -197,10 +201,12 @@ const SubHeader = styled.h2`
   display: flex;
   align-items: center;
   gap: 30px;
-  font-weight: 100;
-  font-size: 3em;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: ${tokens.ink};
+  font-size: 1.75rem;
   @media screen and (max-width: 500px) {
-    font-size: 1.5em;
+    font-size: 1.35rem;
   }
 `;
 
@@ -238,9 +244,9 @@ const VideoContainer = styled.div`
     width: min(800px, 100%);
     aspect-ratio: 800/450;
     border: none;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
-      rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-      rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    border: 1px solid ${tokens.border};
+    border-radius: 12px;
+    box-shadow: ${tokens.shadow};
   }
 `;
 

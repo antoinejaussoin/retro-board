@@ -1,5 +1,4 @@
 import BaseLink, { LinkTypeMap } from '@mui/material/Link';
-import { colors } from '@mui/material';
 import styled from '@emotion/styled';
 import { DefaultComponentProps } from '@mui/material/OverridableComponent';
 
@@ -16,7 +15,7 @@ function Link({ ...props }: LinkProps) {
 const Container = styled.span`
   cursor: pointer;
   a {
-    color: ${colors.deepPurple[500]} !important;
+    color: var(--rs-accent) !important;
   }
 `;
 
