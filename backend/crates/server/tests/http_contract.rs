@@ -76,6 +76,7 @@ async fn boot() -> Server {
         .env("SELF_HOSTED_ADMIN", "admin@localhost")
         .env("BACKEND_PORT", port.to_string())
         .env("SESSION_SECRET", "test-secret")
+        .env("ANTHROPIC_API_KEY", "")
         .env("STRIPE_SECRET", "sk_test_dummy")
         .env("STRIPE_WEBHOOK_SECRET", "whsec_test")
         .stdout(Stdio::null())
@@ -196,6 +197,58 @@ async fn http_contract() {
     assert_eq!(encrypted.status(), 200);
     let encrypted: Value = encrypted.json().await.unwrap();
     assert_eq!(encrypted["encrypted"], "check-value");
+    let encrypted_id = encrypted["id"].as_str().unwrap();
+
+    let summary_anon = client
+        .post(format!("{}/api/ai/summary", server.base))
+        .json(&serde_json::json!({"id": encrypted_id}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(summary_anon.status(), 401, "summary requires a login");
+
+    let summary_encrypted = client
+        .post(format!("{}/api/ai/summary", server.base))
+        .header("cookie", &cookie)
+        .json(&serde_json::json!({"id": encrypted_id}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(
+        summary_encrypted.status(),
+        403,
+        "an encrypted board must not be sent to the model"
+    );
+
+    psql(
+        &server.db,
+        &format!("UPDATE sessions SET options_blur_cards = true WHERE id = '{session_id}'"),
+    );
+    let summary_blurred = client
+        .post(format!("{}/api/ai/summary", server.base))
+        .header("cookie", &cookie)
+        .json(&serde_json::json!({"id": session_id}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(summary_blurred.status(), 403, "blurred cards stay hidden");
+    psql(
+        &server.db,
+        &format!("UPDATE sessions SET options_blur_cards = false WHERE id = '{session_id}'"),
+    );
+
+    let summary_missing_key = client
+        .post(format!("{}/api/ai/summary", server.base))
+        .header("cookie", &cookie)
+        .json(&serde_json::json!({"id": session_id}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(summary_missing_key.status(), 500);
+    assert_eq!(
+        summary_missing_key.text().await.unwrap(),
+        "AI is not configured"
+    );
 
     let email = format!("ada-{}@example.com", std::process::id());
     let registered: Value = client

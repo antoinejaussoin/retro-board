@@ -136,6 +136,79 @@ fn text_from_response(body: &serde_json::Value) -> String {
         .unwrap_or_default()
 }
 
+/// Instructions for a retrospective write-up. The board text is a separate user turn.
+pub const SUMMARY_SYSTEM: &str = "You write a short retrospective summary in Markdown for a remote team using Retrospected. Cover the themes, what went well, what to improve, and the actions already recorded. Use only the board text you are given. Do not invent posts, people, or actions.";
+
+/// Render an unencrypted board as the user prompt for [`SUMMARY_SYSTEM`].
+///
+/// Author names are included only when `show_authors` is true. Emails, chat
+/// messages, and Giphy ids are never included.
+#[must_use]
+pub fn summary_prompt(board: &crate::models::Board, show_authors: bool) -> String {
+    let title = board
+        .name
+        .as_deref()
+        .filter(|name| !name.is_empty())
+        .unwrap_or("Untitled retrospective");
+    let mut lines = vec![format!("# {title}")];
+    let mut columns = board.columns.clone();
+    columns.sort_by_key(|column| column.index);
+    for column in columns {
+        lines.push(format!("\n## {}", column.label));
+        let mut posts: Vec<_> = board
+            .posts
+            .iter()
+            .filter(|post| post.column == column.index)
+            .collect();
+        posts.sort_by_key(|post| std::cmp::Reverse(vote_score(post)));
+        if posts.is_empty() {
+            lines.push("(no posts)".to_owned());
+            continue;
+        }
+        for post in posts {
+            lines.push(format_post(post, show_authors));
+        }
+    }
+    let actions: Vec<_> = board
+        .posts
+        .iter()
+        .filter_map(|post| post.action.as_deref().filter(|action| !action.is_empty()))
+        .collect();
+    if !actions.is_empty() {
+        lines.push("\n## Actions".to_owned());
+        for action in actions {
+            lines.push(format!("- {action}"));
+        }
+    }
+    lines.join("\n")
+}
+
+fn format_post(post: &crate::models::Post, show_authors: bool) -> String {
+    let content = post.content.replace('\n', "\n  ");
+    let mut line = format!(
+        "- (+{}/-{}) {content}",
+        vote_count(post, "like"),
+        vote_count(post, "dislike")
+    );
+    if show_authors {
+        line.push_str(&format!("\n  by {}", post.user.name));
+    }
+    if let Some(group) = &post.group {
+        line.push_str(&format!("\n  group: {}", group.label));
+    }
+    line
+}
+
+fn vote_count(post: &crate::models::Post, kind: &str) -> usize {
+    post.votes.iter().filter(|vote| vote.kind == kind).count()
+}
+
+fn vote_score(post: &crate::models::Post) -> i32 {
+    let likes = i32::try_from(vote_count(post, "like")).unwrap_or(i32::MAX);
+    let dislikes = i32::try_from(vote_count(post, "dislike")).unwrap_or(i32::MAX);
+    likes.saturating_sub(dislikes)
+}
+
 fn text_block(block: &serde_json::Value) -> Option<&str> {
     if block.get("type").and_then(serde_json::Value::as_str) == Some("text") {
         block.get("text").and_then(serde_json::Value::as_str)
@@ -146,7 +219,7 @@ fn text_block(block: &serde_json::Value) -> Option<&str> {
 
 #[cfg(test)]
 mod tests {
-    use super::{conversation, request_body, text_from_response, DEFAULT_MODEL};
+    use super::{conversation, request_body, summary_prompt, text_from_response, DEFAULT_MODEL};
     use crate::models::CoachMessage;
     use serde_json::json;
 
@@ -201,6 +274,98 @@ mod tests {
         ]);
         assert_eq!(system, "Extra");
         assert_eq!(turns, vec![json!({"role": "user", "content": "One\nTwo"})]);
+    }
+
+    #[test]
+    fn summary_prompt_keeps_private_fields_out_and_honours_authors() {
+        use crate::models::{
+            Board, ColumnDefinition, Message, Post, PostGroup, SessionOptions, User, VoteExtract,
+        };
+        use chrono::TimeZone;
+
+        let author = User {
+            id: "u".into(),
+            name: "Ada".into(),
+            photo: None,
+            email: Some("ada@example.com".into()),
+        };
+        let post = Post {
+            id: "p".into(),
+            column: 0,
+            content: "Shipping felt calm".into(),
+            action: Some("Keep the release checklist".into()),
+            giphy: Some("gif-secret".into()),
+            user: author.clone(),
+            group: Some(PostGroup {
+                id: "g".into(),
+                column: 0,
+                label: "Delivery".into(),
+                posts: Vec::new(),
+                rank: "0".into(),
+                user: author.clone(),
+            }),
+            rank: "0".into(),
+            votes: vec![
+                VoteExtract {
+                    id: "v1".into(),
+                    user_name: "Ada".into(),
+                    user_id: "u".into(),
+                    kind: "like".into(),
+                },
+                VoteExtract {
+                    id: "v2".into(),
+                    user_name: "Grace".into(),
+                    user_id: "g".into(),
+                    kind: "dislike".into(),
+                },
+            ],
+        };
+        let board = Board {
+            id: "s".into(),
+            name: Some("Sprint 12".into()),
+            columns: vec![ColumnDefinition {
+                id: "c".into(),
+                kind: "well".into(),
+                index: 0,
+                label: "Went well".into(),
+                color: "#fff".into(),
+                icon: None,
+            }],
+            created_by: author.clone(),
+            moderator: author.clone(),
+            groups: vec![],
+            posts: vec![post],
+            messages: vec![Message {
+                id: "m".into(),
+                content: "secret chat".into(),
+                user: author,
+                created: chrono::Utc.with_ymd_and_hms(2026, 1, 1, 0, 0, 0).unwrap(),
+            }],
+            options: SessionOptions {
+                allow_author_visible: true,
+                ..SessionOptions::default()
+            },
+            encrypted: None,
+            locked: false,
+            ready: vec![],
+            timer: None,
+            demo: false,
+        };
+
+        let named = summary_prompt(&board, true);
+        assert!(named.contains("Sprint 12"), "{named}");
+        assert!(named.contains("Went well"), "{named}");
+        assert!(named.contains("(+1/-1) Shipping felt calm"), "{named}");
+        assert!(named.contains("by Ada"), "{named}");
+        assert!(named.contains("group: Delivery"), "{named}");
+        assert!(named.contains("Keep the release checklist"), "{named}");
+        assert!(!named.contains("ada@example.com"), "{named}");
+        assert!(!named.contains("secret chat"), "{named}");
+        assert!(!named.contains("gif-secret"), "{named}");
+
+        let anonymous = summary_prompt(&board, false);
+        assert!(!anonymous.contains("by Ada"), "{anonymous}");
+        assert!(anonymous.contains("Shipping felt calm"), "{anonymous}");
     }
 
     #[test]

@@ -14,8 +14,10 @@ import { colors } from '@mui/material';
 import { Feedback } from '@mui/icons-material';
 import { ColumnContent } from '../types';
 import { Palette } from '../../../Theme';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Page } from '../../../components/Page';
+import { AiSummary } from './AiSummary';
 import SpeedDial from './SpeedDial';
 import { useSummary } from './useSummary';
 import { ColumnStats, ColumnStatsItem, ActionItem } from './types';
@@ -232,16 +234,18 @@ function ActionsList({ actions }: ActionsListProps) {
 
 export function SummaryMode({ columns, search }: SummaryModeProps) {
   const stats = useSummary(columns);
+  const [aiSummary, setAiSummary] = useState('');
   return (
     <Page>
       <div>
+        <AiSummary onSummary={setAiSummary} />
         {stats.columns.map((stat) => (
           <Section key={stat.column.index} stats={stat} search={search} />
         ))}
         {stats.actions.length ? <ActionsList actions={stats.actions} /> : null}
       </div>
       <SpeedDialContainer>
-        <SpeedDial />
+        <SpeedDial summary={aiSummary} />
       </SpeedDialContainer>
     </Page>
   );

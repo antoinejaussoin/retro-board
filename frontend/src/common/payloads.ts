@@ -106,3 +106,11 @@ export interface AiChatPayload {
   id: string;
   messages: CoachMessage[];
 }
+
+export interface AiSummaryPayload {
+  id: string;
+}
+
+export interface AiSummaryResponse {
+  summary: string;
+}
