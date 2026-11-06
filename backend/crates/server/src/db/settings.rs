@@ -211,13 +211,73 @@ pub async fn save_template(
 }
 
 pub async fn previous_sessions(pool: &PgPool, user_id: &str) -> DbResult<Vec<SessionMetadata>> {
-    let rows = sqlx::query_as::<_, (String, Option<String>, DateTime<Utc>, serde_json::Value, Option<String>, bool, i64, i64, i64, serde_json::Value)>(
-        r#"SELECT id, name, created, created_by, encrypted, locked, number_of_actions, number_of_posts, number_of_votes, COALESCE(participants, '[]'::json)
-           FROM session_view WHERE id IN (
-             SELECT sessions_id FROM visitors WHERE users_id = $1
-             UNION
-             SELECT id FROM sessions WHERE created_by_id = $1
-           )"#,
+    // `session_view` ends with `ORDER BY updated`. Postgres will not push a later
+    // filter into that view, so a previous-sessions request aggregates every board
+    // in the database and only then keeps the caller's rows.
+    let rows = sqlx::query_as::<
+        _,
+        (
+            String,
+            Option<String>,
+            DateTime<Utc>,
+            serde_json::Value,
+            Option<String>,
+            bool,
+            i64,
+            i64,
+            i64,
+            serde_json::Value,
+        ),
+    >(
+        r#"WITH mine AS (
+               SELECT id FROM sessions WHERE created_by_id = $1
+               UNION
+               SELECT sessions_id FROM visitors WHERE users_id = $1
+           ),
+           post_counts AS (
+               SELECT p.session_id,
+                      count(*) AS number_of_posts,
+                      count(*) FILTER (WHERE p.action IS NOT NULL) AS number_of_actions
+               FROM posts p
+               JOIN mine m ON m.id = p.session_id
+               GROUP BY p.session_id
+           ),
+           vote_counts AS (
+               SELECT p.session_id, count(*) AS number_of_votes
+               FROM posts p
+               JOIN mine m ON m.id = p.session_id
+               JOIN votes vv ON vv.post_id = p.id
+               GROUP BY p.session_id
+           ),
+           people AS (
+               SELECT v.sessions_id,
+                      json_agg(json_build_object(
+                          'id', u.id, 'name', u.name, 'photo', u.photo, 'email', u.email
+                      )) AS participants
+               FROM visitors v
+               JOIN mine m ON m.id = v.sessions_id
+               JOIN users u ON u.id = v.users_id
+               GROUP BY v.sessions_id
+           )
+           SELECT s.id,
+                  s.name,
+                  s.created,
+                  json_build_object(
+                      'id', cb.id, 'name', cb.name, 'photo', cb.photo, 'email', cb.email
+                  ) AS created_by,
+                  s.encrypted,
+                  s.locked,
+                  COALESCE(pc.number_of_actions, 0),
+                  COALESCE(pc.number_of_posts, 0),
+                  COALESCE(vc.number_of_votes, 0),
+                  COALESCE(people.participants, '[]'::json)
+           FROM mine m
+           JOIN sessions s ON s.id = m.id
+           LEFT JOIN users cb ON cb.id = s.created_by_id
+           LEFT JOIN post_counts pc ON pc.session_id = s.id
+           LEFT JOIN vote_counts vc ON vc.session_id = s.id
+           LEFT JOIN people ON people.sessions_id = s.id
+           ORDER BY s.updated DESC"#,
     )
     .bind(user_id)
     .fetch_all(pool)
