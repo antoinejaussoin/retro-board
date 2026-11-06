@@ -1,0 +1,165 @@
+name: Build multi-arch image
+
+on:
+  workflow_call:
+    inputs:
+      image:
+        description: Repository name without a tag, for example retrospected/frontend
+        required: true
+        type: string
+      file:
+        description: Path to the Dockerfile
+        required: true
+        type: string
+      context:
+        description: Build context directory
+        required: true
+        type: string
+      tags:
+        description: Full image tags to publish, one per line
+        required: true
+        type: string
+    secrets:
+      DOCKER_NEW_USERNAME:
+        required: true
+      DOCKER_NEW_PASSWORD:
+        required: true
+
+jobs:
+  build:
+    name: ${{ matrix.platform }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: linux/amd64
+            runner: ubuntu-24.04
+          - platform: linux/arm64
+            runner: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check runner architecture
+        run: |
+          set -euo pipefail
+          case "${{ matrix.platform }}" in
+            linux/amd64) expected=x86_64 ;;
+            linux/arm64) expected=aarch64 ;;
+            *)
+              echo "Unsupported platform ${{ matrix.platform }}"
+              exit 1
+              ;;
+          esac
+          actual="$(uname -m)"
+          if [ "$actual" != "$expected" ]; then
+            echo "Runner is ${actual}, expected ${expected} for ${{ matrix.platform }}"
+            exit 1
+          fi
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_NEW_USERNAME }}
+          password: ${{ secrets.DOCKER_NEW_PASSWORD }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build and push by digest
+        id: build
+        uses: docker/build-push-action@v6
+        with:
+          file: ${{ inputs.file }}
+          context: ${{ inputs.context }}
+          platforms: ${{ matrix.platform }}
+          # A provenance attestation is its own index. Merging those indexes
+          # does not produce a pullable multi-arch image.
+          provenance: false
+          outputs: type=image,name=${{ inputs.image }},push-by-digest=true,name-canonical=true,push=true
+      - name: Export digest
+        id: digest
+        run: |
+          set -euo pipefail
+          digest="${{ steps.build.outputs.digest }}"
+          if [ -z "$digest" ]; then
+            echo "Build did not return an image digest"
+            exit 1
+          fi
+          image="${{ inputs.image }}"
+          platform="${{ matrix.platform }}"
+          mkdir -p "${RUNNER_TEMP}/digests"
+          touch "${RUNNER_TEMP}/digests/${digest#sha256:}"
+          echo "slug=${image//\//-}" >> "$GITHUB_OUTPUT"
+          echo "platform=${platform//\//-}" >> "$GITHUB_OUTPUT"
+      - name: Upload digest
+        uses: actions/upload-artifact@v4
+        with:
+          name: digests-${{ steps.digest.outputs.slug }}--${{ steps.digest.outputs.platform }}
+          path: ${{ runner.temp }}/digests/*
+          if-no-files-found: error
+          retention-days: 1
+
+  manifest:
+    name: Publish manifest
+    runs-on: ubuntu-24.04
+    needs: build
+    steps:
+      - name: Digest artifact prefix
+        id: digest
+        run: |
+          image="${{ inputs.image }}"
+          echo "slug=${image//\//-}" >> "$GITHUB_OUTPUT"
+      - name: Download digests
+        uses: actions/download-artifact@v4
+        with:
+          path: ${{ runner.temp }}/digests
+          pattern: digests-${{ steps.digest.outputs.slug }}--*
+          merge-multiple: true
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_NEW_USERNAME }}
+          password: ${{ secrets.DOCKER_NEW_PASSWORD }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Create and push manifest
+        working-directory: ${{ runner.temp }}/digests
+        env:
+          IMAGE: ${{ inputs.image }}
+          TAGS: ${{ inputs.tags }}
+        run: |
+          set -euo pipefail
+          args=()
+          while IFS= read -r tag || [ -n "$tag" ]; do
+            tag="${tag#"${tag%%[![:space:]]*}"}"
+            tag="${tag%"${tag##*[![:space:]]}"}"
+            if [ -z "$tag" ]; then
+              continue
+            fi
+            case "$tag" in
+              "${IMAGE}:"*) ;;
+              *)
+                echo "Tag ${tag} is not ${IMAGE}:<name>"
+                exit 1
+                ;;
+            esac
+            if [ -z "${tag#"${IMAGE}:"}" ]; then
+              echo "Tag ${tag} is missing a name"
+              exit 1
+            fi
+            args+=(-t "$tag")
+          done <<< "$TAGS"
+          if [ "${#args[@]}" -eq 0 ]; then
+            echo "No tags to publish"
+            exit 1
+          fi
+
+          sources=()
+          while IFS= read -r digest_file; do
+            sources+=("${IMAGE}@sha256:$(basename "$digest_file")")
+          done < <(find . -type f -print)
+          if [ "${#sources[@]}" -ne 2 ]; then
+            echo "Expected digests for linux/amd64 and linux/arm64, found ${#sources[@]}: ${sources[*]}"
+            exit 1
+          fi
+
+          echo "Publishing ${sources[*]}"
+          docker buildx imagetools create "${args[@]}" "${sources[@]}"
+          docker buildx imagetools inspect "${args[1]}"
