@@ -779,7 +779,11 @@ async fn admin_stats(
     if !require_admin(&state, &guard).await {
         return text(StatusCode::FORBIDDEN, "You are not allowed to do this");
     }
-    let clients = state.io.get().map(|io| io.sockets().len()).unwrap_or(0);
+    let clients = state
+        .io
+        .get()
+        .map(|io| io.local_client_count())
+        .unwrap_or(0);
     Json(json!({ "clients": clients })).into_response()
 }
 

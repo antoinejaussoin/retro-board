@@ -29,7 +29,10 @@ use std::sync::Arc;
 use axum::extract::{Request, State};
 use axum::middleware::{self, Next};
 use axum::response::Response;
+use socketioxide::adapter::Adapter;
 use socketioxide::SocketIo;
+use socketioxide_core::adapter::DefinedAdapter;
+use socketioxide_redis::{RedisAdapter, RedisAdapterCtr};
 use sqlx::postgres::PgPoolOptions;
 use std::sync::OnceLock;
 use tokio::sync::Mutex;
@@ -74,13 +77,44 @@ async fn run(config: Config) -> Result<(), Box<dyn std::error::Error>> {
         ws_limit,
         io: io_slot.clone(),
     };
-    let (layer, io) = SocketIo::builder()
-        .max_payload(config.ws_max_buffer_size)
-        .with_state(state.clone())
-        .build_layer();
-    let _ = io_slot.set(io.clone());
-    ws::register(&io);
+    if config.redis_for_socketio {
+        // socketioxide-redis publishes on RESP3 (Redis 7+). Every backend
+        // process is Rust, so this does not have to match the old Node adapter.
+        // The namespace subscription must finish before the port opens.
+        let url = format!("{}?protocol=resp3", config.redis_url());
+        let client = redis::Client::open(url)?;
+        let adapter = RedisAdapterCtr::new_with_redis(&client).await?;
+        let (layer, io) = SocketIo::builder()
+            .max_payload(config.ws_max_buffer_size)
+            .with_state(state.clone())
+            .with_adapter::<RedisAdapter<_>>(adapter)
+            .build_layer();
+        tracing::info!("socket.io redis adapter enabled");
+        let _ = io_slot.set(Arc::new(io.clone()));
+        ws::register(&io)
+            .await
+            .map_err(|error| format!("socket.io redis namespace: {error}"))?;
+        serve(state, layer).await?;
+    } else {
+        let (layer, io) = SocketIo::builder()
+            .max_payload(config.ws_max_buffer_size)
+            .with_state(state.clone())
+            .build_layer();
+        let _ = io_slot.set(Arc::new(io.clone()));
+        ws::register(&io);
+        serve(state, layer).await?;
+    }
+    Ok(())
+}
 
+async fn serve<A>(
+    state: AppState,
+    layer: socketioxide::layer::SocketIoLayer<A>,
+) -> Result<(), Box<dyn std::error::Error>>
+where
+    A: Adapter + DefinedAdapter,
+{
+    let port = state.config.backend_port;
     let app = http::router()
         .layer(middleware::from_fn_with_state(
             state.clone(),
@@ -88,8 +122,7 @@ async fn run(config: Config) -> Result<(), Box<dyn std::error::Error>> {
         ))
         .layer(layer)
         .with_state(state);
-
-    let address = SocketAddr::from(([0, 0, 0, 0], config.backend_port));
+    let address = SocketAddr::from(([0, 0, 0, 0], port));
     tracing::info!(%address, "listening");
     let listener = tokio::net::TcpListener::bind(address).await?;
     axum::serve(

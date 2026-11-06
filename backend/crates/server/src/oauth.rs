@@ -181,9 +181,7 @@ async fn finish_login(state: &AppState, session: &mut Session, profile: Registra
         if let Some(io) = state.io.get() {
             let payload =
                 serde_json::json!({ "userId": identity.user_id, "identityId": identity.id });
-            for socket in io.within(socket_id).sockets() {
-                let _ = socket.emit("auth", &payload);
-            }
+            io.emit_to(&socket_id, "auth", &payload).await;
         }
     }
     let mut response =

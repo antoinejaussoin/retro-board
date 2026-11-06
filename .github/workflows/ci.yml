@@ -51,6 +51,9 @@ jobs:
           --health-retries 10
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26.13.0
       - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: 1.99.1

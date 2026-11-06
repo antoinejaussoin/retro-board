@@ -4,8 +4,10 @@ use std::collections::HashMap;
 use std::sync::Arc;
 
 use serde_json::{json, Value};
+use socketioxide::adapter::Adapter;
 use socketioxide::extract::{Data, SocketRef, State};
 use socketioxide::SocketIo;
+use socketioxide_core::adapter::DefinedAdapter;
 use tokio::sync::Mutex;
 use uuid::Uuid;
 
@@ -40,18 +42,23 @@ const RECEIVE_TIMER_STOP: &str = "retrospected/timer/stop/receive";
 #[derive(Clone, Default)]
 struct Presence(Arc<Mutex<HashMap<String, Option<User>>>>);
 
-pub fn register(io: &SocketIo) {
+pub fn register<A>(io: &SocketIo<A>) -> A::InitRes
+where
+    A: Adapter + DefinedAdapter + 'static,
+{
     let presence = presence();
     let presence = presence.clone();
     io.ns(
         "/",
-        move |socket: SocketRef, State(state): State<AppState>| {
+        move |socket: SocketRef<A>, State(state): State<AppState>| {
             let presence = presence.clone();
             let ids = ids_from_socket(&state, &socket);
             socket.extensions.insert(WsIds(ids.clone()));
             socket.on("retrospected/posts/add/success", {
                 let presence = presence.clone();
-                move |socket: SocketRef, Data(value): Data<Value>, State(state): State<AppState>| {
+                move |socket: SocketRef<A>,
+                      Data(value): Data<Value>,
+                      State(state): State<AppState>| {
                     let _ = &presence;
                     on_message(
                         socket,
@@ -66,10 +73,13 @@ pub fn register(io: &SocketIo) {
             });
             register_handlers(socket, state, presence);
         },
-    );
+    )
 }
 
-fn register_handlers(socket: SocketRef, _state: AppState, presence: Presence) {
+fn register_handlers<A>(socket: SocketRef<A>, _state: AppState, presence: Presence)
+where
+    A: Adapter + DefinedAdapter + 'static,
+{
     bind(&socket, "retrospected/posts/edit", false, edit_post);
     bind(&socket, "retrospected/posts/delete", false, delete_post);
     bind(&socket, "retrospected/posts/like/success", false, like_post);
@@ -103,7 +113,7 @@ fn register_handlers(socket: SocketRef, _state: AppState, presence: Presence) {
     bind(&socket, "retrospected/session/lock", true, lock);
     let presence_disconnect = presence.clone();
     socket.on_disconnect(
-        move |socket: SocketRef,
+        move |socket: SocketRef<A>,
               State(state): State<AppState>,
               _: socketioxide::socket::DisconnectReason| {
             let presence = presence_disconnect.clone();
@@ -121,8 +131,8 @@ fn register_handlers(socket: SocketRef, _state: AppState, presence: Presence) {
     let _ = presence;
 }
 
-fn bind(
-    socket: &SocketRef,
+fn bind<A>(
+    socket: &SocketRef<A>,
     event: &'static str,
     only_author: bool,
     handler: fn(
@@ -130,19 +140,21 @@ fn bind(
         Option<(String, String)>,
         String,
         Value,
-        SocketRef,
+        SocketRef<A>,
     ) -> std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>>,
-) {
+) where
+    A: Adapter + DefinedAdapter + 'static,
+{
     socket.on(
         event,
-        move |socket: SocketRef, Data(value): Data<Value>, State(state): State<AppState>| {
+        move |socket: SocketRef<A>, Data(value): Data<Value>, State(state): State<AppState>| {
             on_message(socket, state, value, only_author, handler);
         },
     );
 }
 
-fn on_message(
-    socket: SocketRef,
+fn on_message<A>(
+    socket: SocketRef<A>,
     state: AppState,
     value: Value,
     only_author: bool,
@@ -151,9 +163,11 @@ fn on_message(
         Option<(String, String)>,
         String,
         Value,
-        SocketRef,
+        SocketRef<A>,
     ) -> std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>>,
-) {
+) where
+    A: Adapter + DefinedAdapter + 'static,
+{
     tokio::spawn(async move {
         let ack = value
             .get("ack")
@@ -226,7 +240,7 @@ fn event_is_leave(value: &Value) -> bool {
     value.get("sessionId").is_none()
 }
 
-async fn load_ids(state: &AppState, socket: &SocketRef) -> Option<(String, String)> {
+async fn load_ids<A: Adapter>(state: &AppState, socket: &SocketRef<A>) -> Option<(String, String)> {
     let header = socket
         .req_parts()
         .headers
@@ -243,7 +257,10 @@ struct WsIds(Option<(String, String)>);
 #[derive(Clone)]
 struct BoardRoom(String);
 
-fn ids_from_socket(state: &AppState, socket: &SocketRef) -> Option<(String, String)> {
+fn ids_from_socket<A: Adapter>(
+    state: &AppState,
+    socket: &SocketRef<A>,
+) -> Option<(String, String)> {
     let header = socket
         .req_parts()
         .headers
@@ -255,7 +272,7 @@ fn ids_from_socket(state: &AppState, socket: &SocketRef) -> Option<(String, Stri
     None
 }
 
-fn emit_error(socket: &SocketRef, kind: &'static str, details: Option<String>) {
+fn emit_error<A: Adapter>(socket: &SocketRef<A>, kind: &'static str, details: Option<String>) {
     let _ = socket.emit(RECEIVE_ERROR, &WsError { kind, details });
 }
 
@@ -263,16 +280,23 @@ fn room(session_id: &str) -> String {
     format!("board-{session_id}")
 }
 
-fn broadcast(socket: &SocketRef, session_id: &str, event: &str, data: &impl serde::Serialize) {
-    drop(socket.to(room(session_id)).emit(event, data));
+async fn broadcast<A: Adapter>(
+    socket: &SocketRef<A>,
+    session_id: &str,
+    event: &str,
+    data: &impl serde::Serialize,
+) {
+    if let Err(error) = socket.to(room(session_id)).emit(event, data).await {
+        tracing::debug!(%error, "board broadcast failed");
+    }
 }
 
-fn add_post(
+fn add_post<A: Adapter>(
     state: AppState,
     ids: Option<(String, String)>,
     session_id: String,
     payload: Value,
-    socket: SocketRef,
+    socket: SocketRef<A>,
 ) -> std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>> {
     Box::pin(async move {
         let Some((user_id, _)) = ids else {
@@ -303,18 +327,18 @@ fn add_post(
         )
         .await
         {
-            Ok(Some(saved)) => broadcast(&socket, &session_id, RECEIVE_POST, &saved),
+            Ok(Some(saved)) => broadcast(&socket, &session_id, RECEIVE_POST, &saved).await,
             _ => emit_error(&socket, "cannot_save_post", None),
         }
     })
 }
 
-fn edit_post(
+fn edit_post<A: Adapter>(
     state: AppState,
     _ids: Option<(String, String)>,
     session_id: String,
     payload: Value,
-    socket: SocketRef,
+    socket: SocketRef<A>,
 ) -> std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>> {
     Box::pin(async move {
         let Ok(update) = serde_json::from_value::<PostUpdate>(payload) else {
@@ -334,18 +358,18 @@ fn edit_post(
         )
         .await
         {
-            Ok(Some(post)) => broadcast(&socket, &session_id, RECEIVE_EDIT_POST, &post),
+            Ok(Some(post)) => broadcast(&socket, &session_id, RECEIVE_EDIT_POST, &post).await,
             _ => emit_error(&socket, "cannot_edit_post", None),
         }
     })
 }
 
-fn delete_post(
+fn delete_post<A: Adapter>(
     state: AppState,
     ids: Option<(String, String)>,
     session_id: String,
     payload: Value,
-    socket: SocketRef,
+    socket: SocketRef<A>,
 ) -> std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>> {
     Box::pin(async move {
         let Some((user_id, _)) = ids else {
@@ -364,19 +388,19 @@ fn delete_post(
             .await
             .unwrap_or(false)
         {
-            broadcast(&socket, &session_id, RECEIVE_DELETE_POST, &body);
+            broadcast(&socket, &session_id, RECEIVE_DELETE_POST, &body).await;
         } else {
             emit_error(&socket, "cannot_delete_post", None);
         }
     })
 }
 
-fn like_post(
+fn like_post<A: Adapter>(
     state: AppState,
     ids: Option<(String, String)>,
     session_id: String,
     payload: Value,
-    socket: SocketRef,
+    socket: SocketRef<A>,
 ) -> std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>> {
     Box::pin(async move {
         let Some((user_id, _)) = ids else {
@@ -392,23 +416,26 @@ fn like_post(
             return;
         };
         match db::register_vote(&state.db, &user_id, &session_id, &body.post_id, &body.kind).await {
-            Ok(Some(vote)) => broadcast(
-                &socket,
-                &session_id,
-                RECEIVE_LIKE,
-                &json!({ "postId": body.post_id, "vote": vote }),
-            ),
+            Ok(Some(vote)) => {
+                broadcast(
+                    &socket,
+                    &session_id,
+                    RECEIVE_LIKE,
+                    &json!({ "postId": body.post_id, "vote": vote }),
+                )
+                .await
+            }
             _ => emit_error(&socket, "cannot_register_vote", None),
         }
     })
 }
 
-fn cancel_votes(
+fn cancel_votes<A: Adapter>(
     state: AppState,
     ids: Option<(String, String)>,
     session_id: String,
     payload: Value,
-    socket: SocketRef,
+    socket: SocketRef<A>,
 ) -> std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>> {
     Box::pin(async move {
         let Some((user_id, _)) = ids else {
@@ -429,16 +456,17 @@ fn cancel_votes(
             &session_id,
             RECEIVE_CANCEL_VOTES,
             &json!({ "postId": body.post_id, "userId": user_id }),
-        );
+        )
+        .await;
     })
 }
 
-fn add_group(
+fn add_group<A: Adapter>(
     state: AppState,
     ids: Option<(String, String)>,
     session_id: String,
     payload: Value,
-    socket: SocketRef,
+    socket: SocketRef<A>,
 ) -> std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>> {
     Box::pin(async move {
         let Some((user_id, _)) = ids else {
@@ -466,18 +494,18 @@ fn add_group(
         )
         .await
         {
-            Ok(Some(saved)) => broadcast(&socket, &session_id, RECEIVE_POST_GROUP, &saved),
+            Ok(Some(saved)) => broadcast(&socket, &session_id, RECEIVE_POST_GROUP, &saved).await,
             _ => emit_error(&socket, "cannot_save_group", None),
         }
     })
 }
 
-fn edit_group(
+fn edit_group<A: Adapter>(
     state: AppState,
     ids: Option<(String, String)>,
     session_id: String,
     payload: Value,
-    socket: SocketRef,
+    socket: SocketRef<A>,
 ) -> std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>> {
     Box::pin(async move {
         let Some((user_id, _)) = ids else {
@@ -503,18 +531,20 @@ fn edit_group(
         )
         .await
         {
-            Ok(Some(group)) => broadcast(&socket, &session_id, RECEIVE_EDIT_POST_GROUP, &group),
+            Ok(Some(group)) => {
+                broadcast(&socket, &session_id, RECEIVE_EDIT_POST_GROUP, &group).await
+            }
             _ => emit_error(&socket, "cannot_edit_group", None),
         }
     })
 }
 
-fn delete_group(
+fn delete_group<A: Adapter>(
     state: AppState,
     ids: Option<(String, String)>,
     session_id: String,
     payload: Value,
-    socket: SocketRef,
+    socket: SocketRef<A>,
 ) -> std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>> {
     Box::pin(async move {
         let Some((user_id, _)) = ids else {
@@ -533,19 +563,19 @@ fn delete_group(
             .await
             .unwrap_or(false)
         {
-            broadcast(&socket, &session_id, RECEIVE_DELETE_POST_GROUP, &body);
+            broadcast(&socket, &session_id, RECEIVE_DELETE_POST_GROUP, &body).await;
         } else {
             emit_error(&socket, "cannot_delete_group", None);
         }
     })
 }
 
-fn chat(
+fn chat<A: Adapter>(
     state: AppState,
     ids: Option<(String, String)>,
     session_id: String,
     payload: Value,
-    socket: SocketRef,
+    socket: SocketRef<A>,
 ) -> std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>> {
     Box::pin(async move {
         let Some((user_id, _)) = ids else {
@@ -562,18 +592,18 @@ fn chat(
         };
         let id = message.id.unwrap_or_else(|| Uuid::new_v4().to_string());
         match db::save_message(&state.db, &user_id, &session_id, &id, &message.content).await {
-            Ok(Some(saved)) => broadcast(&socket, &session_id, RECEIVE_CHAT, &saved),
+            Ok(Some(saved)) => broadcast(&socket, &session_id, RECEIVE_CHAT, &saved).await,
             _ => emit_error(&socket, "cannot_record_chat_message", None),
         }
     })
 }
 
-fn start_timer(
+fn start_timer<A: Adapter>(
     state: AppState,
     ids: Option<(String, String)>,
     session_id: String,
     _payload: Value,
-    socket: SocketRef,
+    socket: SocketRef<A>,
 ) -> std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>> {
     Box::pin(async move {
         if ids.is_none() {
@@ -585,23 +615,26 @@ fn start_timer(
             return;
         }
         match db::start_timer(&state.db, &session_id).await {
-            Ok(duration) => broadcast(
-                &socket,
-                &session_id,
-                RECEIVE_TIMER_START,
-                &json!({ "duration": duration }),
-            ),
+            Ok(duration) => {
+                broadcast(
+                    &socket,
+                    &session_id,
+                    RECEIVE_TIMER_START,
+                    &json!({ "duration": duration }),
+                )
+                .await
+            }
             Err(_) => emit_error(&socket, "unknown_error", None),
         }
     })
 }
 
-fn stop_timer(
+fn stop_timer<A: Adapter>(
     state: AppState,
     ids: Option<(String, String)>,
     session_id: String,
     _payload: Value,
-    socket: SocketRef,
+    socket: SocketRef<A>,
 ) -> std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>> {
     Box::pin(async move {
         if ids.is_none() {
@@ -613,16 +646,16 @@ fn stop_timer(
             return;
         }
         let _ = db::stop_timer(&state.db, &session_id).await;
-        broadcast(&socket, &session_id, RECEIVE_TIMER_STOP, &json!(null));
+        broadcast(&socket, &session_id, RECEIVE_TIMER_STOP, &json!(null)).await;
     })
 }
 
-fn request_board(
+fn request_board<A: Adapter>(
     state: AppState,
     _ids: Option<(String, String)>,
     session_id: String,
     _payload: Value,
-    socket: SocketRef,
+    socket: SocketRef<A>,
 ) -> std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>> {
     Box::pin(async move {
         match db::load_board(&state.db, &session_id).await {
@@ -634,12 +667,12 @@ fn request_board(
     })
 }
 
-fn join(
+fn join<A: Adapter>(
     state: AppState,
     ids: Option<(String, String)>,
     session_id: String,
     _payload: Value,
-    socket: SocketRef,
+    socket: SocketRef<A>,
 ) -> std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>> {
     Box::pin(async move {
         socket.join(room(&session_id));
@@ -684,12 +717,12 @@ fn join(
     })
 }
 
-fn leave(
+fn leave<A: Adapter>(
     state: AppState,
     _ids: Option<(String, String)>,
     session_id: String,
     _payload: Value,
-    socket: SocketRef,
+    socket: SocketRef<A>,
 ) -> std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>> {
     Box::pin(async move {
         socket.leave(room(&session_id));
@@ -697,12 +730,12 @@ fn leave(
     })
 }
 
-fn ready(
+fn ready<A: Adapter>(
     state: AppState,
     ids: Option<(String, String)>,
     session_id: String,
     _payload: Value,
-    socket: SocketRef,
+    socket: SocketRef<A>,
 ) -> std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>> {
     Box::pin(async move {
         let Some((user_id, _)) = ids else {
@@ -727,16 +760,17 @@ fn ready(
             &session_id,
             RECEIVE_USER_READY,
             &json!({ "userId": user_id, "name": name, "ready": ready }),
-        );
+        )
+        .await;
     })
 }
 
-fn settings(
+fn settings<A: Adapter>(
     state: AppState,
     ids: Option<(String, String)>,
     session_id: String,
     payload: Value,
-    socket: SocketRef,
+    socket: SocketRef<A>,
 ) -> std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>> {
     Box::pin(async move {
         let Ok(body) = serde_json::from_value::<SettingsPayload>(payload) else {
@@ -769,21 +803,22 @@ fn settings(
             &session_id,
             RECEIVE_SESSION_SETTINGS,
             &body.settings,
-        );
+        )
+        .await;
     })
 }
 
-fn lock(
+fn lock<A: Adapter>(
     state: AppState,
     _ids: Option<(String, String)>,
     session_id: String,
     payload: Value,
-    socket: SocketRef,
+    socket: SocketRef<A>,
 ) -> std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>> {
     Box::pin(async move {
         let locked = payload.as_bool().unwrap_or(false);
         let _ = db::set_locked(&state.db, &session_id, locked).await;
-        broadcast(&socket, &session_id, RECEIVE_LOCK_SESSION, &locked);
+        broadcast(&socket, &session_id, RECEIVE_LOCK_SESSION, &locked).await;
     })
 }
 
@@ -799,17 +834,23 @@ fn user_summary(user: &FullUser) -> User {
     }
 }
 
-async fn send_clients(
+async fn send_clients<A: Adapter>(
     _state: &AppState,
     _presence: &Presence,
-    socket: &SocketRef,
+    socket: &SocketRef<A>,
     session_id: &str,
 ) {
     send_clients_simple(_state, socket, session_id).await;
 }
 
-async fn send_clients_simple(state: &AppState, socket: &SocketRef, session_id: &str) {
+async fn send_clients_simple<A: Adapter>(
+    state: &AppState,
+    socket: &SocketRef<A>,
+    session_id: &str,
+) {
     let sockets = socket.within(room(session_id)).sockets();
+    let local_ids: std::collections::HashSet<String> =
+        sockets.iter().map(|peer| peer.id.to_string()).collect();
     let mut online = Vec::new();
     for (index, peer) in sockets.iter().enumerate() {
         let user = peer
@@ -831,6 +872,21 @@ async fn send_clients_simple(state: &AppState, socket: &SocketRef, session_id: &
             });
         online.push(user);
     }
+    if let Ok(remote) = socket.within(room(session_id)).fetch_sockets().await {
+        for peer in remote {
+            let id = peer.data().id.to_string();
+            if local_ids.contains(&id) {
+                continue;
+            }
+            online.push(Participant {
+                id,
+                name: "(Spectator)".into(),
+                email: None,
+                photo: None,
+                online: true,
+            });
+        }
+    }
     let mut list = online;
     if let Ok(Some(access)) = db::access(&state.db, session_id).await {
         for visitor in access.visitor_ids {
@@ -849,7 +905,7 @@ async fn send_clients_simple(state: &AppState, socket: &SocketRef, session_id: &
         }
     }
     let _ = socket.emit(RECEIVE_CLIENT_LIST, &list);
-    broadcast(socket, session_id, RECEIVE_CLIENT_LIST, &list);
+    broadcast(socket, session_id, RECEIVE_CLIENT_LIST, &list).await;
 }
 
 fn presence() -> Presence {

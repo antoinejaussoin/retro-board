@@ -24,7 +24,7 @@ hmac = "0.12"
 hex = "0.4"
 md-5 = "0.10"
 rand = "0.8"
-redis = { version = "0.27", features = ["tokio-comp", "connection-manager"] }
+redis = { version = "0.32", features = ["tokio-comp", "connection-manager"] }
 reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
 serde.workspace = true
 serde_json.workspace = true
@@ -32,6 +32,8 @@ serde_urlencoded = "0.7"
 sha1 = "0.10"
 sha2 = "0.10"
 socketioxide = { version = "0.17", features = ["extensions", "state"] }
+socketioxide-core = "0.17"
+socketioxide-redis = "=0.3.0"
 sqlx.workspace = true
 thiserror.workspace = true
 tokio.workspace = true
