@@ -79,6 +79,76 @@ async fn send(config: &Config, to: &str, subject: &str, html: &str) {
     if config.mail_smtp_host.is_empty() {
         return;
     }
-    tracing::info!(host = %config.mail_smtp_host, to, "smtp mail is configured; delivery uses the configured relay");
-    let _ = (subject, html);
+    if let Err(error) = send_smtp(config, to, subject, html).await {
+        tracing::warn!(%error, "smtp delivery failed");
+    }
+}
+
+async fn send_smtp(config: &Config, to: &str, subject: &str, html: &str) -> Result<(), String> {
+    use lettre::message::header::ContentType;
+    use lettre::message::Mailbox;
+    use lettre::transport::smtp::authentication::Credentials;
+    use lettre::transport::smtp::client::{Tls, TlsParameters};
+    use lettre::{AsyncSmtpTransport, AsyncTransport, Message, Tokio1Executor};
+
+    let from = config
+        .mail_sender
+        .parse()
+        .map_err(|error| format!("sender address: {error}"))?;
+    let recipient = to
+        .parse()
+        .map_err(|error| format!("recipient address: {error}"))?;
+    let message = Message::builder()
+        .from(Mailbox::new(Some("Retrospected".into()), from))
+        .to(Mailbox::new(None, recipient))
+        .subject(subject)
+        .header(ContentType::TEXT_HTML)
+        .body(html.to_owned())
+        .map_err(|error| format!("message: {error}"))?;
+    let tls = TlsParameters::builder(config.mail_smtp_host.clone())
+        .dangerous_accept_invalid_certs(config.mail_allow_self_signed)
+        .build()
+        .map_err(|error| format!("tls: {error}"))?;
+    let tls = if config.mail_secure {
+        Tls::Wrapper(tls)
+    } else {
+        Tls::Required(tls)
+    };
+    let mut transport =
+        AsyncSmtpTransport::<Tokio1Executor>::builder_dangerous(&config.mail_smtp_host)
+            .port(config.mail_port)
+            .tls(tls);
+    if !config.mail_user.is_empty() {
+        transport = transport.credentials(Credentials::new(
+            config.mail_user.clone(),
+            config.mail_password.clone(),
+        ));
+    }
+    transport
+        .build()
+        .send(message)
+        .await
+        .map(|_| ())
+        .map_err(|error| error.to_string())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::send_smtp;
+    use crate::config::Config;
+
+    #[tokio::test]
+    async fn smtp_reports_a_refused_connection() {
+        let mut config = Config::from_env();
+        config.mail_smtp_host = "127.0.0.1".into();
+        config.mail_port = 1;
+        config.mail_secure = false;
+        config.mail_allow_self_signed = false;
+        config.mail_sender = "noreply@example.com".into();
+        config.mail_user.clear();
+        let error = send_smtp(&config, "person@example.com", "Hello", "<p>Hi</p>")
+            .await
+            .expect_err("nothing is listening on port 1");
+        assert!(!error.is_empty());
+    }
 }

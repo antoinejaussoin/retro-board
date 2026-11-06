@@ -183,6 +183,63 @@ async fn apply(
     Ok(())
 }
 
+/// Append an empty SQL migration to a catalogue without rewriting the existing entries.
+///
+/// Fill in the new `sql` field before the server starts. An empty statement is recorded
+/// and then skipped forever.
+///
+/// # Errors
+/// Returns an error when the catalogue is not a JSON array, the title is empty, or the
+/// name is already present.
+pub fn append_sql_migration(catalogue: &str, title: &str, timestamp: i64) -> Result<String, Error> {
+    let title = title.trim();
+    if title.is_empty() || !title.chars().all(|ch| ch.is_ascii_alphanumeric()) {
+        return Err(Error::Message(
+            "migration title must be letters and digits, for example AddWidget".into(),
+        ));
+    }
+    let name = format!("{title}{timestamp}");
+    let existing: Vec<serde_json::Value> = serde_json::from_str(catalogue)?;
+    if existing
+        .iter()
+        .any(|item| item.get("name").and_then(serde_json::Value::as_str) == Some(name.as_str()))
+    {
+        return Err(Error::Message(format!("migration {name} already exists")));
+    }
+    let entry = format!(
+        r#"  {{
+    "name": "{name}",
+    "timestamp": {timestamp},
+    "kind": "sql",
+    "steps": [
+      {{
+        "sql": "",
+        "params": []
+      }}
+    ]
+  }}"#
+    );
+    let trimmed = catalogue.trim_end();
+    let Some(without) = trimmed.strip_suffix(']') else {
+        return Err(Error::Message(
+            "migration catalogue must be a JSON array".into(),
+        ));
+    };
+    let without = without.trim_end();
+    let updated = if without.ends_with('[') {
+        format!("{without}\n{entry}\n]\n")
+    } else {
+        format!("{without},\n{entry}\n]\n")
+    };
+    let parsed: Vec<serde_json::Value> = serde_json::from_str(&updated)?;
+    if parsed.len() != existing.len() + 1 {
+        return Err(Error::Message(
+            "appending the migration did not produce one new entry".into(),
+        ));
+    }
+    Ok(updated)
+}
+
 pub(crate) async fn execute_step(
     tx: &mut sqlx::Transaction<'_, sqlx::Postgres>,
     step: &Step,
@@ -196,4 +253,21 @@ pub(crate) async fn execute_step(
     }
     query.execute(&mut **tx).await?;
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::append_sql_migration;
+
+    #[test]
+    fn append_keeps_existing_entries_and_adds_one() {
+        let catalogue = "[\n  {\n    \"name\": \"Initial1\",\n    \"timestamp\": 1,\n    \"kind\": \"sql\",\n    \"steps\": []\n  }\n]\n";
+        let updated = append_sql_migration(catalogue, "AddWidget", 99).expect("append");
+        assert!(updated.contains("Initial1"));
+        assert!(updated.contains("AddWidget99"));
+        let parsed: Vec<serde_json::Value> = serde_json::from_str(&updated).expect("json");
+        assert_eq!(parsed.len(), 2);
+        assert_eq!(parsed[1]["kind"], "sql");
+        assert!(append_sql_migration(&updated, "AddWidget", 99).is_err());
+    }
 }

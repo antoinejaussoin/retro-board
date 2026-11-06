@@ -223,6 +223,60 @@ async fn http_contract() {
         .iter()
         .any(|item| item["id"] == session_id));
 
+    let renamed: Value = client
+        .post(format!("{}/api/me/username", server.base))
+        .header("cookie", &cookie)
+        .json(&serde_json::json!({"name": "Ada Lovelace"}))
+        .send()
+        .await
+        .unwrap()
+        .json()
+        .await
+        .unwrap();
+    assert_eq!(renamed["name"], "Ada Lovelace");
+    let translated: Value = client
+        .post(format!("{}/api/me/language", server.base))
+        .header("cookie", &cookie)
+        .json(&serde_json::json!({"language": "fr-FR"}))
+        .send()
+        .await
+        .unwrap()
+        .json()
+        .await
+        .unwrap();
+    assert_eq!(translated["language"], "fr-FR");
+    assert_eq!(
+        client
+            .delete(format!("{}/api/session/{session_id}", server.base))
+            .header("cookie", &cookie)
+            .send()
+            .await
+            .unwrap()
+            .status(),
+        200
+    );
+    let gmail: bool = client
+        .get(format!("{}/api/stripe/domain/gmail.com", server.base))
+        .send()
+        .await
+        .unwrap()
+        .json()
+        .await
+        .unwrap();
+    let custom: bool = client
+        .get(format!(
+            "{}/api/stripe/domain/retrospected.com",
+            server.base
+        ))
+        .send()
+        .await
+        .unwrap()
+        .json()
+        .await
+        .unwrap();
+    assert!(!gmail);
+    assert!(custom);
+
     let missing = client
         .post(format!("{}/api/reset", server.base))
         .json(&serde_json::json!({"email": "missing@example.com"}))

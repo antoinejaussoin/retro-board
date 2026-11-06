@@ -10,6 +10,10 @@ version.workspace = true
 name = "retrospected-migrate"
 path = "src/bin/migrate.rs"
 
+[[bin]]
+name = "retrospected-new-migration"
+path = "src/bin/new_migration.rs"
+
 [dependencies]
 chrono.workspace = true
 serde.workspace = true
