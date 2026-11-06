@@ -6,8 +6,8 @@ import type {
   SessionSettings,
   VoteExtract,
 } from 'common';
-import { findIndex } from 'lodash';
 import { useCallback } from 'react';
+import type { SessionEvent } from './reduceSession';
 import { useGameStore } from './state';
 
 interface UseSession {
@@ -30,243 +30,107 @@ interface UseSession {
 
 export default function useSession(): UseSession {
   const session = useGameStore((s) => s.session);
-  const setSession = useGameStore((s) => s.setSession);
+  const dispatch = useGameStore((s) => s.dispatch);
+  const send = useCallback(
+    (event: SessionEvent) => {
+      dispatch(event);
+    },
+    [dispatch],
+  );
 
   const resetSession = useCallback(() => {
-    setSession(null);
-  }, [setSession]);
+    send({ type: 'reset' });
+  }, [send]);
 
   const receivePost = useCallback(
     (post: Post) => {
-      setSession((session) =>
-        !session
-          ? session
-          : {
-              ...session,
-              posts: [...session.posts, post],
-            },
-      );
+      send({ type: 'add-post', post });
     },
-    [setSession],
+    [send],
   );
 
   const receivePostGroup = useCallback(
     (postGroup: PostGroup) => {
-      setSession((session) =>
-        !session
-          ? session
-          : {
-              ...session,
-              groups: [...session.groups, postGroup],
-            },
-      );
+      send({ type: 'add-group', group: postGroup });
     },
-    [setSession],
+    [send],
   );
 
   const receiveChatMessage = useCallback(
     (message: Message) => {
-      setSession((session) =>
-        !session
-          ? session
-          : {
-              ...session,
-              messages: [...session.messages, message],
-            },
-      );
+      send({ type: 'add-message', message });
     },
-    [setSession],
+    [send],
   );
 
   const receiveBoard = useCallback(
-    (session: Session) => {
-      setSession(session);
+    (next: Session) => {
+      send({ type: 'receive-board', session: next });
     },
-    [setSession],
+    [send],
   );
 
   const updatePost = useCallback(
     (post: Post) => {
-      setSession((session) => {
-        if (!session) {
-          return session;
-        }
-        const index = findIndex(session.posts, (p) => p.id === post.id);
-        if (index === -1) {
-          return session;
-        }
-        return {
-          ...session,
-          posts: [
-            ...session.posts.slice(0, index),
-            post,
-            ...session.posts.slice(index + 1),
-          ],
-        };
-      });
+      send({ type: 'update-post', post });
     },
-    [setSession],
+    [send],
   );
 
   const updatePostGroup = useCallback(
     (group: PostGroup) => {
-      setSession((session) => {
-        if (!session) {
-          return session;
-        }
-        const index = findIndex(session.groups, (p) => p.id === group.id);
-        if (index === -1) {
-          return session;
-        }
-        return {
-          ...session,
-          groups: [
-            ...session.groups.slice(0, index),
-            group,
-            ...session.groups.slice(index + 1),
-          ],
-        };
-      });
+      send({ type: 'update-group', group });
     },
-    [setSession],
+    [send],
   );
 
   const receiveVote = useCallback(
     (postId: string, vote: VoteExtract) => {
-      setSession((session) => {
-        if (!session) {
-          return session;
-        }
-        const postIndex = findIndex(session.posts, (p) => p.id === postId);
-        const post = session.posts[postIndex];
-        if (!post) {
-          return session;
-        }
-        return {
-          ...session,
-          posts: [
-            ...session.posts.slice(0, postIndex),
-            {
-              ...post,
-              votes: [...post.votes, vote],
-            },
-            ...session.posts.slice(postIndex + 1),
-          ],
-        };
-      });
+      send({ type: 'add-vote', postId, vote });
     },
-    [setSession],
+    [send],
   );
 
   const cancelVotes = useCallback(
     (postId: string, userId: string) => {
-      setSession((session) => {
-        if (!session) {
-          return session;
-        }
-        return {
-          ...session,
-          posts: session.posts.map((p) => {
-            if (p.id !== postId) {
-              return p;
-            }
-            return {
-              ...p,
-              votes: p.votes.filter((v) => v.userId !== userId),
-            };
-          }),
-        };
-      });
+      send({ type: 'cancel-votes', postId, userId });
     },
-    [setSession],
+    [send],
   );
 
   const deletePost = useCallback(
     (postId: string) => {
-      setSession((session) =>
-        !session
-          ? session
-          : {
-              ...session,
-              posts: session.posts.filter((p) => p.id !== postId),
-            },
-      );
+      send({ type: 'delete-post', postId });
     },
-    [setSession],
+    [send],
   );
 
   const deletePostGroup = useCallback(
     (groupId: string) => {
-      setSession((session) =>
-        !session
-          ? session
-          : {
-              ...session,
-              groups: session.groups.filter((g) => g.id !== groupId),
-              posts: session.posts.map((p) =>
-                p.group && p.group.id === groupId
-                  ? {
-                      ...p,
-                      group: null,
-                    }
-                  : p,
-              ),
-            },
-      );
+      send({ type: 'delete-group', groupId });
     },
-    [setSession],
+    [send],
   );
 
   const editSessionSettings = useCallback(
-    (updated: SessionSettings) => {
-      setSession((session) =>
-        !session
-          ? null
-          : {
-              ...session,
-              name: checkUndefined(updated.name, session.name),
-              options: checkUndefined(updated.options, session.options),
-              columns: checkUndefined(updated.columns, session.columns),
-              locked: checkUndefined(updated.locked, session.locked),
-              moderator: checkUndefined(updated.moderator, session.moderator),
-            },
-      );
+    (settings: SessionSettings) => {
+      send({ type: 'settings', settings });
     },
-    [setSession],
+    [send],
   );
 
   const lockSession = useCallback(
     (locked: boolean) => {
-      setSession((session) =>
-        !session
-          ? session
-          : {
-              ...session,
-              locked,
-            },
-      );
+      send({ type: 'lock', locked });
     },
-    [setSession],
+    [send],
   );
 
   const userReady = useCallback(
     (userId: string, ready?: boolean) => {
-      setSession((session) =>
-        !session
-          ? session
-          : {
-              ...session,
-              ready: (
-                ready === undefined
-                  ? !session.ready.includes(userId)
-                  : ready
-              )
-                ? [...session.ready, userId]
-                : session.ready.filter((id) => id !== userId),
-            },
-      );
+      send({ type: 'ready', userId, ready });
     },
-    [setSession],
+    [send],
   );
 
   return {
@@ -286,11 +150,4 @@ export default function useSession(): UseSession {
     userReady,
     cancelVotes,
   };
-}
-
-function checkUndefined<T>(value: T | undefined, defaultValue: T): T {
-  if (value === undefined) {
-    return defaultValue;
-  }
-  return value;
 }
