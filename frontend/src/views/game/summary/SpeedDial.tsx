@@ -9,7 +9,7 @@ import ReactMarkdown from 'react-markdown';
 import { useTranslation } from 'react-i18next';
 import { useSnackbar } from 'notistack';
 
-const CopySpeedDial = () => {
+const CopySpeedDial = ({ summary }: { summary: string }) => {
   const isSupported = !!window.getSelection;
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -17,7 +17,7 @@ const CopySpeedDial = () => {
   const handleOpen = useCallback(() => setOpen(true), []);
   const handleClose = useCallback(() => setOpen(false), []);
   const mdElement = useRef<HTMLDivElement>(null);
-  const md = useMarkdown();
+  const md = useMarkdown(summary);
 
   const handleCopyToMarkdown = useCallback(async () => {
     const p = document.createElement('pre');

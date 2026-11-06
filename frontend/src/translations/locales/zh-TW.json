@@ -281,7 +281,20 @@
     "noPosts": "目前無任何內容",
     "copyAsMarkdown": "將摘要復制為 Markdown",
     "copyAsRichText": "將摘要復制為富文本",
-    "copySuccessful": "您已成功將摘要復製到剪貼板"
+    "copySuccessful": "您已成功將摘要復製到剪貼板",
+    "summarise": "用 AI 總結",
+    "summarising": "正在總結…",
+    "aiSummaryTitle": "AI 總結",
+    "aiSummaryHelp": "產生這次回顧的簡短總結。複製摘要時會包含這份總結。",
+    "aiSummaryStale": "撰寫這份總結後，看板已有更新。",
+    "regenerate": "重新產生總結",
+    "edit": "編輯",
+    "save": "儲存",
+    "preview": "預覽",
+    "bold": "粗體",
+    "italic": "斜體",
+    "heading": "標題",
+    "list": "清單"
   },
   "SessionName": {
     "defaultSessionName": "我的回顧"

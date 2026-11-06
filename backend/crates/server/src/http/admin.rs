@@ -32,7 +32,7 @@ pub(super) async fn capabilities(State(state): State<AppState>) -> Json<BackendC
         disable_password_registration: state.config.disable_password_registration,
         disable_account_deletion: state.config.disable_account_deletion,
         disable_show_author: state.config.disable_show_author,
-        ai: !state.config.open_ai_api_key.is_empty(),
+        ai: !state.config.anthropic_api_key.is_empty(),
         o_auth: OAuthFlags {
             google: !state.config.google_key.is_empty() && !state.config.google_secret.is_empty(),
             github: !state.config.github_key.is_empty() && !state.config.github_secret.is_empty(),

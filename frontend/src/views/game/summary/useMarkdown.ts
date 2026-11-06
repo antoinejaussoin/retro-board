@@ -9,7 +9,7 @@ import useSession from '../useSession';
 import type { ActionItem, ColumnStatsItem } from './types';
 import { useSummary } from './useSummary';
 
-export default function useMarkdown() {
+export default function useMarkdown(aiSummary = '') {
   const { session } = useSession();
   const columns = useColumns();
   const { t } = useTranslation();
@@ -51,7 +51,7 @@ export default function useMarkdown() {
 
 **Votes**: ${numberOfVotes}
 
-### Actions
+${aiSummary.trim() ? `### AI summary\n\n${aiSummary.trim()}\n\n` : ''}### Actions
 
 ${stats.actions.map(toAction).join('\n')}
 
@@ -68,7 +68,7 @@ ${[...col.items].map((i) => toItem(i, 0)).join('\n')}
     }
 
     return md;
-  }, [session, t, stats]);
+  }, [session, t, stats, aiSummary]);
   return result;
 }
 

@@ -7,6 +7,32 @@ pub struct AiChatPayload {
     pub messages: Vec<CoachMessage>,
 }
 
+/// Body of `POST /api/ai/summary`. Only the board id is accepted.
+#[derive(Debug, Deserialize)]
+pub struct AiSummaryPayload {
+    pub id: String,
+}
+
+/// Body of `PATCH /api/ai/summary/{id}`. The Markdown the user edited.
+#[derive(Debug, Deserialize)]
+pub struct EditAiSummaryPayload {
+    pub summary: String,
+}
+
+/// Markdown write-up returned by `POST /api/ai/summary`.
+#[derive(Debug, Serialize)]
+pub struct AiSummaryResponse {
+    pub summary: String,
+}
+
+/// Saved write-up returned by `GET /api/ai/summary/{id}`.
+#[derive(Debug, Serialize)]
+pub struct StoredAiSummaryResponse {
+    pub summary: Option<String>,
+    /// True when the board has changed since `summary` was written.
+    pub stale: bool,
+}
+
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct CoachMessage {
     pub role: String,

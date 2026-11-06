@@ -281,7 +281,20 @@
     "noPosts": "Aucun post à afficher",
     "copyAsMarkdown": "Copier le résumé au format Markdown",
     "copyAsRichText": "Copier le résumé en texte enrichi",
-    "copySuccessful": "Vous avez copié le résumé avec succès"
+    "copySuccessful": "Vous avez copié le résumé avec succès",
+    "summarise": "Résumer avec l'IA",
+    "summarising": "Résumé en cours…",
+    "aiSummaryTitle": "Résumé IA",
+    "aiSummaryHelp": "Générez un court compte rendu de cette rétrospective. Il est inclus lorsque vous copiez le résumé.",
+    "aiSummaryStale": "Le tableau a changé depuis la rédaction de ce résumé.",
+    "regenerate": "Régénérer le résumé",
+    "edit": "Modifier",
+    "save": "Enregistrer",
+    "preview": "Aperçu",
+    "bold": "Gras",
+    "italic": "Italique",
+    "heading": "Titre",
+    "list": "Liste"
   },
   "SessionName": {
     "defaultSessionName": "Ma Retrospective"

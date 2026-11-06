@@ -49,6 +49,11 @@ pub fn router() -> Router<AppState> {
         .route("/api/admin/stats", get(admin::admin_stats))
         .route("/api/slack/create", post(slack::slack_create))
         .route("/api/ai/chat", post(ai::ai_chat))
+        .route(
+            "/api/ai/summary/{id}",
+            get(ai::ai_summary_stored).patch(ai::ai_summary_edit),
+        )
+        .route("/api/ai/summary", post(ai::ai_summary))
         .route("/api/create", post(board::create_session))
         .route("/api/demo", post(board::create_demo))
         .route("/api/logout", post(auth::logout))

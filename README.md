@@ -65,7 +65,7 @@ It features the following technologies:
 - [Stripe](https://stripe.com/), for our payment solution
 - [Docusaurus](http://docusaurus.io/), for our documentation
 - [NextJS](https://nextjs.org/), for our landing page
-- [ChatGPT](https://openai.com/blog/chatgpt), powering our AI agile coach
+- [Claude](https://www.anthropic.com/claude), powering our AI agile coach
 - [Biome](https://biomejs.dev), for linting and formatting, all in one beautiful package
 
 Previous versions featured the following libraries:

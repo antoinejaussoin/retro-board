@@ -275,7 +275,20 @@
     "noPosts": "There are no posts to display",
     "copyAsMarkdown": "Copy the summary as Markdown",
     "copyAsRichText": "Copy the summary as Rich Text",
-    "copySuccessful": "You successfully copied your summary in your clipboard"
+    "copySuccessful": "You successfully copied your summary in your clipboard",
+    "summarise": "Summarise with AI",
+    "summarising": "Summarising…",
+    "aiSummaryTitle": "AI summary",
+    "aiSummaryHelp": "Generate a short write-up of this retrospective. It is included when you copy the summary.",
+    "aiSummaryStale": "The board has changed since this summary was written.",
+    "regenerate": "Regenerate summary",
+    "edit": "Edit",
+    "save": "Save",
+    "preview": "Preview",
+    "bold": "Bold",
+    "italic": "Italic",
+    "heading": "Heading",
+    "list": "List"
   },
   "SessionName": {
     "defaultSessionName": "My Retrospective"

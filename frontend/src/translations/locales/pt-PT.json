@@ -281,7 +281,20 @@
     "noPosts": "Não há nenhuma postagem para exibir",
     "copyAsMarkdown": "Copiar o resumo como Markdown",
     "copyAsRichText": "Copiar o resumo como Rich Text",
-    "copySuccessful": "Você copiou o seu resumo para a área de transferência"
+    "copySuccessful": "Você copiou o seu resumo para a área de transferência",
+    "summarise": "Resumir com IA",
+    "summarising": "A resumir…",
+    "aiSummaryTitle": "Resumo de IA",
+    "aiSummaryHelp": "Gere um breve resumo desta retrospetiva. É incluído quando copia o resumo.",
+    "aiSummaryStale": "O quadro mudou desde que este resumo foi escrito.",
+    "regenerate": "Gerar o resumo novamente",
+    "edit": "Editar",
+    "save": "Guardar",
+    "preview": "Pré-visualização",
+    "bold": "Negrito",
+    "italic": "Itálico",
+    "heading": "Título",
+    "list": "Lista"
   },
   "SessionName": {
     "defaultSessionName": "Meu Retrospectivo"

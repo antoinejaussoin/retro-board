@@ -3387,5 +3387,16 @@
         "params": []
       }
     ]
+  },
+  {
+    "name": "PersistAiSummary1762460800000",
+    "timestamp": 1762460800000,
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"ai_summary\" text, ADD \"ai_summary_fingerprint\" text",
+        "params": []
+      }
+    ]
   }
 ]

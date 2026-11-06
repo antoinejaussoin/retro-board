@@ -275,7 +275,20 @@
     "noPosts": "Es gibt keine Beiträge",
     "copyAsMarkdown": "Zusammenfassung als Markdown kopieren",
     "copyAsRichText": "Zusammenfassung als Rich Text kopieren",
-    "copySuccessful": "Sie haben Ihre Zusammenfassung erfolgreich in Ihre Zwischenablage kopiert"
+    "copySuccessful": "Sie haben Ihre Zusammenfassung erfolgreich in Ihre Zwischenablage kopiert",
+    "summarise": "Mit KI zusammenfassen",
+    "summarising": "Wird zusammengefasst…",
+    "aiSummaryTitle": "KI-Zusammenfassung",
+    "aiSummaryHelp": "Erstellen Sie eine kurze Zusammenfassung dieser Retrospektive. Sie ist enthalten, wenn Sie die Zusammenfassung kopieren.",
+    "aiSummaryStale": "Das Board hat sich geändert, seit diese Zusammenfassung geschrieben wurde.",
+    "regenerate": "Zusammenfassung neu erstellen",
+    "edit": "Bearbeiten",
+    "save": "Speichern",
+    "preview": "Vorschau",
+    "bold": "Fett",
+    "italic": "Kursiv",
+    "heading": "Überschrift",
+    "list": "Liste"
   },
   "SessionName": {
     "defaultSessionName": "Meine Retrospektive"
