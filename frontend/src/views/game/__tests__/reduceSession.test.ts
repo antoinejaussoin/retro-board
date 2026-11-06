@@ -1,4 +1,10 @@
-import { defaultOptions, type Post, type PostGroup, type Session, type User } from 'common';
+import {
+  defaultOptions,
+  type Post,
+  type PostGroup,
+  type Session,
+  type User,
+} from 'common';
 import { describe, expect, it } from 'vitest';
 import { reduceSession, type SessionEvent } from '../reduceSession';
 
@@ -75,9 +81,9 @@ describe('reduceSession', () => {
       'foo',
       'foo',
     ]);
-    expect(
-      apply(updated, { type: 'update-post', post: card('missing') }),
-    ).toBe(updated);
+    expect(apply(updated, { type: 'update-post', post: card('missing') })).toBe(
+      updated,
+    );
   });
 
   it('deletes a post and leaves the others', () => {
@@ -115,7 +121,13 @@ describe('reduceSession', () => {
       userId: '1',
     });
     expect(cancelled?.posts[0].votes.map((vote) => vote.userId)).toEqual(['2']);
-    expect(apply(start, { type: 'add-vote', postId: 'missing', vote: { id: 'v', type: 'like', userId: '1', userName: 'danièle' } })).toBe(start);
+    expect(
+      apply(start, {
+        type: 'add-vote',
+        postId: 'missing',
+        vote: { id: 'v', type: 'like', userId: '1', userName: 'danièle' },
+      }),
+    ).toBe(start);
   });
 
   it('deletes a group and detaches its posts', () => {
@@ -140,7 +152,10 @@ describe('reduceSession', () => {
     expect(renamed?.options).toBe(start.options);
     expect(renamed?.locked).toBe(false);
 
-    const cleared = apply(renamed, { type: 'settings', settings: { name: null } });
+    const cleared = apply(renamed, {
+      type: 'settings',
+      settings: { name: null },
+    });
     expect(cleared?.name).toBeNull();
     expect(cleared?.options).toBe(start.options);
   });
@@ -161,7 +176,9 @@ describe('reduceSession', () => {
 
   it('ignores board edits when there is no session', () => {
     expect(apply(null, { type: 'add-post', post: card('1') })).toBeNull();
-    expect(apply(null, { type: 'settings', settings: { name: 'x' } })).toBeNull();
+    expect(
+      apply(null, { type: 'settings', settings: { name: 'x' } }),
+    ).toBeNull();
     expect(apply(null, { type: 'delete-group', groupId: 'g' })).toBeNull();
   });
 });

@@ -69,7 +69,9 @@ export function reduceSession(
       return session
         ? {
             ...session,
-            groups: session.groups.filter((group) => group.id !== event.groupId),
+            groups: session.groups.filter(
+              (group) => group.id !== event.groupId,
+            ),
             posts: session.posts.map((post) =>
               post.group && post.group.id === event.groupId
                 ? { ...post, group: null }
@@ -107,11 +109,7 @@ function replaceById<Key extends 'posts' | 'groups'>(
   }
   return {
     ...session,
-    [key]: [
-      ...items.slice(0, index),
-      next,
-      ...items.slice(index + 1),
-    ],
+    [key]: [...items.slice(0, index), next, ...items.slice(index + 1)],
   };
 }
 
@@ -143,8 +141,7 @@ function mergeSettings(session: Session, updated: SessionSettings): Session {
     ...session,
     name: updated.name === undefined ? session.name : updated.name,
     options: updated.options === undefined ? session.options : updated.options,
-    columns:
-      updated.columns === undefined ? session.columns : updated.columns,
+    columns: updated.columns === undefined ? session.columns : updated.columns,
     locked: updated.locked === undefined ? session.locked : updated.locked,
     moderator:
       updated.moderator === undefined ? session.moderator : updated.moderator,
