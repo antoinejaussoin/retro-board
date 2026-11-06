@@ -19,6 +19,11 @@ services:
       POSTGRES_PASSWORD: some-password
       POSTGRES_USER: postgres
       POSTGRES_DB: retroboard
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d retroboard"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
     restart: unless-stopped
     logging:
       driver: 'json-file'
@@ -28,7 +33,10 @@ services:
   backend:
     image: retrospected/backend:latest
     depends_on:
-      - redis
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3201/healthz"]
       interval: 2s
