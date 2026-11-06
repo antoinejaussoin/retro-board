@@ -64,12 +64,14 @@ describe('Cryptography', () => {
     const fromNoble = sealNoble(plain, key);
     const fromSubtle = await sealSubtle(plain, key);
 
-    expect(bytesToUtf8((await openSubtle(fromNoble, key))!)).toEqual(
-      `${CHECK_PREFIX}hello world`,
-    );
-    expect(bytesToUtf8(openNoble(fromSubtle, key)!)).toEqual(
-      `${CHECK_PREFIX}hello world`,
-    );
+    const openedBySubtle = await openSubtle(fromNoble, key);
+    const openedByNoble = openNoble(fromSubtle, key);
+    expect(openedBySubtle).not.toBeNull();
+    expect(openedByNoble).not.toBeNull();
+    if (openedBySubtle && openedByNoble) {
+      expect(bytesToUtf8(openedBySubtle)).toEqual(`${CHECK_PREFIX}hello world`);
+      expect(bytesToUtf8(openedByNoble)).toEqual(`${CHECK_PREFIX}hello world`);
+    }
     expect(decrypt(fromSubtle, key)).toEqual('hello world');
     expect(fromNoble).not.toEqual(fromSubtle);
   });

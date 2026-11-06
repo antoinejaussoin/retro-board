@@ -8,7 +8,9 @@ export type ListDropData = {
   targetId: string;
 };
 
-export function isPostDragData(data: Record<string, unknown>): data is PostDragData {
+export function isPostDragData(
+  data: Record<string, unknown>,
+): data is PostDragData {
   return data.type === 'post' && typeof data.postId === 'string';
 }
 
@@ -28,9 +30,9 @@ export function isPostDropData(
 }
 
 function cardsIn(container: Element, draggingId: string): HTMLElement[] {
-  return Array.from(container.querySelectorAll<HTMLElement>('[data-post-id]')).filter(
-    (card) => card.dataset.postId !== draggingId,
-  );
+  return Array.from(
+    container.querySelectorAll<HTMLElement>('[data-post-id]'),
+  ).filter((card) => card.dataset.postId !== draggingId);
 }
 
 export function insertionIndex(
@@ -46,7 +48,10 @@ export function insertionIndex(
   return index === -1 ? cards.length : index;
 }
 
-export function edgeOf(card: Element, clientY: number): 'top' | 'bottom' | 'center' {
+export function edgeOf(
+  card: Element,
+  clientY: number,
+): 'top' | 'bottom' | 'center' {
   const rect = card.getBoundingClientRect();
   if (rect.height === 0) {
     return 'center';

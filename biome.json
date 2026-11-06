@@ -3,7 +3,11 @@
   "vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
   "files": {
     "ignoreUnknown": false,
-    "ignore": ["dist/**/*", ".next/**/*"],
+    "ignore": [
+      "dist/**/*",
+      ".next/**/*",
+      "frontend/src/common/generated.ts"
+    ],
     "include": ["src/**/*.js", "src/**/*.ts"]
   },
   "formatter": {

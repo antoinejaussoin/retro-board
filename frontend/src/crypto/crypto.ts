@@ -23,7 +23,7 @@ function randomNonce(): Uint8Array {
 function bytesToBase64(bytes: Uint8Array): string {
   let binary = '';
   for (let i = 0; i < bytes.length; i++) {
-    binary += String.fromCharCode(bytes[i]!);
+    binary += String.fromCharCode(bytes[i] ?? 0);
   }
   return btoa(binary);
 }
@@ -161,7 +161,9 @@ function evpBytesToKey(
   let previous = new Uint8Array(0);
   let length = 0;
   while (length < 48) {
-    const input = new Uint8Array(previous.length + password.length + salt.length);
+    const input = new Uint8Array(
+      previous.length + password.length + salt.length,
+    );
     input.set(previous, 0);
     input.set(password, previous.length);
     input.set(salt, previous.length + password.length);
