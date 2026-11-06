@@ -1,5 +1,4 @@
-import { useCallback } from 'react';
-import Switch from '@mui/material/Switch';
+import { Checkbox } from 'ui/checkbox';
 
 interface BooleanOptionProps {
   value: boolean;
@@ -7,12 +6,7 @@ interface BooleanOptionProps {
 }
 
 const BooleanOption = ({ value, onChange }: BooleanOptionProps) => {
-  const handleChange = useCallback(
-    (_event: React.ChangeEvent<HTMLInputElement>, checked: boolean) =>
-      onChange(checked),
-    [onChange]
-  );
-  return <Switch checked={value} onChange={handleChange}></Switch>;
+  return <Checkbox checked={value} onCheckedChange={onChange} />;
 };
 
 export default BooleanOption;

@@ -1,14 +1,11 @@
 import { lazy, Suspense, useCallback, useState } from 'react';
-import styled from '@emotion/styled';
-import Typography from '@mui/material/Typography';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
+import { Trash2 } from 'lucide-react';
+import { TwitterPicker, type ColorResult } from 'react-color';
 import EditableLabel from '../../../../components/EditableLabel';
-import { ColumnSettings } from '../../../../state/types';
-import { TwitterPicker, ColorResult } from 'react-color';
-import IconButton from '@mui/material/IconButton';
-import { colors } from '@mui/material';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { DeleteForeverOutlined } from '@mui/icons-material';
+import { useMediaQuery } from 'hooks/useMediaQuery';
+import type { ColumnSettings } from '../../../../state/types';
+import { IconButton } from 'ui/icon-button';
+import { Popover, PopoverContent, PopoverTrigger } from 'ui/popover';
 
 const IconPicker = lazy(() => import('./IconPicker'));
 
@@ -19,6 +16,19 @@ interface ColumnEditorProps {
   onRemove: (value: ColumnSettings) => void;
 }
 
+const palette = [
+  '#E8F5E9',
+  '#FFEBEE',
+  '#FFFDE7',
+  '#BBDEFB',
+  '#E1BEE7',
+  '#FFE0B2',
+  '#FFCCBC',
+  '#B2EBF2',
+  '#D7CCC8',
+  '#CFD8DC',
+];
+
 const ColumnEditor = ({
   value,
   canDelete,
@@ -27,8 +37,6 @@ const ColumnEditor = ({
 }: ColumnEditorProps) => {
   const fullScreen = useMediaQuery('(max-width:600px)');
   const [pickerOpen, setPickerOpen] = useState(false);
-  const openPicker = useCallback(() => setPickerOpen(true), []);
-  const closePicker = useCallback(() => setPickerOpen(false), []);
   const handleLabelChange = useCallback(
     (label: string) => {
       onChange({
@@ -36,7 +44,7 @@ const ColumnEditor = ({
         label,
       });
     },
-    [onChange, value]
+    [onChange, value],
   );
   const handleColorChange = useCallback(
     (result: ColorResult) => {
@@ -44,9 +52,9 @@ const ColumnEditor = ({
         ...value,
         color: result.hex,
       });
-      closePicker();
+      setPickerOpen(false);
     },
-    [onChange, value, closePicker]
+    [onChange, value],
   );
 
   const handleIconChange = useCallback(
@@ -56,129 +64,59 @@ const ColumnEditor = ({
         icon,
       });
     },
-    [onChange, value]
+    [onChange, value],
   );
   const handleRemove = useCallback(() => {
     onRemove(value);
   }, [value, onRemove]);
+
+  const deleteButton = canDelete ? (
+    <IconButton
+      onClick={handleRemove}
+      aria-label="Delete column"
+      className="text-red-600"
+    >
+      <Trash2 className="size-4" />
+    </IconButton>
+  ) : null;
+
   return (
-    <Container>
-      <ColorAndIconContainer>
-        <ColorContainer>
-          <ColorPickerValue
-            color={value.color}
-            onClick={pickerOpen ? closePicker : openPicker}
-          />
-          {pickerOpen && (
-            <ClickAwayListener onClickAway={closePicker}>
-              <PickerContainer>
-                <TwitterPicker
-                  colors={[
-                    '#E8F5E9',
-                    '#FFEBEE',
-                    '#FFFDE7',
-                    '#BBDEFB',
-                    '#E1BEE7',
-                    '#FFE0B2',
-                    '#FFCCBC',
-                    '#B2EBF2',
-                    '#D7CCC8',
-                    '#CFD8DC',
-                  ]}
-                  triangle="hide"
-                  color={value.color}
-                  onChange={handleColorChange}
-                ></TwitterPicker>
-              </PickerContainer>
-            </ClickAwayListener>
-          )}
-        </ColorContainer>
-        <IconContainer>
-          <Suspense fallback={<span />}>
-            <IconPicker value={value.icon} onChange={handleIconChange} />
-          </Suspense>
-        </IconContainer>
-        {fullScreen && canDelete ? (
-          <DeleteContainer>
-            <IconButton onClick={handleRemove} size="large">
-              <DeleteForeverOutlined />
-            </IconButton>
-          </DeleteContainer>
-        ) : null}
-      </ColorAndIconContainer>
-      <LabelContainer>
-        <Typography>
-          <EditableLabel
-            wrapText
-            value={value.label}
-            onChange={handleLabelChange}
-            placeholder={value.label || '(empty)'}
-          />
-        </Typography>
-      </LabelContainer>
-      {!fullScreen && canDelete ? (
-        <DeleteContainer>
-          <IconButton onClick={handleRemove} size="large">
-            <DeleteForeverOutlined />
-          </IconButton>
-        </DeleteContainer>
-      ) : null}
-    </Container>
+    <div className="flex w-full items-center gap-3 py-2.5 max-[600px]:flex-col max-[600px]:items-start">
+      <div className="flex items-center gap-4 max-[600px]:mb-1">
+        <Popover open={pickerOpen} onOpenChange={setPickerOpen}>
+          <PopoverTrigger asChild>
+            <button
+              type="button"
+              aria-label="Column color"
+              className="size-6 rounded-md shadow ring-1 ring-black/10"
+              style={{ backgroundColor: value.color }}
+            />
+          </PopoverTrigger>
+          <PopoverContent align="start" className="z-[70] w-auto p-0">
+            <TwitterPicker
+              colors={palette}
+              triangle="hide"
+              color={value.color}
+              onChange={handleColorChange}
+            />
+          </PopoverContent>
+        </Popover>
+        <Suspense fallback={<span />}>
+          <IconPicker value={value.icon} onChange={handleIconChange} />
+        </Suspense>
+        {fullScreen ? deleteButton : null}
+      </div>
+      <div className="min-w-0 flex-1">
+        <EditableLabel
+          wrapText
+          value={value.label}
+          onChange={handleLabelChange}
+          placeholder={value.label || '(empty)'}
+        />
+      </div>
+      {!fullScreen ? deleteButton : null}
+    </div>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 10px 0;
-  width: 100%;
-  @media (max-width: 600px) {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-`;
-
-const DeleteContainer = styled.div`
-  svg {
-    color: ${colors.red[500]};
-  }
-`;
-
-const LabelContainer = styled.div`
-  flex: 1;
-`;
-
-const ColorPickerValue = styled.div<{ color: string }>`
-  width: 24px;
-  height: 24px;
-  box-shadow: 2px 2px 5px 2px rgba(224, 224, 224, 1);
-  background-color: ${(props) => props.color};
-  cursor: pointer;
-`;
-
-const PickerContainer = styled.div`
-  position: absolute;
-  left: 0px;
-  top: -100px;
-  z-index: 9999;
-`;
-
-const ColorContainer = styled.div`
-  position: relative;
-  margin-right: 20px;
-`;
-
-const IconContainer = styled.div`
-  margin-right: 20px;
-`;
-
-const ColorAndIconContainer = styled.div`
-  display: flex;
-  align-items: center;
-
-  @media (max-width: 600px) {
-    margin-bottom: 15px;
-  }
-`;
 
 export default ColumnEditor;

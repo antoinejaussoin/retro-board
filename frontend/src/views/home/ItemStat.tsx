@@ -1,5 +1,3 @@
-import styled from '@emotion/styled';
-
 interface ItemStatProps {
   value: number;
   label: string;
@@ -8,32 +6,13 @@ interface ItemStatProps {
 
 const ItemStat = ({ value, label, color }: ItemStatProps) => {
   return (
-    <Container>
-      <Value style={{ color, fontWeight: 100 }}>{value}</Value>
-      <Label>{label}</Label>
-    </Container>
+    <div className="flex flex-col items-center px-1 py-2 text-center">
+      <div className="text-lg font-medium tabular-nums" style={{ color }}>
+        {value}
+      </div>
+      <div className="text-[11px] leading-4 text-muted">{label}</div>
+    </div>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 30px;
-  font-weight: 100;
-
-  @media screen and (max-width: 500px) {
-    padding: 10px 15px;
-  }
-`;
-
-const Value = styled.div`
-  font-size: 4em;
-`;
-const Label = styled.div`
-  font-weight: 100;
-  font-size: 1em;
-`;
 
 export default ItemStat;

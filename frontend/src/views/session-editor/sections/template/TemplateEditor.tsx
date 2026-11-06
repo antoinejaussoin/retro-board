@@ -1,12 +1,11 @@
 import { useCallback } from 'react';
-import { ColumnSettings } from '../../../../state/types';
-import ColumnEditor from './ColumnEditor';
-import { getTemplateColumnByType } from '../../../../state/columns';
-import { trackEvent } from '../../../../track';
-import { Add } from '@mui/icons-material';
+import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@mui/material';
-import styled from '@emotion/styled';
+import { getTemplateColumnByType } from '../../../../state/columns';
+import type { ColumnSettings } from '../../../../state/types';
+import { trackEvent } from '../../../../track';
+import { Button } from 'ui/button';
+import ColumnEditor from './ColumnEditor';
 
 const MAX_NUMBER_OF_COLUMNS = 5;
 
@@ -22,7 +21,7 @@ export function TemplateEditor({ columns, onChange }: TemplateEditorProps) {
       onChange(Object.assign([], columns, { [index]: value }));
       trackEvent('custom-modal/column/change');
     },
-    [onChange, columns]
+    [onChange, columns],
   );
   const handleAddColumn = useCallback(() => {
     const custom = getTemplateColumnByType(t)('custom');
@@ -31,38 +30,28 @@ export function TemplateEditor({ columns, onChange }: TemplateEditorProps) {
   }, [onChange, columns, t]);
   const handleRemoveColumn = useCallback(
     (column: ColumnSettings) => {
-      onChange(columns.filter((c) => c !== column));
+      onChange(columns.filter((item) => item !== column));
       trackEvent('custom-modal/column/remove');
     },
-    [onChange, columns]
+    [onChange, columns],
   );
   return (
-    <Container>
-      {columns.map((def, index) => (
+    <div className="min-[600px]:min-h-[340px]">
+      {columns.map((definition, index) => (
         <ColumnEditor
-          key={index}
-          value={def}
+          key={`${definition.type}-${index}`}
+          value={definition}
           canDelete={columns.length > 1}
           onChange={(value) => handleColumnChange(value, index)}
           onRemove={handleRemoveColumn}
         />
       ))}
       {columns.length < MAX_NUMBER_OF_COLUMNS ? (
-        <Button
-          onClick={handleAddColumn}
-          color="secondary"
-          startIcon={<Add />}
-          style={{ marginTop: 10 }}
-        >
+        <Button variant="secondary" onClick={handleAddColumn} className="mt-2">
+          <Plus className="size-4" />
           {t('Customize.customTemplateAddColumn')}
         </Button>
       ) : null}
-    </Container>
+    </div>
   );
 }
-
-const Container = styled.div`
-  @media screen and (min-width: 600px) {
-    min-height: 340px;
-  }
-`;

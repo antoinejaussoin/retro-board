@@ -1,6 +1,5 @@
-import styled from '@emotion/styled';
-import { Alert } from '@mui/material';
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
+import { Alert } from 'ui/alert';
 
 interface SettingCategoryProps {
   title: string;
@@ -12,17 +11,11 @@ export default function SettingCategory({
   children,
 }: PropsWithChildren<SettingCategoryProps>) {
   return (
-    <Container>
-      <Alert severity="success" style={{ marginTop: 10 }}>
+    <div>
+      <Alert severity="success" className="mt-2">
         {subtitle}
       </Alert>
-      <ChildrenContainer>{children}</ChildrenContainer>
-    </Container>
+      <div className="w-full">{children}</div>
+    </div>
   );
 }
-
-const ChildrenContainer = styled.div`
-  width: 100%;
-`;
-
-const Container = styled.div``;

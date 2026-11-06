@@ -1,39 +1,36 @@
-import { useCallback, useMemo, useState } from 'react';
-import styled from '@emotion/styled';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {
-  Alert,
-  ListItemIcon,
-  ListItemText,
-  MenuItem,
-  Typography,
-} from '@mui/material';
-import { Dashboard, Key } from '@mui/icons-material';
-import PreviousGames from './home/PreviousGames';
-import { SessionMetadata } from 'common';
-import { trackAdWordsConversion, trackEvent } from './../track';
-import { createGame, createEncryptedGame, deleteSession } from '../api';
-import { Page } from '../components/Page';
-import usePreviousSessions from '../hooks/usePreviousSessions';
-import useUser from '../state/user/useUser';
+import { KeyRound, LayoutDashboard } from 'lucide-react';
+import type { SessionMetadata } from 'common';
 import shortid from 'shortid';
-import { storeEncryptionKeyLocally } from '../crypto/crypto';
-import ProButton from '../components/ProButton';
-import { useSnackbar } from 'notistack';
-import TrialPrompt from './home/TrialPrompt';
 import { useTranslation } from 'react-i18next';
 import ClosableAlert from 'components/ClosableAlert';
+import { Page } from '../components/Page';
+import ProButton from '../components/ProButton';
 import SplitButton from 'components/SplitButton/SplitButton';
-import SearchBar from './game/SearchBar';
+import useIsPro from '../auth/useIsPro';
 import { NameEditor } from 'molecules/NameEditor';
+import { trackAdWordsConversion, trackEvent } from './../track';
+import { createEncryptedGame, createGame, deleteSession } from '../api';
+import { storeEncryptionKeyLocally } from '../crypto/crypto';
+import usePreviousSessions from '../hooks/usePreviousSessions';
+import useUser from '../state/user/useUser';
+import { Alert } from 'ui/alert';
+import { MenuItem } from 'ui/menu';
+import { useSnackbar } from 'ui/toast';
+import SearchBar from './game/SearchBar';
+import PreviousGames from './home/PreviousGames';
 import { SetupProPrompt } from './home/SetupProPrompt';
+import TrialPrompt from './home/TrialPrompt';
 
 function Home() {
   const navigate = useNavigate();
   const user = useUser();
+  const isPro = useIsPro();
   const isLoggedIn = !!user;
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
+  const encryptedTriggerRef = useRef<HTMLButtonElement>(null);
   const [search, setSearch] = useState('');
   const [previousSessions, refreshPreviousSessions] = usePreviousSessions();
   const hasPreviousSessions = previousSessions.length > 0;
@@ -43,9 +40,9 @@ function Home() {
       return previousSessions;
     }
     return previousSessions.filter((session) =>
-      (session.name || t('SessionName.defaultSessionName')!)
+      (session.name || t('SessionName.defaultSessionName'))
         .toLowerCase()
-        .includes(search.toLowerCase())
+        .includes(search.toLowerCase()),
     );
   }, [search, previousSessions, t]);
 
@@ -55,7 +52,7 @@ function Home() {
       trackEvent('home/create/default');
       trackAdWordsConversion();
       await refreshPreviousSessions();
-      navigate('/game/' + session.id);
+      navigate(`/game/${session.id}`);
     } else {
       enqueueSnackbar('Something went wrong when creating the session', {
         variant: 'error',
@@ -75,17 +72,25 @@ function Home() {
     } else {
       enqueueSnackbar(
         'Something went wrong when creating the encrypted session',
-        { variant: 'error' }
+        { variant: 'error' },
       );
     }
   }, [navigate, enqueueSnackbar, refreshPreviousSessions]);
+
+  const handleEncryptedSession = useCallback(() => {
+    if (isPro) {
+      void createEncryptedSession();
+      return;
+    }
+    encryptedTriggerRef.current?.click();
+  }, [createEncryptedSession, isPro]);
 
   const handleDeleteSession = useCallback(
     async (session: SessionMetadata) => {
       await deleteSession(session.id);
       await refreshPreviousSessions();
     },
-    [refreshPreviousSessions]
+    [refreshPreviousSessions],
   );
 
   return (
@@ -95,61 +100,52 @@ function Home() {
       {user && user.accountType === 'anonymous' ? (
         <ClosableAlert severity="info" closable>
           <span>{t('Home.anonWarning')}</span>&nbsp;&nbsp;&nbsp;
-          <Link style={{ textDecoration: 'none' }} to="/account">
+          <Link className="font-medium no-underline" to="/account">
             {t('Home.login')}
           </Link>
         </ClosableAlert>
       ) : null}
       <Page>
-        <MainHeader>
-          {t('Home.welcome')}&nbsp;
-          <NameEditor />
-        </MainHeader>
-
-        <LaunchButtons>
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <h1 className="flex flex-wrap items-center gap-x-3 text-4xl font-light tracking-tight text-ink sm:text-5xl">
+            <span>{t('Home.welcome')}</span>
+            <NameEditor />
+          </h1>
           <ProButton quota>
             <SplitButton
               data-cy="new-session-button"
               disabled={!isLoggedIn}
-              icon={<Dashboard fontSize="large" />}
+              icon={<LayoutDashboard className="size-5" />}
               onClick={createDefaultSession}
-              label={t('Join.standardTab.button')!}
+              label={t('Join.standardTab.button')}
               secondary
               large
             >
-              <MenuItem onClick={createDefaultSession}>
-                <ListItemIcon>
-                  <Dashboard fontSize="small" />
-                </ListItemIcon>
-                <ListItemText>{t('Join.standardTab.button')}</ListItemText>
+              <MenuItem onSelect={() => void createDefaultSession()}>
+                <LayoutDashboard className="size-4" />
+                {t('Join.standardTab.button')}
               </MenuItem>
-              <ProButton>
-                <MenuItem onClick={createEncryptedSession}>
-                  <ListItemIcon>
-                    <Key fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText>
-                    {t('Encryption.createEncryptedSession')}
-                  </ListItemText>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    paddingLeft={5}
-                  >
-                    Pro
-                  </Typography>
-                </MenuItem>
-              </ProButton>
+              <MenuItem onSelect={handleEncryptedSession}>
+                <KeyRound className="size-4" />
+                <span className="flex-1">
+                  {t('Encryption.createEncryptedSession')}
+                </span>
+                <span className="text-xs font-medium text-muted">Pro</span>
+              </MenuItem>
             </SplitButton>
           </ProButton>
-        </LaunchButtons>
+        </div>
 
         {hasPreviousSessions ? (
           <>
-            <PreviousContainer>
-              <SubHeader>{t('Join.previousTab.header')}</SubHeader>
-              <SearchBar value={search} onChange={setSearch} />
-            </PreviousContainer>
+            <div className="mt-14 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <h2 className="text-2xl font-light tracking-tight text-ink sm:text-3xl">
+                {t('Join.previousTab.header')}
+              </h2>
+              <div className="w-full sm:w-72">
+                <SearchBar value={search} onChange={setSearch} />
+              </div>
+            </div>
 
             <PreviousGames
               games={filteredSessions}
@@ -157,93 +153,41 @@ function Home() {
             />
 
             {!!search && filteredSessions.length === 0 ? (
-              <Alert severity="info">
+              <Alert severity="info" className="mt-4">
                 {t('Home.searchNoMatch', { search })}
               </Alert>
             ) : null}
           </>
         ) : (
           <>
-            <PreviousContainer>
-              <SubHeader>{t('Home.discover')}</SubHeader>
-            </PreviousContainer>
-            <VideoContainer>
+            <h2 className="mt-14 text-2xl font-light tracking-tight text-ink sm:text-3xl">
+              {t('Home.discover')}
+            </h2>
+            <div className="mt-6 overflow-hidden rounded-3xl shadow-2xl">
               <iframe
-                width="100%"
-                height="100%"
+                className="aspect-video w-full max-w-3xl border-0"
                 src="https://www.youtube.com/embed/SpbAaziAwTY"
                 title="Discover Retrospected"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
-              ></iframe>
-            </VideoContainer>
+              />
+            </div>
           </>
         )}
       </Page>
+      {/* The subscribe dialog has to live outside the split menu, which unmounts when it closes. */}
+      <ProButton>
+        <button
+          ref={encryptedTriggerRef}
+          type="button"
+          tabIndex={-1}
+          className="hidden"
+        >
+          {t('Encryption.createEncryptedSession')}
+        </button>
+      </ProButton>
     </>
   );
 }
-
-const MainHeader = styled.h1`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  font-weight: 100;
-  font-size: 4em;
-  @media screen and (max-width: 800px) {
-    font-size: 2em;
-  }
-`;
-
-const SubHeader = styled.h2`
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  font-weight: 100;
-  font-size: 3em;
-  @media screen and (max-width: 500px) {
-    font-size: 1.5em;
-  }
-`;
-
-const PreviousContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 30px;
-`;
-
-const LaunchButtons = styled.div`
-  display: flex;
-  margin: 30px 0px 60px;
-  > button {
-    margin: 0 10px;
-  }
-
-  @media (max-width: 500px) {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    > button {
-      margin: 0;
-    }
-    > *:last-child {
-      margin-top: 40px;
-    }
-  }
-`;
-
-const VideoContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  > iframe {
-    width: min(800px, 100%);
-    aspect-ratio: 800/450;
-    border: none;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
-      rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-      rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-  }
-`;
 
 export default Home;

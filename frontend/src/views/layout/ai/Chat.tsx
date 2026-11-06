@@ -1,14 +1,12 @@
 import ScrollToBottom from 'react-scroll-to-bottom';
-import styled from '@emotion/styled';
-import ChatMessage from './ChatMessage';
-import ChatInput from './ChatInput';
-
-import { keyframes } from '@emotion/react';
-import { CoachMessage } from 'common';
-import { Examples } from './Examples';
-import { Alert, Button, colors } from '@mui/material';
+import type { CoachMessage } from 'common';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { Alert } from 'ui/alert';
+import { Button } from 'ui/button';
+import { Examples } from './Examples';
+import ChatInput from './ChatInput';
+import ChatMessage from './ChatMessage';
 
 type ChatProps = {
   messages: CoachMessage[];
@@ -28,19 +26,24 @@ export function Chat({
   const { t } = useTranslation();
   const navigate = useNavigate();
   return (
-    <Container>
-      <Main>
-        <ScrollContainer followButtonClassName="follow">
-          {messages.map((m, index) => (
+    <div className="flex min-h-0 flex-1 flex-col">
+      <div className="relative min-h-0 flex-1">
+        <ScrollToBottom
+          className="absolute inset-0"
+          scrollViewClassName="h-full"
+          followButtonClassName="!bg-paper !text-ink after:text-xs after:content-['↓']"
+        >
+          {messages.map((message, index) => (
             <ChatMessage
-              message={m.content ?? ''}
-              own={m.role === 'user'}
-              key={index}
+              message={message.content ?? ''}
+              own={message.role === 'user'}
+              // Coach replies have no id; order is append-only.
+              key={`${message.role}-${index}`}
             />
           ))}
-          {thinking ? <ChatMessage message={<Ellipsis />} /> : null}
+          {thinking ? <ChatMessage message={<Thinking />} /> : null}
           {disabled ? (
-            <AlertContainer>
+            <div className="flex h-full flex-col items-center justify-center gap-6 px-4 text-center">
               <Alert severity="error">{t('Ai.disabledAnonymous')}</Alert>
               <Button
                 onClick={() => {
@@ -50,78 +53,28 @@ export function Chat({
               >
                 {t('AccountPage.convertTitle')}
               </Button>
-            </AlertContainer>
+            </div>
           ) : null}
           {!disabled && messages.length === 0 ? (
-            <ExamplesContainer>
+            <div className="pt-8">
               <Examples onSelect={onMessage} />
-            </ExamplesContainer>
+            </div>
           ) : null}
-        </ScrollContainer>
-      </Main>
-      <UserInput>
+        </ScrollToBottom>
+      </div>
+      <div className="mt-4">
         <ChatInput disabled={disabled || thinking} onMessage={onMessage} />
-      </UserInput>
-    </Container>
+      </div>
+    </div>
   );
 }
 
-const ellipsis = keyframes`
-  0%    { content: ''; }
-  25%   { content: '.'; }
-  50%   { content: '..'; }
-  75%   { content: '...'; }
-  100%  { content: ''; }
-`;
-
-const Container = styled.div``;
-
-const Main = styled.div`
-  display: flex;
-`;
-
-const ExamplesContainer = styled.div`
-  padding-top: 3rem;
-`;
-
-const UserInput = styled.div`
-  margin-top: 20px;
-`;
-
-const ScrollContainer = styled(ScrollToBottom)`
-  height: calc(100vh - 380px);
-  flex: 1 1 auto;
-  .follow {
-    background-color: ${colors.grey[200]};
-    color: ${colors.grey[900]};
-  }
-  .follow::after {
-    content: '↓';
-    font-size: 0.8rem;
-    position: relative;
-    left: 0px;
-  }
-`;
-
-const Ellipsis = styled.div`
-  min-width: 50px;
-  line-height: 3rem;
-  font-size: 2.5rem;
-  height: 10px;
-  position: relative;
-  top: -25px;
-  ::after {
-    display: inline-block;
-    animation: ${ellipsis} steps(1, end) 1s infinite;
-    content: '';
-  }
-`;
-
-const AlertContainer = styled.div`
-  display: flex;
-  gap: 40px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-`;
+function Thinking() {
+  return (
+    <span className="inline-flex items-end gap-1 py-1" aria-hidden>
+      <span className="size-1.5 animate-bounce rounded-full bg-current [animation-delay:0ms]" />
+      <span className="size-1.5 animate-bounce rounded-full bg-current [animation-delay:150ms]" />
+      <span className="size-1.5 animate-bounce rounded-full bg-current [animation-delay:300ms]" />
+    </span>
+  );
+}

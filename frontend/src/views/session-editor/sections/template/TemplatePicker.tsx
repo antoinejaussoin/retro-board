@@ -1,14 +1,13 @@
-import {
-  ColumnSettings,
-  Template,
-  TranslationFunction,
-} from '../../../../state/types';
+import { useTranslation } from 'react-i18next';
 import {
   getAllTemplates,
   getTemplateColumns,
 } from '../../../../state/templates';
-import { useTranslation } from 'react-i18next';
-import styled from '@emotion/styled';
+import type {
+  ColumnSettings,
+  Template,
+  TranslationFunction,
+} from '../../../../state/types';
 import { TemplateItem } from './TemplateItem';
 
 interface TemplatePickerProps {
@@ -21,25 +20,25 @@ export function TemplatePicker({ current, onSelect }: TemplatePickerProps) {
   const templates = getAllTemplates(t);
 
   return (
-    <Container>
+    <div className="flex flex-wrap gap-2.5 py-2.5">
       {templates
-        .filter((def) => def.type !== 'default')
-        .map((def) => (
+        .filter((definition) => definition.type !== 'default')
+        .map((definition) => (
           <TemplateItem
-            key={def.type}
-            definition={def}
-            selected={isSelected(current, def.type, t)}
+            key={definition.type}
+            definition={definition}
+            selected={isSelected(current, definition.type, t)}
             onSelect={onSelect}
           />
         ))}
-    </Container>
+    </div>
   );
 }
 
 function isSelected(
   current: ColumnSettings[],
   templateType: Template,
-  t: TranslationFunction
+  t: TranslationFunction,
 ) {
   const template = getTemplateColumns(templateType, t);
   if (current.length !== template.length) {
@@ -56,10 +55,3 @@ function isSelected(
   }
   return true;
 }
-
-const Container = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding: 10px 0;
-`;
