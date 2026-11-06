@@ -1,9 +1,9 @@
 import { Message } from 'common';
-import styled from '@emotion/styled';
-import { colors } from '@mui/material';
+import useCrypto from 'crypto/useCrypto';
 import { formatRelative } from 'date-fns';
 import { useDateLocale } from 'hooks/useFormatDate';
-import useCrypto from 'crypto/useCrypto';
+import useUser from 'state/user/useUser';
+import { cn } from 'ui/cn';
 
 type ChatMessageProps = {
   message: Message;
@@ -12,66 +12,48 @@ type ChatMessageProps = {
 export default function ChatMessage({ message }: ChatMessageProps) {
   const locale = useDateLocale();
   const { decrypt } = useCrypto();
+  const me = useUser();
+  const own = !!me && me.id === message.user.id;
   return (
-    <Container>
-      <Photo>
+    <div className={cn('flex items-end gap-2', own && 'flex-row-reverse')}>
+      <div className="size-8 shrink-0 overflow-hidden rounded-full bg-primary-100">
         {message.user.photo ? (
-          <img src={message.user.photo} alt={message.user.name} />
-        ) : null}
-      </Photo>
-      <Inner>
-        <Header>
-          <Name>{message.user.name}</Name>
-          <Time>
+          <img
+            src={message.user.photo}
+            alt={message.user.name}
+            className="size-full object-cover"
+          />
+        ) : (
+          <span className="flex size-full items-center justify-center text-xs font-medium text-primary-800">
+            {message.user.name.slice(0, 1)}
+          </span>
+        )}
+      </div>
+      <div
+        className={cn(
+          'max-w-[75%] rounded-2xl px-3 py-2 text-sm',
+          own
+            ? 'rounded-br-md bg-primary-700 text-white'
+            : 'rounded-bl-md bg-paper text-ink',
+        )}
+      >
+        <div
+          className={cn(
+            'mb-0.5 flex items-baseline gap-2 text-xs',
+            own ? 'text-white/75' : 'text-muted',
+          )}
+        >
+          <span className={cn('font-semibold', own ? 'text-white' : 'text-ink')}>
+            {message.user.name}
+          </span>
+          <span>
             {formatRelative(new Date(message.created), new Date(), { locale })}
-          </Time>
-        </Header>
-        <Content>{decrypt(message.content)}</Content>
-      </Inner>
-    </Container>
+          </span>
+        </div>
+        <div className="whitespace-pre-wrap break-words">
+          {decrypt(message.content)}
+        </div>
+      </div>
+    </div>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-`;
-
-const Inner = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  margin-left: 10px;
-`;
-
-const Photo = styled.div`
-  width: 30px;
-  padding-top: 3px;
-  > img {
-    width: 30px;
-    height: 30px;
-    border-radius: 5px;
-    object-fit: fill;
-  }
-`;
-
-const Header = styled.div`
-  display: flex;
-  align-items: baseline;
-  padding-bottom: 4px;
-`;
-
-const Name = styled.span`
-  font-weight: bold;
-  padding-right: 10px;
-`;
-
-const Time = styled.span`
-  color: ${colors.grey[500]};
-  font-size: 0.8rem;
-`;
-
-const Content = styled.div`
-  margin: 0;
-  padding: 0;
-  white-space: pre-wrap;
-`;

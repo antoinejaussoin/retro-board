@@ -1,18 +1,19 @@
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { colors, IconButton } from '@mui/material';
-import { Lock, VerifiedUser } from '@mui/icons-material';
+import { Lock, LockOpen } from 'lucide-react';
 import { useCallback, useState } from 'react';
-import styled from '@emotion/styled';
-import CustomAvatar from '../../../../components/Avatar';
-import { useSnackbar } from 'notistack';
 import { useTranslation } from 'react-i18next';
+import CustomAvatar from '../../../../components/Avatar';
 import ProButton from '../../../../components/ProButton';
+import { useMediaQuery } from '../../../../hooks/useMediaQuery';
+import { Button } from 'ui/button';
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogFooter,
+  DialogTitle,
+} from 'ui/dialog';
+import { IconButton } from 'ui/icon-button';
+import { useSnackbar } from 'ui/toast';
 import useParticipants from '../../useParticipants';
 import useSession from '../../useSession';
 
@@ -36,7 +37,7 @@ function LockSession({ onLock }: LockSessionProps) {
         session.locked
           ? t('Private.unlockSuccessNotification')
           : t('Private.lockSuccessNotification'),
-        { variant: 'success' }
+        { variant: 'success' },
       );
     }
     setOpen(false);
@@ -58,97 +59,77 @@ function LockSession({ onLock }: LockSessionProps) {
     return null;
   }
 
+  const icon = session.locked ? (
+    <Lock className="size-4 text-red-800" />
+  ) : (
+    <LockOpen className="size-4 text-emerald-800" />
+  );
+
   return (
     <>
       <ProButton>
         {small ? (
-          <IconButton onClick={handleOpenDialog} color="secondary">
+          <IconButton
+            onClick={handleOpenDialog}
+            aria-label={
+              session.locked
+                ? t('Private.unlockButton')
+                : t('Private.lockButton')
+            }
+          >
             {session.locked ? (
-              <VerifiedUser style={{ color: colors.red[800] }} />
+              <Lock className="size-5 text-red-800" />
             ) : (
-              <VerifiedUser style={{ color: colors.green[800] }} />
+              <LockOpen className="size-5 text-emerald-800" />
             )}
           </IconButton>
         ) : (
-          <Button
-            variant="outlined"
-            color="primary"
-            startIcon={
-              session.locked ? (
-                <VerifiedUser style={{ color: colors.red[800] }} />
-              ) : (
-                <VerifiedUser style={{ color: colors.green[800] }} />
-              )
-            }
-            onClick={handleOpenDialog}
-          >
+          <Button variant="outline" onClick={handleOpenDialog}>
+            {icon}
             {session.locked
               ? t('Private.unlockButton')
               : t('Private.lockButton')}
           </Button>
         )}
       </ProButton>
-      <Dialog
-        onClose={handleCloseDialog}
-        fullScreen={fullScreen}
-        aria-labelledby="lock-session-dialog"
-        open={open}
-      >
-        <DialogTitle id="lock-session-dialog">
-          <Lock style={{ position: 'relative', top: 3 }} />
-          &nbsp;{t('Private.lockButton')}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>{t('Private.lockDescription')}</DialogContentText>
+      <Dialog onClose={handleCloseDialog} open={open}>
+        <DialogContent fullScreen={fullScreen} size="md">
+          <DialogTitle>
+            <span className="inline-flex items-center gap-2">
+              <Lock className="size-5" />
+              {t('Private.lockButton')}
+            </span>
+          </DialogTitle>
+          <DialogBody>
+            <p className="text-sm leading-6 text-muted">
+              {t('Private.lockDescription')}
+            </p>
+            <div className="mt-4 flex flex-wrap">
+              {participants.map((player) => (
+                <div
+                  key={player.id}
+                  className="flex min-w-[150px] flex-1 flex-col p-2.5"
+                >
+                  <div className="flex justify-center">
+                    <CustomAvatar user={player} />
+                  </div>
+                  <div className="mt-2.5 text-center text-stone-600">
+                    {player.name}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </DialogBody>
+          <DialogFooter>
+            <Button variant="ghost" onClick={handleCloseDialog}>
+              {t('Private.cancelButton')}
+            </Button>
+            <Button onClick={handleLock}>{t('Private.lockButton')}</Button>
+          </DialogFooter>
         </DialogContent>
-        <DialogContent>
-          <Users>
-            {participants.map((player) => (
-              <UserContainer key={player.id}>
-                <AvatarContainer>
-                  <CustomAvatar user={player} />
-                </AvatarContainer>
-                <Name>{player.name}</Name>
-              </UserContainer>
-            ))}
-          </Users>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog}>
-            {t('Private.cancelButton')}
-          </Button>
-          <Button variant="contained" color="primary" onClick={handleLock}>
-            {t('Private.lockButton')}
-          </Button>
-        </DialogActions>
       </Dialog>
     </>
   );
 }
-
-const Users = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`;
-
-const UserContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-width: 150px;
-  padding: 10px;
-  flex: 1;
-`;
-
-const AvatarContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const Name = styled.div`
-  display: flex;
-  justify-content: center;
-  color: ${colors.grey[700]};
-  margin-top: 10px;
-`;
 
 export default LockSession;

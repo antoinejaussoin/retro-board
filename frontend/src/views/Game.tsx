@@ -1,34 +1,30 @@
+import { CloudOff, LayoutDashboard, List } from 'lucide-react';
 import { useCallback, useState } from 'react';
-import styled from '@emotion/styled';
+import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
 import {
-  useParams,
   Route,
+  Routes,
   useLocation,
   useNavigate,
-  Routes,
+  useParams,
 } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
-import CircularProgress from '@mui/material/CircularProgress';
-import AppBar from '@mui/material/AppBar';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Button from '@mui/material/Button';
-import { colors } from '@mui/material';
-import { Dashboard, List, CloudOff } from '@mui/icons-material';
-import { useTranslation } from 'react-i18next';
-import useGame from './game/useGame';
-import Board from './game/board/Board';
-import { SummaryMode } from './game/summary/SummaryMode';
-import useColumns from './game/useColumns';
+import { Button } from 'ui/button';
+import { SegmentedControl } from 'ui/segmented';
+import { Spinner } from 'ui/spinner';
 import NoContent from '../components/NoContent';
 import useCrypto from '../crypto/useCrypto';
-import Unauthorized from './game/Unauthorized';
+import AckWarning from './game/AckWarning';
+import Board from './game/board/Board';
 import SearchBar from './game/SearchBar';
 import GameFooter from './game/footer/GameFooter';
-import AckWarning from './game/AckWarning';
-import useUnauthorised from './game/useUnauthorised';
-import useSession from './game/useSession';
+import { SummaryMode } from './game/summary/SummaryMode';
 import TimerProvider from './game/TimerProvider';
+import Unauthorized from './game/Unauthorized';
+import useColumns from './game/useColumns';
+import useGame from './game/useGame';
+import useSession from './game/useSession';
+import useUnauthorised from './game/useUnauthorised';
 
 interface RouteParams {
   gameId: string;
@@ -41,8 +37,10 @@ function GamePage() {
   const { gameId } = useParams<keyof RouteParams>();
   const { session } = useSession();
   const handleChange = useCallback(
-    (_: unknown, v: string) => navigate(v),
-    [navigate]
+    (next: string) => {
+      navigate(next);
+    },
+    [navigate],
   );
   const columns = useColumns();
   const { decrypt } = useCrypto();
@@ -77,9 +75,9 @@ function GamePage() {
 
   if (status === 'not-connected' || status === 'connecting') {
     return (
-      <LoadingContainer>
-        <CircularProgress />
-      </LoadingContainer>
+      <div className="mt-28 flex flex-col items-center justify-center">
+        <Spinner />
+      </div>
     );
   }
 
@@ -113,6 +111,31 @@ function GamePage() {
     );
   }
 
+  const modeOptions = [
+    {
+      value: rootUrl,
+      label: (
+        <>
+          <LayoutDashboard className="size-4" />
+          {t('GameMenu.board')}
+        </>
+      ),
+    },
+    ...(!session.options.blurCards
+      ? [
+          {
+            value: summaryUrl,
+            label: (
+              <>
+                <List className="size-4" />
+                {t('GameMenu.summary')}
+              </>
+            ),
+          },
+        ]
+      : []),
+  ];
+
   return (
     <TimerProvider>
       <div>
@@ -133,48 +156,27 @@ function GamePage() {
           />
         </Helmet>
         {status === 'disconnected' ? (
-          <DisconnectedContainer>
-            <DisconnectedTitle>
-              <CloudOff
-                style={{ position: 'relative', top: 3, marginRight: 10 }}
-              />
-              &nbsp;{t('PostBoard.disconnected')}
-            </DisconnectedTitle>
-            <Button color="secondary" variant="contained" onClick={reconnect}>
+          <div className="fixed inset-x-0 bottom-0 top-14 z-[80] flex flex-col items-center justify-center bg-white/70 px-6 backdrop-blur-sm">
+            <h2 className="mb-5 flex items-center gap-2 text-center text-2xl font-light">
+              <CloudOff className="size-7" />
+              {t('PostBoard.disconnected')}
+            </h2>
+            <Button variant="secondary" onClick={reconnect}>
               {t('PostBoard.reconnect')}
             </Button>
-          </DisconnectedContainer>
+          </div>
         ) : null}
-        <AppBar position="static" color="default">
-          <AppBarContent>
-            <Tabs
-              value={path}
-              onChange={handleChange}
-              variant="scrollable"
-              scrollButtons
-              indicatorColor="primary"
-              textColor="primary"
-              aria-label="Game mode tabs"
-              allowScrollButtonsMobile
-            >
-              <Tab
-                label={t('GameMenu.board')}
-                icon={<Dashboard />}
-                value={rootUrl}
-              />
-              {!session.options.blurCards ? (
-                <Tab
-                  label={t('GameMenu.summary')}
-                  icon={<List />}
-                  value={summaryUrl}
-                />
-              ) : null}
-            </Tabs>
-            <SearchContent>
-              <SearchBar value={search} onChange={setSearch} />
-            </SearchContent>
-          </AppBarContent>
-        </AppBar>
+        <div className="sticky top-14 z-20 flex items-center gap-3 border-b border-line bg-paper px-3 py-2 sm:px-4">
+          <SegmentedControl
+            aria-label="Game mode tabs"
+            value={path}
+            onChange={handleChange}
+            options={modeOptions}
+          />
+          <div className="ml-auto min-w-0">
+            <SearchBar value={search} onChange={setSearch} />
+          </div>
+        </div>
         <AckWarning acks={acks} onRefresh={reconnect} />
         <Routes>
           <Route
@@ -209,71 +211,18 @@ function GamePage() {
             }
           />
         </Routes>
-        <ParticipantContainer>
-          <GameFooter
-            onReady={onUserReady}
-            messages={session.messages}
-            options={session.options}
-            onTimerReset={onTimerReset}
-            onTimerStart={onTimerStart}
-            onMessage={onChatMessage}
-            onConfigure={(options) => onChangeSession({ options }, false)}
-          />
-        </ParticipantContainer>
+        <GameFooter
+          onReady={onUserReady}
+          messages={session.messages}
+          options={session.options}
+          onTimerReset={onTimerReset}
+          onTimerStart={onTimerStart}
+          onMessage={onChatMessage}
+          onConfigure={(options) => onChangeSession({ options }, false)}
+        />
       </div>
     </TimerProvider>
   );
 }
-
-const LoadingContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 120px;
-`;
-
-const DisconnectedContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  height: 100%;
-  height: calc(100% - 56px);
-  width: 100%;
-  z-index: 999;
-  background-color: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(3px);
-`;
-
-const DisconnectedTitle = styled.h2`
-  font-weight: 300;
-  text-align: center;
-  margin: 0 20px 20px;
-`;
-
-const AppBarContent = styled.div`
-  display: flex;
-`;
-
-const SearchContent = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  flex: 1;
-  margin-right: 20px;
-`;
-
-const ParticipantContainer = styled.div`
-  position: fixed;
-  bottom: 0px;
-  right: 0px;
-  left: 0px;
-  padding: 10px;
-  z-index: 3;
-  border-top: 1px solid ${colors.grey[300]};
-  background-color: white;
-`;
 
 export default GamePage;

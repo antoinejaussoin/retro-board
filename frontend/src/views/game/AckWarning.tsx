@@ -1,14 +1,10 @@
-import Button from '@mui/material/Button';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
-import { useEffect, useState } from 'react';
+import { Check, RefreshCw } from 'lucide-react';
 import throttle from 'lodash/throttle';
-import { AckItem } from './types';
+import { useCallback, useEffect, useState } from 'react';
+import { Alert } from 'ui/alert';
+import { Button } from 'ui/button';
 import { recordManualError, trackEvent } from '../../track';
-import { useCallback } from 'react';
-import styled from '@emotion/styled';
-import { Autorenew, Check } from '@mui/icons-material';
-import { colors } from '@mui/material';
+import { AckItem } from './types';
 
 interface AckWarningProps {
   acks: AckItem[];
@@ -23,7 +19,7 @@ export default function AckWarning({ acks, onRefresh }: AckWarningProps) {
   useEffect(() => {
     const timer = setInterval(() => {
       setLateAcks(
-        acks.filter((a) => a.requested.valueOf() + 5000 < new Date().valueOf())
+        acks.filter((a) => a.requested.valueOf() + 5000 < new Date().valueOf()),
       );
     }, 500);
     return () => clearInterval(timer);
@@ -43,50 +39,33 @@ export default function AckWarning({ acks, onRefresh }: AckWarningProps) {
 
   if (!acks.length) {
     return (
-      <Container>
-        <Check htmlColor={colors.green[100]} />
-      </Container>
+      <div className="m-1 flex justify-end">
+        <Check className="size-4 text-emerald-200" />
+      </div>
     );
   }
 
   if (!lateAcks.length) {
     return (
-      <Container>
-        <LoopIcon htmlColor={colors.orange[300]} />
-      </Container>
+      <div className="m-1 flex justify-end">
+        <RefreshCw className="size-4 animate-spin text-amber-400 [animation-duration:4s]" />
+      </div>
     );
   }
 
   return (
     <Alert
       severity="error"
-      action={
-        <Button color="primary" onClick={handleRefresh}>
-          Reload
-        </Button>
-      }
+      title="Something's not quite right 😓"
+      className="m-2"
     >
-      <AlertTitle>Something's not quite right 😓</AlertTitle>
-      {lateAcks.length} message{lateAcks.length === 1 ? ' was' : 's were'} not
-      received by the server in a timely manner. Please reload the session.
+      <p>
+        {lateAcks.length} message{lateAcks.length === 1 ? ' was' : 's were'} not
+        received by the server in a timely manner. Please reload the session.
+      </p>
+      <Button size="sm" className="mt-2" onClick={handleRefresh}>
+        Reload
+      </Button>
     </Alert>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin: 5px;
-  > svg {
-    font-size: 0.9em;
-  }
-`;
-
-const LoopIcon = styled(Autorenew)`
-  @keyframes spin {
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  animation: spin 4s linear infinite;
-`;

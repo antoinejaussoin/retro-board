@@ -1,36 +1,36 @@
 import { Message } from 'common';
-import styled from '@emotion/styled';
+import { useMediaQuery } from 'hooks/useMediaQuery';
+import { Dialog, DialogContent, DialogTitle } from 'ui/dialog';
 import Chat from './Chat';
-import { colors } from '@mui/material';
 
 type ChatModalProps = {
   messages: Message[];
   onMessage: (content: string) => void;
+  onClose: () => void;
 };
 
-export default function ChatModal({ messages, onMessage }: ChatModalProps) {
+export default function ChatModal({
+  messages,
+  onMessage,
+  onClose,
+}: ChatModalProps) {
+  const fullScreen = useMediaQuery('(max-width:800px)');
   return (
-    <Container>
-      <Chat messages={messages} onMessage={onMessage} />
-    </Container>
+    <Dialog open onClose={onClose}>
+      <DialogContent
+        fullScreen={fullScreen}
+        size="md"
+        className={
+          fullScreen
+            ? 'overflow-hidden'
+            : 'h-[min(70dvh,640px)] overflow-hidden'
+        }
+      >
+        <DialogTitle>Chat</DialogTitle>
+        <div className="flex min-h-0 flex-1 flex-col">
+          <Chat messages={messages} onMessage={onMessage} />
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }
-
-const Container = styled.div`
-  position: fixed;
-  bottom: 80px;
-  right: 15px;
-  background-color: white;
-  box-shadow: 2px 2px 5px 2px rgba(224, 224, 224, 1);
-  border: 1px solid ${colors.grey[200]};
-  border-radius: 5px;
-  max-width: 400px;
-  display: flex;
-  flex-flow: column;
-
-  @media (max-width: 800px) {
-    max-width: unset;
-    width: calc(100% - 30px);
-    left: 15px;
-  }
-`;

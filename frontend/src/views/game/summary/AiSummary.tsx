@@ -1,22 +1,14 @@
-import { AutoAwesome, Edit } from '@mui/icons-material';
-import {
-  Alert,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CircularProgress,
-  Typography,
-} from '@mui/material';
-import { useTheme } from '@mui/material/styles';
 import { requestConfig } from 'api/fetch';
 import type { AiSummaryResponse, StoredAiSummary } from 'common';
 import useBackendCapabilities from 'global/useBackendCapabilities';
+import { Pencil, Sparkles } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
 import useUser from 'state/user/useUser';
+import { Alert } from 'ui/alert';
+import { Button } from 'ui/button';
+import { Spinner } from 'ui/spinner';
 import useSession from '../useSession';
 import { SummaryMarkdownEditor } from './SummaryMarkdownEditor';
 
@@ -24,12 +16,14 @@ interface AiSummaryProps {
   onSummary: (summary: string) => void;
 }
 
+const markdownClass =
+  'text-sm leading-6 [&_h1]:mb-2 [&_h1]:text-xl [&_h2]:mb-2 [&_h2]:text-lg [&_h3]:mb-1 [&_h3]:font-semibold [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:my-2 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5';
+
 export function AiSummary({ onSummary }: AiSummaryProps) {
   const { session } = useSession();
   const user = useUser();
   const { ai } = useBackendCapabilities();
   const { t } = useTranslation();
-  const theme = useTheme();
   const [loading, setLoading] = useState(false);
   const [known, setKnown] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -164,48 +158,46 @@ export function AiSummary({ onSummary }: AiSummaryProps) {
   const canRegenerate = ready && !!shown && stale;
 
   return (
-    <Card sx={{ marginBottom: 2 }}>
-      <CardHeader
-        title={
-          <Typography variant="h6" style={{ fontWeight: 300 }}>
-            {t('SummaryBoard.aiSummaryTitle')}
-          </Typography>
-        }
-        style={{
-          backgroundColor: theme.palette.primary.main,
-          color: theme.palette.primary.contrastText,
-        }}
-      />
-      <CardContent>
+    <section className="mb-4 overflow-hidden rounded-2xl border border-line bg-cream shadow-card">
+      <header className="border-b border-line px-5 py-4 text-lg font-light">
+        {t('SummaryBoard.aiSummaryTitle')}
+      </header>
+      <div className="px-5 py-4">
         {!shown ? (
-          <Typography variant="body2" sx={{ marginBottom: 2 }}>
+          <p className="mb-4 text-sm text-muted">
             {t('SummaryBoard.aiSummaryHelp')}
-          </Typography>
+          </p>
         ) : null}
         {stale && shown ? (
-          <Alert severity="info" sx={{ marginBottom: 2 }}>
+          <Alert severity="info" className="mb-4">
             {t('SummaryBoard.aiSummaryStale')}
           </Alert>
         ) : null}
         {error ? (
-          <Alert severity="warning" sx={{ marginBottom: 2 }}>
+          <Alert severity="warning" className="mb-4">
             {error}
           </Alert>
         ) : null}
         {editing ? (
           <SummaryMarkdownEditor value={draft} onChange={setDraft} />
         ) : shown ? (
-          <ReactMarkdown>{shown}</ReactMarkdown>
+          <div className={markdownClass}>
+            <ReactMarkdown>{shown}</ReactMarkdown>
+          </div>
         ) : null}
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, marginTop: 2 }}>
+        <div className="mt-4 flex flex-wrap gap-2">
           {editing ? (
             <>
-              <Button disabled={saving} onClick={() => setEditing(false)}>
+              <Button
+                variant="ghost"
+                disabled={saving}
+                onClick={() => setEditing(false)}
+              >
                 {t('Generic.cancel')}
               </Button>
-              <Button variant="contained" disabled={saving} onClick={saveEdit}>
+              <Button disabled={saving} onClick={saveEdit}>
                 {saving ? (
-                  <CircularProgress size={16} color="inherit" />
+                  <Spinner className="size-4" />
                 ) : (
                   t('SummaryBoard.save')
                 )}
@@ -213,18 +205,12 @@ export function AiSummary({ onSummary }: AiSummaryProps) {
             </>
           ) : null}
           {(canGenerate || canRegenerate) && !editing ? (
-            <Button
-              variant="contained"
-              startIcon={
-                loading ? (
-                  <CircularProgress size={16} color="inherit" />
-                ) : (
-                  <AutoAwesome />
-                )
-              }
-              disabled={loading}
-              onClick={summarise}
-            >
+            <Button disabled={loading} onClick={summarise}>
+              {loading ? (
+                <Spinner className="size-4" />
+              ) : (
+                <Sparkles className="size-4" />
+              )}
               {loading
                 ? t('SummaryBoard.summarising')
                 : canRegenerate
@@ -234,19 +220,20 @@ export function AiSummary({ onSummary }: AiSummaryProps) {
           ) : null}
           {shown && !editing ? (
             <Button
-              startIcon={<Edit />}
+              variant="outline"
               disabled={loading}
               onClick={() => {
                 setDraft(shown);
                 setEditing(true);
               }}
             >
+              <Pencil className="size-4" />
               {t('SummaryBoard.edit')}
             </Button>
           ) : null}
-        </Box>
-      </CardContent>
-    </Card>
+        </div>
+      </div>
+    </section>
   );
 }
 

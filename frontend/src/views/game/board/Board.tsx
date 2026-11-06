@@ -1,15 +1,15 @@
-import { useEffect } from 'react';
-import styled from '@emotion/styled';
-import { Post, PostGroup, SessionOptions, SessionSettings } from 'common';
 import { monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
-import Column from './Column';
-import { Page } from '../../../components/Page';
+import { Post, PostGroup, SessionOptions, SessionSettings } from 'common';
+import ClosableAlert from 'components/ClosableAlert';
+import Icon from 'components/Icon/Icon';
+import { t } from 'i18next';
+import { useEffect } from 'react';
+import { cn } from 'ui/cn';
+import { useMediaQuery } from '../../../hooks/useMediaQuery';
+import { getMiddle, getNext, getPrevious } from '../lexorank';
+import useSession from '../useSession';
 import { ColumnContent } from '../types';
-import {
-  getMovingEntities,
-  getCombiningEntities,
-  calculateRank,
-} from './moving-logic';
+import Column from './Column';
 import {
   edgeOf,
   indexBeside,
@@ -18,12 +18,12 @@ import {
   isPostDragData,
   isPostDropData,
 } from './drag';
-import { getNext, getMiddle, getPrevious } from '../lexorank';
 import BoardHeader from './header/BoardHeader';
-import useSession from '../useSession';
-import Icon from 'components/Icon/Icon';
-import ClosableAlert from 'components/ClosableAlert';
-import { t } from 'i18next';
+import {
+  calculateRank,
+  getCombiningEntities,
+  getMovingEntities,
+} from './moving-logic';
 
 interface GameModeProps {
   columns: ColumnContent[];
@@ -36,7 +36,7 @@ interface GameModeProps {
     post: Post,
     destinationGroup: PostGroup | null,
     destinationColumn: number,
-    newRank: string
+    newRank: string,
   ) => void;
   onCombinePost: (post1: Post, post2: Post) => void;
   onDeletePost: (post: Post) => void;
@@ -51,7 +51,7 @@ interface GameModeProps {
 
 const calculateRankForNewPost = (
   column: ColumnContent,
-  placeFirst: boolean
+  placeFirst: boolean,
 ): string => {
   if (column.posts.length) {
     if (placeFirst) {
@@ -89,6 +89,9 @@ function GameMode({
   demo,
 }: GameModeProps) {
   const { session } = useSession();
+  const stacked = useMediaQuery(
+    `(max-width: ${columns.length * 340 + 100}px)`,
+  );
 
   useEffect(() => {
     return monitorForElements({
@@ -105,7 +108,7 @@ function GameMode({
             const entities = getCombiningEntities(
               postId,
               target.data.postId,
-              columns
+              columns,
             );
             if (entities) {
               onCombinePost(entities.post1, entities.post2);
@@ -113,21 +116,21 @@ function GameMode({
             return;
           }
           const parent = location.current.dropTargets.find((candidate) =>
-            isListDropData(candidate.data)
+            isListDropData(candidate.data),
           );
           if (parent && isListDropData(parent.data)) {
             const entities = getMovingEntities(
               postId,
               parent.data.targetId,
               indexBeside(parent.element, target.element, edge, postId),
-              columns
+              columns,
             );
             if (entities) {
               onMovePost(
                 entities.post,
                 entities.targetGroup,
                 entities.targetColumn,
-                calculateRank(entities.previous, entities.next)
+                calculateRank(entities.previous, entities.next),
               );
             }
           }
@@ -140,16 +143,16 @@ function GameMode({
             insertionIndex(
               target.element,
               location.current.input.clientY,
-              postId
+              postId,
             ),
-            columns
+            columns,
           );
           if (entities) {
             onMovePost(
               entities.post,
               entities.targetGroup,
               entities.targetColumn,
-              calculateRank(entities.previous, entities.next)
+              calculateRank(entities.previous, entities.next),
             );
           }
         }
@@ -162,65 +165,59 @@ function GameMode({
   }
 
   return (
-    <Page>
+    <div className="px-4 pt-6 pb-28">
       {demo ? (
-        <ClosableAlert severity="info" closable>
-          {t('PostBoard.demo')}
-        </ClosableAlert>
+        <div className="mb-4">
+          <ClosableAlert severity="info" closable>
+            {t('PostBoard.demo')}
+          </ClosableAlert>
+        </div>
       ) : null}
       <BoardHeader
         onChangeSession={onChangeSession}
         onLockSession={onLockSession}
       />
-      <Columns numberOfColumns={columns.length}>
-          {columns.map((column) => (
-            <Column
-              key={column.index}
-              column={column}
-              search={search}
-              posts={column.posts}
-              groups={column.groups}
-              question={column.label}
-              icon={<Icon icon={column.icon} size={24} />}
-              color={column.color}
-              onAdd={(content) =>
-                onAddPost(
-                  column.index,
-                  content,
-                  calculateRankForNewPost(column, options.newPostsFirst)
-                )
-              }
-              onAddGroup={() =>
-                onAddGroup(column.index, calculateRankForNewGroup(column))
-              }
-              onDelete={onDeletePost}
-              onLike={(post) => onLike(post, true)}
-              onDislike={(post) => onLike(post, false)}
-              onCancelVotes={onCancelVotes}
-              onEdit={onEdit}
-              onEditGroup={onEditGroup}
-              onDeleteGroup={onDeleteGroup}
-            />
-          ))}
-      </Columns>
-    </Page>
+      <div
+        className={cn('mt-8 grid gap-3', stacked && 'mt-2.5 gap-5')}
+        style={{
+          gridTemplateColumns: stacked
+            ? '1fr'
+            : `repeat(${columns.length}, minmax(0, 1fr))`,
+          minHeight: stacked ? undefined : 'calc(100dvh - 14rem)',
+        }}
+      >
+        {columns.map((column) => (
+          <Column
+            key={column.index}
+            column={column}
+            search={search}
+            posts={column.posts}
+            groups={column.groups}
+            question={column.label}
+            icon={<Icon icon={column.icon} size={24} />}
+            color={column.color}
+            onAdd={(content) =>
+              onAddPost(
+                column.index,
+                content,
+                calculateRankForNewPost(column, options.newPostsFirst),
+              )
+            }
+            onAddGroup={() =>
+              onAddGroup(column.index, calculateRankForNewGroup(column))
+            }
+            onDelete={onDeletePost}
+            onLike={(post) => onLike(post, true)}
+            onDislike={(post) => onLike(post, false)}
+            onCancelVotes={onCancelVotes}
+            onEdit={onEdit}
+            onEditGroup={onEditGroup}
+            onDeleteGroup={onDeleteGroup}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
-
-const Columns = styled.div<{ numberOfColumns: number }>`
-  display: flex;
-  margin-top: 30px;
-
-  ${(props) => `
-  @media screen and (max-width: ${props.numberOfColumns * 340 + 100}px) {
-    margin-top: 10px;
-    flex-direction: column;
-
-    > * {
-      margin-bottom: 20px;
-    }
-  }
-  `}
-`;
 
 export default GameMode;

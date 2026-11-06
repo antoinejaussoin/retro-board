@@ -5,9 +5,6 @@ import { render, fireEvent } from '../../../../../testing';
 import PostItem from '../Post';
 import { Post, User, VoteExtract, VoteType } from 'common';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { ThemeProvider } from '@mui/material';
-import theme from '../../../../../Theme';
-import { SnackbarProvider } from 'notistack';
 import { act } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -20,15 +17,11 @@ const u = (name: string): User => ({
 
 const renderWithRouter = (children: React.ReactNode) =>
   render(
-    <SnackbarProvider>
-      <ThemeProvider theme={theme}>
-        <MemoryRouter initialEntries={['/']}>
-          <Routes>
-            <Route path="/" element={children} />
-          </Routes>
-        </MemoryRouter>
-      </ThemeProvider>
-    </SnackbarProvider>
+    <MemoryRouter initialEntries={['/']}>
+      <Routes>
+        <Route path="/" element={children} />
+      </Routes>
+    </MemoryRouter>,
   );
 
 function buildVotes(type: VoteType, users: User[], post: Post): VoteExtract[] {

@@ -1,11 +1,12 @@
-import { useState, useCallback } from 'react';
-import Button from '@mui/material/Button';
-import SessionEditor from '../../../session-editor/SessionEditor';
 import { AllSessionSettings, SessionSettings, User } from 'common';
-import { trackEvent } from '../../../../track';
-import { Settings } from '@mui/icons-material';
+import { Settings } from 'lucide-react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IconButton, useMediaQuery } from '@mui/material';
+import { useMediaQuery } from '../../../../hooks/useMediaQuery';
+import { trackEvent } from '../../../../track';
+import { Button } from 'ui/button';
+import { IconButton } from 'ui/icon-button';
+import SessionEditor from '../../../session-editor/SessionEditor';
 
 interface ModifyOptionsProps {
   settings: AllSessionSettings;
@@ -33,10 +34,10 @@ function ModifyOptions({ settings, owner, onChange }: ModifyOptionsProps) {
           timer: modifiedSettings.timer,
           options: modifiedSettings.options,
         },
-        saveAsTemplate
+        saveAsTemplate,
       );
     },
-    [onChange, settings]
+    [onChange, settings],
   );
 
   if (!settings) {
@@ -46,16 +47,16 @@ function ModifyOptions({ settings, owner, onChange }: ModifyOptionsProps) {
   return (
     <>
       {small ? (
-        <IconButton onClick={() => setOpen(true)} color="primary">
-          <Settings />
+        <IconButton
+          onClick={() => setOpen(true)}
+          aria-label={t('Join.standardTab.customizeButton')}
+          className="text-primary-700"
+        >
+          <Settings className="size-5" />
         </IconButton>
       ) : (
-        <Button
-          variant="outlined"
-          color="primary"
-          startIcon={<Settings />}
-          onClick={() => setOpen(true)}
-        >
+        <Button variant="outline" onClick={() => setOpen(true)}>
+          <Settings className="size-4" />
           {t('Join.standardTab.customizeButton')}
         </Button>
       )}
