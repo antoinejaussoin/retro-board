@@ -233,10 +233,10 @@ const Header = styled.div`
   margin: 10px;
   padding: 20px;
   display: flex;
-  background-color: ${colors.deepPurple[50]};
-  color: ${colors.deepPurple[700]};
+  background-color: var(--rs-accent-wash);
+  color: var(--rs-accent-dark);
   font-size: 3rem;
-  font-weight: 100;
+  font-weight: 600;
   justify-content: center;
 
   @media screen and (max-width: 600px) {

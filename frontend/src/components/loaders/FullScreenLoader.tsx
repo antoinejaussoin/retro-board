@@ -13,7 +13,7 @@ export function FullScreenLoader() {
 }
 
 const Container = styled.div`
-  background-color: #673ab7;
+  background-color: #f6f5f2;
   height: 100%;
   width: 100%;
   position: fixed;
@@ -22,8 +22,8 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  color: #1c1917;
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
 `;
 
 const Loader = styled.div`

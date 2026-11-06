@@ -9,7 +9,6 @@ import { CHECK_PREFIX, decrypt } from '../../../../crypto/crypto';
 import { Alert } from '@mui/material';
 import { useEncryptionKey } from '../../../../crypto/useEncryptionKey';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { colors } from '@mui/material';
 import useSession from '../../useSession';
 import { useTranslation } from 'react-i18next';
 
@@ -60,7 +59,8 @@ function EncryptionModal() {
 
 const Input = styled.input`
   text-align: center;
-  border: 1px solid ${colors.deepPurple[900]};
+  border: 1px solid var(--rs-accent);
+  border-radius: 8px;
   font-size: 2em;
 `;
 

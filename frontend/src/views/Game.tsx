@@ -9,11 +9,9 @@ import {
 } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import CircularProgress from '@mui/material/CircularProgress';
-import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Button from '@mui/material/Button';
-import { colors } from '@mui/material';
 import { Dashboard, List, CloudOff } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import useGame from './game/useGame';
@@ -29,6 +27,7 @@ import AckWarning from './game/AckWarning';
 import useUnauthorised from './game/useUnauthorised';
 import useSession from './game/useSession';
 import TimerProvider from './game/TimerProvider';
+import { tokens } from '../tokens';
 
 interface RouteParams {
   gameId: string;
@@ -145,36 +144,36 @@ function GamePage() {
             </Button>
           </DisconnectedContainer>
         ) : null}
-        <AppBar position="static" color="default">
-          <AppBarContent>
-            <Tabs
-              value={path}
-              onChange={handleChange}
-              variant="scrollable"
-              scrollButtons
-              indicatorColor="primary"
-              textColor="primary"
-              aria-label="Game mode tabs"
-              allowScrollButtonsMobile
-            >
+        <ModeBar>
+          <Tabs
+            value={path}
+            onChange={handleChange}
+            variant="scrollable"
+            scrollButtons
+            indicatorColor="primary"
+            textColor="primary"
+            aria-label="Game mode tabs"
+            allowScrollButtonsMobile
+          >
+            <Tab
+              label={t('GameMenu.board')}
+              icon={<Dashboard />}
+              iconPosition="start"
+              value={rootUrl}
+            />
+            {!session.options.blurCards ? (
               <Tab
-                label={t('GameMenu.board')}
-                icon={<Dashboard />}
-                value={rootUrl}
+                label={t('GameMenu.summary')}
+                icon={<List />}
+                iconPosition="start"
+                value={summaryUrl}
               />
-              {!session.options.blurCards ? (
-                <Tab
-                  label={t('GameMenu.summary')}
-                  icon={<List />}
-                  value={summaryUrl}
-                />
-              ) : null}
-            </Tabs>
-            <SearchContent>
-              <SearchBar value={search} onChange={setSearch} />
-            </SearchContent>
-          </AppBarContent>
-        </AppBar>
+            ) : null}
+          </Tabs>
+          <SearchContent>
+            <SearchBar value={search} onChange={setSearch} />
+          </SearchContent>
+        </ModeBar>
         <AckWarning acks={acks} onRefresh={reconnect} />
         <Routes>
           <Route
@@ -248,13 +247,17 @@ const DisconnectedContainer = styled.div`
 `;
 
 const DisconnectedTitle = styled.h2`
-  font-weight: 300;
+  font-weight: 500;
   text-align: center;
   margin: 0 20px 20px;
 `;
 
-const AppBarContent = styled.div`
+const ModeBar = styled.div`
   display: flex;
+  align-items: center;
+  background: transparent;
+  border-bottom: 1px solid ${tokens.border};
+  padding: 0 8px;
 `;
 
 const SearchContent = styled.div`
@@ -272,8 +275,8 @@ const ParticipantContainer = styled.div`
   left: 0px;
   padding: 10px;
   z-index: 3;
-  border-top: 1px solid ${colors.grey[300]};
-  background-color: white;
+  border-top: 1px solid ${tokens.border};
+  background-color: ${tokens.paper};
 `;
 
 export default GamePage;

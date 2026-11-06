@@ -2,7 +2,7 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Button, Hidden } from '@mui/material';
+import { Button } from '@mui/material';
 import useIsPro from 'auth/useIsPro';
 import ProButton from 'components/ProButton';
 import styled from '@emotion/styled';
@@ -17,6 +17,7 @@ import { AiButton } from './ai/AiButton';
 import logoIcon from './logo-white.png';
 import logoText from './text-white.png';
 import config from 'utils/getConfig';
+import { tokens } from 'tokens';
 
 export function Header() {
   const user = useUser();
@@ -26,15 +27,21 @@ export function Header() {
   const goToHome = useCallback(() => navigate('/'), [navigate]);
   const { toggle: togglePanel } = useSidePanel();
   const isOnGamePage = !!useMatch('game/:gameId/*');
+  const branded = Boolean(config.HEADER_PRIMARY_COLOR);
+  const inkDefaultLogo = !branded && !config.LOGO;
   return (
     <AppBar
       position="sticky"
+      elevation={0}
       style={{
-        backgroundColor: config.HEADER_PRIMARY_COLOR || undefined,
-        color: config.HEADER_SECONDARY_COLOR || undefined,
+        backgroundColor: branded ? config.HEADER_PRIMARY_COLOR : tokens.paper,
+        color: branded
+          ? config.HEADER_SECONDARY_COLOR || '#fff'
+          : tokens.ink,
+        borderBottom: branded ? 'none' : `1px solid ${tokens.border}`,
       }}
     >
-      <Toolbar>
+      <Toolbar variant="dense">
         <IconButton
           color="inherit"
           aria-label="Menu"
@@ -44,7 +51,11 @@ export function Header() {
         >
           <MenuIcon />
         </IconButton>
-        <MainTitle onClick={goToHome} data-cy="header-home-button">
+        <MainTitle
+          onClick={goToHome}
+          data-cy="header-home-button"
+          $ink={inkDefaultLogo}
+        >
           <img
             src={config.LOGO ? config.LOGO : logoIcon}
             alt="Retrospected Icon"
@@ -58,15 +69,13 @@ export function Header() {
           <ProPill small />
         </ProPillContainer>
         {displayGoPro ? (
-          <Hidden mdDown>
-            <GoProContainer>
-              <ProButton>
-                <Button variant="contained" color="secondary">
-                  ⭐️ Go Pro!
-                </Button>
-              </ProButton>
-            </GoProContainer>
-          </Hidden>
+          <GoProContainer>
+            <ProButton>
+              <Button variant="contained" color="secondary">
+                ⭐️ Go Pro!
+              </Button>
+            </ProButton>
+          </GoProContainer>
         ) : null}
         <Spacer />
         {user ? <AiButton /> : null}
@@ -78,13 +87,16 @@ export function Header() {
   );
 }
 
-const MainTitle = styled.div`
+const MainTitle = styled.div<{ $ink: boolean }>`
   display: flex;
   align-items: center;
   gap: 10px;
   cursor: pointer;
   margin-left: 10px;
   margin-right: 20px;
+  img {
+    filter: ${(props) => (props.$ink ? 'brightness(0)' : 'none')};
+  }
   > :nth-of-type(2) {
     position: relative;
     top: 2px;
@@ -105,6 +117,10 @@ const ProPillContainer = styled.div``;
 
 const GoProContainer = styled.div`
   margin-left: 20px;
+
+  @media (max-width: 900px) {
+    display: none;
+  }
 `;
 
 const Spacer = styled.div`

@@ -6,7 +6,6 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Tooltip from '@mui/material/Tooltip';
 import { colors } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import {
   ThumbUpOutlined,
   ThumbDownOutlined,
@@ -52,20 +51,6 @@ interface PostItemProps {
   onDelete: () => void;
 }
 
-const useStyles = makeStyles(() => {
-  return {
-    actionContainer: {
-      backgroundColor: colors.grey[100],
-    },
-    actionIcon: {
-      color: colors.blue[400],
-    },
-    ghipyIcon: {
-      color: colors.yellow[700],
-    },
-  };
-});
-
 const PostItem = ({
   index,
   post,
@@ -92,7 +77,6 @@ const PostItem = ({
     canUseGiphy,
     isBlurred,
   } = usePostUserPermissions(post);
-  const classes = useStyles();
   const { t } = useTranslation();
   const { encrypt, decrypt } = useCrypto();
   const canDecrypt = useCanDecrypt();
@@ -167,7 +151,14 @@ const PostItem = ({
         isDragDisabled={!canReorder}
       >
         {(provided: DraggableProvided) => (
-          <PostCard ref={provided.innerRef} {...provided.draggableProps}>
+          <PostCard
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            style={{
+              ...provided.draggableProps.style,
+              ['--note-accent' as string]: color,
+            }}
+          >
             {isBlurred ? (
               <Tooltip title="Cards from other people will be shown when the moderator chooses to reveal them.">
                 <BlurOverlay />
@@ -219,7 +210,7 @@ const PostItem = ({
               )}
             </CardContent>
             {displayAction && canCreateAction && (
-              <CardContent className={classes.actionContainer}>
+              <ActionNote>
                 <Typography variant="caption">{t('Actions.title')}:</Typography>
                 <Typography variant="body1">
                   <EditableLabel
@@ -231,10 +222,9 @@ const PostItem = ({
                     multiline
                   />
                 </Typography>
-              </CardContent>
+              </ActionNote>
             )}
             <ActionsBar
-              color={color}
               rightActions={
                 <>
                   {giphyImageUrl && (
@@ -259,9 +249,11 @@ const PostItem = ({
                       tooltip={t('Post.setActionButton')!}
                       icon={
                         post.action ? (
-                          <Assignment className={classes.actionIcon} />
+                          <Assignment style={{ color: colors.blue[400] }} />
                         ) : (
-                          <AssignmentOutlined className={classes.actionIcon} />
+                          <AssignmentOutlined
+                            style={{ color: colors.blue[400] }}
+                          />
                         )
                       }
                       onClick={toggleAction}
@@ -272,7 +264,9 @@ const PostItem = ({
                       ariaLabel={t('Post.setGiphyButton')}
                       tooltip={t('Post.setGiphyButton')!}
                       icon={
-                        <EmojiEmotionsOutlined className={classes.ghipyIcon} />
+                        <EmojiEmotionsOutlined
+                          style={{ color: colors.yellow[700] }}
+                        />
                       }
                       innerRef={postElement}
                       onClick={handleShowGiphy}
@@ -363,19 +357,28 @@ const DragHandle = styled.div`
   top: 3px;
   right: 3px;
   visibility: hidden;
-  color: ${colors.grey[500]};
+  color: var(--rs-muted);
 `;
 
 const PostCard = styled(Card)`
-  margin: 10px 5px;
-  margin-bottom: 20px;
+  margin: 8px 0 12px;
   position: relative;
+  background: var(--rs-paper);
+  border: 1px solid var(--rs-border);
+  border-left: 3px solid color-mix(in srgb, var(--note-accent) 55%, #1c1917);
+  border-radius: 10px;
+  box-shadow: var(--rs-shadow);
+  overflow: hidden;
 
   :hover {
     & .drag-handle {
       visibility: visible;
     }
   }
+`;
+
+const ActionNote = styled(CardContent)`
+  background-color: #f5f5f4;
 `;
 
 const AuthorContainer = styled.div`

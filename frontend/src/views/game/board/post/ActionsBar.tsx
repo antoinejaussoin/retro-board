@@ -2,18 +2,16 @@ import styled from '@emotion/styled';
 import CardActions from '@mui/material/CardActions';
 
 interface ActionsBarProps {
-  color: string;
   rightActions: React.ReactNode;
 }
 
 const ActionsBar = ({
   children,
   rightActions,
-  color,
 }: React.PropsWithChildren<ActionsBarProps>) => {
   return (
     <Actions>
-      <ButtonsContainer style={{ backgroundColor: color }}>
+      <ButtonsContainer>
         <MainButtons>{children}</MainButtons>
         <RightActions>{rightActions}</RightActions>
       </ButtonsContainer>
@@ -35,7 +33,9 @@ const Actions = styled(CardActions)`
 const ButtonsContainer = styled.div`
   display: flex;
   margin: 0;
-  padding: 8px;
+  padding: 4px 8px;
+  border-top: 1px solid var(--rs-border);
+  background: #fafaf9;
 `;
 
 const RightActions = styled.div``;

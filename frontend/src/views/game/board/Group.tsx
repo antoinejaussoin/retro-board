@@ -6,7 +6,6 @@ import {
   DroppableProvided,
   DroppableStateSnapshot,
 } from '@hello-pangea/dnd';
-import { colors } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import {
   Delete,
@@ -112,20 +111,23 @@ const GroupContainer = styled.div<{ draggingOver: boolean }>`
   position: relative;
   display: flex;
   flex-direction: column;
-  border: 1px dashed lightgray;
+  border: 1px solid var(--rs-border);
   border-radius: 10px;
-  margin: 10px 0;
+  margin: 8px 0;
+  overflow: hidden;
   background-color: ${(props) =>
-    props.draggingOver ? colors.grey[200] : 'unset'};
+    props.draggingOver ? 'rgba(255, 255, 255, 0.72)' : 'var(--rs-paper)'};
 `;
 
 const Header = styled.div<{ collapsed: boolean }>`
   display: flex;
   align-items: center;
   background-color: ${(props) =>
-    props.collapsed ? colors.grey[50] : colors.grey[100]};
+    props.collapsed ? 'transparent' : '#fafaf9'};
+  border-bottom: ${(props) =>
+    props.collapsed ? 'none' : '1px solid var(--rs-border)'};
   padding: ${(props) => (props.collapsed ? '3px 10px' : '10px')};
-  color: ${(props) => (props.collapsed ? colors.grey[500] : 'inherit')};
+  color: ${(props) => (props.collapsed ? 'var(--rs-muted)' : 'inherit')};
 `;
 
 const Content = styled.div`

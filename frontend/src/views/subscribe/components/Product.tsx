@@ -69,7 +69,7 @@ const Container = styled.div<{ selected: boolean }>`
   width: 300px;
   border-radius: 5px;
   border: 3px solid
-    ${(props) => (props.selected ? colors.deepPurple[500] : colors.grey[50])};
+    ${(props) => (props.selected ? 'var(--rs-accent)' : colors.grey[50])};
 `;
 
 const Header = styled.div`
@@ -93,11 +93,11 @@ const Seats = styled.div`
   justify-content: center;
   font-size: 1.5em;
   font-weight: 300;
-  color: ${colors.deepPurple[500]};
+  color: var(--rs-accent);
 `;
 
 const Total = styled.div`
-  background-color: ${colors.deepPurple[500]};
+  background-color: var(--rs-accent);
   color: white;
   text-align: center;
   font-size: 2em;
@@ -114,17 +114,17 @@ const PickMe = styled.div`
 `;
 
 const PickMeButton = styled.div`
-  border: 1px solid ${colors.deepPurple[500]};
-  color: ${colors.deepPurple[500]};
+  border: 1px solid var(--rs-accent);
+  color: var(--rs-accent);
   border-radius: 10px;
   font-size: 1.5em;
-  font-weight: 100;
+  font-weight: 500;
   text-align: center;
   padding: 5px;
 
   :hover {
-    background-color: ${colors.deepPurple[500]};
-    color: white;
+    background-color: var(--rs-accent);
+    color: var(--rs-accent-contrast);
   }
 `;
 

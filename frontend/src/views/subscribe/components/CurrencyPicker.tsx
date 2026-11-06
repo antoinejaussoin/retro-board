@@ -38,8 +38,7 @@ const CurrencyContainer = styled.div<{ selected: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: ${(props) => (props.selected ? '1' : '0')}px solid
-    ${colors.deepPurple[500]};
+  border: ${(props) => (props.selected ? '1' : '0')}px solid var(--rs-accent);
   border-radius: 3px;
   margin: ${(props) => (props.selected ? '0' : '1')}px;
   padding: 5px 0 2px 0px;

@@ -183,13 +183,13 @@ const Container = styled.span`
 `;
 
 const Header = styled.div`
-  background-color: ${colors.deepPurple[300]};
-  background: ${`linear-gradient(
+  background-color: var(--rs-accent);
+  background: linear-gradient(
     171deg,
-    ${colors.deepPurple[300]} 35%,
-    ${colors.deepPurple[600]} 100%
-  )`};
-  color: white;
+    var(--rs-accent) 35%,
+    var(--rs-accent-dark) 100%
+  );
+  color: var(--rs-accent-contrast);
   min-width: 60hw;
   padding: 20px 20px;
   font-size: 2.5em;
