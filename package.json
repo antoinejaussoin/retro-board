@@ -11,7 +11,8 @@
     "stripe-login": "stripe login",
     "stripe-listen": "stripe listen --forward-to localhost:3000/api/stripe/webhook",
     "bump": ". ./scripts/bump.sh",
-    "mig": "cd backend && cargo run -p retrospected-migrations --bin retrospected-migrate"
+    "mig": "cd backend && cargo run -p retrospected-migrations --bin retrospected-migrate",
+    "hardcode-licence": "cd backend && cargo run -q -p retrospected-server --bin retrospected-hardcode-licence --"
   },
   "repository": {
     "type": "git",

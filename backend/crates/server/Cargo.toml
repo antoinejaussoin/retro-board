@@ -10,6 +10,10 @@ version.workspace = true
 name = "retrospected-server"
 path = "src/main.rs"
 
+[[bin]]
+name = "retrospected-hardcode-licence"
+path = "src/bin/hardcode_licence.rs"
+
 [dependencies]
 retrospected-migrations = { path = "../migrations" }
 aes = "0.8"
