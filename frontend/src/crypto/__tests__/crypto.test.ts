@@ -1,5 +1,14 @@
+import { bytesToUtf8, utf8ToBytes } from '@noble/ciphers/utils.js';
 import { describe, expect, it } from 'vitest';
-import { decrypt, encrypt } from '../crypto';
+import {
+  CHECK_PREFIX,
+  decrypt,
+  encrypt,
+  openNoble,
+  openSubtle,
+  sealNoble,
+  sealSubtle,
+} from '../crypto';
 
 describe('Cryptography', () => {
   it('Can encrypt and decrypt successfuly with the correct key', () => {
@@ -32,7 +41,7 @@ describe('Cryptography', () => {
   it('Will append the encrypted string with a special prefix', () => {
     const key = 'foobar';
     const source = 'hello world';
-    expect(encrypt(source, key).startsWith('<<ENCRYPTED>>')).toBeTruthy();
+    expect(encrypt(source, key).startsWith('<<GCM>>')).toBeTruthy();
   });
 
   it('Will remove the special prefix if it was in clear text', () => {
@@ -47,5 +56,21 @@ describe('Cryptography', () => {
       '<<ENCRYPTED>>U2FsdGVkX19vBaSLDa0pMKwIum97gdBaKYRFV48N5caP2aba4l1zCWsLF0yu/dQe';
     const source = 'hello world';
     expect(decrypt(encrypted, key)).toEqual(source);
+  });
+
+  it('opens a noble ciphertext with subtle and a subtle ciphertext with noble', async () => {
+    const key = 'foobar';
+    const plain = utf8ToBytes(`${CHECK_PREFIX}hello world`);
+    const fromNoble = sealNoble(plain, key);
+    const fromSubtle = await sealSubtle(plain, key);
+
+    expect(bytesToUtf8((await openSubtle(fromNoble, key))!)).toEqual(
+      `${CHECK_PREFIX}hello world`,
+    );
+    expect(bytesToUtf8(openNoble(fromSubtle, key)!)).toEqual(
+      `${CHECK_PREFIX}hello world`,
+    );
+    expect(decrypt(fromSubtle, key)).toEqual('hello world');
+    expect(fromNoble).not.toEqual(fromSubtle);
   });
 });

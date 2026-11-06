@@ -27,7 +27,7 @@ In the example above, only the <span style="color: blue">blue</span> part of the
 
 ## Encryption
 
-Your content is encrypted locally using AES, with [crypto-js/aes](https://cryptojs.gitbook.io/docs/#ciphers).
+Your content is encrypted locally with AES-256-GCM. The key is the SHA-256 of the passphrase in the URL. Cards saved with the previous AES format still open.
 
 ## Decryption
 

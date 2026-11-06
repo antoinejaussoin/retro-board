@@ -1,17 +1,8 @@
-import 'core-js/stable';
-import 'whatwg-fetch';
 import { createRoot } from 'react-dom/client';
 import './translations/i18n';
 import App from './App';
 import { initialiseAnalytics, initialiseSentry } from './track';
 import * as serviceWorker from './serviceWorker';
-
-// Hack because a dependency requires module.hot to be defined
-window.module = {
-  hot: false,
-} as any;
-
-(window as any).global = window;
 
 const container = document.getElementById('content');
 const root = createRoot(container!);
