@@ -32,6 +32,9 @@ jobs:
 
   backend:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
     steps:
       - uses: actions/checkout@v4
       - name: Read VERSION
@@ -53,6 +56,9 @@ jobs:
           context: backend
           tags: retrospected/backend:alpha
           platforms: linux/amd64
+          # Same scope build-multiarch.yml uses for retrospected/backend on linux/amd64.
+          cache-from: type=gha,scope=retrospected-backend-linux-amd64
+          cache-to: type=gha,scope=retrospected-backend-linux-amd64,mode=max,ignore-error=true
           push: true
 
   marketing:

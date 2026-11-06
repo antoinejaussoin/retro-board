@@ -19,6 +19,11 @@ on:
         description: Full image tags to publish, one per line
         required: true
         type: string
+      cache:
+        description: Save BuildKit layers in the GitHub Actions cache
+        required: false
+        type: boolean
+        default: false
     secrets:
       DOCKER_NEW_USERNAME:
         required: true
@@ -29,6 +34,9 @@ jobs:
   build:
     name: ${{ matrix.platform }}
     runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+      actions: write
     strategy:
       fail-fast: false
       matrix:
@@ -55,6 +63,17 @@ jobs:
             echo "Runner is ${actual}, expected ${expected} for ${{ matrix.platform }}"
             exit 1
           fi
+      - name: Build identifiers
+        id: build-id
+        run: |
+          set -euo pipefail
+          image="${{ inputs.image }}"
+          platform="${{ matrix.platform }}"
+          slug="${image//\//-}"
+          platform_pair="${platform//\//-}"
+          echo "slug=${slug}" >> "$GITHUB_OUTPUT"
+          echo "platform=${platform_pair}" >> "$GITHUB_OUTPUT"
+          echo "scope=${slug}-${platform_pair}" >> "$GITHUB_OUTPUT"
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
@@ -72,9 +91,12 @@ jobs:
           # A provenance attestation is its own index. Merging those indexes
           # does not produce a pullable multi-arch image.
           provenance: false
+          # mode=max keeps the intermediate dependency stage. mode=min would only
+          # keep the final runtime image, which does not contain the Cargo build.
+          cache-from: ${{ inputs.cache && format('type=gha,scope={0}', steps.build-id.outputs.scope) || '' }}
+          cache-to: ${{ inputs.cache && format('type=gha,scope={0},mode=max,ignore-error=true', steps.build-id.outputs.scope) || '' }}
           outputs: type=image,name=${{ inputs.image }},push-by-digest=true,name-canonical=true,push=true
       - name: Export digest
-        id: digest
         run: |
           set -euo pipefail
           digest="${{ steps.build.outputs.digest }}"
@@ -82,16 +104,12 @@ jobs:
             echo "Build did not return an image digest"
             exit 1
           fi
-          image="${{ inputs.image }}"
-          platform="${{ matrix.platform }}"
           mkdir -p "${RUNNER_TEMP}/digests"
           touch "${RUNNER_TEMP}/digests/${digest#sha256:}"
-          echo "slug=${image//\//-}" >> "$GITHUB_OUTPUT"
-          echo "platform=${platform//\//-}" >> "$GITHUB_OUTPUT"
       - name: Upload digest
         uses: actions/upload-artifact@v4
         with:
-          name: digests-${{ steps.digest.outputs.slug }}--${{ steps.digest.outputs.platform }}
+          name: digests-${{ steps.build-id.outputs.slug }}--${{ steps.build-id.outputs.platform }}
           path: ${{ runner.temp }}/digests/*
           if-no-files-found: error
           retention-days: 1

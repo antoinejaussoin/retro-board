@@ -41,6 +41,7 @@ jobs:
       tags: |
         retrospected/backend:latest
         retrospected/backend:${{ needs.version.outputs.version }}
+      cache: true
     secrets:
       DOCKER_NEW_USERNAME: ${{ secrets.DOCKER_NEW_USERNAME }}
       DOCKER_NEW_PASSWORD: ${{ secrets.DOCKER_NEW_PASSWORD }}

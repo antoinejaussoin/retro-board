@@ -23,6 +23,7 @@ jobs:
       file: backend/Dockerfile
       context: backend
       tags: retrospected/backend:canary
+      cache: true
     secrets:
       DOCKER_NEW_USERNAME: ${{ secrets.DOCKER_NEW_USERNAME }}
       DOCKER_NEW_PASSWORD: ${{ secrets.DOCKER_NEW_PASSWORD }}
