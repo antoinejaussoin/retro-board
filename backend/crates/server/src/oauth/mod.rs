@@ -1,12 +1,16 @@
 //! OAuth start and callback routes. Callback URLs stay `${BASE_URL}/api/auth/{provider}/callback`.
 
+use std::sync::Arc;
+
 use axum::extract::{Query, State};
 use axum::http::{header, StatusCode};
 use axum::response::{IntoResponse, Redirect, Response};
 use axum::routing::get;
+use axum::Extension;
 use axum::Router;
 use serde::Deserialize;
 use serde_json::Value;
+use tokio::sync::Mutex;
 
 use crate::db::{self, Registration};
 use crate::models::user_ids;
@@ -46,20 +50,21 @@ pub(super) struct CallbackQuery {
 
 async fn start_oauth(
     State(state): State<AppState>,
+    Extension(slot): Extension<Arc<Mutex<Session>>>,
     axum::extract::OriginalUri(uri): axum::extract::OriginalUri,
-    headers: header::HeaderMap,
 ) -> Response {
     let provider = provider_from_path(uri.path()).unwrap_or("");
     let Some(auth) = authorize_url(&state, provider) else {
         return StatusCode::NOT_FOUND.into_response();
     };
-    let mut session = load_session(&state, &headers).await;
+    let mut session = slot.lock().await;
     let nonce = uuid::Uuid::new_v4().to_string();
     session.raw["oauthState"] = serde_json::Value::String(nonce.clone());
     if let Some(socket) = query_param(uri.query().unwrap_or(""), "socketId") {
         session.socket_id = Some(socket);
     }
     state.sessions.save(&session).await;
+    state.sessions.remember_oauth_tx(&nonce, &session.id).await;
     let mut target = auth;
     target.push_str(if target.contains('?') { "&" } else { "?" });
     target.push_str(&format!("state={}", urlencoding::encode(&nonce)));
@@ -68,8 +73,8 @@ async fn start_oauth(
 
 async fn callback_oauth(
     State(state): State<AppState>,
+    Extension(slot): Extension<Arc<Mutex<Session>>>,
     Query(query): Query<CallbackQuery>,
-    headers: header::HeaderMap,
     axum::extract::OriginalUri(uri): axum::extract::OriginalUri,
 ) -> Response {
     let provider = provider_from_path(uri.path())
@@ -79,19 +84,83 @@ async fn callback_oauth(
     let Some(code) = query.code else {
         return StatusCode::FORBIDDEN.into_response();
     };
-    let mut session = load_session(&state, &headers).await;
-    if session
-        .raw
-        .get("oauthState")
-        .and_then(|value| value.as_str())
-        != query.state.as_deref()
-    {
-        return StatusCode::FORBIDDEN.into_response();
-    }
-    let Ok(profile) = exchange(&state, &provider, &code).await else {
+    let Some(expected) = query.state.clone() else {
+        tracing::warn!(provider, "oauth callback missing state");
         return StatusCode::FORBIDDEN.into_response();
     };
-    finish_login(&state, &mut session, profile).await
+    let mut session = slot.lock().await.clone();
+    if !prepare_callback_session(&state, &mut session, "oauthState", &expected).await {
+        tracing::warn!(provider, "oauth state did not match the session");
+        return StatusCode::FORBIDDEN.into_response();
+    }
+    let profile = match exchange(&state, &provider, &code).await {
+        Ok(profile) => profile,
+        Err(error) => {
+            tracing::warn!(%error, provider, "oauth token exchange failed");
+            return StatusCode::FORBIDDEN.into_response();
+        }
+    };
+    let response = finish_login(&state, &mut session, profile).await;
+    *slot.lock().await = session;
+    response
+}
+
+/// The provider redirects the popup without the session cookie, so the request
+/// looks like a new empty session. The `state` value still identifies the
+/// session that started the login. A session that is already logged in, or
+/// waiting on a different return, is left as it is.
+async fn prepare_callback_session(
+    state: &AppState,
+    session: &mut Session,
+    field: &str,
+    expected: &str,
+) -> bool {
+    let current = session.raw.get(field).and_then(Value::as_str);
+    let stored = state.sessions.oauth_tx(expected).await;
+    match bind_oauth(
+        current,
+        expected,
+        session.passport_user.is_some(),
+        stored.is_some(),
+    ) {
+        OauthBind::Keep => {
+            state.sessions.forget_oauth_tx(expected).await;
+            true
+        }
+        OauthBind::Swap => {
+            let Some(sid) = stored else {
+                return false;
+            };
+            let Some(loaded) = state.sessions.load(&sid).await else {
+                return false;
+            };
+            if loaded.raw.get(field).and_then(Value::as_str) != Some(expected) {
+                return false;
+            }
+            *session = loaded;
+            state.sessions.forget_oauth_tx(expected).await;
+            true
+        }
+        OauthBind::Reject => false,
+    }
+}
+
+#[derive(Debug, PartialEq, Eq)]
+enum OauthBind {
+    Keep,
+    Swap,
+    Reject,
+}
+
+fn bind_oauth(current: Option<&str>, expected: &str, logged_in: bool, have_tx: bool) -> OauthBind {
+    if current == Some(expected) {
+        return OauthBind::Keep;
+    }
+    if have_tx && !logged_in && current.is_none() {
+        OauthBind::Swap
+    } else {
+        OauthBind::Reject
+    }
 }
 
 pub(super) async fn finish_login(
@@ -469,18 +538,6 @@ pub(super) fn query_param(query: &str, name: &str) -> Option<String> {
     })
 }
 
-pub(super) async fn load_session(state: &AppState, headers: &header::HeaderMap) -> Session {
-    let cookie = headers
-        .get(header::COOKIE)
-        .and_then(|value| value.to_str().ok());
-    if let Some(sid) = state.sessions.from_cookie(cookie) {
-        if let Some(session) = state.sessions.load(&sid).await {
-            return session;
-        }
-    }
-    state.sessions.create().await
-}
-
 pub(super) fn redirect(state: &AppState, session: &Session, location: String) -> Response {
     let mut response = Redirect::temporary(&location).into_response();
     response.headers_mut().insert(
@@ -492,4 +549,32 @@ pub(super) fn redirect(state: &AppState, session: &Session, location: String) ->
             .unwrap(),
     );
     response
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{bind_oauth, OauthBind};
+
+    #[test]
+    fn keeps_the_session_that_started_oauth() {
+        assert_eq!(
+            bind_oauth(Some("nonce"), "nonce", false, true),
+            OauthBind::Keep
+        );
+    }
+
+    #[test]
+    fn swaps_when_the_popup_lost_the_cookie() {
+        assert_eq!(bind_oauth(None, "nonce", false, true), OauthBind::Swap);
+    }
+
+    #[test]
+    fn rejects_a_logged_in_session_and_a_different_pending_login() {
+        assert_eq!(bind_oauth(None, "nonce", true, true), OauthBind::Reject);
+        assert_eq!(
+            bind_oauth(Some("other"), "nonce", false, true),
+            OauthBind::Reject
+        );
+        assert_eq!(bind_oauth(None, "nonce", false, false), OauthBind::Reject);
+    }
 }
