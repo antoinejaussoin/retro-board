@@ -1,8 +1,17 @@
-FROM rust:1.99.1-bookworm AS build
-
+FROM lukemathwalker/cargo-chef:0.1.78-rust-1.99.1-bookworm AS chef
 WORKDIR /usr/src/backend
+
+# Dependencies are compiled before the sources are copied. That layer is reused
+# until Cargo.toml or Cargo.lock changes.
+FROM chef AS planner
 COPY . .
-RUN cargo build --release --locked -p retrospected-server
+RUN cargo chef prepare --recipe-path recipe.json
+
+FROM chef AS build
+COPY --from=planner /usr/src/backend/recipe.json recipe.json
+RUN cargo chef cook --release --locked --package retrospected-server --recipe-path recipe.json
+COPY . .
+RUN cargo build --release --locked --package retrospected-server
 
 FROM debian:bookworm-slim
 
