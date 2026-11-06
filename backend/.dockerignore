@@ -1,6 +1,4 @@
+target
 node_modules
-npm-debug.log
-persist
-Dockerfile*
-dist
-yarn-error.log
+src
+*.md

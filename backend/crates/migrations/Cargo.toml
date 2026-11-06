@@ -1,0 +1,30 @@
+[package]
+name = "retrospected-migrations"
+description = "TypeORM-compatible migration runner for Retrospected"
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+version.workspace = true
+
+[[bin]]
+name = "retrospected-migrate"
+path = "src/bin/migrate.rs"
+
+[[bin]]
+name = "retrospected-new-migration"
+path = "src/bin/new_migration.rs"
+
+[dependencies]
+chrono.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sqlx.workspace = true
+thiserror.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+
+[dev-dependencies]
+sqlx.workspace = true
+
+[lints]
+workspace = true
