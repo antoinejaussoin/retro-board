@@ -1,7 +1,9 @@
 //! Anthropic Messages API for the agile coach.
 
-use crate::models::CoachMessage;
+use sha2::Digest;
 use thiserror::Error;
+
+use crate::models::CoachMessage;
 
 /// Coach persona sent as the Anthropic `system` field.
 pub const SYSTEM: &str = "You are an online agile coach, helping users to improve their online retrospectives, using Retrospected. Users are part of a remote team and are not physically in the same room. Always introduce yourself as an agile coach that can help users improve their online retrospectives and make the most out of Retrospected.";
@@ -215,6 +217,21 @@ fn vote_score(post: &crate::models::Post) -> i32 {
     likes.saturating_sub(dislikes)
 }
 
+/// Hash of the board prompt, stored so a later edit can be detected.
+#[must_use]
+pub fn summary_fingerprint(prompt: &str) -> String {
+    hex::encode(sha2::Sha256::digest(prompt.as_bytes()))
+}
+
+/// A saved summary is stale when the board prompt no longer matches what was summarised.
+#[must_use]
+pub fn summary_is_stale(summary: Option<&str>, stored: Option<&str>, current: &str) -> bool {
+    if summary.map(str::trim).is_none_or(|text| text.is_empty()) {
+        return false;
+    }
+    stored != Some(current)
+}
+
 fn text_block(block: &serde_json::Value) -> Option<&str> {
     if block.get("type").and_then(serde_json::Value::as_str) == Some("text") {
         block.get("text").and_then(serde_json::Value::as_str)
@@ -225,7 +242,10 @@ fn text_block(block: &serde_json::Value) -> Option<&str> {
 
 #[cfg(test)]
 mod tests {
-    use super::{conversation, request_body, summary_prompt, text_from_response, DEFAULT_MODEL};
+    use super::{
+        conversation, request_body, summary_fingerprint, summary_is_stale, summary_prompt,
+        text_from_response, DEFAULT_MODEL,
+    };
     use crate::models::CoachMessage;
     use serde_json::json;
 
@@ -374,6 +394,16 @@ mod tests {
         let anonymous = summary_prompt(&board, false);
         assert!(!anonymous.contains("by Ada"), "{anonymous}");
         assert!(anonymous.contains("Shipping felt calm"), "{anonymous}");
+        assert!(!summary_is_stale(None, None, "current"));
+        assert!(!summary_is_stale(Some("   "), None, "current"));
+        let current = summary_fingerprint(&named);
+        assert!(!summary_is_stale(Some("saved"), Some(&current), &current));
+        assert!(summary_is_stale(
+            Some("saved"),
+            Some(&current),
+            &summary_fingerprint(&anonymous)
+        ));
+        assert!(summary_is_stale(Some("saved"), None, &current));
     }
 
     #[test]

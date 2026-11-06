@@ -285,7 +285,9 @@
     "summarise": "AIで要約",
     "summarising": "要約しています…",
     "aiSummaryTitle": "AIサマリー",
-    "aiSummaryHelp": "このレトロスペクティブの短い要約を作成します。サマリーをコピーすると、この要約も含まれます。"
+    "aiSummaryHelp": "このレトロスペクティブの短い要約を作成します。サマリーをコピーすると、この要約も含まれます。",
+    "aiSummaryStale": "この要約を作成した後にボードが変更されました。",
+    "regenerate": "要約を再作成"
   },
   "SessionName": {
     "defaultSessionName": "新しいレトロスペクティブ"

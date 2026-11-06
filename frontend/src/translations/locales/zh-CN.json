@@ -285,7 +285,9 @@
     "summarise": "用 AI 总结",
     "summarising": "正在总结…",
     "aiSummaryTitle": "AI 总结",
-    "aiSummaryHelp": "生成这次回顾的简短总结。复制摘要时会包含这份总结。"
+    "aiSummaryHelp": "生成这次回顾的简短总结。复制摘要时会包含这份总结。",
+    "aiSummaryStale": "撰写这份总结后，看板已有更新。",
+    "regenerate": "重新生成总结"
   },
   "SessionName": {
     "defaultSessionName": "我的回顾"

@@ -285,7 +285,9 @@
     "summarise": "Podsumuj z pomocą AI",
     "summarising": "Podsumowywanie…",
     "aiSummaryTitle": "Podsumowanie AI",
-    "aiSummaryHelp": "Wygeneruj krótki opis tej retrospektywy. Zostanie on dołączony, gdy skopiujesz podsumowanie."
+    "aiSummaryHelp": "Wygeneruj krótki opis tej retrospektywy. Zostanie on dołączony, gdy skopiujesz podsumowanie.",
+    "aiSummaryStale": "Tablica zmieniła się od czasu napisania tego podsumowania.",
+    "regenerate": "Wygeneruj podsumowanie ponownie"
   },
   "SessionName": {
     "defaultSessionName": "Moja Retrospektywa"

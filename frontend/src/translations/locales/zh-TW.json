@@ -285,7 +285,9 @@
     "summarise": "用 AI 總結",
     "summarising": "正在總結…",
     "aiSummaryTitle": "AI 總結",
-    "aiSummaryHelp": "產生這次回顧的簡短總結。複製摘要時會包含這份總結。"
+    "aiSummaryHelp": "產生這次回顧的簡短總結。複製摘要時會包含這份總結。",
+    "aiSummaryStale": "撰寫這份總結後，看板已有更新。",
+    "regenerate": "重新產生總結"
   },
   "SessionName": {
     "defaultSessionName": "我的回顧"

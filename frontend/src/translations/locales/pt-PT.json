@@ -285,7 +285,9 @@
     "summarise": "Resumir com IA",
     "summarising": "A resumir…",
     "aiSummaryTitle": "Resumo de IA",
-    "aiSummaryHelp": "Gere um breve resumo desta retrospetiva. É incluído quando copia o resumo."
+    "aiSummaryHelp": "Gere um breve resumo desta retrospetiva. É incluído quando copia o resumo.",
+    "aiSummaryStale": "O quadro mudou desde que este resumo foi escrito.",
+    "regenerate": "Gerar o resumo novamente"
   },
   "SessionName": {
     "defaultSessionName": "Meu Retrospectivo"

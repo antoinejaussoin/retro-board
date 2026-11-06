@@ -279,7 +279,9 @@
     "summarise": "Mit KI zusammenfassen",
     "summarising": "Wird zusammengefasst…",
     "aiSummaryTitle": "KI-Zusammenfassung",
-    "aiSummaryHelp": "Erstellen Sie eine kurze Zusammenfassung dieser Retrospektive. Sie ist enthalten, wenn Sie die Zusammenfassung kopieren."
+    "aiSummaryHelp": "Erstellen Sie eine kurze Zusammenfassung dieser Retrospektive. Sie ist enthalten, wenn Sie die Zusammenfassung kopieren.",
+    "aiSummaryStale": "Das Board hat sich geändert, seit diese Zusammenfassung geschrieben wurde.",
+    "regenerate": "Zusammenfassung neu erstellen"
   },
   "SessionName": {
     "defaultSessionName": "Meine Retrospektive"

@@ -114,3 +114,8 @@ export interface AiSummaryPayload {
 export interface AiSummaryResponse {
   summary: string;
 }
+
+export interface StoredAiSummary {
+  summary: string | null;
+  stale: boolean;
+}

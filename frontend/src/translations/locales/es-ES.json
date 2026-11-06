@@ -285,7 +285,9 @@
     "summarise": "Resumir con IA",
     "summarising": "Resumiendo…",
     "aiSummaryTitle": "Resumen de IA",
-    "aiSummaryHelp": "Genera un breve resumen de esta retrospectiva. Se incluye al copiar el resumen."
+    "aiSummaryHelp": "Genera un breve resumen de esta retrospectiva. Se incluye al copiar el resumen.",
+    "aiSummaryStale": "El tablero ha cambiado desde que se escribió este resumen.",
+    "regenerate": "Volver a generar el resumen"
   },
   "SessionName": {
     "defaultSessionName": "Mi retrospectiva"

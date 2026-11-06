@@ -285,7 +285,9 @@
     "summarise": "Összefoglalás MI-vel",
     "summarising": "Összefoglalás…",
     "aiSummaryTitle": "MI-összefoglaló",
-    "aiSummaryHelp": "Készítsen rövid összefoglalót erről a retrospektívről. A másoláskor ez is bekerül az összefoglalóba."
+    "aiSummaryHelp": "Készítsen rövid összefoglalót erről a retrospektívről. A másoláskor ez is bekerül az összefoglalóba.",
+    "aiSummaryStale": "A tábla megváltozott az összefoglaló megírása óta.",
+    "regenerate": "Összefoglaló újragenerálása"
   },
   "SessionName": {
     "defaultSessionName": "Retro"

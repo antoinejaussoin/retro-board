@@ -285,7 +285,9 @@
     "summarise": "Samenvatten met AI",
     "summarising": "Bezig met samenvatten…",
     "aiSummaryTitle": "AI-samenvatting",
-    "aiSummaryHelp": "Genereer een korte samenvatting van deze retrospective. Deze wordt meegenomen wanneer je de samenvatting kopieert."
+    "aiSummaryHelp": "Genereer een korte samenvatting van deze retrospective. Deze wordt meegenomen wanneer je de samenvatting kopieert.",
+    "aiSummaryStale": "Het bord is veranderd sinds deze samenvatting is geschreven.",
+    "regenerate": "Samenvatting opnieuw maken"
   },
   "SessionName": {
     "defaultSessionName": "Mijn Retrospective"

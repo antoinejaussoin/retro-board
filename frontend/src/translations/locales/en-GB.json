@@ -279,7 +279,9 @@
     "summarise": "Summarise with AI",
     "summarising": "Summarising…",
     "aiSummaryTitle": "AI summary",
-    "aiSummaryHelp": "Generate a short write-up of this retrospective. It is included when you copy the summary."
+    "aiSummaryHelp": "Generate a short write-up of this retrospective. It is included when you copy the summary.",
+    "aiSummaryStale": "The board has changed since this summary was written.",
+    "regenerate": "Regenerate summary"
   },
   "SessionName": {
     "defaultSessionName": "My Retrospective"

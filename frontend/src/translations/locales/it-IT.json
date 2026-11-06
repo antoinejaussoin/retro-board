@@ -285,7 +285,9 @@
     "summarise": "Riassumi con l'IA",
     "summarising": "Riepilogo in corso…",
     "aiSummaryTitle": "Riepilogo IA",
-    "aiSummaryHelp": "Genera un breve riepilogo di questa retrospettiva. È incluso quando copi il riepilogo."
+    "aiSummaryHelp": "Genera un breve riepilogo di questa retrospettiva. È incluso quando copi il riepilogo.",
+    "aiSummaryStale": "La board è cambiata da quando è stato scritto questo riepilogo.",
+    "regenerate": "Rigenera il riepilogo"
   },
   "SessionName": {
     "defaultSessionName": "La mia Retrospective"

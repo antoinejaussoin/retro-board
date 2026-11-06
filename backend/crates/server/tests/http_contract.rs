@@ -206,6 +206,16 @@ async fn http_contract() {
         .await
         .unwrap();
     assert_eq!(summary_anon.status(), 401, "summary requires a login");
+    let stored_anon = client
+        .get(format!("{}/api/ai/summary/{encrypted_id}", server.base))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(
+        stored_anon.status(),
+        401,
+        "reading a summary requires a login"
+    );
 
     let summary_encrypted = client
         .post(format!("{}/api/ai/summary", server.base))
@@ -249,6 +259,20 @@ async fn http_contract() {
         summary_missing_key.text().await.unwrap(),
         "AI is not configured"
     );
+    let stored: Value = client
+        .get(format!("{}/api/ai/summary/{session_id}", server.base))
+        .header("cookie", &cookie)
+        .send()
+        .await
+        .unwrap()
+        .json()
+        .await
+        .unwrap();
+    assert!(
+        stored["summary"].is_null(),
+        "a new board has no saved summary"
+    );
+    assert_eq!(stored["stale"], false);
 
     let email = format!("ada-{}@example.com", std::process::id());
     let registered: Value = client

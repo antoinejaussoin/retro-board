@@ -95,6 +95,43 @@ pub async fn record_ai(
     Ok(())
 }
 
+/// Saved retrospective summary and the fingerprint of the board it describes.
+pub struct StoredAiSummary {
+    pub summary: Option<String>,
+    pub fingerprint: Option<String>,
+}
+
+pub async fn stored_ai_summary(
+    pool: &PgPool,
+    session_id: &str,
+) -> DbResult<Option<StoredAiSummary>> {
+    let row = sqlx::query_as::<_, (Option<String>, Option<String>)>(
+        "SELECT ai_summary, ai_summary_fingerprint FROM sessions WHERE id = $1",
+    )
+    .bind(session_id)
+    .fetch_optional(pool)
+    .await?;
+    Ok(row.map(|(summary, fingerprint)| StoredAiSummary {
+        summary,
+        fingerprint,
+    }))
+}
+
+pub async fn save_ai_summary(
+    pool: &PgPool,
+    session_id: &str,
+    summary: &str,
+    fingerprint: &str,
+) -> DbResult<()> {
+    sqlx::query("UPDATE sessions SET ai_summary = $2, ai_summary_fingerprint = $3 WHERE id = $1")
+        .bind(session_id)
+        .bind(summary)
+        .bind(fingerprint)
+        .execute(pool)
+        .await?;
+    Ok(())
+}
+
 pub async fn cancel_subscription(pool: &PgPool, id: &str) -> DbResult<()> {
     sqlx::query("UPDATE subscriptions SET active = false WHERE id = $1")
         .bind(id)

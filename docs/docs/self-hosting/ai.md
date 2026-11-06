@@ -25,4 +25,4 @@ If `AI_FREE_LIMIT` or `AI_PAID_LIMIT` is unset, the server still reads `OPEN_AI_
 
 ## Retrospective summary
 
-On an unencrypted board, a logged-in participant can press **Summarise with AI** on the summary page. The browser sends only the board id. The server loads that board, refuses encrypted and blurred boards, and asks the configured model for a short write-up. The write-up appears on the page and is included when the summary is copied as Markdown.
+On an unencrypted board, a logged-in participant can press **Summarise with AI** on the summary page. The browser sends only the board id. The server loads that board, refuses encrypted and blurred boards, and asks the configured model for a short write-up. The write-up is saved on the board, so it is still there after a refresh, and it is included when the summary is copied as Markdown. If the board changes afterwards, the saved write-up stays visible and can be generated again.
