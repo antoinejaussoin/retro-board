@@ -47,6 +47,10 @@ where
     io.ns(
         "/",
         move |socket: SocketRef<A>, State(state): State<AppState>| {
+            // Node Socket.IO puts every socket in a room named with its id, and OAuth
+            // completion emits with `io.in(socketId)`. socketioxide does not do that,
+            // so the `auth` event never arrived and the popup stayed on a blank page.
+            socket.join(socket.id);
             log_connection(&socket, &state);
             let presence = presence.clone();
             let ids = ids_from_socket(&state, &socket);

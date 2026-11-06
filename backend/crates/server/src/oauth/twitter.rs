@@ -1,19 +1,24 @@
 use std::collections::HashMap;
 
+use std::sync::Arc;
+
 use axum::extract::{Query, State};
 use axum::http::{header, StatusCode};
 use axum::response::{IntoResponse, Response};
+use axum::Extension;
 use hmac::Mac;
 use serde_json::Value;
+use tokio::sync::Mutex;
 
 use crate::db::Registration;
+use crate::session::Session;
 use crate::state::AppState;
 
-use super::{finish_login, load_session, query_param, redirect, CallbackQuery};
+use super::{finish_login, prepare_callback_session, query_param, redirect, CallbackQuery};
 
 pub(super) async fn start_twitter(
     State(state): State<AppState>,
-    headers: header::HeaderMap,
+    Extension(slot): Extension<Arc<Mutex<Session>>>,
     axum::extract::OriginalUri(uri): axum::extract::OriginalUri,
 ) -> Response {
     if state.config.twitter_key.is_empty() {
@@ -29,13 +34,17 @@ pub(super) async fn start_twitter(
     else {
         return StatusCode::BAD_GATEWAY.into_response();
     };
-    let mut session = load_session(&state, &headers).await;
+    let mut session = slot.lock().await;
     session.raw["twitterToken"] = serde_json::Value::String(token.0.clone());
     session.raw["twitterSecret"] = serde_json::Value::String(token.1);
     if let Some(socket) = query_param(uri.query().unwrap_or(""), "socketId") {
         session.socket_id = Some(socket);
     }
     state.sessions.save(&session).await;
+    state
+        .sessions
+        .remember_oauth_tx(&token.0, &session.id)
+        .await;
     redirect(
         &state,
         &session,
@@ -48,13 +57,16 @@ pub(super) async fn start_twitter(
 
 pub(super) async fn callback_twitter(
     State(state): State<AppState>,
+    Extension(slot): Extension<Arc<Mutex<Session>>>,
     Query(query): Query<CallbackQuery>,
-    headers: header::HeaderMap,
 ) -> Response {
     let (Some(token), Some(verifier)) = (query.oauth_token, query.oauth_verifier) else {
         return StatusCode::FORBIDDEN.into_response();
     };
-    let mut session = load_session(&state, &headers).await;
+    let mut session = slot.lock().await.clone();
+    if !prepare_callback_session(&state, &mut session, "twitterToken", &token).await {
+        return StatusCode::FORBIDDEN.into_response();
+    }
     let secret = session
         .raw
         .get("twitterSecret")
@@ -64,7 +76,9 @@ pub(super) async fn callback_twitter(
     let Ok(profile) = twitter_access(&state, &token, &secret, &verifier).await else {
         return StatusCode::FORBIDDEN.into_response();
     };
-    finish_login(&state, &mut session, profile).await
+    let response = finish_login(&state, &mut session, profile).await;
+    *slot.lock().await = session;
+    response
 }
 
 async fn twitter_request_token(
