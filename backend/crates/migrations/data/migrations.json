@@ -1,0 +1,3391 @@
+[
+  {
+    "name": "Initial1563180728495",
+    "timestamp": 1563180728495,
+    "filename": "1563180728495-Initial.ts",
+    "kind": "initial",
+    "steps": [
+      {
+        "sql": "CREATE TABLE \"sessions\" (\"id\" character varying NOT NULL, \"name\" character varying, CONSTRAINT \"PK_3238ef96f18b355b671619111bc\" PRIMARY KEY (\"id\"))",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_ac984ccbd8b01af155e1874e8c\" ON \"sessions\" (\"name\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE TABLE \"users\" (\"id\" character varying NOT NULL, \"name\" character varying NOT NULL, CONSTRAINT \"PK_a3ffb1c0c8416b9fc6f907b7433\" PRIMARY KEY (\"id\"))",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_51b8b26ac168fbe7d6f5653e6c\" ON \"users\" (\"name\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE TABLE \"posts\" (\"id\" character varying NOT NULL, \"postType\" character varying NOT NULL, \"content\" character varying NOT NULL, \"sessionId\" character varying, \"userId\" character varying, CONSTRAINT \"PK_2829ac61eff60fcec60d7274b9e\" PRIMARY KEY (\"id\"))",
+        "params": []
+      },
+      {
+        "sql": "CREATE TABLE \"posts-likes\" (\"postsId\" character varying NOT NULL, \"usersId\" character varying NOT NULL, CONSTRAINT \"PK_3af5c1c14ed70366af0fb0b6f2b\" PRIMARY KEY (\"postsId\", \"usersId\"))",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_abcc8f1b7f831ac9628c046844\" ON \"posts-likes\" (\"postsId\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_fd92dae15e41a077de24f88b80\" ON \"posts-likes\" (\"usersId\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE TABLE \"posts-dislikes\" (\"postsId\" character varying NOT NULL, \"usersId\" character varying NOT NULL, CONSTRAINT \"PK_9938b66b4e2497cad0cf1a66d46\" PRIMARY KEY (\"postsId\", \"usersId\"))",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_9384267f02386d788a48da7fe1\" ON \"posts-dislikes\" (\"postsId\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_e4907b084ed752c03e957b0235\" ON \"posts-dislikes\" (\"usersId\") ",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" ADD CONSTRAINT \"FK_764b665f832e28c01595ec15cf3\" FOREIGN KEY (\"sessionId\") REFERENCES \"sessions\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" ADD CONSTRAINT \"FK_ae05faaa55c866130abef6e1fee\" FOREIGN KEY (\"userId\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts-likes\" ADD CONSTRAINT \"FK_abcc8f1b7f831ac9628c0468441\" FOREIGN KEY (\"postsId\") REFERENCES \"posts\"(\"id\") ON DELETE CASCADE ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts-likes\" ADD CONSTRAINT \"FK_fd92dae15e41a077de24f88b801\" FOREIGN KEY (\"usersId\") REFERENCES \"users\"(\"id\") ON DELETE CASCADE ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts-dislikes\" ADD CONSTRAINT \"FK_9384267f02386d788a48da7fe14\" FOREIGN KEY (\"postsId\") REFERENCES \"posts\"(\"id\") ON DELETE CASCADE ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts-dislikes\" ADD CONSTRAINT \"FK_e4907b084ed752c03e957b0235c\" FOREIGN KEY (\"usersId\") REFERENCES \"users\"(\"id\") ON DELETE CASCADE ON UPDATE NO ACTION",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "AddCreatedUpdated1563308286822",
+    "timestamp": 1563308286822,
+    "filename": "1563308286822-AddCreatedUpdated.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"created\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT '2000-01-01 00:00:00+00'",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"updated\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT '2000-01-01 00:00:00+00'",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" ADD \"created\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT '2000-01-01 00:00:00+00'",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" ADD \"updated\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT '2000-01-01 00:00:00+00'",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "test21563369405334",
+    "timestamp": 1563369405334,
+    "filename": "1563369405334-ChangeUpdatedCreatedToNow.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"sessions\" ALTER COLUMN \"created\" SET DEFAULT now()",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ALTER COLUMN \"updated\" SET DEFAULT now()",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" ALTER COLUMN \"created\" SET DEFAULT now()",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" ALTER COLUMN \"updated\" SET DEFAULT now()",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "AddAction1563453603008",
+    "timestamp": 1563453603008,
+    "filename": "1563453603008-AddAction.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"posts\" ADD \"action\" character varying",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "NullableFalse1563547164981",
+    "timestamp": 1563547164981,
+    "filename": "1563547164981-NullableFalse.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DELETE FROM \"posts\" where \"sessionId\" is NULL",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" DROP CONSTRAINT \"FK_764b665f832e28c01595ec15cf3\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" DROP CONSTRAINT \"FK_ae05faaa55c866130abef6e1fee\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" ALTER COLUMN \"sessionId\" SET NOT NULL",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" ALTER COLUMN \"userId\" SET NOT NULL",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" ADD CONSTRAINT \"FK_764b665f832e28c01595ec15cf3\" FOREIGN KEY (\"sessionId\") REFERENCES \"sessions\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" ADD CONSTRAINT \"FK_ae05faaa55c866130abef6e1fee\" FOREIGN KEY (\"userId\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "AddOptions1571597571363",
+    "timestamp": 1571597571363,
+    "filename": "1571597571363-AddOptions.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"maxUpVotes\" numeric",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"maxDownVotes\" numeric",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"allowActions\" boolean NOT NULL DEFAULT true",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "SetDefaultValues1572381846806",
+    "timestamp": 1572381846806,
+    "filename": "1572381846806-SetDefaultValues.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"sessions\" ALTER COLUMN \"maxUpVotes\" SET DEFAULT null",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ALTER COLUMN \"maxDownVotes\" SET DEFAULT null",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "AddSelfVoting1572385576950",
+    "timestamp": 1572385576950,
+    "filename": "1572385576950-AddSelfVoting.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"allowSelfVoting\" boolean NOT NULL DEFAULT false",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"allowMultipleVotes\" boolean NOT NULL DEFAULT false",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "AddCustomColumns1572704989505",
+    "timestamp": 1572704989505,
+    "filename": "1572704989505-AddCustomColumns.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"posts\" ADD \"column\" integer NOT NULL DEFAULT 0",
+        "params": []
+      },
+      {
+        "sql": "UPDATE \"posts\" SET \"column\" = 0 WHERE \"postType\" = 'well'",
+        "params": []
+      },
+      {
+        "sql": "UPDATE \"posts\" SET \"column\" = 1 WHERE \"postType\" = 'notWell'",
+        "params": []
+      },
+      {
+        "sql": "UPDATE \"posts\" SET \"column\" = 2 WHERE \"postType\" = 'ideas'",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "RemoveOldColumns1572705844584",
+    "timestamp": 1572705844584,
+    "filename": "1572705844584-RemoveOldColumns.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"posts\" DROP COLUMN \"postType\"",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "ColumnDefinitions1572708796385",
+    "timestamp": 1572708796385,
+    "filename": "1572708796385-ColumnDefinitions.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "CREATE TABLE \"columns\" (\"id\" character varying NOT NULL, \"type\" character varying NOT NULL, \"index\" integer NOT NULL, \"label\" character varying NOT NULL, \"color\" character varying NOT NULL, \"icon\" character varying, \"sessionId\" character varying NOT NULL, CONSTRAINT \"PK_4ac339ccbbfed1dcd96812abbd5\" PRIMARY KEY (\"id\"))",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"columns\" ADD CONSTRAINT \"FK_37907d102f38ece687182bf5237\" FOREIGN KEY (\"sessionId\") REFERENCES \"sessions\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "ColumnDefinitions21572709904015",
+    "timestamp": 1572709904015,
+    "filename": "1572709904015-ColumnDefinitionsSeq.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "CREATE SEQUENCE \"columns_id_seq\" OWNED BY \"columns\".\"id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"columns\" ALTER COLUMN \"id\" SET DEFAULT nextval('columns_id_seq')",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "ColumnDefinitionsCreate1572720263441",
+    "timestamp": 1572720263441,
+    "filename": "1572720263441-ColumnDefinitionsCreate.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "INSERT INTO \"columns\" (type, index, label, color, icon, \"sessionId\") select 'well', 0, '', '', '', \"id\" from sessions",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"columns\" (type, index, label, color, icon, \"sessionId\") select 'notWell', 1, '', '', '', \"id\" from sessions",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"columns\" (type, index, label, color, icon, \"sessionId\") select 'ideas', 2, '', '', '', \"id\" from sessions",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "Votes1573077963093",
+    "timestamp": 1573077963093,
+    "filename": "1573077963093-Votes.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "CREATE TABLE \"votes\" (\"id\" character varying NOT NULL, \"count\" integer NOT NULL DEFAULT 0, \"type\" character varying NOT NULL, \"created\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), \"updated\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), \"userId\" character varying NOT NULL, \"postId\" character varying NOT NULL, CONSTRAINT \"PK_f3d9fd4a0af865152c3f59db8ff\" PRIMARY KEY (\"id\"))",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"columns\" ADD \"created\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"columns\" ADD \"updated\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"votes\" ADD CONSTRAINT \"FK_5169384e31d0989699a318f3ca4\" FOREIGN KEY (\"userId\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"votes\" ADD CONSTRAINT \"FK_b5b05adc89dda0614276a13a599\" FOREIGN KEY (\"postId\") REFERENCES \"posts\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "Votes21573078141434",
+    "timestamp": 1573078141434,
+    "filename": "1573078141434-VotesSeq.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "CREATE SEQUENCE \"votes_id_seq\" OWNED BY \"votes\".\"id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"votes\" ALTER COLUMN \"id\" SET DEFAULT nextval('votes_id_seq')",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "PopulateVotes1573143216588",
+    "timestamp": 1573143216588,
+    "filename": "1573143216588-PopulateVotes.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "INSERT INTO \"votes\" (\"count\", \"type\", \"userId\", \"postId\") select 1, 'like', \"usersId\", \"postsId\" from \"posts-likes\"",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"votes\" (\"count\", \"type\", \"userId\", \"postId\") select 1, 'dislike', \"usersId\", \"postsId\" from \"posts-dislikes\"",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "RemoveOldVotes1573143457302",
+    "timestamp": 1573143457302,
+    "filename": "1573143457302-RemoveOldVotes.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DROP TABLE \"posts-likes\"",
+        "params": []
+      },
+      {
+        "sql": "DROP TABLE \"posts-dislikes\"",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "RemoveCount1573156845706",
+    "timestamp": 1573156845706,
+    "filename": "1573156845706-RemoveCount.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"votes\" DROP COLUMN \"count\"",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "AddAllowAuthorVisible1573233321103",
+    "timestamp": 1573233321103,
+    "filename": "1573233321103-AddAllowAuthorVisible.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"allowAuthorVisible\" boolean NOT NULL DEFAULT false",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "RemoveAutogenIDs1575488936576",
+    "timestamp": 1575488936576,
+    "filename": "1575488936576-RemoveAutogenIDs.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"votes\" ALTER COLUMN \"id\" DROP DEFAULT",
+        "params": []
+      },
+      {
+        "sql": "DROP SEQUENCE \"votes_id_seq\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"columns\" ALTER COLUMN \"id\" DROP DEFAULT",
+        "params": []
+      },
+      {
+        "sql": "DROP SEQUENCE \"columns_id_seq\"",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "CascadeDeleteVotes1575556830937",
+    "timestamp": 1575556830937,
+    "filename": "1575556830937-CascadeDeleteVotes.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"votes\" DROP CONSTRAINT \"FK_b5b05adc89dda0614276a13a599\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"votes\" ADD CONSTRAINT \"FK_b5b05adc89dda0614276a13a599\" FOREIGN KEY (\"postId\") REFERENCES \"posts\"(\"id\") ON DELETE CASCADE ON UPDATE CASCADE",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "UserProfile21582577141797",
+    "timestamp": 1582577141797,
+    "filename": "1582577141797-UserProfile2.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"votes\" DROP CONSTRAINT \"FK_b5b05adc89dda0614276a13a599\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users\" ADD \"accountType\" character varying NOT NULL DEFAULT 'anonymous'",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users\" ADD \"username\" character varying",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users\" ADD \"photo\" character varying",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"votes\" ADD CONSTRAINT \"FK_b5b05adc89dda0614276a13a599\" FOREIGN KEY (\"postId\") REFERENCES \"posts\"(\"id\") ON DELETE CASCADE ON UPDATE CASCADE",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "UserProfile31582578286632",
+    "timestamp": 1582578286632,
+    "filename": "1582578286632-UserProfile3.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"users\" ADD \"created\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users\" ADD \"updated\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "AddCreatedBy1583053396784",
+    "timestamp": 1583053396784,
+    "filename": "1583053396784-AddCreatedBy.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "INSERT INTO users (id, name, \"accountType\", username, photo, created, updated) values ('unknown-user', 'Unknown User', 'anonymous', null, null, NOW(), NOW())",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users\" ADD CONSTRAINT \"UNIQUE_username_accountType\" UNIQUE (\"username\", \"accountType\")",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"createdById\" character varying",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD CONSTRAINT \"FK_d26fe2e6102cd9c47650a0d7a6f\" FOREIGN KEY (\"createdById\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "UPDATE \"sessions\" SET \"createdById\" = 'unknown-user'",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "AddCreatedByNonNullable1583055056512",
+    "timestamp": 1583055056512,
+    "filename": "1583055056512-AddCreatedByNonNullable.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"sessions\" DROP CONSTRAINT \"FK_d26fe2e6102cd9c47650a0d7a6f\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ALTER COLUMN \"createdById\" SET NOT NULL",
+        "params": []
+      },
+      {
+        "sql": "CREATE UNIQUE INDEX \"IDX_b5d57c15d430d9964131201079\" ON \"users\" (\"username\", \"accountType\") ",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD CONSTRAINT \"FK_d26fe2e6102cd9c47650a0d7a6f\" FOREIGN KEY (\"createdById\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "UserLanguage1583168991232",
+    "timestamp": 1583168991232,
+    "filename": "1583168991232-UserLanguage.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"users\" ADD \"language\" character varying NOT NULL DEFAULT 'en'",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "Giphy1584117892452",
+    "timestamp": 1584117892452,
+    "filename": "1584117892452-Giphy.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"posts\" ADD \"giphy\" character varying",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "SessionOptions1584182574659",
+    "timestamp": 1584182574659,
+    "filename": "1584182574659-SessionOptions.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"optionsMaxupvotes\" numeric",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"optionsMaxdownvotes\" numeric",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"optionsAllowactions\" boolean NOT NULL DEFAULT true",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"optionsAllowselfvoting\" boolean NOT NULL DEFAULT false",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"optionsAllowmultiplevotes\" boolean NOT NULL DEFAULT false",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"optionsAllowauthorvisible\" boolean NOT NULL DEFAULT false",
+        "params": []
+      },
+      {
+        "sql": "UPDATE \"sessions\" SET \"optionsMaxupvotes\" = \"maxUpVotes\"",
+        "params": []
+      },
+      {
+        "sql": "UPDATE \"sessions\" SET \"optionsMaxdownvotes\" = \"maxDownVotes\"",
+        "params": []
+      },
+      {
+        "sql": "UPDATE \"sessions\" SET \"optionsAllowactions\" = \"allowActions\"",
+        "params": []
+      },
+      {
+        "sql": "UPDATE \"sessions\" SET \"optionsAllowselfvoting\" = \"allowSelfVoting\"",
+        "params": []
+      },
+      {
+        "sql": "UPDATE \"sessions\" SET \"optionsAllowmultiplevotes\" = \"allowMultipleVotes\"",
+        "params": []
+      },
+      {
+        "sql": "UPDATE \"sessions\" SET \"optionsAllowauthorvisible\" = \"allowAuthorVisible\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" DROP COLUMN \"maxUpVotes\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" DROP COLUMN \"maxDownVotes\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" DROP COLUMN \"allowActions\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" DROP COLUMN \"allowSelfVoting\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" DROP COLUMN \"allowMultipleVotes\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" DROP COLUMN \"allowAuthorVisible\"",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "Templates1584197076810",
+    "timestamp": 1584197076810,
+    "filename": "1584197076810-Templates.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "CREATE TABLE \"templates\" (\"id\" character varying NOT NULL, \"name\" character varying NOT NULL, \"created\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), \"updated\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), \"createdById\" character varying NOT NULL, \"optionsMaxupvotes\" numeric, \"optionsMaxdownvotes\" numeric, \"optionsAllowactions\" boolean NOT NULL DEFAULT true, \"optionsAllowselfvoting\" boolean NOT NULL DEFAULT false, \"optionsAllowmultiplevotes\" boolean NOT NULL DEFAULT false, \"optionsAllowauthorvisible\" boolean NOT NULL DEFAULT false, CONSTRAINT \"PK_515948649ce0bbbe391de702ae5\" PRIMARY KEY (\"id\"))",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_5624219dd33b4644599d4d4b23\" ON \"templates\" (\"name\") ",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" ADD CONSTRAINT \"FK_c58b12b1a7b4012bb238bc26542\" FOREIGN KEY (\"createdById\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "Templates21584200581240",
+    "timestamp": 1584200581240,
+    "filename": "1584200581240-Templates2.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "CREATE TABLE \"templates-columns\" (\"id\" character varying NOT NULL, \"type\" character varying NOT NULL, \"index\" integer NOT NULL, \"label\" character varying NOT NULL, \"color\" character varying NOT NULL, \"icon\" character varying, \"created\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), \"updated\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), \"templateId\" character varying NOT NULL, CONSTRAINT \"PK_1cb34b1c28a611073a0054cec6b\" PRIMARY KEY (\"id\"))",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates-columns\" ADD CONSTRAINT \"FK_c96b807f7154ddb4fb7017af12e\" FOREIGN KEY (\"templateId\") REFERENCES \"templates\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "UserDefaultTemplate1584201019525",
+    "timestamp": 1584201019525,
+    "filename": "1584201019525-UserDefaultTemplate.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"users\" ADD \"defaultTemplateId\" character varying",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users\" ADD CONSTRAINT \"FK_5b086b03bb64304390cec7635ec\" FOREIGN KEY (\"defaultTemplateId\") REFERENCES \"templates\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "PostGroup1584800485849",
+    "timestamp": 1584800485849,
+    "filename": "1584800485849-PostGroup.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "CREATE TABLE \"groups\" (\"id\" character varying NOT NULL, \"column\" integer NOT NULL DEFAULT 0, \"label\" character varying NOT NULL, \"created\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), \"updated\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), \"sessionId\" character varying NOT NULL, \"userId\" character varying NOT NULL, CONSTRAINT \"PK_659d1483316afb28afd3a90646e\" PRIMARY KEY (\"id\"))",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" ADD \"groupId\" character varying",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"groups\" ADD CONSTRAINT \"FK_9ad140fba0b4ad9559e65302825\" FOREIGN KEY (\"sessionId\") REFERENCES \"sessions\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"groups\" ADD CONSTRAINT \"FK_898cf6af34722df13f760cc364f\" FOREIGN KEY (\"userId\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" ADD CONSTRAINT \"FK_d10acbe503da4c56853181efc98\" FOREIGN KEY (\"groupId\") REFERENCES \"groups\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "GroupCascade1584899266581",
+    "timestamp": 1584899266581,
+    "filename": "1584899266581-GroupCascade.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"posts\" DROP CONSTRAINT \"FK_d10acbe503da4c56853181efc98\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" ADD CONSTRAINT \"FK_d10acbe503da4c56853181efc98\" FOREIGN KEY (\"groupId\") REFERENCES \"groups\"(\"id\") ON DELETE SET NULL ON UPDATE CASCADE",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "Lexorank1584999977293",
+    "timestamp": 1584999977293,
+    "filename": "1584999977293-Lexorank.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"groups\" ADD \"rank\" character varying NOT NULL DEFAULT '0|hzzzzz:'",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" ADD \"rank\" character varying NOT NULL DEFAULT '0|hzzzzz:'",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "LexorankIndex1585000111311",
+    "timestamp": 1585000111311,
+    "filename": "1585000111311-LexorankIndex.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "CREATE INDEX \"IDX_9d73f4eb34c2b6b8f802977095\" ON \"groups\" (\"rank\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_0253a73663519dde3f8ad81ef4\" ON \"posts\" (\"rank\") ",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "RerankEverything1585000111315",
+    "timestamp": 1585000111315,
+    "filename": "1585000111312-RerankEverything.ts",
+    "kind": "rerank",
+    "steps": []
+  },
+  {
+    "name": "MoreOptions1586009266534",
+    "timestamp": 1586009266534,
+    "filename": "1586009266534-MoreOptions.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"templates\" ADD \"optionsAllowgiphy\" boolean NOT NULL DEFAULT true",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" ADD \"optionsAllowpermagiphy\" boolean NOT NULL DEFAULT false",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" ADD \"optionsAllowgrouping\" boolean NOT NULL DEFAULT true",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" ADD \"optionsAllowreordering\" boolean NOT NULL DEFAULT true",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"optionsAllowgiphy\" boolean NOT NULL DEFAULT true",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"optionsAllowpermagiphy\" boolean NOT NULL DEFAULT false",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"optionsAllowgrouping\" boolean NOT NULL DEFAULT true",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"optionsAllowreordering\" boolean NOT NULL DEFAULT true",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "RemovePermaGiphy1586699835290",
+    "timestamp": 1586699835290,
+    "filename": "1586699835290-RemovePermaGiphy.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"templates\" DROP COLUMN \"optionsAllowpermagiphy\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" DROP COLUMN \"optionsAllowpermagiphy\"",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "blur1602060432444",
+    "timestamp": 1602060432444,
+    "filename": "1602060432444-blur.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"templates\" ADD \"optionsBlurcards\" boolean NOT NULL DEFAULT false",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"optionsBlurcards\" boolean NOT NULL DEFAULT false",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "Passwords1602703218677",
+    "timestamp": 1602703218677,
+    "filename": "1602703218677-Passwords.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"users\" ADD \"password\" character varying",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "EmailVerification1602776315219",
+    "timestamp": 1602776315219,
+    "filename": "1602776315219-EmailVerification.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"users\" ADD \"emailVerification\" character varying",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "Pro1603012996927",
+    "timestamp": 1603012996927,
+    "filename": "1603012996927-Pro.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"users\" ADD \"pro\" character varying",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users\" ADD \"stripeId\" character varying",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "Subscriptions1603697704984",
+    "timestamp": 1603697704984,
+    "filename": "1603697704984-Subscriptions.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "CREATE TABLE \"subscriptions\" (\"id\" character varying NOT NULL, \"status\" character varying NOT NULL DEFAULT 'active', \"created\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), \"updated\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), \"ownerId\" character varying NOT NULL, CONSTRAINT \"PK_a87248d73155605cf782be9ee5e\" PRIMARY KEY (\"id\"))",
+        "params": []
+      },
+      {
+        "sql": "CREATE TABLE \"subscriptions-users\" (\"subscriptionsId\" character varying NOT NULL, \"usersId\" character varying NOT NULL, CONSTRAINT \"PK_00cd7f2adab9f3397e5f2edf769\" PRIMARY KEY (\"subscriptionsId\", \"usersId\"))",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_dccc47d20a8793f7bcb417cd57\" ON \"subscriptions-users\" (\"subscriptionsId\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_b05891b70145228739e2a7b29b\" ON \"subscriptions-users\" (\"usersId\") ",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"subscriptions\" ADD CONSTRAINT \"FK_331400b3a08ee505d42ddba1db0\" FOREIGN KEY (\"ownerId\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"subscriptions-users\" ADD CONSTRAINT \"FK_dccc47d20a8793f7bcb417cd57e\" FOREIGN KEY (\"subscriptionsId\") REFERENCES \"subscriptions\"(\"id\") ON DELETE CASCADE ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"subscriptions-users\" ADD CONSTRAINT \"FK_b05891b70145228739e2a7b29b4\" FOREIGN KEY (\"usersId\") REFERENCES \"users\"(\"id\") ON DELETE CASCADE ON UPDATE NO ACTION",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "SubscriptionActive1603742014444",
+    "timestamp": 1603742014444,
+    "filename": "1603742014444-SubscriptionActive.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"subscriptions\" RENAME COLUMN \"status\" TO \"active\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"subscriptions\" DROP COLUMN \"active\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"subscriptions\" ADD \"active\" boolean NOT NULL DEFAULT false",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "UserView1604156127611",
+    "timestamp": 1604156127611,
+    "filename": "1604156127611-UserView.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"users\" DROP COLUMN \"pro\"",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"user_view\" AS \nselect \n\tu.id,\n\tu.name,\n\tu.\"accountType\",\n\tu.username,\n\tu.\"stripeId\",\n\tu.photo,\n\tu.language,\n\tcoalesce(s.id, s2.id) as \"subscriptionsId\",\n\tcoalesce(s.active, s2.active) as \"pro\"\nfrom users u \nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join \"subscriptions-users\" su on su.\"usersId\" = u.id\nleft join subscriptions s2 on s2.id = su.\"subscriptionsId\" and s2.active is true\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"type\", \"schema\", \"name\", \"value\") VALUES ($1, $2, $3, $4)",
+        "params": [
+          "VIEW",
+          "public",
+          "user_view",
+          "select \n\tu.id,\n\tu.name,\n\tu.\"accountType\",\n\tu.username,\n\tu.\"stripeId\",\n\tu.photo,\n\tu.language,\n\tcoalesce(s.id, s2.id) as \"subscriptionsId\",\n\tcoalesce(s.active, s2.active) as \"pro\"\nfrom users u \nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join \"subscriptions-users\" su on su.\"usersId\" = u.id\nleft join subscriptions s2 on s2.id = su.\"subscriptionsId\" and s2.active is true"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "EmailOnUser1604156506978",
+    "timestamp": 1604156506978,
+    "filename": "1604156506978-EmailOnUser.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"users\" ADD \"email\" character varying",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "UserViewEmail1604170341990",
+    "timestamp": 1604170341990,
+    "filename": "1604170341990-UserViewEmail.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DELETE FROM \"typeorm_metadata\" WHERE \"type\" = 'VIEW' AND \"schema\" = $1 AND \"name\" = $2",
+        "params": [
+          "public",
+          "user_view"
+        ]
+      },
+      {
+        "sql": "DROP VIEW \"user_view\"",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"user_view\" AS \nselect \n\tu.id,\n\tu.name,\n\tu.\"accountType\",\n\tu.username,\n\tu.\"stripeId\",\n\tu.photo,\n  u.language,\n  u.email,\n\tcoalesce(s.id, s2.id) as \"subscriptionsId\",\n\tcoalesce(s.active, s2.active) as \"pro\"\nfrom users u \nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join \"subscriptions-users\" su on su.\"usersId\" = u.id\nleft join subscriptions s2 on s2.id = su.\"subscriptionsId\" and s2.active is true\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"type\", \"schema\", \"name\", \"value\") VALUES ($1, $2, $3, $4)",
+        "params": [
+          "VIEW",
+          "public",
+          "user_view",
+          "select \n\tu.id,\n\tu.name,\n\tu.\"accountType\",\n\tu.username,\n\tu.\"stripeId\",\n\tu.photo,\n  u.language,\n  u.email,\n\tcoalesce(s.id, s2.id) as \"subscriptionsId\",\n\tcoalesce(s.active, s2.active) as \"pro\"\nfrom users u \nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join \"subscriptions-users\" su on su.\"usersId\" = u.id\nleft join subscriptions s2 on s2.id = su.\"subscriptionsId\" and s2.active is true"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "SubDomainPlan1604268430891",
+    "timestamp": 1604268430891,
+    "filename": "1604268430891-SubDomainPlan.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"subscriptions\" ADD \"plan\" character varying NOT NULL",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"subscriptions\" ADD \"domain\" character varying",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "UserView1604310316654",
+    "timestamp": 1604310316654,
+    "filename": "1604310316654-UserView.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DELETE FROM \"typeorm_metadata\" WHERE \"type\" = 'VIEW' AND \"schema\" = $1 AND \"name\" = $2",
+        "params": [
+          "public",
+          "user_view"
+        ]
+      },
+      {
+        "sql": "DROP VIEW \"user_view\"",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"user_view\" AS \nselect \n\tu.id,\n\tu.name,\n\tu.\"accountType\",\n\tu.username,\n\tu.\"stripeId\",\n\tu.photo,\n\tu.language,\n\tu.email,\n\tcoalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n\tcoalesce(s.active, s2.active, s3.active) as \"pro\"\nfrom users u \nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join \"subscriptions-users\" su on su.\"usersId\" = u.id\nleft join subscriptions s2 on s2.id = su.\"subscriptionsId\" and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"type\", \"schema\", \"name\", \"value\") VALUES ($1, $2, $3, $4)",
+        "params": [
+          "VIEW",
+          "public",
+          "user_view",
+          "select \n\tu.id,\n\tu.name,\n\tu.\"accountType\",\n\tu.username,\n\tu.\"stripeId\",\n\tu.photo,\n\tu.language,\n\tu.email,\n\tcoalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n\tcoalesce(s.active, s2.active, s3.active) as \"pro\"\nfrom users u \nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join \"subscriptions-users\" su on su.\"usersId\" = u.id\nleft join subscriptions s2 on s2.id = su.\"subscriptionsId\" and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "CurrencyOnUser1604338172960",
+    "timestamp": 1604338172960,
+    "filename": "1604338172960-CurrencyOnUser.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DELETE FROM \"typeorm_metadata\" WHERE \"type\" = 'VIEW' AND \"schema\" = $1 AND \"name\" = $2",
+        "params": [
+          "public",
+          "user_view"
+        ]
+      },
+      {
+        "sql": "DROP VIEW \"user_view\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users\" ADD \"currency\" character varying",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"user_view\" AS \nselect \n\tu.id,\n\tu.name,\n\tu.\"accountType\",\n  u.username,\n  u.currency,\n\tu.\"stripeId\",\n\tu.photo,\n\tu.language,\n\tu.email,\n\tcoalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n\tcoalesce(s.active, s2.active, s3.active) as \"pro\"\nfrom users u \nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join \"subscriptions-users\" su on su.\"usersId\" = u.id\nleft join subscriptions s2 on s2.id = su.\"subscriptionsId\" and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"type\", \"schema\", \"name\", \"value\") VALUES ($1, $2, $3, $4)",
+        "params": [
+          "VIEW",
+          "public",
+          "user_view",
+          "select \n\tu.id,\n\tu.name,\n\tu.\"accountType\",\n  u.username,\n  u.currency,\n\tu.\"stripeId\",\n\tu.photo,\n\tu.language,\n\tu.email,\n\tcoalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n\tcoalesce(s.active, s2.active, s3.active) as \"pro\"\nfrom users u \nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join \"subscriptions-users\" su on su.\"usersId\" = u.id\nleft join subscriptions s2 on s2.id = su.\"subscriptionsId\" and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "UserViewPlan1604425841721",
+    "timestamp": 1604425841721,
+    "filename": "1604425841721-UserViewPlan.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DELETE FROM \"typeorm_metadata\" WHERE \"type\" = 'VIEW' AND \"schema\" = $1 AND \"name\" = $2",
+        "params": [
+          "public",
+          "user_view"
+        ]
+      },
+      {
+        "sql": "DROP VIEW \"user_view\"",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"user_view\" AS \nselect \n\tu.id,\n\tu.name,\n\tu.\"accountType\",\n  u.username,\n  u.currency,\n\tu.\"stripeId\",\n\tu.photo,\n\tu.language,\n  u.email,\n  s.id as \"ownSubscriptionsId\",\n  s.plan as \"ownPlan\",\n\tcoalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n  coalesce(s.active, s2.active, s3.active) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\"\nfrom users u \nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join \"subscriptions-users\" su on su.\"usersId\" = u.id\nleft join subscriptions s2 on s2.id = su.\"subscriptionsId\" and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"type\", \"schema\", \"name\", \"value\") VALUES ($1, $2, $3, $4)",
+        "params": [
+          "VIEW",
+          "public",
+          "user_view",
+          "select \n\tu.id,\n\tu.name,\n\tu.\"accountType\",\n  u.username,\n  u.currency,\n\tu.\"stripeId\",\n\tu.photo,\n\tu.language,\n  u.email,\n  s.id as \"ownSubscriptionsId\",\n  s.plan as \"ownPlan\",\n\tcoalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n  coalesce(s.active, s2.active, s3.active) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\"\nfrom users u \nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join \"subscriptions-users\" su on su.\"usersId\" = u.id\nleft join subscriptions s2 on s2.id = su.\"subscriptionsId\" and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "EmailString1604568881527",
+    "timestamp": 1604568881527,
+    "filename": "1604568881527-EmailString.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DROP VIEW \"user_view\"",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"user_view\" AS \nselect \n\tu.id,\n\tu.name,\n\tu.\"accountType\",\n  u.username,\n  u.currency,\n\tu.\"stripeId\",\n\tu.photo,\n\tu.language,\n  u.email,\n  s.id as \"ownSubscriptionsId\",\n  s.plan as \"ownPlan\",\n\tcoalesce(s.id, s3.id) as \"subscriptionsId\",\n  coalesce(s.active, s3.active) as \"pro\",\n  coalesce(s.plan, s3.plan) as \"plan\"\nfrom users u \nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"type\", \"schema\", \"name\", \"value\") VALUES ($1, $2, $3, $4)",
+        "params": [
+          "VIEW",
+          "public",
+          "user_view",
+          "select \n\tu.id,\n\tu.name,\n\tu.\"accountType\",\n  u.username,\n  u.currency,\n\tu.\"stripeId\",\n\tu.photo,\n\tu.language,\n  u.email,\n  s.id as \"ownSubscriptionsId\",\n  s.plan as \"ownPlan\",\n\tcoalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n  coalesce(s.active, s2.active, s3.active) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\"\nfrom users u \nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join subscriptions s2 on u.email = ANY(s2.members)\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true"
+        ]
+      },
+      {
+        "sql": "ALTER TABLE \"subscriptions\" ADD \"members\" text array NOT NULL DEFAULT array[]::text[]",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"subscriptions-users\" DROP CONSTRAINT \"FK_b05891b70145228739e2a7b29b4\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"subscriptions-users\" DROP CONSTRAINT \"FK_dccc47d20a8793f7bcb417cd57e\"",
+        "params": []
+      },
+      {
+        "sql": "DROP INDEX \"IDX_b05891b70145228739e2a7b29b\"",
+        "params": []
+      },
+      {
+        "sql": "DROP INDEX \"IDX_dccc47d20a8793f7bcb417cd57\"",
+        "params": []
+      },
+      {
+        "sql": "DROP TABLE \"subscriptions-users\"",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "UserViewUpdate1604570317394",
+    "timestamp": 1604570317394,
+    "filename": "1604570317394-UserViewUpdate.ts",
+    "kind": "sql",
+    "steps": []
+  },
+  {
+    "name": "UserViewUpdate1604757879070",
+    "timestamp": 1604757879070,
+    "filename": "1604757879070-UserViewUpdate.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DELETE FROM \"typeorm_metadata\" WHERE \"type\" = 'VIEW' AND \"schema\" = $1 AND \"name\" = $2",
+        "params": [
+          "public",
+          "user_view"
+        ]
+      },
+      {
+        "sql": "DROP VIEW \"user_view\"",
+        "params": []
+      },
+      {
+        "sql": "COMMENT ON COLUMN \"subscriptions\".\"members\" IS NULL",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"subscriptions\" ALTER COLUMN \"members\" SET DEFAULT '{}'::text[]",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"user_view\" AS \nselect \n  u.id,\n  u.name,\n  u.\"accountType\",\n  u.username,\n  u.currency,\n  u.\"stripeId\",\n  u.photo,\n  u.language,\n  u.email,\n  s.id as \"ownSubscriptionsId\",\n  s.plan as \"ownPlan\",\n  coalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n  coalesce(s.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\"\nfrom users u \nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join subscriptions s2 on u.email = ANY(s2.members) and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"type\", \"schema\", \"name\", \"value\") VALUES ($1, $2, $3, $4)",
+        "params": [
+          "VIEW",
+          "public",
+          "user_view",
+          "select \n  u.id,\n  u.name,\n  u.\"accountType\",\n  u.username,\n  u.currency,\n  u.\"stripeId\",\n  u.photo,\n  u.language,\n  u.email,\n  s.id as \"ownSubscriptionsId\",\n  s.plan as \"ownPlan\",\n  coalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n  coalesce(s.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\"\nfrom users u \nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join subscriptions s2 on u.email = ANY(s2.members) and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "EncryptionCheck1604846593315",
+    "timestamp": 1604846593315,
+    "filename": "1604846593315-EncryptionCheck.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"encrypted\" character varying",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "Visitors1605115660660",
+    "timestamp": 1605115660660,
+    "filename": "1605115660660-Visitors.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "CREATE TABLE \"visitors\" (\"sessionsId\" character varying NOT NULL, \"usersId\" character varying NOT NULL, CONSTRAINT \"PK_c16501c34b8530a425739e400bd\" PRIMARY KEY (\"sessionsId\", \"usersId\"))",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_89c90edf2f369cfbcb220d2e09\" ON \"visitors\" (\"sessionsId\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_d50229c10adbf294a228c35cb1\" ON \"visitors\" (\"usersId\") ",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"visitors\" ADD CONSTRAINT \"FK_89c90edf2f369cfbcb220d2e09f\" FOREIGN KEY (\"sessionsId\") REFERENCES \"sessions\"(\"id\") ON DELETE CASCADE ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"visitors\" ADD CONSTRAINT \"FK_d50229c10adbf294a228c35cb19\" FOREIGN KEY (\"usersId\") REFERENCES \"users\"(\"id\") ON DELETE CASCADE ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "\n        insert into visitors \n\t    select distinct \"sessionsId\", \"usersId\" from (\n            (\n                select distinct id as \"sessionsId\", \"createdById\" as \"usersId\" from sessions\n            )\n            union\n            (\n                select distinct sessions.id, posts.\"userId\" from sessions \n                left join posts on sessions.id = posts.\"sessionId\"\n            )\n            union\n            (\n                select distinct sessions.id, votes.\"userId\" from sessions \n                left join posts on sessions.id = posts.\"sessionId\"\n                left join votes on posts.id = votes.\"postId\"\n\n            )\n        ) s where \"usersId\" is not null\n        ",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "Lock1605129988929",
+    "timestamp": 1605129988929,
+    "filename": "1605129988929-Lock.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"locked\" boolean NOT NULL DEFAULT false",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "DomainInUserView1607775300202",
+    "timestamp": 1607775300202,
+    "filename": "1607775300202-DomainInUserView.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DELETE FROM \"typeorm_metadata\" WHERE \"type\" = 'VIEW' AND \"schema\" = $1 AND \"name\" = $2",
+        "params": [
+          "public",
+          "user_view"
+        ]
+      },
+      {
+        "sql": "DROP VIEW \"user_view\"",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"user_view\" AS \nselect \n  u.id,\n  u.name,\n  u.\"accountType\",\n  u.username,\n  u.currency,\n  u.\"stripeId\",\n  u.photo,\n  u.language,\n  u.email,\n  s.id as \"ownSubscriptionsId\",\n  s.plan as \"ownPlan\",\n  coalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n  coalesce(s.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\",\n  coalesce(s.domain, s2.domain, s3.domain) as \"domain\"\nfrom users u \nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join subscriptions s2 on u.email = ANY(s2.members) and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"type\", \"schema\", \"name\", \"value\") VALUES ($1, $2, $3, $4)",
+        "params": [
+          "VIEW",
+          "public",
+          "user_view",
+          "select \n  u.id,\n  u.name,\n  u.\"accountType\",\n  u.username,\n  u.currency,\n  u.\"stripeId\",\n  u.photo,\n  u.language,\n  u.email,\n  s.id as \"ownSubscriptionsId\",\n  s.plan as \"ownPlan\",\n  coalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n  coalesce(s.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\",\n  coalesce(s.domain, s2.domain, s3.domain) as \"domain\"\nfrom users u \nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join subscriptions s2 on u.email = ANY(s2.members) and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "TrialField1611862780348",
+    "timestamp": 1611862780348,
+    "filename": "1611862780348-TrialField.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"subscriptions\" ADD \"trial\" TIMESTAMP WITH TIME ZONE",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "UserViewTrial1611865707262",
+    "timestamp": 1611865707262,
+    "filename": "1611865707262-UserViewTrial.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DELETE FROM \"typeorm_metadata\" WHERE \"type\" = 'VIEW' AND \"schema\" = $1 AND \"name\" = $2",
+        "params": [
+          "public",
+          "user_view"
+        ]
+      },
+      {
+        "sql": "DROP VIEW \"user_view\"",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"user_view\" AS \nselect \n  u.id,\n  u.name,\n  u.\"accountType\",\n  u.username,\n  u.currency,\n  u.\"stripeId\",\n  u.photo,\n  u.language,\n  u.email,\n  s.id as \"ownSubscriptionsId\",\n  s.plan as \"ownPlan\",\n  coalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n  coalesce(s.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\",\n  coalesce(s.domain, s2.domain, s3.domain) as \"domain\",\n  coalesce(s.trial, s2.trial, s3.trial) as \"trial\",\n \t(\n\t\tselect count(*) from users iu\n\t\tleft join subscriptions t on t.\"ownerId\" = iu.id and t.trial is not null\n\t\tleft join subscriptions t2 on iu.email = ANY(t2.members) and t2.trial is not null\n\t\tleft join subscriptions t3 on t3.domain = split_part(iu.email, '@', 2) and s3.trial is not null\n\t\twhere iu.id = u.id\n\t) as \"trialCount\"\nfrom users u \n\nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true and (s.trial is null or s.trial > now())\nleft join subscriptions s2 on u.email = ANY(s2.members) and s2.active is true and (s2.trial is null or s2.trial > now())\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true and (s3.trial is null or s3.trial > now())\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"type\", \"schema\", \"name\", \"value\") VALUES ($1, $2, $3, $4)",
+        "params": [
+          "VIEW",
+          "public",
+          "user_view",
+          "select \n  u.id,\n  u.name,\n  u.\"accountType\",\n  u.username,\n  u.currency,\n  u.\"stripeId\",\n  u.photo,\n  u.language,\n  u.email,\n  s.id as \"ownSubscriptionsId\",\n  s.plan as \"ownPlan\",\n  coalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n  coalesce(s.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\",\n  coalesce(s.domain, s2.domain, s3.domain) as \"domain\",\n  coalesce(s.trial, s2.trial, s3.trial) as \"trial\",\n \t(\n\t\tselect count(*) from users iu\n\t\tleft join subscriptions t on t.\"ownerId\" = iu.id and t.trial is not null\n\t\tleft join subscriptions t2 on iu.email = ANY(t2.members) and t2.trial is not null\n\t\tleft join subscriptions t3 on t3.domain = split_part(iu.email, '@', 2) and s3.trial is not null\n\t\twhere iu.id = u.id\n\t) as \"trialCount\"\nfrom users u \n\nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true and (s.trial is null or s.trial > now())\nleft join subscriptions s2 on u.email = ANY(s2.members) and s2.active is true and (s2.trial is null or s2.trial > now())\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true and (s3.trial is null or s3.trial > now())"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "UserView1612705460478",
+    "timestamp": 1612705460478,
+    "filename": "1612705460478-UserView.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DELETE FROM \"typeorm_metadata\" WHERE \"type\" = 'VIEW' AND \"schema\" = $1 AND \"name\" = $2",
+        "params": [
+          "public",
+          "user_view"
+        ]
+      },
+      {
+        "sql": "DROP VIEW \"user_view\"",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"user_view\" AS \nselect \n  u.id,\n  u.name,\n  u.\"accountType\",\n  u.username,\n  u.currency,\n  u.\"stripeId\",\n  u.photo,\n  u.language,\n  u.email,\n  s.id as \"ownSubscriptionsId\",\n  s.plan as \"ownPlan\",\n  coalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n  coalesce(s.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\",\n  coalesce(s.domain, s2.domain, s3.domain) as \"domain\",\n  coalesce(s.trial, s2.trial, s3.trial) as \"trial\",\n \t(\n\t\tselect count(*) from subscriptions t\n\t\twhere\n\t\t\tt.trial is not null and (\n\t\t\t\tt.\"ownerId\" = u.id \n\t\t\t\tor u.email = ANY(t.members)\n\t\t\t\tor t.domain = split_part(u.email, '@', 2)\n\t\t\t)\n\t) as \"trialCount\"\nfrom users u \n\nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true and (s.trial is null or s.trial > now())\nleft join subscriptions s2 on u.email = ANY(s2.members) and s2.active is true and (s2.trial is null or s2.trial > now())\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true and (s3.trial is null or s3.trial > now())\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"type\", \"schema\", \"name\", \"value\") VALUES ($1, $2, $3, $4)",
+        "params": [
+          "VIEW",
+          "public",
+          "user_view",
+          "select \n  u.id,\n  u.name,\n  u.\"accountType\",\n  u.username,\n  u.currency,\n  u.\"stripeId\",\n  u.photo,\n  u.language,\n  u.email,\n  s.id as \"ownSubscriptionsId\",\n  s.plan as \"ownPlan\",\n  coalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n  coalesce(s.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\",\n  coalesce(s.domain, s2.domain, s3.domain) as \"domain\",\n  coalesce(s.trial, s2.trial, s3.trial) as \"trial\",\n \t(\n\t\tselect count(*) from subscriptions t\n\t\twhere\n\t\t\tt.trial is not null and (\n\t\t\t\tt.\"ownerId\" = u.id \n\t\t\t\tor u.email = ANY(t.members)\n\t\t\t\tor t.domain = split_part(u.email, '@', 2)\n\t\t\t)\n\t) as \"trialCount\"\nfrom users u \n\nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true and (s.trial is null or s.trial > now())\nleft join subscriptions s2 on u.email = ANY(s2.members) and s2.active is true and (s2.trial is null or s2.trial > now())\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true and (s3.trial is null or s3.trial > now())"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "ChangeTrialStrategy1612707646584",
+    "timestamp": 1612707646584,
+    "filename": "1612707646584-ChangeTrialStrategy.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DELETE FROM \"typeorm_metadata\" WHERE \"type\" = 'VIEW' AND \"schema\" = $1 AND \"name\" = $2",
+        "params": [
+          "public",
+          "user_view"
+        ]
+      },
+      {
+        "sql": "DROP VIEW \"user_view\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"subscriptions\" DROP COLUMN \"trial\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users\" ADD \"trial\" TIMESTAMP WITH TIME ZONE",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"user_view\" AS \nselect \n  u.id,\n  u.name,\n  u.\"accountType\",\n  u.username,\n  u.currency,\n  u.\"stripeId\",\n  u.photo,\n  u.language,\n  u.email,\n  u.trial,\n  s.id as \"ownSubscriptionsId\",\n  s.plan as \"ownPlan\",\n  coalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n  coalesce(s.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\",\n  coalesce(s.domain, s2.domain, s3.domain) as \"domain\"\nfrom users u \n\nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join subscriptions s2 on u.email = ANY(s2.members) and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"type\", \"schema\", \"name\", \"value\") VALUES ($1, $2, $3, $4)",
+        "params": [
+          "VIEW",
+          "public",
+          "user_view",
+          "select \n  u.id,\n  u.name,\n  u.\"accountType\",\n  u.username,\n  u.currency,\n  u.\"stripeId\",\n  u.photo,\n  u.language,\n  u.email,\n  u.trial,\n  s.id as \"ownSubscriptionsId\",\n  s.plan as \"ownPlan\",\n  coalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n  coalesce(s.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\",\n  coalesce(s.domain, s2.domain, s3.domain) as \"domain\"\nfrom users u \n\nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join subscriptions s2 on u.email = ANY(s2.members) and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "addQuotaDefault1613300399273",
+    "timestamp": 1613300399273,
+    "filename": "1613300399273-add-quota-default.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"users\" ADD \"quota\" integer NOT NULL DEFAULT '0'",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "setQuota1613301454849",
+    "timestamp": 1613301454849,
+    "filename": "1613301454849-set-quota.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "COMMENT ON COLUMN \"users\".\"quota\" IS NULL",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users\" ALTER COLUMN \"quota\" SET DEFAULT '50'",
+        "params": []
+      },
+      {
+        "sql": "update users set quota = 50",
+        "params": []
+      },
+      {
+        "sql": "update users u2 set quota = new_quota from\n        (\n        select u.id, GREATEST(cast(count(p.*) as int) + 30, 50) as new_quota from users u\n        join posts p on u.id = p.\"userId\"\n        group by u.id\n        ) as sub\n        where u2.id = sub.id",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "limitPosts1619871525430",
+    "timestamp": 1619871525430,
+    "filename": "1619871525430-limit-posts.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"templates\" ADD \"optionsMaxposts\" numeric",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"optionsMaxposts\" numeric",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "NewPostsFirst1624464797775",
+    "timestamp": 1624464797775,
+    "filename": "1624464797775-NewPostsFirst.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"templates\" ADD \"optionsNewpostsfirst\" boolean NOT NULL DEFAULT true",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"optionsNewpostsfirst\" boolean NOT NULL DEFAULT true",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "Licences1624638720430",
+    "timestamp": 1624638720430,
+    "filename": "1624638720430-Licences.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"visitors\" DROP CONSTRAINT \"FK_89c90edf2f369cfbcb220d2e09f\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"visitors\" DROP CONSTRAINT \"FK_d50229c10adbf294a228c35cb19\"",
+        "params": []
+      },
+      {
+        "sql": "CREATE TABLE \"licences\" (\"id\" character varying NOT NULL, \"email\" character varying NOT NULL, \"key\" character varying NOT NULL, \"created\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), \"updated\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), CONSTRAINT \"PK_78f76903a7e2d2b2ac378fca8d3\" PRIMARY KEY (\"id\"))",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" ALTER COLUMN \"optionsNewpostsfirst\" SET DEFAULT true",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ALTER COLUMN \"optionsNewpostsfirst\" SET DEFAULT true",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"visitors\" ADD CONSTRAINT \"FK_89c90edf2f369cfbcb220d2e09f\" FOREIGN KEY (\"sessionsId\") REFERENCES \"sessions\"(\"id\") ON DELETE CASCADE ON UPDATE CASCADE",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"visitors\" ADD CONSTRAINT \"FK_d50229c10adbf294a228c35cb19\" FOREIGN KEY (\"usersId\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "LicenceNewFields1624641783848",
+    "timestamp": 1624641783848,
+    "filename": "1624641783848-LicenceNewFields.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"licences\" ADD \"stripeCustomerId\" character varying NOT NULL",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"licences\" ADD \"stripeSessionId\" character varying NOT NULL",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"licences\" ALTER COLUMN \"email\" DROP NOT NULL",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "CompareEmailLowercase1628539922827",
+    "timestamp": 1628539922827,
+    "filename": "1628539922827-Compare-Email-Lowercase.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DELETE FROM \"typeorm_metadata\" WHERE \"type\" = $1 AND \"schema\" = $2 AND \"name\" = $3",
+        "params": [
+          "VIEW",
+          "public",
+          "user_view"
+        ]
+      },
+      {
+        "sql": "DROP VIEW \"user_view\"",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"user_view\" AS \nselect \n  u.id,\n  u.name,\n  u.\"accountType\",\n  u.username,\n  u.currency,\n  u.\"stripeId\",\n  u.photo,\n  u.language,\n  u.email,\n  u.trial,\n  s.id as \"ownSubscriptionsId\",\n  s.plan as \"ownPlan\",\n  coalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n  coalesce(s.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\",\n  coalesce(s.domain, s2.domain, s3.domain) as \"domain\"\nfrom users u \n\nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"type\", \"schema\", \"name\", \"value\") VALUES ($1, $2, $3, $4)",
+        "params": [
+          "VIEW",
+          "public",
+          "user_view",
+          "select \n  u.id,\n  u.name,\n  u.\"accountType\",\n  u.username,\n  u.currency,\n  u.\"stripeId\",\n  u.photo,\n  u.language,\n  u.email,\n  u.trial,\n  s.id as \"ownSubscriptionsId\",\n  s.plan as \"ownPlan\",\n  coalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n  coalesce(s.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\",\n  coalesce(s.domain, s2.domain, s3.domain) as \"domain\"\nfrom users u \n\nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "CanDeleteSessions1628773645790",
+    "timestamp": 1628773645790,
+    "filename": "1628773645790-CanDeleteSessions.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DELETE FROM \"typeorm_metadata\" WHERE \"type\" = $1 AND \"schema\" = $2 AND \"name\" = $3",
+        "params": [
+          "VIEW",
+          "public",
+          "user_view"
+        ]
+      },
+      {
+        "sql": "DROP VIEW \"public\".\"user_view\"",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"user_view\" AS \nselect \n  u.id,\n  u.name,\n  u.\"accountType\",\n  u.username,\n  u.currency,\n  u.\"stripeId\",\n  u.photo,\n  u.language,\n  u.email,\n  case when u.\"accountType\" = 'anonymous' and u.password is null then false else true end as \"canDeleteSession\",\n  u.trial,\n  s.id as \"ownSubscriptionsId\",\n  s.plan as \"ownPlan\",\n  coalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n  coalesce(s.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\",\n  coalesce(s.domain, s2.domain, s3.domain) as \"domain\"\nfrom users u \n\nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"type\", \"schema\", \"name\", \"value\") VALUES ($1, $2, $3, $4)",
+        "params": [
+          "VIEW",
+          "public",
+          "user_view",
+          "select \n  u.id,\n  u.name,\n  u.\"accountType\",\n  u.username,\n  u.currency,\n  u.\"stripeId\",\n  u.photo,\n  u.language,\n  u.email,\n  case when u.\"accountType\" = 'anonymous' and u.password is null then false else true end as \"canDeleteSession\",\n  u.trial,\n  s.id as \"ownSubscriptionsId\",\n  s.plan as \"ownPlan\",\n  coalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n  coalesce(s.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\",\n  coalesce(s.domain, s2.domain, s3.domain) as \"domain\"\nfrom users u \n\nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "SlackInfo1629039159832",
+    "timestamp": 1629039159832,
+    "filename": "1629039159832-SlackInfo.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"public\".\"users\" ADD \"slackUserId\" character varying",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"public\".\"users\" ADD \"slackTeamId\" character varying",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "UserIdentity1629042328834",
+    "timestamp": 1629042328834,
+    "filename": "1629042328834-UserIdentity.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "CREATE TABLE \"users_identities\" (\"id\" character varying NOT NULL, \"accountType\" character varying NOT NULL DEFAULT 'anonymous', \"username\" character varying, \"password\" character varying, \"emailVerification\" character varying, \"created\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), \"updated\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), \"userId\" character varying, CONSTRAINT \"PK_2f798ffcbaa58ad651b989e8825\" PRIMARY KEY (\"id\"))",
+        "params": []
+      },
+      {
+        "sql": "CREATE UNIQUE INDEX \"IDX_3c67bd4e6a014698751d9242e3\" ON \"users_identities\" (\"username\", \"accountType\") ",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users_identities\" ADD CONSTRAINT \"FK_a10dca6aa6bda5865287bf2792a\" FOREIGN KEY (\"userId\") REFERENCES \"users\"(\"id\") ON DELETE CASCADE ON UPDATE CASCADE",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "AddPhoto1629045752715",
+    "timestamp": 1629045752715,
+    "filename": "1629045752715-AddPhoto.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"public\".\"users_identities\" ADD \"photo\" character varying",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "MigratingIdentities1629045752716",
+    "timestamp": 1629045752716,
+    "filename": "1629045752716-MigratingIdentities.ts",
+    "kind": "identities",
+    "steps": []
+  },
+  {
+    "name": "UniqueEmail1629059231723",
+    "timestamp": 1629059231723,
+    "filename": "1629059231723-UniqueEmail.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "CREATE UNIQUE INDEX \"IDX_97672ac88f789774dd47f7c8be\" ON \"public\".\"users\" (\"email\") ",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "RemoveColsInUsers1629135706482",
+    "timestamp": 1629135706482,
+    "filename": "1629135706482-RemoveColsInUsers.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DROP INDEX \"public\".\"IDX_b5d57c15d430d9964131201079\"",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "UserView1629136774230",
+    "timestamp": 1629136774230,
+    "filename": "1629136774230-UserView.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DELETE FROM \"typeorm_metadata\" WHERE \"type\" = $1 AND \"schema\" = $2 AND \"name\" = $3",
+        "params": [
+          "VIEW",
+          "public",
+          "user_view"
+        ]
+      },
+      {
+        "sql": "DROP VIEW \"public\".\"user_view\"",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"user_view\" AS \n  select \n  i.id,\n  u.id as \"userId\",\n  u.name,\n  i.\"accountType\",\n  i.username,\n  u.currency,\n  u.\"stripeId\",\n  i.photo,\n  u.language,\n  u.email,\n  case when i.\"accountType\" = 'anonymous' and i.password is null then false else true end as \"canDeleteSession\",\n  u.trial,\n  s.id as \"ownSubscriptionsId\",\n  s.plan as \"ownPlan\",\n  coalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n  coalesce(s.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\",\n  coalesce(s.domain, s2.domain, s3.domain) as \"domain\"\nfrom users_identities i\n\njoin users u on u.id = i.\"userId\"\nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"type\", \"schema\", \"name\", \"value\") VALUES ($1, $2, $3, $4)",
+        "params": [
+          "VIEW",
+          "public",
+          "user_view",
+          "select \n  i.id,\n  u.id as \"userId\",\n  u.name,\n  i.\"accountType\",\n  i.username,\n  u.currency,\n  u.\"stripeId\",\n  i.photo,\n  u.language,\n  u.email,\n  case when i.\"accountType\" = 'anonymous' and i.password is null then false else true end as \"canDeleteSession\",\n  u.trial,\n  s.id as \"ownSubscriptionsId\",\n  s.plan as \"ownPlan\",\n  coalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n  coalesce(s.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\",\n  coalesce(s.domain, s2.domain, s3.domain) as \"domain\"\nfrom users_identities i\n\njoin users u on u.id = i.\"userId\"\nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "RemoveColsInUsers21629137032951",
+    "timestamp": 1629137032951,
+    "filename": "1629137032951-RemoveColsInUsers2.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"public\".\"users\" DROP COLUMN \"accountType\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"public\".\"users\" DROP COLUMN \"username\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"public\".\"users\" DROP COLUMN \"photo\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"public\".\"users\" DROP COLUMN \"password\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"public\".\"users\" DROP COLUMN \"emailVerification\"",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "AddPhotoBackToUser1629222818292",
+    "timestamp": 1629222818292,
+    "filename": "1629222818292-AddPhotoBackToUser.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"public\".\"users\" ADD \"photo\" character varying",
+        "params": []
+      },
+      {
+        "sql": "\n        update users set photo = sub.photo\n        from (\n            select distinct on (i.\"userId\") i.\"userId\", photo\n            from users_identities i\n            where i.photo is not null\n        ) as sub\n        where users.id = sub.\"userId\"\n    ",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "UserView1629277554178",
+    "timestamp": 1629277554178,
+    "filename": "1629277554178-UserView.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DELETE FROM \"typeorm_metadata\" WHERE \"type\" = $1 AND \"schema\" = $2 AND \"name\" = $3",
+        "params": [
+          "VIEW",
+          "public",
+          "user_view"
+        ]
+      },
+      {
+        "sql": "DROP VIEW \"public\".\"user_view\"",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"user_view\" AS \n  select \n  u.id,\n  i.id as \"identityId\",\n  u.name,\n  i.\"accountType\",\n  i.username,\n  u.currency,\n  u.\"stripeId\",\n  i.photo,\n  u.language,\n  u.email,\n  case when i.\"accountType\" = 'anonymous' and i.password is null then false else true end as \"canDeleteSession\",\n  u.trial,\n  s.id as \"ownSubscriptionsId\",\n  s.plan as \"ownPlan\",\n  coalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n  coalesce(s.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\",\n  coalesce(s.domain, s2.domain, s3.domain) as \"domain\"\nfrom users_identities i\n\njoin users u on u.id = i.\"userId\"\nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"type\", \"schema\", \"name\", \"value\") VALUES ($1, $2, $3, $4)",
+        "params": [
+          "VIEW",
+          "public",
+          "user_view",
+          "select \n  u.id,\n  i.id as \"identityId\",\n  u.name,\n  i.\"accountType\",\n  i.username,\n  u.currency,\n  u.\"stripeId\",\n  i.photo,\n  u.language,\n  u.email,\n  case when i.\"accountType\" = 'anonymous' and i.password is null then false else true end as \"canDeleteSession\",\n  u.trial,\n  s.id as \"ownSubscriptionsId\",\n  s.plan as \"ownPlan\",\n  coalesce(s.id, s2.id, s3.id) as \"subscriptionsId\",\n  coalesce(s.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\",\n  coalesce(s.domain, s2.domain, s3.domain) as \"domain\"\nfrom users_identities i\n\njoin users u on u.id = i.\"userId\"\nleft join subscriptions s on s.\"ownerId\" = u.id and s.active is true\nleft join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "IndexPost1632066879336",
+    "timestamp": 1632066879336,
+    "filename": "1632066879336-IndexPost.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "CREATE INDEX \"IDX_764b665f832e28c01595ec15cf\" ON \"public\".\"posts\" (\"sessionId\") ",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "IndexEverything1632067126663",
+    "timestamp": 1632067126663,
+    "filename": "1632067126663-IndexEverything.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "CREATE INDEX \"IDX_9ad140fba0b4ad9559e6530282\" ON \"public\".\"groups\" (\"sessionId\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_898cf6af34722df13f760cc364\" ON \"public\".\"groups\" (\"userId\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_5169384e31d0989699a318f3ca\" ON \"public\".\"votes\" (\"userId\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_b5b05adc89dda0614276a13a59\" ON \"public\".\"votes\" (\"postId\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_c58b12b1a7b4012bb238bc2654\" ON \"public\".\"templates\" (\"createdById\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_331400b3a08ee505d42ddba1db\" ON \"public\".\"subscriptions\" (\"ownerId\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_a10dca6aa6bda5865287bf2792\" ON \"public\".\"users_identities\" (\"userId\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_5b086b03bb64304390cec7635e\" ON \"public\".\"users\" (\"defaultTemplateId\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_d10acbe503da4c56853181efc9\" ON \"public\".\"posts\" (\"groupId\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_ae05faaa55c866130abef6e1fe\" ON \"public\".\"posts\" (\"userId\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_d26fe2e6102cd9c47650a0d7a6\" ON \"public\".\"sessions\" (\"createdById\") ",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "SessionView1632072153351",
+    "timestamp": 1632072153351,
+    "filename": "1632072153351-SessionView.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "CREATE VIEW \"session_view\" AS \nselect \n\ts.id,\n\ts.name,\n\ts.created,\n\ts.\"createdById\",\n\t(\n\t\tselect to_jsonb(cb) from (\n\t\t\tselect cbu.id, cbu.name, cbu.photo from users cbu\n\t\t\twhere cbu.id = s.\"createdById\"\n\t\t) as cb\n\t) as \"createdBy\",\n\ts.encrypted,\n\ts.locked,\n\t(select count(*) from posts p where p.\"sessionId\" = s.id and p.action is not null) as \"numberOfActions\",\t\n\t(select count(*) from posts p where p.\"sessionId\" = s.id) as \"numberOfPosts\",\n\t(\n\t\tselect count(*) from votes vv\n\t\tleft join posts vp on vp.id = vv.\"postId\"\n\t\twhere vp.\"sessionId\" = s.id\n\t) as \"numberOfVotes\",\n\t(\n\t\tselect json_agg(vis) from (\n\t\t\tselect vu.id, vu.name, vu.photo from visitors v\n\t\t\tjoin users vu on vu.id = v.\"usersId\"\n\t\t\twhere v.\"sessionsId\" = s.id\n\t\t) as vis\n\t) as participants\n\nfrom sessions s\nleft join users u on s.\"createdById\" = u.id\n\norder by s.updated desc\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"type\", \"schema\", \"name\", \"value\") VALUES ($1, $2, $3, $4)",
+        "params": [
+          "VIEW",
+          "public",
+          "session_view",
+          "select \n\ts.id,\n\ts.name,\n\ts.created,\n\ts.\"createdById\",\n\t(\n\t\tselect to_jsonb(cb) from (\n\t\t\tselect cbu.id, cbu.name, cbu.photo from users cbu\n\t\t\twhere cbu.id = s.\"createdById\"\n\t\t) as cb\n\t) as \"createdBy\",\n\ts.encrypted,\n\ts.locked,\n\t(select count(*) from posts p where p.\"sessionId\" = s.id and p.action is not null) as \"numberOfActions\",\t\n\t(select count(*) from posts p where p.\"sessionId\" = s.id) as \"numberOfPosts\",\n\t(\n\t\tselect count(*) from votes vv\n\t\tleft join posts vp on vp.id = vv.\"postId\"\n\t\twhere vp.\"sessionId\" = s.id\n\t) as \"numberOfVotes\",\n\t(\n\t\tselect json_agg(vis) from (\n\t\t\tselect vu.id, vu.name, vu.photo from visitors v\n\t\t\tjoin users vu on vu.id = v.\"usersId\"\n\t\t\twhere v.\"sessionsId\" = s.id\n\t\t) as vis\n\t) as participants\n\nfrom sessions s\nleft join users u on s.\"createdById\" = u.id\n\norder by s.updated desc"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "SessionViewChange1632078601269",
+    "timestamp": 1632078601269,
+    "filename": "1632078601269-SessionViewChange.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DELETE FROM \"typeorm_metadata\" WHERE \"type\" = $1 AND \"schema\" = $2 AND \"name\" = $3",
+        "params": [
+          "VIEW",
+          "public",
+          "session_view"
+        ]
+      },
+      {
+        "sql": "DROP VIEW \"public\".\"session_view\"",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"session_view\" AS \nselect \n\ts.id,\n\ts.name,\n\ts.created,\n\t(\n\t\tselect to_jsonb(cb) from (\n\t\t\tselect cbu.id, cbu.name, cbu.photo from users cbu\n\t\t\twhere cbu.id = s.\"createdById\"\n\t\t) as cb\n\t) as \"createdBy\",\n\ts.encrypted,\n\ts.locked,\n\t(select count(*) from posts p where p.\"sessionId\" = s.id and p.action is not null) as \"numberOfActions\",\t\n\t(select count(*) from posts p where p.\"sessionId\" = s.id) as \"numberOfPosts\",\n\t(\n\t\tselect count(*) from votes vv\n\t\tleft join posts vp on vp.id = vv.\"postId\"\n\t\twhere vp.\"sessionId\" = s.id\n\t) as \"numberOfVotes\",\n\t(\n\t\tselect json_agg(vis) from (\n\t\t\tselect vu.id, vu.name, vu.photo from visitors v\n\t\t\tjoin users vu on vu.id = v.\"usersId\"\n\t\t\twhere v.\"sessionsId\" = s.id\n\t\t) as vis\n\t) as participants\n\nfrom sessions s\nleft join users u on s.\"createdById\" = u.id\n\norder by s.updated desc\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"type\", \"schema\", \"name\", \"value\") VALUES ($1, $2, $3, $4)",
+        "params": [
+          "VIEW",
+          "public",
+          "session_view",
+          "select \n\ts.id,\n\ts.name,\n\ts.created,\n\t(\n\t\tselect to_jsonb(cb) from (\n\t\t\tselect cbu.id, cbu.name, cbu.photo from users cbu\n\t\t\twhere cbu.id = s.\"createdById\"\n\t\t) as cb\n\t) as \"createdBy\",\n\ts.encrypted,\n\ts.locked,\n\t(select count(*) from posts p where p.\"sessionId\" = s.id and p.action is not null) as \"numberOfActions\",\t\n\t(select count(*) from posts p where p.\"sessionId\" = s.id) as \"numberOfPosts\",\n\t(\n\t\tselect count(*) from votes vv\n\t\tleft join posts vp on vp.id = vv.\"postId\"\n\t\twhere vp.\"sessionId\" = s.id\n\t) as \"numberOfVotes\",\n\t(\n\t\tselect json_agg(vis) from (\n\t\t\tselect vu.id, vu.name, vu.photo from visitors v\n\t\t\tjoin users vu on vu.id = v.\"usersId\"\n\t\t\twhere v.\"sessionsId\" = s.id\n\t\t) as vis\n\t) as participants\n\nfrom sessions s\nleft join users u on s.\"createdById\" = u.id\n\norder by s.updated desc"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "ReadyUsers1634486639965",
+    "timestamp": 1634486639965,
+    "filename": "1634486639965-ReadyUsers.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"ready\" text array NOT NULL DEFAULT '{}'",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "Chat1635622247115",
+    "timestamp": 1635622247115,
+    "filename": "1635622247115-Chat.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "CREATE TABLE \"messages\" (\"id\" character varying NOT NULL, \"content\" character varying NOT NULL, \"created\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), \"updated\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), \"sessionId\" character varying NOT NULL, \"userId\" character varying NOT NULL, CONSTRAINT \"PK_18325f38ae6de43878487eff986\" PRIMARY KEY (\"id\"))",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_066163c46cda7e8187f96bc87a\" ON \"messages\" (\"sessionId\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_4838cd4fc48a6ff2d4aa01aa64\" ON \"messages\" (\"userId\") ",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"messages\" ADD CONSTRAINT \"FK_066163c46cda7e8187f96bc87a0\" FOREIGN KEY (\"sessionId\") REFERENCES \"sessions\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"messages\" ADD CONSTRAINT \"FK_4838cd4fc48a6ff2d4aa01aa646\" FOREIGN KEY (\"userId\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "BigRenaming1643049742051",
+    "timestamp": 1643049742051,
+    "filename": "1643049742051-BigRenaming.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"users_identities\" DROP CONSTRAINT \"FK_a10dca6aa6bda5865287bf2792a\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users\" DROP CONSTRAINT \"FK_5b086b03bb64304390cec7635ec\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" DROP CONSTRAINT \"FK_c58b12b1a7b4012bb238bc26542\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"columns\" DROP CONSTRAINT \"FK_37907d102f38ece687182bf5237\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates-columns\" DROP CONSTRAINT \"FK_c96b807f7154ddb4fb7017af12e\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"groups\" DROP CONSTRAINT \"FK_9ad140fba0b4ad9559e65302825\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"groups\" DROP CONSTRAINT \"FK_898cf6af34722df13f760cc364f\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"messages\" DROP CONSTRAINT \"FK_066163c46cda7e8187f96bc87a0\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"messages\" DROP CONSTRAINT \"FK_4838cd4fc48a6ff2d4aa01aa646\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" DROP CONSTRAINT \"FK_d26fe2e6102cd9c47650a0d7a6f\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"votes\" DROP CONSTRAINT \"FK_5169384e31d0989699a318f3ca4\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"votes\" DROP CONSTRAINT \"FK_b5b05adc89dda0614276a13a599\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" DROP CONSTRAINT \"FK_764b665f832e28c01595ec15cf3\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" DROP CONSTRAINT \"FK_ae05faaa55c866130abef6e1fee\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" DROP CONSTRAINT \"FK_d10acbe503da4c56853181efc98\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"subscriptions\" DROP CONSTRAINT \"FK_331400b3a08ee505d42ddba1db0\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"visitors\" DROP CONSTRAINT \"FK_89c90edf2f369cfbcb220d2e09f\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"visitors\" DROP CONSTRAINT \"FK_d50229c10adbf294a228c35cb19\"",
+        "params": []
+      },
+      {
+        "sql": "DROP INDEX \"public\".\"IDX_3c67bd4e6a014698751d9242e3\"",
+        "params": []
+      },
+      {
+        "sql": "DROP INDEX \"public\".\"IDX_a10dca6aa6bda5865287bf2792\"",
+        "params": []
+      },
+      {
+        "sql": "DROP INDEX \"public\".\"IDX_5b086b03bb64304390cec7635e\"",
+        "params": []
+      },
+      {
+        "sql": "DROP INDEX \"public\".\"IDX_c58b12b1a7b4012bb238bc2654\"",
+        "params": []
+      },
+      {
+        "sql": "DROP INDEX \"public\".\"IDX_898cf6af34722df13f760cc364\"",
+        "params": []
+      },
+      {
+        "sql": "DROP INDEX \"public\".\"IDX_9ad140fba0b4ad9559e6530282\"",
+        "params": []
+      },
+      {
+        "sql": "DROP INDEX \"public\".\"IDX_066163c46cda7e8187f96bc87a\"",
+        "params": []
+      },
+      {
+        "sql": "DROP INDEX \"public\".\"IDX_4838cd4fc48a6ff2d4aa01aa64\"",
+        "params": []
+      },
+      {
+        "sql": "DROP INDEX \"public\".\"IDX_d26fe2e6102cd9c47650a0d7a6\"",
+        "params": []
+      },
+      {
+        "sql": "DROP INDEX \"public\".\"IDX_5169384e31d0989699a318f3ca\"",
+        "params": []
+      },
+      {
+        "sql": "DROP INDEX \"public\".\"IDX_b5b05adc89dda0614276a13a59\"",
+        "params": []
+      },
+      {
+        "sql": "DROP INDEX \"public\".\"IDX_764b665f832e28c01595ec15cf\"",
+        "params": []
+      },
+      {
+        "sql": "DROP INDEX \"public\".\"IDX_ae05faaa55c866130abef6e1fe\"",
+        "params": []
+      },
+      {
+        "sql": "DROP INDEX \"public\".\"IDX_d10acbe503da4c56853181efc9\"",
+        "params": []
+      },
+      {
+        "sql": "DROP INDEX \"public\".\"IDX_331400b3a08ee505d42ddba1db\"",
+        "params": []
+      },
+      {
+        "sql": "DROP INDEX \"public\".\"IDX_89c90edf2f369cfbcb220d2e09\"",
+        "params": []
+      },
+      {
+        "sql": "DROP INDEX \"public\".\"IDX_d50229c10adbf294a228c35cb1\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"columns\" RENAME COLUMN \"sessionId\" TO \"session_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates-columns\" RENAME COLUMN \"templateId\" TO \"template_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"subscriptions\" RENAME COLUMN \"ownerId\" TO \"owner_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users_identities\" RENAME COLUMN \"accountType\" TO \"account_type\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users_identities\" RENAME COLUMN \"emailVerification\" TO \"email_verification\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users_identities\" RENAME COLUMN \"userId\" TO \"user_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users\" RENAME COLUMN \"defaultTemplateId\" TO \"default_template_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users\" RENAME COLUMN \"stripeId\" TO \"stripe_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users\" RENAME COLUMN \"slackUserId\" TO \"slack_user_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users\" RENAME COLUMN \"slackTeamId\" TO \"slack_team_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" RENAME COLUMN \"createdById\" TO \"created_by_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" RENAME COLUMN \"optionsMaxupvotes\" TO \"options_max_up_votes\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" RENAME COLUMN \"optionsMaxdownvotes\" TO \"options_max_down_votes\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" RENAME COLUMN \"optionsAllowactions\" TO \"options_allow_actions\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" RENAME COLUMN \"optionsAllowselfvoting\" TO \"options_allow_self_voting\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" RENAME COLUMN \"optionsAllowmultiplevotes\" TO \"options_allow_multiple_votes\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" RENAME COLUMN \"optionsAllowauthorvisible\" TO \"options_allow_author_visible\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" RENAME COLUMN \"optionsAllowgiphy\" TO \"options_allow_giphy\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" RENAME COLUMN \"optionsAllowgrouping\" TO \"options_allow_grouping\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" RENAME COLUMN \"optionsAllowreordering\" TO \"options_allow_reordering\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" RENAME COLUMN \"optionsBlurcards\" TO \"options_blur_cards\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" RENAME COLUMN \"optionsMaxposts\" TO \"options_max_posts\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" RENAME COLUMN \"optionsNewpostsfirst\" TO \"options_new_posts_first\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"groups\" RENAME COLUMN \"sessionId\" TO \"session_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"groups\" RENAME COLUMN \"userId\" TO \"user_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"messages\" RENAME COLUMN \"sessionId\" TO \"session_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"messages\" RENAME COLUMN \"userId\" TO \"user_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" RENAME COLUMN \"createdById\" TO \"created_by_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" RENAME COLUMN \"optionsMaxupvotes\" TO \"options_max_up_votes\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" RENAME COLUMN \"optionsMaxdownvotes\" TO \"options_max_down_votes\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" RENAME COLUMN \"optionsAllowactions\" TO \"options_allow_actions\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" RENAME COLUMN \"optionsAllowselfvoting\" TO \"options_allow_self_voting\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" RENAME COLUMN \"optionsAllowmultiplevotes\" TO \"options_allow_multiple_votes\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" RENAME COLUMN \"optionsAllowauthorvisible\" TO \"options_allow_author_visible\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" RENAME COLUMN \"optionsAllowgiphy\" TO \"options_allow_giphy\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" RENAME COLUMN \"optionsAllowgrouping\" TO \"options_allow_grouping\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" RENAME COLUMN \"optionsAllowreordering\" TO \"options_allow_reordering\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" RENAME COLUMN \"optionsBlurcards\" TO \"options_blur_cards\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" RENAME COLUMN \"optionsMaxposts\" TO \"options_max_posts\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" RENAME COLUMN \"optionsNewpostsfirst\" TO \"options_new_posts_first\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"votes\" RENAME COLUMN \"userId\" TO \"user_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"votes\" RENAME COLUMN \"postId\" TO \"post_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" RENAME COLUMN \"sessionId\" TO \"session_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" RENAME COLUMN \"userId\" TO \"user_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" RENAME COLUMN \"groupId\" TO \"group_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"licences\" RENAME COLUMN \"stripeCustomerId\" TO \"stripe_customer_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"licences\" RENAME COLUMN \"stripeSessionId\" TO \"stripe_session_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"visitors\" DROP CONSTRAINT IF EXISTS \"PK_c16501c34b8530a425739e400bd\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"visitors\" RENAME COLUMN \"sessionsId\" to \"sessions_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"visitors\" RENAME COLUMN \"usersId\" to \"users_id\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"visitors\" ADD CONSTRAINT \"PK_96af66c2594330cf6578ef210c2\" PRIMARY KEY (\"sessions_id\", \"users_id\")",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_b3b8654b4e2311526fcefdb9ce\" ON \"users_identities\" (\"user_id\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE UNIQUE INDEX \"IDX_de8111fd70689bb6934b7650e5\" ON \"users_identities\" (\"username\", \"account_type\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_ac509eeb1d008dda662c19bc2a\" ON \"users\" (\"default_template_id\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_7fe85a796a57a6cccfaa2dff03\" ON \"templates\" (\"created_by_id\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_4e97c4fa8c699264016d1a4d92\" ON \"groups\" (\"session_id\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_9f71bda715870718997ed62f64\" ON \"groups\" (\"user_id\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_ff71b7760071ed9caba7f02beb\" ON \"messages\" (\"session_id\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_830a3c1d92614d1495418c4673\" ON \"messages\" (\"user_id\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_1ccf045da14e5350b26ee88259\" ON \"sessions\" (\"created_by_id\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_27be2cab62274f6876ad6a3164\" ON \"votes\" (\"user_id\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_18499a5b9b4cf71093f7b7f79f\" ON \"votes\" (\"post_id\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_5b08cabd478d3eb9fcc657d426\" ON \"posts\" (\"session_id\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_7628aa3741a30d6217271a226c\" ON \"posts\" (\"group_id\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_c4f9a7bd77b489e711277ee598\" ON \"posts\" (\"user_id\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_7dc6f309358b04777f86d1f3fe\" ON \"subscriptions\" (\"owner_id\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_93910938d4f16f57a137da768b\" ON \"visitors\" (\"sessions_id\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_44b69e6f1b8c5328046a6f6a2c\" ON \"visitors\" (\"users_id\") ",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users_identities\" ADD CONSTRAINT \"FK_b3b8654b4e2311526fcefdb9ce8\" FOREIGN KEY (\"user_id\") REFERENCES \"users\"(\"id\") ON DELETE CASCADE ON UPDATE CASCADE",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users\" ADD CONSTRAINT \"FK_ac509eeb1d008dda662c19bc2a3\" FOREIGN KEY (\"default_template_id\") REFERENCES \"templates\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" ADD CONSTRAINT \"FK_7fe85a796a57a6cccfaa2dff03c\" FOREIGN KEY (\"created_by_id\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"columns\" ADD CONSTRAINT \"FK_9f5aedb06b838d50b1b4a56e042\" FOREIGN KEY (\"session_id\") REFERENCES \"sessions\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates-columns\" ADD CONSTRAINT \"FK_f5ccf851c3134ac587eb4e794d9\" FOREIGN KEY (\"template_id\") REFERENCES \"templates\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"groups\" ADD CONSTRAINT \"FK_4e97c4fa8c699264016d1a4d929\" FOREIGN KEY (\"session_id\") REFERENCES \"sessions\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"groups\" ADD CONSTRAINT \"FK_9f71bda715870718997ed62f64b\" FOREIGN KEY (\"user_id\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"messages\" ADD CONSTRAINT \"FK_ff71b7760071ed9caba7f02beb4\" FOREIGN KEY (\"session_id\") REFERENCES \"sessions\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"messages\" ADD CONSTRAINT \"FK_830a3c1d92614d1495418c46736\" FOREIGN KEY (\"user_id\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD CONSTRAINT \"FK_1ccf045da14e5350b26ee882592\" FOREIGN KEY (\"created_by_id\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"votes\" ADD CONSTRAINT \"FK_27be2cab62274f6876ad6a31641\" FOREIGN KEY (\"user_id\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"votes\" ADD CONSTRAINT \"FK_18499a5b9b4cf71093f7b7f79f8\" FOREIGN KEY (\"post_id\") REFERENCES \"posts\"(\"id\") ON DELETE CASCADE ON UPDATE CASCADE",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" ADD CONSTRAINT \"FK_5b08cabd478d3eb9fcc657d4269\" FOREIGN KEY (\"session_id\") REFERENCES \"sessions\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" ADD CONSTRAINT \"FK_7628aa3741a30d6217271a226cf\" FOREIGN KEY (\"group_id\") REFERENCES \"groups\"(\"id\") ON DELETE SET NULL ON UPDATE CASCADE",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"posts\" ADD CONSTRAINT \"FK_c4f9a7bd77b489e711277ee5986\" FOREIGN KEY (\"user_id\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"subscriptions\" ADD CONSTRAINT \"FK_7dc6f309358b04777f86d1f3fef\" FOREIGN KEY (\"owner_id\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"visitors\" ADD CONSTRAINT \"FK_93910938d4f16f57a137da768b3\" FOREIGN KEY (\"sessions_id\") REFERENCES \"sessions\"(\"id\") ON DELETE CASCADE ON UPDATE CASCADE",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"visitors\" ADD CONSTRAINT \"FK_44b69e6f1b8c5328046a6f6a2c0\" FOREIGN KEY (\"users_id\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "DELETE FROM \"typeorm_metadata\" WHERE \"type\" = $1 AND \"name\" = $2 AND \"schema\" = $3",
+        "params": [
+          "VIEW",
+          "user_view",
+          "public"
+        ]
+      },
+      {
+        "sql": "DROP VIEW \"user_view\"",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"user_view\" AS \nselect \n  u.id,\n  i.id as identity_id,\n  u.name,\n  i.account_type,\n  i.username,\n  u.currency,\n  u.stripe_id,\n  i.photo,\n  u.language,\n  u.email,\n  case when i.account_type = 'anonymous' and i.password is null then false else true end as \"can_delete_session\",\n  u.trial,\n  s.id as \"own_subscriptions_id\",\n  s.plan as \"own_plan\",\n  coalesce(s.id, s2.id, s3.id) as \"subscriptions_id\",\n  coalesce(s.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\",\n  coalesce(s.domain, s2.domain, s3.domain) as \"domain\"\nfrom users_identities i\n\njoin users u on u.id = i.user_id\nleft join subscriptions s on s.owner_id = u.id and s.active is true\nleft join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"database\", \"schema\", \"table\", \"type\", \"name\", \"value\") VALUES (DEFAULT, $1, DEFAULT, $2, $3, $4)",
+        "params": [
+          "public",
+          "VIEW",
+          "user_view",
+          "select \n  u.id,\n  i.id as identity_id,\n  u.name,\n  i.account_type,\n  i.username,\n  u.currency,\n  u.stripe_id,\n  i.photo,\n  u.language,\n  u.email,\n  case when i.account_type = 'anonymous' and i.password is null then false else true end as \"can_delete_session\",\n  u.trial,\n  s.id as \"own_subscriptions_id\",\n  s.plan as \"own_plan\",\n  coalesce(s.id, s2.id, s3.id) as \"subscriptions_id\",\n  coalesce(s.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s.plan, s2.plan, s3.plan) as \"plan\",\n  coalesce(s.domain, s2.domain, s3.domain) as \"domain\"\nfrom users_identities i\n\njoin users u on u.id = i.user_id\nleft join subscriptions s on s.owner_id = u.id and s.active is true\nleft join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true"
+        ]
+      },
+      {
+        "sql": "DELETE FROM \"typeorm_metadata\" WHERE \"type\" = $1 AND \"name\" = $2 AND \"schema\" = $3",
+        "params": [
+          "VIEW",
+          "session_view",
+          "public"
+        ]
+      },
+      {
+        "sql": "DROP VIEW \"session_view\"",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"session_view\" AS \nselect \n\ts.id,\n\ts.name,\n\ts.created,\n\t(\n\t\tselect to_jsonb(cb) from (\n\t\t\tselect cbu.id, cbu.name, cbu.photo from users cbu\n\t\t\twhere cbu.id = s.created_by_id\n\t\t) as cb\n\t) as created_by,\n\ts.encrypted,\n\ts.locked,\n\t(select count(*) from posts p where p.session_id = s.id and p.action is not null) as \"number_of_actions\",\t\n\t(select count(*) from posts p where p.session_id = s.id) as \"number_of_posts\",\n\t(\n\t\tselect count(*) from votes vv\n\t\tleft join posts vp on vp.id = vv.post_id\n\t\twhere vp.session_id = s.id\n\t) as \"number_of_votes\",\n\t(\n\t\tselect json_agg(vis) from (\n\t\t\tselect vu.id, vu.name, vu.photo from visitors v\n\t\t\tjoin users vu on vu.id = v.users_id\n\t\t\twhere v.sessions_id = s.id\n\t\t) as vis\n\t) as participants\n\nfrom sessions s\nleft join users u on s.created_by_id = u.id\n\norder by s.updated desc\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"database\", \"schema\", \"table\", \"type\", \"name\", \"value\") VALUES (DEFAULT, $1, DEFAULT, $2, $3, $4)",
+        "params": [
+          "public",
+          "VIEW",
+          "session_view",
+          "select \n\ts.id,\n\ts.name,\n\ts.created,\n\t(\n\t\tselect to_jsonb(cb) from (\n\t\t\tselect cbu.id, cbu.name, cbu.photo from users cbu\n\t\t\twhere cbu.id = s.created_by_id\n\t\t) as cb\n\t) as created_by,\n\ts.encrypted,\n\ts.locked,\n\t(select count(*) from posts p where p.session_id = s.id and p.action is not null) as \"number_of_actions\",\t\n\t(select count(*) from posts p where p.session_id = s.id) as \"number_of_posts\",\n\t(\n\t\tselect count(*) from votes vv\n\t\tleft join posts vp on vp.id = vv.post_id\n\t\twhere vp.session_id = s.id\n\t) as \"number_of_votes\",\n\t(\n\t\tselect json_agg(vis) from (\n\t\t\tselect vu.id, vu.name, vu.photo from visitors v\n\t\t\tjoin users vu on vu.id = v.users_id\n\t\t\twhere v.sessions_id = s.id\n\t\t) as vis\n\t) as participants\n\nfrom sessions s\nleft join users u on s.created_by_id = u.id\n\norder by s.updated desc"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "TemplateColumnsRename1643053991480",
+    "timestamp": 1643053991480,
+    "filename": "1643053991480-TemplateColumnsRename.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"templates-columns\" RENAME TO \"templates_columns\"",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "MissingConstraint1643107796386",
+    "timestamp": 1643107796386,
+    "filename": "1643107796386-MissingConstraint.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"templates_columns\" DROP CONSTRAINT \"FK_f5ccf851c3134ac587eb4e794d9\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates_columns\" ADD CONSTRAINT \"FK_6d169517f9e0e1b10bac42c215d\" FOREIGN KEY (\"template_id\") REFERENCES \"templates\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "MissingIndices1643116159073",
+    "timestamp": 1643116159073,
+    "filename": "1643116159073-MissingIndices.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "CREATE INDEX \"IDX_9f5aedb06b838d50b1b4a56e04\" ON \"columns\" (\"session_id\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_6d169517f9e0e1b10bac42c215\" ON \"templates_columns\" (\"template_id\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_db22f6defb263cc5b40a39847b\" ON \"licences\" (\"email\") ",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "MigrateEmojis1648400473646",
+    "timestamp": 1648400473646,
+    "filename": "1648400473646-MigrateEmojis.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "UPDATE templates_columns SET icon = 'grinning' WHERE icon = 'satisfied';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE columns SET icon = 'grinning' WHERE icon = 'satisfied';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE templates_columns SET icon = 'unamused' WHERE icon = 'disatisfied';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE columns SET icon = 'unamused' WHERE icon = 'disatisfied';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE templates_columns SET icon = 'sunny' WHERE icon = 'sunny';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE columns SET icon = 'sunny' WHERE icon = 'sunny';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE templates_columns SET icon = 'loudspeaker' WHERE icon = 'announcement';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE columns SET icon = 'loudspeaker' WHERE icon = 'announcement';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE templates_columns SET icon = 'paperclip' WHERE icon = 'file';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE columns SET icon = 'paperclip' WHERE icon = 'file';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE templates_columns SET icon = 'dollar' WHERE icon = 'money';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE columns SET icon = 'dollar' WHERE icon = 'money';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE templates_columns SET icon = 'arrows_clockwise' WHERE icon = 'renew';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE columns SET icon = 'arrows_clockwise' WHERE icon = 'renew';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE templates_columns SET icon = 'arrow_forward' WHERE icon = 'play';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE columns SET icon = 'arrow_forward' WHERE icon = 'play';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE templates_columns SET icon = 'black_square_for_stop' WHERE icon = 'pause';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE columns SET icon = 'black_square_for_stop' WHERE icon = 'pause';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE templates_columns SET icon = 'fast_forward' WHERE icon = 'fast-forward';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE columns SET icon = 'fast_forward' WHERE icon = 'fast-forward';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE templates_columns SET icon = 'thumbsup' WHERE icon = 'liked';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE columns SET icon = 'thumbsup' WHERE icon = 'liked';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE templates_columns SET icon = 'book' WHERE icon = 'books';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE columns SET icon = 'book' WHERE icon = 'books';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE templates_columns SET icon = 'question' WHERE icon = 'help';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE columns SET icon = 'question' WHERE icon = 'help';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE templates_columns SET icon = 'desert_island' WHERE icon = 'cocktail';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE columns SET icon = 'desert_island' WHERE icon = 'cocktail';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE templates_columns SET icon = 'motor_boat' WHERE icon = 'boat';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE columns SET icon = 'motor_boat' WHERE icon = 'boat';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE templates_columns SET icon = 'linked_paperclips' WHERE icon = 'link';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE columns SET icon = 'linked_paperclips' WHERE icon = 'link';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE templates_columns SET icon = 'wind_blowing_face' WHERE icon = 'gesture';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE columns SET icon = 'wind_blowing_face' WHERE icon = 'gesture';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE templates_columns SET icon = 'moyai' WHERE icon = 'fitness';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE columns SET icon = 'moyai' WHERE icon = 'fitness';",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "MigrateLanguages1652023488716",
+    "timestamp": 1652023488716,
+    "filename": "1652023488716-MigrateLanguages.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "UPDATE users SET language = 'ar-SA' WHERE language = 'ar';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE users SET language = 'de-DE' WHERE language = 'de';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE users SET language = 'en-GB' WHERE language = 'en';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE users SET language = 'es-ES' WHERE language = 'es';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE users SET language = 'fr-FR' WHERE language = 'fr';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE users SET language = 'hu-HU' WHERE language = 'hu';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE users SET language = 'it-IT' WHERE language = 'it';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE users SET language = 'ja-JP' WHERE language = 'ja';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE users SET language = 'nl-NL' WHERE language = 'nl';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE users SET language = 'pl-PL' WHERE language = 'pl';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE users SET language = 'pt-BR' WHERE language = 'pt';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE users SET language = 'pt-PT' WHERE language = 'ptbr';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE users SET language = 'uk-UA' WHERE language = 'ru';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE users SET language = 'zh-CN' WHERE language = 'zhcn';",
+        "params": []
+      },
+      {
+        "sql": "UPDATE users SET language = 'zh-TW' WHERE language = 'zhtw';",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "DefaultLanguage1652028782451",
+    "timestamp": 1652028782451,
+    "filename": "1652028782451-DefaultLanguage.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"users\" ALTER COLUMN \"language\" SET DEFAULT 'en-GB'",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "NullLanguage1652033290129",
+    "timestamp": 1652033290129,
+    "filename": "1652033290129-NullLanguage.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"users\" ALTER COLUMN \"language\" DROP NOT NULL",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users\" ALTER COLUMN \"language\" DROP DEFAULT",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "planOwner1669661894373",
+    "timestamp": 1669661894373,
+    "filename": "1669661894373-PlanOwners.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DELETE FROM \"typeorm_metadata\" WHERE \"type\" = $1 AND \"name\" = $2 AND \"schema\" = $3",
+        "params": [
+          "VIEW",
+          "user_view",
+          "public"
+        ]
+      },
+      {
+        "sql": "DROP VIEW \"user_view\"",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"user_view\" AS \n  select \n  u.id,\n  i.id as identity_id,\n  u.name,\n  i.account_type,\n  i.username,\n  u.currency,\n  u.stripe_id,\n  i.photo,\n  u.language,\n  u.email,\n  case when i.account_type = 'anonymous' and i.password is null then false else true end as \"can_delete_session\",\n  u.trial,\n  s1.id as \"own_subscriptions_id\",\n  s1.plan as \"own_plan\",\n  coalesce(s1.id, s2.id, s3.id) as \"subscriptions_id\",\n  coalesce(s1.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s1.plan, s2.plan, s3.plan) as \"plan\",\n  coalesce(s1.domain, s2.domain, s3.domain) as \"domain\",\n  coalesce(o1.name, o2.name, o2.name) as \"plan_owner\",\n  coalesce(o1.email, o2.email, o2.email) as \"plan_owner_email\"\nfrom users_identities i\n\njoin users u on u.id = i.user_id\nleft join subscriptions s1 on s1.owner_id = u.id and s1.active is true\nleft join users o1 on o1.id = s1.owner_id\nleft join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true\nleft join users o2 on o2.id = s2.owner_id\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\nleft join users o3 on o3.id = s3.owner_id\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"database\", \"schema\", \"table\", \"type\", \"name\", \"value\") VALUES (DEFAULT, $1, DEFAULT, $2, $3, $4)",
+        "params": [
+          "public",
+          "VIEW",
+          "user_view",
+          "select \n  u.id,\n  i.id as identity_id,\n  u.name,\n  i.account_type,\n  i.username,\n  u.currency,\n  u.stripe_id,\n  i.photo,\n  u.language,\n  u.email,\n  case when i.account_type = 'anonymous' and i.password is null then false else true end as \"can_delete_session\",\n  u.trial,\n  s1.id as \"own_subscriptions_id\",\n  s1.plan as \"own_plan\",\n  coalesce(s1.id, s2.id, s3.id) as \"subscriptions_id\",\n  coalesce(s1.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s1.plan, s2.plan, s3.plan) as \"plan\",\n  coalesce(s1.domain, s2.domain, s3.domain) as \"domain\",\n  coalesce(o1.name, o2.name, o2.name) as \"plan_owner\",\n  coalesce(o1.email, o2.email, o2.email) as \"plan_owner_email\"\nfrom users_identities i\n\njoin users u on u.id = i.user_id\nleft join subscriptions s1 on s1.owner_id = u.id and s1.active is true\nleft join users o1 on o1.id = s1.owner_id\nleft join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true\nleft join users o2 on o2.id = s2.owner_id\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\nleft join users o3 on o3.id = s3.owner_id"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "SubscriptionAdmins1669662836558",
+    "timestamp": 1669662836558,
+    "filename": "1669662836558-SubscriptionAdmins.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"subscriptions\" ADD \"admins\" text array NOT NULL DEFAULT '{}'",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "AdminsView1669663848592",
+    "timestamp": 1669663848592,
+    "filename": "1669663848592-AdminsView.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DELETE FROM \"typeorm_metadata\" WHERE \"type\" = $1 AND \"name\" = $2 AND \"schema\" = $3",
+        "params": [
+          "VIEW",
+          "user_view",
+          "public"
+        ]
+      },
+      {
+        "sql": "DROP VIEW \"user_view\"",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"user_view\" AS \nselect \n  u.id,\n  i.id as identity_id,\n  u.name,\n  i.account_type,\n  i.username,\n  u.currency,\n  u.stripe_id,\n  i.photo,\n  u.language,\n  u.email,\n  case when i.account_type = 'anonymous' and i.password is null then false else true end as \"can_delete_session\",\n  u.trial,\n  s1.id as \"own_subscriptions_id\",\n  s1.plan as \"own_plan\",\n  coalesce(s1.id, s2.id, s3.id) as \"subscriptions_id\",\n  coalesce(s1.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s1.plan, s2.plan, s3.plan) as \"plan\",\n  coalesce(s1.domain, s2.domain, s3.domain) as \"domain\",\n  coalesce(o1.name, o2.name, o3.name) as \"plan_owner\",\n  coalesce(o1.email, o2.email, o3.email) as \"plan_owner_email\",\n  coalesce(s1.admins, s2.admins, s3.admins) as \"plan_admins\"\nfrom users_identities i\n\njoin users u on u.id = i.user_id\nleft join subscriptions s1 on s1.owner_id = u.id and s1.active is true\nleft join users o1 on o1.id = s1.owner_id\nleft join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true\nleft join users o2 on o2.id = s2.owner_id\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\nleft join users o3 on o3.id = s3.owner_id\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"database\", \"schema\", \"table\", \"type\", \"name\", \"value\") VALUES (DEFAULT, $1, DEFAULT, $2, $3, $4)",
+        "params": [
+          "public",
+          "VIEW",
+          "user_view",
+          "select \n  u.id,\n  i.id as identity_id,\n  u.name,\n  i.account_type,\n  i.username,\n  u.currency,\n  u.stripe_id,\n  i.photo,\n  u.language,\n  u.email,\n  case when i.account_type = 'anonymous' and i.password is null then false else true end as \"can_delete_session\",\n  u.trial,\n  s1.id as \"own_subscriptions_id\",\n  s1.plan as \"own_plan\",\n  coalesce(s1.id, s2.id, s3.id) as \"subscriptions_id\",\n  coalesce(s1.active, s2.active, s3.active, false) as \"pro\",\n  coalesce(s1.plan, s2.plan, s3.plan) as \"plan\",\n  coalesce(s1.domain, s2.domain, s3.domain) as \"domain\",\n  coalesce(o1.name, o2.name, o3.name) as \"plan_owner\",\n  coalesce(o1.email, o2.email, o3.email) as \"plan_owner_email\",\n  coalesce(s1.admins, s2.admins, s3.admins) as \"plan_admins\"\nfrom users_identities i\n\njoin users u on u.id = i.user_id\nleft join subscriptions s1 on s1.owner_id = u.id and s1.active is true\nleft join users o1 on o1.id = s1.owner_id\nleft join subscriptions s2 on lower(u.email) = any(lower(s2.members::text)::text[]) and s2.active is true\nleft join users o2 on o2.id = s2.owner_id\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\nleft join users o3 on o3.id = s3.owner_id"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "AddAdminsToUserView1669721743363",
+    "timestamp": 1669721743363,
+    "filename": "1669721743363-AddAdminsToUserView.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DELETE FROM \"typeorm_metadata\" WHERE \"type\" = $1 AND \"name\" = $2 AND \"schema\" = $3",
+        "params": [
+          "VIEW",
+          "user_view",
+          "public"
+        ]
+      },
+      {
+        "sql": "DROP VIEW \"user_view\"",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"user_view\" AS \n  select \n  u.id,\n  i.id as identity_id,\n  u.name,\n  i.account_type,\n  i.username,\n  u.currency,\n  u.stripe_id,\n  i.photo,\n  u.language,\n  u.email,\n  case when i.account_type = 'anonymous' and i.password is null then false else true end as \"can_delete_session\",\n  u.trial,\n  s1.id as \"own_subscriptions_id\",\n  s1.plan as \"own_plan\",\n  coalesce(s1.id, s2.id, s3.id) as \"subscriptions_id\",\n  coalesce(s1.active, s2.active, s3.active, s4.active, false) as \"pro\",\n  coalesce(s1.plan, s2.plan, s3.plan, s4.plan) as \"plan\",\n  coalesce(s1.domain, s2.domain, s3.domain, s4.domain) as \"domain\",\n  coalesce(o1.name, o2.name, o3.name, o4.name) as \"plan_owner\",\n  coalesce(o1.email, o2.email, o3.email, o4.email) as \"plan_owner_email\",\n  coalesce(s1.admins, s2.admins, s3.admins, s4.admins) as \"plan_admins\"\nfrom users_identities i\n\njoin users u on u.id = i.user_id\nleft join subscriptions s1 on s1.owner_id = u.id and s1.active is true\nleft join users o1 on o1.id = s1.owner_id\nleft join subscriptions s2 on s2.members @> ARRAY[u.email::text] and s2.active is true\nleft join users o2 on o2.id = s2.owner_id\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\nleft join users o3 on o3.id = s3.owner_id\nleft join subscriptions s4 on s4.admins @> ARRAY[u.email::text] and s4.active is true\nleft join users o4 on o4.id = s4.owner_id\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"database\", \"schema\", \"table\", \"type\", \"name\", \"value\") VALUES (DEFAULT, $1, DEFAULT, $2, $3, $4)",
+        "params": [
+          "public",
+          "VIEW",
+          "user_view",
+          "select \n  u.id,\n  i.id as identity_id,\n  u.name,\n  i.account_type,\n  i.username,\n  u.currency,\n  u.stripe_id,\n  i.photo,\n  u.language,\n  u.email,\n  case when i.account_type = 'anonymous' and i.password is null then false else true end as \"can_delete_session\",\n  u.trial,\n  s1.id as \"own_subscriptions_id\",\n  s1.plan as \"own_plan\",\n  coalesce(s1.id, s2.id, s3.id) as \"subscriptions_id\",\n  coalesce(s1.active, s2.active, s3.active, s4.active, false) as \"pro\",\n  coalesce(s1.plan, s2.plan, s3.plan, s4.plan) as \"plan\",\n  coalesce(s1.domain, s2.domain, s3.domain, s4.domain) as \"domain\",\n  coalesce(o1.name, o2.name, o3.name, o4.name) as \"plan_owner\",\n  coalesce(o1.email, o2.email, o3.email, o4.email) as \"plan_owner_email\",\n  coalesce(s1.admins, s2.admins, s3.admins, s4.admins) as \"plan_admins\"\nfrom users_identities i\n\njoin users u on u.id = i.user_id\nleft join subscriptions s1 on s1.owner_id = u.id and s1.active is true\nleft join users o1 on o1.id = s1.owner_id\nleft join subscriptions s2 on s2.members @> ARRAY[u.email::text] and s2.active is true\nleft join users o2 on o2.id = s2.owner_id\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\nleft join users o3 on o3.id = s3.owner_id\nleft join subscriptions s4 on s4.admins @> ARRAY[u.email::text] and s4.active is true\nleft join users o4 on o4.id = s4.owner_id"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "AddAdminsToUserView21669722435110",
+    "timestamp": 1669722435110,
+    "filename": "1669722435110-AddAdminsToUserView2.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DELETE FROM \"typeorm_metadata\" WHERE \"type\" = $1 AND \"name\" = $2 AND \"schema\" = $3",
+        "params": [
+          "VIEW",
+          "user_view",
+          "public"
+        ]
+      },
+      {
+        "sql": "DROP VIEW \"user_view\"",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"user_view\" AS \n  select \n  u.id,\n  i.id as identity_id,\n  u.name,\n  i.account_type,\n  i.username,\n  u.currency,\n  u.stripe_id,\n  i.photo,\n  u.language,\n  u.email,\n  case when i.account_type = 'anonymous' and i.password is null then false else true end as \"can_delete_session\",\n  u.trial,\n  s1.id as \"own_subscriptions_id\",\n  s1.plan as \"own_plan\",\n  coalesce(s1.id, s2.id, s3.id) as \"subscriptions_id\",\n  coalesce(s1.active, s2.active, s3.active, false) as \"pro\", /* s4 should not be taken into account for Pro */\n  coalesce(s1.plan, s2.plan, s3.plan, s4.plan) as \"plan\",\n  coalesce(s1.domain, s2.domain, s3.domain, s4.domain) as \"domain\",\n  coalesce(o1.name, o2.name, o3.name, o4.name) as \"plan_owner\",\n  coalesce(o1.email, o2.email, o3.email, o4.email) as \"plan_owner_email\",\n  coalesce(s1.admins, s2.admins, s3.admins, s4.admins) as \"plan_admins\"\nfrom users_identities i\n\njoin users u on u.id = i.user_id\nleft join subscriptions s1 on s1.owner_id = u.id and s1.active is true\nleft join users o1 on o1.id = s1.owner_id\nleft join subscriptions s2 on s2.members @> ARRAY[u.email::text] and s2.active is true\nleft join users o2 on o2.id = s2.owner_id\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\nleft join users o3 on o3.id = s3.owner_id\nleft join subscriptions s4 on s4.admins @> ARRAY[u.email::text] and s4.active is true\nleft join users o4 on o4.id = s4.owner_id\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"database\", \"schema\", \"table\", \"type\", \"name\", \"value\") VALUES (DEFAULT, $1, DEFAULT, $2, $3, $4)",
+        "params": [
+          "public",
+          "VIEW",
+          "user_view",
+          "select \n  u.id,\n  i.id as identity_id,\n  u.name,\n  i.account_type,\n  i.username,\n  u.currency,\n  u.stripe_id,\n  i.photo,\n  u.language,\n  u.email,\n  case when i.account_type = 'anonymous' and i.password is null then false else true end as \"can_delete_session\",\n  u.trial,\n  s1.id as \"own_subscriptions_id\",\n  s1.plan as \"own_plan\",\n  coalesce(s1.id, s2.id, s3.id) as \"subscriptions_id\",\n  coalesce(s1.active, s2.active, s3.active, false) as \"pro\", /* s4 should not be taken into account for Pro */\n  coalesce(s1.plan, s2.plan, s3.plan, s4.plan) as \"plan\",\n  coalesce(s1.domain, s2.domain, s3.domain, s4.domain) as \"domain\",\n  coalesce(o1.name, o2.name, o3.name, o4.name) as \"plan_owner\",\n  coalesce(o1.email, o2.email, o3.email, o4.email) as \"plan_owner_email\",\n  coalesce(s1.admins, s2.admins, s3.admins, s4.admins) as \"plan_admins\"\nfrom users_identities i\n\njoin users u on u.id = i.user_id\nleft join subscriptions s1 on s1.owner_id = u.id and s1.active is true\nleft join users o1 on o1.id = s1.owner_id\nleft join subscriptions s2 on s2.members @> ARRAY[u.email::text] and s2.active is true\nleft join users o2 on o2.id = s2.owner_id\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\nleft join users o3 on o3.id = s3.owner_id\nleft join subscriptions s4 on s4.admins @> ARRAY[u.email::text] and s4.active is true\nleft join users o4 on o4.id = s4.owner_id"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "AllowCancelVote1674589758156",
+    "timestamp": 1674589758156,
+    "filename": "1674589758156-AllowCancelVote.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"templates\" ADD \"options_allow_cancel_vote\" boolean NOT NULL DEFAULT true",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"options_allow_cancel_vote\" boolean NOT NULL DEFAULT true",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "TimerOnSession1674905273870",
+    "timestamp": 1674905273870,
+    "filename": "1674905273870-TimerOnSession.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"timer\" TIMESTAMP WITH TIME ZONE",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "TimerOptions1674905786619",
+    "timestamp": 1674905786619,
+    "filename": "1674905786619-TimerOptions.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"templates\" ADD \"options_allow_timer\" boolean NOT NULL DEFAULT true",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" ADD \"options_timer_duration\" numeric NOT NULL DEFAULT '900'",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"options_allow_timer\" boolean NOT NULL DEFAULT true",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"options_timer_duration\" numeric NOT NULL DEFAULT '900'",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "LockControlsTimerEnd1675096520361",
+    "timestamp": 1675096520361,
+    "filename": "1675096520361-LockControlsTimerEnd.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"templates\" ADD \"options_readonly_on_timer_end\" boolean NOT NULL DEFAULT true",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"options_readonly_on_timer_end\" boolean NOT NULL DEFAULT true",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "ChangeDefaults1675515259530",
+    "timestamp": 1675515259530,
+    "filename": "1675515259530-ChangeDefaults.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"templates\" ALTER COLUMN \"options_allow_cancel_vote\" SET DEFAULT true",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" ALTER COLUMN \"options_allow_timer\" SET DEFAULT true",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ALTER COLUMN \"options_allow_cancel_vote\" SET DEFAULT true",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ALTER COLUMN \"options_allow_timer\" SET DEFAULT true",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "Demo1677668065305",
+    "timestamp": 1677668065305,
+    "filename": "1677668065305-Demo.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"demo\" boolean NOT NULL DEFAULT false",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "tracking1678985862753",
+    "timestamp": 1678985862753,
+    "filename": "1678985862753-tracking.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"users\" ADD \"tracking_campaign_id\" character varying",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users\" ADD \"tracking_creative_id\" character varying",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users\" ADD \"tracking_device\" character varying",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users\" ADD \"tracking_keyword\" character varying",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"users\" ADD \"tracking_gclid\" character varying",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "trackedAt1679043892889",
+    "timestamp": 1679043892889,
+    "filename": "1679043892889-tracked-at.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"users\" ADD \"tracking_tracked_at\" TIMESTAMP WITH TIME ZONE",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "AiMessages1679854010349",
+    "timestamp": 1679854010349,
+    "filename": "1679854010349-Ai-Messages.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "CREATE TABLE \"ai_chat_messages\" (\"id\" character varying NOT NULL, \"role\" character varying NOT NULL, \"content\" character varying NOT NULL, \"created\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), \"updated\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), \"chat_id\" character varying NOT NULL, CONSTRAINT \"PK_68e330d1b2a3c5368bf6d2f67cb\" PRIMARY KEY (\"id\"))",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_312864ee92fd941771769c43e1\" ON \"ai_chat_messages\" (\"chat_id\") ",
+        "params": []
+      },
+      {
+        "sql": "CREATE TABLE \"ai_chat\" (\"id\" character varying NOT NULL, \"created\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), \"updated\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), \"created_by_id\" character varying NOT NULL, CONSTRAINT \"PK_29ed612b3503cda55a5b05a1964\" PRIMARY KEY (\"id\"))",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_bb5673675b010b4b948b8b363d\" ON \"ai_chat\" (\"created_by_id\") ",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"ai_chat_messages\" ADD CONSTRAINT \"FK_312864ee92fd941771769c43e19\" FOREIGN KEY (\"chat_id\") REFERENCES \"ai_chat\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"ai_chat\" ADD CONSTRAINT \"FK_bb5673675b010b4b948b8b363d3\" FOREIGN KEY (\"created_by_id\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "AiChatCascade1680210996379",
+    "timestamp": 1680210996379,
+    "filename": "1680210996379-AiChatCascade.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"ai_chat_messages\" DROP CONSTRAINT \"FK_312864ee92fd941771769c43e19\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"ai_chat_messages\" ADD CONSTRAINT \"FK_312864ee92fd941771769c43e19\" FOREIGN KEY (\"chat_id\") REFERENCES \"ai_chat\"(\"id\") ON DELETE CASCADE ON UPDATE CASCADE",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "AddMembersToView1684682842078",
+    "timestamp": 1684682842078,
+    "filename": "1684682842078-AddMembersToView.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DELETE FROM \"typeorm_metadata\" WHERE \"type\" = $1 AND \"name\" = $2 AND \"schema\" = $3",
+        "params": [
+          "VIEW",
+          "user_view",
+          "public"
+        ]
+      },
+      {
+        "sql": "DROP VIEW \"user_view\"",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"user_view\" AS \nselect \n  u.id,\n  i.id as identity_id,\n  u.name,\n  i.account_type,\n  i.username,\n  u.currency,\n  u.stripe_id,\n  i.photo,\n  u.language,\n  u.email,\n  case when i.account_type = 'anonymous' and i.password is null then false else true end as \"can_delete_session\",\n  u.trial,\n  s1.id as \"own_subscriptions_id\",\n  s1.plan as \"own_plan\",\n  coalesce(s1.id, s2.id, s3.id) as \"subscriptions_id\",\n  coalesce(s1.active, s2.active, s3.active, false) as \"pro\", /* s4 should not be taken into account for Pro */\n  coalesce(s1.plan, s2.plan, s3.plan, s4.plan) as \"plan\",\n  coalesce(s1.domain, s2.domain, s3.domain, s4.domain) as \"domain\",\n  coalesce(o1.name, o2.name, o3.name, o4.name) as \"plan_owner\",\n  coalesce(o1.email, o2.email, o3.email, o4.email) as \"plan_owner_email\",\n  coalesce(s1.admins, s2.admins, s3.admins, s4.admins) as \"plan_admins\",\n  coalesce(s1.members, s2.members, s3.members, s4.members) as \"plan_members\"\nfrom users_identities i\n\njoin users u on u.id = i.user_id\nleft join subscriptions s1 on s1.owner_id = u.id and s1.active is true\nleft join users o1 on o1.id = s1.owner_id\nleft join subscriptions s2 on s2.members @> ARRAY[u.email::text] and s2.active is true\nleft join users o2 on o2.id = s2.owner_id\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\nleft join users o3 on o3.id = s3.owner_id\nleft join subscriptions s4 on s4.admins @> ARRAY[u.email::text] and s4.active is true\nleft join users o4 on o4.id = s4.owner_id\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"database\", \"schema\", \"table\", \"type\", \"name\", \"value\") VALUES (DEFAULT, $1, DEFAULT, $2, $3, $4)",
+        "params": [
+          "public",
+          "VIEW",
+          "user_view",
+          "select \n  u.id,\n  i.id as identity_id,\n  u.name,\n  i.account_type,\n  i.username,\n  u.currency,\n  u.stripe_id,\n  i.photo,\n  u.language,\n  u.email,\n  case when i.account_type = 'anonymous' and i.password is null then false else true end as \"can_delete_session\",\n  u.trial,\n  s1.id as \"own_subscriptions_id\",\n  s1.plan as \"own_plan\",\n  coalesce(s1.id, s2.id, s3.id) as \"subscriptions_id\",\n  coalesce(s1.active, s2.active, s3.active, false) as \"pro\", /* s4 should not be taken into account for Pro */\n  coalesce(s1.plan, s2.plan, s3.plan, s4.plan) as \"plan\",\n  coalesce(s1.domain, s2.domain, s3.domain, s4.domain) as \"domain\",\n  coalesce(o1.name, o2.name, o3.name, o4.name) as \"plan_owner\",\n  coalesce(o1.email, o2.email, o3.email, o4.email) as \"plan_owner_email\",\n  coalesce(s1.admins, s2.admins, s3.admins, s4.admins) as \"plan_admins\",\n  coalesce(s1.members, s2.members, s3.members, s4.members) as \"plan_members\"\nfrom users_identities i\n\njoin users u on u.id = i.user_id\nleft join subscriptions s1 on s1.owner_id = u.id and s1.active is true\nleft join users o1 on o1.id = s1.owner_id\nleft join subscriptions s2 on s2.members @> ARRAY[u.email::text] and s2.active is true\nleft join users o2 on o2.id = s2.owner_id\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\nleft join users o3 on o3.id = s3.owner_id\nleft join subscriptions s4 on s4.admins @> ARRAY[u.email::text] and s4.active is true\nleft join users o4 on o4.id = s4.owner_id"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "DontLeakSubId1684684514088",
+    "timestamp": 1684684514088,
+    "filename": "1684684514088-DontLeakSubId.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "DELETE FROM \"typeorm_metadata\" WHERE \"type\" = $1 AND \"name\" = $2 AND \"schema\" = $3",
+        "params": [
+          "VIEW",
+          "user_view",
+          "public"
+        ]
+      },
+      {
+        "sql": "DROP VIEW \"user_view\"",
+        "params": []
+      },
+      {
+        "sql": "CREATE VIEW \"user_view\" AS \nselect \n  u.id,\n  i.id as identity_id,\n  u.name,\n  i.account_type,\n  i.username,\n  u.currency,\n  u.stripe_id,\n  i.photo,\n  u.language,\n  u.email,\n  case when i.account_type = 'anonymous' and i.password is null then false else true end as \"can_delete_session\",\n  u.trial,\n  s1.id as \"own_subscriptions_id\",\n  s1.plan as \"own_plan\",\n  coalesce(s1.active, s2.active, s3.active, false) as \"pro\", /* s4 should not be taken into account for Pro */\n  coalesce(s1.plan, s2.plan, s3.plan, s4.plan) as \"plan\",\n  coalesce(s1.domain, s2.domain, s3.domain, s4.domain) as \"domain\",\n  coalesce(o1.name, o2.name, o3.name, o4.name) as \"plan_owner\",\n  coalesce(o1.email, o2.email, o3.email, o4.email) as \"plan_owner_email\",\n  coalesce(s1.admins, s2.admins, s3.admins, s4.admins) as \"plan_admins\",\n  coalesce(s1.members, s2.members, s3.members, s4.members) as \"plan_members\"\nfrom users_identities i\n\njoin users u on u.id = i.user_id\nleft join subscriptions s1 on s1.owner_id = u.id and s1.active is true\nleft join users o1 on o1.id = s1.owner_id\nleft join subscriptions s2 on s2.members @> ARRAY[u.email::text] and s2.active is true\nleft join users o2 on o2.id = s2.owner_id\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\nleft join users o3 on o3.id = s3.owner_id\nleft join subscriptions s4 on s4.admins @> ARRAY[u.email::text] and s4.active is true\nleft join users o4 on o4.id = s4.owner_id\n  ",
+        "params": []
+      },
+      {
+        "sql": "INSERT INTO \"typeorm_metadata\"(\"database\", \"schema\", \"table\", \"type\", \"name\", \"value\") VALUES (DEFAULT, $1, DEFAULT, $2, $3, $4)",
+        "params": [
+          "public",
+          "VIEW",
+          "user_view",
+          "select \n  u.id,\n  i.id as identity_id,\n  u.name,\n  i.account_type,\n  i.username,\n  u.currency,\n  u.stripe_id,\n  i.photo,\n  u.language,\n  u.email,\n  case when i.account_type = 'anonymous' and i.password is null then false else true end as \"can_delete_session\",\n  u.trial,\n  s1.id as \"own_subscriptions_id\",\n  s1.plan as \"own_plan\",\n  coalesce(s1.active, s2.active, s3.active, false) as \"pro\", /* s4 should not be taken into account for Pro */\n  coalesce(s1.plan, s2.plan, s3.plan, s4.plan) as \"plan\",\n  coalesce(s1.domain, s2.domain, s3.domain, s4.domain) as \"domain\",\n  coalesce(o1.name, o2.name, o3.name, o4.name) as \"plan_owner\",\n  coalesce(o1.email, o2.email, o3.email, o4.email) as \"plan_owner_email\",\n  coalesce(s1.admins, s2.admins, s3.admins, s4.admins) as \"plan_admins\",\n  coalesce(s1.members, s2.members, s3.members, s4.members) as \"plan_members\"\nfrom users_identities i\n\njoin users u on u.id = i.user_id\nleft join subscriptions s1 on s1.owner_id = u.id and s1.active is true\nleft join users o1 on o1.id = s1.owner_id\nleft join subscriptions s2 on s2.members @> ARRAY[u.email::text] and s2.active is true\nleft join users o2 on o2.id = s2.owner_id\nleft join subscriptions s3 on s3.domain = split_part(u.email, '@', 2) and s3.active is true\nleft join users o3 on o3.id = s3.owner_id\nleft join subscriptions s4 on s4.admins @> ARRAY[u.email::text] and s4.active is true\nleft join users o4 on o4.id = s4.owner_id"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "MoreOptions1689628225524",
+    "timestamp": 1689628225524,
+    "filename": "1689628225524-MoreOptions.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"templates\" ADD \"options_restrict_title_edit_to_owner\" boolean NOT NULL DEFAULT false",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" ADD \"options_restrict_reordering_to_owner\" boolean NOT NULL DEFAULT false",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" ADD \"options_restrict_grouping_to_owner\" boolean NOT NULL DEFAULT false",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"options_restrict_title_edit_to_owner\" boolean NOT NULL DEFAULT false",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"options_restrict_reordering_to_owner\" boolean NOT NULL DEFAULT false",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"options_restrict_grouping_to_owner\" boolean NOT NULL DEFAULT false",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "Moderator1689787853666",
+    "timestamp": 1689787853666,
+    "filename": "1689787853666-Moderator.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"moderator_id\" character varying",
+        "params": []
+      },
+      {
+        "sql": "CREATE INDEX \"IDX_7127e358f4f0bf8686d77af14c\" ON \"sessions\" (\"moderator_id\") ",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD CONSTRAINT \"FK_7127e358f4f0bf8686d77af14cd\" FOREIGN KEY (\"moderator_id\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "UPDATE \"sessions\" SET \"moderator_id\" = \"created_by_id\"",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "ModeratorNonNull1689787951867",
+    "timestamp": 1689787951867,
+    "filename": "1689787951867-ModeratorNonNull.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"sessions\" DROP CONSTRAINT \"FK_1ccf045da14e5350b26ee882592\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ALTER COLUMN \"created_by_id\" DROP NOT NULL",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD CONSTRAINT \"FK_1ccf045da14e5350b26ee882592\" FOREIGN KEY (\"created_by_id\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "RenameModerator1695539888278",
+    "timestamp": 1695539888278,
+    "filename": "1695539888278-RenameModerator.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"templates\" ADD \"options_restrict_title_edit_to_moderator\" boolean NOT NULL DEFAULT false",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" ADD \"options_restrict_reordering_to_moderator\" boolean NOT NULL DEFAULT false",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" ADD \"options_restrict_grouping_to_moderator\" boolean NOT NULL DEFAULT false",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"options_restrict_title_edit_to_moderator\" boolean NOT NULL DEFAULT false",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"options_restrict_reordering_to_moderator\" boolean NOT NULL DEFAULT false",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"options_restrict_grouping_to_moderator\" boolean NOT NULL DEFAULT false",
+        "params": []
+      },
+      {
+        "sql": "UPDATE \"templates\" SET \n            options_restrict_title_edit_to_moderator = options_restrict_title_edit_to_owner,\n            options_restrict_reordering_to_moderator = options_restrict_reordering_to_owner,\n            options_restrict_grouping_to_moderator = options_restrict_grouping_to_owner\n        ",
+        "params": []
+      },
+      {
+        "sql": "UPDATE \"sessions\" SET \n            options_restrict_title_edit_to_moderator = options_restrict_title_edit_to_owner,\n            options_restrict_reordering_to_moderator = options_restrict_reordering_to_owner,\n            options_restrict_grouping_to_moderator = options_restrict_grouping_to_owner\n        ",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" DROP COLUMN \"options_restrict_title_edit_to_owner\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" DROP COLUMN \"options_restrict_reordering_to_owner\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" DROP COLUMN \"options_restrict_grouping_to_owner\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" DROP COLUMN \"options_restrict_title_edit_to_owner\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" DROP COLUMN \"options_restrict_reordering_to_owner\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" DROP COLUMN \"options_restrict_grouping_to_owner\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" DROP CONSTRAINT \"FK_1ccf045da14e5350b26ee882592\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ALTER COLUMN \"created_by_id\" SET NOT NULL",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD CONSTRAINT \"FK_1ccf045da14e5350b26ee882592\" FOREIGN KEY (\"created_by_id\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "ModeratorNonNull1695540515122",
+    "timestamp": 1695540515122,
+    "filename": "1695540515122-ModeratorNonNull.ts",
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "ALTER TABLE \"sessions\" DROP CONSTRAINT \"FK_7127e358f4f0bf8686d77af14cd\"",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ALTER COLUMN \"moderator_id\" SET NOT NULL",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD CONSTRAINT \"FK_7127e358f4f0bf8686d77af14cd\" FOREIGN KEY (\"moderator_id\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      }
+    ]
+  }
+]

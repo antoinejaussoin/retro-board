@@ -1,0 +1,45 @@
+[package]
+name = "retrospected-server"
+description = "Retrospected HTTP and Socket.IO backend"
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+version.workspace = true
+
+[[bin]]
+name = "retrospected-server"
+path = "src/main.rs"
+
+[dependencies]
+retrospected-migrations = { path = "../migrations" }
+aes = "0.8"
+axum = { version = "0.8", features = ["macros"] }
+base64 = "0.22"
+bcrypt = "0.17"
+cbc = "0.1"
+cipher = { version = "0.4.4", features = ["alloc", "block-padding"] }
+chrono.workspace = true
+cookie = "0.18"
+hmac = "0.12"
+hex = "0.4"
+md-5 = "0.10"
+rand = "0.8"
+redis = { version = "0.27", features = ["tokio-comp", "connection-manager"] }
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+serde.workspace = true
+serde_json.workspace = true
+serde_urlencoded = "0.7"
+sha1 = "0.10"
+sha2 = "0.10"
+socketioxide = { version = "0.17", features = ["extensions", "state"] }
+sqlx.workspace = true
+thiserror.workspace = true
+tokio.workspace = true
+tower-http = { version = "0.6", features = ["trace"] }
+tracing.workspace = true
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+urlencoding = "2"
+uuid.workspace = true
+
+[lints]
+workspace = true

@@ -1,22 +1,20 @@
-FROM node:26.13.0-alpine
+FROM rust:1.99.1-bookworm AS build
 
 WORKDIR /usr/src/backend
+COPY . .
+RUN cargo build --release --locked -p retrospected-server
 
-ENV NODE_ENV=production
+FROM debian:bookworm-slim
 
-RUN apk update
-RUN apk add curl
-RUN npm install -g yarn@1.22.22
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends curl ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
-COPY ./yarn.lock ./
-COPY ./package.json ./
+COPY --from=build /usr/src/backend/target/release/retrospected-server /usr/local/bin/retrospected-server
 
-RUN yarn --network-timeout 1000000 install
+ENV BACKEND_PORT=3201
+EXPOSE 3201
 
-COPY ./ ./
-
-RUN yarn build
-RUN rm -rf ./src
-
-EXPOSE ${BACKEND_PORT}
-CMD [ "yarn", "backend-production" ]
+# Migrations run inside the binary before it listens, matching the previous
+# `yarn backend-production` entrypoint.
+CMD ["retrospected-server"]
