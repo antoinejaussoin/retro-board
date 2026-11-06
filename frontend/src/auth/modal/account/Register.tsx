@@ -5,7 +5,7 @@ import { useLanguage } from '../../../translations';
 import Wrapper from './../Wrapper';
 import Input from '../../../components/Input';
 import { Person, Email, VpnKey } from '@mui/icons-material';
-import { register } from '../../../api';
+import { me, register, updateLanguage } from '../../../api';
 import useBackendCapabilities from 'global/useBackendCapabilities';
 import { useTranslation } from 'react-i18next';
 import { validate } from 'email/validate';
@@ -57,7 +57,14 @@ const Register = ({ onClose, onCancel }: RegisterProps) => {
       trackEvent('register/password');
       setIsSuccessful(true);
       if (response.loggedIn) {
-        setUser(response.user);
+        // Match anonymous login: read the session user back before updating
+        // the cache. Setting the register payload directly leaves the suspense
+        // user query pending, so the home page stays on its loading spinner.
+        let currentUser = (await me()) ?? response.user;
+        if (currentUser?.language == null) {
+          currentUser = await updateLanguage(language.locale);
+        }
+        setUser(currentUser);
         onClose();
       }
     }

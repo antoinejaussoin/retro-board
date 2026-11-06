@@ -9,6 +9,10 @@ if (useSentry) {
 	Sentry.init({
 		dsn: process.env.SENTRY_URL,
 		release: `backend@${version}`,
+		// The default loader wraps every ESM import. OpenAI resolves
+		// `openai/_shims/auto/runtime` through its own package name, and that
+		// wrapper makes the shim registry initialize twice and crash on boot.
+		registerEsmLoaderHooks: { onlyIncludeInstrumentedModules: true },
 	});	
 } else {
 	console.log('Sentry is disabled', version);
