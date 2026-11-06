@@ -17,10 +17,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 26.13.0
-      - run: yarn
-      - run: yarn ci-test
-      - run: yarn ci-lint
-      - run: yarn build
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - run: npm run ci-test
+      - run: npm run ci-lint
+      - run: npm run build
   test-backend:
     runs-on: ubuntu-latest
     permissions:
@@ -78,9 +80,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 26.13.0
-      - run: yarn
-      - run: yarn ci-lint
-      - run: yarn build
+          cache: npm
+          cache-dependency-path: marketing/package-lock.json
+      - run: npm ci
+      - run: npm run ci-lint
+      - run: npm run build
   test-docs:
     runs-on: ubuntu-latest
     defaults:
@@ -91,6 +95,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 26.13.0
-      - run: yarn
-      - run: yarn typecheck
-      - run: yarn build
+          cache: npm
+          cache-dependency-path: docs/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
