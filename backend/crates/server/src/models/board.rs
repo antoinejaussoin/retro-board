@@ -2,7 +2,7 @@ use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
 use super::user::User;
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize, ts_rs::TS)]
 #[serde(rename_all = "camelCase")]
 pub struct SessionOptions {
     pub max_up_votes: Option<f64>,
@@ -52,7 +52,7 @@ impl Default for SessionOptions {
     }
 }
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize, ts_rs::TS)]
 #[serde(rename_all = "camelCase")]
 pub struct ColumnDefinition {
     pub id: String,
@@ -64,7 +64,7 @@ pub struct ColumnDefinition {
     pub icon: Option<String>,
 }
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize, ts_rs::TS)]
 #[serde(rename_all = "camelCase")]
 pub struct VoteExtract {
     pub id: String,
@@ -74,7 +74,7 @@ pub struct VoteExtract {
     pub kind: String,
 }
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize, ts_rs::TS)]
 #[serde(rename_all = "camelCase")]
 pub struct PostGroup {
     pub id: String,
@@ -85,7 +85,7 @@ pub struct PostGroup {
     pub user: User,
 }
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize, ts_rs::TS)]
 #[serde(rename_all = "camelCase")]
 pub struct Post {
     pub id: String,
@@ -99,7 +99,7 @@ pub struct Post {
     pub votes: Vec<VoteExtract>,
 }
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize, ts_rs::TS)]
 #[serde(rename_all = "camelCase")]
 pub struct Message {
     pub id: String,
@@ -108,8 +108,9 @@ pub struct Message {
     pub created: DateTime<Utc>,
 }
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize, ts_rs::TS)]
 #[serde(rename_all = "camelCase")]
+#[ts(rename = "Session")]
 pub struct Board {
     pub id: String,
     pub name: Option<String>,
@@ -127,7 +128,7 @@ pub struct Board {
     pub demo: bool,
 }
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize, ts_rs::TS)]
 #[serde(rename_all = "camelCase")]
 pub struct Participant {
     pub id: String,
@@ -137,7 +138,7 @@ pub struct Participant {
     pub online: bool,
 }
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize, ts_rs::TS)]
 #[serde(rename_all = "camelCase")]
 pub struct SessionMetadata {
     pub id: String,

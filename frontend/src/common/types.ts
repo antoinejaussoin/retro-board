@@ -1,4 +1,4 @@
-export type SessionSettings = Partial<AllSessionSettings>;
+import type { ColumnDefinition, SessionOptions, User } from './generated';
 
 export interface AllSessionSettings {
   name: string | null;
@@ -6,102 +6,15 @@ export interface AllSessionSettings {
   options: SessionOptions;
   columns: ColumnDefinition[];
   locked: boolean;
-  timer: Date | null;
+  timer: string | null;
 }
 
-export interface Session extends AllSessionSettings, PostContainer, Entity {
-  posts: Post[];
-  groups: PostGroup[];
-  messages: Message[];
-  encrypted: string | null;
-  createdBy: User;
-  ready: string[];
-  demo: boolean;
-}
-
-export interface SessionMetadata extends Entity {
-  name: string | null;
-  participants: User[];
-  numberOfPosts: number;
-  numberOfVotes: number;
-  numberOfActions: number;
-  created: Date;
-  createdBy: User;
-  canBeDeleted: boolean;
-  encrypted: string | null;
-  locked: boolean;
-  lockedForUser: boolean;
-}
-
-export interface Message extends Entity {
-  content: string;
-  user: User;
-  created: Date;
-}
-
-export interface SessionTemplate extends Entity {
+export interface SessionTemplate {
+  id: string;
   name: string;
   columns: ColumnDefinition[];
   options: SessionOptions;
   createdBy: User;
-}
-
-export interface ColumnDefinition extends Entity {
-  type: ColumnDefinitionType;
-  index: number;
-  label: string;
-  color: string;
-  icon: string | null;
-}
-
-export interface SessionOptions {
-  maxUpVotes: number | null;
-  maxDownVotes: number | null;
-  maxPosts: number | null;
-  allowActions: boolean;
-  allowSelfVoting: boolean;
-  allowMultipleVotes: boolean;
-  allowAuthorVisible: boolean;
-  allowGiphy: boolean;
-  allowGrouping: boolean;
-  allowReordering: boolean;
-  allowCancelVote: boolean;
-  restrictTitleEditToModerator: boolean;
-  restrictReorderingToModerator: boolean;
-  restrictGroupingToModerator: boolean;
-  blurCards: boolean;
-  newPostsFirst: boolean;
-  allowTimer: boolean;
-  timerDuration: number;
-  readonlyOnTimerEnd: boolean;
-}
-
-export interface Entity {
-  id: string;
-}
-
-export interface Rankable {
-  rank: string;
-}
-
-export interface PostContainer extends Entity {
-  posts: Post[];
-}
-
-export interface Post extends Rankable, Entity {
-  column: number;
-  content: string;
-  action: string | null;
-  giphy: string | null;
-  user: User;
-  group: PostGroup | null;
-  votes: VoteExtract[];
-}
-
-export interface PostGroup extends PostContainer, Rankable, Entity {
-  label: string;
-  column: number;
-  user: User;
 }
 
 export type ProStatus = 'valid' | 'payment_issue' | 'pending';
@@ -125,20 +38,11 @@ export interface Product {
   };
 }
 
-export interface User extends Entity {
-  name: string;
-  photo: string | null;
-  email: string | null;
-}
-
-export interface UserIdentity extends Entity {
+export interface UserIdentity {
+  id: string;
   username: string | null;
   accountType: AccountType;
   photo: string | null;
-}
-
-export interface Participant extends User {
-  online: boolean;
 }
 
 export interface FullUser extends User {
@@ -178,18 +82,30 @@ export type AccountType =
   | 'okta'
   | 'password';
 
-export interface Vote extends Entity {
+export interface Vote {
+  id: string;
   user: User;
   type: VoteType;
 }
 
-export interface VoteExtract extends Entity {
-  type: VoteType;
-  userName: string;
-  userId: string;
-}
-
 export type VoteType = 'like' | 'dislike';
+
+export type WsErrorType =
+  | 'cannot_save_post'
+  | 'cannot_save_group'
+  | 'cannot_get_session'
+  | 'cannot_register_vote'
+  | 'cannot_edit_post'
+  | 'cannot_edit_group'
+  | 'cannot_save_options'
+  | 'cannot_save_columns'
+  | 'cannot_delete_post'
+  | 'cannot_delete_group'
+  | 'cannot_rename_session'
+  | 'cannot_record_chat_message'
+  | 'cannot_cancel_votes'
+  | 'unknown_error'
+  | 'action_unauthorised';
 
 export type AdminStats = {
   clients: number;

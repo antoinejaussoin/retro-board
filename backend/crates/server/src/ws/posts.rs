@@ -1,4 +1,4 @@
-use serde_json::{json, Value};
+use serde_json::Value;
 use socketioxide::adapter::Adapter;
 use socketioxide::extract::SocketRef;
 use uuid::Uuid;
@@ -8,7 +8,10 @@ use super::{
     RECEIVE_LIKE, RECEIVE_POST,
 };
 use crate::db::{self};
-use crate::models::{DeletePostPayload, IncomingPost, LikePayload, PostUpdate};
+use crate::models::{
+    DeletePostPayload, IncomingPost, LikePayload, PostUpdate, ReceiveCancelVotesPayload,
+    ReceiveLikePayload,
+};
 use crate::state::AppState;
 
 pub(super) fn add_post<A: Adapter>(
@@ -141,7 +144,10 @@ pub(super) fn like_post<A: Adapter>(
                     &socket,
                     &session_id,
                     RECEIVE_LIKE,
-                    &json!({ "postId": body.post_id, "vote": vote }),
+                    &ReceiveLikePayload {
+                        post_id: body.post_id,
+                        vote,
+                    },
                 )
                 .await
             }
@@ -175,7 +181,10 @@ pub(super) fn cancel_votes<A: Adapter>(
             &socket,
             &session_id,
             RECEIVE_CANCEL_VOTES,
-            &json!({ "postId": body.post_id, "userId": user_id }),
+            &ReceiveCancelVotesPayload {
+                post_id: body.post_id,
+                user_id,
+            },
         )
         .await;
     })

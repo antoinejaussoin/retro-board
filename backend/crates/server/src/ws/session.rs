@@ -9,7 +9,7 @@ use super::{
     RECEIVE_TIMER_START, RECEIVE_TIMER_STOP, RECEIVE_UNAUTHORIZED, RECEIVE_USER_READY,
 };
 use crate::db::{self};
-use crate::models::{ChatIn, SettingsPayload};
+use crate::models::{ChatIn, SettingsPayload, TimerStartPayload, UserReadyPayload};
 use crate::state::AppState;
 
 pub(super) fn chat<A: Adapter>(
@@ -62,7 +62,7 @@ pub(super) fn start_timer<A: Adapter>(
                     &socket,
                     &session_id,
                     RECEIVE_TIMER_START,
-                    &json!({ "duration": duration }),
+                    &TimerStartPayload { duration },
                 )
                 .await
             }
@@ -151,11 +151,11 @@ pub(super) fn join<A: Adapter>(
         }
         if let Ok(Some(board)) = db::load_board(&state.db, &session_id).await {
             if let Some(timer) = board.timer {
-                let duration = (timer - chrono::Utc::now()).num_seconds();
+                let duration = (timer - chrono::Utc::now()).num_seconds() as f64;
                 emit_self(
                     &socket,
                     RECEIVE_TIMER_START,
-                    &json!({ "duration": duration }),
+                    &TimerStartPayload { duration },
                 );
             }
             emit_self(&socket, RECEIVE_BOARD, &board);
@@ -206,7 +206,11 @@ pub(super) fn ready<A: Adapter>(
             &socket,
             &session_id,
             RECEIVE_USER_READY,
-            &json!({ "userId": user_id, "name": name, "ready": ready }),
+            &UserReadyPayload {
+                user_id,
+                name,
+                ready,
+            },
         )
         .await;
     })

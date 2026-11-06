@@ -15,6 +15,10 @@ path = "src/main.rs"
 name = "retrospected-hardcode-licence"
 path = "src/bin/hardcode_licence.rs"
 
+[[bin]]
+name = "retrospected-export-types"
+path = "src/bin/export_types.rs"
+
 [dependencies]
 retrospected-migrations = { path = "../migrations" }
 aes = "0.8"
@@ -49,6 +53,7 @@ urlencoding = "2"
 uuid.workspace = true
 psl = "2.1.248"
 lettre = { version = "0.11.23", default-features = false, features = ["tokio1-rustls-tls", "builder", "smtp-transport"] }
+ts-rs = { version = "12.0.1", features = ["serde-compat", "chrono-impl"] }
 
 [lints]
 workspace = true
