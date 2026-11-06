@@ -1,13 +1,10 @@
-import { PropsWithChildren, useState } from 'react';
-import Alert from '@mui/material/Alert';
-import IconButton from '@mui/material/IconButton';
-import Collapse from '@mui/material/Collapse';
-import CloseIcon from '@mui/icons-material/Close';
-import { AlertTitle } from '@mui/material';
+import { X } from 'lucide-react';
+import { useState, type PropsWithChildren } from 'react';
+import { Alert, type AlertSeverity } from 'ui/alert';
 
 interface TransitionAlertProps {
   title?: string;
-  severity?: 'success' | 'info' | 'warning' | 'error';
+  severity?: AlertSeverity;
 }
 
 export default function TransitionAlert({
@@ -16,27 +13,22 @@ export default function TransitionAlert({
   children,
 }: PropsWithChildren<TransitionAlertProps>) {
   const [open, setOpen] = useState(true);
-
+  if (!open) {
+    return null;
+  }
   return (
-    <Collapse in={open}>
-      <Alert
-        severity={severity}
-        action={
-          <IconButton
-            aria-label="close"
-            color="inherit"
-            size="small"
-            onClick={() => {
-              setOpen(false);
-            }}
-          >
-            <CloseIcon fontSize="inherit" />
-          </IconButton>
-        }
-      >
-        {title ? <AlertTitle>{title}</AlertTitle> : null}
-        {children}
-      </Alert>
-    </Collapse>
+    <Alert severity={severity} title={title}>
+      <div className="flex items-start justify-between gap-3">
+        <div>{children}</div>
+        <button
+          type="button"
+          aria-label="close"
+          onClick={() => setOpen(false)}
+          className="rounded-full p-1 hover:bg-ink/5"
+        >
+          <X className="size-4" />
+        </button>
+      </div>
+    </Alert>
   );
 }

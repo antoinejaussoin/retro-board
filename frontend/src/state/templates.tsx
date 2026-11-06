@@ -5,7 +5,7 @@ import {
   TranslationFunction,
 } from './types';
 import { getTemplateColumnByType } from './columns';
-import { Bookmark } from '@mui/icons-material';
+import { Bookmark } from 'lucide-react';
 
 export function getAllTemplates(t: TranslationFunction): TemplateDefinition[] {
   return [

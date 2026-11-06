@@ -1,23 +1,19 @@
-import BaseLink, { LinkTypeMap } from '@mui/material/Link';
-import { colors } from '@mui/material';
-import styled from '@emotion/styled';
-import { DefaultComponentProps } from '@mui/material/OverridableComponent';
+import type { AnchorHTMLAttributes, ReactNode } from 'react';
+import { cn } from 'ui/cn';
 
-interface LinkProps extends DefaultComponentProps<LinkTypeMap<{}, 'a'>> {}
-
-function Link({ ...props }: LinkProps) {
+function Link({
+  className,
+  children,
+  ...props
+}: AnchorHTMLAttributes<HTMLAnchorElement> & { children?: ReactNode }) {
   return (
-    <Container>
-      <BaseLink {...props} />
-    </Container>
+    <a
+      className={cn('cursor-pointer text-primary-700 hover:underline', className)}
+      {...props}
+    >
+      {children}
+    </a>
   );
 }
-
-const Container = styled.span`
-  cursor: pointer;
-  a {
-    color: ${colors.deepPurple[500]} !important;
-  }
-`;
 
 export default Link;

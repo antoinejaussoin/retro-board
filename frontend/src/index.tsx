@@ -1,4 +1,6 @@
+import '@fontsource-variable/plus-jakarta-sans';
 import { createRoot } from 'react-dom/client';
+import './index.css';
 import './translations/i18n';
 import App from './App';
 import { initialiseAnalytics, initialiseSentry } from './track';

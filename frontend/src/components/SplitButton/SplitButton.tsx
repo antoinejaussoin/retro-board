@@ -1,12 +1,8 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
-import Grow from '@mui/material/Grow';
-import Paper from '@mui/material/Paper';
-import Popper from '@mui/material/Popper';
-import MenuList from '@mui/material/MenuList';
+import { ChevronDown } from 'lucide-react';
+import { useState } from 'react';
+import { Button } from 'ui/button';
+import { Menu, MenuContent, MenuTrigger } from 'ui/menu';
+import { cn } from 'ui/cn';
 
 type SplitButtonProps = {
   label?: string;
@@ -28,82 +24,42 @@ export default function SplitButton({
   onClick,
   ...props
 }: SplitButtonProps) {
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef<HTMLDivElement>(null);
-
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
-
-  const handleClose = (event: Event) => {
-    if (
-      anchorRef.current &&
-      anchorRef.current.contains(event.target as HTMLElement)
-    ) {
-      return;
-    }
-
-    setOpen(false);
-  };
-
+  const [open, setOpen] = useState(false);
   return (
-    <>
-      <ButtonGroup
-        variant="contained"
-        color={secondary ? 'secondary' : 'primary'}
-        size={large ? 'large' : 'medium'}
-        ref={anchorRef}
-        aria-label={label}
+    <div className="inline-flex">
+      <Button
         disabled={disabled}
+        onClick={onClick}
+        variant={secondary ? 'secondary' : 'primary'}
+        size={large ? 'lg' : 'md'}
+        className="rounded-r-none"
+        {...props}
       >
-        <Button
-          disabled={disabled}
-          startIcon={icon}
-          onClick={onClick}
-          {...props}
-        >
-          {label}
-        </Button>
-        <Button
-          disabled={disabled}
-          size="small"
-          aria-controls={open ? 'split-button-menu' : undefined}
-          aria-expanded={open ? 'true' : undefined}
-          aria-label="select other options"
-          aria-haspopup="menu"
-          onClick={handleToggle}
-        >
-          <ArrowDropDownIcon />
-        </Button>
-      </ButtonGroup>
-      <Popper
-        sx={{
-          zIndex: 1,
-        }}
-        open={open}
-        anchorEl={anchorRef.current}
-        role={undefined}
-        transition
-        disablePortal
-      >
-        {({ TransitionProps, placement }) => (
-          <Grow
-            {...TransitionProps}
-            style={{
-              transformOrigin:
-                placement === 'bottom' ? 'center top' : 'center bottom',
-            }}
+        {icon}
+        {label}
+      </Button>
+      <Menu>
+        <MenuTrigger>
+          <button
+            type="button"
+            disabled={disabled}
+            aria-label="select other options"
+            aria-expanded={open}
+            aria-haspopup="menu"
+            onClick={() => setOpen((value) => !value)}
+            className={cn(
+              'inline-flex items-center rounded-r-full border-l border-white/20 px-2 text-white disabled:opacity-40',
+              secondary ? 'bg-secondary-600 hover:bg-secondary-700' : 'bg-primary-700 hover:bg-primary-800',
+              large ? 'h-12' : 'h-10',
+            )}
           >
-            <Paper>
-              <ClickAwayListener onClickAway={handleClose}>
-                <MenuList id="split-button-menu" autoFocusItem>
-                  {children}
-                </MenuList>
-              </ClickAwayListener>
-            </Paper>
-          </Grow>
-        )}
-      </Popper>
-    </>
+            <ChevronDown className="size-4" />
+          </button>
+        </MenuTrigger>
+        <MenuContent align="start" className="min-w-64">
+          {children}
+        </MenuContent>
+      </Menu>
+    </div>
   );
 }

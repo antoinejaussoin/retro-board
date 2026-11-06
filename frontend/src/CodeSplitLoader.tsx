@@ -1,17 +1,9 @@
-import CircularProgress from '@mui/material/CircularProgress';
-import styled from '@emotion/styled';
+import { Spinner } from 'ui/spinner';
 
 export function CodeSplitLoader() {
   return (
-    <Center>
-      <CircularProgress />
-    </Center>
+    <div className="flex items-center justify-center py-16">
+      <Spinner />
+    </div>
   );
 }
-
-const Center = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-`;

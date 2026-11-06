@@ -21,7 +21,7 @@ function BoardSection({ options, owner, onChange }: BoardSectionProps) {
   useEffect(() => {
     async function load() {
       const nextUsers = await fetchUsers();
-      setUsers(nextUsers);
+      setUsers(Array.isArray(nextUsers) ? nextUsers : []);
     }
     load();
   }, []);

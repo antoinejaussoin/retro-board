@@ -1,15 +1,15 @@
 import { useCallback, useState, useEffect, useRef } from 'react';
+import type { CSSProperties } from 'react';
 import {
   GithubLoginButton,
   GoogleLoginButton,
   TwitterLoginButton,
   MicrosoftLoginButton,
 } from 'react-social-login-buttons';
-import styled from '@emotion/styled';
-import io, { Socket } from 'socket.io-client';
+import io, { type Socket } from 'socket.io-client';
 import { useLanguage } from '../../translations';
 import { me, updateLanguage } from '../../api';
-import { FullUser } from 'common';
+import type { FullUser } from 'common';
 import Wrapper from './Wrapper';
 import SlackLoginButton from './social/SlackLoginButton';
 import OktaLoginButton from './social/OktaLoginButton';
@@ -17,6 +17,17 @@ import useOAuthAvailabilities from '../../global/useOAuthAvailabilities';
 import { useTranslation } from 'react-i18next';
 
 const API_URL = '/api/auth';
+
+const socialButtonStyle: CSSProperties = {
+  border: '1px solid #e6dfd4',
+  borderRadius: 14,
+  boxShadow: 'none',
+  fontFamily: 'inherit',
+  fontSize: 14,
+  fontWeight: 500,
+  margin: 0,
+  width: '100%',
+};
 
 interface SocialAuthProps {
   onClose: () => void;
@@ -42,22 +53,22 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
         '',
         `toolbar=no, location=no, directories=no, status=no, menubar=no, 
       scrollbars=no, resizable=no, copyhistory=no, width=${width}, 
-      height=${height}, top=${top}, left=${left}`
+      height=${height}, top=${top}, left=${left}`,
       );
     },
-    [socket]
+    [socket],
   );
   const handleGitHub = useCallback(() => handleOAuth('github'), [handleOAuth]);
   const handleSlack = useCallback(() => handleOAuth('slack'), [handleOAuth]);
   const handleOkta = useCallback(() => handleOAuth('okta'), [handleOAuth]);
   const handleMicrosoft = useCallback(
     () => handleOAuth('microsoft'),
-    [handleOAuth]
+    [handleOAuth],
   );
   const handleGoogle = useCallback(() => handleOAuth('google'), [handleOAuth]);
   const handleTwitter = useCallback(
     () => handleOAuth('twitter'),
-    [handleOAuth]
+    [handleOAuth],
   );
 
   useEffect(() => {
@@ -89,30 +100,58 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
       header={t('SocialMediaLogin.header')}
       help={t('SocialMediaLogin.info')}
     >
-      <AccountsButtons>
+      <div className="mt-6 flex flex-col gap-2.5">
         {details.microsoft && (
-          <MicrosoftLoginButton onClick={handleMicrosoft} text="Microsoft" />
+          <MicrosoftLoginButton
+            onClick={handleMicrosoft}
+            text="Microsoft"
+            size="42px"
+            style={socialButtonStyle}
+          />
         )}
         {details.google && (
-          <GoogleLoginButton onClick={handleGoogle} text="Google" />
+          <GoogleLoginButton
+            onClick={handleGoogle}
+            text="Google"
+            size="42px"
+            style={socialButtonStyle}
+          />
         )}
         {details.github && (
-          <GithubLoginButton onClick={handleGitHub} text="GitHub" />
+          <GithubLoginButton
+            onClick={handleGitHub}
+            text="GitHub"
+            size="42px"
+            style={socialButtonStyle}
+          />
         )}
         {details.slack && (
-          <SlackLoginButton onClick={handleSlack} text="Slack" />
+          <SlackLoginButton
+            onClick={handleSlack}
+            text="Slack"
+            size="42px"
+            style={socialButtonStyle}
+          />
         )}
         {details.twitter && (
-          <TwitterLoginButton onClick={handleTwitter} text="Twitter" />
+          <TwitterLoginButton
+            onClick={handleTwitter}
+            text="Twitter"
+            size="42px"
+            style={socialButtonStyle}
+          />
         )}
-        {details.okta && <OktaLoginButton onClick={handleOkta} text="Okta" />}
-      </AccountsButtons>
+        {details.okta && (
+          <OktaLoginButton
+            onClick={handleOkta}
+            text="Okta"
+            size="42px"
+            style={socialButtonStyle}
+          />
+        )}
+      </div>
     </Wrapper>
   );
 }
-
-const AccountsButtons = styled.div`
-  margin-top: 30px;
-`;
 
 export default SocialAuth;

@@ -1,6 +1,3 @@
-import styled from '@emotion/styled';
-import { colors } from '@mui/material';
-
 interface NoContentProps {
   title: string;
   subtitle?: string;
@@ -8,33 +5,13 @@ interface NoContentProps {
 
 const NoContent = ({ title, subtitle }: NoContentProps) => {
   return (
-    <Container>
-      <Title>{title}</Title>
-      <Subtitle>{subtitle}</Subtitle>
-    </Container>
+    <div className="my-12 flex w-full flex-col items-center justify-center px-6 text-center">
+      <h1 className="text-3xl font-light text-muted">{title}</h1>
+      {subtitle ? (
+        <h2 className="mt-2 text-base font-light text-muted">{subtitle}</h2>
+      ) : null}
+    </div>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin: 50px 0;
-`;
-
-const Title = styled.h1`
-  color: ${colors.grey[500]};
-  font-weight: 300;
-  padding: 0 40px;
-`;
-
-const Subtitle = styled.h2`
-  color: ${colors.grey[500]};
-  font-weight: 100;
-  font-size: 1em;
-  padding: 0 40px;
-`;
 
 export default NoContent;

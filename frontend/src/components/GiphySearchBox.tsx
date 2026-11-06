@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import styled from '@emotion/styled';
 
 const PAGE_SIZE = 20;
 
@@ -90,111 +89,61 @@ export default function GiphySearchBox({
   }, [fetchPage, debouncedQuery]);
 
   return (
-    <Wrapper>
-      <Search
+    <div className="w-[280px]">
+      <input
         value={query}
         placeholder="Search for GIFs"
         aria-label="Search for GIFs"
         onChange={(event) => setQuery(event.target.value)}
+        className="mb-2 box-border w-full rounded-xl border border-line bg-cream px-3 py-2 text-sm"
       />
-      <Results>
+      <div className="h-[300px] overflow-auto">
         {error ? (
-          <Message>Oops! Something went wrong. Please, try again.</Message>
+          <p className="my-3 text-center text-muted">
+            Oops! Something went wrong. Please, try again.
+          </p>
         ) : null}
         {!error && !loading && gifs.length === 0 ? (
-          <Message>No matches found.</Message>
+          <p className="my-3 text-center text-muted">No matches found.</p>
         ) : null}
-        {loading && gifs.length === 0 ? <Message>Loading...</Message> : null}
-        <Grid>
+        {loading && gifs.length === 0 ? (
+          <p className="my-3 text-center text-muted">Loading...</p>
+        ) : null}
+        <div className="grid grid-cols-2 gap-1">
           {gifs.map((gif) => {
             const src = gifPreviewUrl(gif);
             if (!src) return null;
             return (
-              <GifButton
+              <button
                 key={gif.id}
                 type="button"
                 onClick={() => onSelect({ id: gif.id })}
+                className="bg-paper p-0"
               >
-                <img src={src} alt={gif.title || 'GIF'} />
-              </GifButton>
+                <img src={src} alt={gif.title || 'GIF'} className="block w-full" />
+              </button>
             );
           })}
-        </Grid>
+        </div>
         {hasMore ? (
-          <More
+          <button
             type="button"
             onClick={() => void fetchPage(gifs.length, true, debouncedQuery)}
             disabled={loading}
+            className="mt-2 w-full py-2 text-sm"
           >
             {loading ? 'Loading...' : 'Load more'}
-          </More>
+          </button>
         ) : null}
-      </Results>
-      <Attribution href="https://giphy.com/" target="_blank" rel="noreferrer">
+      </div>
+      <a
+        href="https://giphy.com/"
+        target="_blank"
+        rel="noreferrer"
+        className="mt-2 block text-right text-xs text-muted"
+      >
         Powered by GIPHY
-      </Attribution>
-    </Wrapper>
+      </a>
+    </div>
   );
 }
-
-const Wrapper = styled.div`
-  width: 280px;
-`;
-
-const Search = styled.input`
-  box-sizing: border-box;
-  width: 100%;
-  margin-bottom: 8px;
-  padding: 8px 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font: inherit;
-`;
-
-const Results = styled.div`
-  height: 300px;
-  overflow: auto;
-`;
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5px;
-`;
-
-const GifButton = styled.button`
-  padding: 0;
-  border: 0;
-  background: #eee;
-  cursor: pointer;
-
-  img {
-    display: block;
-    width: 100%;
-  }
-`;
-
-const Message = styled.p`
-  margin: 12px 0;
-  color: #666;
-  text-align: center;
-`;
-
-const More = styled.button`
-  display: block;
-  width: 100%;
-  margin-top: 8px;
-  padding: 8px;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-  font: inherit;
-`;
-
-const Attribution = styled.a`
-  display: block;
-  margin-top: 8px;
-  color: #666;
-  font-size: 12px;
-  text-align: right;
-`;

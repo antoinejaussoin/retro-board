@@ -1,11 +1,10 @@
-import styled from '@emotion/styled';
 import { HelpButton } from 'components/HelpButton';
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren, ReactNode } from 'react';
 
 interface WrapperProps {
-  header?: React.ReactNode;
-  actions?: React.ReactNode;
-  help?: React.ReactNode;
+  header?: ReactNode;
+  actions?: ReactNode;
+  help?: ReactNode;
 }
 
 export default function Wrapper({
@@ -15,37 +14,23 @@ export default function Wrapper({
   children,
 }: PropsWithChildren<WrapperProps>) {
   return (
-    <Container>
-      <TitleContainer>
-        <Title>{header}</Title>
+    <div>
+      <div className="mt-1 mb-5 flex items-center gap-2 pr-8">
+        <h2 className="min-w-0 flex-1 text-2xl font-medium tracking-tight text-ink">
+          {header}
+        </h2>
         {help ? (
-          <Help>
-            <HelpButton color="#ccc">{help}</HelpButton>
-          </Help>
+          <span className="shrink-0 text-muted">
+            <HelpButton>{help}</HelpButton>
+          </span>
         ) : null}
-      </TitleContainer>
-      <Content>{children}</Content>
-      <Actions>{actions}</Actions>
-    </Container>
+      </div>
+      <div>{children}</div>
+      {actions ? (
+        <div className="mt-5 flex items-center justify-end gap-2.5">
+          {actions}
+        </div>
+      ) : null}
+    </div>
   );
 }
-
-const Container = styled.div``;
-const TitleContainer = styled.div`
-  font-weight: 100;
-  font-size: 1.6em;
-  margin: 20px 0;
-  display: flex;
-  align-items: center;
-`;
-const Title = styled.div`
-  flex: 1;
-`;
-const Help = styled.div``;
-const Content = styled.div``;
-const Actions = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin: 20px 0 5px 0;
-  gap: 10px;
-`;

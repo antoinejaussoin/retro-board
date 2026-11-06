@@ -1,22 +1,22 @@
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import { Button, Hidden } from '@mui/material';
+import AccountMenu from 'auth/AccountMenu';
 import useIsPro from 'auth/useIsPro';
 import ProButton from 'components/ProButton';
-import styled from '@emotion/styled';
-import { useCallback } from 'react';
-import useUser from 'state/user/useUser';
-import { useMatch, useNavigate } from 'react-router-dom';
-import useSidePanel from 'views/panel/useSidePanel';
-import Invite from './Invite';
-import AccountMenu from 'auth/AccountMenu';
 import ProPill from 'components/ProPill';
-import { AiButton } from './ai/AiButton';
-import logoIcon from './logo-white.png';
-import logoText from './text-white.png';
+import { Menu } from 'lucide-react';
+import { useCallback } from 'react';
+import { useMatch, useNavigate } from 'react-router-dom';
+import useUser from 'state/user/useUser';
+import { headerTone } from 'Theme';
+import { Button } from 'ui/button';
+import { IconButton } from 'ui/icon-button';
 import config from 'utils/getConfig';
+import useSidePanel from 'views/panel/useSidePanel';
+import { AiButton } from './ai/AiButton';
+import Invite from './Invite';
+import logoBlack from './logo-black.png';
+import logoWhite from './logo-white.png';
+import textBlack from './text-black.png';
+import textWhite from './text-white.png';
 
 export function Header() {
   const user = useUser();
@@ -26,87 +26,54 @@ export function Header() {
   const goToHome = useCallback(() => navigate('/'), [navigate]);
   const { toggle: togglePanel } = useSidePanel();
   const isOnGamePage = !!useMatch('game/:gameId/*');
+  const light = headerTone === 'light';
+  const mark = config.LOGO || (light ? logoBlack : logoWhite);
+  const word = light ? textBlack : textWhite;
+
   return (
-    <AppBar
-      position="sticky"
+    <header
+      className="sticky top-0 z-30 flex h-14 items-center gap-1 border-b border-black/10 px-2 text-header-fg sm:gap-2 sm:px-4"
       style={{
-        backgroundColor: config.HEADER_PRIMARY_COLOR || undefined,
-        color: config.HEADER_SECONDARY_COLOR || undefined,
+        background: 'var(--brand-header-bg)',
+        color: 'var(--brand-header-fg)',
       }}
     >
-      <Toolbar>
-        <IconButton
-          color="inherit"
-          aria-label="Menu"
-          onClick={togglePanel}
-          size="large"
-          data-cy="side-panel-toggle"
-        >
-          <MenuIcon />
-        </IconButton>
-        <MainTitle onClick={goToHome} data-cy="header-home-button">
+      <IconButton
+        aria-label="Menu"
+        onClick={togglePanel}
+        data-cy="side-panel-toggle"
+        className="hover:bg-white/15"
+      >
+        <Menu className="size-5" />
+      </IconButton>
+      <button
+        type="button"
+        onClick={goToHome}
+        data-cy="header-home-button"
+        className="flex min-w-0 items-center gap-2.5 rounded-full px-1 py-1 max-[400px]:hidden"
+      >
+        <img src={mark} alt="Retrospected" className="h-7 w-auto" />
+        {config.LOGO ? null : (
           <img
-            src={config.LOGO ? config.LOGO : logoIcon}
-            alt="Retrospected Icon"
-            height="30"
+            src={word}
+            alt=""
+            className="hidden h-6 w-auto min-[800px]:block"
           />
-          {!config.LOGO ? (
-            <img src={logoText} alt="Retrospected" height="30" />
-          ) : null}
-        </MainTitle>
-        <ProPillContainer>
-          <ProPill small />
-        </ProPillContainer>
-        {displayGoPro ? (
-          <Hidden mdDown>
-            <GoProContainer>
-              <ProButton>
-                <Button variant="contained" color="secondary">
-                  ⭐️ Go Pro!
-                </Button>
-              </ProButton>
-            </GoProContainer>
-          </Hidden>
-        ) : null}
-        <Spacer />
-        {user ? <AiButton /> : null}
-        <Spacer />
-        {isOnGamePage ? <Invite /> : null}
-        <AccountMenu />
-      </Toolbar>
-    </AppBar>
+        )}
+      </button>
+      <ProPill small />
+      {displayGoPro ? (
+        <ProButton>
+          <Button variant="secondary" className="ml-2 hidden md:inline-flex">
+            Go Pro
+          </Button>
+        </ProButton>
+      ) : null}
+      <div className="flex-1" />
+      {user ? <AiButton /> : null}
+      <div className="w-2" />
+      {isOnGamePage ? <Invite /> : null}
+      <AccountMenu />
+    </header>
   );
 }
-
-const MainTitle = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  margin-left: 10px;
-  margin-right: 20px;
-  > :nth-of-type(2) {
-    position: relative;
-    top: 2px;
-  }
-
-  @media screen and (max-width: 800px) {
-    > :nth-of-type(2) {
-      display: none;
-    }
-  }
-
-  @media screen and (max-width: 400px) {
-    display: none;
-  }
-`;
-
-const ProPillContainer = styled.div``;
-
-const GoProContainer = styled.div`
-  margin-left: 20px;
-`;
-
-const Spacer = styled.div`
-  flex: 1;
-`;

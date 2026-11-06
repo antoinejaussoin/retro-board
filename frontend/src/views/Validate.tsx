@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { verifyEmail } from '../api';
-import { Alert } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { verifyEmail } from '../api';
 import { useSetUser } from 'state/user/useSetUser';
+import { Alert } from 'ui/alert';
 
 function ValidatePage() {
   const setUser = useSetUser();
@@ -39,16 +39,18 @@ function ValidatePage() {
   }, [email, code, navigate, setUser]);
 
   return (
-    <div style={{ margin: 50 }}>
-      {success && !loading ? (
-        <Alert severity="success">{t('ValidateAccount.success')}</Alert>
-      ) : null}
-      {!success && !loading ? (
-        <Alert severity="error">{t('ValidateAccount.error')}</Alert>
-      ) : null}
-      {loading ? (
-        <Alert severity="info">{t('ValidateAccount.loading')}</Alert>
-      ) : null}
+    <div className="flex justify-center bg-paper px-4 py-12">
+      <div className="w-full max-w-md rounded-3xl border border-line bg-cream p-6 text-ink shadow-card">
+        {success && !loading ? (
+          <Alert severity="success">{t('ValidateAccount.success')}</Alert>
+        ) : null}
+        {!success && !loading ? (
+          <Alert severity="error">{t('ValidateAccount.error')}</Alert>
+        ) : null}
+        {loading ? (
+          <Alert severity="info">{t('ValidateAccount.loading')}</Alert>
+        ) : null}
+      </div>
     </div>
   );
 }

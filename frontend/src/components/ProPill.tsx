@@ -1,9 +1,8 @@
-import Chip from '@mui/material/Chip';
-import { colors } from '@mui/material';
-import { Star } from '@mui/icons-material';
+import { Star } from 'lucide-react';
 import useIsPro from '../auth/useIsPro';
 import useIsTrial from '../auth/useIsTrial';
 import useUser from '../state/user/useUser';
+import { Chip } from 'ui/chip';
 
 interface ProPillProps {
   small?: boolean;
@@ -18,31 +17,19 @@ function ProPill({ small = false }: ProPillProps) {
   }
   if (!isPro) {
     return (
-      <Chip
-        label={'Free'}
-        color="primary"
-        style={{ backgroundColor: colors.grey[500] }}
-        size={small ? 'small' : 'medium'}
-      />
+      <Chip tone="muted" className={small ? 'px-2 py-0 text-[10px]' : undefined}>
+        Free
+      </Chip>
     );
   }
   return (
     <Chip
-      icon={
-        <Star
-          color="inherit"
-          style={{
-            color: colors.yellow[500],
-            position: 'relative',
-            top: -1,
-            left: 1,
-          }}
-        />
-      }
-      label={isTrial ? `Pro Trial` : 'Pro'}
-      color="secondary"
-      size={small ? 'small' : 'medium'}
-    />
+      tone="secondary"
+      className={small ? 'px-2 py-0 text-[10px]' : undefined}
+      icon={<Star className="size-3 fill-amber-300 text-amber-300" />}
+    >
+      {isTrial ? 'Pro Trial' : 'Pro'}
+    </Chip>
   );
 }
 

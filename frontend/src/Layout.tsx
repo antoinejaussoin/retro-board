@@ -1,13 +1,13 @@
-import { useEffect, lazy, Suspense } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
-import { trackPageView } from './track';
-import { CodeSplitLoader } from './CodeSplitLoader';
-import { Alert, AlertTitle } from '@mui/material';
-import useBackendCapabilities from './global/useBackendCapabilities';
-import { useTranslation } from 'react-i18next';
-import { Welcome } from 'views/Welcome';
-import { Header } from 'views/layout/Header';
 import useUser from 'state/user/useUser';
+import { lazy, Suspense, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Route, Routes, useLocation } from 'react-router-dom';
+import { CodeSplitLoader } from './CodeSplitLoader';
+import useBackendCapabilities from './global/useBackendCapabilities';
+import { trackPageView } from './track';
+import { Alert } from 'ui/alert';
+import { Header } from 'views/layout/Header';
+import { Welcome } from 'views/Welcome';
 
 const Home = lazy(() => import('./views/Home'));
 const Game = lazy(() => import('./views/Game'));
@@ -16,7 +16,7 @@ const AccountPage = lazy(() => import('./views/account/AccountPage'));
 const CancelPage = lazy(() => import('./views/subscribe/CancelPage'));
 const SuccessPage = lazy(() => import('./views/subscribe/SuccessPage'));
 const SubscribePageOuter = lazy(
-  () => import('./views/subscribe/SubscribePageOuter')
+  () => import('./views/subscribe/SubscribePageOuter'),
 );
 const ResetPasswordPage = lazy(() => import('./views/Reset'));
 const ValidatePage = lazy(() => import('./views/Validate'));
@@ -28,21 +28,17 @@ const Demo = lazy(() => import('./views/Demo'));
 function App() {
   const backend = useBackendCapabilities();
   const user = useUser();
-
   const location = useLocation();
-
   const { t } = useTranslation();
 
-  // Tracks page views on every location change
   useEffect(() => {
     trackPageView(location.pathname);
   }, [location.pathname]);
 
   return (
-    <div>
+    <div className="min-h-dvh bg-paper text-ink">
       {!backend.licenced ? (
-        <Alert title="Unlicenced" severity="error">
-          <AlertTitle>{t('Main.unlicenced.title')}</AlertTitle>
+        <Alert severity="error" title={t('Main.unlicenced.title')}>
           This software is unlicenced. You can obtain a licence{' '}
           <a
             target="_blank"

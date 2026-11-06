@@ -1,27 +1,22 @@
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { colors } from '@mui/material';
-import {
-  AllInclusive,
-  Lock,
-  Psychology,
-  VerifiedUser,
-} from '@mui/icons-material';
-import { useCallback, cloneElement } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styled from '@emotion/styled';
-import useIsPro from '../../auth/useIsPro';
 import useIsDisabled from '../../hooks/useIsDisabled';
 import useModal from '../../hooks/useModal';
-import { startTrial } from '../../views/subscribe/api';
-import Feature from './Feature';
-import { trackEvent } from '../../track';
+import { Infinity, Lock, Sparkles, ShieldCheck } from 'lucide-react';
+import { cloneElement, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import useIsPro from '../../auth/useIsPro';
+import { trackEvent } from '../../track';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
+import { startTrial } from '../../views/subscribe/api';
+import { Button } from 'ui/button';
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogFooter,
+  DialogTitle,
+} from 'ui/dialog';
+import Feature from './Feature';
 
 interface ComponentProp {
   disabled?: boolean;
@@ -54,7 +49,7 @@ function ProButton({ children, quota }: ProButtonProps) {
       navigate('/subscribe');
       close();
     },
-    [navigate, close]
+    [navigate, close],
   );
 
   const handleStartTrial = useCallback(
@@ -65,18 +60,13 @@ function ProButton({ children, quota }: ProButtonProps) {
       await startTrial();
       window.location.reload();
     },
-    []
+    [],
   );
 
-  const handleClose = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
-      e.stopPropagation();
-      e.preventDefault();
-      trackEvent('trial/modal/cancel');
-      close();
-    },
-    [close]
-  );
+  const handleClose = useCallback(() => {
+    trackEvent('trial/modal/cancel');
+    close();
+  }, [close]);
 
   const handleOpen = useCallback(
     (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -85,7 +75,7 @@ function ProButton({ children, quota }: ProButtonProps) {
       trackEvent('trial/modal/open');
       open();
     },
-    [open]
+    [open],
   );
 
   if (isValid) {
@@ -93,128 +83,68 @@ function ProButton({ children, quota }: ProButtonProps) {
   }
 
   return (
-    <Container onClick={handleOpen}>
+    <span className="inline-flex cursor-pointer" onClick={handleOpen}>
       {clone}
-      <Dialog
-        onClose={handleClose}
-        maxWidth="sm"
-        aria-labelledby="lock-session-dialog"
-        fullScreen={fullScreen}
-        open={opened}
-      >
-        <DialogTitle id="lock-session-dialog">
-          {t('SubscribeModal.title')}
-        </DialogTitle>
-        <DialogContent style={{ padding: 0, margin: 0 }}>
-          <Header>{t('SubscribeModal.header')}</Header>
-        </DialogContent>
-        <DialogContent>
-          <DialogContentText>
-            {t('SubscribeModal.description')}
-          </DialogContentText>
-        </DialogContent>
-        <DialogContent>
-          <Features>
-            <Feature
-              icon={<Lock />}
-              color={colors.red[700]}
-              title={t('SubscribeModal.features.encryptedSession.title')!}
-              description={
-                t('SubscribeModal.features.encryptedSession.description')!
-              }
-            />
-            <Feature
-              icon={<VerifiedUser />}
-              color={colors.green[700]}
-              title={t('SubscribeModal.features.privateSessions.title')!}
-              description={
-                t('SubscribeModal.features.privateSessions.description')!
-              }
-            />
-            <Feature
-              icon={<AllInclusive />}
-              color={colors.orange[700]}
-              title={t('SubscribeModal.features.unlimitedPosts.title')!}
-              description={
-                t('SubscribeModal.features.unlimitedPosts.description')!
-              }
-            />
-            <Feature
-              icon={<Psychology />}
-              color={colors.blue[700]}
-              title={t('SubscribeModal.features.ai.title')!}
-              description={t('SubscribeModal.features.ai.description')!}
-            />
-          </Features>
-        </DialogContent>
-        <DialogActions>
-          <LeftButtons>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={handleStartTrial}
-            >
+      <Dialog open={opened} onClose={handleClose}>
+        <DialogContent size="sm" fullScreen={fullScreen}>
+          <div className="bg-primary-700 px-6 py-8 text-center text-3xl font-light text-white max-[400px]:hidden max-[700px]:text-2xl">
+            {t('SubscribeModal.header')}
+          </div>
+          <DialogTitle>{t('SubscribeModal.title')}</DialogTitle>
+          <DialogBody>
+            <p className="mb-4 text-sm leading-6 text-muted">
+              {t('SubscribeModal.description')}
+            </p>
+            <div className="flex flex-col gap-3">
+              <Feature
+                icon={<Lock className="size-6" />}
+                color="#c62828"
+                title={t('SubscribeModal.features.encryptedSession.title')!}
+                description={
+                  t('SubscribeModal.features.encryptedSession.description')!
+                }
+              />
+              <Feature
+                icon={<ShieldCheck className="size-6" />}
+                color="#2e7d32"
+                title={t('SubscribeModal.features.privateSessions.title')!}
+                description={
+                  t('SubscribeModal.features.privateSessions.description')!
+                }
+              />
+              <Feature
+                icon={<Infinity className="size-6" />}
+                color="#ef6c00"
+                title={t('SubscribeModal.features.unlimitedPosts.title')!}
+                description={
+                  t('SubscribeModal.features.unlimitedPosts.description')!
+                }
+              />
+              <Feature
+                icon={<Sparkles className="size-6" />}
+                color="#1565c0"
+                title={t('SubscribeModal.features.ai.title')!}
+                description={t('SubscribeModal.features.ai.description')!}
+              />
+            </div>
+          </DialogBody>
+          <DialogFooter className="justify-between">
+            <Button variant="secondary" onClick={handleStartTrial}>
               {t('SubscribeModal.startTrial')}
             </Button>
-          </LeftButtons>
-          <Button onClick={handleClose}>
-            {t('SubscribeModal.cancelButton')}
-          </Button>
-          <Button variant="contained" color="primary" onClick={goToSubscribe}>
-            {t('SubscribeModal.subscribeButton')}
-          </Button>
-        </DialogActions>
+            <div className="flex gap-2">
+              <Button variant="ghost" onClick={handleClose}>
+                {t('SubscribeModal.cancelButton')}
+              </Button>
+              <Button onClick={goToSubscribe}>
+                {t('SubscribeModal.subscribeButton')}
+              </Button>
+            </div>
+          </DialogFooter>
+        </DialogContent>
       </Dialog>
-    </Container>
+    </span>
   );
 }
-
-const LeftButtons = styled.div`
-  display: flex;
-  flex: 1;
-`;
-
-const Container = styled.span`
-  cursor: pointer;
-  display: inline-flex;
-  > * {
-    flex: 1;
-  }
-`;
-
-const Header = styled.div`
-  background-color: ${colors.deepPurple[300]};
-  background: ${`linear-gradient(
-    171deg,
-    ${colors.deepPurple[300]} 35%,
-    ${colors.deepPurple[600]} 100%
-  )`};
-  color: white;
-  min-width: 60hw;
-  padding: 20px 20px;
-  font-size: 2.5em;
-  font-weight: 100;
-  display: flex;
-  justify-content: center;
-
-  @media screen and (max-width: 600px) {
-    font-size: 1.5rem;
-    padding: 10px;
-  }
-
-  @media screen and (max-width: 400px) {
-    display: none;
-  }
-
-  @media screen and (max-height: 700px) {
-    display: none;
-  }
-`;
-
-const Features = styled.div`
-  > * {
-    margin-bottom: 10px;
-  }
-`;
 
 export default ProButton;

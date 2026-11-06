@@ -1,10 +1,13 @@
 import { createButton } from 'react-social-login-buttons';
-import { colors } from '@mui/material';
 
 const config = {
-  activeStyle: { background: colors.grey[100] },
+  activeStyle: { background: '#f6f3ee' },
   icon: Icon,
-  style: { background: 'white', color: 'black' },
+  style: {
+    background: '#fffdf8',
+    color: '#1c1917',
+    border: '1px solid #e6dfd4',
+  },
   text: 'Login with Okta',
 };
 

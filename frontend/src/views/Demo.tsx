@@ -1,18 +1,17 @@
-import styled from '@emotion/styled';
-import { colors } from '@mui/material';
 import { anonymousLogin, createDemoGame, me, updateLanguage } from 'api';
-import useUser from 'state/user/useUser';
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { trackEvent } from 'track';
-import { Language } from 'translations/languages';
-import { languages, useLanguage } from '../translations';
 import { useSetUser } from 'state/user/useSetUser';
+import useUser from 'state/user/useUser';
+import { trackEvent } from 'track';
+import type { Language } from 'translations/languages';
+import { languages, useLanguage } from '../translations';
+import { Spinner } from 'ui/spinner';
 
 export default function Demo() {
   const user = useUser();
   const setUser = useSetUser();
-  let [searchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const twoLetter = searchParams.get('lang');
   const [currentLanguage, changeLanguage] = useLanguage();
   const language = getLanguage(twoLetter || 'en');
@@ -59,25 +58,17 @@ export default function Demo() {
     alreadyLoggedIn,
   ]);
   return (
-    <Container>
-      <h1>Preparing demo...</h1>
-    </Container>
+    <div className="flex min-h-[calc(100dvh-3.5rem)] items-center justify-center bg-paper px-4">
+      <div className="w-full max-w-md rounded-3xl border border-line bg-cream px-8 py-10 text-center text-ink shadow-card">
+        <Spinner className="mx-auto" />
+        <h1 className="mt-4 text-3xl font-medium tracking-tight">
+          Preparing demo...
+        </h1>
+      </div>
+    </div>
   );
 }
 
 function getLanguage(twoLetter: string): Language {
   return languages.find((l) => l.twoLetter === twoLetter) || languages[0];
 }
-
-const Container = styled.div`
-  background-color: ${colors.deepPurple[400]};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: calc(100vh - 60px);
-
-  h1 {
-    color: white;
-    font-size: 3rem;
-  }
-`;

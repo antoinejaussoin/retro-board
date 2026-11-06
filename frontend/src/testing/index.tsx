@@ -5,6 +5,8 @@ import { BackendCapabilities, FullUser, Session, defaultOptions } from 'common';
 import useSession from '../views/game/useSession';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { queryKeys } from 'state/queryKeys';
+import { ConfirmProvider } from 'ui/confirm';
+import { TooltipProvider } from 'ui/tooltip';
 
 const user: FullUser = {
   id: 'John Doe',
@@ -109,7 +111,11 @@ export function AllTheProviders({ children }: PropsWithChildren<{}>) {
   const [client] = useState(() => createTestQueryClient());
   return (
     <QueryClientProvider client={client}>
-      <Inner>{children}</Inner>
+      <TooltipProvider>
+        <ConfirmProvider>
+          <Inner>{children}</Inner>
+        </ConfirmProvider>
+      </TooltipProvider>
     </QueryClientProvider>
   );
 }

@@ -1,13 +1,13 @@
+import { Mail } from 'lucide-react';
 import { useCallback, useState } from 'react';
-import Button from '@mui/material/Button';
-import { Alert } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import Wrapper from './../Wrapper';
-import Input from '../../../components/Input';
-import { Email } from '@mui/icons-material';
-import { resetPassword } from '../../../api';
 import { Link } from 'react-router-dom';
+import { resetPassword } from '../../../api';
+import Input from '../../../components/Input';
 import useBackendCapabilities from '../../../global/useBackendCapabilities';
+import { Alert } from 'ui/alert';
+import { Button } from 'ui/button';
+import Wrapper from './../Wrapper';
 
 type LostPasswordProps = {
   onCancel: () => void;
@@ -32,7 +32,9 @@ const LostPassword = ({ onCancel }: LostPasswordProps) => {
         You are using a Self-Hosted version of Retrospected, without email
         support. In order to reset your password, ask your admin (
         {backend.adminEmail}) to access the admin page to do that:&nbsp;
-        <Link to="/admin">Admin Panel</Link>
+        <Link to="/admin" className="underline">
+          Admin Panel
+        </Link>
       </Alert>
     );
   }
@@ -45,15 +47,14 @@ const LostPassword = ({ onCancel }: LostPasswordProps) => {
       actions={
         <>
           <Button
+            variant="outline"
             onClick={onCancel}
-            color="secondary"
             data-cy="cancel-register-button"
           >
             {t('Generic.cancel')}
           </Button>
           <Button
             onClick={handleForgotPassword}
-            color="primary"
             autoFocus
             disabled={!email.length}
           >
@@ -62,19 +63,18 @@ const LostPassword = ({ onCancel }: LostPasswordProps) => {
         </>
       }
     >
-      <Alert severity="info">{t('ResetPassword.info')}</Alert>
-
-      <Input
-        value={email}
-        onChangeValue={setEmail}
-        title={t('AuthCommon.emailField')!}
-        placeholder={t('AuthCommon.emailField')!}
-        type="email"
-        variant="standard"
-        fullWidth
-        style={{ marginTop: 20 }}
-        leftIcon={<Email />}
-      />
+      <div className="flex flex-col gap-4">
+        <Alert severity="info">{t('ResetPassword.info')}</Alert>
+        <Input
+          value={email}
+          onChangeValue={setEmail}
+          title={t('AuthCommon.emailField')!}
+          placeholder={t('AuthCommon.emailField')!}
+          type="email"
+          fullWidth
+          leftIcon={<Mail className="size-4" />}
+        />
+      </div>
     </Wrapper>
   );
 };

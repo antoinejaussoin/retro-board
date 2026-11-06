@@ -1,11 +1,10 @@
-import { colors } from '@mui/material';
-import { Info } from '@mui/icons-material';
-import { useNavigate } from 'react-router';
-import styled from '@emotion/styled';
+import { Info } from 'lucide-react';
+import type { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
 
 interface HowDoesItWorkButtonProps {
-  children: React.ReactElement;
+  children: ReactElement;
   url: string;
 }
 
@@ -16,43 +15,16 @@ export default function HowDoesItWorkButton({
   const navigate = useNavigate();
   const { t } = useTranslation();
   return (
-    <Container>
+    <span className="inline-flex flex-col items-end">
       {children}
-
-      <LinkContainer>
-        <Info />
-        <GoLink onClick={() => navigate(url)}>
-          {t('Home.howDoesThatWork')}
-        </GoLink>
-      </LinkContainer>
-    </Container>
+      <button
+        type="button"
+        onClick={() => navigate(url)}
+        className="mt-1 inline-flex items-center gap-1 text-[0.7rem] text-sky-100 hover:text-sky-300 hover:underline"
+      >
+        <Info className="size-3" />
+        {t('Home.howDoesThatWork')}
+      </button>
+    </span>
   );
 }
-
-const Container = styled.span`
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-end;
-`;
-
-const LinkContainer = styled.div`
-  font-size: 0.5em;
-  margin-top: 3px;
-  > svg {
-    font-size: 1.3em;
-    color: ${colors.lightBlue[100]};
-    margin-right: 3px;
-    position: relative;
-    top: 1px;
-  }
-`;
-
-const GoLink = styled.span`
-  color: ${colors.lightBlue[100]};
-  cursor: pointer;
-
-  :hover {
-    text-decoration: underline;
-    color: ${colors.lightBlue[500]};
-  }
-`;

@@ -22,17 +22,18 @@ export function UserSelector({
   onSelect,
 }: UserSelectorProps) {
   const { t } = useTranslation();
+  const people = options ?? [];
   const selected: User | null = useMemo(() => {
-    return options.find((user) => user.id === moderatorId) || null;
-  }, [options, moderatorId]);
+    return people.find((user) => user.id === moderatorId) || null;
+  }, [people, moderatorId]);
 
   return (
     <div className="w-full py-1 sm:ml-auto sm:max-w-xs">
       <Select
         value={selected?.id}
-        disabled={options.length === 0}
+        disabled={people.length === 0}
         onValueChange={(id) => {
-          const user = options.find((option) => option.id === id);
+          const user = people.find((option) => option.id === id);
           if (user) {
             onSelect(user);
           }
@@ -44,7 +45,7 @@ export function UserSelector({
           </SelectValue>
         </SelectTrigger>
         <SelectContent className="z-[70]">
-          {options.map((user) => (
+          {people.map((user) => (
             <SelectItem key={user.id} value={user.id}>
               <UserItem user={user} />
             </SelectItem>
