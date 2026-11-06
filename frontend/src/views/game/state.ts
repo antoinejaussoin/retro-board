@@ -1,5 +1,6 @@
 import type { Participant, Session, UnauthorizedAccessPayload } from 'common';
 import { create } from 'zustand';
+import { reduceSession, type SessionEvent } from './reduceSession';
 
 type GameStore = {
   participants: Participant[];
@@ -8,9 +9,7 @@ type GameStore = {
   timer: Date | null;
   setParticipants: (participants: Participant[]) => void;
   setUnauthorised: (value: UnauthorizedAccessPayload | null) => void;
-  setSession: (
-    session: Session | null | ((prev: Session | null) => Session | null),
-  ) => void;
+  dispatch: (event: SessionEvent) => void;
   setTimer: (timer: Date | null) => void;
 };
 
@@ -21,12 +20,6 @@ export const useGameStore = create<GameStore>((set, get) => ({
   timer: null,
   setParticipants: (participants) => set({ participants }),
   setUnauthorised: (unauthorised) => set({ unauthorised }),
-  setSession: (session) => {
-    if (typeof session === 'function') {
-      set({ session: session(get().session) });
-    } else {
-      set({ session });
-    }
-  },
+  dispatch: (event) => set({ session: reduceSession(get().session, event) }),
   setTimer: (timer) => set({ timer }),
 }));
