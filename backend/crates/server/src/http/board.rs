@@ -1,6 +1,7 @@
 use std::net::SocketAddr;
 use std::sync::Arc;
 
+use axum::body::Bytes;
 use axum::extract::{ConnectInfo, Path, State};
 use axum::http::{HeaderMap, StatusCode};
 use axum::response::{IntoResponse, Response};
@@ -56,7 +57,7 @@ pub(super) async fn create_session(
     ConnectInfo(addr): ConnectInfo<SocketAddr>,
     headers: HeaderMap,
     Extension(session): Extension<Arc<Mutex<Session>>>,
-    Json(body): Json<CreateSessionPayload>,
+    body: Bytes,
 ) -> Response {
     if !limited(&state, &headers, Some(addr)).await {
         return text(
@@ -70,13 +71,32 @@ pub(super) async fn create_session(
             "You must be logged in in order to create a session",
         );
     };
-    match db::create_session(&state.db, &user_id, body.encrypted_check.as_deref()).await {
+    let payload = match create_payload(&body) {
+        Ok(payload) => payload,
+        Err(error) => {
+            tracing::warn!(%error, "create session body");
+            return text(
+                StatusCode::BAD_REQUEST,
+                "Failed to parse the request body as JSON",
+            );
+        }
+    };
+    match db::create_session(&state.db, &user_id, payload.encrypted_check.as_deref()).await {
         Ok(board) => Json(board).into_response(),
         Err(error) => {
             tracing::warn!(%error, "create session");
             empty(StatusCode::INTERNAL_SERVER_ERROR)
         }
     }
+}
+
+/// The home page posts `Content-Type: application/json` with an empty body.
+fn create_payload(body: &[u8]) -> Result<CreateSessionPayload, serde_json::Error> {
+    let body = body.trim_ascii();
+    if body.is_empty() {
+        return Ok(CreateSessionPayload::default());
+    }
+    serde_json::from_slice(body)
 }
 
 pub(super) async fn create_demo(

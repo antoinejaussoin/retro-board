@@ -25,5 +25,5 @@ ENV BACKEND_PORT=3201
 EXPOSE 3201
 
 # Migrations run inside the binary before it listens, matching the previous
-# `yarn backend-production` entrypoint.
+# production entrypoint.
 CMD ["retrospected-server"]

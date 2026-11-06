@@ -33,7 +33,7 @@ pub struct ResetPasswordPayload {
     pub code: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Default, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CreateSessionPayload {
     pub encrypted_check: Option<String>,

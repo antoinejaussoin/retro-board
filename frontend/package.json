@@ -7,7 +7,6 @@
   "dependencies": {
     "@biomejs/biome": "1.9.4",
     "@emoji-mart/data": "1.2.1",
-    "@emoji-mart/react": "1.1.1",
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",
     "@esbuild-plugins/node-globals-polyfill": "0.2.3",
@@ -36,7 +35,6 @@
     "@types/react-color": "3.0.13",
     "@types/react-copy-to-clipboard": "5.0.7",
     "@types/react-dom": "19.3.0",
-    "@types/react-helmet": "6.1.11",
     "@types/shortid": "0.0.32",
     "@types/uuid": "10.0.0",
     "@vitejs/plugin-react": "4.7.0",
@@ -61,19 +59,17 @@
     "prop-types": "15.8.1",
     "query-string": "9.1.1",
     "react": "19.3.1",
-    "react-autosize-textarea": "7.1.0",
     "react-color": "2.19.3",
     "react-copy-to-clipboard": "5.1.1",
     "react-dom": "19.3.1",
     "react-ga4": "^2.1.0",
-    "react-giphy-searchbox": "1.5.4",
-    "react-helmet": "6.1.0",
+    "react-helmet-async": "3.0.0",
     "react-i18next": "13.5.0",
     "react-markdown": "8.0.7",
     "react-password-strength-bar": "0.4.1",
     "react-router-dom": "7.18.5",
     "react-scroll-to-bottom": "4.2.0",
-    "react-social-login-buttons": "3.9.1",
+    "react-social-login-buttons": "4.1.1",
     "rehype-raw": "6.1.1",
     "shortid": "2.2.17",
     "socket.io-client": "4.8.4",
@@ -95,7 +91,7 @@
     "lint": "biome lint",
     "test": "vitest",
     "ci-lint": "biome ci",
-    "ci-test": "CI=true yarn test",
+    "ci-test": "CI=true npm test",
     "analyze": "source-map-explorer build/static/js/*",
     "watch": "tsc --watch --noEmit"
   },
@@ -105,7 +101,7 @@
     "not ie <= 9",
     "not op_mini all"
   ],
-  "resolutions": {
+  "overrides": {
     "vite": "6.4.3"
   }
 }

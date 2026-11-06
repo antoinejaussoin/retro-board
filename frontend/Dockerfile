@@ -6,14 +6,13 @@ WORKDIR /home/node/app
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
 COPY ./package.json ./
-COPY ./yarn.lock ./
+COPY ./package-lock.json ./
 
-RUN npm install -g yarn@1.22.22
 RUN chown -R node:node /home/node/app
 
 USER node
 
-RUN yarn --network-timeout 1000000 install
+RUN npm ci --include=dev
 
 COPY --chown=node:node ./src ./src
 COPY --chown=node:node ./public ./public
@@ -22,7 +21,7 @@ COPY --chown=node:node ./vite.config.ts ./vite.config.ts
 COPY --chown=node:node ./index.html ./index.html
 COPY --chown=node:node ./.env ./.env
 
-RUN yarn build
+RUN npm run build
 
 FROM nginx:1.31.8
 

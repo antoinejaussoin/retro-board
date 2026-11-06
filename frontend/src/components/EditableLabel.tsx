@@ -2,9 +2,7 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { colors } from '@mui/material';
 import { Edit } from '@mui/icons-material';
-import TextareaAutosize from 'react-autosize-textarea'; // Really need to replace this dependency
-
-const TextareaAutosizeAny = TextareaAutosize as any;
+import TextareaAutosize from '@mui/material/TextareaAutosize';
 
 interface EditableLabelProps extends CenteredProp {
   value: string;
@@ -79,7 +77,7 @@ const EditableLabel = ({
       {editMode ? (
         <EditMode>
           {multiline ? (
-            <TextareaAutosizeAny
+            <TextareaAutosize
               ref={inputRef as React.RefObject<HTMLTextAreaElement>}
               aria-label={`${label} input`}
               data-testid={`${label} input`}

@@ -4,4 +4,4 @@
 .next
 node_modules
 Makefile
-yarn-error.log
+npm-debug.log
