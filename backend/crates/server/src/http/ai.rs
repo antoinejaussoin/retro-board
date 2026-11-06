@@ -36,8 +36,8 @@ pub(super) async fn ai_chat(
         &state.db,
         &user.id,
         user.pro,
-        state.config.open_ai_free_limit,
-        state.config.open_ai_paid_limit,
+        state.config.ai_free_limit,
+        state.config.ai_paid_limit,
     )
     .await
     .unwrap_or(0.0);
@@ -47,7 +47,7 @@ pub(super) async fn ai_chat(
             "You have reached your monthly allowance of messages",
         );
     }
-    if state.config.open_ai_api_key.is_empty() {
+    if state.config.anthropic_api_key.is_empty() {
         return text(StatusCode::INTERNAL_SERVER_ERROR, "AI is not configured");
     }
     let mut messages = body.messages.clone();
@@ -60,10 +60,16 @@ pub(super) async fn ai_chat(
             },
         );
     }
-    let answer = match crate::ai::complete(&state.config.open_ai_api_key, &messages).await {
+    let answer = match crate::ai::complete(
+        &state.config.anthropic_api_key,
+        &state.config.anthropic_model,
+        &messages,
+    )
+    .await
+    {
         Ok(answer) => answer,
         Err(error) => {
-            tracing::warn!(%error, "openai");
+            tracing::warn!(%error, "anthropic");
             return text(StatusCode::INTERNAL_SERVER_ERROR, "AI request failed");
         }
     };

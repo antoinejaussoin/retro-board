@@ -164,23 +164,24 @@ pub fn banner(config: &Config, owner: Option<&str>, migrations_applied: usize) {
             blue("activated")
         ));
     }
-    if config.open_ai_api_key.is_empty() {
+    if config.anthropic_api_key.is_empty() {
         say(format!(
             "🤖  {} from {} was {}.",
-            red("AI / ChatGPT"),
-            yellow("OpenAI"),
+            red("AI"),
+            yellow("Anthropic"),
             red("not activated")
         ));
         say(format!(
             "    Please set the {} environment variable.",
-            yellow("OPEN_AI_API_KEY")
+            yellow("ANTHROPIC_API_KEY")
         ));
     } else {
         say(format!(
-            "🤖  {} from {} has been {}",
-            red("AI / ChatGPT"),
-            yellow("OpenAI"),
-            blue("activated")
+            "🤖  {} from {} has been {} (model {}).",
+            red("AI"),
+            yellow("Anthropic"),
+            blue("activated"),
+            yellow(&config.anthropic_model)
         ));
     }
     for (name, enabled) in [

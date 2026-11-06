@@ -81,9 +81,10 @@ pub struct Config {
     pub mail_allow_self_signed: bool,
     pub ga4_secret: String,
     pub ga4_measurement_id: String,
-    pub open_ai_api_key: String,
-    pub open_ai_free_limit: f64,
-    pub open_ai_paid_limit: f64,
+    pub anthropic_api_key: String,
+    pub anthropic_model: String,
+    pub ai_free_limit: f64,
+    pub ai_paid_limit: f64,
     pub disable_account_deletion: bool,
     pub disable_show_author: bool,
 }
@@ -153,9 +154,10 @@ impl Config {
             mail_allow_self_signed: env_bool("MAIL_ALLOW_SELF_SIGNED_CERTS", false),
             ga4_secret: env_str("GA4_SECRET", ""),
             ga4_measurement_id: env_str("GA4_MEASUREMENT_ID", ""),
-            open_ai_api_key: env_str("OPEN_AI_API_KEY", ""),
-            open_ai_free_limit: env_f64("OPEN_AI_FREE_LIMIT", 5.0),
-            open_ai_paid_limit: env_f64("OPEN_AI_PAID_LIMIT", 100.0),
+            anthropic_api_key: env_str("ANTHROPIC_API_KEY", ""),
+            anthropic_model: env_model("ANTHROPIC_MODEL", crate::ai::DEFAULT_MODEL),
+            ai_free_limit: env_f64_fallback("AI_FREE_LIMIT", "OPEN_AI_FREE_LIMIT", 5.0),
+            ai_paid_limit: env_f64_fallback("AI_PAID_LIMIT", "OPEN_AI_PAID_LIMIT", 1000.0),
             disable_account_deletion: env_bool("DISABLE_ACCOUNT_DELETION", false),
             disable_show_author: env_bool("DISABLE_SHOW_AUTHOR", false),
         }
@@ -230,9 +232,17 @@ fn env_u64(key: &str, default: u64) -> u64 {
         .unwrap_or(default)
 }
 
-fn env_f64(key: &str, default: f64) -> f64 {
-    env_raw(key)
+fn env_model(key: &str, default: &str) -> String {
+    match env_raw(key) {
+        Some(value) if !value.is_empty() => value,
+        _ => default.to_owned(),
+    }
+}
+
+fn env_f64_fallback(primary: &str, legacy: &str, default: f64) -> f64 {
+    env_raw(primary)
         .and_then(|value| value.parse().ok())
+        .or_else(|| env_raw(legacy).and_then(|value| value.parse().ok()))
         .unwrap_or(default)
 }
 

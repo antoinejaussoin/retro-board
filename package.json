@@ -34,8 +34,8 @@
     "docker",
     "docker-compose",
     "postgres",
-    "gpt-4",
-    "chat gpt"
+    "anthropic",
+    "claude"
   ],
   "author": "Antoine Jaussoin",
   "license": "GNU GPLv3",
