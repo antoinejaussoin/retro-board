@@ -1,6 +1,7 @@
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useCallback } from 'react';
-import useStateFetch from '../../hooks/useStateFetch';
-import { updateMembers } from './api';
+import { queryKeys } from '../../state/queryKeys';
+import { getMembers, updateMembers } from './api';
 import { validate } from 'email/validate';
 import styled from '@emotion/styled';
 import { Alert } from '@mui/material';
@@ -25,39 +26,34 @@ function isNotFull(members: string[] | null): boolean {
 function MembersEditor() {
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
-  const [members, setMembers] = useStateFetch<string[] | null>(
-    '/api/stripe/members',
-    null
-  );
+  const queryClient = useQueryClient();
+  const { data: members = null } = useQuery({
+    queryKey: queryKeys.members,
+    queryFn: getMembers,
+  });
   const handleAdd = useCallback(
     (value: string) => {
       if (members && !members.includes(value)) {
-        setMembers((prev) => {
-          const updated = [...(prev || []), value];
-          updateMembers(updated);
-          return updated;
-        });
+        const updated = [...members, value];
+        queryClient.setQueryData(queryKeys.members, updated);
+        void updateMembers(updated);
         enqueueSnackbar(`${value} has been given a pro account.`, {
           variant: 'success',
         });
       }
     },
-    [members, setMembers, enqueueSnackbar]
+    [members, queryClient, enqueueSnackbar]
   );
   const handleRemove = useCallback(
     (value: string) => {
       if (members && members.includes(value)) {
-        setMembers((prev) => {
-          const updated = prev ? prev.filter((v) => v !== value) : null;
-          if (updated) {
-            updateMembers(updated);
-          }
-          return updated;
-        });
+        const updated = members.filter((member) => member !== value);
+        queryClient.setQueryData(queryKeys.members, updated);
+        void updateMembers(updated);
         enqueueSnackbar(`${value} has been removed.`, { variant: 'info' });
       }
     },
-    [members, setMembers, enqueueSnackbar]
+    [members, queryClient, enqueueSnackbar]
   );
   const handleValidate = useCallback(
     async (value: string) => {

@@ -1,17 +1,12 @@
 import type { Product } from 'common';
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { getProducts } from '../../../api';
+import { queryKeys } from '../../../state/queryKeys';
 
 export default function useProducts(): Product[] {
-  const [products, setProducts] = useState<Product[]>([]);
-  useEffect(() => {
-    async function fetch() {
-      const result = await getProducts();
-      if (result) {
-        setProducts(result);
-      }
-    }
-    fetch();
-  }, []);
-  return products;
+  const { data = [] } = useQuery({
+    queryKey: queryKeys.products,
+    queryFn: async () => (await getProducts()) ?? [],
+  });
+  return data;
 }
