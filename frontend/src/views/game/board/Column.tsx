@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import Input from '@mui/material/Input';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -10,11 +10,8 @@ import PostItem from './post/Post';
 import { Post, PostGroup } from 'common';
 import { useTranslation } from 'react-i18next';
 import Group from './Group';
-import {
-  Droppable,
-  DroppableProvided,
-  DroppableStateSnapshot,
-} from '@hello-pangea/dnd';
+import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
+import { isPostDragData } from './drag';
 import { ColumnContent } from '../types';
 import useCrypto from '../../../crypto/useCrypto';
 import useQuota from '../../../hooks/useQuota';
@@ -62,6 +59,8 @@ const Column: React.FC<ColumnProps> = ({
   const [content, setContent] = useState('');
   const { encrypt } = useCrypto();
   const permissions = useSessionUserPermissions();
+  const postsRef = useRef<HTMLDivElement>(null);
+  const [draggingOver, setDraggingOver] = useState(false);
   const { increment } = useQuota();
   const searchPredicate = useSearch(search);
   const onContentChange = useCallback(
@@ -89,6 +88,22 @@ const Column: React.FC<ColumnProps> = ({
       handleAdd();
     }
   }, [handleAdd, content]);
+
+  useEffect(() => {
+    const element = postsRef.current;
+    if (!element) {
+      return;
+    }
+    return dropTargetForElements({
+      element,
+      canDrop: ({ source }) =>
+        permissions.canReorderPosts && isPostDragData(source.data),
+      getData: () => ({ type: 'column', targetId: `column#${column.index}` }),
+      onDragEnter: () => setDraggingOver(true),
+      onDragLeave: () => setDraggingOver(false),
+      onDrop: () => setDraggingOver(false),
+    });
+  }, [column.index, permissions.canReorderPosts]);
 
   return (
     <ColumnWrapper>
@@ -144,9 +159,8 @@ const Column: React.FC<ColumnProps> = ({
               }
               onDelete={() => onDeleteGroup(group)}
             >
-              {posts.map((post, index) => (
+              {posts.map((post) => (
                 <PostItem
-                  index={index}
                   key={post.id}
                   post={post}
                   color={color}
@@ -178,54 +192,42 @@ const Column: React.FC<ColumnProps> = ({
           );
         })}
       </Groups>
-      <Droppable
-        droppableId={'column#' + column.index}
-        isCombineEnabled
-        isDropDisabled={!permissions.canReorderPosts}
+      <PostsWrapper
+        ref={postsRef}
+        draggingOver={draggingOver}
+        draggingColor={column.color}
       >
-        {(
-          dropProvided: DroppableProvided,
-          dropSnapshot: DroppableStateSnapshot
-        ) => (
-          <PostsWrapper
-            ref={dropProvided.innerRef}
-            {...dropProvided.droppableProps}
-            draggingOver={dropSnapshot.isDraggingOver}
-            draggingColor={column.color}
-          >
-            {posts.filter(searchPredicate).map((post, index) => (
-              <PostItem
-                index={index}
-                key={post.id}
-                post={post}
-                color={color}
-                onLike={() => onLike(post)}
-                onDislike={() => onDislike(post)}
-                onCancelVotes={() => onCancelVotes(post)}
-                onDelete={() => onDelete(post)}
-                onEdit={(content) =>
-                  onEdit({
-                    ...post,
-                    content,
-                  })
-                }
-                onEditAction={(action) =>
-                  onEdit({
-                    ...post,
-                    action,
-                  })
-                }
-                onEditGiphy={(giphy) =>
-                  onEdit({
-                    ...post,
-                    giphy,
-                  })
-                }
-              />
-            ))}
-          </PostsWrapper>
-        )}
-      </Droppable>
+        {posts.filter(searchPredicate).map((post) => (
+          <PostItem
+            key={post.id}
+            post={post}
+            color={color}
+            combine={permissions.canReorderPosts}
+            onLike={() => onLike(post)}
+            onDislike={() => onDislike(post)}
+            onCancelVotes={() => onCancelVotes(post)}
+            onDelete={() => onDelete(post)}
+            onEdit={(content) =>
+              onEdit({
+                ...post,
+                content,
+              })
+            }
+            onEditAction={(action) =>
+              onEdit({
+                ...post,
+                action,
+              })
+            }
+            onEditGiphy={(giphy) =>
+              onEdit({
+                ...post,
+                giphy,
+              })
+            }
+          />
+        ))}
+      </PostsWrapper>
     </ColumnWrapper>
   );
 };

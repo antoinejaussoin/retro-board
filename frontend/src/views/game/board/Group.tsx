@@ -1,11 +1,8 @@
-import { PropsWithChildren, useCallback, useState } from 'react';
+import { PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react';
 import { PostGroup } from 'common';
 import styled from '@emotion/styled';
-import {
-  Droppable,
-  DroppableProvided,
-  DroppableStateSnapshot,
-} from '@hello-pangea/dnd';
+import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
+import { isPostDragData } from './drag';
 import { colors } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import {
@@ -49,16 +46,26 @@ export default function Group({
   const toggleCollapse = useCallback(() => {
     setCollapsed((c) => !c);
   }, []);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [draggingOver, setDraggingOver] = useState(false);
+  useEffect(() => {
+    const element = containerRef.current;
+    if (!element) {
+      return;
+    }
+    return dropTargetForElements({
+      element,
+      canDrop: ({ source }) => isPostDragData(source.data),
+      getData: () => ({ type: 'group', targetId: `group#${group.id}` }),
+      onDragEnter: () => setDraggingOver(true),
+      onDragLeave: () => setDraggingOver(false),
+      onDrop: () => setDraggingOver(false),
+    });
+  }, [group.id]);
   return (
-    <Droppable droppableId={'group#' + group.id} key={group.id} mode="standard">
-      {(
-        dropProvided: DroppableProvided,
-        dropSnapshot: DroppableStateSnapshot
-      ) => (
         <GroupContainer
-          ref={dropProvided.innerRef}
-          {...dropProvided.droppableProps}
-          draggingOver={dropSnapshot.isDraggingOver}
+          ref={containerRef}
+          draggingOver={draggingOver}
         >
           <Header collapsed={collapsed}>
             <Label>
@@ -103,8 +110,6 @@ export default function Group({
             </Content>
           ) : null}
         </GroupContainer>
-      )}
-    </Droppable>
   );
 }
 

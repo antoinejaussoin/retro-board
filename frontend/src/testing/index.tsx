@@ -2,12 +2,6 @@ import { PropsWithChildren, useEffect, useState } from 'react';
 import { render, RenderOptions, RenderResult } from '@testing-library/react';
 import { vi } from 'vitest';
 import { BackendCapabilities, FullUser, Session, defaultOptions } from 'common';
-import {
-  DragDropContext,
-  Droppable,
-  DroppableProvided,
-  DroppableStateSnapshot,
-} from '@hello-pangea/dnd';
 import useSession from '../views/game/useSession';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { queryKeys } from 'state/queryKeys';
@@ -126,15 +120,7 @@ export default function Inner({ children }: PropsWithChildren<{}>) {
   useEffect(() => {
     receiveBoard(initialSession);
   }, [receiveBoard]);
-  return (
-    <DragDropContext onDragEnd={() => {}}>
-      <Droppable droppableId="test">
-        {(dropProvided: DroppableProvided, _: DroppableStateSnapshot) => (
-          <div ref={dropProvided.innerRef}>{children}</div>
-        )}
-      </Droppable>
-    </DragDropContext>
-  );
+  return children;
 }
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;

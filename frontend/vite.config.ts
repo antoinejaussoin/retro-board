@@ -18,6 +18,8 @@ export default defineConfig({
   assetsInclude: ['**/*.md'],
   define: {
     APP_VERSION: JSON.stringify(process.env.npm_package_version),
+    // The `util` package (pulled in by isemail) reads this while loading.
+    'process.env.NODE_DEBUG': 'false',
   },
   server: {
     port: 3000,

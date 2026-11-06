@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useRef } from 'react';
+import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
 import Typography from '@mui/material/Typography';
 import Popover from '@mui/material/Popover';
@@ -19,7 +19,10 @@ import {
   EmojiEmotionsOutlined,
   Clear,
 } from '@mui/icons-material';
-import { Draggable, DraggableProvided } from '@hello-pangea/dnd';
+import {
+  draggable,
+  dropTargetForElements,
+} from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { useTranslation } from 'react-i18next';
 import EditableLabel from '../../../../components/EditableLabel';
 import { Palette } from '../../../../Theme';
@@ -38,10 +41,11 @@ import useCrypto from '../../../../crypto/useCrypto';
 import { getLorem } from './lorem';
 import useCanDecrypt from '../../../../crypto/useCanDecrypt';
 import { useConfirm } from 'material-ui-confirm';
+import { isPostDragData } from '../drag';
 
 interface PostItemProps {
-  index: number;
   post: Post;
+  combine?: boolean;
   color: string;
   onLike: () => void;
   onDislike: () => void;
@@ -67,9 +71,9 @@ const useStyles = makeStyles(() => {
 });
 
 const PostItem = ({
-  index,
   post,
   color,
+  combine = false,
   onLike,
   onDislike,
   onCancelVotes,
@@ -100,6 +104,9 @@ const PostItem = ({
     post.giphy
   );
   const postElement = useRef<HTMLButtonElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const handleRef = useRef<HTMLDivElement>(null);
+  const [dragging, setDragging] = useState(false);
   const [actionsToggled, toggleAction] = useToggle(false);
   const [showGiphyEditor, setShowGiphyEditor] = useState(false);
   const confirm = useConfirm();
@@ -159,22 +166,55 @@ const PostItem = ({
     return isBlurred ? generateLoremIpsum(post.content) : decrypt(post.content);
   }, [decrypt, isBlurred, post.content]);
 
+  useEffect(() => {
+    const element = cardRef.current;
+    if (!element) {
+      return;
+    }
+    const cleanups: Array<() => void> = [];
+    const handle = handleRef.current;
+    if (canReorder && handle) {
+      cleanups.push(
+        draggable({
+          element,
+          dragHandle: handle,
+          getInitialData: () => ({ type: 'post', postId: post.id }),
+          onDragStart: () => setDragging(true),
+          onDrop: () => setDragging(false),
+        })
+      );
+    }
+    if (combine) {
+      cleanups.push(
+        dropTargetForElements({
+          element,
+          canDrop: ({ source }) =>
+            isPostDragData(source.data) && source.data.postId !== post.id,
+          getData: () => ({ type: 'post', postId: post.id }),
+        })
+      );
+    }
+    return () => {
+      for (const cleanup of cleanups) {
+        cleanup();
+      }
+    };
+  }, [canReorder, combine, post.id]);
+
   return (
     <>
-      <Draggable
-        draggableId={post.id}
-        index={index}
-        isDragDisabled={!canReorder}
+      <PostCard
+        ref={cardRef}
+        data-post-id={post.id}
+        style={{ opacity: dragging ? 0.4 : undefined }}
       >
-        {(provided: DraggableProvided) => (
-          <PostCard ref={provided.innerRef} {...provided.draggableProps}>
             {isBlurred ? (
               <Tooltip title="Cards from other people will be shown when the moderator chooses to reveal them.">
                 <BlurOverlay />
               </Tooltip>
             ) : null}
             {canReorder ? (
-              <DragHandle {...provided.dragHandleProps} className="drag-handle">
+              <DragHandle ref={handleRef} className="drag-handle">
                 <DragIndicator />
               </DragHandle>
             ) : null}
@@ -329,8 +369,6 @@ const PostItem = ({
               ) : null}
             </ActionsBar>
           </PostCard>
-        )}
-      </Draggable>
       <Popover
         open={showGiphyEditor}
         anchorEl={postElement.current}

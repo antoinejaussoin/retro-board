@@ -5,11 +5,11 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "@atlaskit/pragmatic-drag-and-drop": "1.7.7",
     "@biomejs/biome": "1.9.4",
     "@emoji-mart/data": "1.2.1",
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",
-    "@hello-pangea/dnd": "18.0.1",
     "@mui/icons-material": "6.5.0",
     "@mui/material": "6.5.0",
     "@mui/styles": "6.5.0",
