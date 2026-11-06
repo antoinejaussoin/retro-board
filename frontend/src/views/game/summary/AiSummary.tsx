@@ -1,6 +1,7 @@
-import { AutoAwesome } from '@mui/icons-material';
+import { AutoAwesome, Edit } from '@mui/icons-material';
 import {
   Alert,
+  Box,
   Button,
   Card,
   CardContent,
@@ -17,6 +18,7 @@ import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
 import useUser from 'state/user/useUser';
 import useSession from '../useSession';
+import { SummaryMarkdownEditor } from './SummaryMarkdownEditor';
 
 interface AiSummaryProps {
   onSummary: (summary: string) => void;
@@ -34,6 +36,9 @@ export function AiSummary({ onSummary }: AiSummaryProps) {
   const [summary, setSummary] = useState('');
   const [loadedFor, setLoadedFor] = useState('');
   const [stale, setStale] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState('');
+  const [saving, setSaving] = useState(false);
   const visible =
     ai &&
     !!session &&
@@ -100,6 +105,7 @@ export function AiSummary({ onSummary }: AiSummaryProps) {
         setSummary(body.summary);
         setLoadedFor(session.id);
         setStale(false);
+        setEditing(false);
         onSummary(body.summary);
       } else if (response.status === 402) {
         setError(
@@ -115,6 +121,39 @@ export function AiSummary({ onSummary }: AiSummaryProps) {
       setLoading(false);
     }
   }, [onSummary, session, t, user]);
+
+  const saveEdit = useCallback(async () => {
+    if (!session) {
+      return;
+    }
+    setSaving(true);
+    setError(null);
+    try {
+      const response = await fetch(
+        `/api/ai/summary/${encodeURIComponent(session.id)}`,
+        {
+          method: 'PATCH',
+          body: JSON.stringify({ summary: draft }),
+          ...requestConfig(),
+        },
+      );
+      if (response.ok) {
+        const body = (await response.json()) as AiSummaryResponse;
+        loadTicket.current += 1;
+        setSummary(body.summary);
+        setLoadedFor(session.id);
+        setEditing(false);
+        onSummary(body.summary);
+      } else {
+        setError(t('Ai.genericError'));
+      }
+    } catch (cause) {
+      console.error(cause);
+      setError(t('Ai.genericError'));
+    } finally {
+      setSaving(false);
+    }
+  }, [draft, onSummary, session, t]);
 
   if (!visible) {
     return null;
@@ -153,28 +192,59 @@ export function AiSummary({ onSummary }: AiSummaryProps) {
             {error}
           </Alert>
         ) : null}
-        {shown ? <ReactMarkdown>{shown}</ReactMarkdown> : null}
-        {canGenerate || canRegenerate ? (
-          <Button
-            variant="contained"
-            sx={{ marginTop: shown ? 2 : 0 }}
-            startIcon={
-              loading ? (
-                <CircularProgress size={16} color="inherit" />
-              ) : (
-                <AutoAwesome />
-              )
-            }
-            disabled={loading}
-            onClick={summarise}
-          >
-            {loading
-              ? t('SummaryBoard.summarising')
-              : canRegenerate
-                ? t('SummaryBoard.regenerate')
-                : t('SummaryBoard.summarise')}
-          </Button>
+        {editing ? (
+          <SummaryMarkdownEditor value={draft} onChange={setDraft} />
+        ) : shown ? (
+          <ReactMarkdown>{shown}</ReactMarkdown>
         ) : null}
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, marginTop: 2 }}>
+          {editing ? (
+            <>
+              <Button disabled={saving} onClick={() => setEditing(false)}>
+                {t('Generic.cancel')}
+              </Button>
+              <Button variant="contained" disabled={saving} onClick={saveEdit}>
+                {saving ? (
+                  <CircularProgress size={16} color="inherit" />
+                ) : (
+                  t('SummaryBoard.save')
+                )}
+              </Button>
+            </>
+          ) : null}
+          {(canGenerate || canRegenerate) && !editing ? (
+            <Button
+              variant="contained"
+              startIcon={
+                loading ? (
+                  <CircularProgress size={16} color="inherit" />
+                ) : (
+                  <AutoAwesome />
+                )
+              }
+              disabled={loading}
+              onClick={summarise}
+            >
+              {loading
+                ? t('SummaryBoard.summarising')
+                : canRegenerate
+                  ? t('SummaryBoard.regenerate')
+                  : t('SummaryBoard.summarise')}
+            </Button>
+          ) : null}
+          {shown && !editing ? (
+            <Button
+              startIcon={<Edit />}
+              disabled={loading}
+              onClick={() => {
+                setDraft(shown);
+                setEditing(true);
+              }}
+            >
+              {t('SummaryBoard.edit')}
+            </Button>
+          ) : null}
+        </Box>
       </CardContent>
     </Card>
   );

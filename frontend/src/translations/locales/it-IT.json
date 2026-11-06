@@ -287,7 +287,14 @@
     "aiSummaryTitle": "Riepilogo IA",
     "aiSummaryHelp": "Genera un breve riepilogo di questa retrospettiva. È incluso quando copi il riepilogo.",
     "aiSummaryStale": "La board è cambiata da quando è stato scritto questo riepilogo.",
-    "regenerate": "Rigenera il riepilogo"
+    "regenerate": "Rigenera il riepilogo",
+    "edit": "Modifica",
+    "save": "Salva",
+    "preview": "Anteprima",
+    "bold": "Grassetto",
+    "italic": "Corsivo",
+    "heading": "Titolo",
+    "list": "Elenco"
   },
   "SessionName": {
     "defaultSessionName": "La mia Retrospective"

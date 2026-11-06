@@ -216,6 +216,17 @@ async fn http_contract() {
         401,
         "reading a summary requires a login"
     );
+    let edit_anon = client
+        .patch(format!("{}/api/ai/summary/{encrypted_id}", server.base))
+        .json(&serde_json::json!({"summary": "edited"}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(
+        edit_anon.status(),
+        401,
+        "editing a summary requires a login"
+    );
 
     let summary_encrypted = client
         .post(format!("{}/api/ai/summary", server.base))

@@ -287,7 +287,14 @@
     "aiSummaryTitle": "MI-összefoglaló",
     "aiSummaryHelp": "Készítsen rövid összefoglalót erről a retrospektívről. A másoláskor ez is bekerül az összefoglalóba.",
     "aiSummaryStale": "A tábla megváltozott az összefoglaló megírása óta.",
-    "regenerate": "Összefoglaló újragenerálása"
+    "regenerate": "Összefoglaló újragenerálása",
+    "edit": "Szerkesztés",
+    "save": "Mentés",
+    "preview": "Előnézet",
+    "bold": "Félkövér",
+    "italic": "Dőlt",
+    "heading": "Címsor",
+    "list": "Lista"
   },
   "SessionName": {
     "defaultSessionName": "Retro"

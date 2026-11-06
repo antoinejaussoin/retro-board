@@ -13,6 +13,12 @@ pub struct AiSummaryPayload {
     pub id: String,
 }
 
+/// Body of `PATCH /api/ai/summary/{id}`. The Markdown the user edited.
+#[derive(Debug, Deserialize)]
+pub struct EditAiSummaryPayload {
+    pub summary: String,
+}
+
 /// Markdown write-up returned by `POST /api/ai/summary`.
 #[derive(Debug, Serialize)]
 pub struct AiSummaryResponse {

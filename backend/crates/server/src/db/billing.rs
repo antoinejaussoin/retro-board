@@ -117,6 +117,17 @@ pub async fn stored_ai_summary(
     }))
 }
 
+/// Replace the saved summary text and leave the board fingerprint unchanged.
+pub async fn update_ai_summary(pool: &PgPool, session_id: &str, summary: &str) -> DbResult<bool> {
+    let result =
+        sqlx::query("UPDATE sessions SET ai_summary = $2 WHERE id = $1 AND ai_summary IS NOT NULL")
+            .bind(session_id)
+            .bind(summary)
+            .execute(pool)
+            .await?;
+    Ok(result.rows_affected() == 1)
+}
+
 pub async fn save_ai_summary(
     pool: &PgPool,
     session_id: &str,

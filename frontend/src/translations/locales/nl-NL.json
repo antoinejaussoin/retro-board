@@ -287,7 +287,14 @@
     "aiSummaryTitle": "AI-samenvatting",
     "aiSummaryHelp": "Genereer een korte samenvatting van deze retrospective. Deze wordt meegenomen wanneer je de samenvatting kopieert.",
     "aiSummaryStale": "Het bord is veranderd sinds deze samenvatting is geschreven.",
-    "regenerate": "Samenvatting opnieuw maken"
+    "regenerate": "Samenvatting opnieuw maken",
+    "edit": "Bewerken",
+    "save": "Opslaan",
+    "preview": "Voorbeeld",
+    "bold": "Vet",
+    "italic": "Cursief",
+    "heading": "Kop",
+    "list": "Lijst"
   },
   "SessionName": {
     "defaultSessionName": "Mijn Retrospective"

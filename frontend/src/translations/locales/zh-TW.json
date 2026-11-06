@@ -287,7 +287,14 @@
     "aiSummaryTitle": "AI 總結",
     "aiSummaryHelp": "產生這次回顧的簡短總結。複製摘要時會包含這份總結。",
     "aiSummaryStale": "撰寫這份總結後，看板已有更新。",
-    "regenerate": "重新產生總結"
+    "regenerate": "重新產生總結",
+    "edit": "編輯",
+    "save": "儲存",
+    "preview": "預覽",
+    "bold": "粗體",
+    "italic": "斜體",
+    "heading": "標題",
+    "list": "清單"
   },
   "SessionName": {
     "defaultSessionName": "我的回顧"

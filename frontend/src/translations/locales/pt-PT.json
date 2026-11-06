@@ -287,7 +287,14 @@
     "aiSummaryTitle": "Resumo de IA",
     "aiSummaryHelp": "Gere um breve resumo desta retrospetiva. É incluído quando copia o resumo.",
     "aiSummaryStale": "O quadro mudou desde que este resumo foi escrito.",
-    "regenerate": "Gerar o resumo novamente"
+    "regenerate": "Gerar o resumo novamente",
+    "edit": "Editar",
+    "save": "Guardar",
+    "preview": "Pré-visualização",
+    "bold": "Negrito",
+    "italic": "Itálico",
+    "heading": "Título",
+    "list": "Lista"
   },
   "SessionName": {
     "defaultSessionName": "Meu Retrospectivo"

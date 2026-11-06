@@ -287,7 +287,14 @@
     "aiSummaryTitle": "ملخص الذكاء الاصطناعي",
     "aiSummaryHelp": "أنشئ ملخصًا قصيرًا لهذه المراجعة. يُضمَّن عند نسخ الملخص.",
     "aiSummaryStale": "تغيّرت اللوحة منذ كتابة هذا الملخص.",
-    "regenerate": "إعادة إنشاء الملخص"
+    "regenerate": "إعادة إنشاء الملخص",
+    "edit": "تعديل",
+    "save": "حفظ",
+    "preview": "معاينة",
+    "bold": "عريض",
+    "italic": "مائل",
+    "heading": "عنوان",
+    "list": "قائمة"
   },
   "SessionName": {
     "defaultSessionName": "جلسة جديدة"

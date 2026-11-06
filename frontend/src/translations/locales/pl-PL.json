@@ -287,7 +287,14 @@
     "aiSummaryTitle": "Podsumowanie AI",
     "aiSummaryHelp": "Wygeneruj krótki opis tej retrospektywy. Zostanie on dołączony, gdy skopiujesz podsumowanie.",
     "aiSummaryStale": "Tablica zmieniła się od czasu napisania tego podsumowania.",
-    "regenerate": "Wygeneruj podsumowanie ponownie"
+    "regenerate": "Wygeneruj podsumowanie ponownie",
+    "edit": "Edytuj",
+    "save": "Zapisz",
+    "preview": "Podgląd",
+    "bold": "Pogrubienie",
+    "italic": "Kursywa",
+    "heading": "Nagłówek",
+    "list": "Lista"
   },
   "SessionName": {
     "defaultSessionName": "Moja Retrospektywa"

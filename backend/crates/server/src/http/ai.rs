@@ -139,6 +139,35 @@ pub(super) async fn ai_summary_stored(
     Json(stored_summary(&state, &board).await).into_response()
 }
 
+pub(super) async fn ai_summary_edit(
+    State(state): State<AppState>,
+    Extension(session): Extension<Arc<Mutex<Session>>>,
+    Path(id): Path<String>,
+    Json(body): Json<crate::models::EditAiSummaryPayload>,
+) -> Response {
+    let Some(user) = logged_in_user(&state, &session).await else {
+        return text(
+            StatusCode::UNAUTHORIZED,
+            "You need to be logged in to use this feature",
+        );
+    };
+    if let Err(response) = open_summary_board(&state, &user, &id).await {
+        return *response;
+    }
+    let summary = body.summary.trim().to_owned();
+    let saved = match db::update_ai_summary(&state.db, &id, &summary).await {
+        Ok(saved) => saved,
+        Err(error) => {
+            tracing::warn!(%error, "edit summary");
+            return text(StatusCode::INTERNAL_SERVER_ERROR, "AI request failed");
+        }
+    };
+    if !saved {
+        return text(StatusCode::NOT_FOUND, "Session not found");
+    }
+    Json(AiSummaryResponse { summary }).into_response()
+}
+
 async fn open_summary_board(
     state: &AppState,
     user: &FullUser,
