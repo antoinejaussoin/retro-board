@@ -17,7 +17,7 @@ function ProPill({ small = false }: ProPillProps) {
   }
   if (!isPro) {
     return (
-      <Chip tone="muted" className={small ? 'px-2 py-0 text-[10px]' : undefined}>
+      <Chip tone="muted" className={small ? 'h-6 px-2.5 text-xs' : undefined}>
         Free
       </Chip>
     );
@@ -25,7 +25,7 @@ function ProPill({ small = false }: ProPillProps) {
   return (
     <Chip
       tone="secondary"
-      className={small ? 'px-2 py-0 text-[10px]' : undefined}
+      className={small ? 'h-6 px-2.5 text-xs' : undefined}
       icon={<Star className="size-3 fill-amber-300 text-amber-300" />}
     >
       {isTrial ? 'Pro Trial' : 'Pro'}
