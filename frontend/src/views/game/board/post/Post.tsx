@@ -213,7 +213,7 @@ const PostItem = ({
           <GripVertical className="size-4" />
         </div>
       ) : null}
-      <div className="px-4 py-3 pr-8">
+      <div className="px-4 py-3 pr-8 text-sm">
         <div className={isBlurred ? 'retro-post-blurred' : undefined}>
           <EditableLabel
             wrapText

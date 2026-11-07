@@ -29,8 +29,8 @@ export function Chat({
     <div className="flex min-h-0 flex-1 flex-col">
       <div className="relative min-h-0 flex-1">
         <ScrollToBottom
-          className="absolute inset-0"
-          scrollViewClassName="h-full"
+          className="!absolute inset-0"
+          scrollViewClassName="h-full overflow-y-auto"
           followButtonClassName="!bg-paper !text-ink after:text-xs after:content-['↓']"
         >
           {messages.map((message, index) => (

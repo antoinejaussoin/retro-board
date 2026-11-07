@@ -102,7 +102,7 @@ export function AiCoach({ open, onClose }: AiCoachProps) {
         <DialogTitle>
           <span className="inline-flex items-center gap-3">
             <Sparkles className="size-5 text-primary-700" />
-            {t('Ai.title')}&nbsp;(beta)
+            {t('Ai.title')}
           </span>
         </DialogTitle>
         <DialogBody className="flex min-h-0 flex-1 flex-col gap-3 overflow-hidden">

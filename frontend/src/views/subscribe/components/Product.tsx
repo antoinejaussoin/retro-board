@@ -40,7 +40,7 @@ function ProductDisplay({
           : 'border-line hover:border-primary-300',
       )}
     >
-      <div className="px-6 pt-6 text-center text-2xl font-medium tracking-tight">
+      <div className="px-6 py-6 text-center text-2xl font-medium leading-none tracking-tight">
         {product.name}
       </div>
       <div className="flex-1 bg-paper px-6 py-4 text-sm leading-6 text-muted">

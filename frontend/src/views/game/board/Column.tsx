@@ -135,18 +135,16 @@ const Column: React.FC<ColumnProps> = ({
           </button>
         </div>
         {permissions.canCreateGroup ? (
-          <div className="flex items-center border-l border-line pl-1">
-            <Tooltip content={t('Column.createGroupTooltip')} side="bottom">
-              <IconButton
-                onClick={onAddGroup}
-                tabIndex={-1}
-                aria-label={t('Column.createGroupTooltip')}
-                className="size-9"
-              >
-                <FolderPlus className="size-5" />
-              </IconButton>
-            </Tooltip>
-          </div>
+          <Tooltip content={t('Column.createGroupTooltip')} side="bottom">
+            <IconButton
+              onClick={onAddGroup}
+              tabIndex={-1}
+              aria-label={t('Column.createGroupTooltip')}
+              className="size-9"
+            >
+              <FolderPlus className="size-5" />
+            </IconButton>
+          </Tooltip>
         ) : null}
       </div>
       <div>

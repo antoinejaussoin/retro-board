@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { remainingAllowance } from '../useRemainingVotes';
 
 describe('remainingAllowance', () => {
-  it('treats a missing limit as unlimited', () => {
-    expect(remainingAllowance(null, 4)).toBe('unlimited');
+  it('hides a vote type with no limit', () => {
+    expect(remainingAllowance(null, 4)).toBeNull();
   });
 
   it('hides a vote type that is turned off', () => {

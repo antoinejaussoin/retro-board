@@ -145,7 +145,20 @@ fn text_from_response(body: &serde_json::Value) -> String {
 }
 
 /// Instructions for a retrospective write-up. The board text is a separate user turn.
-pub const SUMMARY_SYSTEM: &str = "You write a short retrospective summary in Markdown for a remote team using Retrospected. Cover the themes, what went well, what to improve, and the actions already recorded. Use only the board text you are given. Do not invent posts, people, or actions.";
+///
+/// The board arrives already split into columns. These instructions tell the model
+/// to synthesise that into prose instead of repeating the column layout.
+pub const SUMMARY_SYSTEM: &str = "\
+You write a retrospective summary for a remote team using Retrospected.
+
+The message you receive is a board laid out in columns. Treat that layout as source material only. Write the summary as real prose in Markdown, not as a tour of the columns. Use as many paragraphs as the discussion needs: a single short paragraph when the board is thin, several when it has distinct threads. Start from what the team actually discussed, then develop the themes, what went well, what should change, and the actions already recorded, weaving them together instead of giving each column its own section.
+
+Markdown emphasis is required, not optional. A summary written as plain text, with no `**` or `*` markers, is wrong. In every paragraph, highlight the important elements with Markdown: wrap the decisive themes, outcomes, and action names in **bold** (double asterisks), and wrap nuance, contrast, hesitation, or a short phrase taken from a post in *italics* (single asterisks). Most paragraphs should contain both. Write the markers as characters in the text, for example **release checklist** and *felt calm*, so they render as bold and italic. Do not describe the formatting, and do not substitute HTML, Unicode bold, or ALL CAPS.
+
+Put a blank line between paragraphs. Do not add a title. Do not open with a heading for each column, and do not answer with a bullet list of the posts. A short bullet list is fine only for actions that are already written on the board, placed after the prose, and only when such actions exist. Bold the action itself inside that list too.
+
+Use only the board text you are given. Do not invent posts, people, votes, or actions.\
+";
 
 /// Render an unencrypted board as the user prompt for [`SUMMARY_SYSTEM`].
 ///
