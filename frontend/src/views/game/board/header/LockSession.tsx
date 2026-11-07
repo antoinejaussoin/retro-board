@@ -84,7 +84,7 @@ function LockSession({ onLock }: LockSessionProps) {
             )}
           </IconButton>
         ) : (
-          <Button variant="outline" onClick={handleOpenDialog}>
+          <Button variant="outline" size="sm" onClick={handleOpenDialog}>
             {icon}
             {session.locked
               ? t('Private.unlockButton')

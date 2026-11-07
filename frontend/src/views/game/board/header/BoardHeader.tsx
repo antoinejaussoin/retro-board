@@ -43,8 +43,7 @@ function BoardHeader({ onChangeSession, onLockSession }: BoardHeaderProps) {
   const { session } = useSession();
   const permissions = useSessionUserPermissions();
   const locked = useShouldLockSession();
-  const narrow = useMediaQuery('(max-width: 500px)');
-  const medium = useMediaQuery('(max-width: 1100px)');
+  const compact = useMediaQuery('(max-width: 720px)');
 
   const handleReveal = useCallback(() => {
     if (session) {
@@ -74,20 +73,16 @@ function BoardHeader({ onChangeSession, onLockSession }: BoardHeaderProps) {
     return <span>Loading...</span>;
   }
 
-  const template = narrow
+  const showVotes = remainingVotes.up !== null || remainingVotes.down !== null;
+  const template = compact
     ? {
-        columns: '1fr 1fr 1fr',
+        columns: '1fr auto 1fr',
         areas: '"title title title" "left votes right"',
       }
-    : medium
-      ? {
-          columns: '1fr 1fr',
-          areas: '"left right" "title title" "votes votes"',
-        }
-      : {
-          columns: '1fr 3fr 1fr',
-          areas: '"left title right" ". votes ."',
-        };
+    : {
+        columns: 'auto minmax(0, 1fr) auto',
+        areas: '"left title right"',
+      };
 
   return (
     <>
@@ -127,7 +122,7 @@ function BoardHeader({ onChangeSession, onLockSession }: BoardHeaderProps) {
         ) : null}
       </div>
       <div
-        className="mt-5 mb-12 grid items-center justify-items-center gap-x-2.5 gap-y-4"
+        className="grid items-center gap-x-3 gap-y-1.5"
         style={{
           gridTemplateColumns: template.columns,
           gridTemplateAreas: template.areas,
@@ -150,7 +145,7 @@ function BoardHeader({ onChangeSession, onLockSession }: BoardHeaderProps) {
           style={{ gridArea: 'title' }}
           className="flex w-full min-w-0 justify-center justify-self-stretch"
         >
-          <h1 className="w-full text-center text-2xl font-light">
+          <h1 className="w-full text-center text-xl font-light leading-tight">
             <EditableLabel
               wrapText
               placeholder={t('SessionName.defaultSessionName')!}
@@ -163,16 +158,23 @@ function BoardHeader({ onChangeSession, onLockSession }: BoardHeaderProps) {
         </div>
         <div
           style={{ gridArea: 'right' }}
-          className="flex justify-self-end"
+          className="flex items-center justify-self-end gap-8"
         >
+          {!compact && showVotes ? (
+            <RemainingVotes up={remainingVotes.up} down={remainingVotes.down} />
+          ) : null}
           {canModifyOptions ? <LockSession onLock={onLockSession} /> : null}
         </div>
-        <div
-          style={{ gridArea: 'votes' }}
-          className="mt-2.5 flex justify-center"
-        >
-          <RemainingVotes up={remainingVotes.up} down={remainingVotes.down} />
-        </div>
+        {compact ? (
+          <div style={{ gridArea: 'votes' }} className="flex justify-center">
+            {showVotes ? (
+              <RemainingVotes
+                up={remainingVotes.up}
+                down={remainingVotes.down}
+              />
+            ) : null}
+          </div>
+        ) : null}
       </div>
       {shouldDisplayEncryptionWarning ? (
         <TransitionAlert

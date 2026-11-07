@@ -37,7 +37,7 @@ function RevealButton({ onClick }: RevealButtonProps) {
           <Eye className="size-5" />
         </IconButton>
       ) : (
-        <Button variant="outline" onClick={handleOpenDialog}>
+        <Button variant="outline" size="sm" onClick={handleOpenDialog}>
           <Eye className="size-4" />
           {t('RevealCards.buttonLabel')}
         </Button>

@@ -55,7 +55,7 @@ function ModifyOptions({ settings, owner, onChange }: ModifyOptionsProps) {
           <Settings className="size-5" />
         </IconButton>
       ) : (
-        <Button variant="outline" onClick={() => setOpen(true)}>
+        <Button variant="outline" size="sm" onClick={() => setOpen(true)}>
           <Settings className="size-4" />
           {t('Join.standardTab.customizeButton')}
         </Button>

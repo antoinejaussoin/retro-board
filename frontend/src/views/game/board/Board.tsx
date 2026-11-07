@@ -165,7 +165,7 @@ function GameMode({
   }
 
   return (
-    <div className="px-4 pt-6 pb-28">
+    <div className="px-4 pt-3 pb-28">
       {demo ? (
         <div className="mb-4">
           <ClosableAlert severity="info" closable>
@@ -178,12 +178,12 @@ function GameMode({
         onLockSession={onLockSession}
       />
       <div
-        className={cn('mt-8 grid gap-3', stacked && 'mt-2.5 gap-5')}
+        className={cn('mt-3 grid gap-3', stacked && 'mt-2 gap-5')}
         style={{
           gridTemplateColumns: stacked
             ? '1fr'
             : `repeat(${columns.length}, minmax(0, 1fr))`,
-          minHeight: stacked ? undefined : 'calc(100dvh - 14rem)',
+          minHeight: stacked ? undefined : 'calc(100dvh - 11rem)',
         }}
       >
         {columns.map((column) => (

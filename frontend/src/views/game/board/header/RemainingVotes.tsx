@@ -18,7 +18,7 @@ const RemainingVotes = ({ up, down }: RemainingVotesProps) => {
   }
 
   return (
-    <div className="flex justify-end gap-5 pb-2.5 sm:pb-0">
+    <div className="flex items-center gap-3 pr-3">
       {up !== null ? (
         <Tooltip content={getTooltip(t, up, 'up')} side="bottom">
           <span className="relative inline-flex">
