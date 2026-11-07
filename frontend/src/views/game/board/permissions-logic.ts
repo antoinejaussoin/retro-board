@@ -69,6 +69,7 @@ export interface PostUserPermissions {
   canDelete: boolean;
   canShowAuthor: boolean;
   canUseGiphy: boolean;
+  canReact: boolean;
   canReorder: boolean;
   canCancelVote: boolean;
   isBlurred: boolean;
@@ -90,6 +91,7 @@ export function postPermissionLogic(
       canShowAuthor: false,
       canUpVote: false,
       canUseGiphy: false,
+      canReact: false,
       canDisplayDownVote: false,
       canDisplayUpVote: false,
       canReorder: false,
@@ -105,6 +107,7 @@ export function postPermissionLogic(
     allowMultipleVotes,
     allowAuthorVisible,
     allowGiphy,
+    allowReactions,
     allowReordering,
     allowCancelVote,
     restrictReorderingToModerator: restrictReorderingToOwner,
@@ -140,6 +143,7 @@ export function postPermissionLogic(
   const canDelete = !readonly && isLoggedIn && isAuthor;
   const canShowAuthor = allowAuthorVisible && !capabilities.disableShowAuthor;
   const canUseGiphy = isLoggedIn && allowGiphy;
+  const canReact = !readonly && isLoggedIn && allowReactions;
   const canReorder =
     !readonly &&
     isLoggedIn &&
@@ -158,6 +162,7 @@ export function postPermissionLogic(
     canDelete,
     canShowAuthor,
     canUseGiphy,
+    canReact,
     canReorder,
     canCancelVote,
     isBlurred,

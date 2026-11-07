@@ -13,7 +13,12 @@ import useUser from '../../../state/user/useUser';
 import { postPermissionLogic } from '../board/permissions-logic';
 import type { ColumnContent } from '../types';
 import useSession from '../useSession';
-import { countVotes, countVotesForGroup } from '../utils';
+import {
+  countReactions,
+  countReactionsForGroup,
+  countVotes,
+  countVotesForGroup,
+} from '../utils';
 import type { ActionItem, ColumnStats, ColumnStatsItem, Stats } from './types';
 
 export function useSummary(columns: ColumnContent[]): Stats {
@@ -69,6 +74,7 @@ function postToItem(
     children: [],
     likes: countVotes(post, 'like'),
     dislikes: countVotes(post, 'dislike'),
+    reactions: countReactions(post),
     post,
   };
 }
@@ -90,6 +96,7 @@ function groupToItem(
     ),
     likes: countVotesForGroup(group, 'like'),
     dislikes: countVotesForGroup(group, 'dislike'),
+    reactions: countReactionsForGroup(group),
     group,
   };
 }

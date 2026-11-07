@@ -67,7 +67,10 @@
     "voteRemainingNone": "残り {{type}} はありません。",
     "voteRemainingUnlimited": "{{type}}は無制限です。",
     "toggleGiphyButton": "Giphy画像の切り替え",
-    "cancelVote": "この投稿への投票をキャンセル"
+    "cancelVote": "この投稿への投票をキャンセル",
+    "addReaction": "リアクションを追加",
+    "reactWith": "{{emoji}} でリアクション",
+    "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {
     "title": "セッションをカスタマイズ",
@@ -110,6 +113,8 @@
     "newPostsFirstHelp": "新しい投稿が列の上部に追加されます",
     "allowGiphy": "Giphyを許可する",
     "allowGiphyHelp": "ユーザーが投稿に対してGiphy画像を設定できるようにする",
+    "allowReactions": "絵文字リアクションを許可",
+    "allowReactionsHelp": "参加者が投稿に絵文字リアクションを付けられるようにする",
     "allowGrouping": "グループ化を許可",
     "allowGroupingHelp": "投稿をグループ化するグループの作成を許可する",
     "allowReordering": "並べ替えを許可",
@@ -170,6 +175,7 @@
     "error_cannot_save_columns": "列の保存に失敗しました",
     "error_cannot_save_options": "オプションの保存に失敗しました",
     "error_cannot_cancel_votes": "投票のキャンセルに失敗しました",
+    "error_cannot_react": "リアクションを保存できませんでした。",
     "maxPostsReached": "モデレーターが設定した投稿の最大数に達しました。",
     "iAmDone": "終わりました！",
     "iAmNotDoneYet": "まだ完了していません...",

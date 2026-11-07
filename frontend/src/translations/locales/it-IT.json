@@ -67,7 +67,10 @@
     "voteRemainingNone": "Non hai nessun {{type}} rimanente.",
     "voteRemainingUnlimited": "Hai un numero illimitato di {{type}}.",
     "toggleGiphyButton": "Toggle immagine Giphy",
-    "cancelVote": "Annulla i tuoi voti su questo post"
+    "cancelVote": "Annulla i tuoi voti su questo post",
+    "addReaction": "Aggiungi una reazione",
+    "reactWith": "Reagisci con {{emoji}}",
+    "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {
     "title": "Personalizza il tuo gioco!",
@@ -110,6 +113,8 @@
     "newPostsFirstHelp": "Nuovi post sono stati aggiunti nella parte superiore della colonna",
     "allowGiphy": "Consenti Giphy",
     "allowGiphyHelp": "Permetti la creazione di gruppi per raggruppare post",
+    "allowReactions": "Consenti reazioni emoji",
+    "allowReactionsHelp": "Consenti ai partecipanti di lasciare reazioni emoji sui post",
     "allowGrouping": "Consenti il raggruppamento",
     "allowGroupingHelp": "Permetti la creazione di gruppi per raggruppare post",
     "allowReordering": "Consenti il riordinamento",
@@ -170,6 +175,7 @@
     "error_cannot_save_columns": "Salvataggio colonne non riuscito",
     "error_cannot_save_options": "Opzioni di salvataggio fallite",
     "error_cannot_cancel_votes": "Annullamento dei voti fallito",
+    "error_cannot_react": "Non è stato possibile salvare la tua reazione.",
     "maxPostsReached": "Hai raggiunto il numero massimo di post impostati dal moderatore.",
     "iAmDone": "Ho finito!",
     "iAmNotDoneYet": "Non ho ancora finito...",

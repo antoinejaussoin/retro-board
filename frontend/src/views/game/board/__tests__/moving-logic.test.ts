@@ -17,6 +17,7 @@ function p(
     content: '',
     user: {} as unknown as User,
     votes: [],
+    reactions: [],
     giphy: null,
     rank,
     group,

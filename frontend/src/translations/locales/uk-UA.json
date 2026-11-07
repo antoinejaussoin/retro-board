@@ -67,7 +67,10 @@
     "voteRemainingNone": "У вас не залишилося {{type}}.",
     "voteRemainingUnlimited": "У вас необмежена кількість {{type}}.",
     "toggleGiphyButton": "Перемкнути зображення Giphy",
-    "cancelVote": "Скасувати Ваші голосування в цьому повідомленні"
+    "cancelVote": "Скасувати Ваші голосування в цьому повідомленні",
+    "addReaction": "Додати реакцію",
+    "reactWith": "Відреагувати {{emoji}}",
+    "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {
     "title": "Налаштуйте вашу сесію",
@@ -110,6 +113,8 @@
     "newPostsFirstHelp": "Нові пости додаються у верхній частині колонки",
     "allowGiphy": "Дозволити Giphy",
     "allowGiphyHelp": "Дозволити користувачам встановлювати зображення Giphy з постом",
+    "allowReactions": "Дозволити емодзі-реакції",
+    "allowReactionsHelp": "Дозволити учасникам залишати емодзі-реакції на картках",
     "allowGrouping": "Дозволити групування",
     "allowGroupingHelp": "Дозволити створення груп для групових повідомлень",
     "allowReordering": "Дозволити повторне замовлення",
@@ -170,6 +175,7 @@
     "error_cannot_save_columns": "Помилка збереження стовпців",
     "error_cannot_save_options": "Зберегти параметри не вдалося",
     "error_cannot_cancel_votes": "Скасування голосування не вдалося",
+    "error_cannot_react": "Не вдалося зберегти вашу реакцію.",
     "maxPostsReached": "Ви досягли максимальної кількості повідомлень, встановлених модератором.",
     "iAmDone": "Я завершив!",
     "iAmNotDoneYet": "Я ще не завершив...",

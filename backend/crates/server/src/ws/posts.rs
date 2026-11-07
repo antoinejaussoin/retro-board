@@ -5,12 +5,12 @@ use uuid::Uuid;
 
 use super::{
     broadcast, emit_error, RECEIVE_CANCEL_VOTES, RECEIVE_DELETE_POST, RECEIVE_EDIT_POST,
-    RECEIVE_LIKE, RECEIVE_POST,
+    RECEIVE_LIKE, RECEIVE_POST, RECEIVE_REACT,
 };
-use crate::db::{self};
+use crate::db::{self, ReactionChange};
 use crate::models::{
-    DeletePostPayload, IncomingPost, LikePayload, PostUpdate, ReceiveCancelVotesPayload,
-    ReceiveLikePayload,
+    DeletePostPayload, IncomingPost, LikePayload, PostUpdate, ReactPayload,
+    ReceiveCancelVotesPayload, ReceiveLikePayload, ReceiveReactPayload,
 };
 use crate::state::AppState;
 
@@ -187,5 +187,56 @@ pub(super) fn cancel_votes<A: Adapter>(
             },
         )
         .await;
+    })
+}
+
+pub(super) fn react_post<A: Adapter>(
+    state: AppState,
+    ids: Option<(String, String)>,
+    session_id: String,
+    payload: Value,
+    socket: SocketRef<A>,
+) -> std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>> {
+    Box::pin(async move {
+        let Some((user_id, _)) = ids else {
+            emit_error(
+                &socket,
+                "action_unauthorised",
+                Some("User not authenticated".into()),
+            );
+            return;
+        };
+        let Ok(body) = serde_json::from_value::<ReactPayload>(payload) else {
+            emit_error(&socket, "cannot_react", None);
+            return;
+        };
+        match db::toggle_reaction(
+            &state.db,
+            &user_id,
+            &session_id,
+            &body.post_id,
+            &body.emoji,
+        )
+        .await
+        {
+            Ok(Some(change)) => {
+                let (reaction, change_label) = match change {
+                    ReactionChange::Added(reaction) => (reaction, "added"),
+                    ReactionChange::Removed(reaction) => (reaction, "removed"),
+                };
+                broadcast(
+                    &socket,
+                    &session_id,
+                    RECEIVE_REACT,
+                    &ReceiveReactPayload {
+                        post_id: body.post_id,
+                        reaction,
+                        change: change_label.into(),
+                    },
+                )
+                .await;
+            }
+            _ => emit_error(&socket, "cannot_react", None),
+        }
     })
 }

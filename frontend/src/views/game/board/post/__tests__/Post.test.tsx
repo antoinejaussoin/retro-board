@@ -40,6 +40,7 @@ function buildVotes(type: VoteType, users: User[], post: Post): VoteExtract[] {
 const post: Post = {
   content: 'Foo',
   votes: [],
+  reactions: [],
   user: u('Anne-Claire'),
   id: '1',
   column: 0,
@@ -66,6 +67,7 @@ describe('Post', () => {
         onLike={noop}
         onEditAction={noop}
         onCancelVotes={noop}
+        onReact={noop}
         color="#123456"
       />
     );
@@ -81,6 +83,7 @@ describe('Post', () => {
         onLike={noop}
         onEditAction={noop}
         onCancelVotes={noop}
+        onReact={noop}
         color="#123456"
       />
     );
@@ -102,6 +105,7 @@ describe('Post', () => {
         onLike={likeHandler}
         onEditAction={noop}
         onCancelVotes={noop}
+        onReact={noop}
         color="#123456"
       />
     );
@@ -143,6 +147,7 @@ describe('Post', () => {
         onEditAction={noop}
         onLike={noop}
         onCancelVotes={noop}
+        onReact={noop}
         color="#123456"
       />
     );
@@ -176,6 +181,7 @@ describe('Post', () => {
         onEditAction={noop}
         onLike={noop}
         onCancelVotes={noop}
+        onReact={noop}
         color="#123456"
       />
     );
@@ -186,5 +192,65 @@ describe('Post', () => {
     const editableInput = queryByLabelText(/post content input/i);
     expect(editableInput).toBeNull();
     expect(editHandler).not.toHaveBeenCalled();
+  });
+
+  it('shows reaction counts and toggles from the chip and picker', () => {
+    const reactHandler = vi.fn();
+    const reacted: Post = {
+      ...post,
+      reactions: [
+        {
+          id: 'r1',
+          emoji: '👍',
+          userId: 'John Doe',
+          userName: 'John Doe',
+        },
+        {
+          id: 'r2',
+          emoji: '👍',
+          userId: 'Charlotte',
+          userName: 'Charlotte',
+        },
+        {
+          id: 'r3',
+          emoji: '🎉',
+          userId: 'Armand',
+          userName: 'Armand',
+        },
+      ],
+    };
+    const { getByRole, getByText, getAllByText } = renderWithRouter(
+      <PostItem
+        post={reacted}
+        onEditGiphy={noop}
+        onDelete={noop}
+        onDislike={noop}
+        onEdit={noop}
+        onLike={noop}
+        onEditAction={noop}
+        onCancelVotes={noop}
+        onReact={reactHandler}
+        color="#123456"
+      />,
+    );
+    const thumbChip = getByRole('button', { pressed: true });
+    expect(thumbChip).toHaveTextContent('👍');
+    expect(thumbChip).toHaveTextContent('2');
+    expect(getByText('🎉').closest('button')).toHaveAttribute(
+      'aria-pressed',
+      'false',
+    );
+    act(() => {
+      thumbChip.click();
+    });
+    expect(reactHandler).toHaveBeenCalledWith('👍');
+    act(() => {
+      getByRole('button', { name: /Post\.addReaction/i }).click();
+    });
+    act(() => {
+      getByText('🚀').click();
+    });
+    expect(reactHandler).toHaveBeenCalledWith('🚀');
+    expect(getAllByText('👍').length).toBeGreaterThan(0);
   });
 });

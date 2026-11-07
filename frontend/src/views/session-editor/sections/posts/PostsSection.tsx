@@ -76,6 +76,16 @@ function PostsSection({ options, onChange }: PostsSectionProps) {
     [onChange, options]
   );
 
+  const setAllowReactions = useCallback(
+    (value: boolean) => {
+      onChange({
+        ...options,
+        allowReactions: value,
+      });
+    },
+    [onChange, options]
+  );
+
   const setBlurCards = useCallback(
     (value: boolean) => {
       onChange({
@@ -201,6 +211,15 @@ function PostsSection({ options, onChange }: PostsSectionProps) {
         help={t('Customize.allowGiphyHelp')!}
       >
         <BooleanOption value={options.allowGiphy} onChange={setAllowGiphy} />
+      </OptionItem>
+      <OptionItem
+        label={t('Customize.allowReactions')!}
+        help={t('Customize.allowReactionsHelp')!}
+      >
+        <BooleanOption
+          value={options.allowReactions}
+          onChange={setAllowReactions}
+        />
       </OptionItem>
     </SettingCategory>
   );

@@ -67,7 +67,10 @@
     "voteRemainingNone": "Você não tem nenhum {{type}} restante.",
     "voteRemainingUnlimited": "Você tem {{type}} ilimitados.",
     "toggleGiphyButton": "Alternar imagem Giphy",
-    "cancelVote": "Cancelar seus votos nesta publicação"
+    "cancelVote": "Cancelar seus votos nesta publicação",
+    "addReaction": "Adicionar uma reação",
+    "reactWith": "Reagir com {{emoji}}",
+    "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {
     "title": "Personalize sua sessão",
@@ -110,6 +113,8 @@
     "newPostsFirstHelp": "Novas postagens são adicionadas no topo da coluna",
     "allowGiphy": "Permitir Giphy",
     "allowGiphyHelp": "Permitir que os usuários definam uma imagem para Giphy contra um post",
+    "allowReactions": "Permitir reações com emoji",
+    "allowReactionsHelp": "Permitir que os participantes deixem reações com emoji nas publicações",
     "allowGrouping": "Permitir Agrupamento",
     "allowGroupingHelp": "Permitir a criação de grupos para agrupar postagens",
     "allowReordering": "Permitir reordenação",
@@ -170,6 +175,7 @@
     "error_cannot_save_columns": "Falha ao salvar colunas",
     "error_cannot_save_options": "Opções de salvamento falharam",
     "error_cannot_cancel_votes": "Falha ao cancelar votos",
+    "error_cannot_react": "Não foi possível guardar a sua reação.",
     "maxPostsReached": "Você atingiu o número máximo de postagens definido pelo moderador.",
     "iAmDone": "Estou pronto!",
     "iAmNotDoneYet": "Eu não terminei ainda...",

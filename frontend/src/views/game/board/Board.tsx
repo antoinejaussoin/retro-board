@@ -42,6 +42,7 @@ interface GameModeProps {
   onDeletePost: (post: Post) => void;
   onLike: (post: Post, like: boolean) => void;
   onCancelVotes: (post: Post) => void;
+  onReact: (post: Post, emoji: string) => void;
   onEdit: (post: Post) => void;
   onEditGroup: (group: PostGroup) => void;
   onDeleteGroup: (group: PostGroup) => void;
@@ -78,6 +79,7 @@ function GameMode({
   onDeletePost,
   onLike,
   onCancelVotes,
+  onReact,
   onEdit,
   onEditGroup,
   onDeleteGroup,
@@ -213,6 +215,7 @@ function GameMode({
             onLike={(post) => onLike(post, true)}
             onDislike={(post) => onLike(post, false)}
             onCancelVotes={onCancelVotes}
+            onReact={onReact}
             onEdit={onEdit}
             onEditGroup={onEditGroup}
             onDeleteGroup={onDeleteGroup}

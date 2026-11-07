@@ -46,7 +46,10 @@
     "voteRemainingOne": null,
     "voteRemainingNone": null,
     "voteRemainingUnlimited": "У вас неограниченное количество {{type}}.",
-    "toggleGiphyButton": null
+    "toggleGiphyButton": null,
+    "addReaction": "Добавить реакцию",
+    "reactWith": "Отреагировать {{emoji}}",
+    "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {
     "title": null,
@@ -76,6 +79,8 @@
     "newPostsFirstHelp": null,
     "allowGiphy": null,
     "allowGiphyHelp": null,
+    "allowReactions": "Разрешить эмодзи-реакции",
+    "allowReactionsHelp": "Разрешить участникам оставлять эмодзи-реакции на карточках",
     "allowGrouping": null,
     "allowGroupingHelp": null,
     "allowReordering": null,
@@ -113,7 +118,8 @@
     "maxPostsReached": null,
     "iAmDone": null,
     "iAmNotDoneYet": null,
-    "userIsReady": null
+    "userIsReady": null,
+    "error_cannot_react": "Не удалось сохранить вашу реакцию."
   },
   "GameMenu": {
     "board": "Записи",

@@ -67,7 +67,10 @@
     "voteRemainingNone": "Nie masz jeszcze żadnych {{type}}.",
     "voteRemainingUnlimited": "Możesz oddawać {{type}} bez limitu.",
     "toggleGiphyButton": "Przełącz obraz Giphy",
-    "cancelVote": "Anuluj swoje głosy na ten post"
+    "cancelVote": "Anuluj swoje głosy na ten post",
+    "addReaction": "Dodaj reakcję",
+    "reactWith": "Zareaguj {{emoji}}",
+    "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {
     "title": "Dostosuj swoją sesję",
@@ -110,6 +113,8 @@
     "newPostsFirstHelp": "Nowe posty są dodawane w górnej części kolumny",
     "allowGiphy": "Zezwalaj na Giphy",
     "allowGiphyHelp": "Zezwalaj użytkownikom na ustawianie obrazu Giphy przeciwko wpisowi",
+    "allowReactions": "Zezwól na reakcje emoji",
+    "allowReactionsHelp": "Pozwól uczestnikom dodawać reakcje emoji do wpisów",
     "allowGrouping": "Zezwalaj na grupowanie",
     "allowGroupingHelp": "Pozwól tworzyć grupy do grupowania postów",
     "allowReordering": "Zezwalaj na ponowne zamawianie",
@@ -170,6 +175,7 @@
     "error_cannot_save_columns": "Zapisywanie kolumn nie powiodło się",
     "error_cannot_save_options": "Zapisywanie opcji nie powiodło się",
     "error_cannot_cancel_votes": "Anulowanie głosów nie powiodło się",
+    "error_cannot_react": "Nie udało się zapisać Twojej reakcji.",
     "maxPostsReached": "Osiągnąłeś maksymalną liczbę postów ustawionych przez moderatora.",
     "iAmDone": "Gotowe!",
     "iAmNotDoneYet": "Jeszcze nie skończyłem...",

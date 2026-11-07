@@ -9,6 +9,7 @@ import {
   type Session,
   type SessionSettings,
   type UnauthorizedAccessPayload,
+  type ReactionExtract,
   type VoteExtract,
   type VoteType,
   type WebsocketMessage,
@@ -19,8 +20,10 @@ import {
   type WsGroupUpdatePayload,
   type WsLikeUpdatePayload,
   type WsPostUpdatePayload,
+  type WsReactPayload,
   type WsReceiveCancelVotesPayload,
   type WsReceiveLikeUpdatePayload,
+  type WsReceiveReactPayload,
   type WsReceiveTimerStartPayload,
   type WsSaveSessionSettingsPayload,
   type WsUserReadyPayload,
@@ -125,6 +128,7 @@ function useGame(sessionId: string) {
     deletePostGroup,
     updatePostGroup,
     receiveVote,
+    receiveReaction,
     resetSession,
     editSessionSettings,
     lockSession,
@@ -326,6 +330,16 @@ function useGame(sessionId: string) {
       },
     );
 
+    socket.on(
+      Actions.RECEIVE_REACT,
+      ({ postId, reaction, change }: WsReceiveReactPayload) => {
+        if (debug) {
+          console.log('Receive reaction: ', postId, reaction, change);
+        }
+        receiveReaction(postId, reaction, change);
+      },
+    );
+
     socket.on(Actions.RECEIVE_EDIT_POST, (post: Post | null) => {
       if (debug) {
         console.log('Receive edit post: ', post);
@@ -431,6 +445,7 @@ function useGame(sessionId: string) {
     receivePost,
     receiveChatMessage,
     receiveVote,
+    receiveReaction,
     receiveBoard,
     updateParticipants,
     deletePost,
@@ -485,6 +500,7 @@ function useGame(sessionId: string) {
           action: null,
           giphy: null,
           votes: [],
+          reactions: [],
           id: v4(),
           column: columnIndex,
           user,
@@ -717,6 +733,35 @@ function useGame(sessionId: string) {
     [user, send, updatePost, allowCancelVotes],
   );
 
+  const onReact = useCallback(
+    (post: Post, emoji: string) => {
+      if (!send || !user) {
+        return;
+      }
+      const existing = post.reactions.find(
+        (reaction) =>
+          reaction.userId === user.id && reaction.emoji === emoji,
+      );
+      const reaction: ReactionExtract = existing ?? {
+        id: v4(),
+        emoji,
+        userId: user.id,
+        userName: user.name,
+      };
+      if (existing) {
+        receiveReaction(post.id, reaction, 'removed');
+      } else {
+        receiveReaction(post.id, reaction, 'added');
+      }
+      send<WsReactPayload>(Actions.REACT_SUCCESS, {
+        postId: post.id,
+        emoji,
+      });
+      trackAction(Actions.REACT_SUCCESS);
+    },
+    [user, send, receiveReaction],
+  );
+
   const onChangeSession = useCallback(
     (settings: SessionSettings, saveAsTemplate: boolean) => {
       if (send) {
@@ -780,6 +825,7 @@ function useGame(sessionId: string) {
     onDeletePostGroup,
     onLike,
     onCancelVotes,
+    onReact,
     onChangeSession,
     onLockSession,
     reconnect,
@@ -791,7 +837,7 @@ function useGame(sessionId: string) {
 
 function toPostUpdate(post: Post): WsPostUpdatePayload {
   return {
-    post: omit(post, ['votes', 'user', 'group']),
+    post: omit(post, ['votes', 'reactions', 'user', 'group']),
     groupId: post.group ? post.group.id : null,
   };
 }

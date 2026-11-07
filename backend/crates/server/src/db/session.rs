@@ -25,6 +25,7 @@ struct OptionsRow {
     allow_multiple_votes: bool,
     allow_author_visible: bool,
     allow_giphy: bool,
+    allow_reactions: bool,
     allow_grouping: bool,
     allow_reordering: bool,
     allow_cancel_vote: bool,
@@ -53,6 +54,7 @@ pub async fn create_session(
                   t.options_allow_multiple_votes AS allow_multiple_votes,
                   t.options_allow_author_visible AS allow_author_visible,
                   t.options_allow_giphy AS allow_giphy,
+                  t.options_allow_reactions AS allow_reactions,
                   t.options_allow_grouping AS allow_grouping,
                   t.options_allow_reordering AS allow_reordering,
                   t.options_allow_cancel_vote AS allow_cancel_vote,
@@ -80,6 +82,7 @@ pub async fn create_session(
             row.allow_multiple_votes,
             row.allow_author_visible,
             row.allow_giphy,
+            row.allow_reactions,
             row.allow_grouping,
             row.allow_reordering,
             row.allow_cancel_vote,
@@ -162,14 +165,15 @@ async fn insert_session(
             id, name, created_by_id, moderator_id, encrypted, demo,
             options_max_up_votes, options_max_down_votes, options_max_posts,
             options_allow_actions, options_allow_self_voting, options_allow_multiple_votes,
-            options_allow_author_visible, options_allow_giphy, options_allow_grouping,
-            options_allow_reordering, options_allow_cancel_vote, options_blur_cards,
-            options_new_posts_first, options_allow_timer, options_timer_duration,
-            options_readonly_on_timer_end, options_restrict_title_edit_to_moderator,
-            options_restrict_reordering_to_moderator, options_restrict_grouping_to_moderator
+            options_allow_author_visible, options_allow_giphy, options_allow_reactions,
+            options_allow_grouping, options_allow_reordering, options_allow_cancel_vote,
+            options_blur_cards, options_new_posts_first, options_allow_timer,
+            options_timer_duration, options_readonly_on_timer_end,
+            options_restrict_title_edit_to_moderator, options_restrict_reordering_to_moderator,
+            options_restrict_grouping_to_moderator
         ) VALUES (
             $1,$2,$3,$3,$4,$5,
-            $6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24
+            $6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25
         )"#,
     )
     .bind(id)
@@ -185,6 +189,7 @@ async fn insert_session(
     .bind(options.allow_multiple_votes)
     .bind(options.allow_author_visible)
     .bind(options.allow_giphy)
+    .bind(options.allow_reactions)
     .bind(options.allow_grouping)
     .bind(options.allow_reordering)
     .bind(options.allow_cancel_vote)

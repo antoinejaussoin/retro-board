@@ -56,7 +56,11 @@ function GroupSummary({ group, search }: GroupSummaryProps) {
   return (
     <div className="my-2 border-l border-dashed border-gray-400 pl-3">
       <div className="flex items-center gap-2 font-semibold opacity-60">
-        <Score likes={group.likes} dislikes={group.dislikes} />
+        <Score
+          likes={group.likes}
+          dislikes={group.dislikes}
+          reactions={group.reactions}
+        />
         <span>{decrypt(group.content)}</span>
       </div>
       <div className="mt-1 ml-4">
@@ -99,7 +103,11 @@ function PostLine({ item }: PostLineProps) {
   return (
     <div className="rounded-lg px-1 hover:bg-paper" role="listitem">
       <div className="flex gap-2 py-1.5">
-        <Score likes={item.likes} dislikes={item.dislikes} />
+        <Score
+          likes={item.likes}
+          dislikes={item.dislikes}
+          reactions={item.reactions}
+        />
         <span className="flex-1 whitespace-pre-wrap" aria-label="post content">
           {decrypt(item.content)}
         </span>
@@ -113,12 +121,30 @@ function PostLine({ item }: PostLineProps) {
   );
 }
 
-function Score({ likes, dislikes }: { likes: number; dislikes: number }) {
+function Score({
+  likes,
+  dislikes,
+  reactions,
+}: {
+  likes: number;
+  dislikes: number;
+  reactions: { emoji: string; count: number }[];
+}) {
   return (
     <span className="shrink-0">
       <span style={{ color: Palette.positive }}>+{likes}</span>
       &nbsp;
       <span style={{ color: Palette.negative }}>-{dislikes}</span>
+      {reactions.length ? (
+        <>
+          &nbsp;
+          <span className="text-muted">
+            {reactions
+              .map((reaction) => `${reaction.emoji}${reaction.count}`)
+              .join(' ')}
+          </span>
+        </>
+      ) : null}
     </span>
   );
 }

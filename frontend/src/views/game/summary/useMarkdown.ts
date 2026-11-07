@@ -74,9 +74,15 @@ ${[...col.items].map((i) => toItem(i, 0)).join('\n')}
 
 function toItem(item: ColumnStatsItem, depth: number) {
   const highlight = item.type === 'group' ? '**' : '';
+  const reactions =
+    item.reactions.length > 0
+      ? ` ${item.reactions
+          .map((reaction) => `${reaction.emoji}${reaction.count}`)
+          .join(' ')}`
+      : '';
   let content = `${' '.repeat(depth * 2)}* (+${item.likes}/-${
     item.dislikes
-  }) ${highlight}${toMultiline(item.content)}${highlight}`;
+  })${reactions} ${highlight}${toMultiline(item.content)}${highlight}`;
   if (item.post?.action) {
     content += `\n${' '.repeat((depth + 1) * 2)}* **Action**: *${toMultiline(
       item.post.action,

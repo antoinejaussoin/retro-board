@@ -30,9 +30,11 @@ import { Tooltip } from 'ui/tooltip';
 import { isPostDragData } from '../drag';
 import { usePostUserPermissions } from '../usePostUserPermissions';
 import { countVotes, enumerateVotes } from '../../utils';
+import useUser from '../../../../state/user/useUser';
 import ActionButton from './ActionButton';
 import ActionsBar from './ActionsBar';
 import { getLorem } from './lorem';
+import ReactionBar from './ReactionBar';
 import VoteButton from './VoteButton';
 
 interface PostItemProps {
@@ -42,6 +44,7 @@ interface PostItemProps {
   onLike: () => void;
   onDislike: () => void;
   onCancelVotes: () => void;
+  onReact: (emoji: string) => void;
   onEdit: (content: string) => void;
   onEditAction: (action: string) => void;
   onEditGiphy: (giphyId: string | null) => void;
@@ -58,6 +61,7 @@ const PostItem = ({
   onLike,
   onDislike,
   onCancelVotes,
+  onReact,
   onEdit,
   onEditAction,
   onEditGiphy,
@@ -75,8 +79,10 @@ const PostItem = ({
     canShowAuthor,
     canReorder,
     canUseGiphy,
+    canReact,
     isBlurred,
   } = usePostUserPermissions(post);
+  const user = useUser();
   const { t } = useTranslation();
   const { encrypt, decrypt } = useCrypto();
   const canDecrypt = useCanDecrypt();
@@ -261,6 +267,13 @@ const PostItem = ({
           />
         </div>
       )}
+      <ReactionBar
+        reactions={post.reactions}
+        currentUserId={user?.id ?? null}
+        canReact={canReact}
+        showNames={canShowAuthor}
+        onToggle={onReact}
+      />
       <ActionsBar
         rightActions={
           <>

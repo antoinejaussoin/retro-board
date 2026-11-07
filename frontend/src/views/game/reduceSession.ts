@@ -2,6 +2,7 @@ import type {
   Message,
   Post,
   PostGroup,
+  ReactionExtract,
   Session,
   SessionSettings,
   VoteExtract,
@@ -17,6 +18,8 @@ export type SessionEvent =
   | { type: 'update-group'; group: PostGroup }
   | { type: 'add-vote'; postId: string; vote: VoteExtract }
   | { type: 'cancel-votes'; postId: string; userId: string }
+  | { type: 'add-reaction'; postId: string; reaction: ReactionExtract }
+  | { type: 'remove-reaction'; postId: string; reaction: ReactionExtract }
   | { type: 'delete-post'; postId: string }
   | { type: 'delete-group'; groupId: string }
   | { type: 'settings'; settings: SessionSettings }
@@ -57,6 +60,32 @@ export function reduceSession(
       return mapPost(session, event.postId, (post) => ({
         ...post,
         votes: post.votes.filter((vote) => vote.userId !== event.userId),
+      }));
+    case 'add-reaction':
+      return mapPost(session, event.postId, (post) => {
+        const already = post.reactions.some(
+          (reaction) =>
+            reaction.userId === event.reaction.userId &&
+            reaction.emoji === event.reaction.emoji,
+        );
+        if (already) {
+          return post;
+        }
+        return {
+          ...post,
+          reactions: [...post.reactions, event.reaction],
+        };
+      });
+    case 'remove-reaction':
+      return mapPost(session, event.postId, (post) => ({
+        ...post,
+        reactions: post.reactions.filter(
+          (reaction) =>
+            !(
+              reaction.userId === event.reaction.userId &&
+              reaction.emoji === event.reaction.emoji
+            ),
+        ),
       }));
     case 'delete-post':
       return session

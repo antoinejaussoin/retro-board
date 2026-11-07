@@ -65,6 +65,7 @@ function GamePage() {
     onEditPostGroup,
     onLike,
     onCancelVotes,
+    onReact,
     onChangeSession,
     onLockSession,
     onUserReady,
@@ -197,6 +198,7 @@ function GamePage() {
                   onDeletePost={onDeletePost}
                   onLike={onLike}
                   onCancelVotes={onCancelVotes}
+                  onReact={onReact}
                   onDeleteGroup={onDeletePostGroup}
                   onEditGroup={onEditPostGroup}
                   onLockSession={onLockSession}
