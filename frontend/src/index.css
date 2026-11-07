@@ -145,5 +145,5 @@
 }
 
 .retro-post-actions {
-  background-color: color-mix(in srgb, var(--post-color) 45%, var(--color-cream));
+  background-color: var(--post-color);
 }
