@@ -1,5 +1,4 @@
 interface ActionsBarProps {
-  color: string;
   rightActions: React.ReactNode;
 }
 
@@ -9,13 +8,9 @@ const actionVisibility =
 const ActionsBar = ({
   children,
   rightActions,
-  color,
 }: React.PropsWithChildren<ActionsBarProps>) => {
   return (
-    <div
-      className="flex items-center gap-1 border-t-2 px-1.5 py-1"
-      style={{ borderTopColor: color }}
-    >
+    <div className="retro-post-actions flex items-center gap-1 border-t border-line px-1.5 py-1">
       <div className="flex min-w-0 flex-1 items-center">{children}</div>
       <div
         className={`flex items-center transition-opacity ${actionVisibility}`}

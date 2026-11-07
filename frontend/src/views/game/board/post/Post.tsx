@@ -183,7 +183,12 @@ const PostItem = ({
       ref={cardRef}
       data-post-id={post.id}
       className="group relative mx-1 mb-4 overflow-hidden rounded-2xl border border-line bg-cream shadow-card"
-      style={{ opacity: dragging ? 0.4 : undefined }}
+      style={
+        {
+          opacity: dragging ? 0.4 : undefined,
+          '--post-color': color,
+        } as React.CSSProperties
+      }
     >
       {isBlurred ? (
         <style>{`
@@ -257,7 +262,6 @@ const PostItem = ({
         </div>
       )}
       <ActionsBar
-        color={color}
         rightActions={
           <>
             {canCancelVote ? (
