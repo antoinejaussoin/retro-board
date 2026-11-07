@@ -28,7 +28,7 @@ export function Alert({
     <div
       role="alert"
       className={cn(
-        'relative flex gap-3 rounded-2xl border border-l-4 px-4 py-3 text-sm leading-6',
+        'relative flex items-start gap-3 rounded-2xl border border-l-4 px-4 py-3 text-sm leading-6',
         tones[severity],
         className,
       )}
