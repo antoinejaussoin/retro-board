@@ -65,7 +65,7 @@ const PreviousGameItem = ({
 
   return (
     <>
-      <article className="group relative flex flex-col rounded-3xl border border-line bg-cream p-4 shadow-card transition hover:border-primary-200">
+      <article className="group relative flex h-full flex-col rounded-3xl border border-line bg-cream p-4 shadow-card transition hover:border-primary-200">
         <button
           type="button"
           onClick={handleClick}
@@ -113,7 +113,7 @@ const PreviousGameItem = ({
               })}
             </span>
           </div>
-          <div className="grid grid-cols-4 rounded-2xl bg-paper">
+          <div className="mt-auto grid grid-cols-4 rounded-2xl bg-paper">
             <ItemStat
               value={session.numberOfPosts}
               label={t('PreviousGame.posts', { count: +session.numberOfPosts })}
