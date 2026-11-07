@@ -1,47 +1,39 @@
-import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
-import styled from '@emotion/styled';
-import Typography from '@mui/material/Typography';
-import Popover from '@mui/material/Popover';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Tooltip from '@mui/material/Tooltip';
-import { colors } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import {
-  ThumbUpOutlined,
-  ThumbDownOutlined,
-  DeleteForeverOutlined,
-  Close,
-  DragIndicator,
-  InsertPhotoTwoTone,
-  Assignment,
-  AssignmentOutlined,
-  EmojiEmotionsOutlined,
-  Clear,
-} from '@mui/icons-material';
 import {
   draggable,
   dropTargetForElements,
 } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
+import { Post } from 'common';
+import {
+  GripVertical,
+  Image,
+  Smile,
+  SquareCheck,
+  ThumbsDown,
+  ThumbsUp,
+  Trash2,
+  X,
+} from 'lucide-react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import EditableLabel from '../../../../components/EditableLabel';
+import GiphySearchBox from '../../../../components/GiphySearchBox';
+import useCanDecrypt from '../../../../crypto/useCanDecrypt';
+import useCrypto from '../../../../crypto/useCrypto';
+import useGiphy from '../../../../hooks/useGiphy';
+import useToggle from '../../../../hooks/useToggle';
+import { trackEvent } from '../../../../track';
 import { Palette } from '../../../../Theme';
-import { Post } from 'common';
+import config from '../../../../utils/getConfig';
+import { useConfirm } from 'ui/confirm';
+import { Popover, PopoverContent, PopoverTrigger } from 'ui/popover';
+import { Tooltip } from 'ui/tooltip';
+import { isPostDragData } from '../drag';
 import { usePostUserPermissions } from '../usePostUserPermissions';
 import { countVotes, enumerateVotes } from '../../utils';
-import GiphySearchBox from '../../../../components/GiphySearchBox';
-import useGiphy from '../../../../hooks/useGiphy';
-import config from '../../../../utils/getConfig';
-import useToggle from '../../../../hooks/useToggle';
-import VoteButton from './VoteButton';
 import ActionButton from './ActionButton';
 import ActionsBar from './ActionsBar';
-import { trackEvent } from '../../../../track';
-import useCrypto from '../../../../crypto/useCrypto';
 import { getLorem } from './lorem';
-import useCanDecrypt from '../../../../crypto/useCanDecrypt';
-import { useConfirm } from 'material-ui-confirm';
-import { isPostDragData } from '../drag';
+import VoteButton from './VoteButton';
 
 interface PostItemProps {
   post: Post;
@@ -56,19 +48,8 @@ interface PostItemProps {
   onDelete: () => void;
 }
 
-const useStyles = makeStyles(() => {
-  return {
-    actionContainer: {
-      backgroundColor: colors.grey[100],
-    },
-    actionIcon: {
-      color: colors.blue[400],
-    },
-    ghipyIcon: {
-      color: colors.yellow[700],
-    },
-  };
-});
+const hoverActions =
+  'max-md:opacity-100 md:pointer-events-none md:opacity-0 md:group-hover:pointer-events-auto md:group-hover:opacity-100';
 
 const PostItem = ({
   post,
@@ -96,14 +77,12 @@ const PostItem = ({
     canUseGiphy,
     isBlurred,
   } = usePostUserPermissions(post);
-  const classes = useStyles();
   const { t } = useTranslation();
   const { encrypt, decrypt } = useCrypto();
   const canDecrypt = useCanDecrypt();
   const [giphyImageUrl, showGiphyImage, toggleShowGiphyImage] = useGiphy(
-    post.giphy
+    post.giphy,
   );
-  const postElement = useRef<HTMLButtonElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const handleRef = useRef<HTMLDivElement>(null);
   const [dragging, setDragging] = useState(false);
@@ -125,37 +104,35 @@ const PostItem = ({
     setShowGiphyEditor(false);
   }, []);
   const handleChooseGiphyEditor = useCallback(
-    (giphyItem: any) => {
+    (giphyItem: { id: string }) => {
       onEditGiphy(giphyItem.id);
       trackEvent('game/post/giphy/choose');
     },
-    [onEditGiphy]
+    [onEditGiphy],
   );
 
   const handleEdit = useCallback(
     (postContent: string) => {
       onEdit(encrypt(postContent));
     },
-    [onEdit, encrypt]
+    [onEdit, encrypt],
   );
   const handleEditAction = useCallback(
     (action: string) => {
       onEditAction(encrypt(action));
     },
-    [onEditAction, encrypt]
+    [onEditAction, encrypt],
   );
   const handleDelete = useCallback(() => {
-    const buttonProps = {
-      color: 'error',
-      variant: 'contained',
-      'data-cy': 'delete-post-confirm',
-    };
     confirm({
       title: t('PostBoard.deleteConfirmation.title'),
       description: t('PostBoard.deleteConfirmation.description'),
       confirmationText: t('PostBoard.deleteConfirmation.confirm'),
       cancellationText: t('PostBoard.deleteConfirmation.cancel'),
-      confirmationButtonProps: buttonProps as any,
+      confirmationButtonProps: {
+        color: 'error',
+        'data-cy': 'delete-post-confirm',
+      },
     }).then(() => {
       onDelete();
       trackEvent('game/post/delete');
@@ -181,7 +158,7 @@ const PostItem = ({
           getInitialData: () => ({ type: 'post', postId: post.id }),
           onDragStart: () => setDragging(true),
           onDrop: () => setDragging(false),
-        })
+        }),
       );
     }
     if (combine) {
@@ -191,7 +168,7 @@ const PostItem = ({
           canDrop: ({ source }) =>
             isPostDragData(source.data) && source.data.postId !== post.id,
           getData: () => ({ type: 'post', postId: post.id }),
-        })
+        }),
       );
     }
     return () => {
@@ -202,295 +179,206 @@ const PostItem = ({
   }, [canReorder, combine, post.id]);
 
   return (
-    <>
-      <PostCard
-        ref={cardRef}
-        data-post-id={post.id}
-        style={{ opacity: dragging ? 0.4 : undefined }}
-      >
-            {isBlurred ? (
-              <Tooltip title="Cards from other people will be shown when the moderator chooses to reveal them.">
-                <BlurOverlay />
-              </Tooltip>
+    <div
+      ref={cardRef}
+      data-post-id={post.id}
+      className="group relative mb-4 overflow-hidden rounded-2xl border border-line bg-cream shadow-card"
+      style={
+        {
+          opacity: dragging ? 0.4 : undefined,
+          '--post-color': color,
+        } as React.CSSProperties
+      }
+    >
+      {isBlurred ? (
+        <style>{`
+          .retro-post-blurred > * { display: none; }
+          .retro-post-blurred::before { content: '(hidden for now)'; }
+          @supports (backdrop-filter: blur(3px)) or (-webkit-backdrop-filter: blur(3px)) {
+            .retro-post-blurred > * { display: block; }
+            .retro-post-blurred::before { content: unset; }
+          }
+        `}</style>
+      ) : null}
+      {isBlurred ? (
+        <Tooltip content="Cards from other people will be shown when the moderator chooses to reveal them.">
+          <div className="absolute inset-0 z-[2] bg-white/90 backdrop-blur-[3px] supports-[backdrop-filter]:bg-white/30" />
+        </Tooltip>
+      ) : null}
+      {canReorder ? (
+        <div
+          ref={handleRef}
+          className={`drag-handle absolute top-1 right-1 z-[1] cursor-grab text-muted transition-opacity ${hoverActions}`}
+        >
+          <GripVertical className="size-4" />
+        </div>
+      ) : null}
+      <div className="px-4 py-3 pr-8">
+        <div className={isBlurred ? 'retro-post-blurred' : undefined}>
+          <EditableLabel
+            wrapText
+            readOnly={readOnly}
+            value={actualContent}
+            onChange={handleEdit}
+            label="Post content"
+            multiline
+          />
+        </div>
+        {canShowAuthor && (
+          <div className="mt-2 flex justify-end text-xs">
+            <span className="text-muted">{t('Post.by')}&nbsp;</span>
+            <span>{post.user.name}</span>
+          </div>
+        )}
+      </div>
+      {giphyImageUrl && showGiphyImage && (
+        <div className="relative">
+          <button
+            type="button"
+            onClick={toggleShowGiphyImage}
+            aria-label={t('Post.closeExtra')}
+            className="absolute top-2 right-2 inline-flex size-5 items-center justify-center rounded-full bg-red-400 text-white"
+          >
+            <X className="size-3" />
+          </button>
+          <img
+            src={giphyImageUrl}
+            alt="Giphy"
+            className="h-[200px] w-full object-cover"
+          />
+        </div>
+      )}
+      {displayAction && canCreateAction && (
+        <div className="border-t border-line bg-paper px-4 py-3 text-sm">
+          <p className="text-xs text-blue-400">{t('Actions.title')}:</p>
+          <EditableLabel
+            wrapText
+            value={decrypt(post.action || '')}
+            onChange={handleEditAction}
+            label={t('Actions.title')!}
+            focused={actionsToggled && !post.action}
+            multiline
+          />
+        </div>
+      )}
+      <ActionsBar
+        rightActions={
+          <>
+            {canCancelVote ? (
+              <ActionButton
+                icon={
+                  <X className="size-5" style={{ color: Palette.negative }} />
+                }
+                tooltip={t('Post.cancelVote')!}
+                ariaLabel={t('Post.cancelVote')}
+                onClick={onCancelVotes}
+              />
             ) : null}
-            {canReorder ? (
-              <DragHandle ref={handleRef} className="drag-handle">
-                <DragIndicator />
-              </DragHandle>
-            ) : null}
-            <CardContent>
-              <LabelContainer blurred={isBlurred}>
-                <Typography variant="body1">
-                  <EditableLabel
-                    wrapText
-                    readOnly={readOnly}
-                    value={actualContent}
-                    onChange={handleEdit}
-                    label="Post content"
-                    multiline
+            {giphyImageUrl && (
+              <ActionButton
+                ariaLabel={t('Post.toggleGiphyButton')}
+                tooltip={t('Post.toggleGiphyButton')!}
+                icon={
+                  <Image
+                    className="size-5"
+                    style={{
+                      color: !showGiphyImage ? '#a5d6a7' : '#ef9a9a',
+                    }}
                   />
-                </Typography>
-              </LabelContainer>
-              {canShowAuthor && (
-                <AuthorContainer>
-                  <Typography
-                    variant="caption"
-                    color="textSecondary"
-                    component="div"
-                  >
-                    {t('Post.by')}&nbsp;
-                  </Typography>
-                  <Typography
-                    variant="caption"
-                    color="textPrimary"
-                    component="div"
-                  >
-                    {post.user.name}
-                  </Typography>
-                </AuthorContainer>
-              )}
-              {giphyImageUrl && showGiphyImage && (
-                <GiphyContainer>
-                  <CloseButtonContainer>
-                    <Close onClick={toggleShowGiphyImage} fontSize="small" />
-                  </CloseButtonContainer>
-                  <img src={giphyImageUrl} alt="Giphy" height="200px" />
-                </GiphyContainer>
-              )}
-            </CardContent>
-            {displayAction && canCreateAction && (
-              <CardContent className={classes.actionContainer}>
-                <Typography variant="caption">{t('Actions.title')}:</Typography>
-                <Typography variant="body1">
-                  <EditableLabel
-                    wrapText
-                    value={decrypt(post.action || '')}
-                    onChange={handleEditAction}
-                    label={t('Actions.title')!}
-                    focused={actionsToggled && !post.action}
-                    multiline
-                  />
-                </Typography>
-              </CardContent>
+                }
+                onClick={toggleShowGiphyImage}
+              />
             )}
-            <ActionsBar
-              color={color}
-              rightActions={
-                <>
-                  {giphyImageUrl && (
-                    <ActionButton
-                      ariaLabel={t('Post.toggleGiphyButton')}
-                      tooltip={t('Post.toggleGiphyButton')!}
-                      icon={
-                        <InsertPhotoTwoTone
-                          style={{
-                            color: !showGiphyImage
-                              ? colors.green[200]
-                              : colors.red[200],
-                          }}
-                        />
-                      }
-                      onClick={toggleShowGiphyImage}
-                    />
-                  )}
-                  {canCreateAction && (
-                    <ActionButton
-                      ariaLabel={t('Post.setActionButton')}
-                      tooltip={t('Post.setActionButton')!}
-                      icon={
-                        post.action ? (
-                          <Assignment className={classes.actionIcon} />
-                        ) : (
-                          <AssignmentOutlined className={classes.actionIcon} />
-                        )
-                      }
-                      onClick={toggleAction}
-                    />
-                  )}
-                  {canEdit && !!config.GIPHY_API_KEY && canUseGiphy && (
-                    <ActionButton
-                      ariaLabel={t('Post.setGiphyButton')}
-                      tooltip={t('Post.setGiphyButton')!}
-                      icon={
-                        <EmojiEmotionsOutlined className={classes.ghipyIcon} />
-                      }
-                      innerRef={postElement}
-                      onClick={handleShowGiphy}
-                    />
-                  )}
-                  {canDelete && (
-                    <ActionButton
-                      ariaLabel={t('Post.deleteButton')}
-                      tooltip={t('Post.deleteButton')!}
-                      icon={
-                        <DeleteForeverOutlined
-                          style={{
-                            color: Palette.negative,
-                          }}
-                        />
-                      }
-                      onClick={handleDelete}
-                    />
-                  )}
-                </>
-              }
-            >
-              {canDisplayUpVote ? (
-                <VoteButton
-                  voters={upVoters}
-                  canVote={canUpVote}
-                  count={upVotes}
-                  icon={<ThumbUpOutlined style={{ color: Palette.positive }} />}
-                  onClick={onLike}
-                  showTooltip={canShowAuthor}
-                  ariaLabel="Like"
-                />
-              ) : null}
-              {canDisplayDownVote ? (
-                <VoteButton
-                  voters={downVoters}
-                  canVote={canDownVote}
-                  count={downVotes}
-                  icon={
-                    <ThumbDownOutlined style={{ color: Palette.negative }} />
+            {canCreateAction && (
+              <ActionButton
+                ariaLabel={t('Post.setActionButton')}
+                tooltip={t('Post.setActionButton')!}
+                icon={
+                  <SquareCheck
+                    className="size-5 text-blue-400"
+                    style={{ opacity: post.action ? 1 : 0.55 }}
+                  />
+                }
+                onClick={toggleAction}
+              />
+            )}
+            {canEdit && !!config.GIPHY_API_KEY && canUseGiphy && (
+              <Popover
+                open={showGiphyEditor}
+                onOpenChange={(next) => {
+                  if (next) {
+                    handleShowGiphy();
+                  } else {
+                    handleHideGiphyEditor();
                   }
-                  onClick={onDislike}
-                  showTooltip={canShowAuthor}
-                  ariaLabel="Dislike"
-                />
-              ) : null}
-              {canCancelVote ? (
-                <ActionButton
-                  icon={<Clear htmlColor={Palette.negative} />}
-                  tooltip={t('Post.cancelVote')!}
-                  ariaLabel={t('Post.cancelVote')}
-                  onClick={onCancelVotes}
-                />
-              ) : null}
-            </ActionsBar>
-          </PostCard>
-      <Popover
-        open={showGiphyEditor}
-        anchorEl={postElement.current}
-        onClose={handleHideGiphyEditor}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
+                }}
+              >
+                <Tooltip content={t('Post.setGiphyButton')!} side="bottom">
+                  <PopoverTrigger asChild>
+                    <button
+                      type="button"
+                      aria-label={t('Post.setGiphyButton')}
+                      tabIndex={-1}
+                      className="inline-flex size-8 items-center justify-center rounded-full text-yellow-700 hover:bg-ink/8"
+                    >
+                      <Smile className="size-5" />
+                    </button>
+                  </PopoverTrigger>
+                </Tooltip>
+                <PopoverContent align="start" className="w-auto p-2">
+                  <GiphySearchBox
+                    apiKey={config.GIPHY_API_KEY}
+                    onSelect={handleChooseGiphyEditor}
+                  />
+                </PopoverContent>
+              </Popover>
+            )}
+            {canDelete && (
+              <ActionButton
+                ariaLabel={t('Post.deleteButton')}
+                tooltip={t('Post.deleteButton')!}
+                icon={
+                  <Trash2 className="size-5" style={{ color: Palette.negative }} />
+                }
+                onClick={handleDelete}
+              />
+            )}
+          </>
+        }
       >
-        <Card>
-          <CardContent>
-            <GiphySearchBox
-              apiKey={config.GIPHY_API_KEY}
-              onSelect={handleChooseGiphyEditor}
-            />
-          </CardContent>
-        </Card>
-      </Popover>
-    </>
+        {canDisplayUpVote ? (
+          <VoteButton
+            voters={upVoters}
+            canVote={canUpVote}
+            count={upVotes}
+            icon={
+              <ThumbsUp className="size-5" style={{ color: Palette.positive }} />
+            }
+            onClick={onLike}
+            showTooltip={canShowAuthor}
+            ariaLabel="Like"
+          />
+        ) : null}
+        {canDisplayDownVote ? (
+          <VoteButton
+            voters={downVoters}
+            canVote={canDownVote}
+            count={downVotes}
+            icon={
+              <ThumbsDown
+                className="size-5"
+                style={{ color: Palette.negative }}
+              />
+            }
+            onClick={onDislike}
+            showTooltip={canShowAuthor}
+            ariaLabel="Dislike"
+          />
+        ) : null}
+      </ActionsBar>
+    </div>
   );
 };
-
-const DragHandle = styled.div`
-  cursor: move;
-  position: absolute;
-  top: 3px;
-  right: 3px;
-  visibility: hidden;
-  color: ${colors.grey[500]};
-`;
-
-const PostCard = styled(Card)`
-  margin: 10px 5px;
-  margin-bottom: 20px;
-  position: relative;
-
-  :hover {
-    & .drag-handle {
-      visibility: visible;
-    }
-  }
-`;
-
-const AuthorContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  position: relative;
-  margin-top: -10px;
-  top: 10px;
-  right: -5px;
-`;
-
-const GiphyContainer = styled.div`
-  position: relative;
-  img {
-    width: 100%;
-    object-fit: fit;
-    height: 100%;
-  }
-
-  margin: -20px;
-  margin-top: 30px;
-`;
-
-const CloseButtonContainer = styled.div`
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  right: 8px;
-  top: 5px;
-  width: 20px;
-  height: 20px;
-  border-radius: 15px;
-  color: white;
-  font-size: 0.5em;
-  background-color: ${colors.red[400]};
-  cursor: pointer;
-`;
-
-const BlurOverlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.9);
-  z-index: 2;
-  @supports (backdrop-filter: blur(3px)) or (-webkit-backdrop-filter: blur(3px)) {
-    background-color: rgba(255, 255, 255, 0.3);
-    -webkit-backdrop-filter: blur(3px);
-    backdrop-filter: blur(3px);
-  }
-`;
-
-const LabelContainer = styled.div<{ blurred: boolean }>`
-  ${(props) =>
-    props.blurred
-      ? `
-  > * {
-    display: none;
-  }
-
-  &::before {
-    content: '(hidden for now)';
-  }
-
-  @supports (backdrop-filter: blur(3px)) or (-webkit-backdrop-filter: blur(3px)) {
-    > * {
-      display: block;
-    }
-
-    &::before {
-      content: unset;
-    }
-  }`
-      : null}
-`;
 
 function generateLoremIpsum(originalText: string) {
   const count = originalText.split(' ').length;

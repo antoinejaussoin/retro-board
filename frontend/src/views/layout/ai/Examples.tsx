@@ -1,69 +1,49 @@
-import styled from '@emotion/styled';
-import { Color, colors } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { cn } from 'ui/cn';
 
 type ExamplesProps = {
   onSelect: (message: string) => void;
 };
 
-const palette: Color[] = [
-  colors.blue,
-  colors.orange,
-  colors.green,
-  colors.purple,
-  colors.cyan,
+const tones = [
+  'border-sky-200 text-sky-800 hover:bg-sky-50',
+  'border-orange-200 text-orange-800 hover:bg-orange-50',
+  'border-emerald-200 text-emerald-800 hover:bg-emerald-50',
+  'border-purple-200 text-purple-800 hover:bg-purple-50',
+  'border-cyan-200 text-cyan-800 hover:bg-cyan-50',
 ];
+
+function asExamples(value: unknown): string[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+  return value.filter((item): item is string => typeof item === 'string');
+}
 
 export function Examples({ onSelect }: ExamplesProps) {
   const { t } = useTranslation();
+  const examples = asExamples(t('Ai.examples', { returnObjects: true }));
+
   return (
-    <Container>
-      <Title>{t('Ai.examplesTitle')}</Title>
-      <Items>
-        {(t('Ai.examples', { returnObjects: true }) as string[]).map(
-          (example, index) => (
-            <Item
-              mainColor={palette[index % (palette.length - 1)]}
-              key={index}
-              onClick={() => onSelect(example)}
-            >
-              {example}
-            </Item>
-          )
-        )}
-      </Items>
-    </Container>
+    <div className="w-full">
+      <h2 className="text-center text-xl font-light text-muted">
+        {t('Ai.examplesTitle')}
+      </h2>
+      <div className="mt-4 flex flex-wrap justify-center px-2">
+        {examples.map((example, index) => (
+          <button
+            key={example}
+            type="button"
+            onClick={() => onSelect(example)}
+            className={cn(
+              'm-1.5 inline-flex rounded-full border px-3 py-2 text-left text-sm transition',
+              tones[index % tones.length],
+            )}
+          >
+            {example}
+          </button>
+        ))}
+      </div>
+    </div>
   );
 }
-
-const Container = styled.div`
-  width: 100%;
-`;
-
-const Title = styled.h1`
-  text-align: center;
-  font-weight: 100;
-  color: #ccc;
-`;
-
-const Item = styled.div<{ mainColor: Color }>`
-  display: inline-flex;
-  padding: 10px;
-  border: 1px solid ${(p) => p.mainColor[200]};
-  border-radius: 20px;
-  margin: 10px;
-  color: ${(p) => p.mainColor[200]};
-
-  :hover {
-    cursor: pointer;
-    color: ${(p) => p.mainColor[500]};
-    background-color: ${(p) => p.mainColor[50]};
-  }
-`;
-
-const Items = styled.div`
-  margin: 0 40px;
-  display: flex;
-  justify-items: center;
-  flex-wrap: wrap;
-`;

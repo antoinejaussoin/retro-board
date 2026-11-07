@@ -65,6 +65,7 @@
     "voteRemainingMultiple": "You have {{number}} {{type}}s remaining.",
     "voteRemainingOne": "You only have one {{type}} remaining, make it count!",
     "voteRemainingNone": "You don't have any {{type}} remaining.",
+    "voteRemainingUnlimited": "You have unlimited {{type}}s.",
     "toggleGiphyButton": "Toggle Giphy image",
     "cancelVote": "Cancel your votes on this post"
   },

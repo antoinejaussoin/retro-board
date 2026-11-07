@@ -1,17 +1,16 @@
+import { UserRoundX } from 'lucide-react';
 import { useCallback } from 'react';
-import DialogContent from '@mui/material/DialogContent';
 import { useTranslation } from 'react-i18next';
-import SocialAuth from './SocialAuth';
-import AccountAuth from './AccountAuth';
-import useOAuthAvailabilities from '../../global/useOAuthAvailabilities';
-import useBackendCapabilities from '../../global/useBackendCapabilities';
-import { Alert, Button } from '@mui/material';
-import styled from '@emotion/styled';
 import { anonymousLogin, me, updateLanguage } from 'api';
+import useBackendCapabilities from '../../global/useBackendCapabilities';
+import useOAuthAvailabilities from '../../global/useOAuthAvailabilities';
+import { useSetUser } from 'state/user/useSetUser';
 import { trackEvent } from 'track';
 import { useLanguage } from 'translations';
-import { NoAccounts } from '@mui/icons-material';
-import { useSetUser } from 'state/user/useSetUser';
+import { Alert } from 'ui/alert';
+import { Button } from 'ui/button';
+import AccountAuth from './AccountAuth';
+import SocialAuth from './SocialAuth';
 
 interface LoginContentProps {
   anonymous: boolean;
@@ -49,104 +48,61 @@ export default function LoginContent({
   }, [setUser, onClose, language]);
 
   if (hasNoWayOfLoggingIn) {
-    <Alert severity="error">{t('AuthCommon.noAuthWarning')}</Alert>;
+    // Falls through. This case also sets hasNoWayOtherThanAnonymous, so the
+    // warning below is what renders.
   }
 
+  const showSocial = !hasNoSocialMediaAuth;
+  const showPasswords = !disablePasswords;
+
   return (
-    <>
+    <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5 text-ink">
       {hasNoWayOtherThanAnonymous ? (
         <Alert severity="error">{t('AuthCommon.noAuthWarning')}</Alert>
       ) : (
-        <>
-          <DialogContent>
-            <Main>
-              <Container>
-                {!hasNoSocialMediaAuth ? (
+        <div className="@container">
+          <div
+            className={
+              showSocial && showPasswords
+                ? 'mx-auto w-full max-w-md @min-[60rem]:max-w-[60rem]'
+                : 'mx-auto w-full max-w-md'
+            }
+          >
+            <div className="flex flex-col items-center gap-6 @min-[60rem]:flex-row @min-[60rem]:items-stretch @min-[60rem]:justify-center">
+              {showSocial ? (
+                <div className="w-full min-w-0 max-w-md">
                   <SocialAuth onClose={onClose} onUser={setUser} />
-                ) : null}
-                {!hasNoSocialMediaAuth && !disablePasswords ? (
-                  <Separator>
-                    <span>{t('AuthCommon.or')}</span>
-                  </Separator>
-                ) : null}
-                {!disablePasswords ? (
+                </div>
+              ) : null}
+              {showSocial && showPasswords ? (
+                <div className="relative flex h-px w-4/5 shrink-0 items-center justify-center bg-line @min-[60rem]:h-auto @min-[60rem]:w-px @min-[60rem]:self-stretch">
+                  <span className="bg-cream px-2 text-sm text-muted">
+                    {t('AuthCommon.or')}
+                  </span>
+                </div>
+              ) : null}
+              {showPasswords ? (
+                <div className="w-full min-w-0 max-w-md">
                   <AccountAuth onClose={onClose} onUser={setUser} />
-                ) : null}
-              </Container>
-            </Main>
+                </div>
+              ) : null}
+            </div>
             {anonymous ? (
-              <Footer>
+              <div className="mt-6 flex justify-center border-t border-line pt-6 @min-[60rem]:justify-end @min-[60rem]:border-t-0 @min-[60rem]:pt-2">
                 <Button
+                  variant="ghost"
                   onClick={handleAnonLogin}
-                  variant="text"
-                  color="secondary"
-                  startIcon={<NoAccounts />}
                   data-cy="login-anonymous"
+                  className="text-muted"
                 >
+                  <UserRoundX className="size-4" />
                   {t('AuthCommon.skipAndAnonLogin')}
                 </Button>
-              </Footer>
+              </div>
             ) : null}
-          </DialogContent>
-        </>
+          </div>
+        </div>
       )}
-    </>
+    </div>
   );
 }
-
-const Separator = styled.div`
-  display: flex;
-  height: 200px;
-  max-height: unset;
-  width: 0px;
-  max-width: 0px;
-  margin: 0 20px;
-  border-left: 1px solid #ccc;
-  background-color: #ccc;
-  flex: 0;
-  align-self: center;
-  justify-content: center;
-  align-items: center;
-
-  span {
-    display: block;
-    padding: 5px;
-    background-color: white;
-    color: #ccc;
-  }
-
-  @media screen and (max-width: 1000px) {
-    width: 80%;
-    height: 0px;
-    max-height: 0px;
-    max-width: unset;
-    margin: 10px 0;
-    border-top: 1px solid #ccc;
-  }
-`;
-
-const Container = styled.div`
-  display: flex;
-  gap: 20px;
-  > * {
-    flex: 1;
-  }
-
-  @media screen and (max-width: 1000px) {
-    flex-direction: column;
-  }
-`;
-
-const Main = styled.div``;
-
-const Footer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-
-  @media screen and (max-width: 1000px) {
-    border-top: 1px solid #ccc;
-    justify-content: center;
-    margin-top: 30px;
-    padding-top: 30px;
-  }
-`;

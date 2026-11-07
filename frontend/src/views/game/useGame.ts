@@ -29,7 +29,7 @@ import { addSeconds } from 'date-fns';
 import { isProduction } from 'is-production';
 import { omit } from 'lodash';
 import find from 'lodash/find';
-import { useSnackbar } from 'notistack';
+import { useSnackbar } from 'ui/toast';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import io, { type Socket } from 'socket.io-client';

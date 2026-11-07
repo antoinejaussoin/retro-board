@@ -1,6 +1,6 @@
-import { Add } from '@mui/icons-material';
-import { IconButton, Input as BaseInput, InputAdornment } from '@mui/material';
+import { Plus } from 'lucide-react';
 import React, { useCallback, useState } from 'react';
+import { IconButton } from 'ui/icon-button';
 
 type InputProps = {
   cy?: string;
@@ -21,14 +21,14 @@ export default function Input({
   const [valid, setValid] = useState(false);
 
   const handleChange = useCallback(
-    async (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
       const newValue = evt.target.value;
       setValid(false);
       setValue(newValue);
       const isValid = !!newValue.length;
       setValid(isValid);
     },
-    []
+    [],
   );
 
   const handleAdd = useCallback(() => {
@@ -40,37 +40,35 @@ export default function Input({
   }, [onAdd, value, valid]);
 
   const handleKeyPress = useCallback(
-    (event: React.KeyboardEvent<unknown>) => {
+    (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
       if (isEnter(event.nativeEvent.code) && !event.nativeEvent.shiftKey) {
         event.stopPropagation();
         event.preventDefault();
         handleAdd();
       }
     },
-    [handleAdd]
+    [handleAdd],
   );
 
   return (
-    <BaseInput
-      value={value}
-      placeholder={placeholder}
-      onChange={handleChange}
-      onKeyPress={handleKeyPress}
-      style={{ border: 'none', outline: 'none', margin: 10 }}
-      multiline
-      inputProps={{ 'data-cy': cy }}
-      endAdornment={
-        <InputAdornment position="end">
-          <IconButton
-            aria-label="add new pro user email"
-            onClick={handleAdd}
-            edge="end"
-            disabled={!valid}
-          >
-            <Add />
-          </IconButton>
-        </InputAdornment>
-      }
-    />
+    <div className="flex items-end gap-1 border-t border-line px-2 py-2">
+      <textarea
+        value={value}
+        placeholder={placeholder}
+        onChange={handleChange}
+        onKeyDown={handleKeyPress}
+        data-cy={cy}
+        rows={2}
+        className="max-h-32 min-h-10 flex-1 resize-none bg-transparent px-2 py-2 text-sm text-ink outline-none placeholder:text-muted"
+      />
+      <IconButton
+        aria-label="Send message"
+        onClick={handleAdd}
+        disabled={!valid}
+        className="size-9"
+      >
+        <Plus className="size-4" />
+      </IconButton>
+    </div>
   );
 }

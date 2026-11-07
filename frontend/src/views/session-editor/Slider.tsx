@@ -1,7 +1,5 @@
-import { useCallback, useMemo } from 'react';
-import styled from '@emotion/styled';
-import SliderBase from '@mui/material/Slider';
-import type { Mark } from './mark';
+import { useMemo } from 'react';
+import { Slider as RangeSlider } from 'ui/slider';
 
 interface SliderProps {
   from: number;
@@ -11,31 +9,24 @@ interface SliderProps {
 }
 
 const Slider = ({ from, to, value, onChange }: SliderProps) => {
-  const handleChange = useCallback(
-    (_event: Event, value: number | number[]) => onChange(value as number),
-    [onChange]
-  );
-  const marks: Mark[] = useMemo(() => {
-    return new Array(to - from + 1).fill(0).map((_, index) => ({
+  const marks = useMemo(() => {
+    return Array.from({ length: Math.max(0, to - from + 1) }, (_, index) => ({
       value: index + from,
       label: `${index + from}`,
     }));
   }, [from, to]);
+
   return (
-    <Container>
-      <SliderBase
-        value={value as number}
-        onChange={handleChange}
+    <div className="pr-5">
+      <RangeSlider
+        value={value}
+        onChange={onChange}
         marks={marks}
         min={from}
         max={to}
       />
-    </Container>
+    </div>
   );
 };
-
-const Container = styled.div`
-  padding-right: 20px;
-`;
 
 export default Slider;

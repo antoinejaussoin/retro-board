@@ -65,6 +65,7 @@
     "voteRemainingMultiple": "Pozostało Ci {{number}} {{type}}s.",
     "voteRemainingOne": "Pozostało Ci tylko jeden {{type}} , zliczaj się!",
     "voteRemainingNone": "Nie masz jeszcze żadnych {{type}}.",
+    "voteRemainingUnlimited": "Możesz oddawać {{type}} bez limitu.",
     "toggleGiphyButton": "Przełącz obraz Giphy",
     "cancelVote": "Anuluj swoje głosy na ten post"
   },

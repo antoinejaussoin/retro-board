@@ -1,13 +1,13 @@
-import Tooltip from '@mui/material/Tooltip';
-import Button from '@mui/material/Button';
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren, RefObject } from 'react';
+import { Tooltip } from 'ui/tooltip';
+import { cn } from 'ui/cn';
 
 interface ActionButtonProps {
   tooltip: React.ReactElement | string | number;
   ariaLabel: string;
   icon: JSX.Element;
   disabled?: boolean;
-  innerRef?: React.RefObject<HTMLButtonElement | null>;
+  innerRef?: RefObject<HTMLButtonElement | null>;
   onClick: () => void;
 }
 
@@ -22,31 +22,23 @@ export default function ActionButton({
 }: PropsWithChildren<ActionButtonProps>) {
   const showTooltip = !!tooltip;
   return (
-    <Tooltip
-      placement="bottom"
-      disableHoverListener={!showTooltip}
-      disableFocusListener={!showTooltip}
-      disableTouchListener={!showTooltip}
-      title={tooltip}
-    >
-      <span>
-        <Button
+    <Tooltip content={showTooltip ? tooltip : undefined} side="bottom">
+      <span className="inline-flex">
+        <button
+          type="button"
           onClick={onClick}
           disabled={!!disabled}
           aria-label={ariaLabel}
           tabIndex={-1}
           ref={innerRef}
-          color="inherit"
-          style={{
-            position: 'relative',
-            paddingLeft: 0,
-            paddingRight: 0,
-            minWidth: children !== undefined ? 64 : 42,
-          }}
+          className={cn(
+            'inline-flex h-8 items-center justify-center gap-1 rounded-full px-1.5 text-sm text-current hover:bg-ink/8 disabled:pointer-events-none disabled:opacity-40',
+            children !== undefined ? 'min-w-12' : 'min-w-8',
+          )}
         >
           {icon}
-          {children !== undefined ? <>&nbsp;{children}</> : null}
-        </Button>
+          {children !== undefined ? <span>{children}</span> : null}
+        </button>
       </span>
     </Tooltip>
   );

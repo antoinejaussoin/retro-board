@@ -1,13 +1,13 @@
-import styled from '@emotion/styled';
-import { PlayArrow, Settings, Stop, TimerOutlined } from '@mui/icons-material';
-import { Color, colors, IconButton } from '@mui/material';
 import { SessionOptions } from 'common';
 import { differenceInSeconds } from 'date-fns';
 import useModal from 'hooks/useModal';
 import { noop } from 'lodash';
-import { useConfirm } from 'material-ui-confirm';
-import { useCallback, useEffect, useState, memo } from 'react';
+import { Play, Settings, Square, Timer as TimerIcon } from 'lucide-react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { cn } from 'ui/cn';
+import { useConfirm } from 'ui/confirm';
+import { IconButton } from 'ui/icon-button';
 import { useTimer } from '../useTimer';
 import { TimerSettingsModal } from './TimerSettingsModal';
 
@@ -33,8 +33,8 @@ export const Timer = memo(function Timer({
     getTime(
       end,
       options.timerDuration,
-      end ? differenceInSeconds(end, new Date()) : null
-    )
+      end ? differenceInSeconds(end, new Date()) : null,
+    ),
   );
   const [opened, open, close] = useModal();
 
@@ -60,7 +60,7 @@ export const Timer = memo(function Timer({
       const time = getTime(
         end,
         options.timerDuration,
-        differenceInSeconds(end, new Date())
+        differenceInSeconds(end, new Date()),
       );
       setRemaining(time);
     }, 1000);
@@ -68,34 +68,51 @@ export const Timer = memo(function Timer({
     return () => clearInterval(handle);
   }, [end, options.timerDuration]);
 
-  const color = getColor(options.timerDuration, end);
+  const tone = timerTone(options.timerDuration, end);
 
   return (
-    <Container>
+    <div className="flex items-center gap-1">
       {options.allowTimer || canControl ? (
-        <TimerOutlined fontSize="large" htmlColor={color[600]} />
+        <TimerIcon className={cn('size-6', tone)} />
       ) : null}
       {options.allowTimer ? (
         <>
-          <Remaining color={color[400]}>
+          <span
+            className={cn(
+              'font-timer text-2xl leading-none whitespace-nowrap',
+              tone,
+            )}
+          >
             {remaining.minutes}:{remaining.seconds}
-          </Remaining>
+          </span>
           {canControl ? (
             end ? (
-              <IconButton onClick={handleStop}>
-                <Stop />
+              <IconButton
+                onClick={handleStop}
+                aria-label={t('Timer.stopTimerButton')}
+                className="size-8"
+              >
+                <Square className="size-4" />
               </IconButton>
             ) : (
-              <IconButton onClick={onStart}>
-                <PlayArrow />
+              <IconButton
+                onClick={onStart}
+                aria-label="Start timer"
+                className="size-8"
+              >
+                <Play className="size-4" />
               </IconButton>
             )
           ) : null}
         </>
       ) : null}
       {canControl ? (
-        <IconButton onClick={open}>
-          <Settings />
+        <IconButton
+          onClick={open}
+          aria-label={t('Customize.timerCategory')}
+          className="size-8"
+        >
+          <Settings className="size-4" />
         </IconButton>
       ) : null}
       {opened ? (
@@ -112,7 +129,7 @@ export const Timer = memo(function Timer({
           options={options}
         />
       ) : null}
-    </Container>
+    </div>
   );
 });
 
@@ -124,7 +141,7 @@ type Time = {
 function getTime(
   end: Date | null,
   duration: number,
-  left: number | null
+  left: number | null,
 ): Time {
   const remaining =
     end === null || left === null ? duration : Math.max(0, left);
@@ -135,28 +152,16 @@ function getTime(
   return { minutes, seconds };
 }
 
-function getColor(totalDuration: number, end: Date | null): Color {
+function timerTone(totalDuration: number, end: Date | null): string {
   if (!end) {
-    return colors.grey;
+    return 'text-gray-400';
   }
   const remainingRatio = differenceInSeconds(end, new Date()) / totalDuration;
   if (remainingRatio > 0.25) {
-    return colors.green;
+    return 'text-emerald-500';
   }
   if (remainingRatio > 0.1) {
-    return colors.orange;
+    return 'text-amber-500';
   }
-  return colors.red;
+  return 'text-red-500';
 }
-
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`;
-
-const Remaining = styled.div`
-  font-family: 'DIGITALDREAM';
-  font-size: 1.5rem;
-  color: ${(props) => props.color};
-`;

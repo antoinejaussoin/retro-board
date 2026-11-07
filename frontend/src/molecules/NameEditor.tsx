@@ -1,10 +1,10 @@
-import useUser from 'state/user/useUser';
 import EditableLabel from 'components/EditableLabel';
-import { useSnackbar } from 'notistack';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { updateUserName } from 'views/account/api';
 import { useSetUser } from 'state/user/useSetUser';
+import useUser from 'state/user/useUser';
+import { useSnackbar } from 'ui/toast';
+import { updateUserName } from 'views/account/api';
 
 export function NameEditor() {
   const { enqueueSnackbar } = useSnackbar();
@@ -23,7 +23,7 @@ export function NameEditor() {
         setUser(updatedUser);
       }
     },
-    [setUser, enqueueSnackbar, t]
+    [setUser, enqueueSnackbar, t],
   );
 
   if (!user) {

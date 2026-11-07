@@ -1,13 +1,14 @@
-import { Alert, AlertColor, AlertTitle } from '@mui/material';
-import { useState, useCallback } from 'react';
+import { useCallback, useState, type ReactNode } from 'react';
+import { Alert, type AlertSeverity } from 'ui/alert';
 
 type ClosableAlertProps = {
-  title?: React.ReactNode;
-  children: React.ReactNode;
-  severity: AlertColor;
+  title?: ReactNode;
+  children: ReactNode;
+  severity: AlertSeverity;
   closable?: boolean;
   id?: string;
   persisted?: boolean;
+  className?: string;
 };
 
 export default function ClosableAlert({
@@ -17,6 +18,7 @@ export default function ClosableAlert({
   closable,
   id,
   persisted,
+  className,
 }: ClosableAlertProps) {
   const [open, setOpen] = useState(loadInitial(id));
 
@@ -35,15 +37,19 @@ export default function ClosableAlert({
   if (!open) return null;
 
   return (
-    <Alert severity={severity} onClose={handleClose}>
-      <AlertTitle>{title}</AlertTitle>
+    <Alert
+      severity={severity}
+      title={title}
+      className={className}
+      onClose={closable ? handleClose : undefined}
+    >
       {children}
     </Alert>
   );
 }
 
 function computeKey(id: string) {
-  return 'closable-alert-' + id;
+  return `closable-alert-${id}`;
 }
 
 function loadInitial(id?: string) {

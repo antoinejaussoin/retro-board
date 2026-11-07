@@ -1,27 +1,25 @@
-import { BrowserRouter } from 'react-router-dom';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { Global } from '@emotion/react';
-import { ThemeProvider } from '@mui/material';
-import globalCss from './GlobalStyles';
-import AuthProvider from './auth/AuthProvider';
-import LanguageProvider from './translations/LanguageProvider';
-import theme from './Theme';
-import Layout from './Layout';
-import ErrorBoundary from './ErrorBoundary';
-import { SnackbarProvider } from 'notistack';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { Suspense } from 'react';
-import { CodeSplitLoader } from './CodeSplitLoader';
 import QuotaManager from './auth/QuotaManager';
-import { ConfirmProvider } from 'material-ui-confirm';
+import AuthProvider from './auth/AuthProvider';
 import { FullScreenLoader } from 'components/loaders/FullScreenLoader';
+import { Suspense } from 'react';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { BrowserRouter } from 'react-router-dom';
+import { CodeSplitLoader } from './CodeSplitLoader';
+import ErrorBoundary from './ErrorBoundary';
+import Layout from './Layout';
 import { queryClient } from './queryClient';
+import './Theme';
+import LanguageProvider from './translations/LanguageProvider';
+import { ConfirmProvider } from 'ui/confirm';
+import { Toaster } from 'ui/toast';
+import { TooltipProvider } from 'ui/tooltip';
 
 function App() {
   return (
     <HelmetProvider>
-      <ThemeProvider theme={theme}>
-        <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
           <Suspense fallback={<FullScreenLoader />}>
             <Helmet>
               <meta property="og:title" content="Retrospected.com" />
@@ -31,34 +29,25 @@ function App() {
               />
               <meta property="og:url" content="https://app.retrospected.com" />
             </Helmet>
-            <SnackbarProvider
-              maxSnack={3}
-              autoHideDuration={3000}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'center',
-              }}
-            >
-              <ConfirmProvider>
-                <BrowserRouter>
-                  <AuthProvider>
-                    <LanguageProvider>
-                      <QuotaManager>
-                        <Global styles={globalCss} />
-                        <ErrorBoundary>
-                          <Suspense fallback={<CodeSplitLoader />}>
-                            <Layout />
-                          </Suspense>
-                        </ErrorBoundary>
-                      </QuotaManager>
-                    </LanguageProvider>
-                  </AuthProvider>
-                </BrowserRouter>
-              </ConfirmProvider>
-            </SnackbarProvider>
+            <Toaster />
+            <ConfirmProvider>
+              <BrowserRouter>
+                <AuthProvider>
+                  <LanguageProvider>
+                    <QuotaManager>
+                      <ErrorBoundary>
+                        <Suspense fallback={<CodeSplitLoader />}>
+                          <Layout />
+                        </Suspense>
+                      </ErrorBoundary>
+                    </QuotaManager>
+                  </LanguageProvider>
+                </AuthProvider>
+              </BrowserRouter>
+            </ConfirmProvider>
           </Suspense>
-        </QueryClientProvider>
-      </ThemeProvider>
+        </TooltipProvider>
+      </QueryClientProvider>
     </HelmetProvider>
   );
 }

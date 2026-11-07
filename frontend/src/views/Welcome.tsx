@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import LoginContent from 'auth/modal/LoginContent';
 import { noop } from 'lodash';
 import { useTranslation } from 'react-i18next';
@@ -6,39 +5,22 @@ import { useTranslation } from 'react-i18next';
 export function Welcome() {
   const { t } = useTranslation();
   return (
-    <Container>
-      <Title>{t('Welcome.title')}</Title>
-      <LoginContainer>
-        <LoginContent onClose={noop} anonymous />
-      </LoginContainer>
-    </Container>
+    <div className="grid min-h-[calc(100dvh-3.5rem)] lg:grid-cols-[minmax(280px,0.9fr)_1.1fr]">
+      <section className="flex flex-col bg-primary-800 px-8 py-10 text-white lg:px-12">
+        <div className="flex flex-1 flex-col justify-center">
+          <div className="max-w-md">
+            <h1 className="text-4xl leading-tight font-medium tracking-tight sm:text-5xl">
+              {t('Welcome.title')}
+            </h1>
+          </div>
+        </div>
+        <p className="text-sm text-white/70">Real-time retrospectives</p>
+      </section>
+      <section className="flex items-center justify-center bg-paper px-4 py-10">
+        <div className="w-full max-w-md rounded-3xl border border-line bg-cream p-2 shadow-card">
+          <LoginContent onClose={noop} anonymous />
+        </div>
+      </section>
+    </div>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Title = styled.h1`
-  margin-left: 40px;
-  margin-right: 40px;
-  text-align: center;
-  font-weight: 100;
-  font-size: 4em;
-  @media screen and (max-width: 700px) {
-    font-size: 1.5em;
-  }
-`;
-
-const LoginContainer = styled.div`
-  width: 80%;
-  border: 1px solid #ccc;
-
-  margin-top: 20px;
-
-  @media screen and (max-width: 700px) {
-    width: 100%;
-  }
-`;

@@ -1,4 +1,4 @@
-import { Chip } from '@mui/material';
+import { Chip } from 'ui/chip';
 
 type TagProps = {
   value: string;
@@ -7,9 +7,6 @@ type TagProps = {
 
 export default function Tag({ value, onDelete }: TagProps) {
   return (
-    <Chip
-      label={value}
-      onDelete={onDelete ? () => onDelete(value) : undefined}
-    />
+    <Chip onDelete={onDelete ? () => onDelete(value) : undefined}>{value}</Chip>
   );
 }

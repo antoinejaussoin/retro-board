@@ -1,4 +1,4 @@
-import { Search } from '@mui/icons-material';
+import { Search } from 'lucide-react';
 import Input from '../../components/Input';
 
 interface SearchBarProps {
@@ -8,13 +8,12 @@ interface SearchBarProps {
 
 export default function SearchBar({ value, onChange }: SearchBarProps) {
   return (
-    <div>
-      <Input
-        onChangeValue={onChange}
-        value={value}
-        leftIcon={<Search />}
-        variant="standard"
-      />
-    </div>
+    <Input
+      onChangeValue={onChange}
+      value={value}
+      leftIcon={<Search className="size-4" />}
+      aria-label="Search"
+      className="h-9 w-40 sm:w-56"
+    />
   );
 }

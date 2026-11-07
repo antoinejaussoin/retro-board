@@ -1,11 +1,10 @@
-import { colors } from '@mui/material';
-import Tooltip from '@mui/material/Tooltip';
-import { Lock, LockOpenOutlined, LockOutlined } from '@mui/icons-material';
-import { SessionMetadata } from 'common';
+import { Lock, LockKeyhole, LockOpen } from 'lucide-react';
+import type { SessionMetadata } from 'common';
+import { useTranslation } from 'react-i18next';
+import ProButton from '../../../components/ProButton';
 import { CHECK_PREFIX, decrypt } from '../../../crypto/crypto';
 import { useEncryptionKey } from '../../../crypto/useEncryptionKey';
-import ProButton from '../../../components/ProButton';
-import { useTranslation } from 'react-i18next';
+import { Tooltip } from 'ui/tooltip';
 
 interface EncryptedLockProps {
   session: SessionMetadata;
@@ -18,34 +17,42 @@ function EncryptedLock({ session }: EncryptedLockProps) {
   if (!session.encrypted) {
     return (
       <ProButton>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Tooltip title={t('Encryption.sessionNotEncrypted')!}>
-            <LockOpenOutlined htmlColor={colors.grey[400]} />
+        <span className="inline-flex items-center">
+          <Tooltip content={t('Encryption.sessionNotEncrypted')}>
+            <span className="inline-flex text-gray-400">
+              <LockOpen className="size-4" />
+            </span>
           </Tooltip>
-        </div>
+        </span>
       </ProButton>
     );
   }
 
   if (!key) {
     return (
-      <Tooltip title={t('Encryption.sessionEncryptedNoKeyTooltip')!}>
-        <Lock color="error" />
+      <Tooltip content={t('Encryption.sessionEncryptedNoKeyTooltip')}>
+        <span className="inline-flex text-red-600">
+          <Lock className="size-4" />
+        </span>
       </Tooltip>
     );
   }
 
   if (decrypt(session.encrypted, key) !== CHECK_PREFIX) {
     return (
-      <Tooltip title={t('Encryption.sessionEncryptedWrongKeyTooltip')!}>
-        <Lock color="error" />
+      <Tooltip content={t('Encryption.sessionEncryptedWrongKeyTooltip')}>
+        <span className="inline-flex text-red-600">
+          <Lock className="size-4" />
+        </span>
       </Tooltip>
     );
   }
 
   return (
-    <Tooltip title={t('Encryption.sessionEncryptedHaveKeyTooltip')!}>
-      <LockOutlined htmlColor={colors.green[500]} />
+    <Tooltip content={t('Encryption.sessionEncryptedHaveKeyTooltip')}>
+      <span className="inline-flex text-emerald-600">
+        <LockKeyhole className="size-4" />
+      </span>
     </Tooltip>
   );
 }

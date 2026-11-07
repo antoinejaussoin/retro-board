@@ -1,47 +1,24 @@
-import styled from '@emotion/styled';
-import CardActions from '@mui/material/CardActions';
-
 interface ActionsBarProps {
-  color: string;
   rightActions: React.ReactNode;
 }
+
+const actionVisibility =
+  'max-md:opacity-100 md:pointer-events-none md:opacity-0 md:group-hover:pointer-events-auto md:group-hover:opacity-100';
 
 const ActionsBar = ({
   children,
   rightActions,
-  color,
 }: React.PropsWithChildren<ActionsBarProps>) => {
   return (
-    <Actions>
-      <ButtonsContainer style={{ backgroundColor: color }}>
-        <MainButtons>{children}</MainButtons>
-        <RightActions>{rightActions}</RightActions>
-      </ButtonsContainer>
-    </Actions>
+    <div className="retro-post-actions flex items-center gap-1 border-t border-line px-1.5 py-1">
+      <div className="flex min-w-0 flex-1 items-center">{children}</div>
+      <div
+        className={`flex items-center transition-opacity ${actionVisibility}`}
+      >
+        {rightActions}
+      </div>
+    </div>
   );
 };
-
-const Actions = styled(CardActions)`
-  position: relative;
-  flex: 1;
-  padding: 0 !important;
-
-  > div {
-    flex: 1;
-    margin: 0;
-  }
-`;
-
-const ButtonsContainer = styled.div`
-  display: flex;
-  margin: 0;
-  padding: 8px;
-`;
-
-const RightActions = styled.div``;
-
-const MainButtons = styled.div`
-  flex: 1;
-`;
 
 export default ActionsBar;

@@ -65,6 +65,7 @@
     "voteRemainingMultiple": "{{number}} {{type}}mp van hátra.",
     "voteRemainingOne": "Már csak egy {{type}} van hátra, számítson rá!",
     "voteRemainingNone": "Nem maradt {{type}}.",
+    "voteRemainingUnlimited": "Korlátlan számú {{type}} áll rendelkezésére.",
     "toggleGiphyButton": "Kapcsolja be a Giphy képet",
     "cancelVote": ""
   },

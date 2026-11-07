@@ -1,47 +1,35 @@
-import { memo, useCallback } from 'react';
-import styled from '@emotion/styled';
 import { SessionOptions, SessionSettings } from 'common';
-import Typography from '@mui/material/Typography';
-import { makeStyles } from '@mui/styles';
+import ClosableAlert from 'components/ClosableAlert';
+import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import useRemainingVotes from './useRemainingVotes';
-import useCanReveal from './useCanReveal';
+import { useShouldLockSession } from 'views/game/useTimer';
 import EditableLabel from '../../../../components/EditableLabel';
-import RemainingVotes from './RemainingVotes';
-import useUser from '../../../../state/user/useUser';
-import RevealButton from './RevealButton';
-import ModifyOptions from './ModifyOptions';
-import useCanModifyOptions from './useCanModifyOptions';
-import useCrypto from '../../../../crypto/useCrypto';
-import useCanDecrypt from '../../../../crypto/useCanDecrypt';
-import EncryptionModal from './EncryptionModal';
-import useShouldDisplayEncryptionWarning from './useShouldDisplayEncryptionWarning';
 import TransitionAlert from '../../../../components/TransitionAlert';
+import useCanDecrypt from '../../../../crypto/useCanDecrypt';
+import useCrypto from '../../../../crypto/useCrypto';
 import { useEncryptionKey } from '../../../../crypto/useEncryptionKey';
-import LockSession from './LockSession';
+import useIsDisabled from '../../../../hooks/useIsDisabled';
+import { useMediaQuery } from '../../../../hooks/useMediaQuery';
+import useUser from '../../../../state/user/useUser';
 import useSession from '../../useSession';
 import useSessionUserPermissions from '../useSessionUserPermissions';
-import useIsDisabled from '../../../../hooks/useIsDisabled';
-import { useShouldLockSession } from 'views/game/useTimer';
-import ClosableAlert from 'components/ClosableAlert';
+import EncryptionModal from './EncryptionModal';
+import LockSession from './LockSession';
+import ModifyOptions from './ModifyOptions';
+import RemainingVotes from './RemainingVotes';
+import RevealButton from './RevealButton';
+import useCanModifyOptions from './useCanModifyOptions';
+import useCanReveal from './useCanReveal';
+import useRemainingVotes from './useRemainingVotes';
+import useShouldDisplayEncryptionWarning from './useShouldDisplayEncryptionWarning';
 
 interface BoardHeaderProps {
   onChangeSession: (session: SessionSettings, saveAsTemplate: boolean) => void;
   onLockSession: (locked: boolean) => void;
 }
 
-const useStyles = makeStyles({
-  sessionName: {
-    fontWeight: 300,
-  },
-  container: {
-    marginTop: 20,
-  },
-});
-
 function BoardHeader({ onChangeSession, onLockSession }: BoardHeaderProps) {
   const { t } = useTranslation();
-  const classes = useStyles();
   const [key] = useEncryptionKey();
   const remainingVotes = useRemainingVotes();
   const user = useUser();
@@ -55,6 +43,7 @@ function BoardHeader({ onChangeSession, onLockSession }: BoardHeaderProps) {
   const { session } = useSession();
   const permissions = useSessionUserPermissions();
   const locked = useShouldLockSession();
+  const compact = useMediaQuery('(max-width: 720px)');
 
   const handleReveal = useCallback(() => {
     if (session) {
@@ -73,21 +62,32 @@ function BoardHeader({ onChangeSession, onLockSession }: BoardHeaderProps) {
           {
             name: encrypt(name),
           },
-          false
+          false,
         );
       }
     },
-    [onChangeSession, encrypt, session]
+    [onChangeSession, encrypt, session],
   );
 
   if (!session) {
     return <span>Loading...</span>;
   }
 
+  const showVotes = remainingVotes.up !== null || remainingVotes.down !== null;
+  const template = compact
+    ? {
+        columns: '1fr auto 1fr',
+        areas: '"title title title" "left votes right"',
+      }
+    : {
+        columns: 'auto minmax(0, 1fr) auto',
+        areas: '"left title right"',
+      };
+
   return (
     <>
       {!canDecrypt ? <EncryptionModal /> : null}
-      <Alerts>
+      <div className="flex flex-col gap-2.5 [&:not(:empty)]:mb-4">
         {!isLoggedIn ? (
           <ClosableAlert severity="warning">
             {t('PostBoard.notLoggedIn')}
@@ -120,9 +120,18 @@ function BoardHeader({ onChangeSession, onLockSession }: BoardHeaderProps) {
             {t('PostBoard.lockedDescription')}
           </ClosableAlert>
         ) : null}
-      </Alerts>
-      <Header className={classes.container}>
-        <LeftOptions>
+      </div>
+      <div
+        className="grid items-center gap-x-3 gap-y-1.5"
+        style={{
+          gridTemplateColumns: template.columns,
+          gridTemplateAreas: template.areas,
+        }}
+      >
+        <div
+          style={{ gridArea: 'left' }}
+          className="flex items-center justify-self-start gap-2"
+        >
           {canReveal ? <RevealButton onClick={handleReveal} /> : null}
           {canModifyOptions ? (
             <ModifyOptions
@@ -131,14 +140,12 @@ function BoardHeader({ onChangeSession, onLockSession }: BoardHeaderProps) {
               settings={session}
             />
           ) : null}
-        </LeftOptions>
-        <Title>
-          <Typography
-            variant="h5"
-            align="center"
-            className={classes.sessionName}
-            style={{ fontWeight: 300 }}
-          >
+        </div>
+        <div
+          style={{ gridArea: 'title' }}
+          className="flex w-full min-w-0 justify-center justify-self-stretch"
+        >
+          <h1 className="w-full text-center text-xl font-light leading-tight">
             <EditableLabel
               wrapText
               placeholder={t('SessionName.defaultSessionName')!}
@@ -147,17 +154,31 @@ function BoardHeader({ onChangeSession, onLockSession }: BoardHeaderProps) {
               onChange={handleRenameSession}
               readOnly={!isLoggedIn || !canDecrypt || !permissions.canEditTitle}
             />
-          </Typography>
-        </Title>
-        <RightOptions>
+          </h1>
+        </div>
+        <div
+          style={{ gridArea: 'right' }}
+          className="flex items-center justify-self-end gap-8"
+        >
+          {!compact && showVotes ? (
+            <RemainingVotes up={remainingVotes.up} down={remainingVotes.down} />
+          ) : null}
           {canModifyOptions ? <LockSession onLock={onLockSession} /> : null}
-        </RightOptions>
-        <VoteCounts>
-          <RemainingVotes up={remainingVotes.up} down={remainingVotes.down} />
-        </VoteCounts>
-      </Header>
+        </div>
+        {compact ? (
+          <div style={{ gridArea: 'votes' }} className="flex justify-center">
+            {showVotes ? (
+              <RemainingVotes
+                up={remainingVotes.up}
+                down={remainingVotes.down}
+              />
+            ) : null}
+          </div>
+        ) : null}
+      </div>
       {shouldDisplayEncryptionWarning ? (
         <TransitionAlert
+          className="mt-4"
           severity="warning"
           title={t('Encryption.newEncryptedSessionWarningTitle')!}
         >
@@ -169,84 +190,5 @@ function BoardHeader({ onChangeSession, onLockSession }: BoardHeaderProps) {
     </>
   );
 }
-
-const Alerts = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`;
-
-const Header = styled.div`
-  margin-bottom: 50px;
-  display: grid;
-  justify-items: center;
-  align-items: center;
-  grid-template-columns: 1fr 3fr 1fr;
-  grid-template-rows: auto auto;
-  grid-template-areas:
-    'left title right'
-    '. votes .';
-  column-gap: 10px;
-  row-gap: 15px;
-
-  @media (max-width: 1100px) {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto auto;
-    grid-template-areas:
-      'left right'
-      'title title'
-      'votes votes';
-  }
-
-  @media (max-width: 500px) {
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: auto auto;
-    row-gap: 20px;
-    grid-template-areas:
-      'title title title'
-      'left votes right';
-  }
-`;
-
-const Title = styled.div`
-  grid-area: title;
-  display: flex;
-  align-items: center;
-  justify-self: stretch;
-  > * {
-    width: 100%;
-  }
-`;
-
-const VoteCounts = styled.div`
-  grid-area: votes;
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-`;
-
-const LeftOptions = styled.div`
-  grid-area: left;
-  display: flex;
-  justify-self: start;
-
-  > * {
-    margin-right: 10px !important;
-  }
-
-  @media (max-width: 500px) {
-    margin-left: 10px;
-  }
-`;
-
-const RightOptions = styled.div`
-  grid-area: right;
-  display: flex;
-  justify-self: end;
-
-  @media (max-width: 500px) {
-    margin-right: 10px;
-  }
-`;
 
 export default memo(BoardHeader);

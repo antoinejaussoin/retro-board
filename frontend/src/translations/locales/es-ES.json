@@ -65,6 +65,7 @@
     "voteRemainingMultiple": "Tienes {{number}} {{type}}s restantes.",
     "voteRemainingOne": "Solo te queda un {{type}} restante, ¡hazlo contar!",
     "voteRemainingNone": "No te quedan {{type}}.",
+    "voteRemainingUnlimited": "Tienes {{type}}s ilimitados.",
     "toggleGiphyButton": "Cambiar imagen de Giphy",
     "cancelVote": "Cancela tus votos en esta publicación"
   },

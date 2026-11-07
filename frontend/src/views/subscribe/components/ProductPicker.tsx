@@ -1,7 +1,6 @@
 import { Product, Currency, Plan } from 'common';
 import 'flag-icons/css/flag-icons.min.css';
 import { useCallback } from 'react';
-import styled from '@emotion/styled';
 import ProductDisplay from './Product';
 
 interface ProductPickerProps {
@@ -23,10 +22,10 @@ function ProductPicker({
     (product: Product) => {
       onChange(product.plan);
     },
-    [onChange]
+    [onChange],
   );
   return (
-    <Container>
+    <div className="flex flex-wrap justify-center gap-5">
       {products.map((product) => (
         <ProductDisplay
           key={product.plan}
@@ -37,26 +36,8 @@ function ProductPicker({
           selected={value === product.plan}
         />
       ))}
-    </Container>
+    </div>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  > * {
-    margin: 20px;
-  }
-
-  @media screen and (max-width: 600px) {
-    > * {
-      margin: 5px;
-    }
-    > * {
-      width: 100%;
-    }
-  }
-`;
 
 export default ProductPicker;

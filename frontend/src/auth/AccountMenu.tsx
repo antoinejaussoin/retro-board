@@ -1,36 +1,22 @@
-import { useCallback, useState, useRef } from 'react';
-import styled from '@emotion/styled';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Button from '@mui/material/Button';
-import AccountIcon from '@mui/icons-material/AccountCircle';
-import useUser from '../state/user/useUser';
-import LoginModal from './modal/LoginModal';
+import { KeyRound, LogOut, Sparkles, UserRound } from 'lucide-react';
+import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useMatch, useNavigate } from 'react-router-dom';
 import { logout } from '../api';
 import Avatar from '../components/Avatar';
-import { useMatch, useNavigate } from 'react-router-dom';
-import { Key, Logout, Star } from '@mui/icons-material';
-import {
-  Chip,
-  colors,
-  Divider,
-  ListItemIcon,
-  ListItemText,
-} from '@mui/material';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import useIsAdmin from './useIsAdmin';
-import { useTranslation } from 'react-i18next';
 import { useSetUser } from 'state/user/useSetUser';
+import useUser from '../state/user/useUser';
+import { Button } from 'ui/button';
+import { Chip } from 'ui/chip';
+import { Menu, MenuContent, MenuItem, MenuSeparator, MenuTrigger } from 'ui/menu';
+import useIsAdmin from './useIsAdmin';
+import LoginModal from './modal/LoginModal';
 
 const AccountMenu = () => {
   const { t } = useTranslation();
   const setUser = useSetUser();
   const [modalOpened, setModalOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menuAnchor = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-  const closeMenu = useCallback(() => setMenuOpen(false), []);
-  const openMenu = useCallback(() => setMenuOpen(true), []);
   const user = useUser();
   const isAdmin = useIsAdmin();
   const isOnRoot = useMatch('/');
@@ -41,97 +27,72 @@ const AccountMenu = () => {
       evt.stopPropagation();
       setModalOpen(true);
     },
-    []
+    [],
   );
 
   const handleModalClose = useCallback(() => {
     setModalOpen(false);
-    setMenuOpen(false);
   }, []);
 
   const handleLogout = useCallback(() => {
     logout();
     setUser(null);
-    setMenuOpen(false);
     navigate('/');
   }, [setUser, navigate]);
 
-  const handleAccount = useCallback(() => {
-    navigate('/account');
-    setMenuOpen(false);
-  }, [navigate]);
-
-  const handleAdmin = useCallback(() => {
-    navigate('/admin');
-    setMenuOpen(false);
-  }, [navigate]);
-
-  const handleSubscribe = useCallback(() => {
-    navigate('/subscribe');
-    setMenuOpen(false);
-  }, [navigate]);
-
   if (user) {
     return (
-      <div style={{ position: 'relative' }}>
-        <AvatarContainer
-          onClick={openMenu}
-          ref={menuAnchor}
-          data-cy="account-menu"
-        >
-          <DisplayName>{user.name}</DisplayName>
-          <ChipContainer>
-            {user.accountType === 'anonymous' ? (
-              <Chip color="secondary" label={t('Header.anonymous')} />
-            ) : null}
-          </ChipContainer>
-          <Avatar user={user} />
-        </AvatarContainer>
-        {menuAnchor.current ? (
-          <Menu
-            anchorEl={menuAnchor.current}
-            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-            open={menuOpen}
-            onClose={closeMenu}
+      <Menu>
+        <MenuTrigger>
+          <button
+            type="button"
+            data-cy="account-menu"
+            className="flex items-center gap-3 rounded-full py-1 pr-1 pl-3 hover:bg-white/10"
           >
-            {user && !user.pro && user.accountType !== 'anonymous' ? (
-              <MenuItem onClick={handleSubscribe} data-cy="account-menu-go-pro">
-                <ListItemIcon>
-                  <Star
-                    style={{
-                      color: colors.yellow[700],
-                      position: 'relative',
-                      top: -1,
-                    }}
-                  />
-                </ListItemIcon>
-                <ListItemText>Go Pro!</ListItemText>
-              </MenuItem>
+            <span className="hidden max-w-48 truncate text-sm min-[800px]:block">
+              {user.name}
+            </span>
+            {user.accountType === 'anonymous' ? (
+              <span className="hidden min-[900px]:inline">
+                <Chip tone="secondary">{t('Header.anonymous')}</Chip>
+              </span>
             ) : null}
-            <MenuItem onClick={handleAccount} data-cy="account-menu-account">
-              <ListItemIcon>
-                <AccountCircle />
-              </ListItemIcon>
-              <ListItemText>{t('Header.account')}</ListItemText>
+            <Avatar user={user} />
+          </button>
+        </MenuTrigger>
+        <MenuContent>
+          {user && !user.pro && user.accountType !== 'anonymous' ? (
+            <MenuItem
+              onSelect={() => navigate('/subscribe')}
+              data-cy="account-menu-go-pro"
+            >
+              <Sparkles className="size-4 text-amber-600" />
+              Go Pro!
             </MenuItem>
-            {isAdmin ? (
-              <MenuItem onClick={handleAdmin} data-cy="account-menu-admin">
-                <ListItemIcon>
-                  <Key />
-                </ListItemIcon>
-                <ListItemText>{t('Header.adminPanel')}</ListItemText>
-              </MenuItem>
-            ) : null}
-            {isAdmin || isNotAnon ? <Divider /> : null}
-            <MenuItem onClick={handleLogout} data-cy="account-menu-logout">
-              <ListItemIcon>
-                <Logout />
-              </ListItemIcon>
-              <ListItemText>{t('Header.logout')}</ListItemText>
+          ) : null}
+          <MenuItem
+            onSelect={() => navigate('/account')}
+            data-cy="account-menu-account"
+          >
+            <UserRound className="size-4" />
+            {t('Header.account')}
+          </MenuItem>
+          {isAdmin ? (
+            <MenuItem
+              onSelect={() => navigate('/admin')}
+              data-cy="account-menu-admin"
+            >
+              <KeyRound className="size-4" />
+              {t('Header.adminPanel')}
             </MenuItem>
-          </Menu>
-        ) : null}
-      </div>
+          ) : null}
+          {isAdmin || isNotAnon ? <MenuSeparator /> : null}
+          <MenuItem onSelect={handleLogout} data-cy="account-menu-logout">
+            <LogOut className="size-4" />
+            {t('Header.logout')}
+          </MenuItem>
+        </MenuContent>
+      </Menu>
     );
   }
 
@@ -143,39 +104,15 @@ const AccountMenu = () => {
     <>
       <Button
         onClick={handleModalOpen}
-        variant="contained"
-        color="secondary"
+        variant="secondary"
         data-cy="login-button"
-        startIcon={<AccountIcon />}
       >
+        <UserRound className="size-4" />
         {t('AnonymousLogin.header')}
       </Button>
       {modalOpened && <LoginModal onClose={handleModalClose} large />}
     </>
   );
 };
-
-const AvatarContainer = styled.div`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  gap: 15px;
-`;
-
-const DisplayName = styled.div`
-  @media screen and (max-width: 800px) {
-    display: none;
-  }
-  max-width: 200px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-`;
-
-const ChipContainer = styled.div`
-  @media screen and (max-width: 900px) {
-    display: none;
-  }
-`;
 
 export default AccountMenu;

@@ -1,9 +1,8 @@
 import { useCallback } from 'react';
-import styled from '@emotion/styled';
 import { useNavigate } from 'react-router';
-import PreviousGameItem from './game-item/PreviousGameItem';
-import { SessionMetadata } from 'common';
+import type { SessionMetadata } from 'common';
 import { trackEvent } from '../../track';
+import PreviousGameItem from './game-item/PreviousGameItem';
 
 interface PreviousGamesProps {
   games: SessionMetadata[];
@@ -16,14 +15,14 @@ const PreviousGames = ({ games, onDelete }: PreviousGamesProps) => {
     (session: SessionMetadata, encryptionKey: string | null) => {
       trackEvent('home/load-previous');
       navigate(
-        `/game/${session.id}${encryptionKey ? '#' + encryptionKey : ''}`
+        `/game/${session.id}${encryptionKey ? `#${encryptionKey}` : ''}`,
       );
     },
-    [navigate]
+    [navigate],
   );
 
   return (
-    <Container>
+    <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
       {games.map((session) => (
         <PreviousGameItem
           key={session.id}
@@ -32,16 +31,8 @@ const PreviousGames = ({ games, onDelete }: PreviousGamesProps) => {
           onClick={redirectToGame}
         />
       ))}
-    </Container>
+    </div>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  > * {
-    margin: 20px;
-  }
-`;
 
 export default PreviousGames;

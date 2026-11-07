@@ -1,30 +1,16 @@
-import styled from '@emotion/styled';
-import Typography from '@mui/material/Typography';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import Grid from '@mui/material/Grid';
-import { useTheme } from '@mui/material/styles';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Avatar from '@mui/material/Avatar';
-import { colors } from '@mui/material';
-import { Feedback } from '@mui/icons-material';
-import { ColumnContent } from '../types';
-import { Palette } from '../../../Theme';
+import { SquareCheck } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Page } from '../../../components/Page';
+import useCrypto from '../../../crypto/useCrypto';
+import { Palette } from '../../../Theme';
+import { usePostUserPermissionsNullable } from '../board/usePostUserPermissions';
+import { useSearch } from '../is-search-match';
+import { ColumnContent } from '../types';
 import { AiSummary } from './AiSummary';
 import SpeedDial from './SpeedDial';
 import { useSummary } from './useSummary';
-import { ColumnStats, ColumnStatsItem, ActionItem } from './types';
-import useCrypto from '../../../crypto/useCrypto';
-import { Box } from '@mui/system';
-import { usePostUserPermissionsNullable } from '../board/usePostUserPermissions';
-import { useSearch } from '../is-search-match';
+import { ActionItem, ColumnStats, ColumnStatsItem } from './types';
 
 interface SummaryModeProps {
   columns: ColumnContent[];
@@ -40,25 +26,23 @@ function Section({ stats, search }: SectionProps) {
   const { t } = useTranslation();
 
   return (
-    <Box marginBottom={2} role="list">
-      <Card>
-        <CardHeader
-          title={
-            <Typography variant="h6" style={{ fontWeight: 300 }}>
-              {stats.column.label}
-            </Typography>
-          }
-          style={{ backgroundColor: stats.column.color }}
-        />
-        <CardContent>
+    <section className="mb-4" role="list">
+      <article className="overflow-hidden rounded-2xl border border-line bg-cream shadow-card">
+        <header
+          className="border-t-4 px-5 py-3 text-lg font-light"
+          style={{ borderTopColor: stats.column.color }}
+        >
+          {stats.column.label}
+        </header>
+        <div className="px-5 py-4">
           {stats.items.length ? (
             <PostsList items={stats.items} search={search} />
           ) : (
-            <Typography variant="body1">{t('SummaryBoard.noPosts')}</Typography>
+            <p>{t('SummaryBoard.noPosts')}</p>
           )}
-        </CardContent>
-      </Card>
-    </Box>
+        </div>
+      </article>
+    </section>
   );
 }
 
@@ -70,32 +54,17 @@ interface GroupSummaryProps {
 function GroupSummary({ group, search }: GroupSummaryProps) {
   const { decrypt } = useCrypto();
   return (
-    <GroupContainer>
-      <GroupTitle>
-        <Score>
-          <PositiveNumber>+{group.likes}</PositiveNumber>&nbsp;
-          <NegativeNumber>-{group.dislikes}</NegativeNumber>
-        </Score>
-        {decrypt(group.content)}
-      </GroupTitle>
-      <PostsList items={group.children} search={search} />
-    </GroupContainer>
+    <div className="my-2 border-l border-dashed border-gray-400 pl-3">
+      <div className="flex items-center gap-2 font-semibold opacity-60">
+        <Score likes={group.likes} dislikes={group.dislikes} />
+        <span>{decrypt(group.content)}</span>
+      </div>
+      <div className="mt-1 ml-4">
+        <PostsList items={group.children} search={search} />
+      </div>
+    </div>
   );
 }
-
-const GroupContainer = styled.div`
-  border-left: 1px dashed ${colors.grey[500]};
-  margin-left: -10px;
-  padding-left: 10px;
-  > :nth-child(2) {
-    margin-left: 15px;
-  }
-`;
-const GroupTitle = styled.div`
-  display: flex;
-  font-weight: bold;
-  opacity: 0.4;
-`;
 
 interface PostsListProps {
   items: ColumnStatsItem[];
@@ -113,7 +82,7 @@ function PostsList({ items, search }: PostsListProps) {
             <PostLine item={item} key={item.id} />
           ) : (
             <GroupSummary group={item} key={item.id} search={search} />
-          )
+          ),
         )}
     </div>
   );
@@ -128,132 +97,80 @@ function PostLine({ item }: PostLineProps) {
   const permissions = usePostUserPermissionsNullable(item.post);
   const canShowAuthor = permissions && permissions.canShowAuthor;
   return (
-    <PostLineContainer>
-      <Typography component="div">
-        <PostContainer role="listitem">
-          <Score>
-            <PositiveNumber>+{item.likes}</PositiveNumber>&nbsp;
-            <NegativeNumber>-{item.dislikes}</NegativeNumber>
-          </Score>
-          <PostContent aria-label="post content">
-            {decrypt(item.content)}
-          </PostContent>
-          {canShowAuthor ? <Author>(by {item.post?.user.name})</Author> : null}
-        </PostContainer>
-      </Typography>
-    </PostLineContainer>
+    <div className="rounded-lg px-1 hover:bg-paper" role="listitem">
+      <div className="flex gap-2 py-1.5">
+        <Score likes={item.likes} dislikes={item.dislikes} />
+        <span className="flex-1 whitespace-pre-wrap" aria-label="post content">
+          {decrypt(item.content)}
+        </span>
+        {canShowAuthor ? (
+          <span className="flex items-center px-2 text-xs text-muted">
+            (by {item.post?.user.name})
+          </span>
+        ) : null}
+      </div>
+    </div>
   );
 }
 
-const PostLineContainer = styled.div`
-  :hover {
-    background-color: ${colors.grey[50]};
-  }
-`;
-
-const Author = styled.div`
-  color: ${colors.grey[500]};
-  font-size: 0.7rem;
-  display: flex;
-  align-items: center;
-  padding: 0 10px;
-`;
-
-const PostContainer = styled.div`
-  display: flex;
-`;
-
-const Score = styled.div`
-  margin-right: 10px;
-`;
-
-const PositiveNumber = styled.span`
-  color: ${Palette.positive};
-`;
-
-const NegativeNumber = styled.span`
-  color: ${Palette.negative};
-`;
-
-const PostContent = styled.span`
-  white-space: pre-wrap;
-  flex: 1;
-`;
+function Score({ likes, dislikes }: { likes: number; dislikes: number }) {
+  return (
+    <span className="shrink-0">
+      <span style={{ color: Palette.positive }}>+{likes}</span>
+      &nbsp;
+      <span style={{ color: Palette.negative }}>-{dislikes}</span>
+    </span>
+  );
+}
 
 interface ActionsListProps {
   actions: ActionItem[];
 }
 
 function ActionsList({ actions }: ActionsListProps) {
-  const theme = useTheme();
   const { t } = useTranslation();
   const { decrypt } = useCrypto();
   return (
-    <Grid
-      container
-      spacing={4}
-      component="section"
-      role="list"
-      style={{ marginTop: 20 }}
-    >
-      <Grid item xs={12}>
-        <Card>
-          <CardHeader
-            title={
-              <Typography variant="h6" style={{ fontWeight: 300 }}>
-                {t('Actions.summaryTitle')}
-              </Typography>
-            }
-            style={{
-              backgroundColor: theme.palette.primary.main,
-              color: theme.palette.primary.contrastText,
-            }}
-          />
-          <CardContent>
-            <List>
-              {actions.map((action) => (
-                <ListItem key={action.postId}>
-                  <ListItemIcon>
-                    <Avatar>
-                      <Feedback />
-                    </Avatar>
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={decrypt(action.action)}
-                    secondary={decrypt(action.postContent)}
-                  />
-                </ListItem>
-              ))}
-            </List>
-          </CardContent>
-        </Card>
-      </Grid>
-    </Grid>
+    <section className="mt-5" role="list">
+      <article className="overflow-hidden rounded-2xl border border-line border-t-4 border-t-primary-700 bg-cream shadow-card">
+        <header className="px-5 py-3 text-lg font-light">
+          {t('Actions.summaryTitle')}
+        </header>
+        <ul className="px-5 py-2">
+          {actions.map((action) => (
+            <li key={action.postId} className="flex gap-3 py-2" role="listitem">
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary-100 text-primary-800">
+                <SquareCheck className="size-4" />
+              </span>
+              <div className="min-w-0">
+                <p>{decrypt(action.action)}</p>
+                <p className="text-sm text-muted">{decrypt(action.postContent)}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </article>
+    </section>
   );
 }
 
 export function SummaryMode({ columns, search }: SummaryModeProps) {
   const stats = useSummary(columns);
   const [aiSummary, setAiSummary] = useState('');
+  const { t } = useTranslation();
   return (
-    <Page>
-      <div>
-        <AiSummary onSummary={setAiSummary} />
-        {stats.columns.map((stat) => (
-          <Section key={stat.column.index} stats={stat} search={search} />
-        ))}
-        {stats.actions.length ? <ActionsList actions={stats.actions} /> : null}
-      </div>
-      <SpeedDialContainer>
+    <Page className="pb-36">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+        <h1 className="text-2xl font-light tracking-tight">
+          {t('GameMenu.summary')}
+        </h1>
         <SpeedDial summary={aiSummary} />
-      </SpeedDialContainer>
+      </div>
+      <AiSummary onSummary={setAiSummary} />
+      {stats.columns.map((stat) => (
+        <Section key={stat.column.index} stats={stat} search={search} />
+      ))}
+      {stats.actions.length ? <ActionsList actions={stats.actions} /> : null}
     </Page>
   );
 }
-
-const SpeedDialContainer = styled.div`
-  position: fixed;
-  bottom: 85px;
-  right: 20px;
-  z-index: 3;
-`;

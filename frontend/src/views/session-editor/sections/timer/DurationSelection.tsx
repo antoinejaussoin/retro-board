@@ -1,8 +1,6 @@
-import styled from '@emotion/styled';
-import { Slider } from '@mui/material';
-import type { Mark } from '../../mark';
-import { isProduction } from 'is-production';
 import { useCallback } from 'react';
+import { isProduction } from 'is-production';
+import { Slider } from 'ui/slider';
 
 type DurationSelectionProps = {
   /**
@@ -15,7 +13,7 @@ type DurationSelectionProps = {
   onChange: (duration: number) => void;
 };
 
-const marks: Mark[] = [
+const marks = [
   { value: 1, label: '1m' },
   { value: 15, label: '15m' },
   { value: 30, label: '30m' },
@@ -28,30 +26,28 @@ export default function DurationSelection({
   onChange,
 }: DurationSelectionProps) {
   const handleChange = useCallback(
-    (_event: Event, value: number | number[]) => {
-      // Allows testing on a small duration in development mode
+    (value: number) => {
       if (!isProduction() && value === 1) {
         onChange(10);
         return;
       }
-      onChange((value as number) * 60);
+      onChange(value * 60);
     },
-    [onChange]
+    [onChange],
   );
+
+  const minutes = duration / 60;
+  const sliderValue = Math.min(60, Math.max(1, minutes));
+
   return (
-    <Container>
+    <div className="pr-5">
       <Slider
-        value={duration / 60}
+        value={sliderValue}
         onChange={handleChange}
         marks={marks}
         min={1}
         max={60}
-        step={1}
       />
-    </Container>
+    </div>
   );
 }
-
-const Container = styled.div`
-  padding-right: 20px;
-`;

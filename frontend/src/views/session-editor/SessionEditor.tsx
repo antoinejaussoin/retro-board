@@ -1,24 +1,32 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
-import { AllSessionSettings, SessionOptions, User } from 'common';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import DialogActions from '@mui/material/DialogActions';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Button from '@mui/material/Button';
-import AppBar from '@mui/material/AppBar';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  Columns3,
+  LayoutTemplate,
+  StickyNote,
+  ThumbsUp,
+  Timer,
+} from 'lucide-react';
+import type { AllSessionSettings, SessionOptions, User } from 'common';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'hooks/useMediaQuery';
 import useToggle from '../../hooks/useToggle';
-import { ColumnSettings } from '../../state/types';
-import TemplateSection from './sections/template/TemplateSection';
-import PostsSection from './sections/posts/PostsSection';
-import VotingSection from './sections/votes/VotingSection';
 import { extrapolate, toColumnDefinitions } from '../../state/columns';
-import TimerSection from './sections/timer/TimerSection';
+import type { ColumnSettings } from '../../state/types';
+import { Button } from 'ui/button';
+import { Checkbox } from 'ui/checkbox';
+import { cn } from 'ui/cn';
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogFooter,
+  DialogTitle,
+} from 'ui/dialog';
 import BoardSection from './sections/board/BoardSection';
+import PostsSection from './sections/posts/PostsSection';
+import TemplateSection from './sections/template/TemplateSection';
+import TimerSection from './sections/timer/TimerSection';
+import VotingSection from './sections/votes/VotingSection';
 
 interface SessionEditorProps {
   open: boolean;
@@ -27,6 +35,14 @@ interface SessionEditorProps {
   onChange: (settings: AllSessionSettings, makeDefault: boolean) => void;
   onClose: () => void;
 }
+
+const categories = [
+  { id: 'template', icon: LayoutTemplate, labelKey: 'Customize.template' },
+  { id: 'board', icon: Columns3, labelKey: 'Customize.boardCategory' },
+  { id: 'posts', icon: StickyNote, labelKey: 'Customize.postCategory' },
+  { id: 'voting', icon: ThumbsUp, labelKey: 'Customize.votingCategory' },
+  { id: 'timer', icon: Timer, labelKey: 'Customize.timerCategory' },
+] as const;
 
 function SessionEditor({
   open,
@@ -42,8 +58,8 @@ function SessionEditor({
   const [currentTab, setCurrentTab] = useState('template');
 
   const extrapolatedColumns = useMemo(() => {
-    const extrapolatedColumns = settings.columns.map((c) => extrapolate(c, t));
-    return extrapolatedColumns;
+    const columns = settings.columns.map((column) => extrapolate(column, t));
+    return columns;
   }, [settings.columns, t]);
 
   useEffect(() => {
@@ -53,10 +69,6 @@ function SessionEditor({
   const handleCreate = useCallback(() => {
     onChange(settings, isDefaultTemplate);
   }, [onChange, isDefaultTemplate, settings]);
-
-  const handleTab = useCallback((_: React.ChangeEvent<{}>, value: string) => {
-    setCurrentTab(value);
-  }, []);
 
   const handleOptionsChange = useCallback((options: SessionOptions) => {
     setSettings((prev) => ({ ...prev, options }));
@@ -71,82 +83,103 @@ function SessionEditor({
   }, []);
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      fullWidth
-      fullScreen={fullScreen}
-      keepMounted={false}
-      maxWidth="md"
-    >
-      <AppBar position="static" color="default">
-        <Tabs
-          value={currentTab}
-          onChange={handleTab}
-          indicatorColor="primary"
-          textColor="primary"
-          variant="scrollable"
-          scrollButtons="auto"
-          allowScrollButtonsMobile
-          aria-label="scrollable auto tabs example"
+    <Dialog open={open} onClose={onClose}>
+      <DialogContent
+        size="xl"
+        fullScreen={fullScreen}
+        className="min-h-[min(70dvh,720px)]"
+      >
+        <DialogTitle>{t('Customize.title')}</DialogTitle>
+        <div
+          className={cn(
+            'flex min-h-0 flex-1 overflow-hidden',
+            fullScreen ? 'flex-col' : 'flex-row',
+          )}
         >
-          <Tab label={t('Customize.template')} value="template" />
-          <Tab label={t('Customize.boardCategory')} value="board" />
-          <Tab label={t('Customize.postCategory')} value="posts" />
-          <Tab label={t('Customize.votingCategory')} value="voting" />
-          <Tab label={t('Customize.timerCategory')} value="timer" />
-        </Tabs>
-      </AppBar>
-      <DialogContent>
-        {currentTab === 'template' ? (
-          <TemplateSection
-            columns={extrapolatedColumns}
-            onChange={handleColumnsChanged}
+          <nav
+            aria-label={t('Customize.title')}
+            className={cn(
+              'flex gap-1',
+              fullScreen
+                ? 'overflow-x-auto border-b border-line px-4 py-2'
+                : 'w-52 shrink-0 flex-col overflow-y-auto border-r border-line px-3 py-4',
+            )}
+          >
+            {categories.map((category) => {
+              const Icon = category.icon;
+              const selected = currentTab === category.id;
+              return (
+                <button
+                  key={category.id}
+                  type="button"
+                  aria-pressed={selected}
+                  onClick={() => setCurrentTab(category.id)}
+                  className={cn(
+                    'inline-flex shrink-0 items-center gap-2 rounded-full px-3 py-2 text-left text-sm whitespace-nowrap',
+                    !fullScreen && 'w-full rounded-xl whitespace-normal',
+                    selected
+                      ? 'bg-primary-700 text-white'
+                      : 'text-ink hover:bg-paper',
+                  )}
+                >
+                  <Icon className="size-4 shrink-0" />
+                  {t(category.labelKey)}
+                </button>
+              );
+            })}
+          </nav>
+          <DialogBody className="min-h-0 flex-1">
+            {currentTab === 'template' ? (
+              <TemplateSection
+                columns={extrapolatedColumns}
+                onChange={handleColumnsChanged}
+              />
+            ) : null}
+            {currentTab === 'board' ? (
+              <BoardSection
+                owner={owner}
+                options={settings}
+                onChange={handleSettingsChange}
+              />
+            ) : null}
+            {currentTab === 'posts' ? (
+              <PostsSection
+                options={settings.options}
+                onChange={handleOptionsChange}
+              />
+            ) : null}
+            {currentTab === 'voting' ? (
+              <VotingSection
+                options={settings.options}
+                onChange={handleOptionsChange}
+              />
+            ) : null}
+            {currentTab === 'timer' ? (
+              <TimerSection
+                options={settings.options}
+                onChange={handleOptionsChange}
+              />
+            ) : null}
+          </DialogBody>
+        </div>
+        <DialogFooter className="flex-wrap justify-between gap-3">
+          <Checkbox
+            checked={isDefaultTemplate}
+            onCheckedChange={(checked) => {
+              if (checked !== isDefaultTemplate) {
+                toggleIsDefaultTemplate();
+              }
+            }}
+            label={t('Customize.makeDefaultTemplate')}
           />
-        ) : null}
-        {currentTab === 'board' ? (
-          <BoardSection
-            owner={owner}
-            options={settings}
-            onChange={handleSettingsChange}
-          />
-        ) : null}
-        {currentTab === 'posts' ? (
-          <PostsSection
-            options={settings.options}
-            onChange={handleOptionsChange}
-          />
-        ) : null}
-        {currentTab === 'voting' ? (
-          <VotingSection
-            options={settings.options}
-            onChange={handleOptionsChange}
-          />
-        ) : null}
-        {currentTab === 'timer' ? (
-          <TimerSection
-            options={settings.options}
-            onChange={handleOptionsChange}
-          />
-        ) : null}
+          <div className="flex gap-2">
+            <Button variant="ghost" onClick={onClose}>
+              {t('Generic.cancel')}
+            </Button>
+            <Button onClick={handleCreate}>{t('Customize.editButton')}</Button>
+          </div>
+        </DialogFooter>
       </DialogContent>
-      <DialogActions>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={isDefaultTemplate}
-              onChange={toggleIsDefaultTemplate}
-            />
-          }
-          label={t('Customize.makeDefaultTemplate')!}
-        />
-        <Button onClick={onClose} variant="text">
-          {t('Generic.cancel')}
-        </Button>
-        <Button onClick={handleCreate} color="primary" variant="contained">
-          {t('Customize.editButton')}
-        </Button>
-      </DialogActions>
     </Dialog>
   );
 }

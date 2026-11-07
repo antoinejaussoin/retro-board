@@ -1,16 +1,16 @@
+import { KeyRound, Mail, UserRound } from 'lucide-react';
 import { Suspense, useCallback, useState, useMemo, lazy } from 'react';
-import Button from '@mui/material/Button';
-import { Alert } from '@mui/material';
-import { useLanguage } from '../../../translations';
-import Wrapper from './../Wrapper';
-import Input from '../../../components/Input';
-import { Person, Email, VpnKey } from '@mui/icons-material';
-import { me, register, updateLanguage } from '../../../api';
-import useBackendCapabilities from 'global/useBackendCapabilities';
 import { useTranslation } from 'react-i18next';
+import { me, register, updateLanguage } from '../../../api';
+import Input from '../../../components/Input';
 import { validate } from 'email/validate';
-import { trackEvent } from 'track';
+import useBackendCapabilities from 'global/useBackendCapabilities';
 import { useSetUser } from 'state/user/useSetUser';
+import { trackEvent } from 'track';
+import { useLanguage } from '../../../translations';
+import { Alert } from 'ui/alert';
+import { Button } from 'ui/button';
+import Wrapper from './../Wrapper';
 
 type RegisterProps = {
   onClose: () => void;
@@ -32,17 +32,22 @@ const Register = ({ onClose, onCancel }: RegisterProps) => {
   const { disablePasswordRegistration } = useBackendCapabilities();
 
   const validEmail = useMemo(() => {
-    return validate(registerEmail);
+    try {
+      return validate(registerEmail);
+    } catch {
+      return false;
+    }
   }, [registerEmail]);
 
   const validName = registerName.length > 0;
+  const showEmailError = !validEmail && registerEmail.length > 0;
 
   const handleRegistration = useCallback(async () => {
     const response = await register(
       registerName,
       registerEmail,
       registerPassword,
-      language.locale
+      language.locale,
     );
     if (response.error) {
       switch (response.error) {
@@ -93,8 +98,8 @@ const Register = ({ onClose, onCancel }: RegisterProps) => {
       actions={
         <>
           <Button
+            variant="outline"
             onClick={onCancel}
-            color="secondary"
             data-cy="cancel-register-button"
           >
             {t('Generic.cancel')}
@@ -102,7 +107,6 @@ const Register = ({ onClose, onCancel }: RegisterProps) => {
           {!isSuccessful ? (
             <Button
               onClick={handleRegistration}
-              color="primary"
               autoFocus
               disabled={!validEmail || passwordScore < 3 || !validName}
               data-cy="register-button"
@@ -116,77 +120,79 @@ const Register = ({ onClose, onCancel }: RegisterProps) => {
       {isSuccessful ? (
         <Alert severity="success">{t('Register.messageSuccess')}</Alert>
       ) : (
-        <>
+        <div className="flex flex-col gap-4">
           <Alert severity="info">{t('Register.info')}</Alert>
 
-          {generalError ? (
-            <Alert severity="error" style={{ marginTop: 10 }}>
-              {generalError}
-            </Alert>
-          ) : null}
+          {generalError ? <Alert severity="error">{generalError}</Alert> : null}
 
           <Input
             value={registerName}
             onChangeValue={setRegisterName}
             title={t('AuthCommon.nameField')!}
             placeholder={t('AuthCommon.nameField')!}
-            variant="standard"
             fullWidth
-            style={{ marginTop: 20 }}
-            leftIcon={<Person />}
+            leftIcon={<UserRound className="size-4" />}
             required
             data-cy="register-name"
           />
-          <Input
-            value={registerEmail}
-            onChangeValue={setRegisterEmail}
-            title={t('AuthCommon.emailField')!}
-            placeholder={t('AuthCommon.emailField')!}
-            variant="standard"
-            fullWidth
-            style={{ marginTop: 20 }}
-            leftIcon={<Email />}
-            required
-            error={!validEmail && registerEmail.length > 0}
-            helperText={
-              !validEmail && registerEmail.length > 0
-                ? t('Register.errorInvalidEmail')
-                : undefined
-            }
-            data-cy="register-email"
-          />
-          <Input
-            value={registerPassword}
-            onChangeValue={setRegisterPassword}
-            title={t('AuthCommon.passwordField')!}
-            placeholder={t('AuthCommon.passwordField')!}
-            variant="standard"
-            type="password"
-            fullWidth
-            style={{ marginTop: 20 }}
-            leftIcon={<VpnKey />}
-            required
-            data-cy="register-password"
-          />
-          <Suspense fallback={<span />}>
-            <PasswordStrength
-              onChangeScore={setPasswordScore}
-              password={registerPassword}
-              shortScoreWord={
-                (
-                  t(`AuthCommon.passwordScoreWords`, {
-                    returnObjects: true,
-                  }) as string[]
-                )[0]
+          <div>
+            <Input
+              value={registerEmail}
+              onChangeValue={setRegisterEmail}
+              title={t('AuthCommon.emailField')!}
+              placeholder={t('AuthCommon.emailField')!}
+              type="email"
+              fullWidth
+              leftIcon={<Mail className="size-4" />}
+              required
+              aria-invalid={showEmailError}
+              className={
+                showEmailError
+                  ? 'border-red-400 focus:border-red-400 focus:ring-red-200'
+                  : undefined
               }
-              scoreWords={
-                t('AuthCommon.passwordScoreWords', {
-                  returnObjects: true,
-                }) as string[]
-              }
+              data-cy="register-email"
             />
-          </Suspense>
-        </>
+            {showEmailError ? (
+              <p className="mt-1.5 text-sm text-red-700">
+                {t('Register.errorInvalidEmail')}
+              </p>
+            ) : null}
+          </div>
+          <div>
+            <Input
+              value={registerPassword}
+              onChangeValue={setRegisterPassword}
+              title={t('AuthCommon.passwordField')!}
+              placeholder={t('AuthCommon.passwordField')!}
+              type="password"
+              fullWidth
+              leftIcon={<KeyRound className="size-4" />}
+              required
+              data-cy="register-password"
+            />
+            <div className="mt-2">
+              <Suspense fallback={<span />}>
+                <PasswordStrength
+                  onChangeScore={setPasswordScore}
+                  password={registerPassword}
+                  shortScoreWord={
+                    (
+                      t(`AuthCommon.passwordScoreWords`, {
+                        returnObjects: true,
+                      }) as string[]
+                    )[0]
+                  }
+                  scoreWords={
+                    t('AuthCommon.passwordScoreWords', {
+                      returnObjects: true,
+                    }) as string[]
+                  }
+                />
+              </Suspense>
+            </div>
+          </div>
+        </div>
       )}
     </Wrapper>
   );

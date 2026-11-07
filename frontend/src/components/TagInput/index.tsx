@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import NewTag from './NewTag';
 import Tag from './Tag';
 
@@ -22,7 +21,7 @@ export default function TagInput({
   onValidate,
 }: TagInputProps) {
   return (
-    <Container>
+    <div className="flex flex-wrap items-center gap-2">
       {values.map((v, i) => (
         <Tag key={i} value={v} onDelete={onRemove} />
       ))}
@@ -31,13 +30,6 @@ export default function TagInput({
         onValidate={onValidate || noop}
         placeholder={placeholder}
       />
-    </Container>
+    </div>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  flex-wrap: wrap;
-`;

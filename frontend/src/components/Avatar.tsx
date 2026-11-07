@@ -1,80 +1,47 @@
-import { User } from 'common';
-import Avatar, { AvatarTypeMap } from '@mui/material/Avatar';
-import Badge from '@mui/material/Badge';
+import type { User } from 'common';
 import md5 from 'md5';
-import { DefaultComponentProps } from '@mui/material/OverridableComponent';
-import { createStyles, withStyles } from '@mui/styles';
+import { cn } from 'ui/cn';
 
-interface AvatarProps extends DefaultComponentProps<AvatarTypeMap<{}, 'div'>> {
+interface AvatarProps {
   user: User | null;
   online?: boolean;
+  className?: string;
 }
 
-const StyledBadge = withStyles((theme) =>
-  createStyles({
-    badge: {
-      backgroundColor: '#44b700',
-      color: '#44b700',
-      '&::after': {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '75%',
-        height: '75%',
-        borderRadius: '50%',
-        animation: '$ripple 1.2s infinite ease-in-out',
-        border: '1px solid currentColor',
-        content: '""',
-      },
-    },
-    '@keyframes ripple': {
-      '0%': {
-        transform: 'scale(.8)',
-        opacity: 1,
-      },
-      '100%': {
-        transform: 'scale(2.4)',
-        opacity: 0,
-      },
-    },
-  })
-)(Badge);
-
 const getGravatar = (user: User | null) => {
-  if (user && user.photo) {
+  if (user?.photo) {
     return user.photo;
-  } else if (user) {
+  }
+  if (user) {
     return `https://www.gravatar.com/avatar/${md5(user.id)}?d=retro`;
   }
+  return undefined;
 };
 
-const CustomAvatar = ({ user, online, ...props }: AvatarProps) => {
+const CustomAvatar = ({ user, online, className }: AvatarProps) => {
   const displayName = user ? user.name : 'Not logged in';
-
   const avatar = (
-    <Avatar
-      {...props}
+    <img
       alt={displayName}
       src={getGravatar(user)}
       title={displayName}
+      className={cn(
+        'size-9 rounded-full bg-primary-100 object-cover',
+        className,
+      )}
     />
   );
 
-  if (online) {
-    return (
-      <StyledBadge
-        overlap="circular"
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        variant="dot"
-      >
-        {avatar}
-      </StyledBadge>
-    );
+  if (!online) {
+    return avatar;
   }
-  return avatar;
+
+  return (
+    <span className="relative inline-flex">
+      {avatar}
+      <span className="absolute right-0 bottom-0 size-2.5 rounded-full bg-emerald-500 ring-2 ring-cream" />
+    </span>
+  );
 };
 
 export default CustomAvatar;

@@ -1,9 +1,8 @@
-import { colors } from '@mui/material';
-import Tooltip from '@mui/material/Tooltip';
-import { VerifiedUser, VerifiedUserOutlined } from '@mui/icons-material';
-import { SessionMetadata } from 'common';
-import ProButton from '../../../components/ProButton';
+import { Badge, BadgeCheck, BadgeX } from 'lucide-react';
+import type { SessionMetadata } from 'common';
 import { useTranslation } from 'react-i18next';
+import ProButton from '../../../components/ProButton';
+import { Tooltip } from 'ui/tooltip';
 
 interface PrivateSessionIconProps {
   session: SessionMetadata;
@@ -15,25 +14,32 @@ function PrivateSessionIcon({ session }: PrivateSessionIconProps) {
   if (!session.locked) {
     return (
       <ProButton>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Tooltip title={t('Private.sessionIsPublic')!}>
-            <VerifiedUserOutlined htmlColor={colors.grey[400]} />
+        <span className="inline-flex items-center">
+          <Tooltip content={t('Private.sessionIsPublic')}>
+            <span className="inline-flex text-gray-400">
+              <Badge className="size-4" />
+            </span>
           </Tooltip>
-        </div>
+        </span>
       </ProButton>
     );
   }
 
   if (!session.lockedForUser) {
     return (
-      <Tooltip title={t('Private.sessionIsPrivate')!}>
-        <VerifiedUser htmlColor={colors.green[500]} />
+      <Tooltip content={t('Private.sessionIsPrivate')}>
+        <span className="inline-flex text-emerald-600">
+          <BadgeCheck className="size-4" />
+        </span>
       </Tooltip>
     );
   }
+
   return (
-    <Tooltip title={t('Private.sessionIsPrivateNoAccess')!}>
-      <VerifiedUser htmlColor={colors.red[500]} />
+    <Tooltip content={t('Private.sessionIsPrivateNoAccess')}>
+      <span className="inline-flex text-red-600">
+        <BadgeX className="size-4" />
+      </span>
     </Tooltip>
   );
 }

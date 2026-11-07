@@ -1,15 +1,18 @@
-import { Help } from '@mui/icons-material';
-import { Tooltip } from '@mui/material';
+import { CircleHelp } from 'lucide-react';
+import type { ReactNode } from 'react';
+import { Tooltip } from 'ui/tooltip';
 
 type HelpButtonProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   color?: string;
 };
 
 export function HelpButton({ children, color }: HelpButtonProps) {
   return (
-    <Tooltip title={children}>
-      <Help htmlColor={color} />
+    <Tooltip content={children}>
+      <span className="inline-flex" style={{ color }}>
+        <CircleHelp className="size-4" />
+      </span>
     </Tooltip>
   );
 }

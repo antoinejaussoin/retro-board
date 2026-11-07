@@ -1,7 +1,5 @@
-import { colors } from '@mui/material';
 import Markdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
-import styled from '@emotion/styled';
 
 const content = `
 # 🔐  How does the encryption work?
@@ -46,27 +44,8 @@ the key will be stored in local storage for the reason explained above.
 
 export default function EncryptionDoc() {
   return (
-    <Container>
-      <Markdown rehypePlugins={[rehypeRaw as any]}>{content}</Markdown>
-    </Container>
+    <div className="mx-auto max-w-3xl px-6 py-12 text-ink [&_a]:text-primary-700 [&_h1]:mb-4 [&_h1]:border-b [&_h1]:border-line [&_h1]:pb-3 [&_h1]:text-4xl [&_h1]:font-light [&_h2]:mt-10 [&_h2]:mb-3 [&_h2]:text-2xl [&_h2]:font-light [&_li]:my-1 [&_ol]:my-3 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:my-3 [&_p]:leading-7 [&_ul]:my-3 [&_ul]:list-disc [&_ul]:pl-5">
+      <Markdown rehypePlugins={[rehypeRaw as never]}>{content}</Markdown>
+    </div>
   );
 }
-
-const Container = styled.div`
-  margin: 50px;
-
-  h1 {
-    font-weight: 100;
-    border-bottom: 1px solid ${colors.grey[300]};
-    padding-bottom: 10px;
-  }
-
-  h2 {
-    font-weight: 100;
-    margin-top: 30px;
-  }
-
-  a {
-    text-decoration: none;
-  }
-`;

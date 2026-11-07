@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useRef } from 'react';
-import { Button, Popover } from '@mui/material';
-import styled from '@emotion/styled';
+import { useCallback, useEffect } from 'react';
 import data from '@emoji-mart/data';
-import useModal from 'hooks/useModal';
-import Icon from 'components/Icon/Icon';
 import EmojiMartPicker from 'components/Icon/EmojiMartPicker';
+import Icon from 'components/Icon/Icon';
 import { initEmojiMart } from 'components/Icon/emoji-mart';
+import useModal from 'hooks/useModal';
+import { Button } from 'ui/button';
+import { Popover, PopoverContent, PopoverTrigger } from 'ui/popover';
 
 interface IconPickerProps {
   value: string | null;
@@ -17,7 +17,6 @@ type EmojiSelectPayload = {
 };
 
 const IconPicker = ({ value, onChange }: IconPickerProps) => {
-  const ref = useRef<HTMLButtonElement>(null);
   const [opened, open, close] = useModal();
 
   useEffect(() => {
@@ -31,38 +30,34 @@ const IconPicker = ({ value, onChange }: IconPickerProps) => {
         close();
       }
     },
-    [onChange, close]
+    [onChange, close],
   );
 
   return (
-    <Container>
-      <Button
-        ref={ref}
-        onClick={open}
-        size="small"
-        style={{ padding: 5, minWidth: 40 }}
-      >
-        <Icon icon={value || 'grey_question'} />
-      </Button>
-      <Popover
-        open={opened}
-        anchorEl={ref.current}
-        onClose={close}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-      >
+    <Popover
+      open={opened}
+      onOpenChange={(next) => {
+        if (next) {
+          open();
+        } else {
+          close();
+        }
+      }}
+    >
+      <PopoverTrigger asChild>
+        <Button variant="outline" size="sm" className="min-w-10 px-2">
+          <Icon icon={value || 'grey_question'} />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent align="start" className="z-[70] w-auto p-0">
         <EmojiMartPicker
           data={data}
           onEmojiSelect={handleChange}
           theme="light"
         />
-      </Popover>
-    </Container>
+      </PopoverContent>
+    </Popover>
   );
 };
-
-const Container = styled.div``;
 
 export default IconPicker;

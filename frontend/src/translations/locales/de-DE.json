@@ -65,6 +65,7 @@
     "voteRemainingMultiple": "Sie können noch {{number}} mal {{type}}.",
     "voteRemainingOne": "Sie können noch ein mal {{type}}, überlegen Sie es sich gut!",
     "voteRemainingNone": "Sie können nicht mehr {{type}}.",
+    "voteRemainingUnlimited": "Sie können unbegrenzt {{type}}.",
     "toggleGiphyButton": "Giphy-Bild umschalten",
     "cancelVote": "Deine Stimme für diesen Beitrag abbrechen"
   },

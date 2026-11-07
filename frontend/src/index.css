@@ -1,0 +1,149 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', ui-sans-serif,
+    system-ui, sans-serif;
+  --font-timer: 'DIGITALDREAM', ui-monospace, monospace;
+
+  --color-paper: #f3f4f6;
+  --color-cream: #ffffff;
+  --color-ink: #1f2937;
+  --color-muted: #6b7280;
+  --color-line: #e5e7eb;
+  --color-line-strong: #d1d5db;
+  --color-positive: #2e7d32;
+  --color-negative: #ef5350;
+
+  --color-primary-50: var(--brand-primary-50);
+  --color-primary-100: var(--brand-primary-100);
+  --color-primary-200: var(--brand-primary-200);
+  --color-primary-300: var(--brand-primary-300);
+  --color-primary-400: var(--brand-primary-400);
+  --color-primary-500: var(--brand-primary-500);
+  --color-primary-600: var(--brand-primary-600);
+  --color-primary-700: var(--brand-primary-700);
+  --color-primary-800: var(--brand-primary-800);
+  --color-primary-900: var(--brand-primary-900);
+  --color-primary-a100: var(--brand-primary-a100);
+  --color-primary-a200: var(--brand-primary-a200);
+  --color-primary-a400: var(--brand-primary-a400);
+  --color-primary-a700: var(--brand-primary-a700);
+
+  --color-secondary-50: var(--brand-secondary-50);
+  --color-secondary-100: var(--brand-secondary-100);
+  --color-secondary-200: var(--brand-secondary-200);
+  --color-secondary-300: var(--brand-secondary-300);
+  --color-secondary-400: var(--brand-secondary-400);
+  --color-secondary-500: var(--brand-secondary-500);
+  --color-secondary-600: var(--brand-secondary-600);
+  --color-secondary-700: var(--brand-secondary-700);
+  --color-secondary-800: var(--brand-secondary-800);
+  --color-secondary-900: var(--brand-secondary-900);
+  --color-secondary-a100: var(--brand-secondary-a100);
+  --color-secondary-a200: var(--brand-secondary-a200);
+  --color-secondary-a400: var(--brand-secondary-a400);
+  --color-secondary-a700: var(--brand-secondary-a700);
+
+  --color-header: var(--brand-header-bg);
+  --color-header-fg: var(--brand-header-fg);
+
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.05), 0 8px 24px rgb(15 23 42 / 0.05);
+  --animate-fade-in: fade-in 160ms ease;
+  --animate-pop-in: pop-in 180ms ease;
+}
+
+:root {
+  --brand-primary-50: #ede7f6;
+  --brand-primary-100: #d1c4e9;
+  --brand-primary-200: #b39ddb;
+  --brand-primary-300: #9575cd;
+  --brand-primary-400: #7e57c2;
+  --brand-primary-500: #673ab7;
+  --brand-primary-600: #5e35b1;
+  --brand-primary-700: #512da8;
+  --brand-primary-800: #4527a0;
+  --brand-primary-900: #311b92;
+  --brand-primary-a100: #b388ff;
+  --brand-primary-a200: #7c4dff;
+  --brand-primary-a400: #651fff;
+  --brand-primary-a700: #6200ea;
+
+  --brand-secondary-50: #fce4ec;
+  --brand-secondary-100: #f8bbd0;
+  --brand-secondary-200: #f48fb1;
+  --brand-secondary-300: #f06292;
+  --brand-secondary-400: #ec407a;
+  --brand-secondary-500: #e91e63;
+  --brand-secondary-600: #d81b60;
+  --brand-secondary-700: #c2185b;
+  --brand-secondary-800: #ad1457;
+  --brand-secondary-900: #880e4f;
+  --brand-secondary-a100: #ff80ab;
+  --brand-secondary-a200: #ff4081;
+  --brand-secondary-a400: #f50057;
+  --brand-secondary-a700: #c51162;
+
+  --brand-header-bg: #512da8;
+  --brand-header-fg: #ffffff;
+}
+
+@font-face {
+  font-family: 'DIGITALDREAM';
+  src: url('/fonts/digital/DIGITALDREAM.woff2') format('woff2');
+  font-display: swap;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@layer base {
+  html {
+    touch-action: manipulation;
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background: var(--color-paper);
+    font-family: var(--font-sans);
+  }
+
+  #content {
+    min-height: 100dvh;
+    background: var(--color-paper);
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  a {
+    color: var(--brand-primary-700);
+  }
+}
+
+.retro-post-actions {
+  background-color: var(--post-color);
+}

@@ -1,12 +1,12 @@
+import { KeyRound } from 'lucide-react';
 import { useState, useCallback, Suspense, lazy } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { resetChangePassword } from '../api';
-import { Alert } from '@mui/material';
 import Input from '../components/Input';
-import { VpnKey } from '@mui/icons-material';
-import Button from '@mui/material/Button';
-import { useTranslation } from 'react-i18next';
 import { useSetUser } from 'state/user/useSetUser';
+import { Alert } from 'ui/alert';
+import { Button } from 'ui/button';
 
 const PasswordStrength = lazy(() => import('react-password-strength-bar'));
 
@@ -44,52 +44,56 @@ function ResetPasswordPage() {
   }, [email, code, navigate, password, setUser]);
 
   return (
-    <div style={{ margin: 50 }}>
-      {success === true && !loading ? (
-        <Alert severity="success">{t('ResetPassword.success')}</Alert>
-      ) : null}
-      {success === false && !loading ? (
-        <Alert severity="error">{t('ResetPassword.error')}</Alert>
-      ) : null}
-      {success === null && loading ? (
-        <Alert severity="info">{t('ResetPassword.loading')}</Alert>
-      ) : null}
-      {success === null && !loading ? (
-        <>
-          <Alert severity="info">{t('ResetPassword.resetInfo')}</Alert>
-          <Input
-            value={password}
-            onChangeValue={setPassword}
-            title={t('AuthCommon.passwordField')!}
-            placeholder={t('AuthCommon.passwordField')!}
-            type="password"
-            fullWidth
-            style={{ marginTop: 20 }}
-            leftIcon={<VpnKey />}
-            required
-          />
-          <Suspense fallback={<span />}>
-            <PasswordStrength
-              onChangeScore={setScore}
-              password={password}
-              shortScoreWord={t('AuthCommon.passwordScoreWords')![0]}
-              scoreWords={
-                t('AuthCommon.passwordScoreWords', {
-                  returnObjects: true,
-                }) as string[]
-              }
+    <div className="flex justify-center bg-paper px-4 py-12">
+      <div className="w-full max-w-md rounded-3xl border border-line bg-cream p-6 text-ink shadow-card">
+        {success === true && !loading ? (
+          <Alert severity="success">{t('ResetPassword.success')}</Alert>
+        ) : null}
+        {success === false && !loading ? (
+          <Alert severity="error">{t('ResetPassword.error')}</Alert>
+        ) : null}
+        {success === null && loading ? (
+          <Alert severity="info">{t('ResetPassword.loading')}</Alert>
+        ) : null}
+        {success === null && !loading ? (
+          <div className="flex flex-col gap-4">
+            <Alert severity="info">{t('ResetPassword.resetInfo')}</Alert>
+            <Input
+              value={password}
+              onChangeValue={setPassword}
+              title={t('AuthCommon.passwordField')!}
+              placeholder={t('AuthCommon.passwordField')!}
+              type="password"
+              fullWidth
+              leftIcon={<KeyRound className="size-4" />}
+              required
             />
-          </Suspense>
-          <Button
-            onClick={handleChangePassword}
-            disabled={!validPassword}
-            variant="contained"
-            color="primary"
-          >
-            {t('ResetPassword.resetButton')}
-          </Button>
-        </>
-      ) : null}
+            <Suspense fallback={<span />}>
+              <PasswordStrength
+                onChangeScore={setScore}
+                password={password}
+                shortScoreWord={
+                  (
+                    t('AuthCommon.passwordScoreWords', {
+                      returnObjects: true,
+                    }) as string[]
+                  )[0]
+                }
+                scoreWords={
+                  t('AuthCommon.passwordScoreWords', {
+                    returnObjects: true,
+                  }) as string[]
+                }
+              />
+            </Suspense>
+            <div className="flex justify-end">
+              <Button onClick={handleChangePassword} disabled={!validPassword}>
+                {t('ResetPassword.resetButton')}
+              </Button>
+            </div>
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }

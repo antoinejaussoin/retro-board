@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from '@emotion/styled';
 import LoginModal from '../../auth/modal/LoginModal';
 
 export default function LoginPage() {
@@ -9,10 +8,8 @@ export default function LoginPage() {
     navigate('/');
   }, [navigate]);
   return (
-    <Container>
+    <div className="min-h-[calc(100dvh-3.5rem)] bg-paper">
       <LoginModal onClose={handleClose} large />
-    </Container>
+    </div>
   );
 }
-
-const Container = styled.div``;

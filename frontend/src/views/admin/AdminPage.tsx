@@ -1,13 +1,10 @@
-import { Alert, Button, Checkbox } from '@mui/material';
-import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { Merge, Plus, Search } from 'lucide-react';
 import { FullUser } from 'common';
 import useUser from '../../state/user/useUser';
 import useStateFetch from '../../hooks/useStateFetch';
 import { useCallback, useMemo, useState } from 'react';
-import styled from '@emotion/styled';
 import ChangePassword from './ChangePassword';
 import useBackendCapabilities from '../../global/useBackendCapabilities';
-import { Add, CallMerge, Search } from '@mui/icons-material';
 import useModal from 'hooks/useModal';
 import { NewAccountModal } from './NewAccountModal';
 import Input from 'components/Input';
@@ -16,6 +13,13 @@ import { uniq } from 'lodash';
 import MergeModal from './MergeModal';
 import { mergeUsers } from './api';
 import { Stats } from './Stats';
+import { Alert } from 'ui/alert';
+import { Button } from 'ui/button';
+import { Checkbox } from 'ui/checkbox';
+
+const headCell =
+  'sticky top-0 z-10 bg-cream px-3 py-2 font-medium shadow-[inset_0_-1px_0_0_var(--color-line)]';
+const bodyCell = 'border-b border-line px-3 py-2 align-middle';
 
 export default function AdminPage() {
   const user = useUser();
@@ -35,14 +39,14 @@ export default function AdminPage() {
       setUsers((users) => [user, ...users]);
       handleAddClose();
     },
-    [setUsers, handleAddClose]
+    [setUsers, handleAddClose],
   );
 
   const onDelete = useCallback(
     (user: FullUser) => {
       setUsers((users) => users.filter((u) => u.id !== user.id));
     },
-    [setUsers]
+    [setUsers],
   );
 
   const onMerge = useCallback(
@@ -52,7 +56,7 @@ export default function AdminPage() {
       setUsers((prev) => prev.filter((u) => !removedIds.includes(u.id)));
       mergeUsers(main, merged);
     },
-    [setUsers, handleCloseMerge]
+    [setUsers, handleCloseMerge],
   );
 
   const filteredUsers = useMemo(() => {
@@ -62,91 +66,112 @@ export default function AdminPage() {
     return users.filter(
       (u) =>
         u.name.toLowerCase().includes(search.toLowerCase()) ||
-        (u.email ? u.email.toLowerCase().includes(search.toLowerCase()) : false)
+        (u.email
+          ? u.email.toLowerCase().includes(search.toLowerCase())
+          : false),
     );
   }, [search, users]);
 
-  const columns: GridColDef<FullUser>[] = useMemo(() => {
-    return [
-      {
-        field: '',
-        headerName: '',
-        renderCell: (p: GridRenderCellParams<any, FullUser>) => {
-          return (
-            <Checkbox
-              checked={selectedIds.includes(p.row.id)}
-              onChange={(_, checked) =>
-                checked
-                  ? setSelectedIds((prev) => uniq([...prev, p.row.id]))
-                  : setSelectedIds((prev) =>
-                      prev.filter((id) => id !== p.row.id)
-                    )
-              }
-            />
-          );
-        },
-      },
-      { field: 'id', headerName: 'ID' },
-      { field: 'email', headerName: 'Email', width: 300, filterable: true },
-      { field: 'name', headerName: 'Name', width: 300 },
-      { field: 'accountType', headerName: 'Acct Type', filterable: true },
-      {
-        headerName: 'Actions',
-        width: 300,
-        renderCell: (p: GridRenderCellParams<any, FullUser>) => {
-          return (
-            <Actions>
-              {p.row.accountType === 'password' ? (
-                <ChangePassword user={p.row} />
-              ) : null}
-              <DeleteAccount user={p.row} onDelete={onDelete} />
-            </Actions>
-          );
-        },
-      },
-    ] as GridColDef[];
-  }, [onDelete, selectedIds]);
-
   if (!backend.selfHosted) {
     return (
-      <Alert severity="error">
-        This page is only accessible for self-hosted instances.
-      </Alert>
+      <div className="p-6">
+        <Alert severity="error">
+          This page is only accessible for self-hosted instances.
+        </Alert>
+      </div>
     );
   }
   if (!user || user.email !== backend.adminEmail) {
     return (
-      <Alert severity="error">
-        This page is only accessible for the Self-Hosted Administrator (
-        {backend.adminEmail}).
-      </Alert>
+      <div className="p-6">
+        <Alert severity="error">
+          This page is only accessible for the Self-Hosted Administrator (
+          {backend.adminEmail}).
+        </Alert>
+      </div>
     );
   }
   return (
-    <Container>
-      <StatsContainer>
-        <Stats />
-      </StatsContainer>
-      <Header>
-        <Input
-          title="Search"
-          leftIcon={<Search />}
-          value={search}
-          onChangeValue={setSearch}
-          style={{ margin: 0, flex: 1 }}
-        />
-        <Button startIcon={<Add />} onClick={handleAddOpen}>
+    <div className="flex h-[calc(100dvh-3.5rem)] w-full flex-col">
+      <div className="flex flex-wrap items-end gap-2 border-b border-line px-4 py-3">
+        <div className="min-w-56 flex-1">
+          <Input
+            title="Search"
+            leftIcon={<Search className="size-4" />}
+            value={search}
+            onChangeValue={setSearch}
+            fullWidth
+          />
+        </div>
+        <Button onClick={handleAddOpen}>
+          <Plus className="size-4" />
           Add a new user
         </Button>
         <Button
-          startIcon={<CallMerge />}
+          variant="outline"
           onClick={handleOpenMerge}
           disabled={selected.length < 2}
         >
+          <Merge className="size-4" />
           Merge
         </Button>
-      </Header>
-      <DataGrid rows={filteredUsers} columns={columns} filterMode="client" />
+      </div>
+      <div className="min-h-0 flex-1 overflow-auto">
+        <table className="w-full min-w-[880px] border-separate border-spacing-0 text-left text-sm">
+          <thead>
+            <tr>
+              <th className={`${headCell} w-12`}>
+                <span className="sr-only">Select</span>
+              </th>
+              <th className={headCell}>ID</th>
+              <th className={headCell}>Email</th>
+              <th className={headCell}>Name</th>
+              <th className={headCell}>Acct Type</th>
+              <th className={headCell}>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredUsers.length === 0 ? (
+              <tr>
+                <td colSpan={6} className="px-3 py-8 text-center text-muted">
+                  No rows
+                </td>
+              </tr>
+            ) : null}
+            {filteredUsers.map((row) => (
+              <tr key={row.id} className="hover:bg-cream">
+                <td className={bodyCell}>
+                  <Checkbox
+                    checked={selectedIds.includes(row.id)}
+                    onCheckedChange={(checked) =>
+                      checked
+                        ? setSelectedIds((prev) => uniq([...prev, row.id]))
+                        : setSelectedIds((prev) =>
+                            prev.filter((id) => id !== row.id),
+                          )
+                    }
+                  />
+                </td>
+                <td className={`${bodyCell} font-mono text-xs`}>{row.id}</td>
+                <td className={bodyCell}>{row.email}</td>
+                <td className={bodyCell}>{row.name}</td>
+                <td className={bodyCell}>{row.accountType}</td>
+                <td className={bodyCell}>
+                  <div className="flex flex-wrap items-center gap-1">
+                    {row.accountType === 'password' ? (
+                      <ChangePassword user={row} />
+                    ) : null}
+                    <DeleteAccount user={row} onDelete={onDelete} />
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="border-t border-line bg-cream px-4 py-2">
+        <Stats />
+      </div>
       <NewAccountModal
         open={addOpened}
         onClose={handleAddClose}
@@ -158,27 +183,6 @@ export default function AdminPage() {
         users={selected}
         onMerge={onMerge}
       />
-    </Container>
+    </div>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 65px);
-  width: 100%;
-`;
-
-const Header = styled.div`
-  display: flex;
-  gap: 5px;
-  margin: 10px;
-`;
-
-const StatsContainer = styled.div`
-  position: fixed;
-  bottom: 18px;
-  left: 10px;
-`;
-
-const Actions = styled.div``;

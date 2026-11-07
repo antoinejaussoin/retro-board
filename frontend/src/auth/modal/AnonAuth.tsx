@@ -1,13 +1,13 @@
 import { useCallback, useState } from 'react';
-import Button from '@mui/material/Button';
-import Input from '@mui/material/Input';
-import { Alert } from '@mui/material';
-import { anonymousLogin, me, updateLanguage } from '../../api';
-import { FullUser } from 'common';
-import Wrapper from './Wrapper';
 import { useTranslation } from 'react-i18next';
-import { useLanguage } from 'translations';
+import { anonymousLogin, me, updateLanguage } from '../../api';
+import Input from '../../components/Input';
+import type { FullUser } from 'common';
 import { trackEvent } from 'track';
+import { useLanguage } from 'translations';
+import { Alert } from 'ui/alert';
+import { Button } from 'ui/button';
+import Wrapper from './Wrapper';
 
 interface AnonAuthProps {
   onClose: () => void;
@@ -42,10 +42,6 @@ const AnonAuth = ({ onClose, onUser }: AnonAuthProps) => {
     }
     login();
   }, [username, onUser, onClose, language]);
-  const handleUsernameChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value),
-    [setUsername]
-  );
 
   return (
     <Wrapper
@@ -53,7 +49,6 @@ const AnonAuth = ({ onClose, onUser }: AnonAuthProps) => {
       actions={
         <Button
           onClick={handleAnonLogin}
-          color="primary"
           autoFocus
           disabled={!username.trim().length}
           data-cy="anon-login-button"
@@ -62,23 +57,19 @@ const AnonAuth = ({ onClose, onUser }: AnonAuthProps) => {
         </Button>
       }
     >
-      <Alert severity="info">
-        {t('AnonymousLogin.anonymousAuthDescription')}
-      </Alert>
-      {error ? (
-        <Alert severity="error" style={{ marginTop: 10 }}>
-          {error}
+      <div className="flex flex-col gap-4">
+        <Alert severity="info">
+          {t('AnonymousLogin.anonymousAuthDescription')}
         </Alert>
-      ) : null}
-      <Input
-        value={username}
-        onChange={handleUsernameChange}
-        title={t('AnonymousLogin.buttonLabel')!}
-        placeholder={t('AnonymousLogin.namePlaceholder')!}
-        fullWidth
-        style={{ marginTop: 20 }}
-        inputProps={{ 'data-cy': 'anon-input' }}
-      />
+        {error ? <Alert severity="error">{error}</Alert> : null}
+        <Input
+          value={username}
+          onChangeValue={setUsername}
+          placeholder={t('AnonymousLogin.namePlaceholder')!}
+          fullWidth
+          data-cy="anon-input"
+        />
+      </div>
     </Wrapper>
   );
 };

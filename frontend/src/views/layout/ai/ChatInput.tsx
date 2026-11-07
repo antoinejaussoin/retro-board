@@ -1,8 +1,9 @@
-import styled from '@emotion/styled';
-import { Send } from '@mui/icons-material';
-import { Button, Input } from '@mui/material';
+import { Send } from 'lucide-react';
 import { useCallback, useState } from 'react';
+import type { KeyboardEvent } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button } from 'ui/button';
+import { Input } from 'ui/input';
 
 type ChatInputProps = {
   disabled: boolean;
@@ -25,42 +26,30 @@ export default function ChatInput({ disabled, onMessage }: ChatInputProps) {
   }, [input, onMessage]);
 
   const handleKeyPress = useCallback(
-    (event: React.KeyboardEvent<unknown>) => {
+    (event: KeyboardEvent<HTMLInputElement>) => {
       if (isEnter(event.nativeEvent.code) && !event.nativeEvent.shiftKey) {
         event.stopPropagation();
         event.preventDefault();
         handleSend();
       }
     },
-    [handleSend]
+    [handleSend],
   );
 
   return (
-    <Container>
+    <div className="flex items-center gap-3">
       <Input
-        fullWidth
+        className="min-w-0 flex-1"
         disabled={disabled}
-        placeholder={t('Ai.inputPrompt')!}
+        placeholder={t('Ai.inputPrompt') ?? ''}
         value={input}
-        onChange={(evt) => setInput(evt.target.value)}
-        onKeyPress={handleKeyPress}
+        onChange={(event) => setInput(event.target.value)}
+        onKeyDown={handleKeyPress}
       />
-      <Button
-        disabled={disabled || !input.length}
-        endIcon={<Send />}
-        onClick={handleSend}
-      >
+      <Button disabled={disabled || !input.length} onClick={handleSend}>
         {t('Ai.send')}
+        <Send className="size-4" />
       </Button>
-    </Container>
+    </div>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  :first-of-type {
-    flex: 1;
-  }
-`;

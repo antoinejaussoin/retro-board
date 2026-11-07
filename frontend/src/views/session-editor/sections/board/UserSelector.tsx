@@ -1,8 +1,14 @@
-import styled from '@emotion/styled';
-import { Autocomplete, TextField, colors } from '@mui/material';
-import { User } from 'common';
-import CustomAvatar from 'components/Avatar';
 import { useMemo } from 'react';
+import type { User } from 'common';
+import CustomAvatar from 'components/Avatar';
+import { useTranslation } from 'react-i18next';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from 'ui/select';
 
 type UserSelectorProps = {
   moderatorId: string;
@@ -15,31 +21,38 @@ export function UserSelector({
   options,
   onSelect,
 }: UserSelectorProps) {
+  const { t } = useTranslation();
+  const people = options ?? [];
   const selected: User | null = useMemo(() => {
-    return options.find((u) => u.id === moderatorId) || null;
-  }, [options, moderatorId]);
+    return people.find((user) => user.id === moderatorId) || null;
+  }, [people, moderatorId]);
 
   return (
-    <SelectorContainer>
-      <Autocomplete
-        size="small"
-        disablePortal
-        options={options}
-        value={selected}
-        disableClearable={options.length > 0}
-        onChange={(_, value) => onSelect(value as User)}
-        fullWidth
-        renderInput={(params) => (
-          <TextField {...params} value={selected?.name} />
-        )}
-        renderOption={(props, option) => (
-          <span {...props}>
-            <UserItem user={option} />
-          </span>
-        )}
-        getOptionLabel={(option) => option.name}
-      />
-    </SelectorContainer>
+    <div className="w-full py-1 sm:ml-auto sm:max-w-xs">
+      <Select
+        value={selected?.id}
+        disabled={people.length === 0}
+        onValueChange={(id) => {
+          const user = people.find((option) => option.id === id);
+          if (user) {
+            onSelect(user);
+          }
+        }}
+      >
+        <SelectTrigger aria-label={t('Customize.changeModerator')}>
+          <SelectValue placeholder={selected?.name ?? ''}>
+            {selected?.name}
+          </SelectValue>
+        </SelectTrigger>
+        <SelectContent className="z-[70]">
+          {people.map((user) => (
+            <SelectItem key={user.id} value={user.id}>
+              <UserItem user={user} />
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
   );
 }
 
@@ -49,48 +62,12 @@ type UserItemProps = {
 
 export function UserItem({ user }: UserItemProps) {
   return (
-    <Container>
-      <Avatar>
-        <CustomAvatar user={user} />
-      </Avatar>
-      <Name>{user.name}</Name>
-      <Email>{user.email}</Email>
-    </Container>
+    <span className="grid grid-cols-[2rem_minmax(0,1fr)] items-center gap-x-2 text-left text-sm">
+      <span className="row-span-2">
+        <CustomAvatar user={user} className="size-8" />
+      </span>
+      <span className="truncate">{user.name}</span>
+      <span className="truncate text-xs text-muted">{user.email}</span>
+    </span>
   );
 }
-
-const Container = styled.div`
-  display: grid;
-  grid-template-columns: 50px 1fr;
-  grid-template-rows: auto auto;
-  grid-template-areas:
-    'avatar name'
-    'avatar email';
-  row-gap: 1px;
-  font-size: 0.8rem;
-  align-items: center;
-`;
-
-const Avatar = styled.div`
-  grid-area: avatar;
-`;
-const Name = styled.div`
-  grid-area: name;
-`;
-const Email = styled.div`
-  grid-area: email;
-  color: ${colors.grey[500]};
-`;
-const SelectorContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  > * {
-    margin: 5px 0;
-  }
-
-  @media screen and (min-width: 600px) {
-    > * {
-      max-width: 300px;
-    }
-  }
-`;

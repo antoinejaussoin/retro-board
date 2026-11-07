@@ -1,13 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
-import SettingCategory from '../SettingCategory';
+import type { AllSessionSettings, User } from 'common';
+import CustomAvatar from 'components/Avatar';
 import { useTranslation } from 'react-i18next';
-import { AllSessionSettings, User } from 'common';
-import { OptionItem } from '../OptionItem';
 import BooleanOption from '../BooleanOption';
+import { OptionItem } from '../OptionItem';
+import SettingCategory from '../SettingCategory';
 import { fetchUsers } from './api';
 import { UserSelector } from './UserSelector';
-import CustomAvatar from 'components/Avatar';
-import styled from '@emotion/styled';
 
 interface BoardSectionProps {
   owner: User;
@@ -21,8 +20,8 @@ function BoardSection({ options, owner, onChange }: BoardSectionProps) {
 
   useEffect(() => {
     async function load() {
-      const users = await fetchUsers();
-      setUsers(users);
+      const nextUsers = await fetchUsers();
+      setUsers(Array.isArray(nextUsers) ? nextUsers : []);
     }
     load();
   }, []);
@@ -37,7 +36,7 @@ function BoardSection({ options, owner, onChange }: BoardSectionProps) {
         },
       });
     },
-    [onChange, options]
+    [onChange, options],
   );
 
   const setModerator = useCallback(
@@ -47,26 +46,23 @@ function BoardSection({ options, owner, onChange }: BoardSectionProps) {
         moderator: user,
       });
     },
-    [onChange, options]
+    [onChange, options],
   );
 
   return (
     <SettingCategory
-      title={t('Customize.boardCategory')!}
-      subtitle={t('Customize.boardCategorySub')!}
+      title={t('Customize.boardCategory')}
+      subtitle={t('Customize.boardCategorySub')}
     >
-      <OptionItem
-        label={t('Customize.owner')!}
-        help={t('Customize.ownerHelp')!}
-      >
-        <Line>
+      <OptionItem label={t('Customize.owner')} help={t('Customize.ownerHelp')}>
+        <div className="flex items-center gap-2.5">
           <span>{owner.name}</span>
-          <CustomAvatar user={owner} style={{ height: 30, width: 30 }} />
-        </Line>
+          <CustomAvatar user={owner} className="size-8" />
+        </div>
       </OptionItem>
       <OptionItem
-        label={t('Customize.changeModerator')!}
-        help={t('Customize.changeModeratorHelp')!}
+        label={t('Customize.changeModerator')}
+        help={t('Customize.changeModeratorHelp')}
         wide
       >
         <UserSelector
@@ -76,8 +72,8 @@ function BoardSection({ options, owner, onChange }: BoardSectionProps) {
         />
       </OptionItem>
       <OptionItem
-        label={t('Customize.restrictTitleEditToOwner')!}
-        help={t('Customize.restrictTitleEditToOwnerHelp')!}
+        label={t('Customize.restrictTitleEditToOwner')}
+        help={t('Customize.restrictTitleEditToOwnerHelp')}
       >
         <BooleanOption
           value={options.options.restrictTitleEditToModerator}
@@ -87,11 +83,5 @@ function BoardSection({ options, owner, onChange }: BoardSectionProps) {
     </SettingCategory>
   );
 }
-
-const Line = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-`;
 
 export default BoardSection;

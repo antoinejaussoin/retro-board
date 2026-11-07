@@ -1,10 +1,8 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
-import styled from '@emotion/styled';
-import { colors } from '@mui/material';
-import { Edit } from '@mui/icons-material';
-import TextareaAutosize from '@mui/material/TextareaAutosize';
+import { Pencil } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { cn } from 'ui/cn';
 
-interface EditableLabelProps extends CenteredProp {
+interface EditableLabelProps {
   value: string;
   readOnly?: boolean;
   placeholder?: string;
@@ -12,11 +10,8 @@ interface EditableLabelProps extends CenteredProp {
   label?: string;
   focused?: boolean;
   wrapText?: boolean;
-  onChange: (value: string) => void;
-}
-
-interface CenteredProp {
   centered?: boolean;
+  onChange: (value: string) => void;
 }
 
 const EditableLabel = ({
@@ -27,6 +22,7 @@ const EditableLabel = ({
   label,
   focused,
   wrapText = false,
+  centered,
   onChange,
 }: EditableLabelProps) => {
   const [editMode, setEditMode] = useState(false);
@@ -46,13 +42,13 @@ const EditableLabel = ({
         onChange(current);
       }
     },
-    [onChange, current]
+    [onChange, current],
   );
   const handleChange = useCallback(
     (event: React.FormEvent<HTMLTextAreaElement | HTMLInputElement>) => {
       setCurrent(event.currentTarget.value);
     },
-    []
+    [],
   );
 
   useEffect(() => {
@@ -72,12 +68,17 @@ const EditableLabel = ({
     setCurrent(value);
   }, [value]);
 
+  const fieldClass = cn(
+    'w-full flex-1 border-0 bg-transparent p-0 font-[inherit] text-[length:inherit] leading-normal tracking-[inherit] outline-none',
+    centered && 'text-center',
+  );
+
   return (
-    <LabelContainer>
+    <span className="inline-flex max-w-full">
       {editMode ? (
-        <EditMode>
+        <span className="inline-flex w-full items-center">
           {multiline ? (
-            <TextareaAutosize
+            <textarea
               ref={inputRef as React.RefObject<HTMLTextAreaElement>}
               aria-label={`${label} input`}
               data-testid={`${label} input`}
@@ -85,6 +86,7 @@ const EditableLabel = ({
               onBlur={enableViewMode}
               onKeyPress={handleKeyPress}
               onChange={handleChange}
+              className={fieldClass}
             />
           ) : (
             <input
@@ -95,78 +97,38 @@ const EditableLabel = ({
               onBlur={enableViewMode}
               onKeyPress={handleKeyPress}
               onChange={handleChange}
+              className={fieldClass}
             />
           )}
-          <InvisibleEditIcon fontSize="inherit" />
-        </EditMode>
+          <Pencil className="ml-1.5 size-3.5 opacity-0" />
+        </span>
       ) : readOnly ? (
-        <ViewMode wrapText={wrapText} aria-label={label}>
-          <span>{current || placeholder}</span>
-        </ViewMode>
-      ) : (
-        <ViewMode wrapText={wrapText} onClick={enableEditMode}>
-          <span aria-label={label} data-testid={label}>
+        <span className="inline-flex items-center" aria-label={label}>
+          <span className={wrapText ? 'whitespace-pre-wrap' : 'whitespace-nowrap'}>
             {current || placeholder}
           </span>
-          &nbsp;
-          <EditIcon fontSize="inherit" style={{ fontSize: '0.8em' }} />
-        </ViewMode>
+        </span>
+      ) : (
+        <button
+          type="button"
+          className="inline-flex items-center gap-1 text-left"
+          onClick={enableEditMode}
+        >
+          <span
+            aria-label={label}
+            data-testid={label}
+            className={cn(
+              'leading-normal',
+              wrapText ? 'whitespace-pre-wrap' : 'whitespace-nowrap',
+            )}
+          >
+            {current || placeholder}
+          </span>
+          <Pencil className="size-3.5 text-muted hover:text-primary-600" />
+        </button>
       )}
-    </LabelContainer>
+    </span>
   );
 };
 
 export default EditableLabel;
-
-const LabelContainer = styled.span``;
-
-const ViewMode = styled.span<{ wrapText: boolean }>`
-  display: inline-flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  > span {
-    white-space: ${(props) => (props.wrapText ? 'pre-wrap' : 'nowrap')};
-    line-height: 1.5;
-  }
-
-  &:hover {
-    > svg {
-      color: ${colors.purple[500]};
-      cursor: pointer;
-    }
-  }
-`;
-
-const EditMode = styled.span<CenteredProp>`
-  display: inline-flex;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0;
-
-  textarea,
-  input {
-    flex: 1;
-    font-family: inherit;
-    font-weight: inherit;
-    letter-spacing: inherit;
-    width: 100%;
-    background: none;
-    border: none;
-    outline: none;
-    font-size: inherit;
-    text-align: ${(props) => (props.centered ? 'center' : 'inherit')};
-    padding: 0;
-    line-height: 1.5;
-  }
-`;
-
-const EditIcon = styled(Edit)`
-  position: relative;
-  top: 2px;
-  color: ${colors.grey[500]};
-`;
-
-const InvisibleEditIcon = styled(EditIcon)`
-  opacity: 0;
-  margin-left: 6px;
-`;

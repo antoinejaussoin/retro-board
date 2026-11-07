@@ -3,9 +3,24 @@ import useUser from '../../../../state/user/useUser';
 import useSession from '../../useSession';
 import { numberOfVotes } from '../permissions-logic';
 
+export type VoteAllowance = number | 'unlimited';
+
 interface RemainingVotes {
-  up: number | null;
-  down: number | null;
+  up: VoteAllowance | null;
+  down: VoteAllowance | null;
+}
+
+export function remainingAllowance(
+  max: number | null,
+  used: number,
+): VoteAllowance | null {
+  if (max === 0) {
+    return null;
+  }
+  if (max === null) {
+    return 'unlimited';
+  }
+  return Math.max(max - used, 0);
 }
 
 export default function useRemainingVotes(): RemainingVotes {
@@ -20,14 +35,8 @@ export default function useRemainingVotes(): RemainingVotes {
     const downVotes = numberOfVotes('dislike', user.id, session);
 
     return {
-      up:
-        session.options.maxUpVotes !== null
-          ? Math.max(session.options.maxUpVotes - upVotes, 0)
-          : null,
-      down:
-        session.options.maxDownVotes !== null
-          ? Math.max(session.options.maxDownVotes - downVotes, 0)
-          : null,
+      up: remainingAllowance(session.options.maxUpVotes, upVotes),
+      down: remainingAllowance(session.options.maxDownVotes, downVotes),
     };
   }, [session, user]);
 

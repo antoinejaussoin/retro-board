@@ -1,22 +1,20 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
-import styled from '@emotion/styled';
-import Input from '@mui/material/Input';
-import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import { colors } from '@mui/material';
-import { CreateNewFolder, SubdirectoryArrowLeft } from '@mui/icons-material';
-import PostItem from './post/Post';
-import { Post, PostGroup } from 'common';
-import { useTranslation } from 'react-i18next';
-import Group from './Group';
 import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
-import { isPostDragData } from './drag';
-import { ColumnContent } from '../types';
+import { Post, PostGroup } from 'common';
+import { CornerDownLeft, FolderPlus } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { cn } from 'ui/cn';
+import { IconButton } from 'ui/icon-button';
+import { Input } from 'ui/input';
+import { Tooltip } from 'ui/tooltip';
 import useCrypto from '../../../crypto/useCrypto';
 import useQuota from '../../../hooks/useQuota';
-import useSessionUserPermissions from './useSessionUserPermissions';
 import { useSearch } from '../is-search-match';
+import { ColumnContent } from '../types';
+import Group from './Group';
+import { isPostDragData } from './drag';
+import PostItem from './post/Post';
+import useSessionUserPermissions from './useSessionUserPermissions';
 
 interface ColumnProps {
   column: ColumnContent;
@@ -35,6 +33,7 @@ interface ColumnProps {
   onCancelVotes: (post: Post) => void;
   onEdit: (post: Post) => void;
   onDelete: (post: Post) => void;
+  fillViewport?: boolean;
 }
 
 const Column: React.FC<ColumnProps> = ({
@@ -54,6 +53,7 @@ const Column: React.FC<ColumnProps> = ({
   onDelete,
   onEditGroup,
   onDeleteGroup,
+  fillViewport = false,
 }) => {
   const { t } = useTranslation();
   const [content, setContent] = useState('');
@@ -65,7 +65,7 @@ const Column: React.FC<ColumnProps> = ({
   const searchPredicate = useSearch(search);
   const onContentChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => setContent(e.target.value),
-    [setContent]
+    [setContent],
   );
 
   const handleAdd = useCallback(() => {
@@ -80,7 +80,7 @@ const Column: React.FC<ColumnProps> = ({
         handleAdd();
       }
     },
-    [handleAdd, content]
+    [handleAdd, content],
   );
 
   const handleAddButton = useCallback(() => {
@@ -106,41 +106,50 @@ const Column: React.FC<ColumnProps> = ({
   }, [column.index, permissions.canReorderPosts]);
 
   return (
-    <ColumnWrapper>
-      <Add>
-        <Input
-          placeholder={question}
-          onChange={onContentChange}
-          value={content}
-          onKeyDown={handleAddKeyboard}
-          readOnly={!permissions.canCreatePost}
-          startAdornment={
-            icon ? (
-              <InputAdornment position="start">
-                <IconContainer>{icon}</IconContainer>
-              </InputAdornment>
-            ) : null
-          }
-          endAdornment={
-            <InputAdornment position="end">
-              <EnterIcon onClick={handleAddButton}>
-                <SubdirectoryArrowLeft />
-              </EnterIcon>
-            </InputAdornment>
-          }
-          inputProps={{ 'data-cy': 'column-input' }}
-        />
+    <section
+      className="flex min-h-40 min-w-0 flex-col py-3"
+    >
+      <div className="mb-4 flex items-center gap-1">
+        <div className="relative min-w-0 flex-1">
+          {icon ? (
+            <span className="pointer-events-none absolute top-1/2 left-2.5 flex size-6 -translate-y-1/2 items-center justify-center">
+              {icon}
+            </span>
+          ) : null}
+          <Input
+            placeholder={question}
+            onChange={onContentChange}
+            value={content}
+            onKeyDown={handleAddKeyboard}
+            readOnly={!permissions.canCreatePost}
+            data-cy="column-input"
+            className={cn('pr-10', icon && 'pl-11')}
+          />
+          <button
+            type="button"
+            onClick={handleAddButton}
+            aria-label="Add post"
+            className="absolute top-1/2 right-1 inline-flex size-8 -translate-y-1/2 items-center justify-center rounded-full text-muted hover:text-primary-600"
+          >
+            <CornerDownLeft className="size-4" />
+          </button>
+        </div>
         {permissions.canCreateGroup ? (
-          <AddGroup>
-            <Tooltip title={t('Column.createGroupTooltip')}>
-              <IconButton onClick={onAddGroup} tabIndex={-1} size="large">
-                <CreateNewFolder />
+          <div className="flex items-center border-l border-line pl-1">
+            <Tooltip content={t('Column.createGroupTooltip')} side="bottom">
+              <IconButton
+                onClick={onAddGroup}
+                tabIndex={-1}
+                aria-label={t('Column.createGroupTooltip')}
+                className="size-9"
+              >
+                <FolderPlus className="size-5" />
               </IconButton>
             </Tooltip>
-          </AddGroup>
+          </div>
         ) : null}
-      </Add>
-      <Groups>
+      </div>
+      <div>
         {groups.map((group) => {
           const posts = group.posts.filter(searchPredicate);
           if (search && posts.length === 0) {
@@ -191,11 +200,13 @@ const Column: React.FC<ColumnProps> = ({
             </Group>
           );
         })}
-      </Groups>
-      <PostsWrapper
+      </div>
+      <div
         ref={postsRef}
-        draggingOver={draggingOver}
-        draggingColor={column.color}
+        className={cn('min-h-[100px] flex-1 rounded-xl', fillViewport && 'pb-20')}
+        style={{
+          backgroundColor: draggingOver ? column.color : undefined,
+        }}
       >
         {posts.filter(searchPredicate).map((post) => (
           <PostItem
@@ -227,81 +238,13 @@ const Column: React.FC<ColumnProps> = ({
             }
           />
         ))}
-      </PostsWrapper>
-    </ColumnWrapper>
+      </div>
+    </section>
   );
 };
 
 function isEnter(code: string) {
   return code === 'Enter' || code === 'NumpadEnter';
 }
-
-const ColumnWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  margin-bottom: 10px;
-  padding: 0 5px;
-`;
-
-const PostsWrapper = styled.div<{
-  draggingOver: boolean;
-  draggingColor: string;
-}>`
-  background-color: ${(props) =>
-    props.draggingOver ? props.draggingColor : 'unset'};
-  flex: 1;
-  min-height: 100px;
-`;
-
-const Groups = styled.div``;
-
-const Add = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  position: relative;
-  left: 10px;
-
-  > :first-of-type {
-    flex: 1;
-    input {
-      width: 100%;
-    }
-  }
-`;
-
-const AddGroup = styled.div`
-  position: relative;
-  top: 3px;
-  border-left: 1px solid ${colors.grey[300]};
-  margin-left: 12px;
-  height: 25px;
-  display: flex;
-  align-items: center;
-  > * {
-    position: relative;
-    top: -2px;
-  }
-`;
-
-const EnterIcon = styled.div`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  > * {
-    color: ${colors.grey[500]};
-  }
-  :hover {
-    > * {
-      color: ${colors.deepPurple[500]};
-    }
-  }
-`;
-
-const IconContainer = styled.div`
-  position: relative;
-  top: 4px;
-`;
 
 export default Column;

@@ -1,7 +1,6 @@
-import styled from '@emotion/styled';
-import { colors } from '@mui/material';
 import type { ReactNode } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { cn } from 'ui/cn';
 
 type ChatMessageProps = {
   message: string | ReactNode;
@@ -13,62 +12,29 @@ export default function ChatMessage({
   own = false,
 }: ChatMessageProps) {
   return (
-    <MessageContainer own={own}>
-      <MessageContent own={own}>
+    <div
+      className={cn(
+        'mt-4 flex',
+        own ? 'justify-end pl-10' : 'justify-start pr-10',
+      )}
+    >
+      <div
+        className={cn(
+          'max-w-full rounded-2xl px-4 py-3 text-left text-sm leading-6',
+          '[&_a]:underline [&_blockquote]:mb-2 [&_code]:text-[0.9em] [&_ol]:mb-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-2 [&_pre]:mb-2 [&_ul]:mb-2 [&_ul]:list-disc [&_ul]:pl-5',
+          '[&_blockquote:last-child]:mb-0 [&_ol:last-child]:mb-0 [&_p:last-child]:mb-0 [&_pre:last-child]:mb-0 [&_ul:last-child]:mb-0',
+          '[&_pre]:overflow-x-auto [&_pre]:rounded-lg [&_pre]:p-2',
+          own
+            ? 'bg-primary-700 text-white [&_pre]:bg-black/15'
+            : 'border border-line bg-white text-ink [&_pre]:bg-black/5',
+        )}
+      >
         {typeof message === 'string' ? (
           <ReactMarkdown>{message}</ReactMarkdown>
         ) : (
           message
         )}
-      </MessageContent>
-    </MessageContainer>
+      </div>
+    </div>
   );
 }
-
-const MessageContainer = styled.div<{ own: boolean }>`
-  display: flex;
-  justify-content: ${(props) => (props.own ? 'flex-end' : 'flex-start')};
-  padding-right: ${(props) => (props.own ? '0' : '50px')};
-  padding-left: ${(props) => (props.own ? '50px' : '0')};
-  margin-top: 20px;
-`;
-
-const MessageContent = styled.div<{ own: boolean }>`
-  text-align: left;
-  padding: 15px;
-  border-radius: 10px;
-  background-color: ${(props) => (props.own ? colors.blue[400] : '#f0f0f0')};
-  color: ${(props) => (props.own ? 'white' : 'black')};
-  line-height: 1.4rem;
-  p,
-  ul,
-  ol,
-  pre,
-  blockquote {
-    margin: 0 0 0.6em;
-  }
-  p:last-child,
-  ul:last-child,
-  ol:last-child,
-  pre:last-child,
-  blockquote:last-child {
-    margin-bottom: 0;
-  }
-  ul,
-  ol {
-    padding-inline-start: 1.2em;
-  }
-  a {
-    color: inherit;
-  }
-  code {
-    font-size: 0.9em;
-  }
-  pre {
-    overflow-x: auto;
-    padding: 8px;
-    border-radius: 6px;
-    background: ${(props) =>
-      props.own ? 'rgba(0, 0, 0, 0.15)' : 'rgba(0, 0, 0, 0.06)'};
-  }
-`;

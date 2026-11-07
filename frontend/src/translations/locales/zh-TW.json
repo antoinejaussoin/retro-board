@@ -65,6 +65,7 @@
     "voteRemainingMultiple": "您還剩 {{number}} {{type}}秒。",
     "voteRemainingOne": "你只剩下一個 {{type}} 了，算了吧！",
     "voteRemainingNone": "你沒有任何剩餘的 {{type}}。",
+    "voteRemainingUnlimited": "您有無限次{{type}}。",
     "toggleGiphyButton": "切換 Giphy 圖像",
     "cancelVote": ""
   },

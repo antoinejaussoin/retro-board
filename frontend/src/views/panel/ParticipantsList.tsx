@@ -1,38 +1,27 @@
-import List from '@mui/material/List';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
 import Avatar from '../../components/Avatar';
-import { useTranslation } from 'react-i18next';
-import { colors } from '@mui/material';
 import useParticipants from '../game/useParticipants';
+import { useTranslation } from 'react-i18next';
 
 function ParticipantsList() {
   const { t } = useTranslation();
   const { participants } = useParticipants();
 
   return (
-    <>
-      <List
-        component="section"
-        subheader={<ListSubheader>{t('Clients.header')}</ListSubheader>}
-      >
-        {participants.map((player, index) => (
-          <ListItem key={index}>
-            <ListItemAvatar>
-              <Avatar user={player} online={player.online} />
-            </ListItemAvatar>
-            <ListItemText
-              primary={player.name}
-              style={{
-                color: player.online ? colors.grey[900] : colors.grey[500],
-              }}
-            />
-          </ListItem>
+    <section className="px-4 py-3">
+      <h2 className="px-1 py-2 text-xs font-semibold tracking-wide text-muted uppercase">
+        {t('Clients.header')}
+      </h2>
+      <ul className="flex flex-col">
+        {participants.map((player) => (
+          <li key={player.id} className="flex items-center gap-3 py-2">
+            <Avatar user={player} online={player.online} />
+            <span className={player.online ? 'text-ink' : 'text-muted'}>
+              {player.name}
+            </span>
+          </li>
         ))}
-      </List>
-    </>
+      </ul>
+    </section>
   );
 }
 
