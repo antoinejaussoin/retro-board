@@ -23,7 +23,7 @@ const RemainingVotes = ({ up, down }: RemainingVotesProps) => {
         <Tooltip content={getTooltip(t, up, 'up')} side="bottom">
           <span className="relative inline-flex">
             <ThumbsUp className="size-6" style={{ color: Palette.positive }} />
-            {up === 'unlimited' ? null : <Count value={up} />}
+            <Count value={up} />
           </span>
         </Tooltip>
       ) : null}
@@ -34,7 +34,7 @@ const RemainingVotes = ({ up, down }: RemainingVotesProps) => {
               className="size-6"
               style={{ color: Palette.negative }}
             />
-            {down === 'unlimited' ? null : <Count value={down} />}
+            <Count value={down} />
           </span>
         </Tooltip>
       ) : null}
@@ -61,9 +61,6 @@ function getTooltip(
   type: 'up' | 'down',
 ) {
   const voteType = type === 'up' ? t('Post.upVote') : t('Post.downVote');
-  if (value === 'unlimited') {
-    return t('Post.voteRemainingUnlimited', { type: voteType });
-  }
   if (value === 0) {
     return t('Post.voteRemainingNone', { type: voteType });
   }

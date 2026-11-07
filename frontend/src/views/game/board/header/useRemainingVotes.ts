@@ -3,7 +3,7 @@ import useUser from '../../../../state/user/useUser';
 import useSession from '../../useSession';
 import { numberOfVotes } from '../permissions-logic';
 
-export type VoteAllowance = number | 'unlimited';
+export type VoteAllowance = number;
 
 interface RemainingVotes {
   up: VoteAllowance | null;
@@ -14,11 +14,10 @@ export function remainingAllowance(
   max: number | null,
   used: number,
 ): VoteAllowance | null {
-  if (max === 0) {
+  // A missing limit is unlimited, and a zero limit turns that vote off.
+  // Neither case has a remaining count to show in the header.
+  if (max === null || max === 0) {
     return null;
-  }
-  if (max === null) {
-    return 'unlimited';
   }
   return Math.max(max - used, 0);
 }
