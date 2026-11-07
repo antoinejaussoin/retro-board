@@ -138,7 +138,7 @@ function GamePage() {
 
   return (
     <TimerProvider>
-      <div>
+      <div className="flex min-h-[calc(100dvh-3.5rem)] flex-col">
         <Helmet>
           <title>
             {decrypt(session.name) || t('SessionName.defaultSessionName')} -
@@ -178,39 +178,41 @@ function GamePage() {
           </div>
         </div>
         <AckWarning acks={acks} onRefresh={reconnect} />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Board
-                columns={columns}
-                options={session.options}
-                demo={session.demo}
-                search={search}
-                onEdit={onEditPost}
-                onAddPost={onAddPost}
-                onMovePost={onMovePost}
-                onCombinePost={onCombinePost}
-                onAddGroup={onAddGroup}
-                onDeletePost={onDeletePost}
-                onLike={onLike}
-                onCancelVotes={onCancelVotes}
-                onDeleteGroup={onDeletePostGroup}
-                onEditGroup={onEditPostGroup}
-                onLockSession={onLockSession}
-                onChangeSession={onChangeSession}
-              />
-            }
-          />
-          <Route
-            path="/summary"
-            element={
-              !session.options.blurCards ? (
-                <SummaryMode columns={columns} search={search} />
-              ) : null
-            }
-          />
-        </Routes>
+        <div className="flex flex-1 flex-col">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Board
+                  columns={columns}
+                  options={session.options}
+                  demo={session.demo}
+                  search={search}
+                  onEdit={onEditPost}
+                  onAddPost={onAddPost}
+                  onMovePost={onMovePost}
+                  onCombinePost={onCombinePost}
+                  onAddGroup={onAddGroup}
+                  onDeletePost={onDeletePost}
+                  onLike={onLike}
+                  onCancelVotes={onCancelVotes}
+                  onDeleteGroup={onDeletePostGroup}
+                  onEditGroup={onEditPostGroup}
+                  onLockSession={onLockSession}
+                  onChangeSession={onChangeSession}
+                />
+              }
+            />
+            <Route
+              path="/summary"
+              element={
+                !session.options.blurCards ? (
+                  <SummaryMode columns={columns} search={search} />
+                ) : null
+              }
+            />
+          </Routes>
+        </div>
         <GameFooter
           onReady={onUserReady}
           messages={session.messages}

@@ -165,7 +165,12 @@ function GameMode({
   }
 
   return (
-    <div className="px-4 pt-3 pb-28">
+    <div
+      className={cn(
+        'flex flex-col px-4 pt-3',
+        stacked ? 'pb-28' : 'min-h-full flex-1 pb-4',
+      )}
+    >
       {demo ? (
         <div className="mb-4">
           <ClosableAlert severity="info" closable>
@@ -178,12 +183,12 @@ function GameMode({
         onLockSession={onLockSession}
       />
       <div
-        className={cn('mt-3 grid gap-3', stacked && 'mt-2 gap-5')}
+        className={cn('mt-3 grid gap-3', stacked ? 'mt-2 gap-5' : 'flex-1')}
         style={{
           gridTemplateColumns: stacked
             ? '1fr'
             : `repeat(${columns.length}, minmax(0, 1fr))`,
-          minHeight: stacked ? undefined : 'calc(100dvh - 11rem)',
+          gridTemplateRows: stacked ? undefined : 'minmax(min-content, 1fr)',
         }}
       >
         {columns.map((column) => (
@@ -213,6 +218,7 @@ function GameMode({
             onEdit={onEdit}
             onEditGroup={onEditGroup}
             onDeleteGroup={onDeleteGroup}
+            fillViewport={!stacked}
           />
         ))}
       </div>

@@ -178,6 +178,7 @@ function BoardHeader({ onChangeSession, onLockSession }: BoardHeaderProps) {
       </div>
       {shouldDisplayEncryptionWarning ? (
         <TransitionAlert
+          className="mt-4"
           severity="warning"
           title={t('Encryption.newEncryptedSessionWarningTitle')!}
         >

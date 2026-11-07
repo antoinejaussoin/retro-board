@@ -5,11 +5,13 @@ import { Alert, type AlertSeverity } from 'ui/alert';
 interface TransitionAlertProps {
   title?: string;
   severity?: AlertSeverity;
+  className?: string;
 }
 
 export default function TransitionAlert({
   title,
   severity,
+  className,
   children,
 }: PropsWithChildren<TransitionAlertProps>) {
   const [open, setOpen] = useState(true);
@@ -17,7 +19,7 @@ export default function TransitionAlert({
     return null;
   }
   return (
-    <Alert severity={severity} title={title}>
+    <Alert severity={severity} title={title} className={className}>
       <div className="flex items-start justify-between gap-3">
         <div>{children}</div>
         <button

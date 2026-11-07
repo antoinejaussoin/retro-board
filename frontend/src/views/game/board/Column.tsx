@@ -33,6 +33,7 @@ interface ColumnProps {
   onCancelVotes: (post: Post) => void;
   onEdit: (post: Post) => void;
   onDelete: (post: Post) => void;
+  fillViewport?: boolean;
 }
 
 const Column: React.FC<ColumnProps> = ({
@@ -52,6 +53,7 @@ const Column: React.FC<ColumnProps> = ({
   onDelete,
   onEditGroup,
   onDeleteGroup,
+  fillViewport = false,
 }) => {
   const { t } = useTranslation();
   const [content, setContent] = useState('');
@@ -105,7 +107,7 @@ const Column: React.FC<ColumnProps> = ({
 
   return (
     <section
-      className="flex h-full min-h-40 min-w-0 flex-col rounded-2xl border border-line border-t-4 bg-cream p-3"
+      className="flex min-h-40 min-w-0 flex-col rounded-2xl border border-line border-t-4 bg-cream p-3"
       style={{ borderTopColor: color }}
     >
       <div className="mb-4 flex items-center gap-1">
@@ -202,7 +204,7 @@ const Column: React.FC<ColumnProps> = ({
       </div>
       <div
         ref={postsRef}
-        className="min-h-[100px] flex-1 rounded-xl"
+        className={cn('min-h-[100px] flex-1 rounded-xl', fillViewport && 'pb-20')}
         style={{
           backgroundColor: draggingOver ? column.color : undefined,
         }}
