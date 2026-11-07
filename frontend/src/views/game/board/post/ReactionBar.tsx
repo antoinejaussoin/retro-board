@@ -68,7 +68,7 @@ const ReactionBar = ({
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-1.5 px-4 pb-2">
+    <div className="flex max-w-full flex-wrap items-center justify-center gap-1">
       {groups.map((group) => {
         const chip = (
           <button
@@ -81,7 +81,7 @@ const ReactionBar = ({
             })}
             aria-pressed={group.reactedByMe}
             className={cn(
-              'inline-flex h-7 items-center gap-1 rounded-full border px-2 text-xs transition-colors',
+              'inline-flex h-7 items-center gap-0.5 rounded-full border px-1.5 text-xs transition-colors',
               group.reactedByMe
                 ? 'border-primary-500 bg-primary-50 text-primary-800'
                 : 'border-line bg-paper text-ink hover:bg-ink/5',

@@ -267,14 +267,16 @@ const PostItem = ({
           />
         </div>
       )}
-      <ReactionBar
-        reactions={post.reactions}
-        currentUserId={user?.id ?? null}
-        canReact={canReact}
-        showNames={canShowAuthor}
-        onToggle={onReact}
-      />
       <ActionsBar
+        center={
+          <ReactionBar
+            reactions={post.reactions}
+            currentUserId={user?.id ?? null}
+            canReact={canReact}
+            showNames={canShowAuthor}
+            onToggle={onReact}
+          />
+        }
         rightActions={
           <>
             {canCancelVote ? (
