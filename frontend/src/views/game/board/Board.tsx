@@ -183,7 +183,7 @@ function GameMode({
         onLockSession={onLockSession}
       />
       <div
-        className={cn('mt-3 grid gap-3', stacked ? 'mt-2 gap-5' : 'flex-1')}
+        className={cn('mt-3 grid', stacked ? 'mt-2 gap-10' : 'flex-1 gap-6')}
         style={{
           gridTemplateColumns: stacked
             ? '1fr'

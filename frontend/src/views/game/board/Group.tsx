@@ -60,13 +60,13 @@ export default function Group({
       ref={containerRef}
       className={cn(
         'relative my-2.5 flex flex-col rounded-xl border border-dashed border-line',
-        draggingOver && 'bg-stone-200',
+        draggingOver && 'bg-gray-200',
       )}
     >
       <div
         className={cn(
           'flex items-center gap-1',
-          collapsed ? 'bg-paper px-2.5 py-1 text-muted' : 'bg-stone-100 px-2.5 py-2',
+          collapsed ? 'bg-paper px-2.5 py-1 text-muted' : 'bg-gray-100 px-2.5 py-2',
         )}
       >
         <div className="ml-2 min-w-0 flex-1">

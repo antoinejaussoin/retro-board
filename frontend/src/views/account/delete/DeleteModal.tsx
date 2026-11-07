@@ -270,7 +270,7 @@ function Switch({
       }}
       className={cn(
         'relative mt-0.5 inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors disabled:cursor-not-allowed disabled:opacity-50',
-        checked ? 'bg-primary-700' : 'bg-stone-300',
+        checked ? 'bg-primary-700' : 'bg-gray-300',
       )}
     >
       <span

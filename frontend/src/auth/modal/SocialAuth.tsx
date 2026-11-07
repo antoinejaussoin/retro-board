@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next';
 const API_URL = '/api/auth';
 
 const socialButtonStyle: CSSProperties = {
-  border: '1px solid #e6dfd4',
+  border: '1px solid #e5e7eb',
   borderRadius: 14,
   boxShadow: 'none',
   fontFamily: 'inherit',

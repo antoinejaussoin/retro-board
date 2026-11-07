@@ -9,9 +9,9 @@ export function Toaster() {
       position="top-center"
       toastOptions={{
         style: {
-          background: '#fffdf8',
-          color: '#1c1917',
-          border: '1px solid #e6dfd4',
+          background: '#ffffff',
+          color: '#1f2937',
+          border: '1px solid #e5e7eb',
           fontFamily: 'inherit',
         },
       }}

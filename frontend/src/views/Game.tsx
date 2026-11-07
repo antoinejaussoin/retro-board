@@ -177,8 +177,9 @@ function GamePage() {
             <SearchBar value={search} onChange={setSearch} />
           </div>
         </div>
-        <AckWarning acks={acks} onRefresh={reconnect} />
-        <div className="flex flex-1 flex-col">
+        <div className="flex flex-1 flex-col bg-white">
+          <AckWarning acks={acks} onRefresh={reconnect} />
+          <div className="flex flex-1 flex-col">
           <Routes>
             <Route
               path="/"
@@ -212,6 +213,7 @@ function GamePage() {
               }
             />
           </Routes>
+          </div>
         </div>
         <GameFooter
           onReady={onUserReady}

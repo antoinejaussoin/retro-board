@@ -16,7 +16,7 @@ function PrivateSessionIcon({ session }: PrivateSessionIconProps) {
       <ProButton>
         <span className="inline-flex items-center">
           <Tooltip content={t('Private.sessionIsPublic')}>
-            <span className="inline-flex text-stone-400">
+            <span className="inline-flex text-gray-400">
               <Badge className="size-4" />
             </span>
           </Tooltip>

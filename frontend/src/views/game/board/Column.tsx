@@ -107,8 +107,7 @@ const Column: React.FC<ColumnProps> = ({
 
   return (
     <section
-      className="flex min-h-40 min-w-0 flex-col rounded-2xl border border-line border-t-4 bg-cream p-3"
-      style={{ borderTopColor: color }}
+      className="flex min-h-40 min-w-0 flex-col py-3"
     >
       <div className="mb-4 flex items-center gap-1">
         <div className="relative min-w-0 flex-1">

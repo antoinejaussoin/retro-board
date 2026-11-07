@@ -6,7 +6,7 @@ const tones = {
   neutral: 'bg-paper text-ink',
   primary: 'bg-primary-700 text-white',
   secondary: 'bg-secondary-600 text-white',
-  muted: 'bg-stone-400 text-white',
+  muted: 'bg-gray-400 text-white',
 };
 
 export function Chip({

@@ -113,7 +113,7 @@ function LockSession({ onLock }: LockSessionProps) {
                   <div className="flex justify-center">
                     <CustomAvatar user={player} />
                   </div>
-                  <div className="mt-2.5 text-center text-stone-600">
+                  <div className="mt-2.5 text-center text-gray-600">
                     {player.name}
                   </div>
                 </div>

@@ -54,7 +54,7 @@ interface GroupSummaryProps {
 function GroupSummary({ group, search }: GroupSummaryProps) {
   const { decrypt } = useCrypto();
   return (
-    <div className="my-2 border-l border-dashed border-stone-400 pl-3">
+    <div className="my-2 border-l border-dashed border-gray-400 pl-3">
       <div className="flex items-center gap-2 font-semibold opacity-60">
         <Score likes={group.likes} dislikes={group.dislikes} />
         <span>{decrypt(group.content)}</span>

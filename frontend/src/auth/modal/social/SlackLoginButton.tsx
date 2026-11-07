@@ -1,12 +1,12 @@
 import { createButton } from 'react-social-login-buttons';
 
 const config = {
-  activeStyle: { background: '#f6f3ee' },
+  activeStyle: { background: '#f3f4f6' },
   icon: Icon,
   style: {
-    background: '#fffdf8',
-    color: '#1c1917',
-    border: '1px solid #e6dfd4',
+    background: '#ffffff',
+    color: '#1f2937',
+    border: '1px solid #e5e7eb',
   },
   text: 'Login with Slack',
 };

@@ -182,7 +182,7 @@ const PostItem = ({
     <div
       ref={cardRef}
       data-post-id={post.id}
-      className="group relative mx-1 mb-4 overflow-hidden rounded-2xl border border-line bg-cream shadow-card"
+      className="group relative mb-4 overflow-hidden rounded-2xl border border-line bg-cream shadow-card"
       style={
         {
           opacity: dragging ? 0.4 : undefined,

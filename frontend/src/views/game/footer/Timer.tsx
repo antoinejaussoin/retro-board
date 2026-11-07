@@ -154,7 +154,7 @@ function getTime(
 
 function timerTone(totalDuration: number, end: Date | null): string {
   if (!end) {
-    return 'text-stone-400';
+    return 'text-gray-400';
   }
   const remainingRatio = differenceInSeconds(end, new Date()) / totalDuration;
   if (remainingRatio > 0.25) {
