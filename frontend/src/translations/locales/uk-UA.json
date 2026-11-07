@@ -65,6 +65,7 @@
     "voteRemainingMultiple": "Залишилось {{number}} {{type}}сек.",
     "voteRemainingOne": "У вас залишилось тільки один {{type}} і ви можете зробити цей рахунок!",
     "voteRemainingNone": "У вас не залишилося {{type}}.",
+    "voteRemainingUnlimited": "У вас необмежена кількість {{type}}.",
     "toggleGiphyButton": "Перемкнути зображення Giphy",
     "cancelVote": "Скасувати Ваші голосування в цьому повідомленні"
   },

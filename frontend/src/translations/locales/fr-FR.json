@@ -65,6 +65,7 @@
     "voteRemainingMultiple": "Il vous reste {{number}} votes {{type}}s.",
     "voteRemainingOne": "Il ne vous reste plus qu'un vote {{type}}, ne le gâchez pas !",
     "voteRemainingNone": "Il ne vous reste plus aucun vote {{type}}.",
+    "voteRemainingUnlimited": "Vous avez un nombre illimité de votes {{type}}s.",
     "toggleGiphyButton": "Montrer/Cacher l'image Giphy",
     "cancelVote": "Annuler vos votes sur ce post"
   },

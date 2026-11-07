@@ -65,6 +65,7 @@
     "voteRemainingMultiple": "残り {{number}} {{type}}秒です。",
     "voteRemainingOne": "残り {{type}} は1つです。カウントしてください！",
     "voteRemainingNone": "残り {{type}} はありません。",
+    "voteRemainingUnlimited": "{{type}}は無制限です。",
     "toggleGiphyButton": "Giphy画像の切り替え",
     "cancelVote": "この投稿への投票をキャンセル"
   },

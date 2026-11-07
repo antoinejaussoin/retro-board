@@ -65,6 +65,7 @@
     "voteRemainingMultiple": "您还剩下了 {{number}} {{type}}秒。",
     "voteRemainingOne": "你只剩下一个 {{type}} ，把它算进去！",
     "voteRemainingNone": "您没有剩余任何 {{type}}。",
+    "voteRemainingUnlimited": "您有无限次{{type}}。",
     "toggleGiphyButton": "切换Giphy图像",
     "cancelVote": "取消您对此帖子的投票"
   },

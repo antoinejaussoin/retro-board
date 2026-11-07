@@ -65,6 +65,7 @@
     "voteRemainingMultiple": "لديك {{number}} {{type}}ثانية متبقية.",
     "voteRemainingOne": "لديك فقط {{type}} واحد متبقي، جعله عديم!",
     "voteRemainingNone": "ليس لديك أي {{type}} متبقي.",
+    "voteRemainingUnlimited": "لديك عدد غير محدود من {{type}}.",
     "toggleGiphyButton": "تبديل الصورة الجافية",
     "cancelVote": "إلغاء تصويتك على هذا المنشور"
   },

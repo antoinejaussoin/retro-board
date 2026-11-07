@@ -45,6 +45,7 @@
     "voteRemainingMultiple": null,
     "voteRemainingOne": null,
     "voteRemainingNone": null,
+    "voteRemainingUnlimited": "У вас неограниченное количество {{type}}.",
     "toggleGiphyButton": null
   },
   "Customize": {

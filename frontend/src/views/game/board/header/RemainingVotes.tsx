@@ -4,40 +4,37 @@ import { TranslationFunction } from 'state/types';
 import { cn } from 'ui/cn';
 import { Tooltip } from 'ui/tooltip';
 import { Palette } from '../../../../Theme';
-import useSession from '../../useSession';
+import type { VoteAllowance } from './useRemainingVotes';
 
 interface RemainingVotesProps {
-  up: number | null;
-  down: number | null;
+  up: VoteAllowance | null;
+  down: VoteAllowance | null;
 }
 
 const RemainingVotes = ({ up, down }: RemainingVotesProps) => {
   const { t } = useTranslation();
-  const { session } = useSession();
-  const hideUpVotes = session?.options.maxUpVotes === 0;
-  const hideDownVotes = session?.options.maxDownVotes === 0;
-  if (up === null && down === null && hideUpVotes && hideDownVotes) {
+  if (up === null && down === null) {
     return <div />;
   }
 
   return (
     <div className="flex justify-end gap-5 pb-2.5 sm:pb-0">
-      {up !== null && !hideUpVotes ? (
+      {up !== null ? (
         <Tooltip content={getTooltip(t, up, 'up')} side="bottom">
           <span className="relative inline-flex">
             <ThumbsUp className="size-6" style={{ color: Palette.positive }} />
-            <Count value={up} />
+            {up === 'unlimited' ? null : <Count value={up} />}
           </span>
         </Tooltip>
       ) : null}
-      {down !== null && !hideDownVotes ? (
+      {down !== null ? (
         <Tooltip content={getTooltip(t, down, 'down')} side="bottom">
           <span className="relative inline-flex">
             <ThumbsDown
               className="size-6"
               style={{ color: Palette.negative }}
             />
-            <Count value={down} />
+            {down === 'unlimited' ? null : <Count value={down} />}
           </span>
         </Tooltip>
       ) : null}
@@ -60,22 +57,22 @@ function Count({ value }: { value: number }) {
 
 function getTooltip(
   t: TranslationFunction,
-  value: number,
+  value: VoteAllowance,
   type: 'up' | 'down',
 ) {
+  const voteType = type === 'up' ? t('Post.upVote') : t('Post.downVote');
+  if (value === 'unlimited') {
+    return t('Post.voteRemainingUnlimited', { type: voteType });
+  }
   if (value === 0) {
-    return t('Post.voteRemainingNone', {
-      type: type === 'up' ? t('Post.upVote') : t('Post.downVote'),
-    });
+    return t('Post.voteRemainingNone', { type: voteType });
   }
   if (value === 1) {
-    return t('Post.voteRemainingOne', {
-      type: type === 'up' ? t('Post.upVote') : t('Post.downVote'),
-    });
+    return t('Post.voteRemainingOne', { type: voteType });
   }
   return t('Post.voteRemainingMultiple', {
     number: value,
-    type: type === 'up' ? t('Post.upVote') : t('Post.downVote'),
+    type: voteType,
   });
 }
 
