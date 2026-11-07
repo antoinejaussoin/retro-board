@@ -172,11 +172,9 @@ function GameMode({
       )}
     >
       {demo ? (
-        <div className="mb-4">
-          <ClosableAlert severity="info" closable>
-            {t('PostBoard.demo')}
-          </ClosableAlert>
-        </div>
+        <ClosableAlert severity="info" closable className="mb-4">
+          {t('PostBoard.demo')}
+        </ClosableAlert>
       ) : null}
       <BoardHeader
         onChangeSession={onChangeSession}

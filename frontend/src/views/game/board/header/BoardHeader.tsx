@@ -87,7 +87,7 @@ function BoardHeader({ onChangeSession, onLockSession }: BoardHeaderProps) {
   return (
     <>
       {!canDecrypt ? <EncryptionModal /> : null}
-      <div className="flex flex-col gap-2.5">
+      <div className="flex flex-col gap-2.5 [&:not(:empty)]:mb-4">
         {!isLoggedIn ? (
           <ClosableAlert severity="warning">
             {t('PostBoard.notLoggedIn')}

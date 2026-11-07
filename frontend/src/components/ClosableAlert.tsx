@@ -8,6 +8,7 @@ type ClosableAlertProps = {
   closable?: boolean;
   id?: string;
   persisted?: boolean;
+  className?: string;
 };
 
 export default function ClosableAlert({
@@ -17,6 +18,7 @@ export default function ClosableAlert({
   closable,
   id,
   persisted,
+  className,
 }: ClosableAlertProps) {
   const [open, setOpen] = useState(loadInitial(id));
 
@@ -38,6 +40,7 @@ export default function ClosableAlert({
     <Alert
       severity={severity}
       title={title}
+      className={className}
       onClose={closable ? handleClose : undefined}
     >
       {children}
