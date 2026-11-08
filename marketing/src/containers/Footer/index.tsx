@@ -260,7 +260,11 @@ export default function Footer({ legals }: FooterProps) {
       </Container>
       <Container width="1400px">
         <FooterBottom>
-          <Text content={t('Footer.copyright')} />
+          <Text
+            content={t('Footer.copyright', {
+              year: new Date().getFullYear(),
+            })}
+          />
           {/* <FooterNav>
             {footer.nav.map((item) => (
               <li key={item.id}>
