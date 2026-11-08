@@ -57,13 +57,17 @@ fn psql(db: &str, sql: &str) -> String {
 }
 
 async fn boot() -> Server {
-    let db = format!("retro_api_{}", std::process::id());
+    boot_with(0, &[]).await
+}
+
+async fn boot_with(slot: u16, extra: &[(&str, &str)]) -> Server {
+    let db = format!("retro_api_{}_{slot}", std::process::id());
     psql("postgres", &format!("DROP DATABASE IF EXISTS \"{db}\""));
     psql(
         "postgres",
         &format!("CREATE DATABASE \"{db}\" OWNER postgres"),
     );
-    let port = 3400 + (std::process::id() % 1000);
+    let port = 3400 + (std::process::id() % 500) + u32::from(slot);
     let mut child = Command::new(server_bin())
         .env("DB_HOST", "127.0.0.1")
         .env("DB_PORT", "5432")
@@ -93,6 +97,7 @@ async fn boot() -> Server {
         .env("OKTA_KEY", "")
         .env("OKTA_SECRET", "")
         .env("OKTA_AUDIENCE", "")
+        .envs(extra.iter().copied())
         .stdout(Stdio::null())
         .stderr(Stdio::null())
         .spawn()
@@ -299,6 +304,43 @@ async fn http_contract() {
     );
     assert_eq!(stored["stale"], false);
 
+    let taken = format!("taken-{}@example.com", std::process::id());
+    let taken_user = format!("user-taken-{}", std::process::id());
+    let taken_identity = format!("identity-taken-{}", std::process::id());
+    psql(
+        &server.db,
+        &format!("INSERT INTO users (id, name, email) VALUES ('{taken_user}', 'Taken', '{taken}')"),
+    );
+    psql(
+        &server.db,
+        &format!(
+            "INSERT INTO users_identities (id, user_id, account_type, username) VALUES ('{taken_identity}', '{taken_user}', 'google', '{taken}')"
+        ),
+    );
+    let hijack = client
+        .post(format!("{}/api/register", server.base))
+        .json(&serde_json::json!({"name": "Hijack", "username": taken, "password": "stolen-password", "language": "en-GB"}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(
+        hijack.status(),
+        403,
+        "a password must not attach to an existing email"
+    );
+    assert_eq!(hijack.text().await.unwrap(), "User already exists");
+    assert_eq!(
+        client
+            .post(format!("{}/api/auth/login", server.base))
+            .json(&serde_json::json!({"username": taken, "password": "stolen-password"}))
+            .send()
+            .await
+            .unwrap()
+            .status(),
+        403,
+        "the rejected password must not log in"
+    );
+
     let email = format!("ada-{}@example.com", std::process::id());
     let registered: Value = client
         .post(format!("{}/api/register", server.base))
@@ -480,4 +522,383 @@ async fn http_contract() {
             .status(),
         401
     );
+}
+
+#[tokio::test]
+async fn oauth_callback_without_the_starter_cookie_does_not_log_in() {
+    let server = boot_with(
+        5,
+        &[("GOOGLE_KEY", "test-key"), ("GOOGLE_SECRET", "test-secret")],
+    )
+    .await;
+    let client = reqwest::Client::builder()
+        .redirect(reqwest::redirect::Policy::none())
+        .build()
+        .unwrap();
+    let start = client
+        .get(format!("{}/api/auth/google", server.base))
+        .send()
+        .await
+        .unwrap();
+    assert!(
+        start.status().is_redirection(),
+        "google start returned {}",
+        start.status()
+    );
+    let cookie = cookie_from(&start);
+    let location = start
+        .headers()
+        .get("location")
+        .and_then(|value| value.to_str().ok())
+        .unwrap_or("");
+    let state = location
+        .split("state=")
+        .nth(1)
+        .and_then(|value| value.split('&').next())
+        .unwrap_or("");
+    assert!(!state.is_empty(), "authorize url included state");
+    let callback = client
+        .get(format!(
+            "{}/api/auth/google/callback?code=nope&state={state}",
+            server.base
+        ))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(callback.status(), 403);
+    assert_eq!(
+        client
+            .get(format!("{}/api/me", server.base))
+            .header("cookie", &cookie)
+            .send()
+            .await
+            .unwrap()
+            .status(),
+        401,
+        "a callback without the starter cookie must not authenticate that session"
+    );
+}
+
+#[tokio::test]
+async fn admin_routes_follow_the_self_hosted_flag() {
+    let client = reqwest::Client::new();
+    let hosted = boot_with(2, &[("SELF_HOSTED", "false")]).await;
+    let caps: Value = client
+        .get(format!("{}/api/admin/self-hosting", hosted.base))
+        .send()
+        .await
+        .unwrap()
+        .json()
+        .await
+        .unwrap();
+    assert_eq!(caps["adminEmail"], "");
+    let hosted_cookie = register_admin(&client, &hosted.base).await;
+    assert_eq!(
+        client
+            .get(format!("{}/api/admin/users", hosted.base))
+            .header("cookie", &hosted_cookie)
+            .send()
+            .await
+            .unwrap()
+            .status(),
+        403,
+        "hosted deployments must not expose admin mutations"
+    );
+
+    let local = boot_with(3, &[]).await;
+    let local_cookie = register_admin(&client, &local.base).await;
+    assert_eq!(
+        client
+            .get(format!("{}/api/admin/users", local.base))
+            .header("cookie", &local_cookie)
+            .send()
+            .await
+            .unwrap()
+            .status(),
+        200,
+        "the configured self-hosted admin email can list users"
+    );
+
+    let seeded = boot_with(4, &[("SELF_HOSTED_ADMIN_PASSWORD", "seed-secret")]).await;
+    let seeded_login = client
+        .post(format!("{}/api/auth/login", seeded.base))
+        .json(&serde_json::json!({"username": "admin@localhost", "password": "seed-secret"}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(seeded_login.status(), 200, "the seeded admin can log in");
+    let taken = client
+        .post(format!("{}/api/register", seeded.base))
+        .json(&serde_json::json!({"name": "Other", "username": "admin@localhost", "password": "other-password", "language": "en-GB"}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(
+        taken.status(),
+        403,
+        "the seeded admin email is already taken"
+    );
+}
+
+async fn register_admin(client: &reqwest::Client, base: &str) -> String {
+    let registered = client
+        .post(format!("{base}/api/register"))
+        .json(&serde_json::json!({"name": "Admin", "username": "admin@localhost", "password": "admin-password", "language": "en-GB"}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(registered.status(), 200, "admin registration");
+    cookie_from(&registered)
+}
+
+#[tokio::test]
+async fn unverified_password_cannot_log_in_when_mail_is_configured() {
+    let server = boot_with(
+        1,
+        &[
+            ("SELF_HOSTED", "false"),
+            ("MAIL_SMTP_HOST", "127.0.0.1"),
+            ("MAIL_PORT", "1"),
+            ("MAIL_SECURE", "false"),
+            ("MAIL_SENDER", "test@example.com"),
+        ],
+    )
+    .await;
+    let client = reqwest::Client::new();
+    let email = format!("verify-{}@example.com", std::process::id());
+    let registered = client
+        .post(format!("{}/api/register", server.base))
+        .json(&serde_json::json!({"name": "Ada Lovelace", "username": email, "password": "correct-horse", "language": "en-GB"}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(registered.status(), 200);
+    let registered: Value = registered.json().await.unwrap();
+    assert_eq!(registered["loggedIn"], false);
+    assert_eq!(
+        client
+            .post(format!("{}/api/auth/login", server.base))
+            .json(&serde_json::json!({"username": email, "password": "correct-horse"}))
+            .send()
+            .await
+            .unwrap()
+            .status(),
+        403,
+        "login must wait until the verification code is accepted"
+    );
+    let missing_reset = client
+        .post(format!("{}/api/reset", server.base))
+        .json(&serde_json::json!({"email": "missing@example.com"}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(
+        missing_reset.status(),
+        200,
+        "hosted reset must not reveal missing emails"
+    );
+    let missing_code = client
+        .post(format!("{}/api/validate", server.base))
+        .json(&serde_json::json!({"email": "missing@example.com", "code": "nope"}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(missing_code.status(), 403);
+    assert_eq!(missing_code.text().await.unwrap(), "Code not valid");
+    let code = psql(
+        &server.db,
+        &format!("SELECT email_verification FROM users_identities WHERE username = '{email}'"),
+    );
+    assert!(!code.is_empty());
+    let validated = client
+        .post(format!("{}/api/validate", server.base))
+        .json(&serde_json::json!({"email": email, "code": code}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(validated.status(), 200);
+    assert_eq!(
+        client
+            .post(format!("{}/api/auth/login", server.base))
+            .json(&serde_json::json!({"username": email, "password": "correct-horse"}))
+            .send()
+            .await
+            .unwrap()
+            .status(),
+        200
+    );
+}
+
+#[tokio::test]
+async fn login_rotates_the_session_and_logout_clears_it() {
+    let server = boot_with(9, &[]).await;
+    let client = reqwest::Client::new();
+    let anon = client
+        .post(format!("{}/api/auth/anonymous/login", server.base))
+        .json(&serde_json::json!({"username": "ANONUSER__Ada__ANONUSER", "password": "secret"}))
+        .send()
+        .await
+        .unwrap();
+    let first = cookie_from(&anon);
+    let email = format!("rotate-{}@example.com", std::process::id());
+    let registered = client
+        .post(format!("{}/api/register", server.base))
+        .header("cookie", &first)
+        .json(&serde_json::json!({"name": "Ada", "username": email, "password": "correct-horse", "language": "en-GB"}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(registered.status(), 200);
+    let second = cookie_from(&registered);
+    assert_ne!(first, second, "login must issue a new session cookie");
+    let logout = client
+        .post(format!("{}/api/logout", server.base))
+        .header("cookie", &second)
+        .send()
+        .await
+        .unwrap();
+    let cleared = logout
+        .headers()
+        .get_all(reqwest::header::SET_COOKIE)
+        .iter()
+        .filter_map(|value| value.to_str().ok())
+        .any(|value| value.to_ascii_lowercase().contains("max-age=0"));
+    assert!(cleared, "logout must expire connect.sid");
+}
+
+#[tokio::test]
+async fn unsigned_slack_and_empty_stripe_secret_are_rejected() {
+    let server = boot_with(8, &[]).await;
+    let client = reqwest::Client::new();
+    let slack = client
+        .post(format!("{}/api/slack/create", server.base))
+        .header("content-type", "application/json")
+        .body(r#"{"user_id":"U1","text":"retro","response_url":"https://example.com/hook"}"#)
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(slack.status(), 401, "slack commands need a signature");
+
+    let unsigned = boot_with(7, &[("STRIPE_WEBHOOK_SECRET", "")]).await;
+    let webhook = client
+        .post(format!("{}/api/stripe/webhook", unsigned.base))
+        .header("stripe-signature", "t=1,v1=deadbeef")
+        .body("{}")
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(
+        webhook.status(),
+        400,
+        "an empty webhook secret must not verify"
+    );
+}
+
+#[tokio::test]
+async fn socket_refuses_anonymous_edits_and_locked_board_reads() {
+    let server = boot_with(6, &[]).await;
+    let client = reqwest::Client::new();
+    let anon = client
+        .post(format!("{}/api/auth/anonymous/login", server.base))
+        .json(&serde_json::json!({"username": "ANONUSER__Ada__ANONUSER", "password": "secret"}))
+        .send()
+        .await
+        .unwrap();
+    let cookie = cookie_from(&anon);
+    let created: Value = client
+        .post(format!("{}/api/create", server.base))
+        .header("cookie", &cookie)
+        .header("content-type", "application/json")
+        .body("")
+        .send()
+        .await
+        .unwrap()
+        .json()
+        .await
+        .unwrap();
+    let session_id = created["id"].as_str().unwrap();
+    let edit = socket_roundtrip(
+        &server.base,
+        None,
+        "retrospected/posts/edit",
+        &serde_json::json!({
+            "sessionId": session_id,
+            "ack": "1",
+            "payload": {"post": {"id": "missing", "content": "x", "column": 0, "rank": "a"}, "groupId": null}
+        }),
+    )
+    .await;
+    assert!(
+        edit.contains("action_unauthorised"),
+        "an edit with no user must be refused, got {edit}"
+    );
+
+    psql(
+        &server.db,
+        &format!("UPDATE sessions SET locked = true WHERE id = '{session_id}'"),
+    );
+    let request = socket_roundtrip(
+        &server.base,
+        None,
+        "retrospected/session/request",
+        &serde_json::json!({"sessionId": session_id, "ack": "2", "payload": null}),
+    )
+    .await;
+    assert!(
+        request.contains("locked"),
+        "a stranger must not read a locked board, got {request}"
+    );
+}
+
+async fn socket_roundtrip(
+    base: &str,
+    cookie: Option<&str>,
+    event: &str,
+    payload: &Value,
+) -> String {
+    let client = reqwest::Client::builder()
+        .timeout(Duration::from_secs(5))
+        .build()
+        .unwrap();
+    let mut open = client.get(format!("{base}/socket.io/?EIO=4&transport=polling"));
+    if let Some(cookie) = cookie {
+        open = open.header("cookie", cookie);
+    }
+    let opened = open.send().await.unwrap().text().await.unwrap();
+    let sid = opened
+        .split("\"sid\":\"")
+        .nth(1)
+        .and_then(|value| value.split('"').next())
+        .unwrap_or("")
+        .to_owned();
+    assert!(!sid.is_empty(), "socket handshake returned {opened}");
+    let url = format!("{base}/socket.io/?EIO=4&transport=polling&sid={sid}");
+    client
+        .post(&url)
+        .header("content-type", "text/plain;charset=UTF-8")
+        .body("40")
+        .send()
+        .await
+        .unwrap();
+    let _ = client.get(&url).send().await.unwrap().text().await;
+    let packet = format!("42{}", serde_json::json!([event, payload]));
+    client
+        .post(&url)
+        .header("content-type", "text/plain;charset=UTF-8")
+        .body(packet)
+        .send()
+        .await
+        .unwrap();
+    let mut body = String::new();
+    for _ in 0..4 {
+        let chunk = client.get(&url).send().await.unwrap().text().await.unwrap();
+        if chunk.is_empty() {
+            continue;
+        }
+        body.push_str(&chunk);
+        if body.contains("action_unauthorised") || body.contains("\"type\":\"locked\"") {
+            break;
+        }
+    }
+    body
 }

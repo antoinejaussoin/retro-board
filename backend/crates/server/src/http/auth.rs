@@ -2,7 +2,7 @@ use std::net::SocketAddr;
 use std::sync::Arc;
 
 use axum::extract::{ConnectInfo, State};
-use axum::http::{HeaderMap, StatusCode};
+use axum::http::{header, HeaderMap, StatusCode};
 use axum::response::{IntoResponse, Response};
 use axum::{Extension, Json};
 use serde_json::{json, Value};
@@ -59,6 +59,9 @@ pub(super) async fn login(
                     .as_deref()
                     .is_some_and(|hash| verify_password(&body.password, hash).unwrap_or(false)) =>
             {
+                if state.config.emails_enabled() && identity.email_verification.is_some() {
+                    return empty(StatusCode::FORBIDDEN);
+                }
                 Some(identity)
             }
             _ => None,
@@ -67,17 +70,17 @@ pub(super) async fn login(
     let Some(identity) = result else {
         return empty(StatusCode::FORBIDDEN);
     };
-    // Re-check password for anonymous accounts that already had a hash.
     if username.starts_with("ANONUSER__") {
-        if let Some(hash) = identity.password.as_deref() {
-            if !verify_password(&body.password, hash).unwrap_or(false) {
-                return empty(StatusCode::FORBIDDEN);
-            }
+        let Some(hash) = identity.password.as_deref() else {
+            return empty(StatusCode::FORBIDDEN);
+        };
+        if !verify_password(&body.password, hash).unwrap_or(false) {
+            return empty(StatusCode::FORBIDDEN);
         }
     }
     let mut session = session.lock().await;
     session.passport_user = Some(user_ids(&identity.user_id, &identity.id));
-    state.sessions.save(&session).await;
+    state.sessions.rotate(&mut session).await;
     with_cookie(&state, &session.id, empty(StatusCode::OK))
 }
 
@@ -119,6 +122,9 @@ pub(super) async fn register(
         .ok()
         .flatten()
         .is_some()
+        || db::user_owns_email(&state.db, &body.username)
+            .await
+            .unwrap_or(false)
     {
         return text(StatusCode::FORBIDDEN, "User already exists");
     }
@@ -138,6 +144,7 @@ pub(super) async fn register(
             username: body.username.clone(),
             email: body.username.clone(),
             password: Some(hash),
+            email_verified: false,
             email_verification: code.clone(),
             language: body.language.clone(),
             photo: None,
@@ -148,6 +155,9 @@ pub(super) async fn register(
     .await
     {
         Ok(identity) => identity,
+        Err(db::RegisterError::EmailTaken) => {
+            return text(StatusCode::FORBIDDEN, "User already exists");
+        }
         Err(error) => {
             tracing::warn!(%error, "register failed");
             return empty(StatusCode::INTERNAL_SERVER_ERROR);
@@ -173,7 +183,7 @@ pub(super) async fn register(
     }
     let mut session = session.lock().await;
     session.passport_user = Some(user_ids(&identity.user_id, &identity.id));
-    state.sessions.save(&session).await;
+    state.sessions.rotate(&mut session).await;
     with_cookie(
         &state,
         &session.id,
@@ -233,7 +243,11 @@ pub(super) async fn logout(
 ) -> Response {
     let session = session.lock().await;
     state.sessions.destroy(&session.id).await;
-    Json(json!({ "authenticated": false })).into_response()
+    let mut response = Json(json!({ "authenticated": false })).into_response();
+    if let Ok(value) = state.sessions.clear_cookie_header().parse() {
+        response.headers_mut().insert(header::SET_COOKIE, value);
+    }
+    response
 }
 
 pub(super) async fn rename_user(
@@ -313,13 +327,17 @@ pub(super) async fn validate(
         .ok()
         .flatten()
     else {
-        return text(StatusCode::NOT_FOUND, "Email not found");
+        return if state.config.self_hosted {
+            text(StatusCode::NOT_FOUND, "Email not found")
+        } else {
+            text(StatusCode::FORBIDDEN, "Code not valid")
+        };
     };
     if identity.email_verification.as_deref() == Some(body.code.as_str()) {
         let _ = db::set_verification(&state.db, &identity.id, None).await;
         let mut session = session.lock().await;
         session.passport_user = Some(user_ids(&identity.user_id, &identity.id));
-        state.sessions.save(&session).await;
+        state.sessions.rotate(&mut session).await;
         let Some(user) = db::user_by_identity(&state.db, &identity.id, state.force_pro())
             .await
             .ok()
@@ -349,7 +367,11 @@ pub(super) async fn reset(
         .ok()
         .flatten()
     else {
-        return text(StatusCode::NOT_FOUND, "Email not found");
+        return if state.config.self_hosted {
+            text(StatusCode::NOT_FOUND, "Email not found")
+        } else {
+            empty(StatusCode::OK)
+        };
     };
     let code = uuid::Uuid::new_v4().to_string();
     let _ = db::set_verification(&state.db, &identity.id, Some(&code)).await;
@@ -375,7 +397,11 @@ pub(super) async fn reset_password(
         .ok()
         .flatten()
     else {
-        return text(StatusCode::NOT_FOUND, "Email not found");
+        return if state.config.self_hosted {
+            text(StatusCode::NOT_FOUND, "Email not found")
+        } else {
+            text(StatusCode::FORBIDDEN, "Code not valid")
+        };
     };
     if identity.email_verification.as_deref() != Some(body.code.as_str()) {
         return text(StatusCode::FORBIDDEN, "Code not valid");
@@ -386,7 +412,7 @@ pub(super) async fn reset_password(
     let _ = db::set_password(&state.db, &identity.id, &hash).await;
     let mut session = session.lock().await;
     session.passport_user = Some(user_ids(&identity.user_id, &identity.id));
-    state.sessions.save(&session).await;
+    state.sessions.rotate(&mut session).await;
     let Some(user) = db::user_by_identity(&state.db, &identity.id, state.force_pro())
         .await
         .ok()

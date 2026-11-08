@@ -23,6 +23,7 @@ pub struct Config {
     pub licence_key: String,
     pub self_hosted: bool,
     pub self_hosted_admin: String,
+    pub self_hosted_admin_password: String,
     pub db_name: String,
     pub db_user: String,
     pub db_password: String,
@@ -35,8 +36,11 @@ pub struct Config {
     pub backend_port: u16,
     pub session_secret: String,
     pub sql_log: bool,
+    /// Sentry DSN. Empty or `NO_SENTRY` leaves error reporting off.
+    pub sentry_url: String,
     pub base_url: String,
     pub secure_cookies: bool,
+    pub trusted_proxies: Vec<String>,
     pub disable_anonymous_login: bool,
     pub disable_password_login: bool,
     pub disable_password_registration: bool,
@@ -48,6 +52,7 @@ pub struct Config {
     pub github_secret: String,
     pub slack_key: String,
     pub slack_secret: String,
+    pub slack_signing_secret: String,
     pub slack_bot_enable: bool,
     pub microsoft_key: String,
     pub microsoft_secret: String,
@@ -96,6 +101,7 @@ impl Config {
             licence_key: env_str("LICENCE_KEY", ""),
             self_hosted: env_bool("SELF_HOSTED", true),
             self_hosted_admin: env_str("SELF_HOSTED_ADMIN", "admin@acme.com"),
+            self_hosted_admin_password: env_str("SELF_HOSTED_ADMIN_PASSWORD", ""),
             db_name: env_str("DB_NAME", "retroboard"),
             db_user: env_str("DB_USER", "postgres"),
             db_password: env_str("DB_PASSWORD", "postgres"),
@@ -108,8 +114,10 @@ impl Config {
             backend_port: env_u16("BACKEND_PORT", 3201),
             session_secret: env_str("SESSION_SECRET", "changeme"),
             sql_log: env_bool("SQL_LOG", false),
+            sentry_url: env_str("SENTRY_URL", ""),
             base_url: env_str("BASE_URL", "http://localhost:80"),
             secure_cookies: env_bool("SECURE_COOKIES", false),
+            trusted_proxies: env_list("TRUSTED_PROXIES"),
             disable_anonymous_login: env_bool("DISABLE_ANONYMOUS_LOGIN", false),
             disable_password_login: env_bool("DISABLE_PASSWORD_LOGIN", false),
             disable_password_registration: env_bool("DISABLE_PASSWORD_REGISTRATION", false),
@@ -121,6 +129,7 @@ impl Config {
             github_secret: env_str("GITHUB_SECRET", ""),
             slack_key: env_str("SLACK_KEY", ""),
             slack_secret: env_str("SLACK_SECRET", ""),
+            slack_signing_secret: env_str("SLACK_SIGNING_SECRET", ""),
             slack_bot_enable: env_bool("SLACK_BOT_ENABLE", false),
             microsoft_key: env_str("MICROSOFT_KEY", ""),
             microsoft_secret: env_str("MICROSOFT_SECRET", ""),
@@ -169,6 +178,43 @@ impl Config {
         format!("{}-4.11.5", self.session_secret)
     }
 
+    /// Hosted HTTPS always marks the session cookie `Secure`.
+    #[must_use]
+    pub fn secure_cookie(&self) -> bool {
+        if !self.self_hosted && self.base_url.starts_with("https://") {
+            true
+        } else {
+            self.secure_cookies
+        }
+    }
+
+    /// Why a hosted process must refuse to bind. Self-hosted returns nothing.
+    #[must_use]
+    pub fn hosted_startup_error(&self) -> Option<&'static str> {
+        hosted_startup_error(
+            self.self_hosted,
+            &self.session_secret,
+            &self.stripe_secret,
+            &self.stripe_webhook_secret,
+        )
+    }
+
+    /// Defaults a self-hosted operator should change, without stopping the process.
+    #[must_use]
+    pub fn startup_warnings(&self) -> Vec<&'static str> {
+        if !self.self_hosted {
+            return Vec::new();
+        }
+        let mut warnings = Vec::new();
+        if self.session_secret.is_empty() || self.session_secret == "changeme" {
+            warnings.push("SESSION_SECRET is still the default; set a unique value");
+        }
+        if !self.stripe_secret.is_empty() && self.stripe_webhook_secret.is_empty() {
+            warnings.push("STRIPE_WEBHOOK_SECRET is empty while STRIPE_SECRET is set");
+        }
+        warnings
+    }
+
     #[must_use]
     pub fn database_url(&self) -> String {
         format!(
@@ -192,6 +238,26 @@ impl Config {
     }
 }
 
+/// Hosted deployments refuse a default session secret and an unsigned Stripe webhook.
+#[must_use]
+pub fn hosted_startup_error(
+    self_hosted: bool,
+    session_secret: &str,
+    stripe_secret: &str,
+    webhook_secret: &str,
+) -> Option<&'static str> {
+    if self_hosted {
+        return None;
+    }
+    if session_secret.is_empty() || session_secret == "changeme" {
+        return Some("SESSION_SECRET must be set to a unique value");
+    }
+    if !stripe_secret.is_empty() && webhook_secret.is_empty() {
+        return Some("STRIPE_WEBHOOK_SECRET is required when STRIPE_SECRET is set");
+    }
+    None
+}
+
 fn env_raw(key: &str) -> Option<String> {
     match env::var(key) {
         Ok(value) => Some(value),
@@ -201,6 +267,15 @@ fn env_raw(key: &str) -> Option<String> {
 
 fn env_str(key: &str, default: &str) -> String {
     env_raw(key).unwrap_or_else(|| default.to_owned())
+}
+
+fn env_list(key: &str) -> Vec<String> {
+    env_str(key, "")
+        .split(',')
+        .map(str::trim)
+        .filter(|value| !value.is_empty())
+        .map(str::to_owned)
+        .collect()
 }
 
 fn env_opt(key: &str) -> Option<String> {
@@ -305,7 +380,7 @@ fn unquote(value: &str) -> String {
 
 #[cfg(test)]
 mod tests {
-    use super::parse_dotenv;
+    use super::{hosted_startup_error, parse_dotenv};
 
     #[test]
     fn parse_dotenv_keeps_assignments_and_skips_comments() {
@@ -319,5 +394,22 @@ mod tests {
             Some("postgres")
         );
         assert!(!values.contains_key("# comment"));
+    }
+
+    #[test]
+    fn hosted_startup_rejects_the_default_secret_and_an_empty_webhook_secret() {
+        assert_eq!(
+            hosted_startup_error(false, "changeme", "", ""),
+            Some("SESSION_SECRET must be set to a unique value")
+        );
+        assert_eq!(
+            hosted_startup_error(false, "real-secret", "sk_live", ""),
+            Some("STRIPE_WEBHOOK_SECRET is required when STRIPE_SECRET is set")
+        );
+        assert_eq!(hosted_startup_error(true, "changeme", "sk_live", ""), None);
+        assert_eq!(
+            hosted_startup_error(false, "real-secret", "sk_live", "whsec"),
+            None
+        );
     }
 }

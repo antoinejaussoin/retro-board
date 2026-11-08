@@ -49,6 +49,7 @@ services:
       SELF_HOSTED: 'true'
       SELF_HOSTED_ADMIN: admin@localhost
       BASE_URL: http://localhost:1800
+      SENTRY_URL: ${SENTRY_URL:-}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-haiku-5-5}
       AI_FREE_LIMIT: ${AI_FREE_LIMIT:-5}

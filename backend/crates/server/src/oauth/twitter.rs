@@ -14,7 +14,7 @@ use crate::db::Registration;
 use crate::session::Session;
 use crate::state::AppState;
 
-use super::{finish_login, prepare_callback_session, query_param, redirect, CallbackQuery};
+use super::{finish_login, oauth_cookie_matches, query_param, redirect, CallbackQuery};
 
 pub(super) async fn start_twitter(
     State(state): State<AppState>,
@@ -41,10 +41,6 @@ pub(super) async fn start_twitter(
         session.socket_id = Some(socket);
     }
     state.sessions.save(&session).await;
-    state
-        .sessions
-        .remember_oauth_tx(&token.0, &session.id)
-        .await;
     redirect(
         &state,
         &session,
@@ -64,7 +60,7 @@ pub(super) async fn callback_twitter(
         return StatusCode::FORBIDDEN.into_response();
     };
     let mut session = slot.lock().await.clone();
-    if !prepare_callback_session(&state, &mut session, "twitterToken", &token).await {
+    if !oauth_cookie_matches(&session, "twitterToken", &token) {
         return StatusCode::FORBIDDEN.into_response();
     }
     let secret = session
@@ -177,8 +173,9 @@ async fn twitter_access(
             .unwrap_or(&username)
             .into(),
         username,
-        email,
+        email: email.clone(),
         password: None,
+        email_verified: !email.is_empty(),
         email_verification: None,
         language: None,
         photo: user

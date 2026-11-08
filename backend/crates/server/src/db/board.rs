@@ -459,3 +459,85 @@ pub fn allowed(
     }
     Ok(())
 }
+
+/// Creator or current moderator, matching the board header.
+pub fn is_board_owner(user_id: &str, created_by: &str, moderator_id: &str) -> bool {
+    user_id == created_by || user_id == moderator_id
+}
+
+/// Whether this participant may change a card's column, rank, or group.
+pub fn can_reorder(
+    user_id: &str,
+    created_by: &str,
+    moderator_id: &str,
+    options: &SessionOptions,
+) -> bool {
+    options.allow_reordering
+        && (is_board_owner(user_id, created_by, moderator_id)
+            || !options.restrict_reordering_to_moderator)
+}
+
+/// Whether this participant may change the board title.
+pub fn can_edit_title(
+    user_id: &str,
+    created_by: &str,
+    moderator_id: &str,
+    options: &SessionOptions,
+) -> bool {
+    is_board_owner(user_id, created_by, moderator_id) || !options.restrict_title_edit_to_moderator
+}
+
+/// Whether this participant may create or edit groups.
+pub fn can_group(
+    user_id: &str,
+    created_by: &str,
+    moderator_id: &str,
+    options: &SessionOptions,
+) -> bool {
+    options.allow_grouping
+        && (is_board_owner(user_id, created_by, moderator_id)
+            || !options.restrict_grouping_to_moderator)
+}
+
+/// Content changes belong to the author. Placement changes belong to whoever may reorder.
+pub fn post_edit_allowed(
+    actor: &str,
+    author: &str,
+    content_changed: bool,
+    placement_changed: bool,
+    reorder: bool,
+) -> bool {
+    if content_changed && actor != author {
+        return false;
+    }
+    if placement_changed && !reorder && actor != author {
+        return false;
+    }
+    true
+}
+
+#[cfg(test)]
+mod permission_tests {
+    use super::{can_edit_title, can_reorder, post_edit_allowed};
+    use crate::models::SessionOptions;
+
+    #[test]
+    fn strangers_cannot_edit_card_text_or_move_when_reordering_is_closed() {
+        assert!(!post_edit_allowed("bob", "ada", true, false, true));
+        assert!(post_edit_allowed("ada", "ada", true, true, false));
+        assert!(!post_edit_allowed("bob", "ada", false, true, false));
+        assert!(post_edit_allowed("bob", "ada", false, true, true));
+    }
+
+    #[test]
+    fn moderator_flags_keep_title_and_reorder_with_the_owner() {
+        let mut options = SessionOptions::default();
+        options.restrict_title_edit_to_moderator = true;
+        options.restrict_reordering_to_moderator = true;
+        assert!(can_edit_title("ada", "ada", "ada", &options));
+        assert!(can_edit_title("mod", "ada", "mod", &options));
+        assert!(!can_edit_title("bob", "ada", "mod", &options));
+        assert!(can_reorder("mod", "ada", "mod", &options));
+        assert!(!can_reorder("bob", "ada", "mod", &options));
+    }
+}

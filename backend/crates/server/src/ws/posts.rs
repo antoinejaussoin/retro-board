@@ -58,16 +58,58 @@ pub(super) fn add_post<A: Adapter>(
 
 pub(super) fn edit_post<A: Adapter>(
     state: AppState,
-    _ids: Option<(String, String)>,
+    ids: Option<(String, String)>,
     session_id: String,
     payload: Value,
     socket: SocketRef<A>,
 ) -> std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>> {
     Box::pin(async move {
+        let Some((user_id, _)) = ids else {
+            emit_error(
+                &socket,
+                "action_unauthorised",
+                Some("User not authenticated".into()),
+            );
+            return;
+        };
         let Ok(update) = serde_json::from_value::<PostUpdate>(payload) else {
             emit_error(&socket, "cannot_edit_post", None);
             return;
         };
+        let Some(board) = db::load_board(&state.db, &session_id).await.ok().flatten() else {
+            emit_error(&socket, "cannot_edit_post", None);
+            return;
+        };
+        let Some(current) = board.posts.iter().find(|post| post.id == update.post.id) else {
+            emit_error(&socket, "cannot_edit_post", None);
+            return;
+        };
+        let content_changed = current.content != update.post.content
+            || current.action.as_deref() != update.post.action.as_deref()
+            || current.giphy.as_deref() != update.post.giphy.as_deref();
+        let placement_changed = current.column != update.post.column
+            || current.rank != update.post.rank
+            || current.group.as_ref().map(|group| group.id.as_str()) != update.group_id.as_deref();
+        let reorder = db::can_reorder(
+            &user_id,
+            &board.created_by.id,
+            &board.moderator.id,
+            &board.options,
+        );
+        if !db::post_edit_allowed(
+            &user_id,
+            &current.user.id,
+            content_changed,
+            placement_changed,
+            reorder,
+        ) {
+            emit_error(
+                &socket,
+                "action_unauthorised",
+                Some("User not authenticated".into()),
+            );
+            return;
+        }
         match db::update_post(
             &state.db,
             &session_id,

@@ -183,7 +183,8 @@ pub async fn save_group(
 ) -> DbResult<Option<PostGroup>> {
     sqlx::query(
         r#"INSERT INTO groups (id, session_id, user_id, "column", label, rank) VALUES ($1,$2,$3,$4,$5,$6)
-           ON CONFLICT (id) DO UPDATE SET label = EXCLUDED.label, "column" = EXCLUDED."column", rank = EXCLUDED.rank"#,
+           ON CONFLICT (id) DO UPDATE SET label = EXCLUDED.label, "column" = EXCLUDED."column", rank = EXCLUDED.rank
+           WHERE groups.session_id = EXCLUDED.session_id"#,
     )
     .bind(id)
     .bind(session_id)
@@ -246,8 +247,9 @@ pub async fn delete_group(
     if visitor.is_none() {
         return Ok(false);
     }
-    let result = sqlx::query("DELETE FROM groups WHERE id = $1")
+    let result = sqlx::query("DELETE FROM groups WHERE id = $1 AND session_id = $2")
         .bind(group_id)
+        .bind(session_id)
         .execute(pool)
         .await?;
     Ok(result.rows_affected() > 0)

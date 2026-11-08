@@ -23,9 +23,6 @@ pub struct SessionStore {
     secure: bool,
     redis: Option<ConnectionManager>,
     memory: Arc<Mutex<HashMap<String, String>>>,
-    /// OAuth `state` (or Twitter request token) -> session id. The popup often
-    /// returns from the provider without the session cookie.
-    oauth_tx: Arc<Mutex<HashMap<String, String>>>,
 }
 
 #[derive(Clone, Debug)]
@@ -52,61 +49,18 @@ impl SessionStore {
         };
         Ok(Self {
             secret: config.cookie_secret(),
-            secure: config.secure_cookies,
+            secure: config.secure_cookie(),
             redis,
             memory: Arc::new(Mutex::new(HashMap::new())),
-            oauth_tx: Arc::new(Mutex::new(HashMap::new())),
         })
     }
 
-    /// Remember which session started an OAuth redirect. Kept for 10 minutes.
-    pub async fn remember_oauth_tx(&self, key: &str, sid: &str) {
-        if let Some(redis) = &self.redis {
-            let mut conn = redis.clone();
-            let saved: Result<(), redis::RedisError> = redis::cmd("SET")
-                .arg(format!("oauthstate:{key}"))
-                .arg(sid)
-                .arg("PX")
-                .arg(10 * 60 * 1000)
-                .query_async(&mut conn)
-                .await;
-            if let Err(error) = saved {
-                tracing::warn!(%error, "failed to store oauth transaction");
-            }
-        }
-        self.oauth_tx
-            .lock()
-            .await
-            .insert(key.to_owned(), sid.to_owned());
-    }
-
-    /// Session id for an OAuth transaction, without removing it.
-    pub async fn oauth_tx(&self, key: &str) -> Option<String> {
-        if let Some(redis) = &self.redis {
-            let mut conn = redis.clone();
-            let value: Option<String> = redis::cmd("GET")
-                .arg(format!("oauthstate:{key}"))
-                .query_async(&mut conn)
-                .await
-                .ok()
-                .flatten();
-            if value.is_some() {
-                return value;
-            }
-        }
-        self.oauth_tx.lock().await.get(key).cloned()
-    }
-
-    /// Drop an OAuth transaction after it has been used.
-    pub async fn forget_oauth_tx(&self, key: &str) {
-        if let Some(redis) = &self.redis {
-            let mut conn = redis.clone();
-            let _: Result<(), redis::RedisError> = redis::cmd("DEL")
-                .arg(format!("oauthstate:{key}"))
-                .query_async(&mut conn)
-                .await;
-        }
-        self.oauth_tx.lock().await.remove(key);
+    /// Issue a new id, persist the session there, and drop the previous record.
+    pub async fn rotate(&self, session: &mut Session) {
+        let previous = session.id.clone();
+        session.id = new_sid();
+        self.save(session).await;
+        self.destroy(&previous).await;
     }
 
     pub fn from_cookie(&self, header: Option<&str>) -> Option<String> {
@@ -129,6 +83,18 @@ impl SessionStore {
             .http_only(true)
             .same_site(cookie::SameSite::Lax)
             .max_age(cookie::time::Duration::seconds(YEAR_MS / 1000))
+            .secure(self.secure);
+        let _ = &mut cookie;
+        cookie.build().to_string()
+    }
+
+    /// Expire `connect.sid` in the browser.
+    pub fn clear_cookie_header(&self) -> String {
+        let mut cookie = Cookie::build((COOKIE_NAME, ""))
+            .path("/")
+            .http_only(true)
+            .same_site(cookie::SameSite::Lax)
+            .max_age(cookie::time::Duration::seconds(0))
             .secure(self.secure);
         let _ = &mut cookie;
         cookie.build().to_string()

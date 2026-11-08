@@ -64,7 +64,6 @@ async fn start_oauth(
         session.socket_id = Some(socket);
     }
     state.sessions.save(&session).await;
-    state.sessions.remember_oauth_tx(&nonce, &session.id).await;
     let mut target = auth;
     target.push_str(if target.contains('?') { "&" } else { "?" });
     target.push_str(&format!("state={}", urlencoding::encode(&nonce)));
@@ -89,7 +88,7 @@ async fn callback_oauth(
         return StatusCode::FORBIDDEN.into_response();
     };
     let mut session = slot.lock().await.clone();
-    if !prepare_callback_session(&state, &mut session, "oauthState", &expected).await {
+    if !oauth_cookie_matches(&session, "oauthState", &expected) {
         tracing::warn!(provider, "oauth state did not match the session");
         return StatusCode::FORBIDDEN.into_response();
     }
@@ -105,62 +104,10 @@ async fn callback_oauth(
     response
 }
 
-/// The provider redirects the popup without the session cookie, so the request
-/// looks like a new empty session. The `state` value still identifies the
-/// session that started the login. A session that is already logged in, or
-/// waiting on a different return, is left as it is.
-async fn prepare_callback_session(
-    state: &AppState,
-    session: &mut Session,
-    field: &str,
-    expected: &str,
-) -> bool {
-    let current = session.raw.get(field).and_then(Value::as_str);
-    let stored = state.sessions.oauth_tx(expected).await;
-    match bind_oauth(
-        current,
-        expected,
-        session.passport_user.is_some(),
-        stored.is_some(),
-    ) {
-        OauthBind::Keep => {
-            state.sessions.forget_oauth_tx(expected).await;
-            true
-        }
-        OauthBind::Swap => {
-            let Some(sid) = stored else {
-                return false;
-            };
-            let Some(loaded) = state.sessions.load(&sid).await else {
-                return false;
-            };
-            if loaded.raw.get(field).and_then(Value::as_str) != Some(expected) {
-                return false;
-            }
-            *session = loaded;
-            state.sessions.forget_oauth_tx(expected).await;
-            true
-        }
-        OauthBind::Reject => false,
-    }
-}
-
-#[derive(Debug, PartialEq, Eq)]
-enum OauthBind {
-    Keep,
-    Swap,
-    Reject,
-}
-
-fn bind_oauth(current: Option<&str>, expected: &str, logged_in: bool, have_tx: bool) -> OauthBind {
-    if current == Some(expected) {
-        return OauthBind::Keep;
-    }
-    if have_tx && !logged_in && current.is_none() {
-        OauthBind::Swap
-    } else {
-        OauthBind::Reject
-    }
+/// The callback must present the session cookie written when the popup started
+/// the redirect. `state` alone must not select another session.
+fn oauth_cookie_matches(session: &Session, field: &str, expected: &str) -> bool {
+    session.raw.get(field).and_then(Value::as_str) == Some(expected)
 }
 
 pub(super) async fn finish_login(
@@ -192,7 +139,7 @@ pub(super) async fn finish_login(
         let _ = user_id;
     }
     session.passport_user = Some(user_ids(&identity.user_id, &identity.id));
-    state.sessions.save(session).await;
+    state.sessions.rotate(session).await;
     if let Some(socket_id) = session.socket_id.clone() {
         if let Some(io) = state.io.get() {
             let payload =
@@ -270,6 +217,7 @@ async fn exchange(state: &AppState, provider: &str, code: &str) -> Result<Regist
                 format!("https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token")
             });
             return exchange_form(
+                state,
                 &client,
                 &url,
                 &state.config.microsoft_key,
@@ -286,6 +234,7 @@ async fn exchange(state: &AppState, provider: &str, code: &str) -> Result<Regist
                 state.config.okta_audience.trim_end_matches('/')
             );
             return exchange_form(
+                state,
                 &client,
                 &url,
                 &state.config.okta_key,
@@ -298,10 +247,14 @@ async fn exchange(state: &AppState, provider: &str, code: &str) -> Result<Regist
         }
         _ => return Err("unknown provider".into()),
     };
-    exchange_form(&client, token_url, id, secret, code, &callback, provider).await
+    exchange_form(
+        state, &client, token_url, id, secret, code, &callback, provider,
+    )
+    .await
 }
 
 async fn exchange_form(
+    state: &AppState,
     client: &reqwest::Client,
     url: &str,
     id: &str,
@@ -328,10 +281,11 @@ async fn exchange_form(
         .get("access_token")
         .and_then(Value::as_str)
         .ok_or_else(|| "missing token".to_owned())?;
-    profile(client, provider, token, &body).await
+    profile(state, client, provider, token, &body).await
 }
 
 async fn profile(
+    state: &AppState,
     client: &reqwest::Client,
     provider: &str,
     token: &str,
@@ -348,21 +302,39 @@ async fn profile(
                 .json()
                 .await
                 .map_err(|e| e.to_string())?;
-            let email = user
-                .get("email")
-                .and_then(Value::as_str)
-                .unwrap_or("")
-                .to_owned();
+            let raw_email = user.get("email").and_then(Value::as_str).unwrap_or("");
+            let verified = user
+                .get("verified_email")
+                .and_then(Value::as_bool)
+                .unwrap_or(false);
+            let email = if verified {
+                raw_email.to_owned()
+            } else {
+                String::new()
+            };
+            let username = if raw_email.is_empty() {
+                user.get("id")
+                    .and_then(Value::as_str)
+                    .unwrap_or("")
+                    .to_owned()
+            } else {
+                raw_email.to_owned()
+            };
             Ok(Registration {
                 account_type: "google".into(),
                 name: user
                     .get("name")
                     .and_then(Value::as_str)
-                    .unwrap_or(&email)
+                    .unwrap_or(if username.is_empty() {
+                        "Google"
+                    } else {
+                        &username
+                    })
                     .into(),
-                username: email.clone(),
+                username,
                 email,
                 password: None,
+                email_verified: verified && !raw_email.is_empty(),
                 email_verification: None,
                 language: None,
                 photo: user
@@ -394,14 +366,7 @@ async fn profile(
                 .json()
                 .await
                 .unwrap_or(Value::Null);
-            let email = emails
-                .as_array()
-                .and_then(|list| {
-                    list.iter()
-                        .find_map(|item| item.get("email").and_then(Value::as_str))
-                })
-                .unwrap_or("")
-                .to_owned();
+            let email = github_email(&emails).unwrap_or_default();
             let username = user
                 .get("login")
                 .and_then(Value::as_str)
@@ -415,8 +380,9 @@ async fn profile(
                     .unwrap_or(&username)
                     .into(),
                 username,
-                email,
+                email: email.clone(),
                 password: None,
+                email_verified: !email.is_empty(),
                 email_verification: None,
                 language: None,
                 photo: user
@@ -428,38 +394,20 @@ async fn profile(
             })
         }
         "slack" => {
-            let user = token_body
-                .get("authed_user")
-                .cloned()
-                .unwrap_or(Value::Null);
-            let email = user
-                .pointer("/email")
+            let user_token = token_body
+                .pointer("/authed_user/access_token")
                 .and_then(Value::as_str)
-                .or_else(|| token_body.pointer("/user/email").and_then(Value::as_str))
-                .unwrap_or("")
-                .to_owned();
-            Ok(Registration {
-                account_type: "slack".into(),
-                name: user
-                    .get("name")
-                    .and_then(Value::as_str)
-                    .unwrap_or(&email)
-                    .into(),
-                username: email.clone(),
-                email,
-                password: None,
-                email_verification: None,
-                language: None,
-                photo: user
-                    .get("image_192")
-                    .and_then(Value::as_str)
-                    .map(str::to_owned),
-                slack_user_id: user.get("id").and_then(Value::as_str).map(str::to_owned),
-                slack_team_id: token_body
-                    .pointer("/team/id")
-                    .and_then(Value::as_str)
-                    .map(str::to_owned),
-            })
+                .unwrap_or(token);
+            let identity: Value = client
+                .get("https://slack.com/api/users.identity")
+                .bearer_auth(user_token)
+                .send()
+                .await
+                .map_err(|e| e.to_string())?
+                .json()
+                .await
+                .map_err(|e| e.to_string())?;
+            slack_registration(&identity)
         }
         "microsoft" => {
             let user: Value = client
@@ -477,16 +425,29 @@ async fn profile(
                 .or_else(|| user.get("userPrincipalName").and_then(Value::as_str))
                 .unwrap_or("")
                 .to_owned();
+            let username = if email.is_empty() {
+                user.get("id")
+                    .and_then(Value::as_str)
+                    .unwrap_or("")
+                    .to_owned()
+            } else {
+                email.clone()
+            };
             Ok(Registration {
                 account_type: "microsoft".into(),
                 name: user
                     .get("displayName")
                     .and_then(Value::as_str)
-                    .unwrap_or(&email)
+                    .unwrap_or(if username.is_empty() {
+                        "Microsoft"
+                    } else {
+                        &username
+                    })
                     .into(),
-                username: email.clone(),
-                email,
+                username,
+                email: email.clone(),
                 password: None,
+                email_verified: !email.is_empty(),
                 email_verification: None,
                 language: None,
                 photo: None,
@@ -495,31 +456,110 @@ async fn profile(
             })
         }
         "okta" => {
-            let email = token_body
-                .get("email")
-                .and_then(Value::as_str)
-                .unwrap_or("")
-                .to_owned();
-            let name = token_body
-                .get("name")
-                .and_then(Value::as_str)
-                .unwrap_or(&email)
-                .to_owned();
-            Ok(Registration {
-                account_type: "okta".into(),
-                name,
-                username: email.clone(),
-                email,
-                password: None,
-                email_verification: None,
-                language: None,
-                photo: None,
-                slack_user_id: None,
-                slack_team_id: None,
-            })
+            let url = format!(
+                "{}/v1/userinfo",
+                state.config.okta_audience.trim_end_matches('/')
+            );
+            let user: Value = client
+                .get(url)
+                .bearer_auth(token)
+                .send()
+                .await
+                .map_err(|e| e.to_string())?
+                .json()
+                .await
+                .map_err(|e| e.to_string())?;
+            okta_registration(&user)
         }
         _ => Err("profile".into()),
     }
+}
+
+/// Primary verified GitHub address, otherwise any verified address.
+fn github_email(emails: &Value) -> Option<String> {
+    let list = emails.as_array()?;
+    let verified = |item: &&Value| item.get("verified").and_then(Value::as_bool) == Some(true);
+    let address = |item: &Value| item.get("email").and_then(Value::as_str).map(str::to_owned);
+    list.iter()
+        .find(|item| verified(item) && item.get("primary").and_then(Value::as_bool) == Some(true))
+        .or_else(|| list.iter().find(verified))
+        .and_then(address)
+}
+
+fn slack_registration(identity: &Value) -> Result<Registration, String> {
+    if identity.get("ok").and_then(Value::as_bool) == Some(false) {
+        return Err("slack identity".into());
+    }
+    let email = identity
+        .pointer("/user/email")
+        .and_then(Value::as_str)
+        .unwrap_or("")
+        .to_owned();
+    let id = identity
+        .pointer("/user/id")
+        .and_then(Value::as_str)
+        .unwrap_or("")
+        .to_owned();
+    if id.is_empty() {
+        return Err("slack user".into());
+    }
+    let name = identity
+        .pointer("/user/name")
+        .and_then(Value::as_str)
+        .unwrap_or(if email.is_empty() { &id } else { &email })
+        .to_owned();
+    Ok(Registration {
+        account_type: "slack".into(),
+        name,
+        username: id.clone(),
+        email: email.clone(),
+        password: None,
+        email_verified: !email.is_empty(),
+        email_verification: None,
+        language: None,
+        photo: identity
+            .pointer("/user/image_192")
+            .and_then(Value::as_str)
+            .map(str::to_owned),
+        slack_user_id: Some(id),
+        slack_team_id: identity
+            .pointer("/team/id")
+            .and_then(Value::as_str)
+            .map(str::to_owned),
+    })
+}
+
+fn okta_registration(user: &Value) -> Result<Registration, String> {
+    let email = user.get("email").and_then(Value::as_str).unwrap_or("");
+    let verified = user
+        .get("email_verified")
+        .and_then(Value::as_bool)
+        .unwrap_or(false);
+    if email.is_empty() || !verified {
+        return Err("okta email is not verified".into());
+    }
+    let sub = user.get("sub").and_then(Value::as_str).unwrap_or("");
+    if sub.is_empty() {
+        return Err("okta subject".into());
+    }
+    let name = user
+        .get("name")
+        .and_then(Value::as_str)
+        .unwrap_or(email)
+        .to_owned();
+    Ok(Registration {
+        account_type: "okta".into(),
+        name,
+        username: sub.to_owned(),
+        email: email.to_owned(),
+        password: None,
+        email_verified: true,
+        email_verification: None,
+        language: None,
+        photo: None,
+        slack_user_id: None,
+        slack_team_id: None,
+    })
 }
 
 fn provider_from_path(path: &str) -> Option<&str> {
@@ -553,28 +593,71 @@ pub(super) fn redirect(state: &AppState, session: &Session, location: String) ->
 
 #[cfg(test)]
 mod tests {
-    use super::{bind_oauth, OauthBind};
+    use serde_json::json;
+
+    use super::{github_email, oauth_cookie_matches, okta_registration, slack_registration};
+    use crate::session::Session;
+
+    fn session_with(field: &str, value: Option<&str>) -> Session {
+        let mut raw = json!({});
+        if let Some(value) = value {
+            raw[field] = json!(value);
+        }
+        Session {
+            id: "sid".into(),
+            passport_user: None,
+            socket_id: None,
+            raw,
+        }
+    }
 
     #[test]
     fn keeps_the_session_that_started_oauth() {
-        assert_eq!(
-            bind_oauth(Some("nonce"), "nonce", false, true),
-            OauthBind::Keep
-        );
+        let session = session_with("oauthState", Some("nonce"));
+        assert!(oauth_cookie_matches(&session, "oauthState", "nonce"));
     }
 
     #[test]
-    fn swaps_when_the_popup_lost_the_cookie() {
-        assert_eq!(bind_oauth(None, "nonce", false, true), OauthBind::Swap);
+    fn rejects_a_callback_without_the_starter_cookie() {
+        let empty = session_with("oauthState", None);
+        assert!(!oauth_cookie_matches(&empty, "oauthState", "nonce"));
+        let other = session_with("oauthState", Some("other"));
+        assert!(!oauth_cookie_matches(&other, "oauthState", "nonce"));
     }
 
     #[test]
-    fn rejects_a_logged_in_session_and_a_different_pending_login() {
-        assert_eq!(bind_oauth(None, "nonce", true, true), OauthBind::Reject);
-        assert_eq!(
-            bind_oauth(Some("other"), "nonce", false, true),
-            OauthBind::Reject
-        );
-        assert_eq!(bind_oauth(None, "nonce", false, false), OauthBind::Reject);
+    fn github_email_skips_unverified_addresses() {
+        let emails = json!([
+            {"email": "unverified@example.com", "primary": true, "verified": false},
+            {"email": "ada@example.com", "primary": false, "verified": true}
+        ]);
+        assert_eq!(github_email(&emails).as_deref(), Some("ada@example.com"));
+        let primary = json!([
+            {"email": "other@example.com", "primary": false, "verified": true},
+            {"email": "ada@example.com", "primary": true, "verified": true}
+        ]);
+        assert_eq!(github_email(&primary).as_deref(), Some("ada@example.com"));
+    }
+
+    #[test]
+    fn slack_identity_uses_the_user_id_and_okta_requires_a_verified_email() {
+        let slack = slack_registration(&json!({
+            "ok": true,
+            "user": {"id": "U1", "name": "Ada", "email": "ada@example.com"},
+            "team": {"id": "T1"}
+        }))
+        .unwrap();
+        assert_eq!(slack.username, "U1");
+        assert!(slack.email_verified);
+        assert!(okta_registration(&json!({"email": "ada@example.com"})).is_err());
+        let okta = okta_registration(&json!({
+            "sub": "00u",
+            "email": "ada@example.com",
+            "email_verified": true,
+            "name": "Ada"
+        }))
+        .unwrap();
+        assert_eq!(okta.username, "00u");
+        assert!(okta.email_verified);
     }
 }
