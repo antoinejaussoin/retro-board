@@ -6,7 +6,7 @@ members = ["crates/migrations", "crates/server"]
 edition = "2021"
 license = "GPL-3.0-or-later"
 publish = false
-version = "6.0.1"
+version = "6.0.0"
 
 [workspace.lints.clippy]
 all = { level = "warn", priority = -1 }

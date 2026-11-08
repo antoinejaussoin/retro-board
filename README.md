@@ -5,7 +5,7 @@
 [![Canary Build](https://github.com/antoinejaussoin/retro-board/actions/workflows/canary.yml/badge.svg)](https://github.com/antoinejaussoin/retro-board/actions/workflows/canary.yml)
 [![Alpha Build](https://github.com/antoinejaussoin/retro-board/actions/workflows/alpha.yml/badge.svg)](https://github.com/antoinejaussoin/retro-board/actions/workflows/alpha.yml)
 
-[Retrospected](http://www.retrospected.com) is a free AI-powered Real-time Agile Retrospective Board for engineering teams.
+[Retrospected](https://www.retrospected.com) is a free AI-powered Real-time Agile Retrospective Board for engineering teams.
 
 &nbsp;
 
@@ -19,32 +19,30 @@
   <img src="./content/logos/socketio.png" height="65">
   &nbsp;
   <img src="./content/logos/vite.png" height="65">
-  &nbsp;
-  <img src="./content/logos/chatgpt.png" height="65">
 </p>
 
 ![Retrospected.com](/content/screenshot-v5.png?raw=true 'Retrospected.com')
 
 ![Retrospected.com](/content/full-color.png?raw=true 'Retrospected.com')
 
-This project is both an actual product, and also a technology demo using the latest and greatest JavaScript/TypeScript libraries of the month.
+This project is both an actual product and a technology demo: a React application in front of a Rust backend.
 
 It features the following technologies:
 
-- [React 18](https://github.com/facebook/react)
+- [React 19](https://github.com/facebook/react)
 - [React Hooks](https://reactjs.org/docs/hooks-intro.html)
-- [React Router 6](https://reactrouter.com/)
-- [TypeScript 4.9](https://www.typescriptlang.org/)
-- [Recoil.js](https://recoiljs.org), as the global state management library
-- [Socket IO](http://socket.io)
+- [React Router 7](https://reactrouter.com/)
+- [TypeScript 5.9](https://www.typescriptlang.org/)
+- [Zustand](https://zustand.docs.pmnd.rs/) for live board and UI state
+- [TanStack Query](https://tanstack.com/query) for data loaded from the API
+- [Socket.IO](http://socket.io)
 - [Vite](https://vitejs.dev/), as the bundler
-- [MUI 5](https://mui.com) for our components (previously known as Material-UI)
-- [Material UI design](https://www.google.com/design/spec/material-design/introduction.html)
-- [Emotion](https://emotion.sh/docs/introduction)
-- [Multilingual](https://stackoverflow.com/questions/33413880/react-redux-and-multilingual-internationalization-apps-architecture) / Internationalization
-- [Postgres](https://www.postgresql.org/)
-- [Node 26 (LTS)](https://nodejs.org/en/)
-- [Passport](http://www.passportjs.org/) for seamless OAuth authentication with:
+- [Tailwind CSS 4](https://tailwindcss.com/) and [Radix UI](https://www.radix-ui.com/) for the interface
+- [Multilingual](https://www.i18next.com/) / Internationalization, via i18next
+- [Postgres 16](https://www.postgresql.org/)
+- [Rust](https://www.rust-lang.org/) for the backend, with [Axum](https://github.com/tokio-rs/axum), [Tokio](https://tokio.rs/), and [sqlx](https://github.com/launchbadge/sqlx)
+- [Node 26 (LTS)](https://nodejs.org/en/), to build the frontend, the marketing site, and the documentation
+- OAuth authentication with:
   - Google
   - Twitter
   - GitHub
@@ -52,21 +50,28 @@ It features the following technologies:
   - Microsoft
   - Okta
 - [Giphy](https://giphy.com/) because adding a bit of fun to your retro can't hurt!
-- [React Beautiful DND](https://github.com/atlassian/react-beautiful-dnd) to allow re-ordering and grouping by drag-and-drop
+- [Pragmatic Drag and Drop](https://github.com/atlassian/pragmatic-drag-and-drop) to reorder posts and group them, including on touch screens
 - [Vitest](https://vitest.dev), for Unit Testing
-- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro), for Integration Tests
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro), for component tests
 - [npm](https://www.npmjs.com/)
 - [Docker](https://docker.com), for easy deployment
 - [GitHub Actions](https://github.com/features/actions), for Continuous Integration and Deployment (CI/CD)
 - [Multi-Architecture](https://github.com/docker/buildx/), for automatic compatibility with ARM-based servers
 - [Stripe](https://stripe.com/), for our payment solution
 - [Docusaurus](http://docusaurus.io/), for our documentation
-- [NextJS](https://nextjs.org/), for our landing page
-- [Claude](https://www.anthropic.com/claude), powering our AI agile coach
+- [Next.js](https://nextjs.org/), for our landing page
+- [Claude](https://www.anthropic.com/claude), powering the AI agile coach and the retrospective summary
 - [Biome](https://biomejs.dev), for linting and formatting, all in one beautiful package
 
 Previous versions featured the following libraries:
 
+- ~~[Recoil](https://recoiljs.org)~~
+- ~~[MUI 5](https://mui.com) (Material UI) and [Emotion](https://emotion.sh)~~
+- ~~[React Beautiful DnD](https://github.com/atlassian/react-beautiful-dnd)~~
+- ~~Express, TypeORM, and Passport (the backend used to be Node.js)~~
+- ~~[Yarn](https://yarnpkg.com)~~
+- ~~[SendGrid](https://sendgrid.com/)~~
+- ~~[OpenAI](https://openai.com/) / ChatGPT~~
 - ~~[Webpack 5](https://github.com/webpack/webpack) (See older versions for Webpack 1, 2 and 3)~~
 - ~~[Create React App 5](https://create-react-app.dev/docs/getting-started/)~~
 - ~~[Jest](https://facebook.github.io/jest) for Unit Testing~~
@@ -84,7 +89,7 @@ You can browse the documentation [here](https://docs.retrospected.com).
 
 You have two ways of running Retrospected:
 
-- Using the public version, at [www.retrospected.com](https://app.retrospected.com)
+- Using the public version, at [app.retrospected.com](https://app.retrospected.com)
 - Host Retrospected [on your premises](https://docs.retrospected.com/docs/self-hosting/quick-start)
 
 ## Want to host Retrospected on your premises? 🖥
@@ -94,6 +99,22 @@ You can start an instance of Retrospected in 5 minutes by following the [quick-s
 This will run a demo version, which you can turn into a fully licenced version by purchasing a [Self Hosted licence](https://app.retrospected.com/subscribe?product=self-hosted).
 
 ## Versions History
+
+### Version 6.0.0
+
+Version 6 is a new backend and a new interface. Accounts, retrospectives, votes, and self-hosted databases carry over. The HTTP API, the Socket.IO event names, and the Redis session cookies are the same, and the server still applies the existing TypeORM migration history, so a database written by the Node server comes up without a new schema.
+
+- **The backend is Rust.** The Node.js service (Express, TypeORM, Passport) is now one Rust binary, built with Axum, Tokio, sqlx, and socketioxide. Migrations finish before the port opens. `npm run backend` starts it. Logs are printed on the console without setting `RUST_LOG`, including the startup banner, HTTP responses, and Socket.IO traffic, and each line is flushed so `docker compose up` actually shows them. Errors go to Sentry when `SENTRY_URL` is a DSN. OAuth and session handling were tightened, and the HTTP contract tests cover more of the API.
+- **Several backends can share a board.** When `REDIS_FOR_SOCKETIO_ENABLED` is on, Socket.IO rooms go through Redis. A post written on one process reaches people connected to another. Session cookies stay in Redis when `REDIS_ENABLED` is on, in the same `sess:` shape the Node server used, so a login survives a switch from the old binary to the new one.
+- **Self-hosting keeps the same contract.** Docker Compose, Postgres 16, licences (including the hardcoded-licence tool), Stripe, the admin panel, and OAuth for Google, GitHub, Twitter, Slack, Microsoft, and Okta are still there. Verification and password-reset email goes through [Mailjet](https://www.mailjet.com/) instead of SendGrid. SMTP is unchanged, and it is the fallback when Mailjet is not configured. Set `MAILJET_API_KEY`, `MAILJET_SECRET_KEY`, and `MAILJET_SENDER`. The sender address has to be validated in the Mailjet account, otherwise Mailjet accepts the API call and then refuses the message. A `+` in an email address still matches the account when the link comes back with a space in its place. The coach key is `ANTHROPIC_API_KEY` rather than an OpenAI key. `AI_FREE_LIMIT` and `AI_PAID_LIMIT` set the monthly allowance (5 and 1000 by default). If those are unset, the server still reads `OPEN_AI_FREE_LIMIT` and `OPEN_AI_PAID_LIMIT`.
+- **The board has a new look.** Material UI, Emotion, and the old snackbars are gone from the product app. Home, the session editor, the board, chat, the summary, account, administration, and subscribe are drawn with Tailwind CSS 4 and Radix. The typeface is Plus Jakarta Sans. White-label colours, the header, and the logo still follow the instance palette, so a branded self-hosted install does not go back to the default purple.
+- **Drag and drop was replaced, including on phones.** [Pragmatic Drag and Drop](https://github.com/atlassian/pragmatic-drag-and-drop) replaces react-beautiful-dnd. Posts still reorder, move between columns, drop into a group, and combine. A finger on the drag handle runs a pointer drag into that same drop logic, because a touch swipe never started a native HTML drag.
+- **Emoji reactions.** A session can allow reactions (on by default, including for existing templates). Logged-in participants add or remove an emoji on a post, and everyone else sees it live. Reactions are counted in the summary. They are refused when the session disallows them or the board is locked.
+- **The coach is Claude, and it can write the retrospective up.** ChatGPT is no longer called. The agile coach uses the Anthropic Messages API. The default model is `claude-haiku-5-5`; set `ANTHROPIC_MODEL` to use another one your account can call.
+- **Summarise with AI**, on the summary page of an unencrypted board. A logged-in, non-anonymous participant can ask for a Markdown write-up. The browser sends only the board id. The server loads the board, refuses encrypted boards and boards whose cards are still blurred, and stores the text on the session so it is still there after a refresh. It is included when the summary is copied. If the board changes afterwards, the saved text stays and is marked stale, and it can be generated again. Editing the Markdown is saved on the board and does not count as another AI call.
+- **Encrypted cards open on HTTP and on HTTPS.** New text is sealed with AES-GCM in one layout, using a synchronous implementation, because `crypto.subtle` is missing on a plain HTTP page and a card sealed on one origin has to open on the other. Cards sealed with the old CryptoJS format still decrypt. Encrypted sessions are unchanged from the outside: the key still lives in the URL fragment and is not sent to the server.
+- **Frontend platform.** React 19, React Router 7, TypeScript 5.9, Vite 6, and Vitest 3. Recoil is gone. The live board is a pure session reducer behind Zustand, so the socket rules can be tested without a connection. Home, account, and subscribe load through TanStack Query. The board and socket types are generated from the Rust models, instead of being copied by hand.
+- **Tooling around the app.** Yarn is gone; the repository uses npm. The marketing site is on Next.js 15 (still React 18, because its UI kit is not ready for 19). The documentation site is on Docusaurus 3.10. Cypress is on 15. Node 26 builds the frontend, the marketing site, and the docs. The API itself is no longer Node. GitHub Actions builds the server binary before the integration tests, and caches the multi-arch image builds.
 
 ### Version 5.5.2
 
@@ -833,9 +854,9 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 #### What if I want to name my session so I can remember easily how to come back to it?
 
-You can actually change the session ID in the URL with anything you like: for example [www.retrospected.com/game/hello_world](http://www.retrospected.com/game/hello_world)
+Rename it. The title at the top of the board is editable (a session can restrict that to the moderator). Logged-in accounts see their past retrospectives on the home page, and can search them.
 
-Try not to take a too common name though, to avoid anyone else finding your session by chance.
+The address of a session is generated, for example `https://app.retrospected.com/game/P2NWCVKNJ`. Copy that URL to invite someone. Opening an address that does not exist will not create a session.
 
 ## Thanks 👏
 
