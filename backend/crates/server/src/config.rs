@@ -36,6 +36,8 @@ pub struct Config {
     pub backend_port: u16,
     pub session_secret: String,
     pub sql_log: bool,
+    /// Sentry DSN. Empty or `NO_SENTRY` leaves error reporting off.
+    pub sentry_url: String,
     pub base_url: String,
     pub secure_cookies: bool,
     pub trusted_proxies: Vec<String>,
@@ -112,6 +114,7 @@ impl Config {
             backend_port: env_u16("BACKEND_PORT", 3201),
             session_secret: env_str("SESSION_SECRET", "changeme"),
             sql_log: env_bool("SQL_LOG", false),
+            sentry_url: env_str("SENTRY_URL", ""),
             base_url: env_str("BASE_URL", "http://localhost:80"),
             secure_cookies: env_bool("SECURE_COOKIES", false),
             trusted_proxies: env_list("TRUSTED_PROXIES"),

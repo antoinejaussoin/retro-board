@@ -19,6 +19,7 @@ mod licence;
 mod log;
 mod models;
 mod oauth;
+mod sentry;
 mod session;
 mod state;
 mod stripe;
@@ -40,6 +41,7 @@ use tokio::sync::Mutex;
 
 pub use config::{load_dotenv, Config};
 pub use models::export_typescript;
+pub use sentry::{enabled as sentry_enabled, install as install_sentry};
 
 use crate::state::{limiters, AppState};
 

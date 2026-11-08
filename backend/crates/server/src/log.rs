@@ -106,6 +106,29 @@ fn warn_secrets(value: &Value) {
     }
 }
 
+/// Printed before the banner, matching the old process entrypoint.
+pub fn sentry(enabled: bool) {
+    let version = env!("CARGO_PKG_VERSION");
+    if enabled {
+        say(format!("{} {}", blue("Sentry is enabled"), yellow(version)));
+    } else {
+        say(format!(
+            "{} {}",
+            yellow("Sentry is disabled"),
+            yellow(version)
+        ));
+    }
+}
+
+/// `SENTRY_URL` was set to something that is not a DSN.
+pub fn sentry_ignored() {
+    say(format!(
+        "{} {}",
+        red("Sentry is disabled"),
+        red("because SENTRY_URL is not a DSN")
+    ));
+}
+
 /// Startup banner: database, licence, Redis, mail, and OAuth.
 pub fn banner(config: &Config, owner: Option<&str>, migrations_applied: usize) {
     say(format!("💻  {}", yellow("Using Postgres database")));
