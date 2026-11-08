@@ -1,11 +1,14 @@
+import data from '@emoji-mart/data';
 import type { ReactionExtract } from 'common';
+import EmojiMartPicker from 'components/Icon/EmojiMartPicker';
+import { initEmojiMart } from 'components/Icon/emoji-mart';
 import { SmilePlus } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { cn } from 'ui/cn';
 import { Popover, PopoverContent, PopoverTrigger } from 'ui/popover';
 import { Tooltip } from 'ui/tooltip';
-import { REACTION_EMOJIS } from '../../utils';
+import { QUICK_REACTION_EMOJIS } from '../../utils';
+import { reactionChipClassName } from './chipStyles';
 
 interface ReactionGroup {
   emoji: string;
@@ -21,6 +24,11 @@ interface ReactionBarProps {
   showNames: boolean;
   onToggle: (emoji: string) => void;
 }
+
+type EmojiSelectPayload = {
+  id: string;
+  native?: string;
+};
 
 function groupReactions(
   reactions: ReactionExtract[],
@@ -44,9 +52,14 @@ function groupReactions(
       });
     }
   }
-  return REACTION_EMOJIS.map((emoji) => byEmoji.get(emoji)).filter(
+  const quick = QUICK_REACTION_EMOJIS.map((emoji) => byEmoji.get(emoji)).filter(
     (group): group is ReactionGroup => !!group,
   );
+  const others = [...byEmoji.values()].filter(
+    (group) =>
+      !(QUICK_REACTION_EMOJIS as readonly string[]).includes(group.emoji),
+  );
+  return [...quick, ...others];
 }
 
 const ReactionBar = ({
@@ -63,12 +76,21 @@ const ReactionBar = ({
     [reactions, currentUserId],
   );
 
+  useEffect(() => {
+    void initEmojiMart();
+  }, []);
+
   if (!canReact && groups.length === 0) {
     return null;
   }
 
+  const pickEmoji = (emoji: string) => {
+    onToggle(emoji);
+    setOpen(false);
+  };
+
   return (
-    <div className="flex max-w-full flex-wrap items-center justify-center gap-1">
+    <>
       {groups.map((group) => {
         const chip = (
           <button
@@ -80,13 +102,10 @@ const ReactionBar = ({
               count: group.count,
             })}
             aria-pressed={group.reactedByMe}
-            className={cn(
-              'inline-flex h-7 items-center gap-0.5 rounded-full border px-1.5 text-xs transition-colors',
-              group.reactedByMe
-                ? 'border-primary-500 bg-primary-50 text-primary-800'
-                : 'border-line bg-paper text-ink hover:bg-ink/5',
-              !canReact && 'cursor-default opacity-80',
-            )}
+            className={reactionChipClassName({
+              active: group.reactedByMe,
+              interactive: canReact,
+            })}
           >
             <span aria-hidden>{group.emoji}</span>
             <span>{group.count}</span>
@@ -117,33 +136,40 @@ const ReactionBar = ({
               <button
                 type="button"
                 aria-label={t('Post.addReaction')}
-                className="inline-flex size-7 items-center justify-center rounded-full border border-dashed border-line text-muted hover:bg-ink/5 hover:text-ink"
+                className="inline-flex size-7 shrink-0 items-center justify-center rounded-full border border-dashed border-line text-muted hover:bg-ink/5 hover:text-ink"
               >
                 <SmilePlus className="size-4" />
               </button>
             </PopoverTrigger>
           </Tooltip>
-          <PopoverContent align="start" className="w-auto p-2">
-            <div className="flex gap-1">
-              {REACTION_EMOJIS.map((emoji) => (
+          <PopoverContent align="start" className="z-[70] w-auto p-2">
+            <div className="mb-2 flex gap-1 border-b border-line pb-2">
+              {QUICK_REACTION_EMOJIS.map((emoji) => (
                 <button
                   key={emoji}
                   type="button"
                   aria-label={t('Post.reactWith', { emoji })}
                   className="inline-flex size-9 items-center justify-center rounded-md text-xl hover:bg-ink/8"
-                  onClick={() => {
-                    onToggle(emoji);
-                    setOpen(false);
-                  }}
+                  onClick={() => pickEmoji(emoji)}
                 >
                   {emoji}
                 </button>
               ))}
             </div>
+            <EmojiMartPicker
+              data={data}
+              theme="light"
+              onEmojiSelect={(emoji: EmojiSelectPayload) => {
+                const native = emoji.native?.trim();
+                if (native) {
+                  pickEmoji(native);
+                }
+              }}
+            />
           </PopoverContent>
         </Popover>
       ) : null}
-    </div>
+    </>
   );
 };
 

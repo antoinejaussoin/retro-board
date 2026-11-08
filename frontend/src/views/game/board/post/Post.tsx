@@ -8,8 +8,6 @@ import {
   Image,
   Smile,
   SquareCheck,
-  ThumbsDown,
-  ThumbsUp,
   Trash2,
   X,
 } from 'lucide-react';
@@ -100,6 +98,16 @@ const PostItem = ({
   const downVotes = useMemo(() => countVotes(post, 'dislike'), [post]);
   const upVoters = useMemo(() => enumerateVotes(post, 'like'), [post]);
   const downVoters = useMemo(() => enumerateVotes(post, 'dislike'), [post]);
+  const upVotedByMe = useMemo(
+    () => !!user && post.votes.some((v) => v.type === 'like' && v.userId === user.id),
+    [post.votes, user],
+  );
+  const downVotedByMe = useMemo(
+    () =>
+      !!user &&
+      post.votes.some((v) => v.type === 'dislike' && v.userId === user.id),
+    [post.votes, user],
+  );
   const displayAction = actionsToggled || !!post.action;
   const readOnly = !canEdit || isBlurred || !canDecrypt;
   const handleShowGiphy = useCallback(() => {
@@ -268,14 +276,40 @@ const PostItem = ({
         </div>
       )}
       <ActionsBar
-        center={
-          <ReactionBar
-            reactions={post.reactions}
-            currentUserId={user?.id ?? null}
-            canReact={canReact}
-            showNames={canShowAuthor}
-            onToggle={onReact}
-          />
+        left={
+          <>
+            {canDisplayUpVote ? (
+              <VoteButton
+                voters={upVoters}
+                canVote={canUpVote}
+                votedByMe={upVotedByMe}
+                count={upVotes}
+                emoji="👍"
+                onClick={onLike}
+                showTooltip={canShowAuthor}
+                ariaLabel="Like"
+              />
+            ) : null}
+            {canDisplayDownVote ? (
+              <VoteButton
+                voters={downVoters}
+                canVote={canDownVote}
+                votedByMe={downVotedByMe}
+                count={downVotes}
+                emoji="👎"
+                onClick={onDislike}
+                showTooltip={canShowAuthor}
+                ariaLabel="Dislike"
+              />
+            ) : null}
+            <ReactionBar
+              reactions={post.reactions}
+              currentUserId={user?.id ?? null}
+              canReact={canReact}
+              showNames={canShowAuthor}
+              onToggle={onReact}
+            />
+          </>
         }
         rightActions={
           <>
@@ -360,37 +394,7 @@ const PostItem = ({
             )}
           </>
         }
-      >
-        {canDisplayUpVote ? (
-          <VoteButton
-            voters={upVoters}
-            canVote={canUpVote}
-            count={upVotes}
-            icon={
-              <ThumbsUp className="size-5" style={{ color: Palette.positive }} />
-            }
-            onClick={onLike}
-            showTooltip={canShowAuthor}
-            ariaLabel="Like"
-          />
-        ) : null}
-        {canDisplayDownVote ? (
-          <VoteButton
-            voters={downVoters}
-            canVote={canDownVote}
-            count={downVotes}
-            icon={
-              <ThumbsDown
-                className="size-5"
-                style={{ color: Palette.negative }}
-              />
-            }
-            onClick={onDislike}
-            showTooltip={canShowAuthor}
-            ariaLabel="Dislike"
-          />
-        ) : null}
-      </ActionsBar>
+      />
     </div>
   );
 };

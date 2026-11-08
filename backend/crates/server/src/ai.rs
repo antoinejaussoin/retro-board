@@ -226,22 +226,28 @@ fn vote_count(post: &crate::models::Post, kind: &str) -> usize {
 }
 
 fn reaction_suffix(post: &crate::models::Post) -> String {
-    let palette = ["👍", "❤️", "😄", "🎉", "🚀", "👀"];
-    let mut parts = Vec::new();
-    for emoji in palette {
-        let count = post
-            .reactions
-            .iter()
-            .filter(|reaction| reaction.emoji == emoji)
-            .count();
-        if count > 0 {
-            parts.push(format!("{emoji}{count}"));
+    let mut totals: Vec<(String, usize)> = Vec::new();
+    for reaction in &post.reactions {
+        if let Some((_, count)) = totals
+            .iter_mut()
+            .find(|(emoji, _)| emoji == &reaction.emoji)
+        {
+            *count += 1;
+        } else {
+            totals.push((reaction.emoji.clone(), 1));
         }
     }
-    if parts.is_empty() {
+    if totals.is_empty() {
         String::new()
     } else {
-        format!(" {}", parts.join(" "))
+        format!(
+            " {}",
+            totals
+                .into_iter()
+                .map(|(emoji, count)| format!("{emoji}{count}"))
+                .collect::<Vec<_>>()
+                .join(" ")
+        )
     }
 }
 

@@ -1,12 +1,14 @@
+import { reactionChipClassName } from './chipStyles';
 import { VoteEnumeration } from '../../utils';
-import ActionButton from './ActionButton';
+import { Tooltip } from 'ui/tooltip';
 
 interface VoteButtonProps {
   voters: VoteEnumeration[];
   showTooltip: boolean;
   canVote: boolean;
+  votedByMe: boolean;
   count: number;
-  icon: JSX.Element;
+  emoji: string;
   ariaLabel: string;
   onClick: () => void;
 }
@@ -15,20 +17,34 @@ const VoteButton = ({
   voters,
   showTooltip,
   canVote,
+  votedByMe,
   count,
-  icon,
+  emoji,
   onClick,
   ariaLabel,
 }: VoteButtonProps) => {
-  const show = showTooltip && voters.length;
-  return (
-    <ActionButton
+  const chip = (
+    <button
+      type="button"
       onClick={onClick}
-      ariaLabel={ariaLabel}
-      icon={icon}
       disabled={!canVote}
-      tooltip={
-        show ? (
+      aria-label={ariaLabel}
+      aria-pressed={votedByMe}
+      tabIndex={-1}
+      className={reactionChipClassName({
+        active: votedByMe,
+        interactive: canVote,
+      })}
+    >
+      <span aria-hidden>{emoji}</span>
+      <span>{count}</span>
+    </button>
+  );
+
+  if (showTooltip && voters.length) {
+    return (
+      <Tooltip
+        content={
           <div>
             {voters.map((voter, i) => (
               <p key={i}>
@@ -37,14 +53,15 @@ const VoteButton = ({
               </p>
             ))}
           </div>
-        ) : (
-          ''
-        )
-      }
-    >
-      {count}
-    </ActionButton>
-  );
+        }
+        side="bottom"
+      >
+        {chip}
+      </Tooltip>
+    );
+  }
+
+  return chip;
 };
 
 export default VoteButton;

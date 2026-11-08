@@ -6,13 +6,17 @@ use super::board::session_exists;
 use super::DbResult;
 use crate::models::{Message, Post, PostGroup, ReactionExtract, User, VoteExtract};
 
-/// Allowed reaction emoji characters.
-pub const REACTION_EMOJIS: &[&str] = &["👍", "❤️", "😄", "🎉", "🚀", "👀"];
+/// Soft upper bound for a single emoji / ZWJ sequence stored as UTF-8.
+const MAX_REACTION_BYTES: usize = 32;
 
-/// Whether `emoji` is one of the allowed reaction glyphs.
+/// Whether `emoji` is a plausible single reaction glyph (any emoji, not a fixed palette).
 #[must_use]
 pub fn is_allowed_reaction(emoji: &str) -> bool {
-    REACTION_EMOJIS.contains(&emoji)
+    let trimmed = emoji.trim();
+    if trimmed.is_empty() || trimmed.len() > MAX_REACTION_BYTES {
+        return false;
+    }
+    !trimmed.chars().any(char::is_whitespace)
 }
 
 /// Result of toggling a reaction on a post.
@@ -394,16 +398,17 @@ pub async fn toggle_reaction(
 
 #[cfg(test)]
 mod reaction_tests {
-    use super::{is_allowed_reaction, REACTION_EMOJIS};
+    use super::is_allowed_reaction;
 
     #[test]
-    fn allowlist_accepts_palette_and_rejects_others() {
-        for emoji in REACTION_EMOJIS {
+    fn accepts_common_emoji_and_rejects_empty_or_whitespace() {
+        for emoji in ["👍", "❤️", "😄", "🎉", "🚀", "👀", "🔥", "👩‍💻"] {
             assert!(is_allowed_reaction(emoji), "{emoji}");
         }
-        assert!(!is_allowed_reaction("🔥"));
         assert!(!is_allowed_reaction(""));
-        assert!(!is_allowed_reaction("👍👍"));
+        assert!(!is_allowed_reaction("   "));
+        assert!(!is_allowed_reaction("thumbs up"));
+        assert!(!is_allowed_reaction(&"😀".repeat(20)));
     }
 }
 

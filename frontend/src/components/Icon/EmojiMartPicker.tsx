@@ -3,6 +3,7 @@ import { Picker } from 'emoji-mart';
 
 type EmojiSelectPayload = {
   id: string;
+  native?: string;
 };
 
 type EmojiMartPickerProps = {

@@ -3,9 +3,15 @@ import groupBy from 'lodash/groupBy';
 import sum from 'lodash/sum';
 import toPairs from 'lodash/toPairs';
 
-export const REACTION_EMOJIS = ['👍', '❤️', '😄', '🎉', '🚀', '👀'] as const;
-
-export type ReactionEmoji = (typeof REACTION_EMOJIS)[number];
+/** Quick-access palette shown above the full emoji picker. */
+export const QUICK_REACTION_EMOJIS = [
+  '👍',
+  '❤️',
+  '😄',
+  '🎉',
+  '🚀',
+  '👀',
+] as const;
 
 export function countVotes(post: Post, type: VoteType): number {
   return post.votes.filter((v) => v.type === type).length;
@@ -16,25 +22,38 @@ export interface ReactionCount {
   count: number;
 }
 
-export function countReactions(post: Post): ReactionCount[] {
-  return REACTION_EMOJIS.map((emoji) => ({
+function orderedReactionCounts(
+  totals: Map<string, number>,
+): ReactionCount[] {
+  const quick = QUICK_REACTION_EMOJIS.map((emoji) => ({
     emoji,
-    count: post.reactions.filter((reaction) => reaction.emoji === emoji)
-      .length,
+    count: totals.get(emoji) ?? 0,
   })).filter((entry) => entry.count > 0);
+  const others = [...totals.entries()]
+    .filter(
+      ([emoji]) =>
+        !(QUICK_REACTION_EMOJIS as readonly string[]).includes(emoji),
+    )
+    .map(([emoji, count]) => ({ emoji, count }));
+  return [...quick, ...others];
+}
+
+export function countReactions(post: Post): ReactionCount[] {
+  const totals = new Map<string, number>();
+  for (const reaction of post.reactions) {
+    totals.set(reaction.emoji, (totals.get(reaction.emoji) ?? 0) + 1);
+  }
+  return orderedReactionCounts(totals);
 }
 
 export function countReactionsForGroup(group: PostGroup): ReactionCount[] {
   const totals = new Map<string, number>();
   for (const post of group.posts) {
-    for (const entry of countReactions(post)) {
-      totals.set(entry.emoji, (totals.get(entry.emoji) ?? 0) + entry.count);
+    for (const reaction of post.reactions) {
+      totals.set(reaction.emoji, (totals.get(reaction.emoji) ?? 0) + 1);
     }
   }
-  return REACTION_EMOJIS.map((emoji) => ({
-    emoji,
-    count: totals.get(emoji) ?? 0,
-  })).filter((entry) => entry.count > 0);
+  return orderedReactionCounts(totals);
 }
 
 export function countVotesForGroup(group: PostGroup, type: VoteType): number {
