@@ -1,4 +1,4 @@
-import { Icon } from 'react-icons-kit';
+import { Icon } from '@/common/components/KitIcon';
 import { ic_place } from 'react-icons-kit/md/ic_place';
 import { ic_phone } from 'react-icons-kit/md/ic_phone';
 import { paperPlane } from 'react-icons-kit/fa/paperPlane';

@@ -118,7 +118,7 @@ export const GlobalStyle = createGlobalStyle`
         right: 15px;
       }
       &:before{
-        content: '\f10b';
+        content: '\\f10b';
         font-family: Flaticon;
         font-size: 26px;
         color: #ff4361;

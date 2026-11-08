@@ -1,7 +1,7 @@
 import React from 'react';
 import NextLink from 'next/link';
-import { Icon } from 'react-icons-kit';
-import Fade from 'react-reveal/Fade';
+import { Icon } from '@/common/components/KitIcon';
+import Fade from '@/common/components/Reveal/Fade';
 import { arrowRight } from 'react-icons-kit/feather/arrowRight';
 import Container from '@/common/components/UI/Container';
 import Heading from '@/common/components/Heading';

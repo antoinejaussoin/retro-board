@@ -58,7 +58,7 @@ export const ImageContainer = styled.div`
 
 export const Article = styled.article`
   transition: all 0.2s ease 0s;
-  :hover {
+  &:hover {
     transform: translateY(-7px);
   }
 

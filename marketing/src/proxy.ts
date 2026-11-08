@@ -15,7 +15,7 @@ export type TrackingInfo = {
   gclid: string;
 };
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const response = NextResponse.next();
 
   const url = parse(request.url, true);
