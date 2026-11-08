@@ -4,6 +4,7 @@ import EmojiMartPicker from 'components/Icon/EmojiMartPicker';
 import Icon from 'components/Icon/Icon';
 import { initEmojiMart } from 'components/Icon/emoji-mart';
 import useModal from 'hooks/useModal';
+import { useTranslation } from 'react-i18next';
 import { Button } from 'ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from 'ui/popover';
 
@@ -17,6 +18,7 @@ type EmojiSelectPayload = {
 };
 
 const IconPicker = ({ value, onChange }: IconPickerProps) => {
+  const { i18n } = useTranslation();
   const [opened, open, close] = useModal();
 
   useEffect(() => {
@@ -54,6 +56,7 @@ const IconPicker = ({ value, onChange }: IconPickerProps) => {
           data={data}
           onEmojiSelect={handleChange}
           theme="light"
+          language={i18n.language}
         />
       </PopoverContent>
     </Popover>

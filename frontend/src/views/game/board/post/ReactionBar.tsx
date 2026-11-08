@@ -61,7 +61,7 @@ const ReactionBar = ({
   showNames,
   onToggle,
 }: ReactionBarProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [open, setOpen] = useState(false);
   const groups = useMemo(
     () => groupReactions(reactions, currentUserId),
@@ -137,6 +137,7 @@ const ReactionBar = ({
             <EmojiMartPicker
               data={data}
               theme="light"
+              language={i18n.language}
               onEmojiSelect={(emoji: EmojiSelectPayload) => {
                 const native = emoji.native?.trim();
                 if (native) {
