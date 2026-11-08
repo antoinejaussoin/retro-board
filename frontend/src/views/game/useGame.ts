@@ -40,7 +40,6 @@ import { v4 } from 'uuid';
 import useMutableRead from '../../hooks/useMutableRead';
 import { useUserMetadata } from '../../state/user/useUser';
 import { setScope, trackAction, trackEvent } from '../../track';
-import { getMiddle, getNext } from './lexorank';
 import {
   getAddedParticipants,
   getRemovedParticipants,
@@ -601,53 +600,6 @@ function useGame(sessionId: string) {
     [updatePost, send],
   );
 
-  const onCombinePost = useCallback(
-    (post1: Post, post2: Post) => {
-      if (send && user) {
-        const destinationColumn = post2.column;
-        const group: PostGroup = {
-          id: v4(),
-          label: 'My Group',
-          column: post2.column,
-          user: user,
-          posts: [],
-          rank: getMiddle(),
-        };
-
-        receivePostGroup(group);
-        send<PostGroup>(Actions.ADD_POST_GROUP_SUCCESS, group);
-        trackAction(Actions.ADD_POST_GROUP_SUCCESS);
-
-        const updatedPost1: Post = {
-          ...post1,
-          column: destinationColumn,
-          group: group,
-          rank: getMiddle(),
-        };
-        updatePost(updatedPost1);
-        send<WsPostUpdatePayload>(
-          Actions.EDIT_POST,
-          toPostUpdate(updatedPost1),
-        );
-
-        const updatedPost2: Post = {
-          ...post2,
-          column: destinationColumn,
-          group: group,
-          rank: getNext(getMiddle()),
-        };
-        updatePost(updatedPost2);
-        send<WsPostUpdatePayload>(
-          Actions.EDIT_POST,
-          toPostUpdate(updatedPost2),
-        );
-
-        trackAction(Actions.MOVE_POST);
-      }
-    },
-    [updatePost, user, receivePostGroup, send],
-  );
-
   const onDeletePost = useCallback(
     (post: Post) => {
       if (send) {
@@ -819,7 +771,6 @@ function useGame(sessionId: string) {
     onEditPost,
     onEditPostGroup,
     onMovePost,
-    onCombinePost,
     onDeletePost,
     onDeletePostGroup,
     onLike,

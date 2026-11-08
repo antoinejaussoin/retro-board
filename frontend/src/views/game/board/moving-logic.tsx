@@ -2,6 +2,7 @@ import { ColumnContent } from '../types';
 import { Post, PostGroup } from 'common';
 import flattenDeep from 'lodash/flattenDeep';
 import { getMiddle, getPrevious, getNext, getBetween } from '../lexorank';
+import type { DropIntent } from './drag';
 
 interface MovingEntities {
   post: Post;
@@ -10,11 +11,6 @@ interface MovingEntities {
   targetGroup: PostGroup | null;
   targetColumn: number;
   targetIndex: number;
-}
-
-interface CombiningEntities {
-  post1: Post;
-  post2: Post;
 }
 
 export function calculateRank(previous?: Post, next?: Post): string {
@@ -31,21 +27,6 @@ export function calculateRank(previous?: Post, next?: Post): string {
     return getBetween(previous.rank, next.rank);
   }
   throw Error('This should not be possible');
-}
-
-export function getCombiningEntities(
-  postId1: string,
-  postId2: string,
-  columns: ColumnContent[]
-): CombiningEntities | null {
-  const post1 = findPost(columns, postId1);
-  const post2 = findPost(columns, postId2);
-
-  if (post1 && post2) {
-    return { post1, post2 };
-  }
-
-  return null;
 }
 
 export function getMovingEntities(
@@ -115,4 +96,32 @@ function findGroup(
 
 function findColumIndexForGroup(columns: ColumnContent[], groupId: string) {
   return columns.findIndex((col) => col.groups.find((g) => g.id === groupId));
+}
+
+export function settlePostDrop(
+  intent: DropIntent,
+  columns: ColumnContent[],
+  actions: {
+    onMovePost: (
+      post: Post,
+      destinationGroup: PostGroup | null,
+      destinationColumn: number,
+      newRank: string,
+    ) => void;
+  },
+): void {
+  const entities = getMovingEntities(
+    intent.sourceId,
+    intent.targetId,
+    intent.index,
+    columns,
+  );
+  if (entities) {
+    actions.onMovePost(
+      entities.post,
+      entities.targetGroup,
+      entities.targetColumn,
+      calculateRank(entities.previous, entities.next),
+    );
+  }
 }

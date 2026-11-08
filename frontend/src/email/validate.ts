@@ -1,5 +1,5 @@
-import { validate as validateBase } from 'isemail';
+import isEmail from 'validator/es/lib/isEmail';
 
 export function validate(email: string): boolean {
-  return validateBase(email);
+  return isEmail(email);
 }

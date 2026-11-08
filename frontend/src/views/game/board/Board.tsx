@@ -3,7 +3,7 @@ import { Post, PostGroup, SessionOptions, SessionSettings } from 'common';
 import ClosableAlert from 'components/ClosableAlert';
 import Icon from 'components/Icon/Icon';
 import { t } from 'i18next';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { cn } from 'ui/cn';
 import { useMediaQuery } from '../../../hooks/useMediaQuery';
 import { getMiddle, getNext, getPrevious } from '../lexorank';
@@ -11,19 +11,17 @@ import useSession from '../useSession';
 import { ColumnContent } from '../types';
 import Column from './Column';
 import {
-  edgeOf,
-  indexBeside,
-  insertionIndex,
-  isListDropData,
+  clearDragPreview,
+  elementsAt,
+  intentFromNativeDrop,
   isPostDragData,
-  isPostDropData,
+  markDropped,
+  resolveTouchDrop,
+  setDragPreview,
+  type DropIntent,
 } from './drag';
 import BoardHeader from './header/BoardHeader';
-import {
-  calculateRank,
-  getCombiningEntities,
-  getMovingEntities,
-} from './moving-logic';
+import { settlePostDrop } from './moving-logic';
 
 interface GameModeProps {
   columns: ColumnContent[];
@@ -38,7 +36,6 @@ interface GameModeProps {
     destinationColumn: number,
     newRank: string,
   ) => void;
-  onCombinePost: (post1: Post, post2: Post) => void;
   onDeletePost: (post: Post) => void;
   onLike: (post: Post, like: boolean) => void;
   onCancelVotes: (post: Post) => void;
@@ -75,7 +72,6 @@ function GameMode({
   onAddPost,
   onAddGroup,
   onMovePost,
-  onCombinePost,
   onDeletePost,
   onLike,
   onCancelVotes,
@@ -94,73 +90,63 @@ function GameMode({
   const stacked = useMediaQuery(
     `(max-width: ${columns.length * 340 + 100}px)`,
   );
+  const columnsRef = useRef(columns);
+  columnsRef.current = columns;
+  const onMovePostRef = useRef(onMovePost);
+  onMovePostRef.current = onMovePost;
+  const applyPreview = useCallback((intent: DropIntent | null) => {
+    if (!intent) {
+      clearDragPreview();
+      return;
+    }
+    setDragPreview(intent);
+  }, []);
+  const handleTouchDrop = useCallback(
+    (postId: string, clientX: number, clientY: number) => {
+      const resolved = resolveTouchDrop({
+        elements: elementsAt(clientX, clientY),
+        clientY,
+        draggingId: postId,
+      });
+      if (!resolved) {
+        clearDragPreview();
+        return;
+      }
+      settlePostDrop(resolved.intent, columnsRef.current, {
+        onMovePost: onMovePostRef.current,
+      });
+      markDropped(resolved.intent.sourceId);
+    },
+    [],
+  );
 
   useEffect(() => {
     return monitorForElements({
       canMonitor: ({ source }) => isPostDragData(source.data),
+      onDrag({ source, location }) {
+        applyPreview(
+          intentFromNativeDrop(
+            source.data,
+            location.current.dropTargets,
+            location.current.input.clientY,
+          ),
+        );
+      },
       onDrop({ source, location }) {
-        const target = location.current.dropTargets[0];
-        if (!target || !isPostDragData(source.data)) {
+        const intent = intentFromNativeDrop(
+          source.data,
+          location.current.dropTargets,
+          location.current.input.clientY,
+        );
+        if (!intent) {
+          clearDragPreview();
           return;
         }
-        const postId = source.data.postId;
-        if (isPostDropData(target.data) && target.data.postId !== postId) {
-          const edge = edgeOf(target.element, location.current.input.clientY);
-          if (edge === 'center') {
-            const entities = getCombiningEntities(
-              postId,
-              target.data.postId,
-              columns,
-            );
-            if (entities) {
-              onCombinePost(entities.post1, entities.post2);
-            }
-            return;
-          }
-          const parent = location.current.dropTargets.find((candidate) =>
-            isListDropData(candidate.data),
-          );
-          if (parent && isListDropData(parent.data)) {
-            const entities = getMovingEntities(
-              postId,
-              parent.data.targetId,
-              indexBeside(parent.element, target.element, edge, postId),
-              columns,
-            );
-            if (entities) {
-              onMovePost(
-                entities.post,
-                entities.targetGroup,
-                entities.targetColumn,
-                calculateRank(entities.previous, entities.next),
-              );
-            }
-          }
-          return;
-        }
-        if (isListDropData(target.data)) {
-          const entities = getMovingEntities(
-            postId,
-            target.data.targetId,
-            insertionIndex(
-              target.element,
-              location.current.input.clientY,
-              postId,
-            ),
-            columns,
-          );
-          if (entities) {
-            onMovePost(
-              entities.post,
-              entities.targetGroup,
-              entities.targetColumn,
-              calculateRank(entities.previous, entities.next),
-            );
-          }
-        }
+        settlePostDrop(intent, columns, { onMovePost });
+        markDropped(intent.sourceId);
       },
     });
-  }, [columns, onCombinePost, onMovePost]);
+  }, [applyPreview, columns, onMovePost]);
 
   if (!session) {
     return <span>Loading...</span>;
@@ -219,6 +205,8 @@ function GameMode({
             onEdit={onEdit}
             onEditGroup={onEditGroup}
             onDeleteGroup={onDeleteGroup}
+            onTouchPreview={applyPreview}
+            onTouchDrop={handleTouchDrop}
             fillViewport={!stacked}
           />
         ))}
