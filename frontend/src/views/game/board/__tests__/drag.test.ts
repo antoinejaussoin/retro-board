@@ -19,12 +19,9 @@ function box(element: HTMLElement, top: number, height: number) {
     }) as DOMRect;
 }
 
-function card(id: string, acceptsCombine: boolean) {
+function card(id: string) {
   const element = document.createElement('div');
   element.dataset.postId = id;
-  if (acceptsCombine) {
-    element.dataset.postDrop = 'true';
-  }
   return element;
 }
 
@@ -36,9 +33,9 @@ function columnOf(id: string, ...cards: HTMLElement[]) {
 }
 
 describe('resolveTouchDrop', () => {
-  it('combines when a touch lands on the centre of another card', () => {
-    const first = card('a', true);
-    const second = card('b', true);
+  it('reorders when a touch lands on the centre of another card', () => {
+    const first = card('a');
+    const second = card('b');
     const column = columnOf('column#0', first, second);
     box(first, 0, 100);
     box(second, 100, 100);
@@ -50,16 +47,17 @@ describe('resolveTouchDrop', () => {
     });
 
     expect(resolved?.intent).toEqual({
-      type: 'combine',
+      type: 'move',
       sourceId: 'a',
-      targetPostId: 'b',
+      targetId: 'column#0',
+      index: 1,
     });
-    expect(resolved?.highlight).toBe(second);
+    expect(resolved?.highlight).toBe(column);
   });
 
   it('inserts beside a card when the touch is on its edge', () => {
-    const first = card('a', true);
-    const second = card('b', true);
+    const first = card('a');
+    const second = card('b');
     const column = columnOf('column#0', first, second);
     box(first, 0, 100);
     box(second, 100, 100);
@@ -90,8 +88,8 @@ describe('resolveTouchDrop', () => {
     expect(above?.highlight).toBe(column);
   });
 
-  it('uses the list under the finger when the card cannot combine', () => {
-    const grouped = card('a', false);
+  it('drops into an existing group', () => {
+    const grouped = card('a');
     const group = columnOf('group#g', grouped);
     box(grouped, 0, 80);
 
@@ -110,12 +108,12 @@ describe('resolveTouchDrop', () => {
   });
 
   it('ignores the floating preview and the card being dragged', () => {
-    const source = card('a', true);
-    const target = card('b', true);
+    const source = card('a');
+    const target = card('b');
     const column = columnOf('column#0', source, target);
     const preview = document.createElement('div');
     preview.dataset.dragPreview = 'true';
-    const ghost = card('ghost', true);
+    const ghost = card('ghost');
     preview.append(ghost);
     box(source, 0, 100);
     box(target, 100, 100);
@@ -146,10 +144,11 @@ describe('resolveTouchDrop', () => {
 });
 
 describe('intentFromNativeDrop', () => {
-  it('matches the touch rules for a card dropped on another card', () => {
-    const first = card('a', true);
-    const second = card('b', true);
+  it('reorders inside the column when a card is dropped on another card', () => {
+    const first = card('a');
+    const second = card('b');
     const column = columnOf('column#1', first, second);
+    box(first, 0, 100);
     box(second, 100, 100);
     const targets = [
       { element: second, data: { type: 'post', postId: 'b' } },
@@ -159,9 +158,10 @@ describe('intentFromNativeDrop', () => {
     expect(
       intentFromNativeDrop({ type: 'post', postId: 'a' }, targets, 150),
     ).toEqual({
-      type: 'combine',
+      type: 'move',
       sourceId: 'a',
-      targetPostId: 'b',
+      targetId: 'column#1',
+      index: 1,
     });
     expect(
       intentFromNativeDrop({ type: 'post', postId: 'c' }, targets, 190),
@@ -174,7 +174,7 @@ describe('intentFromNativeDrop', () => {
   });
 
   it('inserts into the list when the drop target is the column', () => {
-    const only = card('b', true);
+    const only = card('b');
     const column = columnOf('column#0', only);
     box(only, 0, 100);
 

@@ -1,7 +1,4 @@
-import {
-  draggable,
-  dropTargetForElements,
-} from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
+import { draggable } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { Post } from 'common';
 import {
   GripVertical,
@@ -25,7 +22,6 @@ import config from '../../../../utils/getConfig';
 import { useConfirm } from 'ui/confirm';
 import { Popover, PopoverContent, PopoverTrigger } from 'ui/popover';
 import { Tooltip } from 'ui/tooltip';
-import { isPostDragData } from '../drag';
 import { bindTouchDrag } from '../touch-drag';
 import { usePostUserPermissions } from '../usePostUserPermissions';
 import { countVotes, enumerateVotes } from '../../utils';
@@ -38,7 +34,6 @@ import VoteButton from './VoteButton';
 
 interface PostItemProps {
   post: Post;
-  combine?: boolean;
   color: string;
   onLike: () => void;
   onDislike: () => void;
@@ -57,7 +52,6 @@ const hoverActions =
 const PostItem = ({
   post,
   color,
-  combine = false,
   onLike,
   onDislike,
   onCancelVotes,
@@ -187,28 +181,17 @@ const PostItem = ({
         }),
       );
     }
-    if (combine) {
-      cleanups.push(
-        dropTargetForElements({
-          element,
-          canDrop: ({ source }) =>
-            isPostDragData(source.data) && source.data.postId !== post.id,
-          getData: () => ({ type: 'post', postId: post.id }),
-        }),
-      );
-    }
     return () => {
       for (const cleanup of cleanups) {
         cleanup();
       }
     };
-  }, [canReorder, combine, post.id]);
+  }, [canReorder, post.id]);
 
   return (
     <div
       ref={cardRef}
       data-post-id={post.id}
-      data-post-drop={combine ? 'true' : undefined}
       className={`group relative mb-4 overflow-hidden rounded-2xl border border-line bg-cream shadow-card${canReorder ? ' post-with-handle' : ''}`}
       style={
         {

@@ -220,7 +220,6 @@ const Column: React.FC<ColumnProps> = ({
             key={post.id}
             post={post}
             color={color}
-            combine={permissions.canReorderPosts}
             onLike={() => onLike(post)}
             onDislike={() => onDislike(post)}
             onCancelVotes={() => onCancelVotes(post)}

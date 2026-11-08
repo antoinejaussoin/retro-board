@@ -183,8 +183,7 @@
   user-select: none;
 }
 
-[data-touch-drop='list'],
-[data-touch-drop='combine'] {
+[data-touch-drop='list'] {
   outline: 2px solid var(--color-primary-600);
   outline-offset: -2px;
 }

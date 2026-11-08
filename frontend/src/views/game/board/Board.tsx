@@ -32,7 +32,6 @@ interface GameModeProps {
     destinationColumn: number,
     newRank: string,
   ) => void;
-  onCombinePost: (post1: Post, post2: Post) => void;
   onDeletePost: (post: Post) => void;
   onLike: (post: Post, like: boolean) => void;
   onCancelVotes: (post: Post) => void;
@@ -69,7 +68,6 @@ function GameMode({
   onAddPost,
   onAddGroup,
   onMovePost,
-  onCombinePost,
   onDeletePost,
   onLike,
   onCancelVotes,
@@ -92,8 +90,6 @@ function GameMode({
   columnsRef.current = columns;
   const onMovePostRef = useRef(onMovePost);
   onMovePostRef.current = onMovePost;
-  const onCombinePostRef = useRef(onCombinePost);
-  onCombinePostRef.current = onCombinePost;
   const handleTouchDrop = useCallback(
     (postId: string, clientX: number, clientY: number) => {
       const resolved = resolveTouchDrop({
@@ -106,7 +102,6 @@ function GameMode({
       }
       settlePostDrop(resolved.intent, columnsRef.current, {
         onMovePost: onMovePostRef.current,
-        onCombinePost: onCombinePostRef.current,
       });
     },
     [],
@@ -122,11 +117,11 @@ function GameMode({
           location.current.input.clientY,
         );
         if (intent) {
-          settlePostDrop(intent, columns, { onMovePost, onCombinePost });
+          settlePostDrop(intent, columns, { onMovePost });
         }
       },
     });
-  }, [columns, onCombinePost, onMovePost]);
+  }, [columns, onMovePost]);
 
   if (!session) {
     return <span>Loading...</span>;

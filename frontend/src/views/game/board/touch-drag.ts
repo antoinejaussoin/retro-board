@@ -40,18 +40,14 @@ export function bindTouchDrag(
       draggingId: options.card.dataset.postId ?? '',
     });
     const next = resolved?.highlight ?? null;
-    const mode = resolved?.intent.type === 'combine' ? 'combine' : 'list';
-    if (
-      highlighted === next &&
-      highlighted?.getAttribute('data-touch-drop') === mode
-    ) {
+    if (highlighted === next) {
       return;
     }
     clearHighlight();
     if (!next) {
       return;
     }
-    next.setAttribute('data-touch-drop', mode);
+    next.setAttribute('data-touch-drop', 'list');
     highlighted = next;
   };
 

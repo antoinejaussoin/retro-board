@@ -13,11 +13,6 @@ interface MovingEntities {
   targetIndex: number;
 }
 
-interface CombiningEntities {
-  post1: Post;
-  post2: Post;
-}
-
 export function calculateRank(previous?: Post, next?: Post): string {
   if (!previous && !next) {
     return getMiddle();
@@ -32,21 +27,6 @@ export function calculateRank(previous?: Post, next?: Post): string {
     return getBetween(previous.rank, next.rank);
   }
   throw Error('This should not be possible');
-}
-
-export function getCombiningEntities(
-  postId1: string,
-  postId2: string,
-  columns: ColumnContent[]
-): CombiningEntities | null {
-  const post1 = findPost(columns, postId1);
-  const post2 = findPost(columns, postId2);
-
-  if (post1 && post2) {
-    return { post1, post2 };
-  }
-
-  return null;
 }
 
 export function getMovingEntities(
@@ -128,20 +108,8 @@ export function settlePostDrop(
       destinationColumn: number,
       newRank: string,
     ) => void;
-    onCombinePost: (post1: Post, post2: Post) => void;
   },
 ): void {
-  if (intent.type === 'combine') {
-    const entities = getCombiningEntities(
-      intent.sourceId,
-      intent.targetPostId,
-      columns,
-    );
-    if (entities) {
-      actions.onCombinePost(entities.post1, entities.post2);
-    }
-    return;
-  }
   const entities = getMovingEntities(
     intent.sourceId,
     intent.targetId,
