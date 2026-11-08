@@ -10,6 +10,18 @@ use crate::db::{self};
 use crate::models::{DeleteGroupPayload, GroupUpdate, IncomingGroup};
 use crate::state::AppState;
 
+async fn grouping_allowed(state: &AppState, user_id: &str, session_id: &str) -> bool {
+    let Ok(Some(board)) = db::load_board(&state.db, session_id).await else {
+        return false;
+    };
+    db::can_group(
+        user_id,
+        &board.created_by.id,
+        &board.moderator.id,
+        &board.options,
+    )
+}
+
 pub(super) fn add_group<A: Adapter>(
     state: AppState,
     ids: Option<(String, String)>,
@@ -26,6 +38,10 @@ pub(super) fn add_group<A: Adapter>(
             );
             return;
         };
+        if !grouping_allowed(&state, &user_id, &session_id).await {
+            emit_error(&socket, "action_unauthorised", None);
+            return;
+        }
         let Ok(group) = serde_json::from_value::<IncomingGroup>(payload) else {
             emit_error(&socket, "cannot_save_group", None);
             return;
@@ -65,6 +81,10 @@ pub(super) fn edit_group<A: Adapter>(
             );
             return;
         };
+        if !grouping_allowed(&state, &user_id, &session_id).await {
+            emit_error(&socket, "action_unauthorised", None);
+            return;
+        }
         let Ok(update) = serde_json::from_value::<GroupUpdate>(payload) else {
             emit_error(&socket, "cannot_edit_group", None);
             return;
@@ -104,6 +124,10 @@ pub(super) fn delete_group<A: Adapter>(
             );
             return;
         };
+        if !grouping_allowed(&state, &user_id, &session_id).await {
+            emit_error(&socket, "action_unauthorised", None);
+            return;
+        }
         let Ok(body) = serde_json::from_value::<DeleteGroupPayload>(payload) else {
             emit_error(&socket, "cannot_delete_group", None);
             return;

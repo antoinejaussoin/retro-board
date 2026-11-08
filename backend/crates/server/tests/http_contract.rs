@@ -728,3 +728,112 @@ async fn unverified_password_cannot_log_in_when_mail_is_configured() {
         200
     );
 }
+
+#[tokio::test]
+async fn socket_refuses_anonymous_edits_and_locked_board_reads() {
+    let server = boot_with(6, &[]).await;
+    let client = reqwest::Client::new();
+    let anon = client
+        .post(format!("{}/api/auth/anonymous/login", server.base))
+        .json(&serde_json::json!({"username": "ANONUSER__Ada__ANONUSER", "password": "secret"}))
+        .send()
+        .await
+        .unwrap();
+    let cookie = cookie_from(&anon);
+    let created: Value = client
+        .post(format!("{}/api/create", server.base))
+        .header("cookie", &cookie)
+        .header("content-type", "application/json")
+        .body("")
+        .send()
+        .await
+        .unwrap()
+        .json()
+        .await
+        .unwrap();
+    let session_id = created["id"].as_str().unwrap();
+    let edit = socket_roundtrip(
+        &server.base,
+        None,
+        "retrospected/posts/edit",
+        &serde_json::json!({
+            "sessionId": session_id,
+            "ack": "1",
+            "payload": {"post": {"id": "missing", "content": "x", "column": 0, "rank": "a"}, "groupId": null}
+        }),
+    )
+    .await;
+    assert!(
+        edit.contains("action_unauthorised"),
+        "an edit with no user must be refused, got {edit}"
+    );
+
+    psql(
+        &server.db,
+        &format!("UPDATE sessions SET locked = true WHERE id = '{session_id}'"),
+    );
+    let request = socket_roundtrip(
+        &server.base,
+        None,
+        "retrospected/session/request",
+        &serde_json::json!({"sessionId": session_id, "ack": "2", "payload": null}),
+    )
+    .await;
+    assert!(
+        request.contains("locked"),
+        "a stranger must not read a locked board, got {request}"
+    );
+}
+
+async fn socket_roundtrip(
+    base: &str,
+    cookie: Option<&str>,
+    event: &str,
+    payload: &Value,
+) -> String {
+    let client = reqwest::Client::builder()
+        .timeout(Duration::from_secs(5))
+        .build()
+        .unwrap();
+    let mut open = client.get(format!("{base}/socket.io/?EIO=4&transport=polling"));
+    if let Some(cookie) = cookie {
+        open = open.header("cookie", cookie);
+    }
+    let opened = open.send().await.unwrap().text().await.unwrap();
+    let sid = opened
+        .split("\"sid\":\"")
+        .nth(1)
+        .and_then(|value| value.split('"').next())
+        .unwrap_or("")
+        .to_owned();
+    assert!(!sid.is_empty(), "socket handshake returned {opened}");
+    let url = format!("{base}/socket.io/?EIO=4&transport=polling&sid={sid}");
+    client
+        .post(&url)
+        .header("content-type", "text/plain;charset=UTF-8")
+        .body("40")
+        .send()
+        .await
+        .unwrap();
+    let _ = client.get(&url).send().await.unwrap().text().await;
+    let packet = format!("42{}", serde_json::json!([event, payload]));
+    client
+        .post(&url)
+        .header("content-type", "text/plain;charset=UTF-8")
+        .body(packet)
+        .send()
+        .await
+        .unwrap();
+    let mut body = String::new();
+    for _ in 0..4 {
+        let chunk = client.get(&url).send().await.unwrap().text().await.unwrap();
+        if chunk.is_empty() {
+            continue;
+        }
+        body.push_str(&chunk);
+        if body.contains("action_unauthorised") || body.contains("\"type\":\"locked\"") {
+            break;
+        }
+    }
+    body
+}

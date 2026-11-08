@@ -248,7 +248,8 @@ fn on_message<A>(
         if session_id.is_empty() {
             return;
         }
-        if !state.ws_limit.allow(&session_id).await {
+        let ip = peer_ip(socket.req_parts());
+        if !state.ws_limit.allow(&ip).await || !state.ws_limit.allow(&session_id).await {
             crate::log::ws_limited(&session_id);
             emit_self(&socket, RECEIVE_RATE_LIMITED, &json!({}));
             return;
@@ -261,6 +262,40 @@ fn on_message<A>(
             return;
         }
         let ids = load_ids(&state, &socket).await;
+        let user = match &ids {
+            Some((_, identity_id)) => {
+                db::user_by_identity(&state.db, identity_id, state.force_pro())
+                    .await
+                    .ok()
+                    .flatten()
+            }
+            None => None,
+        };
+        let Some(access) = db::access(&state.db, &session_id).await.ok().flatten() else {
+            emit_error(&socket, "cannot_get_session", None);
+            return;
+        };
+        if let Err(reason) = db::allowed(&access, user.as_ref(), state.force_pro()) {
+            let board = if reason == "locked" {
+                db::load_board(&state.db, &session_id).await.ok().flatten()
+            } else {
+                None
+            };
+            emit_self(
+                &socket,
+                RECEIVE_UNAUTHORIZED,
+                &json!({ "type": reason, "session": board }),
+            );
+            return;
+        }
+        if requires_login(event) && ids.is_none() {
+            emit_error(
+                &socket,
+                "action_unauthorised",
+                Some("User not authenticated".into()),
+            );
+            return;
+        }
         if only_author {
             let ok = if let Some((user_id, _)) = &ids {
                 db::created_by(&state.db, &session_id, user_id)
@@ -283,6 +318,13 @@ fn on_message<A>(
         )
         .await;
     });
+}
+
+fn requires_login(event: &str) -> bool {
+    !matches!(
+        event,
+        "retrospected/session/request" | "retrospected/session/leave"
+    )
 }
 
 fn event_is_leave(value: &Value) -> bool {

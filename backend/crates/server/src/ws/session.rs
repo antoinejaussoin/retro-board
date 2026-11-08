@@ -224,10 +224,44 @@ pub(super) fn settings<A: Adapter>(
     socket: SocketRef<A>,
 ) -> std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>> {
     Box::pin(async move {
+        let Some((user_id, _)) = ids else {
+            emit_error(
+                &socket,
+                "action_unauthorised",
+                Some("User not authenticated".into()),
+            );
+            return;
+        };
         let Ok(body) = serde_json::from_value::<SettingsPayload>(payload) else {
             emit_error(&socket, "cannot_save_session_settings", None);
             return;
         };
+        let Some(board) = db::load_board(&state.db, &session_id).await.ok().flatten() else {
+            emit_error(&socket, "cannot_save_session_settings", None);
+            return;
+        };
+        if let Some(name) = &body.settings.name {
+            let same = board.name.as_ref() == Some(name);
+            if !same
+                && !db::can_edit_title(
+                    &user_id,
+                    &board.created_by.id,
+                    &board.moderator.id,
+                    &board.options,
+                )
+            {
+                emit_error(&socket, "action_unauthorised", None);
+                return;
+            }
+        }
+        if let Some(moderator) = &body.settings.moderator {
+            if moderator.id != board.moderator.id
+                && !db::is_board_owner(&user_id, &board.created_by.id, &board.moderator.id)
+            {
+                emit_error(&socket, "action_unauthorised", None);
+                return;
+            }
+        }
         if let Some(options) = &body.settings.options {
             let _ = db::update_options(&state.db, &session_id, options).await;
         }
@@ -241,12 +275,9 @@ pub(super) fn settings<A: Adapter>(
             let _ = db::set_moderator(&state.db, &session_id, &moderator.id).await;
         }
         if body.save_as_template {
-            if let Some((user_id, _)) = ids {
-                if let (Some(columns), Some(options)) =
-                    (&body.settings.columns, &body.settings.options)
-                {
-                    let _ = db::save_template(&state.db, &user_id, columns, options).await;
-                }
+            if let (Some(columns), Some(options)) = (&body.settings.columns, &body.settings.options)
+            {
+                let _ = db::save_template(&state.db, &user_id, columns, options).await;
             }
         }
         broadcast(
