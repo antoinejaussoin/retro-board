@@ -2,64 +2,71 @@
 slug: 'release-6.0.0'
 lang: 'en'
 title: 'Retrospected 6.0.0'
-subtitle: "A new backend, a new board, and a coach that can write the retrospective up"
+subtitle: "A new backend, a new board, and an AI coach that can summarise your retrospective"
 author: 'Antoine Jaussoin'
 date: '2026-11-08'
 keywords: 'blog,release,6.0.0,rust,claude,emoji,reactions,self-hosting,mailjet'
 cover: '/assets/blog/release-600/board.png'
 ---
 
-Retrospected 6.0.0 is a new version of the product, not a coat of paint on the previous one. The board has been redrawn, the agile coach now runs on Claude, and the server behind it has been rewritten in Rust. Your accounts, your retrospectives, and a self-hosted database come along. Nothing has to be migrated by hand.
+Retrospected 6.0.0 is out, and it's the biggest release so far. Almost everything has been rebuilt: the interface has been redesigned from scratch, the agile coach now uses Claude, and the backend has been rewritten in Rust.
+
+Despite all that, upgrading should be painless. Your account and your retrospectives are still there, and if you self-host, the new server will pick up your existing database without any manual migration.
 
 # A new board
 
-The session itself is the part you look at for an hour, so that is where the new version is most obvious. Home, the board, chat, the summary, account, and administration are drawn again, with Tailwind CSS and Radix in place of Material UI. The type is Plus Jakarta Sans. Columns, votes, the timer, and the private-session control are still where you expect them.
+You spend most of a retrospective looking at the board, so that's where the change is most visible. Every page (home, the board, chat, the summary, your account and the admin panel) has been redesigned, and the app has moved from Material UI to Tailwind CSS and Radix. It also has a new typeface, Plus Jakarta Sans.
+
+We've kept the layout familiar, though: columns, votes, the timer and the private session controls are all where you'd expect them to be.
 
 ![The retrospective board in Retrospected 6.0](/assets/blog/release-600/board.png,1440x900)
 
-White-label colours still apply. A self-hosted instance that sets its own palette, header, and logo keeps them. The default purple is still the default, and a branded install stays branded.
+If you run a self-hosted instance with your own colours, header and logo, none of that is lost. Your branding carries over to the new design, and everyone else gets the same purple as before.
 
 # Emoji reactions
 
-You can now react to a card with an emoji, the same way you already vote on it. Tap the smiley on a card, pick any emoji, and it shows up for everyone in the session. Tap it again to take it back. Reactions are on by default, including on sessions and templates that already exist, and a moderator can turn them off in the session options. They are ignored when the board is locked.
+Alongside votes, you can now react to a card with an emoji. Click the smiley on a card, pick an emoji, and everyone in the session will see it straight away. Click it again to remove it.
+
+Reactions are enabled by default, including on your existing sessions and templates. If you'd rather not have them, a moderator can turn them off in the session options. As you'd expect, you can't react to anything once the board is locked.
 
 ![Picking an emoji reaction on a card](/assets/blog/release-600/reactions.png,1440x900)
 
-The summary counts them next to the votes, and they are included when you copy the summary.
+Reactions are also counted next to the votes on the summary, and they're included when you copy it.
 
-This one came from a request. 👏 Thanks to [@mbinder-wmf](https://github.com/mbinder-wmf) for the idea ([#602](https://github.com/antoinejaussoin/retro-board/issues/602)).
+This feature was suggested by a user, so 👏 thanks to [@mbinder-wmf](https://github.com/mbinder-wmf) for the idea.
 
-# The coach is Claude, and it can write the retrospective up
+# The AI coach now uses Claude, and can summarise your retrospective
 
-The agile coach no longer calls ChatGPT. It uses Claude, through the Anthropic API. On the hosted app that is already wired up. On a self-hosted instance, set `ANTHROPIC_API_KEY`. `ANTHROPIC_MODEL` is optional and defaults to `claude-haiku-5-5`.
+The agile coach has switched from ChatGPT to Claude, via the Anthropic API. There's nothing to do on the hosted app. If you self-host, you'll need to set `ANTHROPIC_API_KEY`, and optionally `ANTHROPIC_MODEL` (it defaults to `claude-haiku-5-5`).
 
-There is also a new button on the summary page: **Summarise with AI**. It asks Claude for a short Markdown write-up of the board. The write-up is saved on the session, so it is still there after a refresh, and it is included when you copy the summary as Markdown or rich text. You can edit that Markdown afterwards. Editing does not spend another AI call. If the board changes after the write-up was generated, the saved text stays and is marked out of date, and you can generate it again.
+The summary page also has a new **Summarise with AI** button, which asks Claude to write a short Markdown summary of the board. The summary is saved with the session, so it won't disappear when you refresh the page, and it's included when you copy the summary as Markdown or rich text. You can edit it afterwards, and editing doesn't count against your AI allowance. If the board changes after the summary was generated, we keep your text but flag it as out of date, and you can regenerate it whenever you like.
 
-A few limits, on purpose. The summary is only offered to a logged-in, non-anonymous participant, and only on a board that is not encrypted. It is also refused while cards are still blurred, so the model cannot read what the room has not revealed yet. The browser sends the board id. The server loads the board itself.
+There are a few deliberate restrictions. The button is only available to logged-in users (not anonymous ones), and only on unencrypted boards. It's also disabled while cards are still blurred, so the AI can't read anything the team hasn't revealed yet. And the board content is always loaded by the server, never sent from your browser.
 
-The summary page, with votes and a reaction counted alongside the cards:
+Here's the summary page, with votes and reactions counted alongside each card:
 
 ![Summary mode, with votes and a reaction](/assets/blog/release-600/summary.png,1440x900)
 
-# Drag and drop, including on a phone
 
-Reordering cards, moving them between columns, and dropping them into a group still work. The library underneath is now Pragmatic Drag and Drop. The practical change is on a phone: a finger on the drag handle did not start a drag before, because a touch swipe never starts a native HTML drag. It does now.
+# Encrypted sessions over plain HTTP
 
-# Encrypted sessions on plain HTTP
+New cards in encrypted sessions are now encrypted with AES-GCM, and they decrypt the same way whether the page is served over HTTPS or plain HTTP. That's mostly good news for self-hosted instances that don't have a certificate set up yet, where encryption used to be a problem.
 
-New cards in an encrypted session are sealed with AES-GCM. The same ciphertext opens whether the page is served over HTTPS or over plain HTTP, which matters for a self-hosted instance that has not put a certificate in front of it yet. Cards sealed with the previous format still decrypt, so an existing encrypted session does not go blank. The key is still the fragment of the URL, and it is still never sent to the server.
+Cards encrypted with the old format can still be read, so your existing encrypted sessions won't suddenly appear empty. As before, the encryption key lives in the URL fragment and is never sent to the server.
 
-# The server is now Rust
+# The server is now written in Rust
 
-The backend used to be Node.js, with Express, TypeORM, and Passport. It is now a single Rust binary. The HTTP API, the Socket.IO event names, and the Redis session cookies are the same, and the server still applies the existing database migrations. A database written by the old server starts on the new one. Docker Compose for a self-hosted install keeps the same shape: Postgres, Redis, the same OAuth providers, Stripe, licences, and the admin panel.
+The backend used to be a Node.js app built on Express, TypeORM and Passport. It's now a single Rust binary.
 
-When Redis is enabled for Socket.IO, a card written on one backend process reaches people connected to another. That is the same idea as before, so a deployment with more than one backend keeps working.
+From the outside, very little has changed. The HTTP API, the Socket.IO events and the Redis session cookies are all the same, and the new server runs the same database migrations, so it can start straight from a database created by the old one. If you self-host with Docker Compose, your setup will look very familiar: Postgres, Redis, the same OAuth providers, Stripe, licences and the admin panel.
 
-Two names did change:
+If you run more than one backend instance, nothing changes there either: with Redis enabled for Socket.IO, a card posted on one instance still shows up for users connected to another.
 
-- Verification and password-reset email goes through [Mailjet](https://www.mailjet.com/) instead of SendGrid. Set `MAILJET_API_KEY`, `MAILJET_SECRET_KEY`, and `MAILJET_SENDER`. The sender address has to be validated in the Mailjet account. SMTP is unchanged, and it is used when Mailjet is not configured.
-- The coach key is `ANTHROPIC_API_KEY`, as above. Monthly allowances are `AI_FREE_LIMIT` and `AI_PAID_LIMIT` (5 and 1000 if you leave them unset). The previous `OPEN_AI_FREE_LIMIT` and `OPEN_AI_PAID_LIMIT` names are still read when the new ones are absent.
+There are, however, two configuration changes to be aware of:
 
-# Around the app
+- Verification and password reset emails are now sent through [Mailjet](https://www.mailjet.com/) instead of SendGrid. You'll need to set `MAILJET_API_KEY`, `MAILJET_SECRET_KEY` and `MAILJET_SENDER`, and the sender address must be validated in your Mailjet account. SMTP still works as before, and is used whenever Mailjet isn't configured.
+- As mentioned above, the AI coach now needs `ANTHROPIC_API_KEY`. The monthly allowances are set with `AI_FREE_LIMIT` and `AI_PAID_LIMIT` (5 and 1000 by default). The old `OPEN_AI_FREE_LIMIT` and `OPEN_AI_PAID_LIMIT` variables are still honoured if the new ones aren't set.
 
-The frontend is on React 19, React Router 7, TypeScript 5.9, and Vite 6. Live board state has moved from Recoil to Zustand, and the home, account, and subscribe pages load their data with TanStack Query. The repository uses npm rather than Yarn. The marketing site is on Next.js 15, and the documentation site is on Docusaurus 3.
+# Everything else
+
+The rest of the stack has been brought up to date too. The frontend now runs on React 19, React Router 7, TypeScript 5.9 and Vite 6. Live board state is managed with Zustand instead of Recoil, and the home, account and subscription pages fetch their data with TanStack Query. The repository has moved from Yarn to npm, the marketing site is on Next.js 15, and the documentation site is on Docusaurus 3.
