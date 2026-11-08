@@ -74,7 +74,8 @@ export async function loadEmojiMartI18n(
   language: string | undefined,
 ): Promise<Record<string, unknown>> {
   const locale = emojiMartLocale(language);
-  const mod = await i18nLoaders[locale]!();
+  const load = i18nLoaders[locale] ?? i18nLoaders.en;
+  const mod = await load();
   return mod.default;
 }
 

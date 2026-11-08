@@ -375,15 +375,13 @@ pub async fn toggle_reaction(
         })));
     }
     let id = Uuid::new_v4().to_string();
-    sqlx::query(
-        "INSERT INTO post_reactions (id, post_id, user_id, emoji) VALUES ($1,$2,$3,$4)",
-    )
-    .bind(&id)
-    .bind(post_id)
-    .bind(user_id)
-    .bind(emoji)
-    .execute(pool)
-    .await?;
+    sqlx::query("INSERT INTO post_reactions (id, post_id, user_id, emoji) VALUES ($1,$2,$3,$4)")
+        .bind(&id)
+        .bind(post_id)
+        .bind(user_id)
+        .bind(emoji)
+        .execute(pool)
+        .await?;
     let user_name: String = sqlx::query_scalar("SELECT name FROM users WHERE id = $1")
         .bind(user_id)
         .fetch_one(pool)
@@ -394,22 +392,6 @@ pub async fn toggle_reaction(
         user_id: user_id.to_owned(),
         user_name,
     })))
-}
-
-#[cfg(test)]
-mod reaction_tests {
-    use super::is_allowed_reaction;
-
-    #[test]
-    fn accepts_common_emoji_and_rejects_empty_or_whitespace() {
-        for emoji in ["👍", "❤️", "😄", "🎉", "🚀", "👀", "🔥", "👩‍💻"] {
-            assert!(is_allowed_reaction(emoji), "{emoji}");
-        }
-        assert!(!is_allowed_reaction(""));
-        assert!(!is_allowed_reaction("   "));
-        assert!(!is_allowed_reaction("thumbs up"));
-        assert!(!is_allowed_reaction(&"😀".repeat(20)));
-    }
 }
 
 pub async fn save_message(
@@ -458,4 +440,20 @@ pub async fn save_message(
             email: row.6,
         },
     }))
+}
+
+#[cfg(test)]
+mod reaction_tests {
+    use super::is_allowed_reaction;
+
+    #[test]
+    fn accepts_common_emoji_and_rejects_empty_or_whitespace() {
+        for emoji in ["👍", "❤️", "😄", "🎉", "🚀", "👀", "🔥", "👩‍💻"] {
+            assert!(is_allowed_reaction(emoji), "{emoji}");
+        }
+        assert!(!is_allowed_reaction(""));
+        assert!(!is_allowed_reaction("   "));
+        assert!(!is_allowed_reaction("thumbs up"));
+        assert!(!is_allowed_reaction(&"😀".repeat(20)));
+    }
 }

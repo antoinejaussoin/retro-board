@@ -739,8 +739,7 @@ function useGame(sessionId: string) {
         return;
       }
       const existing = post.reactions.find(
-        (reaction) =>
-          reaction.userId === user.id && reaction.emoji === emoji,
+        (reaction) => reaction.userId === user.id && reaction.emoji === emoji,
       );
       const reaction: ReactionExtract = existing ?? {
         id: v4(),

@@ -210,14 +210,8 @@ pub(super) fn react_post<A: Adapter>(
             emit_error(&socket, "cannot_react", None);
             return;
         };
-        match db::toggle_reaction(
-            &state.db,
-            &user_id,
-            &session_id,
-            &body.post_id,
-            &body.emoji,
-        )
-        .await
+        match db::toggle_reaction(&state.db, &user_id, &session_id, &body.post_id, &body.emoji)
+            .await
         {
             Ok(Some(change)) => {
                 let (reaction, change_label) = match change {
