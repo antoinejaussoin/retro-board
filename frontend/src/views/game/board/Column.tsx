@@ -138,8 +138,12 @@ const Column: React.FC<ColumnProps> = ({
           <div
             key="slot"
             data-flip-id={`slot:${listId}`}
-            className="mb-4 rounded-2xl border-2 border-dashed border-primary-400 bg-primary-50/80"
-            style={{ height: frame.height }}
+            className="mb-4 rounded-2xl border-2 border-dashed"
+            style={{
+              height: frame.height,
+              backgroundColor: `color-mix(in srgb, ${color} 88%, black)`,
+              borderColor: `color-mix(in srgb, ${color} 75%, black)`,
+            }}
           />
         );
       }
