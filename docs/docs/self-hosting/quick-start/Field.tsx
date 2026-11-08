@@ -10,6 +10,8 @@ export type FieldProps = {
 type InputFieldProps = FieldProps & {
   value: string;
   number?: boolean;
+  /** Skip the alphanumeric filter. Used for API keys and URLs. */
+  unrestricted?: boolean;
   onChange: (value: string) => void;
 };
 
@@ -32,6 +34,7 @@ export function InputField({
   label,
   description,
   number,
+  unrestricted,
   placeholder,
   onChange,
 }: InputFieldProps) {
@@ -41,7 +44,9 @@ export function InputField({
         placeholder={placeholder}
         className={styles.input}
         value={value}
-        onKeyPress={number ? onlyNumbers : onlyAlpha}
+        onKeyPress={
+          unrestricted ? undefined : number ? onlyNumbers : onlyAlpha
+        }
         onChange={(e) => onChange(e.target.value)}
       />
     </Field>

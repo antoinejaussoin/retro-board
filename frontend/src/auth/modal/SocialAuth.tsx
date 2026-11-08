@@ -15,6 +15,7 @@ import SlackLoginButton from './social/SlackLoginButton';
 import OktaLoginButton from './social/OktaLoginButton';
 import useOAuthAvailabilities from '../../global/useOAuthAvailabilities';
 import { useTranslation } from 'react-i18next';
+import { cn } from 'ui/cn';
 
 const API_URL = '/api/auth';
 
@@ -70,6 +71,14 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
     () => handleOAuth('twitter'),
     [handleOAuth],
   );
+  const enabledCount = [
+    details.microsoft,
+    details.google,
+    details.github,
+    details.slack,
+    details.twitter,
+    details.okta,
+  ].filter(Boolean).length;
 
   useEffect(() => {
     const s = io();
@@ -100,12 +109,18 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
       header={t('SocialMediaLogin.header')}
       help={t('SocialMediaLogin.info')}
     >
-      <div className="mt-6 flex flex-col gap-2.5">
+      <div
+        className={cn(
+          'mt-6 grid gap-2.5',
+          enabledCount > 3 ? 'grid-cols-2' : 'grid-cols-1',
+        )}
+      >
         {details.microsoft && (
           <MicrosoftLoginButton
             onClick={handleMicrosoft}
             text="Microsoft"
             size="42px"
+            className="min-w-0"
             style={socialButtonStyle}
           />
         )}
@@ -114,6 +129,7 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
             onClick={handleGoogle}
             text="Google"
             size="42px"
+            className="min-w-0"
             style={socialButtonStyle}
           />
         )}
@@ -122,6 +138,7 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
             onClick={handleGitHub}
             text="GitHub"
             size="42px"
+            className="min-w-0"
             style={socialButtonStyle}
           />
         )}
@@ -130,6 +147,7 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
             onClick={handleSlack}
             text="Slack"
             size="42px"
+            className="min-w-0"
             style={socialButtonStyle}
           />
         )}
@@ -138,6 +156,7 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
             onClick={handleTwitter}
             text="Twitter"
             size="42px"
+            className="min-w-0"
             style={socialButtonStyle}
           />
         )}
@@ -146,6 +165,7 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
             onClick={handleOkta}
             text="Okta"
             size="42px"
+            className="min-w-0"
             style={socialButtonStyle}
           />
         )}

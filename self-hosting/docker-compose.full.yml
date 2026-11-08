@@ -64,7 +64,6 @@ services:
       REDIS_FOR_SOCKETIO_ENABLED: 'false' # Whether Socket.IO uses Redis (set to true when using more than 1 backend replica)
       REDIS_PORT: 6379 # Should match the Redis port
       REDIS_HOST: redis # Must be the name of the Redis service above
-      SENTRY_URL: '' # Optional, Sentry URL (https://1234567890abcdef12345@sentry.io/1234567)
       BASE_URL: http://localhost:80 # This must be the URL of the frontend app once deployed. Only useful if you need OAuth, SendGrid or Stripe
       SECURE_COOKIES: 'false' # You can set this to true if you are using HTTPS. This is more secure.
       DISABLE_ANONYMOUS_LOGIN: 'false' # Set to true to disable anonymous accounts
@@ -72,6 +71,8 @@ services:
       DISABLE_PASSWORD_REGISTRATION: 'false' # Set to true to disable password accounts registration (but not login!)
       DISABLE_ACCOUNT_DELETION: 'false' # Set to true to disable data deletion (GDPR)
       DISABLE_SHOW_AUTHOR: 'false' # Set to true to disable the ability to reveal names, even for board owners
+      GA4_SECRET: '' # Optional, GA4 Measurement Protocol API secret
+      GA4_MEASUREMENT_ID: '' # Optional, GA4 measurement id (G-XXXXXXXXXX)
 
       # -- AI - Anthropic: Set these to enable AI capabilities. This is optional. --
       ANTHROPIC_API_KEY: '' # API key from https://platform.claude.com/settings/keys
@@ -88,6 +89,7 @@ services:
       GITHUB_SECRET:
       SLACK_KEY:
       SLACK_SECRET:
+      SLACK_BOT_ENABLE: 'false' # Set to true to publish the Slack client id for the Slack bot
       MICROSOFT_KEY:
       MICROSOFT_SECRET:
       MICROSOFT_TENANT: # This should generally not be set at all.
@@ -116,9 +118,7 @@ services:
       STRIPE_SECRET: # Stripe payment account secret
       STRIPE_WEBHOOK_SECRET: # Stripe webhook secret
       STRIPE_TEAM_PRODUCT: # Stripe product information
-      STRIPE_TEAM_PRICE: # Stripe product information
       STRIPE_UNLIMITED_PRODUCT: # Stripe product information
-      STRIPE_UNLIMITED_PRICE: # Stripe product information
       STRIPE_SELF_HOSTED_PRODUCT: # Stripe product information
       STRIPE_SELF_HOSTED_URL_GBP: # Stripe payment page for Self Hosting
       STRIPE_SELF_HOSTED_URL_EUR: # Stripe payment page for Self Hosting

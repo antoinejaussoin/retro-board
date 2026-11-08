@@ -86,6 +86,27 @@ export default function Editor() {
     ''
   );
   const [logo, setLogo] = usePersistedState('logo', '');
+  const [useAi, setUseAi] = usePersistedState('use-ai', false);
+  const [anthropicKey, setAnthropicKey] = usePersistedState(
+    'anthropic-key',
+    ''
+  );
+  const [anthropicModel, setAnthropicModel] = usePersistedState(
+    'anthropic-model',
+    'claude-haiku-5-5'
+  );
+  const [aiFreeLimit, setAiFreeLimit] = usePersistedState(
+    'ai-free-limit',
+    '5'
+  );
+  const [aiPaidLimit, setAiPaidLimit] = usePersistedState(
+    'ai-paid-limit',
+    '1000'
+  );
+  const [aiFeedbackUrl, setAiFeedbackUrl] = usePersistedState(
+    'ai-feedback-url',
+    ''
+  );
 
   useEffect(() => {
     if (isBrowser) {
@@ -274,6 +295,63 @@ export default function Editor() {
           ) : null}
         </div>
       </Accordion>
+      <Accordion title="AI">
+        <p>
+          More documentation here: <a href="./ai">AI documentation</a>.
+        </p>
+        <div className={styles.settings}>
+          <FieldToggle
+            id="enable-ai"
+            label="Enable AI"
+            description="Turns on the Agile Coach and AI summaries. Requires an Anthropic API key. This is a paid Anthropic service."
+            toggleLabel="Use Anthropic"
+            value={useAi}
+            onChange={setUseAi}
+          />
+          {useAi ? (
+            <>
+              <InputField
+                label="Anthropic API key"
+                description="API key from https://platform.claude.com/settings/keys"
+                placeholder="sk-ant-..."
+                unrestricted
+                value={anthropicKey}
+                onChange={setAnthropicKey}
+              />
+              <InputField
+                label="Anthropic model"
+                description="Optional. Defaults to claude-haiku-5-5 when unset. claude-sonnet-5-5 is also supported."
+                placeholder="claude-haiku-5-5"
+                unrestricted
+                value={anthropicModel}
+                onChange={setAnthropicModel}
+              />
+              <InputField
+                label="Free AI limit"
+                description="AI calls per rolling month, per user, for non-Pro accounts."
+                number
+                value={aiFreeLimit}
+                onChange={setAiFreeLimit}
+              />
+              <InputField
+                label="Pro AI limit"
+                description="AI calls per rolling month, per user, for Pro accounts."
+                number
+                value={aiPaidLimit}
+                onChange={setAiPaidLimit}
+              />
+              <InputField
+                label="AI feedback URL"
+                description="Optional. URL of a feedback form shown in the Agile Coach."
+                placeholder="https://example.com/ai-feedback"
+                unrestricted
+                value={aiFeedbackUrl}
+                onChange={setAiFeedbackUrl}
+              />
+            </>
+          ) : null}
+        </div>
+      </Accordion>
       <Accordion title="White-Labelling & Customisation">
         <p>
           More documentation here:{' '}
@@ -348,6 +426,12 @@ export default function Editor() {
           primaryHeaderColour,
           secondaryHeaderColour,
           logo,
+          useAi,
+          anthropicKey,
+          anthropicModel,
+          aiFreeLimit,
+          aiPaidLimit,
+          aiFeedbackUrl,
         }}
       />
       <h1>2 - Run Docker</h1>

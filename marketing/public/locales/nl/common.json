@@ -189,7 +189,7 @@
   },
   "Footer": {
     "legal": "Juridische voorwerpen",
-    "copyright": "Copyright © 2023 - Retrospected Ltd. Alle rechten voorbehouden.",
+    "copyright": "Copyright © {{year}} - Retrospected Ltd. Alle rechten voorbehouden.",
     "about": "We maken software met Liefe, uit Londen, VK",
     "various": "Various",
     "documentation": "Documentation"

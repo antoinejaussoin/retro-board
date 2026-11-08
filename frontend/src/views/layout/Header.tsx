@@ -8,6 +8,7 @@ import { useMatch, useNavigate } from 'react-router-dom';
 import useUser from 'state/user/useUser';
 import { headerTone } from 'Theme';
 import { Button } from 'ui/button';
+import { cn } from 'ui/cn';
 import { IconButton } from 'ui/icon-button';
 import config from 'utils/getConfig';
 import useSidePanel from 'views/panel/useSidePanel';
@@ -26,6 +27,9 @@ export function Header() {
   const goToHome = useCallback(() => navigate('/'), [navigate]);
   const { toggle: togglePanel } = useSidePanel();
   const isOnGamePage = !!useMatch('game/:gameId/*');
+  const isLoginRoute = !!useMatch({ path: '/login', end: true });
+  const isHomeRoute = !!useMatch({ path: '/', end: true });
+  const isLoginPage = isLoginRoute || (!user && isHomeRoute);
   const light = headerTone === 'light';
   const mark = config.LOGO || (light ? logoBlack : logoWhite);
   const word = light ? textBlack : textWhite;
@@ -50,14 +54,20 @@ export function Header() {
         type="button"
         onClick={goToHome}
         data-cy="header-home-button"
-        className="flex min-w-0 items-center gap-2.5 rounded-full px-1 py-1 max-[400px]:hidden"
+        className={cn(
+          'flex min-w-0 items-center gap-2.5 rounded-full px-1 py-1',
+          !isLoginPage && 'max-[400px]:hidden',
+        )}
       >
         <img src={mark} alt="Retrospected" className="h-7 w-auto" />
         {config.LOGO ? null : (
           <img
             src={word}
             alt=""
-            className="hidden h-6 w-auto min-[800px]:block"
+            className={cn(
+              'h-6 w-auto',
+              isLoginPage ? 'block' : 'hidden min-[800px]:block',
+            )}
           />
         )}
       </button>

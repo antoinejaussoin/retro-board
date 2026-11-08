@@ -188,7 +188,7 @@
   },
   "Footer": {
     "legal": "Rechtliches",
-    "copyright": "Copyright © 2023 - Retrospected Ltd. Alle Rechte vorbehalten.",
+    "copyright": "Copyright © {{year}} - Retrospected Ltd. Alle Rechte vorbehalten.",
     "about": "Wir erstellen Software mit Liebe, aus London, Großbritannien",
     "various": "Diverses",
     "documentation": "Dokumentation"

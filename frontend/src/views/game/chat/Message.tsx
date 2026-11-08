@@ -21,6 +21,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
           <img
             src={message.user.photo}
             alt={message.user.name}
+            referrerPolicy="no-referrer"
             className="size-full object-cover"
           />
         ) : (
