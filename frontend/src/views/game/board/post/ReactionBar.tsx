@@ -7,7 +7,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Popover, PopoverContent, PopoverTrigger } from 'ui/popover';
 import { Tooltip } from 'ui/tooltip';
-import { reactionChipClassName } from './chipStyles';
+import { reactionChipClassName, reactionEmojiClassName } from './chipStyles';
 
 interface ReactionGroup {
   emoji: string;
@@ -98,7 +98,9 @@ const ReactionBar = ({
               interactive: canReact,
             })}
           >
-            <span aria-hidden>{group.emoji}</span>
+            <span aria-hidden className={reactionEmojiClassName}>
+              {group.emoji}
+            </span>
             <span>{group.count}</span>
           </button>
         );
@@ -127,9 +129,9 @@ const ReactionBar = ({
               <button
                 type="button"
                 aria-label={t('Post.addReaction')}
-                className="retro-reaction-add inline-flex size-7 shrink-0 items-center justify-center rounded-full text-muted hover:text-ink"
+                className="retro-reaction-add inline-flex size-8 shrink-0 items-center justify-center rounded-full text-muted hover:text-ink"
               >
-                <SmilePlus className="size-4" />
+                <SmilePlus className="size-4.5" />
               </button>
             </PopoverTrigger>
           </Tooltip>

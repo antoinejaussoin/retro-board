@@ -1,4 +1,4 @@
-import { reactionChipClassName } from './chipStyles';
+import { reactionChipClassName, reactionEmojiClassName } from './chipStyles';
 import { VoteEnumeration } from '../../utils';
 import { Tooltip } from 'ui/tooltip';
 
@@ -35,7 +35,9 @@ const VoteButton = ({
         interactive: canVote,
       })}
     >
-      <span aria-hidden>{emoji}</span>
+      <span aria-hidden className={reactionEmojiClassName}>
+        {emoji}
+      </span>
       <span>{count}</span>
     </button>
   );
