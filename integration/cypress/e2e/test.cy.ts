@@ -87,7 +87,8 @@ describe('Post workflow', () => {
     // And some chat
     get('open-chat-button').click({ force: true });
     get('chat-input').focus().type('This is a message{enter}');
-    cy.get('#content', { timeout }).should('contain', 'This is a message');
+    // The chat dialog is portaled outside #content.
+    get('chat-container').should('contain', 'This is a message');
 
     // Close
     get('open-chat-button').click({ force: true });
