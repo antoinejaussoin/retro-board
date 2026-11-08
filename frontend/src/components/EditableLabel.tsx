@@ -1,6 +1,43 @@
 import { Pencil } from 'lucide-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { cn } from 'ui/cn';
+
+let caretMeasure: CanvasRenderingContext2D | null | undefined;
+
+function measureContext() {
+  if (caretMeasure !== undefined) {
+    return caretMeasure;
+  }
+  if (import.meta.env.MODE === 'test') {
+    caretMeasure = null;
+    return null;
+  }
+  caretMeasure = document.createElement('canvas').getContext('2d');
+  return caretMeasure;
+}
+
+function revealCaret(input: HTMLInputElement) {
+  const start = input.selectionStart ?? 0;
+  const end = input.selectionEnd ?? 0;
+  const context = measureContext();
+  if (start !== end || !context) {
+    return;
+  }
+  const style = getComputedStyle(input);
+  context.font = style.font;
+  let caretOffset = context.measureText(input.value.slice(0, end)).width;
+  const spacing = Number.parseFloat(style.letterSpacing);
+  if (!Number.isNaN(spacing) && end > 1) {
+    caretOffset += spacing * (end - 1);
+  }
+  const view = input.clientWidth;
+  const padding = 2;
+  if (caretOffset - input.scrollLeft > view - padding) {
+    input.scrollLeft = caretOffset - view + padding;
+  } else if (caretOffset < input.scrollLeft + padding) {
+    input.scrollLeft = Math.max(0, caretOffset - padding);
+  }
+}
 
 interface EditableLabelProps {
   value: string;
@@ -68,6 +105,21 @@ const EditableLabel = ({
     setCurrent(value);
   }, [value]);
 
+  useLayoutEffect(() => {
+    const field = inputRef.current;
+    if (!editMode || multiline || !(field instanceof HTMLInputElement)) {
+      return;
+    }
+    revealCaret(field);
+  }, [editMode, multiline, current]);
+
+  const handleSelect = useCallback(() => {
+    const field = inputRef.current;
+    if (field instanceof HTMLInputElement) {
+      revealCaret(field);
+    }
+  }, []);
+
   const textClass = cn(
     'font-[inherit] text-[length:inherit] leading-normal tracking-[inherit]',
     centered && 'text-center',
@@ -121,10 +173,13 @@ const EditableLabel = ({
               />
             </span>
           ) : (
-            <span className="relative inline-block max-w-full min-w-[1ch]">
+            <span className="inline-grid max-w-full min-w-[1ch] items-center">
               <span
                 aria-hidden
-                className={cn(textClass, 'invisible whitespace-pre')}
+                className={cn(
+                  textClass,
+                  'invisible col-start-1 row-start-1 min-w-0 overflow-hidden whitespace-pre',
+                )}
               >
                 {`${shown}\u00a0`}
               </span>
@@ -137,7 +192,11 @@ const EditableLabel = ({
                 onBlur={enableViewMode}
                 onKeyPress={handleKeyPress}
                 onChange={handleChange}
-                className={cn(fieldClass, 'absolute inset-0 h-full w-full')}
+                onSelect={handleSelect}
+                className={cn(
+                  fieldClass,
+                  'col-start-1 row-start-1 w-full min-w-0 whitespace-pre',
+                )}
               />
             </span>
           )}
