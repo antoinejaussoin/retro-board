@@ -2,6 +2,7 @@ import { ColumnContent } from '../types';
 import { Post, PostGroup } from 'common';
 import flattenDeep from 'lodash/flattenDeep';
 import { getMiddle, getPrevious, getNext, getBetween } from '../lexorank';
+import type { DropIntent } from './drag';
 
 interface MovingEntities {
   post: Post;
@@ -115,4 +116,44 @@ function findGroup(
 
 function findColumIndexForGroup(columns: ColumnContent[], groupId: string) {
   return columns.findIndex((col) => col.groups.find((g) => g.id === groupId));
+}
+
+export function settlePostDrop(
+  intent: DropIntent,
+  columns: ColumnContent[],
+  actions: {
+    onMovePost: (
+      post: Post,
+      destinationGroup: PostGroup | null,
+      destinationColumn: number,
+      newRank: string,
+    ) => void;
+    onCombinePost: (post1: Post, post2: Post) => void;
+  },
+): void {
+  if (intent.type === 'combine') {
+    const entities = getCombiningEntities(
+      intent.sourceId,
+      intent.targetPostId,
+      columns,
+    );
+    if (entities) {
+      actions.onCombinePost(entities.post1, entities.post2);
+    }
+    return;
+  }
+  const entities = getMovingEntities(
+    intent.sourceId,
+    intent.targetId,
+    intent.index,
+    columns,
+  );
+  if (entities) {
+    actions.onMovePost(
+      entities.post,
+      entities.targetGroup,
+      entities.targetColumn,
+      calculateRank(entities.previous, entities.next),
+    );
+  }
 }

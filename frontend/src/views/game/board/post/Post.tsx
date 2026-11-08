@@ -26,6 +26,7 @@ import { useConfirm } from 'ui/confirm';
 import { Popover, PopoverContent, PopoverTrigger } from 'ui/popover';
 import { Tooltip } from 'ui/tooltip';
 import { isPostDragData } from '../drag';
+import { bindTouchDrag } from '../touch-drag';
 import { usePostUserPermissions } from '../usePostUserPermissions';
 import { countVotes, enumerateVotes } from '../../utils';
 import useUser from '../../../../state/user/useUser';
@@ -47,10 +48,11 @@ interface PostItemProps {
   onEditAction: (action: string) => void;
   onEditGiphy: (giphyId: string | null) => void;
   onDelete: () => void;
+  onTouchDrop?: (clientX: number, clientY: number) => void;
 }
 
 const hoverActions =
-  'max-md:opacity-100 md:pointer-events-none md:opacity-0 md:group-hover:pointer-events-auto md:group-hover:opacity-100';
+  'max-md:opacity-100 md:pointer-events-none md:opacity-0 md:group-hover:pointer-events-auto md:group-hover:opacity-100 [@media(hover:none)]:pointer-events-auto [@media(hover:none)]:opacity-100';
 
 const PostItem = ({
   post,
@@ -64,6 +66,7 @@ const PostItem = ({
   onEditAction,
   onEditGiphy,
   onDelete,
+  onTouchDrop,
 }: PostItemProps) => {
   const {
     canCreateAction,
@@ -89,6 +92,8 @@ const PostItem = ({
   );
   const cardRef = useRef<HTMLDivElement>(null);
   const handleRef = useRef<HTMLDivElement>(null);
+  const onTouchDropRef = useRef(onTouchDrop);
+  onTouchDropRef.current = onTouchDrop;
   const [dragging, setDragging] = useState(false);
   const [actionsToggled, toggleAction] = useToggle(false);
   const [showGiphyEditor, setShowGiphyEditor] = useState(false);
@@ -173,6 +178,13 @@ const PostItem = ({
           onDragStart: () => setDragging(true),
           onDrop: () => setDragging(false),
         }),
+        bindTouchDrag(handle, {
+          card: element,
+          onDragging: setDragging,
+          onDrop: (clientX, clientY) => {
+            onTouchDropRef.current?.(clientX, clientY);
+          },
+        }),
       );
     }
     if (combine) {
@@ -196,7 +208,8 @@ const PostItem = ({
     <div
       ref={cardRef}
       data-post-id={post.id}
-      className="group relative mb-4 overflow-hidden rounded-2xl border border-line bg-cream shadow-card"
+      data-post-drop={combine ? 'true' : undefined}
+      className={`group relative mb-4 overflow-hidden rounded-2xl border border-line bg-cream shadow-card${canReorder ? ' post-with-handle' : ''}`}
       style={
         {
           opacity: dragging ? 0.4 : undefined,
@@ -222,12 +235,12 @@ const PostItem = ({
       {canReorder ? (
         <div
           ref={handleRef}
-          className={`drag-handle absolute top-1 right-1 z-[1] cursor-grab text-muted transition-opacity ${hoverActions}`}
+          className={`drag-handle absolute top-1 right-1 z-[1] flex cursor-grab touch-none select-none items-center justify-center text-muted transition-opacity ${hoverActions}`}
         >
           <GripVertical className="size-4" />
         </div>
       ) : null}
-      <div className="px-4 py-3 pr-8 text-sm">
+      <div className="post-copy px-4 py-3 pr-8 text-sm">
         <div className={isBlurred ? 'retro-post-blurred' : undefined}>
           <EditableLabel
             wrapText

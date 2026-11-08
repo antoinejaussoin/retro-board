@@ -58,6 +58,7 @@ export default function Group({
   return (
     <div
       ref={containerRef}
+      data-drop-id={`group#${group.id}`}
       className={cn(
         'relative my-2.5 flex flex-col rounded-xl border border-dashed border-line',
         draggingOver && 'bg-gray-200',

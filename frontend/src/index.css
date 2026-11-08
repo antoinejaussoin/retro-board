@@ -157,3 +157,34 @@
 .retro-reaction-add:hover {
   background-color: color-mix(in srgb, var(--post-color), black 10%);
 }
+
+.drag-handle {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+@media (pointer: coarse) {
+  .drag-handle {
+    top: 0;
+    right: 0;
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .post-with-handle .post-copy {
+    padding-right: 2.75rem;
+  }
+}
+
+.post-touch-drag,
+.post-touch-drag * {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+[data-touch-drop='list'],
+[data-touch-drop='combine'] {
+  outline: 2px solid var(--color-primary-600);
+  outline-offset: -2px;
+}

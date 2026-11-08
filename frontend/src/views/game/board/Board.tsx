@@ -3,7 +3,7 @@ import { Post, PostGroup, SessionOptions, SessionSettings } from 'common';
 import ClosableAlert from 'components/ClosableAlert';
 import Icon from 'components/Icon/Icon';
 import { t } from 'i18next';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { cn } from 'ui/cn';
 import { useMediaQuery } from '../../../hooks/useMediaQuery';
 import { getMiddle, getNext, getPrevious } from '../lexorank';
@@ -11,19 +11,13 @@ import useSession from '../useSession';
 import { ColumnContent } from '../types';
 import Column from './Column';
 import {
-  edgeOf,
-  indexBeside,
-  insertionIndex,
-  isListDropData,
+  elementsAt,
+  intentFromNativeDrop,
   isPostDragData,
-  isPostDropData,
+  resolveTouchDrop,
 } from './drag';
 import BoardHeader from './header/BoardHeader';
-import {
-  calculateRank,
-  getCombiningEntities,
-  getMovingEntities,
-} from './moving-logic';
+import { settlePostDrop } from './moving-logic';
 
 interface GameModeProps {
   columns: ColumnContent[];
@@ -94,69 +88,41 @@ function GameMode({
   const stacked = useMediaQuery(
     `(max-width: ${columns.length * 340 + 100}px)`,
   );
+  const columnsRef = useRef(columns);
+  columnsRef.current = columns;
+  const onMovePostRef = useRef(onMovePost);
+  onMovePostRef.current = onMovePost;
+  const onCombinePostRef = useRef(onCombinePost);
+  onCombinePostRef.current = onCombinePost;
+  const handleTouchDrop = useCallback(
+    (postId: string, clientX: number, clientY: number) => {
+      const resolved = resolveTouchDrop({
+        elements: elementsAt(clientX, clientY),
+        clientY,
+        draggingId: postId,
+      });
+      if (!resolved) {
+        return;
+      }
+      settlePostDrop(resolved.intent, columnsRef.current, {
+        onMovePost: onMovePostRef.current,
+        onCombinePost: onCombinePostRef.current,
+      });
+    },
+    [],
+  );
 
   useEffect(() => {
     return monitorForElements({
       canMonitor: ({ source }) => isPostDragData(source.data),
       onDrop({ source, location }) {
-        const target = location.current.dropTargets[0];
-        if (!target || !isPostDragData(source.data)) {
-          return;
-        }
-        const postId = source.data.postId;
-        if (isPostDropData(target.data) && target.data.postId !== postId) {
-          const edge = edgeOf(target.element, location.current.input.clientY);
-          if (edge === 'center') {
-            const entities = getCombiningEntities(
-              postId,
-              target.data.postId,
-              columns,
-            );
-            if (entities) {
-              onCombinePost(entities.post1, entities.post2);
-            }
-            return;
-          }
-          const parent = location.current.dropTargets.find((candidate) =>
-            isListDropData(candidate.data),
-          );
-          if (parent && isListDropData(parent.data)) {
-            const entities = getMovingEntities(
-              postId,
-              parent.data.targetId,
-              indexBeside(parent.element, target.element, edge, postId),
-              columns,
-            );
-            if (entities) {
-              onMovePost(
-                entities.post,
-                entities.targetGroup,
-                entities.targetColumn,
-                calculateRank(entities.previous, entities.next),
-              );
-            }
-          }
-          return;
-        }
-        if (isListDropData(target.data)) {
-          const entities = getMovingEntities(
-            postId,
-            target.data.targetId,
-            insertionIndex(
-              target.element,
-              location.current.input.clientY,
-              postId,
-            ),
-            columns,
-          );
-          if (entities) {
-            onMovePost(
-              entities.post,
-              entities.targetGroup,
-              entities.targetColumn,
-              calculateRank(entities.previous, entities.next),
-            );
-          }
+        const intent = intentFromNativeDrop(
+          source.data,
+          location.current.dropTargets,
+          location.current.input.clientY,
+        );
+        if (intent) {
+          settlePostDrop(intent, columns, { onMovePost, onCombinePost });
         }
       },
     });
@@ -219,6 +185,7 @@ function GameMode({
             onEdit={onEdit}
             onEditGroup={onEditGroup}
             onDeleteGroup={onDeleteGroup}
+            onTouchDrop={handleTouchDrop}
             fillViewport={!stacked}
           />
         ))}

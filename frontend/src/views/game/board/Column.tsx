@@ -34,6 +34,7 @@ interface ColumnProps {
   onReact: (post: Post, emoji: string) => void;
   onEdit: (post: Post) => void;
   onDelete: (post: Post) => void;
+  onTouchDrop: (postId: string, clientX: number, clientY: number) => void;
   fillViewport?: boolean;
 }
 
@@ -55,6 +56,7 @@ const Column: React.FC<ColumnProps> = ({
   onDelete,
   onEditGroup,
   onDeleteGroup,
+  onTouchDrop,
   fillViewport = false,
 }) => {
   const { t } = useTranslation();
@@ -196,6 +198,9 @@ const Column: React.FC<ColumnProps> = ({
                       giphy,
                     })
                   }
+                  onTouchDrop={(clientX, clientY) =>
+                    onTouchDrop(post.id, clientX, clientY)
+                  }
                 />
               ))}
             </Group>
@@ -204,6 +209,7 @@ const Column: React.FC<ColumnProps> = ({
       </div>
       <div
         ref={postsRef}
+        data-drop-id={`column#${column.index}`}
         className={cn('min-h-[100px] flex-1 rounded-xl', fillViewport && 'pb-20')}
         style={{
           backgroundColor: draggingOver ? column.color : undefined,
@@ -237,6 +243,9 @@ const Column: React.FC<ColumnProps> = ({
                 ...post,
                 giphy,
               })
+            }
+            onTouchDrop={(clientX, clientY) =>
+              onTouchDrop(post.id, clientX, clientY)
             }
           />
         ))}
