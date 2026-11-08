@@ -8,7 +8,7 @@ import useCrypto from '../../../crypto/useCrypto';
 import { cn } from 'ui/cn';
 import { Alert } from 'ui/alert';
 import { IconButton } from 'ui/icon-button';
-import { isPostDragData } from './drag';
+import { isPostDragData, subscribeDragOver } from './drag';
 
 interface GroupProps {
   group: PostGroup;
@@ -53,6 +53,12 @@ export default function Group({
       onDragEnter: () => setDraggingOver(true),
       onDragLeave: () => setDraggingOver(false),
       onDrop: () => setDraggingOver(false),
+    });
+  }, [group.id]);
+  useEffect(() => {
+    const id = `group#${group.id}`;
+    return subscribeDragOver((targetId) => {
+      setDraggingOver(targetId === id);
     });
   }, [group.id]);
   return (

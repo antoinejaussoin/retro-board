@@ -70,6 +70,25 @@ function withoutPreview(elements: Element[]): HTMLElement[] {
   );
 }
 
+const dragOverEvent = 'retro-drag-over';
+
+export function publishDragOver(targetId: string | null) {
+  window.dispatchEvent(
+    new CustomEvent(dragOverEvent, { detail: { targetId } }),
+  );
+}
+
+export function subscribeDragOver(
+  onChange: (targetId: string | null) => void,
+): () => void {
+  const listener = (event: Event) => {
+    const detail = (event as CustomEvent<{ targetId: string | null }>).detail;
+    onChange(detail?.targetId ?? null);
+  };
+  window.addEventListener(dragOverEvent, listener);
+  return () => window.removeEventListener(dragOverEvent, listener);
+}
+
 export function elementsAt(clientX: number, clientY: number): Element[] {
   if (typeof document.elementsFromPoint !== 'function') {
     return [];

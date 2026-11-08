@@ -1,4 +1,4 @@
-import { elementsAt, resolveTouchDrop } from './drag';
+import { elementsAt, publishDragOver, resolveTouchDrop } from './drag';
 
 const dragSlop = 8;
 
@@ -23,14 +23,17 @@ export function bindTouchDrag(
   let lastY = 0;
   let frame = 0;
   let preview: HTMLElement | null = null;
-  let highlighted: HTMLElement | null = null;
+  let overId: string | null = null;
   let restoreDraggable: (() => void) | null = null;
   let grabX = 0;
   let grabY = 0;
 
-  const clearHighlight = () => {
-    highlighted?.removeAttribute('data-touch-drop');
-    highlighted = null;
+  const showOver = (targetId: string | null) => {
+    if (overId === targetId) {
+      return;
+    }
+    overId = targetId;
+    publishDragOver(targetId);
   };
 
   const highlightAt = (clientX: number, clientY: number) => {
@@ -39,16 +42,7 @@ export function bindTouchDrag(
       clientY,
       draggingId: options.card.dataset.postId ?? '',
     });
-    const next = resolved?.highlight ?? null;
-    if (highlighted === next) {
-      return;
-    }
-    clearHighlight();
-    if (!next) {
-      return;
-    }
-    next.setAttribute('data-touch-drop', 'list');
-    highlighted = next;
+    showOver(resolved?.highlight.dataset.dropId ?? null);
   };
 
   const stopLoop = () => {
@@ -131,7 +125,7 @@ export function bindTouchDrag(
     const wasDragging = dragging;
     dragging = false;
     stopLoop();
-    clearHighlight();
+    showOver(null);
     preview?.remove();
     preview = null;
     restoreDraggable?.();

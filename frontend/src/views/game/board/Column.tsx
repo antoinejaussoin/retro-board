@@ -12,7 +12,7 @@ import useQuota from '../../../hooks/useQuota';
 import { useSearch } from '../is-search-match';
 import { ColumnContent } from '../types';
 import Group from './Group';
-import { isPostDragData } from './drag';
+import { isPostDragData, subscribeDragOver } from './drag';
 import PostItem from './post/Post';
 import useSessionUserPermissions from './useSessionUserPermissions';
 
@@ -109,9 +109,19 @@ const Column: React.FC<ColumnProps> = ({
     });
   }, [column.index, permissions.canReorderPosts]);
 
+  useEffect(() => {
+    const id = `column#${column.index}`;
+    return subscribeDragOver((targetId) => {
+      setDraggingOver(targetId === id);
+    });
+  }, [column.index]);
+
   return (
     <section
-      className="flex min-h-40 min-w-0 flex-col py-3"
+      className={cn(
+        'flex min-w-0 flex-col py-3',
+        fillViewport ? 'min-h-40' : 'min-h-[calc(100dvh-7rem)]',
+      )}
     >
       <div className="mb-4 flex items-center gap-1">
         <div className="relative min-w-0 flex-1">
@@ -210,7 +220,7 @@ const Column: React.FC<ColumnProps> = ({
       <div
         ref={postsRef}
         data-drop-id={`column#${column.index}`}
-        className={cn('min-h-[100px] flex-1 rounded-xl', fillViewport && 'pb-20')}
+        className="min-h-[100px] flex-1 rounded-xl pb-20"
         style={{
           backgroundColor: draggingOver ? column.color : undefined,
         }}
