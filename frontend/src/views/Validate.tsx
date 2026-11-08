@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { emailFromQuery } from 'email/query';
 import { verifyEmail } from '../api';
 import { useSetUser } from 'state/user/useSetUser';
 import { Alert } from 'ui/alert';
@@ -12,7 +13,7 @@ function ValidatePage() {
   const location = useLocation();
   const { t } = useTranslation();
   const params = new URLSearchParams(location.search);
-  const email = params.get('email');
+  const email = emailFromQuery(params.get('email'));
   const code = params.get('code');
 
   const [loading, setLoading] = useState(true);

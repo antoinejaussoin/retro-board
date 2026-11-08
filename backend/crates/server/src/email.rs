@@ -7,10 +7,11 @@ const RESET: &str = include_str!("../templates/reset-password.template.html");
 const WELCOME: &str = include_str!("../templates/self-hosted.template.html");
 
 pub async fn send_verification(config: &Config, email: &str, name: &str, code: &str) {
+    let email_query = query_component(email);
     let body = fill(
         REGISTER,
         &[
-            ("email", email),
+            ("email", &email_query),
             ("name", name),
             ("code", code),
             ("domain", &config.base_url),
@@ -26,10 +27,11 @@ pub async fn send_verification(config: &Config, email: &str, name: &str, code: &
 }
 
 pub async fn send_reset(config: &Config, email: &str, name: &str, code: &str) {
+    let email_query = query_component(email);
     let body = fill(
         RESET,
         &[
-            ("email", email),
+            ("email", &email_query),
             ("name", name),
             ("code", code),
             ("domain", &config.base_url),
@@ -39,7 +41,11 @@ pub async fn send_reset(config: &Config, email: &str, name: &str, code: &str) {
 }
 
 pub async fn send_welcome(config: &Config, email: &str, name: &str, key: &str) {
-    let body = fill(WELCOME, &[("email", email), ("name", name), ("key", key)]);
+    let email_query = query_component(email);
+    let body = fill(
+        WELCOME,
+        &[("email", &email_query), ("name", name), ("key", key)],
+    );
     send(
         config,
         email,
@@ -47,6 +53,11 @@ pub async fn send_welcome(config: &Config, email: &str, name: &str, key: &str) {
         &body,
     )
     .await;
+}
+
+/// Percent-encode a query value. `+` must become `%2B`, because query parsers read `+` as a space.
+fn query_component(value: &str) -> String {
+    urlencoding::encode(value).into_owned()
 }
 
 fn fill(template: &str, values: &[(&str, &str)]) -> String {
@@ -230,8 +241,26 @@ async fn send_smtp(config: &Config, to: &str, subject: &str, html: &str) -> Resu
 
 #[cfg(test)]
 mod tests {
-    use super::{mailjet_body, mailjet_failure, send_smtp};
+    use super::{fill, mailjet_body, mailjet_failure, query_component, send_smtp, REGISTER};
     use crate::config::Config;
+
+    #[test]
+    fn verification_link_encodes_a_plus_in_the_address() {
+        let email = query_component("ant+mailjet@jaussoin.com");
+        let body = fill(
+            REGISTER,
+            &[
+                ("email", &email),
+                ("name", "Ada"),
+                ("code", "2f0be913-6776-4f05-bccc-6368a5f13c35"),
+                ("domain", "https://app-beta.retrospected.com"),
+            ],
+        );
+        assert!(body.contains(
+            "email=ant%2Bmailjet%40jaussoin.com&code=2f0be913-6776-4f05-bccc-6368a5f13c35"
+        ));
+        assert!(!body.contains("email=ant+mailjet@jaussoin.com"));
+    }
 
     #[test]
     fn mailjet_body_uses_the_v3_send_shape() {
