@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "lint": "biome ci",
-    "clean": "del ./{frontend,backend,common,maintenance}/package-lock.json && del ./package-lock.json && del ./{frontend,backend,common,maintenance}/node_modules && del ./node_modules",
+    "clean": "del ./{frontend,backend,common}/package-lock.json && del ./package-lock.json && del ./{frontend,backend,common}/node_modules && del ./node_modules",
     "frontend": "cd frontend && npm start && cd ..",
     "backend": "cd backend && cargo run -p retrospected-server",
     "stripe-login": "stripe login",

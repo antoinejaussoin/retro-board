@@ -4,7 +4,6 @@
 # App        http://localhost:1800
 # Marketing  http://localhost:3333
 # Docs       http://localhost:1802
-# Maintenance http://localhost:1803
 # API        http://localhost:3201
 # pgAdmin    http://localhost:1801
 
@@ -96,13 +95,6 @@ services:
       context: ./docs
     ports:
       - '1802:80'
-    restart: unless-stopped
-
-  maintenance:
-    build:
-      context: ./maintenance
-    ports:
-      - '1803:80'
     restart: unless-stopped
 
   pgadmin:

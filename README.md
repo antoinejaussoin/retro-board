@@ -16,8 +16,6 @@
   &nbsp;
   <img src="./content/logos/docker.png" height="65">
   &nbsp;
-  <img src="./content/logos/k8s.svg" height="65">
-  &nbsp;
   <img src="./content/logos/socketio.png" height="65">
   &nbsp;
   <img src="./content/logos/vite.png" height="65">
@@ -59,7 +57,6 @@ It features the following technologies:
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro), for Integration Tests
 - [npm](https://www.npmjs.com/)
 - [Docker](https://docker.com), for easy deployment
-- [Kubernetes](https://kubernetes.io/), to scale Retrospected for its 10M+ users (not)
 - [GitHub Actions](https://github.com/features/actions), for Continuous Integration and Deployment (CI/CD)
 - [Multi-Architecture](https://github.com/docker/buildx/), for automatic compatibility with ARM-based servers
 - [Stripe](https://stripe.com/), for our payment solution
