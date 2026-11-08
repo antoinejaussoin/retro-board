@@ -525,6 +525,61 @@ async fn http_contract() {
 }
 
 #[tokio::test]
+async fn oauth_callback_without_the_starter_cookie_does_not_log_in() {
+    let server = boot_with(
+        5,
+        &[("GOOGLE_KEY", "test-key"), ("GOOGLE_SECRET", "test-secret")],
+    )
+    .await;
+    let client = reqwest::Client::builder()
+        .redirect(reqwest::redirect::Policy::none())
+        .build()
+        .unwrap();
+    let start = client
+        .get(format!("{}/api/auth/google", server.base))
+        .send()
+        .await
+        .unwrap();
+    assert!(
+        start.status().is_redirection(),
+        "google start returned {}",
+        start.status()
+    );
+    let cookie = cookie_from(&start);
+    let location = start
+        .headers()
+        .get("location")
+        .and_then(|value| value.to_str().ok())
+        .unwrap_or("");
+    let state = location
+        .split("state=")
+        .nth(1)
+        .and_then(|value| value.split('&').next())
+        .unwrap_or("");
+    assert!(!state.is_empty(), "authorize url included state");
+    let callback = client
+        .get(format!(
+            "{}/api/auth/google/callback?code=nope&state={state}",
+            server.base
+        ))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(callback.status(), 403);
+    assert_eq!(
+        client
+            .get(format!("{}/api/me", server.base))
+            .header("cookie", &cookie)
+            .send()
+            .await
+            .unwrap()
+            .status(),
+        401,
+        "a callback without the starter cookie must not authenticate that session"
+    );
+}
+
+#[tokio::test]
 async fn admin_routes_follow_the_self_hosted_flag() {
     let client = reqwest::Client::new();
     let hosted = boot_with(2, &[("SELF_HOSTED", "false")]).await;
