@@ -5,7 +5,7 @@ In addition to the basic `docker-compose.yml` file you can [build here](quick-st
 These will allow you to add:
 
 - [OAuth authentication](oauth) (logging via Google, GitHub, etc.)
-- [SendGrid](sendgrid) (emails)
+- [Mailjet](mailjet) (emails)
 - Sentry (error reporting)
 - Google Analytics
 - Change the default language (for new users)
@@ -37,7 +37,7 @@ services:
       REDIS_PORT: 6379 # Should match the Redis port
       REDIS_HOST: redis # Must be the name of the Redis service above
       SENTRY_URL: '' # Optional, Sentry URL (https://1234567890abcdef12345@sentry.io/1234567)
-      BASE_URL: http://localhost:80 # This must be the URL of the frontend app once deployed. Only useful if you need OAuth, SendGrid or Stripe
+      BASE_URL: http://localhost:80 # This must be the URL of the frontend app once deployed. Only useful if you need OAuth, Mailjet or Stripe
       SECURE_COOKIES: 'false' # You can set this to true if you are using HTTPS. This is more secure.
       DISABLE_ANONYMOUS_LOGIN: 'false' # Set to true to disable anonymous accounts
       DISABLE_PASSWORD_LOGIN: 'false' # Set to true to disable password accounts (email accounts).
@@ -79,9 +79,10 @@ services:
       DB_PORT: 5432 # Don't change this.
       BACKEND_PORT: 3201 # Don't change this (or change it in nginx.conf as well)
       SQL_LOG: 'false' # Whether to log SQL queries in the console
-      SENDGRID_API_KEY: # Used for Sendgrid email reminders
-      SENDGRID_SENDER: # Email to be used as the sender for emails
-      MAIL_SMTP_HOST: # SMTP server host for sending emails via SMTP (instead of SendGrid)
+      MAILJET_API_KEY: # Mailjet API key for verification and password-reset emails
+      MAILJET_SECRET_KEY: # Mailjet secret key
+      MAILJET_SENDER: # Sender address. It must be validated in the Mailjet account.
+      MAIL_SMTP_HOST: # SMTP server host for sending emails via SMTP (instead of Mailjet)
       MAIL_PORT: 465 # SMTP port (usually 465 for secure SMTP)
       MAIL_SECURE: true # If SMTP is using encryption, usually via port 465, set this to true
       MAIL_USER: # SMTP username (or email)

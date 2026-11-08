@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # 🙋‍♂️ Managing Users
 
-When self-hosting, you will not have access to the ability to confirm and reset passwords by email (unless you setup [Sendgrid](sendgrid)).
+When self-hosting, you will not have access to the ability to confirm and reset passwords by email (unless you setup [Mailjet](mailjet)).
 
 If a user forgets their password, you can access a specific admin tool by accessing `/admin` on your Retrospected frontend, and reset your user's password.
 

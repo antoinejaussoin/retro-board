@@ -8,43 +8,43 @@ A Retrospected instance sometimes need to send email to its users, when they reg
 
 You have three mechanism for sending emails (or not) you can choose from:
 
-- [Sendgrid](https://sendgrid.com)
+- [Mailjet](https://www.mailjet.com)
 - SMTP
 - Nothing: no emails are sent
 
 ## Nothing (not recommended)
 
-If you don't specify any mechanism (neither Sendgrid nor SMTP), verification emails won't be sent and users will be able to register any email.
+If you don't specify any mechanism (neither Mailjet nor SMTP), verification emails won't be sent and users will be able to register any email.
 It also means they **won't be able to change their password if they forget it**.
 
 You have two ways of solving this problem:
 - Use the [Admin Panel](admin), if you are the admin, to manually change someone else's password
-- Setup Sendgrid or SMTP so that emails are verified, and recovery emails are sent if a user forgets their password
+- Setup Mailjet or SMTP so that emails are verified, and recovery emails are sent if a user forgets their password
 
 The latter is what we are going to setup in this guide.
 
-## SendGrid (recommended)
+## Mailjet (recommended)
 
 :::info Is it free?
-Sendgrid is completely free up to a certain amount of emails per day. For a self-hosted instance, you are very
+Mailjet's free plan includes 6,000 emails per month, with a maximum of 200 emails per day. For a self-hosted instance, you are very
 unlikely to have to pay for it.
 :::
 
+When `MAILJET_API_KEY` is set, Retrospected sends through Mailjet and does not use SMTP.
+
 ### Get an account and API keys
 
-- Go to Sendgrid's [signup page](https://signup.sendgrid.com) and register
-- On your account dashboard, go to `Settings` then `API Keys` and finally `Create API Key`
-- Choose a name, then `Restricted Access` and toggle `Mail Send > Mail Send` (see below)<br />
-<img src="/img/self-hosting/sendgrid-1.png" width="600" />
-- Click create, and then copy the key that you've created somewhere safe (we'll need it later)
-<img src="/img/self-hosting/sendgrid-2.png" width="400" />
+- Go to Mailjet's [signup page](https://app.mailjet.com/signup) and register. The address you sign up with is validated as a sender.
+- Open [API Key Management](https://app.mailjet.com/account/apikeys) and copy the **API key** and the **Secret key** for the primary key. Mailjet shows the secret key when the key is created.
+- To send from another address, add it under [Sender addresses & domains](https://app.mailjet.com/account/sender) and complete the validation email or domain check. Mailjet rejects mail from a sender that is not validated.
 
-### Set the environement variables
+### Set the environment variables
 
 We should now have all the information we need.
 In the `backend` section of your `docker-compose.yml` file, add the following variables:
-- `SENDGRID_API_KEY`: this is the API key you got in the first section of this guide
-- `SENDGRID_SENDER`: enter the email you used to create your Sendgrid account
+- `MAILJET_API_KEY`: the API key from the section above
+- `MAILJET_SECRET_KEY`: the secret key from the same API key
+- `MAILJET_SENDER`: the validated sender address, usually the email you used to create the Mailjet account
 - `BASE_URL`: this is the URL to your self-hosted Retrospected (for example: `http://retro.mycompany.com`)
 
 ### Done!
