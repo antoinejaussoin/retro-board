@@ -223,11 +223,16 @@ pub fn banner(config: &Config, owner: Option<&str>, migrations_applied: usize) {
             ));
         }
     }
-    if !config.sendgrid_api_key.is_empty() {
+    if config.mailjet_ready() {
         say(format!(
             "📨  {} is going to be used for {}",
-            red("SendGrid"),
+            red("Mailjet"),
             yellow("emails")
+        ));
+    } else if config.mailjet_selected() {
+        say(format!(
+            "📨  {} Set MAILJET_API_KEY, MAILJET_SECRET_KEY, and MAILJET_SENDER.",
+            red("MAILJET IS INCOMPLETE.")
         ));
     } else if !config.mail_smtp_host.is_empty() {
         say(format!(
@@ -237,7 +242,7 @@ pub fn banner(config: &Config, owner: Option<&str>, migrations_applied: usize) {
         ));
     } else {
         say(format!(
-            "📨  {} It is recommended to setup a SendGrid or SMTP email provider for account management.",
+            "📨  {} It is recommended to setup a Mailjet or SMTP email provider for account management.",
             red("NO EMAIL PROVIDER CONFIGURED.")
         ));
     }

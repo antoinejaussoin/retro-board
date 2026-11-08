@@ -62,8 +62,9 @@ pub struct Config {
     pub okta_audience: String,
     pub okta_key: String,
     pub okta_secret: String,
-    pub sendgrid_api_key: String,
-    pub sendgrid_sender: String,
+    pub mailjet_api_key: String,
+    pub mailjet_secret_key: String,
+    pub mailjet_sender: String,
     pub stripe_secret: String,
     pub stripe_webhook_secret: String,
     pub stripe_team_product: String,
@@ -139,8 +140,9 @@ impl Config {
             okta_audience: env_str("OKTA_AUDIENCE", ""),
             okta_key: env_str("OKTA_KEY", ""),
             okta_secret: env_str("OKTA_SECRET", ""),
-            sendgrid_api_key: env_str("SENDGRID_API_KEY", ""),
-            sendgrid_sender: env_str("SENDGRID_SENDER", ""),
+            mailjet_api_key: env_str("MAILJET_API_KEY", ""),
+            mailjet_secret_key: env_str("MAILJET_SECRET_KEY", ""),
+            mailjet_sender: env_str("MAILJET_SENDER", ""),
             stripe_secret: env_str("STRIPE_SECRET", ""),
             stripe_webhook_secret: env_str("STRIPE_WEBHOOK_SECRET", ""),
             stripe_team_product: env_str("STRIPE_TEAM_PRODUCT", ""),
@@ -232,9 +234,23 @@ impl Config {
         format!("redis://{}:{}", self.redis_host, self.redis_port)
     }
 
+    /// Mailjet is selected when its API key is set. Secret and sender are still required to deliver.
+    #[must_use]
+    pub fn mailjet_selected(&self) -> bool {
+        !self.mailjet_api_key.is_empty()
+    }
+
+    /// True when Mailjet has the API key, secret key, and sender address it needs.
+    #[must_use]
+    pub fn mailjet_ready(&self) -> bool {
+        self.mailjet_selected()
+            && !self.mailjet_secret_key.is_empty()
+            && !self.mailjet_sender.is_empty()
+    }
+
     #[must_use]
     pub fn emails_enabled(&self) -> bool {
-        !self.mail_smtp_host.is_empty() || !self.sendgrid_api_key.is_empty()
+        !self.mail_smtp_host.is_empty() || self.mailjet_selected()
     }
 }
 

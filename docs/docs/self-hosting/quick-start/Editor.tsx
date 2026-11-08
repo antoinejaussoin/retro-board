@@ -50,14 +50,15 @@ export default function Editor() {
     'disable-show-author',
     false
   );
-  const [useSendgrid, setUseSendgrid] = usePersistedState(
-    'use-sendgrid',
-    false
-  );
+  const [useMailjet, setUseMailjet] = usePersistedState('use-mailjet', false);
   const [useSmtp, setUseSmtp] = usePersistedState('use-smtp', false);
-  const [sendgridKey, setSendgridKey] = usePersistedState('sendgrid-key', '');
-  const [sendgridSender, setSendgridSender] = usePersistedState(
-    'sendgrid-sender',
+  const [mailjetKey, setMailjetKey] = usePersistedState('mailjet-key', '');
+  const [mailjetSecret, setMailjetSecret] = usePersistedState(
+    'mailjet-secret',
+    ''
+  );
+  const [mailjetSender, setMailjetSender] = usePersistedState(
+    'mailjet-sender',
     'your@email.com'
   );
   const [smtpHost, setSmtpHost] = usePersistedState('smtp-host', '');
@@ -217,26 +218,32 @@ export default function Editor() {
       <Accordion title="Email settings">
         <div className={styles.settings}>
           <FieldToggle
-            id="enable-sendgrid"
-            label="Enable Sendgrid"
-            description="Use SendGrid for sending emails."
-            toggleLabel="Use SendGrid"
-            value={useSendgrid}
-            onChange={setUseSendgrid}
+            id="enable-mailjet"
+            label="Enable Mailjet"
+            description="Use Mailjet for sending emails."
+            toggleLabel="Use Mailjet"
+            value={useMailjet}
+            onChange={setUseMailjet}
           />
-          {useSendgrid ? (
+          {useMailjet ? (
             <>
               <InputField
-                label="SendGrid Key"
-                description="Your private SendGrid API Key"
-                value={sendgridKey}
-                onChange={setSendgridKey}
+                label="Mailjet API key"
+                description="The API key from your Mailjet account."
+                value={mailjetKey}
+                onChange={setMailjetKey}
               />
               <InputField
-                label="SendGrid Sender email"
-                description="The email the emails will be sent on behalf of."
-                value={sendgridSender}
-                onChange={setSendgridSender}
+                label="Mailjet secret key"
+                description="The secret key paired with the API key above."
+                value={mailjetSecret}
+                onChange={setMailjetSecret}
+              />
+              <InputField
+                label="Mailjet sender email"
+                description="A sender address validated in your Mailjet account."
+                value={mailjetSender}
+                onChange={setMailjetSender}
               />
             </>
           ) : null}
@@ -245,12 +252,12 @@ export default function Editor() {
           <FieldToggle
             id="enable-smtp"
             label="Enable SMTP"
-            description="Use SMTP for sending emails. Cannot be used in conjunction with SendGrid."
+            description="Use SMTP for sending emails. Cannot be used in conjunction with Mailjet."
             toggleLabel="Use SMTP"
-            value={useSmtp && !useSendgrid}
+            value={useSmtp && !useMailjet}
             onChange={setUseSmtp}
           />
-          {useSmtp && !useSendgrid ? (
+          {useSmtp && !useMailjet ? (
             <>
               <InputField
                 label="SMTP Host"
@@ -411,10 +418,11 @@ export default function Editor() {
           disableRegistration,
           disableAccountDeletion,
           disableShowAuthor,
-          useSendgrid,
+          useMailjet,
           useSmtp,
-          sendgridKey,
-          sendgridSender,
+          mailjetKey,
+          mailjetSecret,
+          mailjetSender,
           smtpHost,
           smtpPort,
           smtpSecure,

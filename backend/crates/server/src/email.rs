@@ -1,4 +1,4 @@
-//! Verification and reset mail. SendGrid is preferred, SMTP is the fallback.
+//! Verification and reset mail. Mailjet is preferred, SMTP is the fallback.
 
 use crate::config::Config;
 
@@ -58,21 +58,9 @@ fn fill(template: &str, values: &[(&str, &str)]) -> String {
 }
 
 async fn send(config: &Config, to: &str, subject: &str, html: &str) {
-    if !config.sendgrid_api_key.is_empty() {
-        let client = reqwest::Client::new();
-        let result = client
-            .post("https://api.sendgrid.com/v3/mail/send")
-            .bearer_auth(&config.sendgrid_api_key)
-            .json(&serde_json::json!({
-                "personalizations": [{ "to": [{ "email": to }] }],
-                "from": { "email": config.sendgrid_sender },
-                "subject": subject,
-                "content": [{ "type": "text/html", "value": html }]
-            }))
-            .send()
-            .await;
-        if let Err(error) = result {
-            tracing::warn!(%error, "sendgrid request failed");
+    if config.mailjet_selected() {
+        if let Err(error) = send_mailjet(config, to, subject, html).await {
+            tracing::warn!(%error, "mailjet delivery failed");
         }
         return;
     }
@@ -81,6 +69,114 @@ async fn send(config: &Config, to: &str, subject: &str, html: &str) {
     }
     if let Err(error) = send_smtp(config, to, subject, html).await {
         tracing::warn!(%error, "smtp delivery failed");
+    }
+}
+
+/// Body for `POST https://api.mailjet.com/v3.1/send`.
+fn mailjet_body(from: &str, to: &str, subject: &str, html: &str) -> serde_json::Value {
+    serde_json::json!({
+        "Messages": [{
+            "From": { "Email": from, "Name": "Retrospected" },
+            "To": [{ "Email": to }],
+            "Subject": subject,
+            "HTMLPart": html
+        }]
+    })
+}
+
+/// Why a Mailjet response did not deliver. `None` means the message was accepted.
+fn mailjet_failure(status: u16, body: &str) -> Option<String> {
+    if !(200..300).contains(&status) {
+        let detail = serde_json::from_str::<serde_json::Value>(body)
+            .ok()
+            .map(|value| error_messages(&value).join("; "))
+            .filter(|text| !text.is_empty())
+            .unwrap_or_else(|| "request rejected".to_owned());
+        return Some(format!("status {status}: {detail}"));
+    }
+    let Ok(value) = serde_json::from_str::<serde_json::Value>(body) else {
+        return None;
+    };
+    let messages = value
+        .get("Messages")
+        .and_then(serde_json::Value::as_array)?;
+    let mut failures = Vec::new();
+    for message in messages {
+        let state = message
+            .get("Status")
+            .and_then(serde_json::Value::as_str)
+            .unwrap_or("");
+        if state == "success" {
+            continue;
+        }
+        let detail = error_messages(message);
+        if detail.is_empty() {
+            failures.push(format!("status {state}"));
+        } else {
+            failures.push(detail.join("; "));
+        }
+    }
+    if failures.is_empty() {
+        None
+    } else {
+        Some(failures.join("; "))
+    }
+}
+
+fn error_messages(value: &serde_json::Value) -> Vec<String> {
+    let mut messages = Vec::new();
+    collect_error_messages(value, &mut messages);
+    messages
+}
+
+fn collect_error_messages(value: &serde_json::Value, messages: &mut Vec<String>) {
+    if let Some(message) = value
+        .get("ErrorMessage")
+        .and_then(serde_json::Value::as_str)
+    {
+        if !message.is_empty() {
+            messages.push(message.to_owned());
+        }
+    }
+    match value {
+        serde_json::Value::Array(items) => {
+            for item in items {
+                collect_error_messages(item, messages);
+            }
+        }
+        serde_json::Value::Object(map) => {
+            for (key, item) in map {
+                if key != "ErrorMessage" {
+                    collect_error_messages(item, messages);
+                }
+            }
+        }
+        serde_json::Value::Null
+        | serde_json::Value::Bool(_)
+        | serde_json::Value::Number(_)
+        | serde_json::Value::String(_) => {}
+    }
+}
+
+async fn send_mailjet(config: &Config, to: &str, subject: &str, html: &str) -> Result<(), String> {
+    if config.mailjet_secret_key.is_empty() {
+        return Err("MAILJET_SECRET_KEY is empty".into());
+    }
+    if config.mailjet_sender.is_empty() {
+        return Err("MAILJET_SENDER is empty".into());
+    }
+    let response = reqwest::Client::new()
+        .post("https://api.mailjet.com/v3.1/send")
+        .basic_auth(&config.mailjet_api_key, Some(&config.mailjet_secret_key))
+        .json(&mailjet_body(&config.mailjet_sender, to, subject, html))
+        .send()
+        .await
+        .map_err(|error| error.to_string())?;
+    let status = response.status().as_u16();
+    let body = response.text().await.map_err(|error| error.to_string())?;
+    match mailjet_failure(status, &body) {
+        Some(error) => Err(error),
+        None => Ok(()),
     }
 }
 
@@ -134,8 +230,44 @@ async fn send_smtp(config: &Config, to: &str, subject: &str, html: &str) -> Resu
 
 #[cfg(test)]
 mod tests {
-    use super::send_smtp;
+    use super::{mailjet_body, mailjet_failure, send_smtp};
     use crate::config::Config;
+
+    #[test]
+    fn mailjet_body_uses_the_v3_send_shape() {
+        let body = mailjet_body(
+            "coach@example.com",
+            "ada@example.com",
+            "Welcome",
+            "<p>Hi</p>",
+        );
+        let message = &body["Messages"][0];
+        assert_eq!(message["From"]["Email"], "coach@example.com");
+        assert_eq!(message["From"]["Name"], "Retrospected");
+        assert_eq!(message["To"][0]["Email"], "ada@example.com");
+        assert_eq!(message["Subject"], "Welcome");
+        assert_eq!(message["HTMLPart"], "<p>Hi</p>");
+    }
+
+    #[test]
+    fn mailjet_failure_accepts_a_successful_message() {
+        let body = r#"{"Messages":[{"Status":"success","To":[],"Cc":[],"Bcc":[]}]}"#;
+        assert_eq!(mailjet_failure(200, body), None);
+    }
+
+    #[test]
+    fn mailjet_failure_reports_a_rejected_message_and_an_auth_error() {
+        let rejected = r#"{"Messages":[{"Status":"error","Errors":[{"ErrorMessage":"sender is not validated"}]}]}"#;
+        assert_eq!(
+            mailjet_failure(200, rejected).as_deref(),
+            Some("sender is not validated")
+        );
+        let unauthorized = r#"{"ErrorMessage":"API key authentication/authorization failure"}"#;
+        assert_eq!(
+            mailjet_failure(401, unauthorized).as_deref(),
+            Some("status 401: API key authentication/authorization failure")
+        );
+    }
 
     #[tokio::test]
     async fn smtp_reports_a_refused_connection() {

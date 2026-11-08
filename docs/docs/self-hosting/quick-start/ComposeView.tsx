@@ -17,10 +17,11 @@ type ComposeViewSettings = {
   disableRegistration: boolean;
   disableAccountDeletion: boolean;
   disableShowAuthor: boolean;
-  useSendgrid: boolean;
+  useMailjet: boolean;
   useSmtp: boolean;
-  sendgridKey: string;
-  sendgridSender: string;
+  mailjetKey: string;
+  mailjetSecret: string;
+  mailjetSender: string;
   smtpHost: string;
   smtpPort: string;
   smtpSecure: boolean;
@@ -68,10 +69,11 @@ export default function ComposeView({
     disableRegistration,
     disableAccountDeletion,
     disableShowAuthor,
-    useSendgrid,
+    useMailjet,
     useSmtp,
-    sendgridKey,
-    sendgridSender,
+    mailjetKey,
+    mailjetSecret,
+    mailjetSender,
     smtpHost,
     smtpPort,
     smtpSecure,
@@ -97,14 +99,15 @@ export default function ComposeView({
     p(disableRegistration, 'DISABLE_PASSWORD_REGISTRATION', 'true'),
     p(disableAccountDeletion, 'DISABLE_ACCOUNT_DELETION', 'true'),
     p(disableShowAuthor, 'DISABLE_SHOW_AUTHOR', 'true'),
-    p(useSendgrid, 'SENDGRID_API_KEY', sendgridKey),
-    p(useSendgrid, 'SENDGRID_SENDER', sendgridSender),
-    p(useSmtp, 'MAIL_SMTP_HOST', smtpHost),
-    p(useSmtp, 'MAIL_PORT', smtpPort, true),
-    p(useSmtp, 'MAIL_SECURE', smtpSecure ? 'true' : 'false'),
-    p(useSmtp, 'MAIL_USER', smtpUser),
-    p(useSmtp, 'MAIL_PASSWORD', smtpPassword),
-    p(useSmtp, 'MAIL_SENDER', smtpSender),
+    p(useMailjet, 'MAILJET_API_KEY', mailjetKey),
+    p(useMailjet, 'MAILJET_SECRET_KEY', mailjetSecret),
+    p(useMailjet, 'MAILJET_SENDER', mailjetSender),
+    p(useSmtp && !useMailjet, 'MAIL_SMTP_HOST', smtpHost),
+    p(useSmtp && !useMailjet, 'MAIL_PORT', smtpPort, true),
+    p(useSmtp && !useMailjet, 'MAIL_SECURE', smtpSecure ? 'true' : 'false'),
+    p(useSmtp && !useMailjet, 'MAIL_USER', smtpUser),
+    p(useSmtp && !useMailjet, 'MAIL_PASSWORD', smtpPassword),
+    p(useSmtp && !useMailjet, 'MAIL_SENDER', smtpSender),
     p(useAi && anthropicKey.length > 0, 'ANTHROPIC_API_KEY', anthropicKey),
     p(useAi && anthropicModel.length > 0, 'ANTHROPIC_MODEL', anthropicModel),
     p(useAi && aiFreeLimit.length > 0, 'AI_FREE_LIMIT', aiFreeLimit, true),
