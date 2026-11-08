@@ -68,10 +68,16 @@ const EditableLabel = ({
     setCurrent(value);
   }, [value]);
 
-  const fieldClass = cn(
-    'w-full flex-1 border-0 bg-transparent p-0 font-[inherit] text-[length:inherit] leading-normal tracking-[inherit] outline-none',
+  const textClass = cn(
+    'font-[inherit] text-[length:inherit] leading-normal tracking-[inherit]',
     centered && 'text-center',
   );
+  const fieldClass = cn(
+    textClass,
+    'border-0 bg-transparent p-0 outline-none',
+    wrapText ? 'whitespace-pre-wrap' : 'whitespace-pre',
+  );
+  const shown = current || placeholder || '';
 
   return (
     <span
@@ -83,34 +89,59 @@ const EditableLabel = ({
       {editMode ? (
         <span
           className={cn(
-            'flex w-full items-center',
-            multiline && 'min-w-0',
+            'max-w-full items-center gap-1',
+            multiline ? 'flex w-full min-w-0' : 'inline-flex',
           )}
         >
           {multiline ? (
-            <textarea
-              ref={inputRef as React.RefObject<HTMLTextAreaElement>}
-              aria-label={`${label} input`}
-              data-testid={`${label} input`}
-              value={current}
-              onBlur={enableViewMode}
-              onKeyPress={handleKeyPress}
-              onChange={handleChange}
-              className={fieldClass}
-            />
+            <span className="relative block min-w-0 flex-1">
+              <span
+                aria-hidden
+                className={cn(
+                  textClass,
+                  'invisible block',
+                  wrapText ? 'whitespace-pre-wrap' : 'whitespace-pre',
+                )}
+              >
+                {`${shown}\u200b`}
+              </span>
+              <textarea
+                ref={inputRef as React.RefObject<HTMLTextAreaElement>}
+                aria-label={`${label} input`}
+                data-testid={`${label} input`}
+                value={current}
+                rows={1}
+                onBlur={enableViewMode}
+                onKeyPress={handleKeyPress}
+                onChange={handleChange}
+                className={cn(
+                  fieldClass,
+                  'absolute inset-0 h-full w-full resize-none overflow-hidden',
+                )}
+              />
+            </span>
           ) : (
-            <input
-              ref={inputRef as React.RefObject<HTMLInputElement>}
-              aria-label={`${label} input`}
-              data-testid={`${label} input`}
-              value={current}
-              onBlur={enableViewMode}
-              onKeyPress={handleKeyPress}
-              onChange={handleChange}
-              className={fieldClass}
-            />
+            <span className="relative inline-block max-w-full min-w-[1ch]">
+              <span
+                aria-hidden
+                className={cn(textClass, 'invisible whitespace-pre')}
+              >
+                {`${shown}\u00a0`}
+              </span>
+              <input
+                ref={inputRef as React.RefObject<HTMLInputElement>}
+                aria-label={`${label} input`}
+                data-testid={`${label} input`}
+                value={current}
+                size={1}
+                onBlur={enableViewMode}
+                onKeyPress={handleKeyPress}
+                onChange={handleChange}
+                className={cn(fieldClass, 'absolute inset-0 h-full w-full')}
+              />
+            </span>
           )}
-          <Pencil className="ml-1.5 size-3.5 shrink-0 opacity-0" />
+          <Pencil className="size-3.5 shrink-0 opacity-0" />
         </span>
       ) : readOnly ? (
         <span
