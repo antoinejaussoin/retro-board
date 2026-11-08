@@ -32,6 +32,12 @@ type ComposeViewSettings = {
   primaryHeaderColour: string;
   secondaryHeaderColour: string;
   logo: string;
+  useAi: boolean;
+  anthropicKey: string;
+  anthropicModel: string;
+  aiFreeLimit: string;
+  aiPaidLimit: string;
+  aiFeedbackUrl: string;
 };
 
 type ComposeViewProps = {
@@ -77,6 +83,12 @@ export default function ComposeView({
     primaryHeaderColour,
     secondaryHeaderColour,
     logo,
+    useAi,
+    anthropicKey,
+    anthropicModel,
+    aiFreeLimit,
+    aiPaidLimit,
+    aiFeedbackUrl,
   },
 }: ComposeViewProps) {
   const optionals = [
@@ -93,6 +105,18 @@ export default function ComposeView({
     p(useSmtp, 'MAIL_USER', smtpUser),
     p(useSmtp, 'MAIL_PASSWORD', smtpPassword),
     p(useSmtp, 'MAIL_SENDER', smtpSender),
+    p(useAi && anthropicKey.length > 0, 'ANTHROPIC_API_KEY', anthropicKey),
+    p(useAi && anthropicModel.length > 0, 'ANTHROPIC_MODEL', anthropicModel),
+    p(useAi && aiFreeLimit.length > 0, 'AI_FREE_LIMIT', aiFreeLimit, true),
+    p(useAi && aiPaidLimit.length > 0, 'AI_PAID_LIMIT', aiPaidLimit, true),
+  ].filter(Boolean);
+
+  const frontendOptionals = [
+    p(
+      useAi && aiFeedbackUrl.length > 0,
+      'FRONTEND_AI_FEEDBACK_URL',
+      aiFeedbackUrl
+    ),
   ].filter(Boolean);
 
   const text = `version: '3'
@@ -105,11 +129,13 @@ services:
       - '${port}:80'
     restart: unless-stopped
     environment:
-      FRONTEND_PRIMARY_COLOURS: ${d(primaryColours)}
-      FRONTEND_SECONDARY_COLOURS: ${d(secondaryColours)}
-      FRONTEND_PRIMARY_HEADER_COLOUR: ${d(primaryHeaderColour)}
-      FRONTEND_SECONDARY_HEADER_COLOUR: ${d(secondaryHeaderColour)}
-      FRONTEND_LOGO: ${d(logo)}
+      FRONTEND_PRIMARY_COLOR: ${d(primaryColours)}
+      FRONTEND_SECONDARY_COLOR: ${d(secondaryColours)}
+      FRONTEND_HEADER_PRIMARY_COLOR: ${d(primaryHeaderColour)}
+      FRONTEND_HEADER_SECONDARY_COLOR: ${d(secondaryHeaderColour)}
+      FRONTEND_LOGO: ${d(logo)}${
+        frontendOptionals.length ? '\n' + frontendOptionals.join('\n') : ''
+      }
     logging:
       driver: 'json-file'
       options:
