@@ -1,5 +1,4 @@
 import React from 'react';
-import Toggle from 'react-toggle';
 import { Field, FieldProps } from './Field';
 import styles from './Editor.module.css';
 
@@ -21,8 +20,11 @@ export function FieldToggle({
   return (
     <Field label={label} description={description}>
       <div className={styles.toggle}>
-        <Toggle
+        <input
           id={id}
+          className={styles.switch}
+          type="checkbox"
+          role="switch"
           checked={value}
           onChange={(e) => onChange(e.target.checked)}
         />
