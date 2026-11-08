@@ -184,24 +184,34 @@
 }
 
 @keyframes post-land {
-  0%,
-  75% {
-    box-shadow:
-      0 0 0 3px var(--color-primary-500),
-      0 8px 24px rgb(31 41 55 / 0.12);
+  0% {
+    transform: translateY(-36px) translate(50%, 50%) rotate(-7deg) scale(0.96)
+      translate(-50%, -50%);
+  }
+  30% {
+    transform: translateY(12px) translate(50%, 50%) rotate(6deg) scale(1.03)
+      translate(-50%, -50%);
+  }
+  52% {
+    transform: translateY(-10px) translate(50%, 50%) rotate(-4deg)
+      translate(-50%, -50%);
+  }
+  74% {
+    transform: translateY(5px) translate(50%, 50%) rotate(2deg)
+      translate(-50%, -50%);
   }
   100% {
-    box-shadow: 0 0 0 0 transparent;
+    transform: translate(50%, 50%) rotate(0deg) translate(-50%, -50%);
   }
 }
 
 .post-landed {
-  animation: post-land 1.8s ease;
+  animation: post-land 0.9s ease-in-out;
+  transform-origin: 0 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .post-landed {
     animation: none;
-    box-shadow: 0 0 0 3px var(--color-primary-500);
   }
 }
