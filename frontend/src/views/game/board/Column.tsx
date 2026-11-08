@@ -192,10 +192,7 @@ const Column: React.FC<ColumnProps> = ({
 
   return (
     <section
-      className={cn(
-        'flex min-w-0 flex-col py-3',
-        fillViewport ? 'min-h-40' : 'min-h-[calc(100dvh-7rem)]',
-      )}
+      className="flex min-h-40 min-w-0 flex-col py-3"
     >
       <div className="mb-4 flex items-center gap-1">
         <div className="relative min-w-0 flex-1">
@@ -267,7 +264,10 @@ const Column: React.FC<ColumnProps> = ({
       <div
         ref={postsRef}
         data-drop-id={`column#${column.index}`}
-        className="min-h-[100px] flex-1 rounded-xl pb-20"
+        className={cn(
+          'min-h-[100px] rounded-xl',
+          fillViewport ? 'flex-1 pb-20' : 'pb-2',
+        )}
         style={{
           backgroundColor:
             draggingOver || frame.preview?.targetId === columnId
