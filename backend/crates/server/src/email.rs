@@ -260,6 +260,9 @@ mod tests {
             "email=ant%2Bmailjet%40jaussoin.com&code=2f0be913-6776-4f05-bccc-6368a5f13c35"
         ));
         assert!(!body.contains("email=ant+mailjet@jaussoin.com"));
+        assert!(body.contains("https://app-beta.retrospected.com/email/logo.png"));
+        assert!(body.contains("https://app-beta.retrospected.com/email/board.png"));
+        assert!(!body.contains("d15k2d11r6t6rl.cloudfront.net"));
     }
 
     #[test]
