@@ -1,7 +1,7 @@
 ---
 slug: 'release-6.0.0'
 lang: 'en'
-title: 'Retrospected 6.0.0'
+title: 'Retrospected 6'
 subtitle: "A new backend, a new board, and an AI coach that can summarise your retrospective"
 author: 'Antoine Jaussoin'
 date: '2026-11-08'
@@ -9,7 +9,7 @@ keywords: 'blog,release,6.0.0,rust,claude,emoji,reactions,self-hosting,mailjet'
 cover: '/assets/blog/release-600/board.png'
 ---
 
-Retrospected 6.0.0 is out, and it's the biggest release so far. Almost everything has been rebuilt: the interface has been redesigned from scratch, the agile coach now uses Claude, and the backend has been rewritten in Rust.
+Retrospected 6 is out, and it's the biggest release so far. Almost everything has been rebuilt: the interface has been redesigned from scratch, the agile coach now uses Claude, and the backend has been rewritten in Rust.
 
 Despite all that, upgrading should be painless. Your account and your retrospectives are still there, and if you self-host, the new server will pick up your existing database without any manual migration.
 
