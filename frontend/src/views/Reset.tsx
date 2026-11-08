@@ -2,6 +2,7 @@ import { KeyRound } from 'lucide-react';
 import { useState, useCallback, Suspense, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { emailFromQuery } from 'email/query';
 import { resetChangePassword } from '../api';
 import Input from '../components/Input';
 import { useSetUser } from 'state/user/useSetUser';
@@ -16,7 +17,7 @@ function ResetPasswordPage() {
   const location = useLocation();
   const { t } = useTranslation();
   const params = new URLSearchParams(location.search);
-  const email = params.get('email');
+  const email = emailFromQuery(params.get('email'));
   const code = params.get('code');
 
   const [loading, setLoading] = useState(false);

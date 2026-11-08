@@ -322,11 +322,7 @@ pub(super) async fn validate(
             "Your request has been rate-limited. Please try again in a few seconds.",
         );
     }
-    let Some(identity) = db::identity_by_username(&state.db, "password", &body.email)
-        .await
-        .ok()
-        .flatten()
-    else {
+    let Some(identity) = password_identity_from_link(&state, &body.email).await else {
         return if state.config.self_hosted {
             text(StatusCode::NOT_FOUND, "Email not found")
         } else {
@@ -392,11 +388,7 @@ pub(super) async fn reset_password(
             "Your request has been rate-limited. Please try again in a few seconds.",
         );
     }
-    let Some(identity) = db::identity_by_username(&state.db, "password", &body.email)
-        .await
-        .ok()
-        .flatten()
-    else {
+    let Some(identity) = password_identity_from_link(&state, &body.email).await else {
         return if state.config.self_hosted {
             text(StatusCode::NOT_FOUND, "Email not found")
         } else {
@@ -421,4 +413,46 @@ pub(super) async fn reset_password(
         return text(StatusCode::INTERNAL_SERVER_ERROR, "Unspecified error");
     };
     with_cookie(&state, &session.id, Json(user).into_response())
+}
+
+/// Usernames to try for a link. Query parsers read `+` as a space, and addresses use `+`.
+fn mail_link_usernames(email: &str) -> Vec<String> {
+    let mut names = vec![email.to_owned()];
+    if email.contains(' ') {
+        names.push(email.replace(' ', "+"));
+    }
+    names
+}
+
+async fn password_identity_from_link(state: &AppState, email: &str) -> Option<db::Identity> {
+    for username in mail_link_usernames(email) {
+        if let Some(identity) = db::identity_by_username(&state.db, "password", &username)
+            .await
+            .ok()
+            .flatten()
+        {
+            return Some(identity);
+        }
+    }
+    None
+}
+
+#[cfg(test)]
+mod tests {
+    use super::mail_link_usernames;
+
+    #[test]
+    fn a_space_in_a_mail_link_is_also_tried_as_a_plus() {
+        assert_eq!(
+            mail_link_usernames("ant mailjet@jaussoin.com"),
+            vec![
+                "ant mailjet@jaussoin.com".to_owned(),
+                "ant+mailjet@jaussoin.com".to_owned()
+            ]
+        );
+        assert_eq!(
+            mail_link_usernames("ant+mailjet@jaussoin.com"),
+            vec!["ant+mailjet@jaussoin.com".to_owned()]
+        );
+    }
 }
