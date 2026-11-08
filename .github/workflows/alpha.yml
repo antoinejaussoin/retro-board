@@ -6,60 +6,27 @@ on:
 
 jobs:
   frontend:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Read VERSION
-        id: package
-        uses: martinbeentjes/npm-get-version-action@master
-      - name: Echo VERSION
-        run: echo ${{ steps.package.outputs.current-version }}
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      - name: Login to DockerHub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_NEW_USERNAME }}
-          password: ${{ secrets.DOCKER_NEW_PASSWORD }}
-      - name: Build and push Frontend
-        uses: docker/build-push-action@v6
-        with:
-          file: frontend/Dockerfile
-          context: frontend
-          tags: retrospected/frontend:alpha
-          platforms: linux/amd64
-          push: true
+    uses: ./.github/workflows/build-multiarch.yml
+    with:
+      image: retrospected/frontend
+      file: frontend/Dockerfile
+      context: frontend
+      tags: retrospected/frontend:alpha
+    secrets:
+      DOCKER_NEW_USERNAME: ${{ secrets.DOCKER_NEW_USERNAME }}
+      DOCKER_NEW_PASSWORD: ${{ secrets.DOCKER_NEW_PASSWORD }}
 
   backend:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      actions: write
-    steps:
-      - uses: actions/checkout@v4
-      - name: Read VERSION
-        id: package
-        uses: martinbeentjes/npm-get-version-action@master
-      - name: Echo VERSION
-        run: echo ${{ steps.package.outputs.current-version }}
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      - name: Login to DockerHub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_NEW_USERNAME }}
-          password: ${{ secrets.DOCKER_NEW_PASSWORD }}
-      - name: Build and push Backend
-        uses: docker/build-push-action@v6
-        with:
-          file: backend/Dockerfile
-          context: backend
-          tags: retrospected/backend:alpha
-          platforms: linux/amd64
-          # Same scope build-multiarch.yml uses for retrospected/backend on linux/amd64.
-          cache-from: type=gha,scope=retrospected-backend-linux-amd64
-          cache-to: type=gha,scope=retrospected-backend-linux-amd64,mode=max,ignore-error=true
-          push: true
+    uses: ./.github/workflows/build-multiarch.yml
+    with:
+      image: retrospected/backend
+      file: backend/Dockerfile
+      context: backend
+      tags: retrospected/backend:alpha
+      cache: true
+    secrets:
+      DOCKER_NEW_USERNAME: ${{ secrets.DOCKER_NEW_USERNAME }}
+      DOCKER_NEW_PASSWORD: ${{ secrets.DOCKER_NEW_PASSWORD }}
 
   marketing:
     runs-on: ubuntu-latest
