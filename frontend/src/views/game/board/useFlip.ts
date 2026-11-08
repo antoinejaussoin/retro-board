@@ -2,16 +2,18 @@ import { useLayoutEffect, type RefObject } from 'react';
 
 const tops = new Map<string, number>();
 
-export function useFlip(
-  ref: RefObject<HTMLElement | null>,
-  signature: string,
-) {
+export function useFlip(ref: RefObject<HTMLElement | null>, signature: string) {
   useLayoutEffect(() => {
     const root = ref.current;
     if (!root) {
       return;
     }
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Recording the order makes this effect rerun after a reorder, which is
+    // when the cards need their new positions measured.
+    root.dataset.boardOrder = signature;
+    const reduce = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
     for (const node of root.querySelectorAll<HTMLElement>('[data-flip-id]')) {
       const id = node.dataset.flipId;
       if (!id) {

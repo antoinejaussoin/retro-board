@@ -229,6 +229,7 @@ const PostItem = ({
       {canReorder ? (
         <div
           ref={handleRef}
+          data-cy="drag-handle"
           className={`drag-handle absolute top-1 right-1 z-[1] flex cursor-grab touch-none select-none items-center justify-center text-muted transition-opacity ${hoverActions}`}
         >
           <GripVertical className="size-4" />

@@ -1,5 +1,9 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { intentFromNativeDrop, resolveTouchDrop, rowsForPreview } from '../drag';
+import {
+  intentFromNativeDrop,
+  resolveTouchDrop,
+  rowsForPreview,
+} from '../drag';
 import { bindTouchDrag } from '../touch-drag';
 
 function box(element: HTMLElement, top: number, height: number) {
@@ -237,7 +241,9 @@ describe('rowsForPreview', () => {
         posts,
         { type: 'move', sourceId: 'a', targetId: 'group#g', index: 0 },
         'column#0',
-      ).map((row) => (row.kind === 'slot' ? 'slot' : `${row.post.id}:${row.collapsed}`)),
+      ).map((row) =>
+        row.kind === 'slot' ? 'slot' : `${row.post.id}:${row.collapsed}`,
+      ),
     ).toEqual(['a:true', 'b:false', 'c:false']);
   });
 });
