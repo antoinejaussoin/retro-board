@@ -21,7 +21,7 @@ The backend is a faithful port of the TypeScript service. Match existing HTTP pa
 - Persist sessions in Redis at `sess:{id}` when `REDIS_ENABLED` is true. JSON must include `passport.user` as `{userId}:{identityId}` so a database written by the Node server still authenticates.
 - Return JSON errors in the same shape the Node handlers used (status plus body). Do not invent a new error envelope.
 - Stripe webhooks need the raw body bytes for signature verification. Do not parse that route as JSON first.
-- Trust the first `X-Forwarded-For` hop for rate-limit keys, matching `trust proxy = 1`.
+- Trust `X-Forwarded-For` only when the TCP peer is loopback, a private address, or listed in `TRUSTED_PROXIES`. A public peer uses its own address.
 
 ## SQL
 

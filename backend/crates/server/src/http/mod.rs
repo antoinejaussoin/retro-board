@@ -95,13 +95,31 @@ pub async fn attach_session(state: &AppState, headers: &HeaderMap) -> Arc<Mutex<
 
 pub fn with_cookie(state: &AppState, session_id: &str, response: Response) -> Response {
     let mut response = response;
+    if response.headers().get(header::SET_COOKIE).is_some() {
+        return response;
+    }
     if let Ok(value) = state.sessions.set_cookie_header(session_id).parse() {
         response.headers_mut().insert(header::SET_COOKIE, value);
     }
     response
 }
 
-pub(super) fn client_ip(headers: &HeaderMap, addr: Option<SocketAddr>) -> String {
+pub(crate) fn client_ip(
+    headers: &HeaderMap,
+    addr: Option<SocketAddr>,
+    trusted: &[String],
+) -> String {
+    let peer = addr.map(|addr| addr.ip());
+    if peer.is_some_and(|ip| proxy_peer(ip, trusted)) {
+        if let Some(forwarded) = forwarded_for(headers) {
+            return forwarded;
+        }
+    }
+    peer.map(|ip| ip.to_string())
+        .unwrap_or_else(|| "unknown".into())
+}
+
+fn forwarded_for(headers: &HeaderMap) -> Option<String> {
     headers
         .get("x-forwarded-for")
         .and_then(|value| value.to_str().ok())
@@ -109,8 +127,43 @@ pub(super) fn client_ip(headers: &HeaderMap, addr: Option<SocketAddr>) -> String
         .map(str::trim)
         .filter(|value| !value.is_empty())
         .map(str::to_owned)
-        .or_else(|| addr.map(|addr| addr.ip().to_string()))
-        .unwrap_or_else(|| "unknown".into())
+}
+
+fn proxy_peer(ip: std::net::IpAddr, trusted: &[String]) -> bool {
+    ip.is_loopback() || is_private(ip) || trusted.iter().any(|entry| proxy_entry(ip, entry))
+}
+
+fn is_private(ip: std::net::IpAddr) -> bool {
+    match ip {
+        std::net::IpAddr::V4(ip) => ip.is_private(),
+        std::net::IpAddr::V6(ip) => {
+            let bits = u128::from(ip);
+            (bits & (0xfe << 120)) == (0xfc << 120)
+        }
+    }
+}
+
+fn proxy_entry(ip: std::net::IpAddr, entry: &str) -> bool {
+    if let Ok(exact) = entry.parse::<std::net::IpAddr>() {
+        return ip == exact;
+    }
+    let Some((base, bits)) = entry.split_once('/') else {
+        return false;
+    };
+    let Ok(bits) = bits.parse::<u32>() else {
+        return false;
+    };
+    match (ip, base.parse::<std::net::Ipv4Addr>()) {
+        (std::net::IpAddr::V4(ip), Ok(base)) if bits <= 32 => {
+            let mask = if bits == 0 {
+                0
+            } else {
+                u32::MAX << (32 - bits)
+            };
+            (u32::from(ip) & mask) == (u32::from(base) & mask)
+        }
+        _ => false,
+    }
 }
 
 pub(super) async fn limited(
@@ -118,7 +171,10 @@ pub(super) async fn limited(
     headers: &HeaderMap,
     addr: Option<SocketAddr>,
 ) -> bool {
-    state.http_limit.allow(&client_ip(headers, addr)).await
+    state
+        .http_limit
+        .allow(&client_ip(headers, addr, &state.config.trusted_proxies))
+        .await
 }
 
 pub(super) fn empty(status: StatusCode) -> Response {
@@ -127,4 +183,25 @@ pub(super) fn empty(status: StatusCode) -> Response {
 
 pub(super) fn text(status: StatusCode, body: &str) -> Response {
     (status, body.to_owned()).into_response()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::client_ip;
+    use axum::http::HeaderMap;
+
+    #[test]
+    fn public_peer_ignores_a_spoofed_forwarded_for() {
+        let mut headers = HeaderMap::new();
+        headers.insert("x-forwarded-for", "1.2.3.4".parse().unwrap());
+        let public = "8.8.8.8:443".parse().unwrap();
+        assert_eq!(client_ip(&headers, Some(public), &[]), "8.8.8.8");
+        let local = "127.0.0.1:8081".parse().unwrap();
+        assert_eq!(client_ip(&headers, Some(local), &[]), "1.2.3.4");
+        let listed = "203.0.113.9:443".parse().unwrap();
+        assert_eq!(
+            client_ip(&headers, Some(listed), &["203.0.113.0/24".into()]),
+            "1.2.3.4"
+        );
+    }
 }

@@ -730,6 +730,43 @@ async fn unverified_password_cannot_log_in_when_mail_is_configured() {
 }
 
 #[tokio::test]
+async fn login_rotates_the_session_and_logout_clears_it() {
+    let server = boot_with(9, &[]).await;
+    let client = reqwest::Client::new();
+    let anon = client
+        .post(format!("{}/api/auth/anonymous/login", server.base))
+        .json(&serde_json::json!({"username": "ANONUSER__Ada__ANONUSER", "password": "secret"}))
+        .send()
+        .await
+        .unwrap();
+    let first = cookie_from(&anon);
+    let email = format!("rotate-{}@example.com", std::process::id());
+    let registered = client
+        .post(format!("{}/api/register", server.base))
+        .header("cookie", &first)
+        .json(&serde_json::json!({"name": "Ada", "username": email, "password": "correct-horse", "language": "en-GB"}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(registered.status(), 200);
+    let second = cookie_from(&registered);
+    assert_ne!(first, second, "login must issue a new session cookie");
+    let logout = client
+        .post(format!("{}/api/logout", server.base))
+        .header("cookie", &second)
+        .send()
+        .await
+        .unwrap();
+    let cleared = logout
+        .headers()
+        .get_all(reqwest::header::SET_COOKIE)
+        .iter()
+        .filter_map(|value| value.to_str().ok())
+        .any(|value| value.to_ascii_lowercase().contains("max-age=0"));
+    assert!(cleared, "logout must expire connect.sid");
+}
+
+#[tokio::test]
 async fn unsigned_slack_and_empty_stripe_secret_are_rejected() {
     let server = boot_with(8, &[]).await;
     let client = reqwest::Client::new();

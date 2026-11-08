@@ -2,7 +2,7 @@ use std::net::SocketAddr;
 use std::sync::Arc;
 
 use axum::extract::{ConnectInfo, State};
-use axum::http::{HeaderMap, StatusCode};
+use axum::http::{header, HeaderMap, StatusCode};
 use axum::response::{IntoResponse, Response};
 use axum::{Extension, Json};
 use serde_json::{json, Value};
@@ -80,7 +80,7 @@ pub(super) async fn login(
     }
     let mut session = session.lock().await;
     session.passport_user = Some(user_ids(&identity.user_id, &identity.id));
-    state.sessions.save(&session).await;
+    state.sessions.rotate(&mut session).await;
     with_cookie(&state, &session.id, empty(StatusCode::OK))
 }
 
@@ -183,7 +183,7 @@ pub(super) async fn register(
     }
     let mut session = session.lock().await;
     session.passport_user = Some(user_ids(&identity.user_id, &identity.id));
-    state.sessions.save(&session).await;
+    state.sessions.rotate(&mut session).await;
     with_cookie(
         &state,
         &session.id,
@@ -243,7 +243,11 @@ pub(super) async fn logout(
 ) -> Response {
     let session = session.lock().await;
     state.sessions.destroy(&session.id).await;
-    Json(json!({ "authenticated": false })).into_response()
+    let mut response = Json(json!({ "authenticated": false })).into_response();
+    if let Ok(value) = state.sessions.clear_cookie_header().parse() {
+        response.headers_mut().insert(header::SET_COOKIE, value);
+    }
+    response
 }
 
 pub(super) async fn rename_user(
@@ -333,7 +337,7 @@ pub(super) async fn validate(
         let _ = db::set_verification(&state.db, &identity.id, None).await;
         let mut session = session.lock().await;
         session.passport_user = Some(user_ids(&identity.user_id, &identity.id));
-        state.sessions.save(&session).await;
+        state.sessions.rotate(&mut session).await;
         let Some(user) = db::user_by_identity(&state.db, &identity.id, state.force_pro())
             .await
             .ok()
@@ -408,7 +412,7 @@ pub(super) async fn reset_password(
     let _ = db::set_password(&state.db, &identity.id, &hash).await;
     let mut session = session.lock().await;
     session.passport_user = Some(user_ids(&identity.user_id, &identity.id));
-    state.sessions.save(&session).await;
+    state.sessions.rotate(&mut session).await;
     let Some(user) = db::user_by_identity(&state.db, &identity.id, state.force_pro())
         .await
         .ok()

@@ -162,7 +162,7 @@ where
               _: socketioxide::socket::DisconnectReason| {
             let presence = presence_disconnect.clone();
             async move {
-                let ip = peer_ip(socket.req_parts());
+                let ip = peer_ip(socket.req_parts(), &state.config.trusted_proxies);
                 crate::log::ws_disconnect(&socket.id.to_string(), &ip);
                 if let Some(session_id) = socket
                     .extensions
@@ -248,7 +248,7 @@ fn on_message<A>(
         if session_id.is_empty() {
             return;
         }
-        let ip = peer_ip(socket.req_parts());
+        let ip = peer_ip(socket.req_parts(), &state.config.trusted_proxies);
         if !state.ws_limit.allow(&ip).await || !state.ws_limit.allow(&session_id).await {
             crate::log::ws_limited(&session_id);
             emit_self(&socket, RECEIVE_RATE_LIMITED, &json!({}));
@@ -396,27 +396,14 @@ pub(super) async fn broadcast<A: Adapter>(
     }
 }
 
-fn peer_ip(parts: &axum::http::request::Parts) -> String {
-    parts
-        .headers
-        .get("x-forwarded-for")
-        .and_then(|value| value.to_str().ok())
-        .and_then(|value| value.split(',').next())
-        .map(str::trim)
-        .filter(|value| !value.is_empty())
-        .map(str::to_owned)
-        .or_else(|| {
-            parts
-                .extensions
-                .get::<std::net::SocketAddr>()
-                .map(|addr| addr.ip().to_string())
-        })
-        .unwrap_or_else(|| "-".into())
+fn peer_ip(parts: &axum::http::request::Parts, trusted: &[String]) -> String {
+    let addr = parts.extensions.get::<std::net::SocketAddr>().copied();
+    crate::http::client_ip(&parts.headers, addr, trusted)
 }
 
 fn log_connection<A: Adapter>(socket: &SocketRef<A>, state: &AppState) {
     let id = socket.id.to_string();
-    let ip = peer_ip(socket.req_parts());
+    let ip = peer_ip(socket.req_parts(), &state.config.trusted_proxies);
     let cookie = socket
         .req_parts()
         .headers

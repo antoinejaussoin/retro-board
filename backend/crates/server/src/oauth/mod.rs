@@ -139,7 +139,7 @@ pub(super) async fn finish_login(
         let _ = user_id;
     }
     session.passport_user = Some(user_ids(&identity.user_id, &identity.id));
-    state.sessions.save(session).await;
+    state.sessions.rotate(session).await;
     if let Some(socket_id) = session.socket_id.clone() {
         if let Some(io) = state.io.get() {
             let payload =

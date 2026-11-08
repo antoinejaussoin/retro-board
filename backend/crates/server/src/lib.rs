@@ -48,6 +48,12 @@ use crate::state::{limiters, AppState};
 /// # Errors
 /// Returns an error when the database, Redis, or the listener cannot start.
 pub async fn run(config: Config) -> Result<(), Box<dyn std::error::Error>> {
+    if let Some(message) = config.hosted_startup_error() {
+        return Err(message.into());
+    }
+    for warning in config.startup_warnings() {
+        tracing::warn!("{warning}");
+    }
     let pool = PgPoolOptions::new()
         .max_connections(10)
         .connect(&config.database_url())

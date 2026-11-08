@@ -49,10 +49,18 @@ impl SessionStore {
         };
         Ok(Self {
             secret: config.cookie_secret(),
-            secure: config.secure_cookies,
+            secure: config.secure_cookie(),
             redis,
             memory: Arc::new(Mutex::new(HashMap::new())),
         })
+    }
+
+    /// Issue a new id, persist the session there, and drop the previous record.
+    pub async fn rotate(&self, session: &mut Session) {
+        let previous = session.id.clone();
+        session.id = new_sid();
+        self.save(session).await;
+        self.destroy(&previous).await;
     }
 
     pub fn from_cookie(&self, header: Option<&str>) -> Option<String> {
@@ -75,6 +83,18 @@ impl SessionStore {
             .http_only(true)
             .same_site(cookie::SameSite::Lax)
             .max_age(cookie::time::Duration::seconds(YEAR_MS / 1000))
+            .secure(self.secure);
+        let _ = &mut cookie;
+        cookie.build().to_string()
+    }
+
+    /// Expire `connect.sid` in the browser.
+    pub fn clear_cookie_header(&self) -> String {
+        let mut cookie = Cookie::build((COOKIE_NAME, ""))
+            .path("/")
+            .http_only(true)
+            .same_site(cookie::SameSite::Lax)
+            .max_age(cookie::time::Duration::seconds(0))
             .secure(self.secure);
         let _ = &mut cookie;
         cookie.build().to_string()
