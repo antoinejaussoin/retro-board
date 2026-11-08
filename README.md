@@ -21,7 +21,7 @@
   <img src="./content/logos/vite.png" height="65">
 </p>
 
-![Retrospected.com](/content/screenshot-v5.png?raw=true 'Retrospected.com')
+![Retrospected.com](/content/screenshot-v6.png?raw=true 'Retrospected.com')
 
 ![Retrospected.com](/content/full-color.png?raw=true 'Retrospected.com')
 
