@@ -10,9 +10,10 @@
   width: 100%;
 }
 
-.rc-collapse-header > .rc-collapse-header-text {
+.rc-collapse-header > .rc-collapse-title {
   width: 100%;
   justify-content: space-between;
+  align-items: center;
   display: flex;
 }
 

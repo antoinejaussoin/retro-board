@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from 'react-icons-kit';
+import { Icon } from '@/common/components/KitIcon';
 import { star } from 'react-icons-kit/fa/star';
 import { starO } from 'react-icons-kit/fa/starO';
 

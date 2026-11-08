@@ -46,11 +46,20 @@ export const RcCollapse = styled(Collapse as any)`
     padding: 25px;
     .rc-collapse-header {
       display: flex;
+      align-items: center;
       cursor: pointer;
       justify-content: space-between;
       padding: 0;
       z-index: 100;
       position: relative;
+      .rc-collapse-title {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        min-width: 0;
+      }
       .icon {
         position: relative;
         width: 15px;

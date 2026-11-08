@@ -1,15 +1,21 @@
+import isPropValid from '@emotion/is-prop-valid';
 import type { AppProps } from 'next/app';
 import { appWithTranslation, useTranslation } from 'next-i18next/pages';
+import { StyleSheetManager } from 'styled-components';
 import '../common/assets/css/flaticon.css';
 import '../common/assets/css/react-slick.css';
 import '../common/assets/css/rc-collapse.css';
 import '../common/assets/css/rc-drawer.css';
 import Head from 'next/head';
 
+function shouldForwardProp(prop: string, target: unknown) {
+  return typeof target === 'string' ? isPropValid(prop) : true;
+}
+
 function App({ Component, pageProps }: AppProps) {
   const { t } = useTranslation();
   return (
-    <>
+    <StyleSheetManager shouldForwardProp={shouldForwardProp}>
       <Head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0,width=device-width" />
@@ -62,7 +68,7 @@ function App({ Component, pageProps }: AppProps) {
         <meta name="theme-color" content="#ffffff" />
       </Head>
       <Component {...pageProps} />
-    </>
+    </StyleSheetManager>
   );
 }
 

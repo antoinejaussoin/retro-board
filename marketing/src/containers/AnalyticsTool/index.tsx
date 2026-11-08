@@ -1,6 +1,6 @@
 import React from 'react';
-import Fade from 'react-reveal/Fade';
-import { Icon } from 'react-icons-kit';
+import Fade from '@/common/components/Reveal/Fade';
+import { Icon } from '@/common/components/KitIcon';
 import { check } from 'react-icons-kit/feather/check';
 import { ic_keyboard_arrow_right } from 'react-icons-kit/md/ic_keyboard_arrow_right';
 import Container from '@/common/components/UI/Container';

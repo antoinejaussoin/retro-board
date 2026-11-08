@@ -1,7 +1,7 @@
 import { Fragment, useMemo, useState } from 'react';
 import Heading from '@/common/components/Heading';
 import Container from '@/common/components/UI/Container';
-import { Icon } from 'react-icons-kit';
+import { Icon } from '@/common/components/KitIcon';
 import { plus } from 'react-icons-kit/entypo/plus';
 import { minus } from 'react-icons-kit/entypo/minus';
 import Section, { SectionHeading, RcCollapse } from './faq.style';

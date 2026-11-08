@@ -3,6 +3,7 @@ const path = require('path')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  agentRules: false,
   reactStrictMode: true,
   i18n,
   output: 'standalone',
