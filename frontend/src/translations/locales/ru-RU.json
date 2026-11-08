@@ -164,7 +164,7 @@
     "or": null
   },
   "SocialMediaLogin": {
-    "header": null,
+    "header": "Войти через",
     "info": null
   },
   "AuthCommon": {

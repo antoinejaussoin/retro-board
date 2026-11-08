@@ -233,7 +233,7 @@
     "or": "ou"
   },
   "SocialMediaLogin": {
-    "header": "OAuth",
+    "header": "Entrar com",
     "info": "Isto usará um provedor de terceiros da sua escolha para autenticar você. Nenhuma senha é armazenada."
   },
   "AuthCommon": {

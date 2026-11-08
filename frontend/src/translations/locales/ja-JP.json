@@ -233,7 +233,7 @@
     "or": "または"
   },
   "SocialMediaLogin": {
-    "header": "OAuth",
+    "header": "次でログイン",
     "info": "認証を選択した第三者プロバイダーを使用します。パスワードは保存されません。"
   },
   "AuthCommon": {

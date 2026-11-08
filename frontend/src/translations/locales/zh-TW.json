@@ -233,7 +233,7 @@
     "or": "或者"
   },
   "SocialMediaLogin": {
-    "header": "身份驗證",
+    "header": "使用以下方式登入",
     "info": "這將使用您選擇的第三方提供商對您進行身份驗證。沒有存儲密碼。"
   },
   "AuthCommon": {

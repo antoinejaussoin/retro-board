@@ -233,7 +233,7 @@
     "or": "或"
   },
   "SocialMediaLogin": {
-    "header": "OAuth",
+    "header": "使用以下方式登录",
     "info": "这将使用您选择的第三方提供商来验证您。没有密码已保存。"
   },
   "AuthCommon": {
