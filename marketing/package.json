@@ -37,7 +37,7 @@
     "gray-matter": "^4",
     "i18next": "26.7.2",
     "lodash-es": "^4",
-    "next": "15.5.9",
+    "next": "15.5.29",
     "next-i18next": "16.4.6",
     "polished": "^4",
     "rc-collapse": "3.9.0",
