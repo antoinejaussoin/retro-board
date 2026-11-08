@@ -206,7 +206,7 @@ const PostItem = ({
       style={
         {
           opacity: dragging ? 0.4 : undefined,
-          transformOrigin: landed ? '0 0' : undefined,
+          transformOrigin: landed ? 'center' : undefined,
           '--post-color': color,
         } as React.CSSProperties
       }

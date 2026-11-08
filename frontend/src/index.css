@@ -185,29 +185,30 @@
 
 @keyframes post-land {
   0% {
-    transform: translateY(-36px) translate(50%, 50%) rotate(-7deg) scale(0.96)
-      translate(-50%, -50%);
+    transform: rotate(-8deg);
+    transform-origin: center;
   }
-  30% {
-    transform: translateY(12px) translate(50%, 50%) rotate(6deg) scale(1.03)
-      translate(-50%, -50%);
+  28% {
+    transform: rotate(7deg);
+    transform-origin: center;
   }
   52% {
-    transform: translateY(-10px) translate(50%, 50%) rotate(-4deg)
-      translate(-50%, -50%);
+    transform: rotate(-4deg);
+    transform-origin: center;
   }
   74% {
-    transform: translateY(5px) translate(50%, 50%) rotate(2deg)
-      translate(-50%, -50%);
+    transform: rotate(2deg);
+    transform-origin: center;
   }
   100% {
-    transform: translate(50%, 50%) rotate(0deg) translate(-50%, -50%);
+    transform: rotate(0deg);
+    transform-origin: center;
   }
 }
 
 .post-landed {
   animation: post-land 0.9s ease-in-out;
-  transform-origin: 0 0;
+  transform-origin: center;
 }
 
 @media (prefers-reduced-motion: reduce) {
