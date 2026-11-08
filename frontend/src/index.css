@@ -147,3 +147,13 @@
 .retro-post-actions {
   background-color: var(--post-color);
 }
+
+.retro-reaction-chip,
+.retro-reaction-add {
+  background-color: transparent;
+}
+
+.retro-reaction-chip:hover:enabled,
+.retro-reaction-add:hover {
+  background-color: color-mix(in srgb, var(--post-color), black 10%);
+}

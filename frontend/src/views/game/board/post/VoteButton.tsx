@@ -32,7 +32,6 @@ const VoteButton = ({
       aria-pressed={votedByMe}
       tabIndex={-1}
       className={reactionChipClassName({
-        active: votedByMe,
         interactive: canVote,
       })}
     >

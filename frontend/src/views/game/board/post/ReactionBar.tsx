@@ -103,7 +103,6 @@ const ReactionBar = ({
             })}
             aria-pressed={group.reactedByMe}
             className={reactionChipClassName({
-              active: group.reactedByMe,
               interactive: canReact,
             })}
           >
@@ -136,7 +135,7 @@ const ReactionBar = ({
               <button
                 type="button"
                 aria-label={t('Post.addReaction')}
-                className="inline-flex size-7 shrink-0 items-center justify-center rounded-full border border-dashed border-line text-muted hover:bg-ink/5 hover:text-ink"
+                className="retro-reaction-add inline-flex size-7 shrink-0 items-center justify-center rounded-full text-muted hover:text-ink"
               >
                 <SmilePlus className="size-4" />
               </button>
