@@ -74,9 +74,19 @@ const EditableLabel = ({
   );
 
   return (
-    <span className="inline-flex max-w-full">
+    <span
+      className={cn(
+        'max-w-full',
+        multiline ? 'flex w-full' : 'inline-flex',
+      )}
+    >
       {editMode ? (
-        <span className="inline-flex w-full items-center">
+        <span
+          className={cn(
+            'flex w-full items-center',
+            multiline && 'min-w-0',
+          )}
+        >
           {multiline ? (
             <textarea
               ref={inputRef as React.RefObject<HTMLTextAreaElement>}
@@ -100,31 +110,46 @@ const EditableLabel = ({
               className={fieldClass}
             />
           )}
-          <Pencil className="ml-1.5 size-3.5 opacity-0" />
+          <Pencil className="ml-1.5 size-3.5 shrink-0 opacity-0" />
         </span>
       ) : readOnly ? (
-        <span className="inline-flex items-center" aria-label={label}>
-          <span className={wrapText ? 'whitespace-pre-wrap' : 'whitespace-nowrap'}>
+        <span
+          className={cn(
+            'items-center',
+            multiline ? 'flex w-full' : 'inline-flex',
+          )}
+          aria-label={label}
+        >
+          <span
+            className={cn(
+              multiline && 'w-full',
+              wrapText ? 'whitespace-pre-wrap' : 'whitespace-nowrap',
+            )}
+          >
             {current || placeholder}
           </span>
         </span>
       ) : (
         <button
           type="button"
-          className="inline-flex items-center gap-1 text-left"
+          className={cn(
+            'items-center gap-1 text-left',
+            multiline ? 'flex w-full' : 'inline-flex',
+          )}
           onClick={enableEditMode}
         >
           <span
             aria-label={label}
             data-testid={label}
             className={cn(
-              'leading-normal',
+              'min-w-0 leading-normal',
+              multiline && 'w-full flex-1',
               wrapText ? 'whitespace-pre-wrap' : 'whitespace-nowrap',
             )}
           >
             {current || placeholder}
           </span>
-          <Pencil className="size-3.5 text-muted hover:text-primary-600" />
+          <Pencil className="size-3.5 shrink-0 text-muted hover:text-primary-600" />
         </button>
       )}
     </span>
