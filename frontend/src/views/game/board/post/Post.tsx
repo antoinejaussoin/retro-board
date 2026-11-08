@@ -22,6 +22,7 @@ import config from '../../../../utils/getConfig';
 import { useConfirm } from 'ui/confirm';
 import { Popover, PopoverContent, PopoverTrigger } from 'ui/popover';
 import { Tooltip } from 'ui/tooltip';
+import type { DropIntent } from '../drag';
 import { bindTouchDrag } from '../touch-drag';
 import { usePostUserPermissions } from '../usePostUserPermissions';
 import { countVotes, enumerateVotes } from '../../utils';
@@ -43,6 +44,8 @@ interface PostItemProps {
   onEditAction: (action: string) => void;
   onEditGiphy: (giphyId: string | null) => void;
   onDelete: () => void;
+  landed?: boolean;
+  onTouchPreview?: (intent: DropIntent | null) => void;
   onTouchDrop?: (clientX: number, clientY: number) => void;
 }
 
@@ -60,6 +63,8 @@ const PostItem = ({
   onEditAction,
   onEditGiphy,
   onDelete,
+  landed = false,
+  onTouchPreview,
   onTouchDrop,
 }: PostItemProps) => {
   const {
@@ -88,6 +93,8 @@ const PostItem = ({
   const handleRef = useRef<HTMLDivElement>(null);
   const onTouchDropRef = useRef(onTouchDrop);
   onTouchDropRef.current = onTouchDrop;
+  const onTouchPreviewRef = useRef(onTouchPreview);
+  onTouchPreviewRef.current = onTouchPreview;
   const [dragging, setDragging] = useState(false);
   const [actionsToggled, toggleAction] = useToggle(false);
   const [showGiphyEditor, setShowGiphyEditor] = useState(false);
@@ -175,6 +182,9 @@ const PostItem = ({
         bindTouchDrag(handle, {
           card: element,
           onDragging: setDragging,
+          onPreview: (intent) => {
+            onTouchPreviewRef.current?.(intent);
+          },
           onDrop: (clientX, clientY) => {
             onTouchDropRef.current?.(clientX, clientY);
           },
@@ -192,7 +202,7 @@ const PostItem = ({
     <div
       ref={cardRef}
       data-post-id={post.id}
-      className={`group relative mb-4 overflow-hidden rounded-2xl border border-line bg-cream shadow-card${canReorder ? ' post-with-handle' : ''}`}
+      className={`group relative mb-4 overflow-hidden rounded-2xl border border-line bg-cream shadow-card${canReorder ? ' post-with-handle' : ''}${landed ? ' post-landed' : ''}`}
       style={
         {
           opacity: dragging ? 0.4 : undefined,

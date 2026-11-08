@@ -11,10 +11,14 @@ import useSession from '../useSession';
 import { ColumnContent } from '../types';
 import Column from './Column';
 import {
+  clearDragPreview,
   elementsAt,
   intentFromNativeDrop,
   isPostDragData,
+  markDropped,
   resolveTouchDrop,
+  setDragPreview,
+  type DropIntent,
 } from './drag';
 import BoardHeader from './header/BoardHeader';
 import { settlePostDrop } from './moving-logic';
@@ -90,6 +94,13 @@ function GameMode({
   columnsRef.current = columns;
   const onMovePostRef = useRef(onMovePost);
   onMovePostRef.current = onMovePost;
+  const applyPreview = useCallback((intent: DropIntent | null) => {
+    if (!intent) {
+      clearDragPreview();
+      return;
+    }
+    setDragPreview(intent);
+  }, []);
   const handleTouchDrop = useCallback(
     (postId: string, clientX: number, clientY: number) => {
       const resolved = resolveTouchDrop({
@@ -98,11 +109,13 @@ function GameMode({
         draggingId: postId,
       });
       if (!resolved) {
+        clearDragPreview();
         return;
       }
       settlePostDrop(resolved.intent, columnsRef.current, {
         onMovePost: onMovePostRef.current,
       });
+      markDropped(resolved.intent.sourceId);
     },
     [],
   );
@@ -110,18 +123,30 @@ function GameMode({
   useEffect(() => {
     return monitorForElements({
       canMonitor: ({ source }) => isPostDragData(source.data),
+      onDrag({ source, location }) {
+        applyPreview(
+          intentFromNativeDrop(
+            source.data,
+            location.current.dropTargets,
+            location.current.input.clientY,
+          ),
+        );
+      },
       onDrop({ source, location }) {
         const intent = intentFromNativeDrop(
           source.data,
           location.current.dropTargets,
           location.current.input.clientY,
         );
-        if (intent) {
-          settlePostDrop(intent, columns, { onMovePost });
+        if (!intent) {
+          clearDragPreview();
+          return;
         }
+        settlePostDrop(intent, columns, { onMovePost });
+        markDropped(intent.sourceId);
       },
     });
-  }, [columns, onMovePost]);
+  }, [applyPreview, columns, onMovePost]);
 
   if (!session) {
     return <span>Loading...</span>;
@@ -180,6 +205,7 @@ function GameMode({
             onEdit={onEdit}
             onEditGroup={onEditGroup}
             onDeleteGroup={onDeleteGroup}
+            onTouchPreview={applyPreview}
             onTouchDrop={handleTouchDrop}
             fillViewport={!stacked}
           />

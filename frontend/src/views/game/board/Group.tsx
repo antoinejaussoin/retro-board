@@ -1,17 +1,19 @@
 import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { PostGroup } from 'common';
 import { ChevronDown, ChevronRight, MessageCircle, Trash2 } from 'lucide-react';
-import { type PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react';
+import { type PropsWithChildren, useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { useTranslation } from 'react-i18next';
 import EditableLabel from '../../../components/EditableLabel';
 import useCrypto from '../../../crypto/useCrypto';
 import { cn } from 'ui/cn';
 import { Alert } from 'ui/alert';
 import { IconButton } from 'ui/icon-button';
-import { isPostDragData, subscribeDragOver } from './drag';
+import { getDragFrame, isPostDragData, subscribeDragFrame } from './drag';
+import { useFlip } from './useFlip';
 
 interface GroupProps {
   group: PostGroup;
+  flipKey: string;
   readonly: boolean;
   onEditLabel: (label: string) => void;
   onDelete: (group: PostGroup) => void;
@@ -19,6 +21,7 @@ interface GroupProps {
 
 export default function Group({
   group,
+  flipKey,
   onEditLabel,
   onDelete,
   readonly,
@@ -40,7 +43,15 @@ export default function Group({
     setCollapsed((c) => !c);
   }, []);
   const containerRef = useRef<HTMLDivElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
   const [draggingOver, setDraggingOver] = useState(false);
+  const frame = useSyncExternalStore(
+    subscribeDragFrame,
+    getDragFrame,
+    getDragFrame,
+  );
+  const targeted = frame.preview?.targetId === `group#${group.id}`;
+  useFlip(bodyRef, flipKey);
   useEffect(() => {
     const element = containerRef.current;
     if (!element) {
@@ -55,19 +66,13 @@ export default function Group({
       onDrop: () => setDraggingOver(false),
     });
   }, [group.id]);
-  useEffect(() => {
-    const id = `group#${group.id}`;
-    return subscribeDragOver((targetId) => {
-      setDraggingOver(targetId === id);
-    });
-  }, [group.id]);
   return (
     <div
       ref={containerRef}
       data-drop-id={`group#${group.id}`}
       className={cn(
         'relative my-2.5 flex flex-col rounded-xl border border-dashed border-line',
-        draggingOver && 'bg-gray-200',
+        (draggingOver || targeted) && 'bg-gray-200',
       )}
     >
       <div
@@ -123,8 +128,8 @@ export default function Group({
       </div>
       {!collapsed ? (
         <div className="flex min-h-[100px] flex-col">
-          <div>{children}</div>
-          {group.posts.length === 0 ? (
+          <div ref={bodyRef}>{children}</div>
+          {group.posts.length === 0 && !targeted ? (
             <div className="m-6">
               <Alert severity="info" title={t('Group.emptyGroupTitle')}>
                 {t('Group.emptyGroupContent')}

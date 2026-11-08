@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { intentFromNativeDrop, resolveTouchDrop } from '../drag';
+import { intentFromNativeDrop, resolveTouchDrop, rowsForPreview } from '../drag';
 import { bindTouchDrag } from '../touch-drag';
 
 function box(element: HTMLElement, top: number, height: number) {
@@ -213,6 +213,35 @@ function pointer(
   return event;
 }
 
+describe('rowsForPreview', () => {
+  const posts = [{ id: 'a' }, { id: 'b' }, { id: 'c' }];
+
+  it('opens a gap where the card will land and collapses the card being dragged', () => {
+    expect(
+      rowsForPreview(
+        posts,
+        { type: 'move', sourceId: 'b', targetId: 'column#0', index: 0 },
+        'column#0',
+      ),
+    ).toEqual([
+      { kind: 'slot' },
+      { kind: 'post', post: { id: 'a' }, collapsed: false },
+      { kind: 'post', post: { id: 'b' }, collapsed: true },
+      { kind: 'post', post: { id: 'c' }, collapsed: false },
+    ]);
+  });
+
+  it('removes the dragged card from its old list without a gap', () => {
+    expect(
+      rowsForPreview(
+        posts,
+        { type: 'move', sourceId: 'a', targetId: 'group#g', index: 0 },
+        'column#0',
+      ).map((row) => (row.kind === 'slot' ? 'slot' : `${row.post.id}:${row.collapsed}`)),
+    ).toEqual(['a:true', 'b:false', 'c:false']);
+  });
+});
+
 describe('bindTouchDrag', () => {
   afterEach(() => {
     document.body.replaceChildren();
@@ -231,6 +260,7 @@ describe('bindTouchDrag', () => {
     const cleanup = bindTouchDrag(handle, {
       card: cardElement,
       onDragging,
+      onPreview: vi.fn(),
       onDrop,
     });
 
@@ -261,6 +291,7 @@ describe('bindTouchDrag', () => {
     const cleanup = bindTouchDrag(handle, {
       card: cardElement,
       onDragging,
+      onPreview: vi.fn(),
       onDrop,
     });
 
@@ -286,6 +317,7 @@ describe('bindTouchDrag', () => {
     const cleanup = bindTouchDrag(handle, {
       card: cardElement,
       onDragging: vi.fn(),
+      onPreview: vi.fn(),
       onDrop,
     });
 

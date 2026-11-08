@@ -70,23 +70,122 @@ function withoutPreview(elements: Element[]): HTMLElement[] {
   );
 }
 
-const dragOverEvent = 'retro-drag-over';
+export type PreviewRow<T> =
+  | { kind: 'post'; post: T; collapsed: boolean }
+  | { kind: 'slot' };
 
-export function publishDragOver(targetId: string | null) {
-  window.dispatchEvent(
-    new CustomEvent(dragOverEvent, { detail: { targetId } }),
+export function rowsForPreview<T extends { id: string }>(
+  posts: T[],
+  preview: DropIntent | null,
+  listId: string,
+): PreviewRow<T>[] {
+  if (!preview) {
+    return posts.map((post) => ({ kind: 'post', post, collapsed: false }));
+  }
+  const rows: PreviewRow<T>[] = [];
+  const remaining = posts.filter((post) => post.id !== preview.sourceId);
+  const slotAt =
+    preview.targetId === listId
+      ? Math.max(0, Math.min(preview.index, remaining.length))
+      : -1;
+  let placed = 0;
+  for (const post of posts) {
+    if (post.id === preview.sourceId) {
+      rows.push({ kind: 'post', post, collapsed: true });
+      continue;
+    }
+    if (placed === slotAt) {
+      rows.push({ kind: 'slot' });
+    }
+    rows.push({ kind: 'post', post, collapsed: false });
+    placed += 1;
+  }
+  if (placed === slotAt) {
+    rows.push({ kind: 'slot' });
+  }
+  return rows;
+}
+
+type DragFrame = {
+  preview: DropIntent | null;
+  height: number;
+  landedId: string | null;
+};
+
+let frame: DragFrame = { preview: null, height: 0, landedId: null };
+const frameListeners = new Set<() => void>();
+let landedTimer = 0;
+
+function emitFrame() {
+  for (const listener of frameListeners) {
+    listener();
+  }
+}
+
+function samePreview(left: DropIntent | null, right: DropIntent | null) {
+  return (
+    left?.sourceId === right?.sourceId &&
+    left?.targetId === right?.targetId &&
+    left?.index === right?.index
   );
 }
 
-export function subscribeDragOver(
-  onChange: (targetId: string | null) => void,
-): () => void {
-  const listener = (event: Event) => {
-    const detail = (event as CustomEvent<{ targetId: string | null }>).detail;
-    onChange(detail?.targetId ?? null);
+function measureCardHeight(postId: string): number {
+  const cards = document.querySelectorAll<HTMLElement>(
+    `[data-post-id="${postId}"]`,
+  );
+  for (const card of cards) {
+    if (card.closest('[data-drag-preview]')) {
+      continue;
+    }
+    if (card.offsetHeight > 0) {
+      return card.offsetHeight;
+    }
+  }
+  return 0;
+}
+
+export function getDragFrame(): DragFrame {
+  return frame;
+}
+
+export function subscribeDragFrame(listener: () => void): () => void {
+  frameListeners.add(listener);
+  return () => {
+    frameListeners.delete(listener);
   };
-  window.addEventListener(dragOverEvent, listener);
-  return () => window.removeEventListener(dragOverEvent, listener);
+}
+
+export function setDragPreview(preview: DropIntent | null) {
+  const height = preview
+    ? measureCardHeight(preview.sourceId) || frame.height || 96
+    : 0;
+  if (samePreview(frame.preview, preview) && frame.height === height) {
+    return;
+  }
+  frame = { ...frame, preview, height };
+  emitFrame();
+}
+
+export function clearDragPreview() {
+  if (!frame.preview && frame.height === 0) {
+    return;
+  }
+  frame = { ...frame, preview: null, height: 0 };
+  emitFrame();
+}
+
+export function markDropped(postId: string) {
+  window.clearTimeout(landedTimer);
+  frame = { preview: null, height: 0, landedId: postId };
+  emitFrame();
+  landedTimer = window.setTimeout(() => {
+    if (frame.landedId !== postId) {
+      return;
+    }
+    frame = { ...frame, landedId: null };
+    emitFrame();
+  }, 1800);
 }
 
 export function elementsAt(clientX: number, clientY: number): Element[] {

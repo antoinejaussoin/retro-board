@@ -1,7 +1,7 @@
 import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { Post, PostGroup } from 'common';
 import { CornerDownLeft, FolderPlus } from 'lucide-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { useTranslation } from 'react-i18next';
 import { cn } from 'ui/cn';
 import { IconButton } from 'ui/icon-button';
@@ -12,7 +12,14 @@ import useQuota from '../../../hooks/useQuota';
 import { useSearch } from '../is-search-match';
 import { ColumnContent } from '../types';
 import Group from './Group';
-import { isPostDragData, subscribeDragOver } from './drag';
+import {
+  getDragFrame,
+  isPostDragData,
+  rowsForPreview,
+  subscribeDragFrame,
+  type DropIntent,
+} from './drag';
+import { useFlip } from './useFlip';
 import PostItem from './post/Post';
 import useSessionUserPermissions from './useSessionUserPermissions';
 
@@ -34,6 +41,7 @@ interface ColumnProps {
   onReact: (post: Post, emoji: string) => void;
   onEdit: (post: Post) => void;
   onDelete: (post: Post) => void;
+  onTouchPreview: (intent: DropIntent | null) => void;
   onTouchDrop: (postId: string, clientX: number, clientY: number) => void;
   fillViewport?: boolean;
 }
@@ -56,6 +64,7 @@ const Column: React.FC<ColumnProps> = ({
   onDelete,
   onEditGroup,
   onDeleteGroup,
+  onTouchPreview,
   onTouchDrop,
   fillViewport = false,
 }) => {
@@ -109,12 +118,73 @@ const Column: React.FC<ColumnProps> = ({
     });
   }, [column.index, permissions.canReorderPosts]);
 
-  useEffect(() => {
-    const id = `column#${column.index}`;
-    return subscribeDragOver((targetId) => {
-      setDraggingOver(targetId === id);
+  const frame = useSyncExternalStore(
+    subscribeDragFrame,
+    getDragFrame,
+    getDragFrame,
+  );
+  const columnId = `column#${column.index}`;
+  const columnPosts = posts.filter(searchPredicate);
+  const columnRows = rowsForPreview(columnPosts, frame.preview, columnId);
+  const columnSignature = columnRows
+    .map((row) => (row.kind === 'slot' ? 'slot' : row.post.id))
+    .join('|');
+  useFlip(postsRef, columnSignature);
+
+  const renderList = (items: Post[], listId: string) =>
+    rowsForPreview(items, frame.preview, listId).map((row) => {
+      if (row.kind === 'slot') {
+        return (
+          <div
+            key="slot"
+            data-flip-id={`slot:${listId}`}
+            className="mb-4 rounded-2xl border-2 border-dashed border-primary-400 bg-primary-50/80"
+            style={{ height: frame.height }}
+          />
+        );
+      }
+      return (
+        <div
+          key={row.post.id}
+          data-flip-id={row.collapsed ? undefined : row.post.id}
+          className={row.collapsed ? 'h-0 overflow-hidden' : undefined}
+          aria-hidden={row.collapsed || undefined}
+        >
+          <PostItem
+            post={row.post}
+            color={color}
+            landed={frame.landedId === row.post.id}
+            onLike={() => onLike(row.post)}
+            onDislike={() => onDislike(row.post)}
+            onDelete={() => onDelete(row.post)}
+            onCancelVotes={() => onCancelVotes(row.post)}
+            onReact={(emoji) => onReact(row.post, emoji)}
+            onEdit={(content) =>
+              onEdit({
+                ...row.post,
+                content,
+              })
+            }
+            onEditAction={(action) =>
+              onEdit({
+                ...row.post,
+                action,
+              })
+            }
+            onEditGiphy={(giphy) =>
+              onEdit({
+                ...row.post,
+                giphy,
+              })
+            }
+            onTouchPreview={onTouchPreview}
+            onTouchDrop={(clientX, clientY) =>
+              onTouchDrop(row.post.id, clientX, clientY)
+            }
+          />
+        </div>
+      );
     });
-  }, [column.index]);
 
   return (
     <section
@@ -163,14 +233,19 @@ const Column: React.FC<ColumnProps> = ({
       </div>
       <div>
         {groups.map((group) => {
-          const posts = group.posts.filter(searchPredicate);
-          if (search && posts.length === 0) {
+          const grouped = group.posts.filter(searchPredicate);
+          if (search && grouped.length === 0) {
             return null;
           }
+          const groupId = `group#${group.id}`;
+          const flipKey = rowsForPreview(grouped, frame.preview, groupId)
+            .map((row) => (row.kind === 'slot' ? 'slot' : row.post.id))
+            .join('|');
           return (
             <Group
               key={group.id}
               group={group}
+              flipKey={flipKey}
               readonly={false}
               onEditLabel={(label) =>
                 onEditGroup({
@@ -180,39 +255,7 @@ const Column: React.FC<ColumnProps> = ({
               }
               onDelete={() => onDeleteGroup(group)}
             >
-              {posts.map((post) => (
-                <PostItem
-                  key={post.id}
-                  post={post}
-                  color={color}
-                  onLike={() => onLike(post)}
-                  onDislike={() => onDislike(post)}
-                  onDelete={() => onDelete(post)}
-                  onCancelVotes={() => onCancelVotes(post)}
-                  onReact={(emoji) => onReact(post, emoji)}
-                  onEdit={(content) =>
-                    onEdit({
-                      ...post,
-                      content,
-                    })
-                  }
-                  onEditAction={(action) =>
-                    onEdit({
-                      ...post,
-                      action,
-                    })
-                  }
-                  onEditGiphy={(giphy) =>
-                    onEdit({
-                      ...post,
-                      giphy,
-                    })
-                  }
-                  onTouchDrop={(clientX, clientY) =>
-                    onTouchDrop(post.id, clientX, clientY)
-                  }
-                />
-              ))}
+              {renderList(grouped, groupId)}
             </Group>
           );
         })}
@@ -222,42 +265,13 @@ const Column: React.FC<ColumnProps> = ({
         data-drop-id={`column#${column.index}`}
         className="min-h-[100px] flex-1 rounded-xl pb-20"
         style={{
-          backgroundColor: draggingOver ? column.color : undefined,
+          backgroundColor:
+            draggingOver || frame.preview?.targetId === columnId
+              ? column.color
+              : undefined,
         }}
       >
-        {posts.filter(searchPredicate).map((post) => (
-          <PostItem
-            key={post.id}
-            post={post}
-            color={color}
-            onLike={() => onLike(post)}
-            onDislike={() => onDislike(post)}
-            onCancelVotes={() => onCancelVotes(post)}
-            onReact={(emoji) => onReact(post, emoji)}
-            onDelete={() => onDelete(post)}
-            onEdit={(content) =>
-              onEdit({
-                ...post,
-                content,
-              })
-            }
-            onEditAction={(action) =>
-              onEdit({
-                ...post,
-                action,
-              })
-            }
-            onEditGiphy={(giphy) =>
-              onEdit({
-                ...post,
-                giphy,
-              })
-            }
-            onTouchDrop={(clientX, clientY) =>
-              onTouchDrop(post.id, clientX, clientY)
-            }
-          />
-        ))}
+        {renderList(columnPosts, columnId)}
       </div>
     </section>
   );
