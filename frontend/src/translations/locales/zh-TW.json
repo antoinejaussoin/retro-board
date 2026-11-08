@@ -69,7 +69,6 @@
     "toggleGiphyButton": "切換 Giphy 圖像",
     "cancelVote": "",
     "addReaction": "新增表情回應",
-    "reactWith": "用 {{emoji}} 回應",
     "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {

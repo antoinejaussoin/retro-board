@@ -69,7 +69,6 @@
     "toggleGiphyButton": "Aan- en uitschakelen Giphy afbeelding",
     "cancelVote": "Uw stemmen op dit bericht annuleren",
     "addReaction": "Reactie toevoegen",
-    "reactWith": "Reageer met {{emoji}}",
     "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {

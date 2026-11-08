@@ -7,7 +7,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Popover, PopoverContent, PopoverTrigger } from 'ui/popover';
 import { Tooltip } from 'ui/tooltip';
-import { QUICK_REACTION_EMOJIS } from '../../utils';
 import { reactionChipClassName } from './chipStyles';
 
 interface ReactionGroup {
@@ -52,14 +51,7 @@ function groupReactions(
       });
     }
   }
-  const quick = QUICK_REACTION_EMOJIS.map((emoji) => byEmoji.get(emoji)).filter(
-    (group): group is ReactionGroup => !!group,
-  );
-  const others = [...byEmoji.values()].filter(
-    (group) =>
-      !(QUICK_REACTION_EMOJIS as readonly string[]).includes(group.emoji),
-  );
-  return [...quick, ...others];
+  return [...byEmoji.values()];
 }
 
 const ReactionBar = ({
@@ -142,19 +134,6 @@ const ReactionBar = ({
             </PopoverTrigger>
           </Tooltip>
           <PopoverContent align="start" className="z-[70] w-auto p-2">
-            <div className="mb-2 flex gap-1 border-b border-line pb-2">
-              {QUICK_REACTION_EMOJIS.map((emoji) => (
-                <button
-                  key={emoji}
-                  type="button"
-                  aria-label={t('Post.reactWith', { emoji })}
-                  className="inline-flex size-9 items-center justify-center rounded-md text-xl hover:bg-ink/8"
-                  onClick={() => pickEmoji(emoji)}
-                >
-                  {emoji}
-                </button>
-              ))}
-            </div>
             <EmojiMartPicker
               data={data}
               theme="light"

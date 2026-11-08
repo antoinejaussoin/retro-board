@@ -69,7 +69,6 @@
     "toggleGiphyButton": "Перемкнути зображення Giphy",
     "cancelVote": "Скасувати Ваші голосування в цьому повідомленні",
     "addReaction": "Додати реакцію",
-    "reactWith": "Відреагувати {{emoji}}",
     "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {

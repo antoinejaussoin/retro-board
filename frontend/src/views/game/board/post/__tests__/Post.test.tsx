@@ -244,13 +244,9 @@ describe('Post', () => {
       thumbChip.click();
     });
     expect(reactHandler).toHaveBeenCalledWith('👍');
-    act(() => {
-      getByRole('button', { name: /Post\.addReaction/i }).click();
-    });
-    act(() => {
-      getByText('🚀').click();
-    });
-    expect(reactHandler).toHaveBeenCalledWith('🚀');
+    expect(
+      getByRole('button', { name: /Post\.addReaction/i }),
+    ).toBeInTheDocument();
     expect(getAllByText('👍').length).toBeGreaterThan(0);
   });
 });

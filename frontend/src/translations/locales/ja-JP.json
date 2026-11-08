@@ -69,7 +69,6 @@
     "toggleGiphyButton": "Giphy画像の切り替え",
     "cancelVote": "この投稿への投票をキャンセル",
     "addReaction": "リアクションを追加",
-    "reactWith": "{{emoji}} でリアクション",
     "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {

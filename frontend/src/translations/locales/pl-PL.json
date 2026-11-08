@@ -69,7 +69,6 @@
     "toggleGiphyButton": "Przełącz obraz Giphy",
     "cancelVote": "Anuluj swoje głosy na ten post",
     "addReaction": "Dodaj reakcję",
-    "reactWith": "Zareaguj {{emoji}}",
     "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {

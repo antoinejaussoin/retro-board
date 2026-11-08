@@ -3,16 +3,6 @@ import groupBy from 'lodash/groupBy';
 import sum from 'lodash/sum';
 import toPairs from 'lodash/toPairs';
 
-/** Quick-access palette shown above the full emoji picker. */
-export const QUICK_REACTION_EMOJIS = [
-  '👍',
-  '❤️',
-  '😄',
-  '🎉',
-  '🚀',
-  '👀',
-] as const;
-
 export function countVotes(post: Post, type: VoteType): number {
   return post.votes.filter((v) => v.type === type).length;
 }
@@ -22,20 +12,10 @@ export interface ReactionCount {
   count: number;
 }
 
-function orderedReactionCounts(
+function reactionCountsFromTotals(
   totals: Map<string, number>,
 ): ReactionCount[] {
-  const quick = QUICK_REACTION_EMOJIS.map((emoji) => ({
-    emoji,
-    count: totals.get(emoji) ?? 0,
-  })).filter((entry) => entry.count > 0);
-  const others = [...totals.entries()]
-    .filter(
-      ([emoji]) =>
-        !(QUICK_REACTION_EMOJIS as readonly string[]).includes(emoji),
-    )
-    .map(([emoji, count]) => ({ emoji, count }));
-  return [...quick, ...others];
+  return [...totals.entries()].map(([emoji, count]) => ({ emoji, count }));
 }
 
 export function countReactions(post: Post): ReactionCount[] {
@@ -43,7 +23,7 @@ export function countReactions(post: Post): ReactionCount[] {
   for (const reaction of post.reactions) {
     totals.set(reaction.emoji, (totals.get(reaction.emoji) ?? 0) + 1);
   }
-  return orderedReactionCounts(totals);
+  return reactionCountsFromTotals(totals);
 }
 
 export function countReactionsForGroup(group: PostGroup): ReactionCount[] {
@@ -53,7 +33,7 @@ export function countReactionsForGroup(group: PostGroup): ReactionCount[] {
       totals.set(reaction.emoji, (totals.get(reaction.emoji) ?? 0) + 1);
     }
   }
-  return orderedReactionCounts(totals);
+  return reactionCountsFromTotals(totals);
 }
 
 export function countVotesForGroup(group: PostGroup, type: VoteType): number {

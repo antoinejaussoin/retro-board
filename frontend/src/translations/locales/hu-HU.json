@@ -69,7 +69,6 @@
     "toggleGiphyButton": "Kapcsolja be a Giphy képet",
     "cancelVote": "",
     "addReaction": "Reakció hozzáadása",
-    "reactWith": "Reagálás ezzel: {{emoji}}",
     "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {

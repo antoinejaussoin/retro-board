@@ -69,7 +69,6 @@
     "toggleGiphyButton": "تبديل الصورة الجافية",
     "cancelVote": "إلغاء تصويتك على هذا المنشور",
     "addReaction": "أضف تفاعلاً",
-    "reactWith": "تفاعل بـ {{emoji}}",
     "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {

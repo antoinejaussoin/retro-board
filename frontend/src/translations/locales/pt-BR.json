@@ -69,7 +69,6 @@
     "toggleGiphyButton": "Alternar imagem Giphy",
     "cancelVote": "Cancelar seus votos nesta publicação",
     "addReaction": "Adicionar uma reação",
-    "reactWith": "Reagir com {{emoji}}",
     "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {

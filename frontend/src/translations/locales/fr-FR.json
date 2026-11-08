@@ -69,7 +69,6 @@
     "toggleGiphyButton": "Montrer/Cacher l'image Giphy",
     "cancelVote": "Annuler vos votes sur ce post",
     "addReaction": "Ajouter une réaction",
-    "reactWith": "Réagir avec {{emoji}}",
     "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {

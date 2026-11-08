@@ -48,7 +48,6 @@
     "voteRemainingUnlimited": "У вас неограниченное количество {{type}}.",
     "toggleGiphyButton": null,
     "addReaction": "Добавить реакцию",
-    "reactWith": "Отреагировать {{emoji}}",
     "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {

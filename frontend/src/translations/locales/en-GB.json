@@ -69,7 +69,6 @@
     "toggleGiphyButton": "Toggle Giphy image",
     "cancelVote": "Cancel your votes on this post",
     "addReaction": "Add a reaction",
-    "reactWith": "React with {{emoji}}",
     "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {
@@ -243,7 +242,13 @@
     "nameField": "Your name (for display purposes)",
     "noAuthWarning": "Your administrator disabled all login possibilities (OAuth, password). Ask your administrator to re-enable at least one.",
     "or": "or",
-    "passwordScoreWords": ["weak", "weak", "not quite", "good", "strong"],
+    "passwordScoreWords": [
+      "weak",
+      "weak",
+      "not quite",
+      "good",
+      "strong"
+    ],
     "skipAndAnonLogin": "Use Anonymously"
   },
   "AccountLogin": {
