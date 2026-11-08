@@ -3,15 +3,56 @@ name: "Integration only (test)"
 on:
   push:
     branches: [v552/integration]
+  pull_request:
 
 jobs:
   integration:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        if: github.event_name == 'pull_request'
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build backend image
+        if: github.event_name == 'pull_request'
+        uses: docker/build-push-action@v6
+        with:
+          file: backend/Dockerfile
+          context: backend
+          tags: retro-backend:local
+          load: true
+          provenance: false
+          cache-from: |
+            type=gha,scope=pr-integration-backend
+            type=gha,scope=retrospected-backend-linux-amd64
+          cache-to: type=gha,scope=pr-integration-backend,mode=max,ignore-error=true
+
+      - name: Build frontend image
+        if: github.event_name == 'pull_request'
+        uses: docker/build-push-action@v6
+        with:
+          file: frontend/Dockerfile
+          context: frontend
+          tags: retro-frontend:local
+          load: true
+          provenance: false
+          cache-from: type=gha,scope=pr-integration-frontend
+          cache-to: type=gha,scope=pr-integration-frontend,mode=max,ignore-error=true
+
       - name: Run Integration Tests
+        if: github.event_name == 'pull_request'
+        run: docker compose -f ./integration/docker-compose.local.local.yml up --exit-code-from cypress
+
+      - name: Run Integration Tests
+        if: github.event_name == 'push'
         run: docker compose -f ./integration/docker-compose.ci.alpha.yml up --exit-code-from cypress
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
