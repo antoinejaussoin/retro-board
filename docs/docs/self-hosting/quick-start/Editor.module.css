@@ -10,3 +10,46 @@ div.toggle {
   align-items: center;
   padding: 20px 0;
 }
+
+.switch {
+  appearance: none;
+  width: 50px;
+  height: 24px;
+  margin: 0;
+  border: 0;
+  border-radius: 30px;
+  background: #4d4d4d;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 22px;
+  height: 22px;
+  box-sizing: border-box;
+  border: 1px solid #4d4d4d;
+  border-radius: 50%;
+  background: #fafafa;
+  transition:
+    left 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.switch:checked {
+  background: #19ab27;
+}
+
+.switch:checked::after {
+  left: 27px;
+  border-color: #19ab27;
+}
+
+.switch:focus-visible {
+  outline: 2px solid #0099e0;
+  outline-offset: 2px;
+}
