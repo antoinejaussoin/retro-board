@@ -64,6 +64,10 @@ pub(super) async fn stripe_webhook(
     headers: HeaderMap,
     body: Bytes,
 ) -> StatusCode {
+    if state.config.stripe_webhook_secret.is_empty() {
+        tracing::warn!("stripe webhook secret is empty");
+        return StatusCode::BAD_REQUEST;
+    }
     if state.config.stripe_secret.is_empty() {
         return StatusCode::INTERNAL_SERVER_ERROR;
     }

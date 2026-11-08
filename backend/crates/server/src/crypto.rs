@@ -114,6 +114,39 @@ fn subtle_eq(left: &[u8], right: &[u8]) -> bool {
     diff == 0
 }
 
+/// Slack request signature (`v0=` HMAC of `v0:timestamp:body`), within five minutes.
+#[must_use]
+pub fn slack_signature_valid(
+    body: &[u8],
+    timestamp: &str,
+    signature: &str,
+    secret: &str,
+    now_secs: i64,
+) -> bool {
+    if secret.is_empty() {
+        return false;
+    }
+    let Ok(timestamp_secs) = timestamp.parse::<i64>() else {
+        return false;
+    };
+    if (now_secs - timestamp_secs).abs() > 60 * 5 {
+        return false;
+    }
+    let mut mac = Hmac::<Sha256>::new_from_slice(secret.as_bytes()).expect("hmac key");
+    mac.update(b"v0:");
+    mac.update(timestamp.as_bytes());
+    mac.update(b":");
+    mac.update(body);
+    let expected = format!("v0={}", hex::encode(mac.finalize().into_bytes()));
+    subtle_eq(signature.as_bytes(), expected.as_bytes())
+}
+
+/// Slack reply targets are the official hook host only.
+#[must_use]
+pub fn slack_hook_url(url: &str) -> bool {
+    url.starts_with("https://hooks.slack.com/")
+}
+
 /// Stripe webhook signature (`t=...,v1=...`).
 #[must_use]
 pub fn stripe_signature_valid(
@@ -152,13 +185,55 @@ pub fn stripe_signature_valid(
 
 #[cfg(test)]
 mod tests {
-    use super::{decrypt_cryptojs, encrypt_cryptojs, sign_cookie, unsign_session};
+    use hmac::{Hmac, Mac};
+    use sha2::Sha256;
+
+    use super::{
+        decrypt_cryptojs, encrypt_cryptojs, sign_cookie, slack_hook_url, slack_signature_valid,
+        unsign_session,
+    };
 
     #[test]
     fn cryptojs_roundtrip() {
         let encrypted = encrypt_cryptojs("Retrospected", "licence-key");
         assert!(encrypted.starts_with("U2FsdGVkX1"));
         assert_eq!(decrypt_cryptojs(&encrypted, "licence-key"), "Retrospected");
+    }
+
+    #[test]
+    fn slack_signature_accepts_a_fresh_v0_hmac_and_rejects_other_hosts() {
+        let secret = "slack-secret";
+        let body = b"user_id=U1&text=retro";
+        let timestamp = "1700000000";
+        let mut mac = Hmac::<Sha256>::new_from_slice(secret.as_bytes()).unwrap();
+        mac.update(b"v0:");
+        mac.update(timestamp.as_bytes());
+        mac.update(b":");
+        mac.update(body);
+        let signature = format!("v0={}", hex::encode(mac.finalize().into_bytes()));
+        assert!(slack_signature_valid(
+            body,
+            timestamp,
+            &signature,
+            secret,
+            1_700_000_100
+        ));
+        assert!(!slack_signature_valid(
+            body,
+            timestamp,
+            &signature,
+            secret,
+            1_700_000_000 + 60 * 6
+        ));
+        assert!(!slack_signature_valid(
+            body,
+            timestamp,
+            "v0=nope",
+            secret,
+            1_700_000_100
+        ));
+        assert!(slack_hook_url("https://hooks.slack.com/services/T/B/X"));
+        assert!(!slack_hook_url("https://example.com/hooks"));
     }
 
     #[test]

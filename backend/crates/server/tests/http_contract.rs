@@ -730,6 +730,34 @@ async fn unverified_password_cannot_log_in_when_mail_is_configured() {
 }
 
 #[tokio::test]
+async fn unsigned_slack_and_empty_stripe_secret_are_rejected() {
+    let server = boot_with(8, &[]).await;
+    let client = reqwest::Client::new();
+    let slack = client
+        .post(format!("{}/api/slack/create", server.base))
+        .header("content-type", "application/json")
+        .body(r#"{"user_id":"U1","text":"retro","response_url":"https://example.com/hook"}"#)
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(slack.status(), 401, "slack commands need a signature");
+
+    let unsigned = boot_with(7, &[("STRIPE_WEBHOOK_SECRET", "")]).await;
+    let webhook = client
+        .post(format!("{}/api/stripe/webhook", unsigned.base))
+        .header("stripe-signature", "t=1,v1=deadbeef")
+        .body("{}")
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(
+        webhook.status(),
+        400,
+        "an empty webhook secret must not verify"
+    );
+}
+
+#[tokio::test]
 async fn socket_refuses_anonymous_edits_and_locked_board_reads() {
     let server = boot_with(6, &[]).await;
     let client = reqwest::Client::new();

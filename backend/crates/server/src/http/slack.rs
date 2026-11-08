@@ -4,6 +4,7 @@ use axum::http::{header, HeaderMap, StatusCode};
 use serde::Deserialize;
 use serde_json::json;
 
+use crate::crypto::{slack_hook_url, slack_signature_valid};
 use crate::db::{self};
 use crate::state::AppState;
 
@@ -19,6 +20,23 @@ pub(super) async fn slack_create(
     headers: HeaderMap,
     body: Bytes,
 ) -> StatusCode {
+    let timestamp = headers
+        .get("x-slack-request-timestamp")
+        .and_then(|value| value.to_str().ok())
+        .unwrap_or("");
+    let signature = headers
+        .get("x-slack-signature")
+        .and_then(|value| value.to_str().ok())
+        .unwrap_or("");
+    if !slack_signature_valid(
+        &body,
+        timestamp,
+        signature,
+        &state.config.slack_signing_secret,
+        chrono::Utc::now().timestamp(),
+    ) {
+        return StatusCode::UNAUTHORIZED;
+    }
     let parsed = if headers
         .get(header::CONTENT_TYPE)
         .and_then(|v| v.to_str().ok())
@@ -48,6 +66,9 @@ pub(super) async fn slack_create(
     } else {
         "Unfortunately, we could not identify you on Retrospected. Try logging in with your Slack account at least once on Retrospected, so we can link your Retrospected account with your Slack account.".into()
     };
+    if !slack_hook_url(&form.response_url) {
+        return StatusCode::UNAUTHORIZED;
+    }
     let _ = reqwest::Client::new()
         .post(&form.response_url)
         .json(&json!({ "response_type": "in_channel", "text": message }))
