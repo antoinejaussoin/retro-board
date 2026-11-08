@@ -266,7 +266,7 @@ const PostItem = ({
           <img
             src={giphyImageUrl}
             alt="Giphy"
-            className="h-[200px] w-full object-cover"
+            className="block h-auto w-full"
           />
         </div>
       )}
