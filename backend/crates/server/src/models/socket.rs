@@ -1,7 +1,7 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
-use super::board::{ColumnDefinition, SessionOptions, VoteExtract};
+use super::board::{ColumnDefinition, ReactionExtract, SessionOptions, VoteExtract};
 use super::user::User;
 
 #[derive(Debug, Deserialize, ts_rs::TS)]
@@ -144,6 +144,25 @@ pub struct ChatIn {
 pub struct ReceiveLikePayload {
     pub post_id: String,
     pub vote: VoteExtract,
+}
+
+/// Client request to toggle an emoji reaction on a post.
+#[derive(Debug, Deserialize, ts_rs::TS)]
+#[serde(rename_all = "camelCase")]
+#[ts(rename = "WsReactPayload")]
+pub struct ReactPayload {
+    pub post_id: String,
+    pub emoji: String,
+}
+
+/// Broadcast when a reaction is added or removed.
+#[derive(Debug, Serialize, ts_rs::TS)]
+#[serde(rename_all = "camelCase")]
+#[ts(rename = "WsReceiveReactPayload")]
+pub struct ReceiveReactPayload {
+    pub post_id: String,
+    pub reaction: ReactionExtract,
+    pub change: String,
 }
 
 /// Broadcast when a participant clears their votes on a post.

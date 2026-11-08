@@ -1,5 +1,6 @@
 import type { Post, PostGroup, User } from 'common';
 import type { ColumnContent } from '../types';
+import type { ReactionCount } from '../utils';
 
 export interface Stats {
   columns: ColumnStats[];
@@ -16,6 +17,7 @@ export interface ColumnStatsItem {
   type: 'post' | 'group';
   likes: number;
   dislikes: number;
+  reactions: ReactionCount[];
   content: string;
   user: User | null;
   children: ColumnStatsItem[];

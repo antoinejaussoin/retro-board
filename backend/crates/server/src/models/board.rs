@@ -13,6 +13,7 @@ pub struct SessionOptions {
     pub allow_multiple_votes: bool,
     pub allow_author_visible: bool,
     pub allow_giphy: bool,
+    pub allow_reactions: bool,
     pub allow_grouping: bool,
     pub allow_reordering: bool,
     pub allow_cancel_vote: bool,
@@ -37,6 +38,7 @@ impl Default for SessionOptions {
             allow_multiple_votes: false,
             allow_author_visible: false,
             allow_giphy: true,
+            allow_reactions: true,
             allow_grouping: true,
             allow_reordering: true,
             allow_cancel_vote: true,
@@ -74,6 +76,16 @@ pub struct VoteExtract {
     pub kind: String,
 }
 
+/// One emoji reaction on a post, including who left it.
+#[derive(Clone, Debug, Serialize, Deserialize, ts_rs::TS)]
+#[serde(rename_all = "camelCase")]
+pub struct ReactionExtract {
+    pub id: String,
+    pub emoji: String,
+    pub user_name: String,
+    pub user_id: String,
+}
+
 #[derive(Clone, Debug, Serialize, Deserialize, ts_rs::TS)]
 #[serde(rename_all = "camelCase")]
 pub struct PostGroup {
@@ -97,6 +109,7 @@ pub struct Post {
     pub group: Option<PostGroup>,
     pub rank: String,
     pub votes: Vec<VoteExtract>,
+    pub reactions: Vec<ReactionExtract>,
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize, ts_rs::TS)]

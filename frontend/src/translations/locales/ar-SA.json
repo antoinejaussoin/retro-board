@@ -67,7 +67,9 @@
     "voteRemainingNone": "ليس لديك أي {{type}} متبقي.",
     "voteRemainingUnlimited": "لديك عدد غير محدود من {{type}}.",
     "toggleGiphyButton": "تبديل الصورة الجافية",
-    "cancelVote": "إلغاء تصويتك على هذا المنشور"
+    "cancelVote": "إلغاء تصويتك على هذا المنشور",
+    "addReaction": "أضف تفاعلاً",
+    "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {
     "title": "تخصيص الجلسة الخاصة بك",
@@ -110,6 +112,8 @@
     "newPostsFirstHelp": "يتم إضافة مشاركات جديدة في الجزء العلوي من العمود",
     "allowGiphy": "السماح بالجفي",
     "allowGiphyHelp": "السماح للمستخدمين بتعيين صورة Giphy مقابل مشاركة",
+    "allowReactions": "السماح بتفاعلات الرموز التعبيرية",
+    "allowReactionsHelp": "السماح للمشاركين بترك تفاعلات رمزية على المنشورات",
     "allowGrouping": "السماح بالتجميع",
     "allowGroupingHelp": "السماح بإنشاء مجموعات لتجميع المشاركات معا",
     "allowReordering": "السماح بإعادة الطلب",
@@ -170,6 +174,7 @@
     "error_cannot_save_columns": "فشل حفظ الأعمدة",
     "error_cannot_save_options": "فشل حفظ الخيارات",
     "error_cannot_cancel_votes": "فشل إلغاء الأصوات",
+    "error_cannot_react": "تعذر حفظ تفاعلك.",
     "maxPostsReached": "لقد وصلت إلى الحد الأقصى لعدد المشاركات التي حددها المشرف",
     "iAmDone": "لقد انتهيت!",
     "iAmNotDoneYet": "أنا لم أنتهِ بعد...",

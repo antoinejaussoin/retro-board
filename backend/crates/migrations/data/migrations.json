@@ -3398,5 +3398,36 @@
         "params": []
       }
     ]
+  },
+  {
+    "name": "AddPostReactions1794076984735",
+    "timestamp": 1794076984735,
+    "kind": "sql",
+    "steps": [
+      {
+        "sql": "CREATE TABLE \"post_reactions\" (\"id\" character varying NOT NULL, \"emoji\" character varying NOT NULL, \"created\" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), \"user_id\" character varying NOT NULL, \"post_id\" character varying NOT NULL, CONSTRAINT \"PK_post_reactions\" PRIMARY KEY (\"id\"))",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"post_reactions\" ADD CONSTRAINT \"FK_post_reactions_user\" FOREIGN KEY (\"user_id\") REFERENCES \"users\"(\"id\") ON DELETE NO ACTION ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"post_reactions\" ADD CONSTRAINT \"FK_post_reactions_post\" FOREIGN KEY (\"post_id\") REFERENCES \"posts\"(\"id\") ON DELETE CASCADE ON UPDATE NO ACTION",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"post_reactions\" ADD CONSTRAINT \"UQ_post_reactions_post_user_emoji\" UNIQUE (\"post_id\", \"user_id\", \"emoji\")",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"sessions\" ADD \"options_allow_reactions\" boolean NOT NULL DEFAULT true",
+        "params": []
+      },
+      {
+        "sql": "ALTER TABLE \"templates\" ADD \"options_allow_reactions\" boolean NOT NULL DEFAULT true",
+        "params": []
+      }
+    ]
   }
 ]

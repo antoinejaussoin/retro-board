@@ -67,7 +67,9 @@
     "voteRemainingNone": "您没有剩余任何 {{type}}。",
     "voteRemainingUnlimited": "您有无限次{{type}}。",
     "toggleGiphyButton": "切换Giphy图像",
-    "cancelVote": "取消您对此帖子的投票"
+    "cancelVote": "取消您对此帖子的投票",
+    "addReaction": "添加表情回应",
+    "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {
     "title": "自定义您的会话",
@@ -110,6 +112,8 @@
     "newPostsFirstHelp": "在列顶部添加新帖子",
     "allowGiphy": "允许Giphy",
     "allowGiphyHelp": "允许用户根据帖子设置Giphy 图像",
+    "allowReactions": "允许表情回应",
+    "allowReactionsHelp": "允许参与者在帖子上留下表情回应",
     "allowGrouping": "允许分组",
     "allowGroupingHelp": "允许创建群组将帖子一起分组",
     "allowReordering": "允许重新排序",
@@ -170,6 +174,7 @@
     "error_cannot_save_columns": "保存列失败",
     "error_cannot_save_options": "保存选项失败",
     "error_cannot_cancel_votes": "取消投票失败",
+    "error_cannot_react": "无法保存你的回应。",
     "maxPostsReached": "您已经达到了版主设置的帖子的最大数量。",
     "iAmDone": "我已完成！",
     "iAmNotDoneYet": "我还没有完成...",

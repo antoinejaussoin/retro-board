@@ -67,7 +67,9 @@
     "voteRemainingNone": "Nem maradt {{type}}.",
     "voteRemainingUnlimited": "Korlátlan számú {{type}} áll rendelkezésére.",
     "toggleGiphyButton": "Kapcsolja be a Giphy képet",
-    "cancelVote": ""
+    "cancelVote": "",
+    "addReaction": "Reakció hozzáadása",
+    "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {
     "title": "A munkamenet testreszabása",
@@ -110,6 +112,8 @@
     "newPostsFirstHelp": "Az új bejegyzések az oszlop tetején jelennek meg",
     "allowGiphy": "Engedélyezze a Giphyt",
     "allowGiphyHelp": "Lehetővé teszi a felhasználók számára, hogy Giphy-képet állítsanak be egy bejegyzéshez",
+    "allowReactions": "Emoji-reakciók engedélyezése",
+    "allowReactionsHelp": "A résztvevők emoji-reakciókat hagyhatnak a bejegyzéseken",
     "allowGrouping": "Csoportosítás engedélyezése",
     "allowGroupingHelp": "Csoportok létrehozásának engedélyezése a bejegyzések csoportosításához",
     "allowReordering": "Újrarendelés engedélyezése",
@@ -170,6 +174,7 @@
     "error_cannot_save_columns": "Az oszlopok mentése nem sikerült",
     "error_cannot_save_options": "A beállítások mentése nem sikerült",
     "error_cannot_cancel_votes": "",
+    "error_cannot_react": "A reakciódat nem sikerült menteni.",
     "maxPostsReached": "Elérted a moderátor által beállított maximális bejegyzések számát.",
     "iAmDone": "Kész vagyok!",
     "iAmNotDoneYet": "Még nem végeztem...",

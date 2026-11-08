@@ -7,6 +7,35 @@ export function countVotes(post: Post, type: VoteType): number {
   return post.votes.filter((v) => v.type === type).length;
 }
 
+export interface ReactionCount {
+  emoji: string;
+  count: number;
+}
+
+function reactionCountsFromTotals(
+  totals: Map<string, number>,
+): ReactionCount[] {
+  return [...totals.entries()].map(([emoji, count]) => ({ emoji, count }));
+}
+
+export function countReactions(post: Post): ReactionCount[] {
+  const totals = new Map<string, number>();
+  for (const reaction of post.reactions) {
+    totals.set(reaction.emoji, (totals.get(reaction.emoji) ?? 0) + 1);
+  }
+  return reactionCountsFromTotals(totals);
+}
+
+export function countReactionsForGroup(group: PostGroup): ReactionCount[] {
+  const totals = new Map<string, number>();
+  for (const post of group.posts) {
+    for (const reaction of post.reactions) {
+      totals.set(reaction.emoji, (totals.get(reaction.emoji) ?? 0) + 1);
+    }
+  }
+  return reactionCountsFromTotals(totals);
+}
+
 export function countVotesForGroup(group: PostGroup, type: VoteType): number {
   return sum(group.posts.map((p) => countVotes(p, type)));
 }

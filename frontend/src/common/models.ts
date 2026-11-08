@@ -9,6 +9,7 @@ export const defaultOptions: SessionOptions = {
   maxUpVotes: null,
   maxPosts: null,
   allowGiphy: true,
+  allowReactions: true,
   allowGrouping: true,
   allowReordering: true,
   allowCancelVote: true,

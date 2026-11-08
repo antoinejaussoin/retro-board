@@ -3,13 +3,15 @@ use sqlx::PgPool;
 
 use super::DbResult;
 use crate::models::{
-    Board, ColumnDefinition, FullUser, Message, Post, PostGroup, SessionOptions, User, VoteExtract,
+    Board, ColumnDefinition, FullUser, Message, Post, PostGroup, ReactionExtract, SessionOptions,
+    User, VoteExtract,
 };
 
 type OptRow = (
     Option<f64>,
     Option<f64>,
     Option<f64>,
+    bool,
     bool,
     bool,
     bool,
@@ -38,17 +40,18 @@ pub(crate) fn options_from_tuple(row: OptRow) -> SessionOptions {
         allow_multiple_votes: row.5,
         allow_author_visible: row.6,
         allow_giphy: row.7,
-        allow_grouping: row.8,
-        allow_reordering: row.9,
-        allow_cancel_vote: row.10,
-        blur_cards: row.11,
-        new_posts_first: row.12,
-        allow_timer: row.13,
-        timer_duration: row.14,
-        readonly_on_timer_end: row.15,
-        restrict_title_edit_to_moderator: row.16,
-        restrict_reordering_to_moderator: row.17,
-        restrict_grouping_to_moderator: row.18,
+        allow_reactions: row.8,
+        allow_grouping: row.9,
+        allow_reordering: row.10,
+        allow_cancel_vote: row.11,
+        blur_cards: row.12,
+        new_posts_first: row.13,
+        allow_timer: row.14,
+        timer_duration: row.15,
+        readonly_on_timer_end: row.16,
+        restrict_title_edit_to_moderator: row.17,
+        restrict_reordering_to_moderator: row.18,
+        restrict_grouping_to_moderator: row.19,
     }
 }
 
@@ -69,6 +72,7 @@ struct BoardHead {
     allow_multiple_votes: bool,
     allow_author_visible: bool,
     allow_giphy: bool,
+    allow_reactions: bool,
     allow_grouping: bool,
     allow_reordering: bool,
     allow_cancel_vote: bool,
@@ -101,6 +105,7 @@ pub async fn load_board(pool: &PgPool, session_id: &str) -> DbResult<Option<Boar
                   s.options_allow_multiple_votes AS allow_multiple_votes,
                   s.options_allow_author_visible AS allow_author_visible,
                   s.options_allow_giphy AS allow_giphy,
+                  s.options_allow_reactions AS allow_reactions,
                   s.options_allow_grouping AS allow_grouping,
                   s.options_allow_reordering AS allow_reordering,
                   s.options_allow_cancel_vote AS allow_cancel_vote,
@@ -146,6 +151,7 @@ pub async fn load_board(pool: &PgPool, session_id: &str) -> DbResult<Option<Boar
         row.allow_multiple_votes,
         row.allow_author_visible,
         row.allow_giphy,
+        row.allow_reactions,
         row.allow_grouping,
         row.allow_reordering,
         row.allow_cancel_vote,
@@ -218,17 +224,12 @@ async fn load_posts(pool: &PgPool, session_id: &str) -> DbResult<Vec<Post>> {
     .bind(session_id)
     .fetch_all(pool)
     .await?;
+    let mut votes_by_post = load_votes_for_session(pool, session_id).await?;
+    let mut reactions_by_post = load_reactions_for_session(pool, session_id).await?;
     let mut posts = Vec::new();
     for row in rows {
-        let votes = sqlx::query_as::<_, (String, String, String, String)>(
-            r#"SELECT v.id, v.type, u.id, u.name FROM votes v JOIN users u ON u.id = v.user_id WHERE v.post_id = $1"#,
-        )
-        .bind(&row.0)
-        .fetch_all(pool)
-        .await?
-        .into_iter()
-        .map(|vote| VoteExtract { id: vote.0, kind: vote.1, user_id: vote.2, user_name: vote.3 })
-        .collect();
+        let votes = votes_by_post.remove(&row.0).unwrap_or_default();
+        let reactions = reactions_by_post.remove(&row.0).unwrap_or_default();
         let group = match (row.10, row.11, row.12, row.13) {
             (Some(id), Some(label), Some(column), Some(rank)) => Some(PostGroup {
                 id,
@@ -260,9 +261,65 @@ async fn load_posts(pool: &PgPool, session_id: &str) -> DbResult<Vec<Post>> {
             },
             group,
             votes,
+            reactions,
         });
     }
     Ok(posts)
+}
+
+async fn load_votes_for_session(
+    pool: &PgPool,
+    session_id: &str,
+) -> DbResult<std::collections::HashMap<String, Vec<VoteExtract>>> {
+    let rows = sqlx::query_as::<_, (String, String, String, String, String)>(
+        r#"SELECT v.post_id, v.id, v.type, u.id, u.name
+           FROM votes v
+           JOIN users u ON u.id = v.user_id
+           JOIN posts p ON p.id = v.post_id
+           WHERE p.session_id = $1"#,
+    )
+    .bind(session_id)
+    .fetch_all(pool)
+    .await?;
+    let mut by_post: std::collections::HashMap<String, Vec<VoteExtract>> =
+        std::collections::HashMap::new();
+    for row in rows {
+        by_post.entry(row.0).or_default().push(VoteExtract {
+            id: row.1,
+            kind: row.2,
+            user_id: row.3,
+            user_name: row.4,
+        });
+    }
+    Ok(by_post)
+}
+
+async fn load_reactions_for_session(
+    pool: &PgPool,
+    session_id: &str,
+) -> DbResult<std::collections::HashMap<String, Vec<ReactionExtract>>> {
+    let rows = sqlx::query_as::<_, (String, String, String, String, String)>(
+        r#"SELECT r.post_id, r.id, r.emoji, u.id, u.name
+           FROM post_reactions r
+           JOIN users u ON u.id = r.user_id
+           JOIN posts p ON p.id = r.post_id
+           WHERE p.session_id = $1
+           ORDER BY r.created ASC"#,
+    )
+    .bind(session_id)
+    .fetch_all(pool)
+    .await?;
+    let mut by_post: std::collections::HashMap<String, Vec<ReactionExtract>> =
+        std::collections::HashMap::new();
+    for row in rows {
+        by_post.entry(row.0).or_default().push(ReactionExtract {
+            id: row.1,
+            emoji: row.2,
+            user_id: row.3,
+            user_name: row.4,
+        });
+    }
+    Ok(by_post)
 }
 
 async fn load_groups(pool: &PgPool, session_id: &str) -> DbResult<Vec<PostGroup>> {

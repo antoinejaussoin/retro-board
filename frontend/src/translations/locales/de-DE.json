@@ -67,7 +67,9 @@
     "voteRemainingNone": "Sie können nicht mehr {{type}}.",
     "voteRemainingUnlimited": "Sie können unbegrenzt {{type}}.",
     "toggleGiphyButton": "Giphy-Bild umschalten",
-    "cancelVote": "Deine Stimme für diesen Beitrag abbrechen"
+    "cancelVote": "Deine Stimme für diesen Beitrag abbrechen",
+    "addReaction": "Reaktion hinzufügen",
+    "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {
     "title": "Personalisieren Sie die Sitzung",
@@ -110,6 +112,8 @@
     "newPostsFirstHelp": "Neue Beiträge werden oben in der Spalte hinzugefügt",
     "allowGiphy": "Giphy erlauben",
     "allowGiphyHelp": "Benutzern erlauben, ein Giphy-Bild statt einen Beitrag zu setzen",
+    "allowReactions": "Emoji-Reaktionen erlauben",
+    "allowReactionsHelp": "Teilnehmern erlauben, Emoji-Reaktionen auf Beiträge zu hinterlassen",
     "allowGrouping": "Gruppieren erlauben",
     "allowGroupingHelp": "Erstelle Gruppen, um Beiträge zusammenzufassen",
     "allowReordering": "Neu sortieren erlauben",
@@ -170,6 +174,7 @@
     "error_cannot_save_columns": "Spalten speichern fehlgeschlagen",
     "error_cannot_save_options": "Speichern der Optionen fehlgeschlagen",
     "error_cannot_cancel_votes": "Abbruch der Abstimmung fehlgeschlagen",
+    "error_cannot_react": "Deine Reaktion konnte nicht gespeichert werden.",
     "maxPostsReached": "Sie haben die vom Moderator festgelegte maximale Anzahl von Beiträgen erreicht.",
     "iAmDone": "Ich bin fertig!",
     "iAmNotDoneYet": "Ich bin noch nicht fertig...",
@@ -237,7 +242,13 @@
     "nameField": "Ihr Name (für Anzeigezwecke)",
     "noAuthWarning": "Ihr Administrator hat alle Login-Möglichkeiten (OAuth, Passwort) deaktiviert. Bitten Sie Ihren Administrator, mindestens eine wieder zu aktivieren.",
     "or": "oder",
-    "passwordScoreWords": ["schwach", "schwach", "nicht ganz", "gut", "stark"],
+    "passwordScoreWords": [
+      "schwach",
+      "schwach",
+      "nicht ganz",
+      "gut",
+      "stark"
+    ],
     "skipAndAnonLogin": "Anonym verwenden"
   },
   "AccountLogin": {

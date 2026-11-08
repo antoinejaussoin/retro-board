@@ -67,7 +67,9 @@
     "voteRemainingNone": "Il ne vous reste plus aucun vote {{type}}.",
     "voteRemainingUnlimited": "Vous avez un nombre illimité de votes {{type}}s.",
     "toggleGiphyButton": "Montrer/Cacher l'image Giphy",
-    "cancelVote": "Annuler vos votes sur ce post"
+    "cancelVote": "Annuler vos votes sur ce post",
+    "addReaction": "Ajouter une réaction",
+    "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {
     "title": "Nouvelle session personalisée",
@@ -110,6 +112,8 @@
     "newPostsFirstHelp": "Les nouveaux posts sont ajoutés en haut de chaque colonne",
     "allowGiphy": "Activer Giphy",
     "allowGiphyHelp": "Autoriser les utilisateurs à ajouter une image Giphy sur n'importe quel post",
+    "allowReactions": "Autoriser les réactions emoji",
+    "allowReactionsHelp": "Autoriser les participants à laisser des réactions emoji sur les cartes",
     "allowGrouping": "Groupes",
     "allowGroupingHelp": "Permettre aux utilisateurs de grouper les posts par groupes",
     "allowReordering": "Re-organiser",
@@ -170,6 +174,7 @@
     "error_cannot_save_columns": "Les colonnes n'ont pu être enregistrées",
     "error_cannot_save_options": "Les options n'ont pu être enregistrées",
     "error_cannot_cancel_votes": "L'annulation des votes a échoué",
+    "error_cannot_react": "Votre réaction n'a pas pu être enregistrée.",
     "maxPostsReached": "Vous avez atteint le nombre de posts maximum prévu par le modérateur.",
     "iAmDone": "J'ai fini !",
     "iAmNotDoneYet": "Je n'ai pas encore fini...",

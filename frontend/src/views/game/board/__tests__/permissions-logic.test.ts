@@ -78,6 +78,7 @@ const post = (user: User, likes?: User[], dislikes?: User[]): Post => {
     action: '',
     giphy: null,
     votes: [],
+    reactions: [],
     group: null,
     rank: 'blah',
   };
@@ -485,6 +486,29 @@ describe('Posts Permission Logic', () => {
     );
     const result = postPermissionLogic(p, s, capabilities, currentUser, false);
     expect(result.canUseGiphy).toBe(false);
+  });
+
+  it('allows reactions when enabled and writable', () => {
+    const p = post(anotherUser);
+    const s = session({ ...defaultOptions, allowReactions: true }, p);
+    const result = postPermissionLogic(p, s, capabilities, currentUser, false);
+    expect(result.canReact).toBe(true);
+  });
+
+  it('blocks reactions when disabled, logged out, or read-only', () => {
+    const p = post(anotherUser);
+    const enabled = session({ ...defaultOptions, allowReactions: true }, p);
+    const disabled = session({ ...defaultOptions, allowReactions: false }, p);
+    expect(
+      postPermissionLogic(p, disabled, capabilities, currentUser, false)
+        .canReact,
+    ).toBe(false);
+    expect(
+      postPermissionLogic(p, enabled, capabilities, null, false).canReact,
+    ).toBe(false);
+    expect(
+      postPermissionLogic(p, enabled, capabilities, currentUser, true).canReact,
+    ).toBe(false);
   });
 
   it('When allowing reordering', () => {

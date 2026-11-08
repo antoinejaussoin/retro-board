@@ -67,7 +67,9 @@
     "voteRemainingNone": "你沒有任何剩餘的 {{type}}。",
     "voteRemainingUnlimited": "您有無限次{{type}}。",
     "toggleGiphyButton": "切換 Giphy 圖像",
-    "cancelVote": ""
+    "cancelVote": "",
+    "addReaction": "新增表情回應",
+    "reactionChip": "{{emoji}} {{count}}"
   },
   "Customize": {
     "title": "自定義您的會話",
@@ -110,6 +112,8 @@
     "newPostsFirstHelp": "新帖子添加在列的頂部",
     "allowGiphy": "允許 Giphy",
     "allowGiphyHelp": "允許用戶針對帖子設置 Giphy 圖像",
+    "allowReactions": "允許表情回應",
+    "allowReactionsHelp": "允許參與者在貼文上留下表情回應",
     "allowGrouping": "允許分組",
     "allowGroupingHelp": "允許創建組以將帖子分組在一起",
     "allowReordering": "允許重新訂購",
@@ -170,6 +174,7 @@
     "error_cannot_save_columns": "保存列失敗",
     "error_cannot_save_options": "保存選項失敗",
     "error_cannot_cancel_votes": "",
+    "error_cannot_react": "無法儲存你的回應。",
     "maxPostsReached": "您已達到版主設置的最大帖子數。",
     "iAmDone": "我受夠了！",
     "iAmNotDoneYet": "我還沒搞定...",

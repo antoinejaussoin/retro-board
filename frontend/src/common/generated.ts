@@ -2,10 +2,11 @@
 // Do not edit.
 
 export type User = { id: string, name: string, photo: string | null, email: string | null, };
-export type SessionOptions = { maxUpVotes: number | null, maxDownVotes: number | null, maxPosts: number | null, allowActions: boolean, allowSelfVoting: boolean, allowMultipleVotes: boolean, allowAuthorVisible: boolean, allowGiphy: boolean, allowGrouping: boolean, allowReordering: boolean, allowCancelVote: boolean, restrictTitleEditToModerator: boolean, restrictReorderingToModerator: boolean, restrictGroupingToModerator: boolean, blurCards: boolean, newPostsFirst: boolean, allowTimer: boolean, timerDuration: number, readonlyOnTimerEnd: boolean, };
+export type SessionOptions = { maxUpVotes: number | null, maxDownVotes: number | null, maxPosts: number | null, allowActions: boolean, allowSelfVoting: boolean, allowMultipleVotes: boolean, allowAuthorVisible: boolean, allowGiphy: boolean, allowReactions: boolean, allowGrouping: boolean, allowReordering: boolean, allowCancelVote: boolean, restrictTitleEditToModerator: boolean, restrictReorderingToModerator: boolean, restrictGroupingToModerator: boolean, blurCards: boolean, newPostsFirst: boolean, allowTimer: boolean, timerDuration: number, readonlyOnTimerEnd: boolean, };
 export type ColumnDefinition = { id: string, type: string, index: number, label: string, color: string, icon: string | null, };
 export type VoteExtract = { id: string, userName: string, userId: string, type: string, };
-export type Post = { id: string, column: number, content: string, action: string | null, giphy: string | null, user: User, group: PostGroup | null, rank: string, votes: Array<VoteExtract>, };
+export type ReactionExtract = { id: string, emoji: string, userName: string, userId: string, };
+export type Post = { id: string, column: number, content: string, action: string | null, giphy: string | null, user: User, group: PostGroup | null, rank: string, votes: Array<VoteExtract>, reactions: Array<ReactionExtract>, };
 export type PostGroup = { id: string, column: number, label: string, posts: Array<Post>, rank: string, user: User, };
 export type Message = { id: string, content: string, user: User, created: string, };
 export type Session = { id: string, name: string | null, columns: Array<ColumnDefinition>, createdBy: User, moderator: User, groups: Array<PostGroup>, posts: Array<Post>, messages: Array<Message>, options: SessionOptions, encrypted: string | null, locked: boolean, ready: Array<string>, timer: string | null, demo: boolean, };
@@ -20,6 +21,7 @@ export type IncomingGroup = { id: string | null, label: string, column: number, 
 export type GroupDraft = { id: string, label: string, column: number, rank: string, };
 export type WsGroupUpdatePayload = { group: GroupDraft, };
 export type WsLikeUpdatePayload = { type: string, postId: string, };
+export type WsReactPayload = { postId: string, emoji: string, };
 export type WsDeletePostPayload = { postId: string, };
 export type WsDeleteGroupPayload = { groupId: string, };
 export type WsSaveSessionSettingsPayload = { settings: SessionSettings, saveAsTemplate: boolean, };
@@ -27,6 +29,7 @@ export type ChatIn = { id: string | null, content: string, };
 export type WsErrorPayload = { type: string, details: string | null, };
 export type WsReceiveLikeUpdatePayload = { postId: string, vote: VoteExtract, };
 export type WsReceiveCancelVotesPayload = { postId: string, userId: string, };
+export type WsReceiveReactPayload = { postId: string, reaction: ReactionExtract, change: string, };
 export type WsReceiveTimerStartPayload = { duration: number, };
 export type WsUserReadyPayload = { userId: string, ready: boolean, name: string, };
 export type WebsocketMessage<T> = { payload: T, sessionId: string, ack: string, };

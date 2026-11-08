@@ -8,8 +8,6 @@ import {
   Image,
   Smile,
   SquareCheck,
-  ThumbsDown,
-  ThumbsUp,
   Trash2,
   X,
 } from 'lucide-react';
@@ -30,9 +28,11 @@ import { Tooltip } from 'ui/tooltip';
 import { isPostDragData } from '../drag';
 import { usePostUserPermissions } from '../usePostUserPermissions';
 import { countVotes, enumerateVotes } from '../../utils';
+import useUser from '../../../../state/user/useUser';
 import ActionButton from './ActionButton';
 import ActionsBar from './ActionsBar';
 import { getLorem } from './lorem';
+import ReactionBar from './ReactionBar';
 import VoteButton from './VoteButton';
 
 interface PostItemProps {
@@ -42,6 +42,7 @@ interface PostItemProps {
   onLike: () => void;
   onDislike: () => void;
   onCancelVotes: () => void;
+  onReact: (emoji: string) => void;
   onEdit: (content: string) => void;
   onEditAction: (action: string) => void;
   onEditGiphy: (giphyId: string | null) => void;
@@ -58,6 +59,7 @@ const PostItem = ({
   onLike,
   onDislike,
   onCancelVotes,
+  onReact,
   onEdit,
   onEditAction,
   onEditGiphy,
@@ -75,8 +77,10 @@ const PostItem = ({
     canShowAuthor,
     canReorder,
     canUseGiphy,
+    canReact,
     isBlurred,
   } = usePostUserPermissions(post);
+  const user = useUser();
   const { t } = useTranslation();
   const { encrypt, decrypt } = useCrypto();
   const canDecrypt = useCanDecrypt();
@@ -94,6 +98,16 @@ const PostItem = ({
   const downVotes = useMemo(() => countVotes(post, 'dislike'), [post]);
   const upVoters = useMemo(() => enumerateVotes(post, 'like'), [post]);
   const downVoters = useMemo(() => enumerateVotes(post, 'dislike'), [post]);
+  const upVotedByMe = useMemo(
+    () => !!user && post.votes.some((v) => v.type === 'like' && v.userId === user.id),
+    [post.votes, user],
+  );
+  const downVotedByMe = useMemo(
+    () =>
+      !!user &&
+      post.votes.some((v) => v.type === 'dislike' && v.userId === user.id),
+    [post.votes, user],
+  );
   const displayAction = actionsToggled || !!post.action;
   const readOnly = !canEdit || isBlurred || !canDecrypt;
   const handleShowGiphy = useCallback(() => {
@@ -262,6 +276,41 @@ const PostItem = ({
         </div>
       )}
       <ActionsBar
+        left={
+          <>
+            {canDisplayUpVote ? (
+              <VoteButton
+                voters={upVoters}
+                canVote={canUpVote}
+                votedByMe={upVotedByMe}
+                count={upVotes}
+                emoji="👍"
+                onClick={onLike}
+                showTooltip={canShowAuthor}
+                ariaLabel="Like"
+              />
+            ) : null}
+            {canDisplayDownVote ? (
+              <VoteButton
+                voters={downVoters}
+                canVote={canDownVote}
+                votedByMe={downVotedByMe}
+                count={downVotes}
+                emoji="👎"
+                onClick={onDislike}
+                showTooltip={canShowAuthor}
+                ariaLabel="Dislike"
+              />
+            ) : null}
+            <ReactionBar
+              reactions={post.reactions}
+              currentUserId={user?.id ?? null}
+              canReact={canReact}
+              showNames={canShowAuthor}
+              onToggle={onReact}
+            />
+          </>
+        }
         rightActions={
           <>
             {canCancelVote ? (
@@ -345,37 +394,7 @@ const PostItem = ({
             )}
           </>
         }
-      >
-        {canDisplayUpVote ? (
-          <VoteButton
-            voters={upVoters}
-            canVote={canUpVote}
-            count={upVotes}
-            icon={
-              <ThumbsUp className="size-5" style={{ color: Palette.positive }} />
-            }
-            onClick={onLike}
-            showTooltip={canShowAuthor}
-            ariaLabel="Like"
-          />
-        ) : null}
-        {canDisplayDownVote ? (
-          <VoteButton
-            voters={downVoters}
-            canVote={canDownVote}
-            count={downVotes}
-            icon={
-              <ThumbsDown
-                className="size-5"
-                style={{ color: Palette.negative }}
-              />
-            }
-            onClick={onDislike}
-            showTooltip={canShowAuthor}
-            ariaLabel="Dislike"
-          />
-        ) : null}
-      </ActionsBar>
+      />
     </div>
   );
 };

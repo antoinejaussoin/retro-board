@@ -15,6 +15,7 @@ function card(id: string): Post {
     id,
     content: 'foo',
     votes: [],
+    reactions: [],
     action: '',
     column: 0,
     giphy: null,
@@ -128,6 +129,34 @@ describe('reduceSession', () => {
         vote: { id: 'v', type: 'like', userId: '1', userName: 'danièle' },
       }),
     ).toBe(start);
+  });
+
+  it('adds a reaction once and removes it', () => {
+    const start = board({ posts: [card('1')] });
+    const reaction = {
+      id: 'r1',
+      emoji: '👍',
+      userId: '1',
+      userName: 'danièle',
+    };
+    const added = apply(start, {
+      type: 'add-reaction',
+      postId: '1',
+      reaction,
+    });
+    expect(added?.posts[0].reactions).toEqual([reaction]);
+    const duplicate = apply(added, {
+      type: 'add-reaction',
+      postId: '1',
+      reaction: { ...reaction, id: 'r2' },
+    });
+    expect(duplicate?.posts[0].reactions).toEqual([reaction]);
+    const removed = apply(duplicate, {
+      type: 'remove-reaction',
+      postId: '1',
+      reaction,
+    });
+    expect(removed?.posts[0].reactions).toEqual([]);
   });
 
   it('deletes a group and detaches its posts', () => {

@@ -65,8 +65,17 @@ pub async fn delete_account(
             .bind(&user.id)
             .execute(&mut *tx)
             .await?;
+        sqlx::query("DELETE FROM post_reactions WHERE user_id = $1")
+            .bind(&user.id)
+            .execute(&mut *tx)
+            .await?;
     } else {
         sqlx::query("UPDATE votes SET user_id = $1 WHERE user_id = $2")
+            .bind(&anon_user)
+            .bind(&user.id)
+            .execute(&mut *tx)
+            .await?;
+        sqlx::query("UPDATE post_reactions SET user_id = $1 WHERE user_id = $2")
             .bind(&anon_user)
             .bind(&user.id)
             .execute(&mut *tx)
@@ -77,6 +86,12 @@ pub async fn delete_account(
             .bind(&user.id)
             .execute(&mut *tx)
             .await?;
+        sqlx::query(
+            "DELETE FROM post_reactions WHERE post_id IN (SELECT id FROM posts WHERE user_id = $1)",
+        )
+        .bind(&user.id)
+        .execute(&mut *tx)
+        .await?;
         sqlx::query("UPDATE posts SET group_id = NULL WHERE group_id IN (SELECT id FROM groups WHERE user_id = $1)").bind(&user.id).execute(&mut *tx).await?;
         sqlx::query("DELETE FROM posts WHERE user_id = $1")
             .bind(&user.id)
@@ -101,6 +116,7 @@ pub async fn delete_account(
     if delete_sessions {
         sqlx::query("DELETE FROM messages WHERE session_id IN (SELECT id FROM sessions WHERE created_by_id = $1)").bind(&user.id).execute(&mut *tx).await?;
         sqlx::query("DELETE FROM votes WHERE post_id IN (SELECT id FROM posts WHERE session_id IN (SELECT id FROM sessions WHERE created_by_id = $1))").bind(&user.id).execute(&mut *tx).await?;
+        sqlx::query("DELETE FROM post_reactions WHERE post_id IN (SELECT id FROM posts WHERE session_id IN (SELECT id FROM sessions WHERE created_by_id = $1))").bind(&user.id).execute(&mut *tx).await?;
         sqlx::query("DELETE FROM posts WHERE session_id IN (SELECT id FROM sessions WHERE created_by_id = $1)").bind(&user.id).execute(&mut *tx).await?;
         sqlx::query("DELETE FROM groups WHERE session_id IN (SELECT id FROM sessions WHERE created_by_id = $1)").bind(&user.id).execute(&mut *tx).await?;
         sqlx::query("DELETE FROM columns WHERE session_id IN (SELECT id FROM sessions WHERE created_by_id = $1)").bind(&user.id).execute(&mut *tx).await?;
@@ -178,6 +194,11 @@ pub async fn merge_users(
             .execute(pool)
             .await?;
         sqlx::query("UPDATE votes SET user_id = $1 WHERE user_id = $2")
+            .bind(&main.id)
+            .bind(&target.id)
+            .execute(pool)
+            .await?;
+        sqlx::query("UPDATE post_reactions SET user_id = $1 WHERE user_id = $2")
             .bind(&main.id)
             .bind(&target.id)
             .execute(pool)

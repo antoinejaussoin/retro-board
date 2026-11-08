@@ -31,7 +31,7 @@ async fn fresh_database_applies_every_migration_once() {
     let applied = retrospected_migrations::run(&pool).await.expect("migrate");
     let catalogue = retrospected_migrations::catalogue().expect("catalogue");
     assert_eq!(applied, catalogue.len());
-    assert_eq!(catalogue.len(), 117);
+    assert_eq!(catalogue.len(), 118);
 
     let again = retrospected_migrations::run(&pool).await.expect("second");
     assert_eq!(again, 0);

@@ -2,6 +2,7 @@ import type {
   Message,
   Post,
   PostGroup,
+  ReactionExtract,
   Session,
   SessionSettings,
   VoteExtract,
@@ -20,6 +21,11 @@ interface UseSession {
   updatePost: (post: Post) => void;
   updatePostGroup: (group: PostGroup) => void;
   receiveVote: (postId: string, vote: VoteExtract) => void;
+  receiveReaction: (
+    postId: string,
+    reaction: ReactionExtract,
+    change: string,
+  ) => void;
   deletePost: (postId: string) => void;
   deletePostGroup: (groupId: string) => void;
   editSessionSettings: (updated: SessionSettings) => void;
@@ -98,6 +104,17 @@ export default function useSession(): UseSession {
     [send],
   );
 
+  const receiveReaction = useCallback(
+    (postId: string, reaction: ReactionExtract, change: string) => {
+      if (change === 'removed') {
+        send({ type: 'remove-reaction', postId, reaction });
+        return;
+      }
+      send({ type: 'add-reaction', postId, reaction });
+    },
+    [send],
+  );
+
   const deletePost = useCallback(
     (postId: string) => {
       send({ type: 'delete-post', postId });
@@ -141,6 +158,7 @@ export default function useSession(): UseSession {
     receivePostGroup,
     receiveChatMessage,
     receiveVote,
+    receiveReaction,
     updatePost,
     updatePostGroup,
     deletePost,

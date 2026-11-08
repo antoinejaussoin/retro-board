@@ -249,7 +249,7 @@ function boardContentKey(
   const posts = session.posts
     .map(
       (post) =>
-        `${post.id}\t${post.content}\t${post.action ?? ''}\t${post.votes.map((vote) => vote.type).join(',')}\t${post.group?.label ?? ''}`,
+        `${post.id}\t${post.content}\t${post.action ?? ''}\t${post.votes.map((vote) => vote.type).join(',')}\t${post.reactions.map((reaction) => reaction.emoji).join(',')}\t${post.group?.label ?? ''}`,
     )
     .join('\n');
   const groups = session.groups

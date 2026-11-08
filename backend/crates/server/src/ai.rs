@@ -207,9 +207,10 @@ pub fn summary_prompt(board: &crate::models::Board, show_authors: bool) -> Strin
 fn format_post(post: &crate::models::Post, show_authors: bool) -> String {
     let content = post.content.replace('\n', "\n  ");
     let mut line = format!(
-        "- (+{}/-{}) {content}",
+        "- (+{}/-{}){reactions} {content}",
         vote_count(post, "like"),
-        vote_count(post, "dislike")
+        vote_count(post, "dislike"),
+        reactions = reaction_suffix(post),
     );
     if show_authors {
         line.push_str(&format!("\n  by {}", post.user.name));
@@ -222,6 +223,32 @@ fn format_post(post: &crate::models::Post, show_authors: bool) -> String {
 
 fn vote_count(post: &crate::models::Post, kind: &str) -> usize {
     post.votes.iter().filter(|vote| vote.kind == kind).count()
+}
+
+fn reaction_suffix(post: &crate::models::Post) -> String {
+    let mut totals: Vec<(String, usize)> = Vec::new();
+    for reaction in &post.reactions {
+        if let Some((_, count)) = totals
+            .iter_mut()
+            .find(|(emoji, _)| emoji == &reaction.emoji)
+        {
+            *count += 1;
+        } else {
+            totals.push((reaction.emoji.clone(), 1));
+        }
+    }
+    if totals.is_empty() {
+        String::new()
+    } else {
+        format!(
+            " {}",
+            totals
+                .into_iter()
+                .map(|(emoji, count)| format!("{emoji}{count}"))
+                .collect::<Vec<_>>()
+                .join(" ")
+        )
+    }
 }
 
 fn vote_score(post: &crate::models::Post) -> i32 {
@@ -360,6 +387,7 @@ mod tests {
                     kind: "dislike".into(),
                 },
             ],
+            reactions: vec![],
         };
         let board = Board {
             id: "s".into(),

@@ -20,6 +20,7 @@ pub(super) const RECEIVE_DELETE_POST: &str = "retrospected/posts/receive/delete"
 pub(super) const RECEIVE_EDIT_POST: &str = "retrospected/posts/receive/edit";
 pub(super) const RECEIVE_LIKE: &str = "retrospected/posts/receive/like";
 pub(super) const RECEIVE_CANCEL_VOTES: &str = "retrospected/posts/receive/cancel-votes";
+pub(super) const RECEIVE_REACT: &str = "retrospected/posts/receive/react";
 pub(super) const RECEIVE_POST_GROUP: &str = "retrospected/group/receive/add";
 pub(super) const RECEIVE_DELETE_POST_GROUP: &str = "retrospected/group/receive/delete";
 pub(super) const RECEIVE_EDIT_POST_GROUP: &str = "retrospected/group/receive/edit";
@@ -100,6 +101,12 @@ where
         "retrospected/posts/cancel-votes/success",
         false,
         posts::cancel_votes,
+    );
+    bind(
+        &socket,
+        "retrospected/posts/react/success",
+        false,
+        posts::react_post,
     );
     bind(
         &socket,
