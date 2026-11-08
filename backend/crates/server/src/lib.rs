@@ -60,6 +60,14 @@ pub async fn run(config: Config) -> Result<(), Box<dyn std::error::Error>> {
         licence.as_ref().map(|licence| licence.owner.as_str()),
         applied,
     );
+    if config.self_hosted
+        && (config.self_hosted_admin.is_empty() || config.self_hosted_admin == "admin@acme.com")
+    {
+        tracing::warn!(
+            admin = %config.self_hosted_admin,
+            "SELF_HOSTED_ADMIN is still the default; set it to the operator's email"
+        );
+    }
     let (http_limit, ws_limit) = limiters(&config);
     let io_slot = Arc::new(OnceLock::new());
     let state = AppState {
@@ -71,6 +79,9 @@ pub async fn run(config: Config) -> Result<(), Box<dyn std::error::Error>> {
         ws_limit,
         io: io_slot.clone(),
     };
+    if let Err(error) = seed_admin(&state).await {
+        tracing::warn!(%error, "could not seed the self-hosted admin");
+    }
     if config.redis_for_socketio {
         // socketioxide-redis publishes on RESP3 (Redis 7+). Every backend
         // process is Rust, so this does not have to match the old Node adapter.
@@ -97,6 +108,35 @@ pub async fn run(config: Config) -> Result<(), Box<dyn std::error::Error>> {
         ws::register(&io);
         serve(state, layer).await?;
     }
+    Ok(())
+}
+
+async fn seed_admin(state: &AppState) -> Result<(), Box<dyn std::error::Error>> {
+    if !state.config.self_hosted || state.config.self_hosted_admin_password.is_empty() {
+        return Ok(());
+    }
+    let email = state.config.self_hosted_admin.as_str();
+    if db::user_owns_email(&state.db, email).await? {
+        return Ok(());
+    }
+    let hash = crate::crypto::hash_password(&state.config.self_hosted_admin_password)?;
+    db::register_user(
+        &state.db,
+        db::Registration {
+            account_type: "password".into(),
+            name: email.to_owned(),
+            username: email.to_owned(),
+            email: email.to_owned(),
+            email_verified: false,
+            password: Some(hash),
+            email_verification: None,
+            language: None,
+            photo: None,
+            slack_user_id: None,
+            slack_team_id: None,
+        },
+    )
+    .await?;
     Ok(())
 }
 

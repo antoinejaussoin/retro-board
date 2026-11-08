@@ -525,6 +525,78 @@ async fn http_contract() {
 }
 
 #[tokio::test]
+async fn admin_routes_follow_the_self_hosted_flag() {
+    let client = reqwest::Client::new();
+    let hosted = boot_with(2, &[("SELF_HOSTED", "false")]).await;
+    let caps: Value = client
+        .get(format!("{}/api/admin/self-hosting", hosted.base))
+        .send()
+        .await
+        .unwrap()
+        .json()
+        .await
+        .unwrap();
+    assert_eq!(caps["adminEmail"], "");
+    let hosted_cookie = register_admin(&client, &hosted.base).await;
+    assert_eq!(
+        client
+            .get(format!("{}/api/admin/users", hosted.base))
+            .header("cookie", &hosted_cookie)
+            .send()
+            .await
+            .unwrap()
+            .status(),
+        403,
+        "hosted deployments must not expose admin mutations"
+    );
+
+    let local = boot_with(3, &[]).await;
+    let local_cookie = register_admin(&client, &local.base).await;
+    assert_eq!(
+        client
+            .get(format!("{}/api/admin/users", local.base))
+            .header("cookie", &local_cookie)
+            .send()
+            .await
+            .unwrap()
+            .status(),
+        200,
+        "the configured self-hosted admin email can list users"
+    );
+
+    let seeded = boot_with(4, &[("SELF_HOSTED_ADMIN_PASSWORD", "seed-secret")]).await;
+    let seeded_login = client
+        .post(format!("{}/api/auth/login", seeded.base))
+        .json(&serde_json::json!({"username": "admin@localhost", "password": "seed-secret"}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(seeded_login.status(), 200, "the seeded admin can log in");
+    let taken = client
+        .post(format!("{}/api/register", seeded.base))
+        .json(&serde_json::json!({"name": "Other", "username": "admin@localhost", "password": "other-password", "language": "en-GB"}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(
+        taken.status(),
+        403,
+        "the seeded admin email is already taken"
+    );
+}
+
+async fn register_admin(client: &reqwest::Client, base: &str) -> String {
+    let registered = client
+        .post(format!("{base}/api/register"))
+        .json(&serde_json::json!({"name": "Admin", "username": "admin@localhost", "password": "admin-password", "language": "en-GB"}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(registered.status(), 200, "admin registration");
+    cookie_from(&registered)
+}
+
+#[tokio::test]
 async fn unverified_password_cannot_log_in_when_mail_is_configured() {
     let server = boot_with(
         1,

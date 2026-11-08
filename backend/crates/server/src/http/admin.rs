@@ -23,7 +23,11 @@ pub(super) async fn capabilities(State(state): State<AppState>) -> Json<BackendC
     Json(BackendCapabilities {
         self_hosted: state.config.self_hosted,
         email_available: state.config.emails_enabled(),
-        admin_email: state.config.self_hosted_admin.clone(),
+        admin_email: if state.config.self_hosted {
+            state.config.self_hosted_admin.clone()
+        } else {
+            String::new()
+        },
         licenced,
         slack_client_id: (state.config.slack_bot_enable && !state.config.slack_key.is_empty())
             .then(|| state.config.slack_key.clone()),
@@ -49,6 +53,9 @@ pub(super) async fn capabilities(State(state): State<AppState>) -> Json<BackendC
 }
 
 pub(super) async fn require_admin(state: &AppState, session: &Session) -> bool {
+    if !state.config.self_hosted {
+        return false;
+    }
     let Some((_, identity_id)) = session.user_ids() else {
         return false;
     };
