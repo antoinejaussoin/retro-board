@@ -9,8 +9,31 @@ import { trackEvent } from 'track';
 import { useLanguage } from 'translations';
 import { Alert } from 'ui/alert';
 import { Button } from 'ui/button';
+import { cn } from 'ui/cn';
 import AccountAuth from './AccountAuth';
 import SocialAuth from './SocialAuth';
+
+function OrDivider({
+  label,
+  responsive = false,
+}: {
+  label: string;
+  responsive?: boolean;
+}) {
+  return (
+    <div
+      className={cn(
+        'relative flex h-px w-4/5 shrink-0 items-center justify-center bg-line',
+        responsive &&
+          '@min-[60rem]:h-auto @min-[60rem]:w-px @min-[60rem]:self-stretch',
+      )}
+    >
+      <span className="relative -top-0.5 bg-cream px-2 text-sm text-muted">
+        {label}
+      </span>
+    </div>
+  );
+}
 
 interface LoginContentProps {
   anonymous: boolean;
@@ -59,7 +82,12 @@ export default function LoginContent({
 
   return (
     <div className="flex min-h-0 flex-1 flex-col text-ink">
-      <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5">
+      <div
+        className={cn(
+          'min-h-0 flex-1 overflow-y-auto px-6 pt-5',
+          showAnonymous ? 'pb-0' : 'pb-5',
+        )}
+      >
         {hasNoWayOtherThanAnonymous ? (
           <Alert severity="error">{t('AuthCommon.noAuthWarning')}</Alert>
         ) : (
@@ -78,11 +106,7 @@ export default function LoginContent({
                   </div>
                 ) : null}
                 {showSocial && showPasswords ? (
-                  <div className="relative flex h-px w-4/5 shrink-0 items-center justify-center bg-line @min-[60rem]:h-auto @min-[60rem]:w-px @min-[60rem]:self-stretch">
-                    <span className="bg-cream px-2 text-sm text-muted">
-                      {t('AuthCommon.or')}
-                    </span>
-                  </div>
+                  <OrDivider label={t('AuthCommon.or')} responsive />
                 ) : null}
                 {showPasswords ? (
                   <div className="w-full min-w-0 max-w-md">
@@ -95,17 +119,20 @@ export default function LoginContent({
         )}
       </div>
       {showAnonymous ? (
-        <div className="flex shrink-0 justify-center border-t border-line px-6 py-4">
-          <Button
-            variant="outline"
-            size="lg"
-            onClick={handleAnonLogin}
-            data-cy="login-anonymous"
-            className="w-full max-w-md"
-          >
-            <UserRoundX className="size-5" />
-            {t('AuthCommon.skipAndAnonLogin')}
-          </Button>
+        <div className="flex shrink-0 flex-col items-center px-6 pt-6 pb-5">
+          <div className="flex w-full max-w-md flex-col items-center gap-6">
+            <OrDivider label={t('AuthCommon.or')} />
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={handleAnonLogin}
+              data-cy="login-anonymous"
+              className="w-full"
+            >
+              <UserRoundX className="size-5" />
+              {t('AuthCommon.skipAndAnonLogin')}
+            </Button>
+          </div>
         </div>
       ) : null}
     </div>
