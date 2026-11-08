@@ -24,6 +24,7 @@ const CustomAvatar = ({ user, online, className }: AvatarProps) => {
     <img
       alt={displayName}
       src={getGravatar(user)}
+      referrerPolicy="no-referrer"
       title={displayName}
       className={cn(
         'size-9 rounded-full bg-primary-100 object-cover',
