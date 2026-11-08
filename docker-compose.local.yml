@@ -49,6 +49,10 @@ services:
       SELF_HOSTED: 'true'
       SELF_HOSTED_ADMIN: admin@localhost
       BASE_URL: http://localhost:1800
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-haiku-5-5}
+      AI_FREE_LIMIT: ${AI_FREE_LIMIT:-5}
+      AI_PAID_LIMIT: ${AI_PAID_LIMIT:-1000}
     depends_on:
       postgres:
         condition: service_healthy
@@ -71,6 +75,7 @@ services:
       BACKEND_HOST: backend
       BACKEND_PORT: 3201
       FRONTEND_SELF_HOSTED: 'true'
+      FRONTEND_AI_FEEDBACK_URL: ${FRONTEND_AI_FEEDBACK_URL:-}
     depends_on:
       backend:
         condition: service_healthy
