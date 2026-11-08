@@ -137,6 +137,15 @@ pub async fn identity(pool: &PgPool, identity_id: &str) -> DbResult<Option<Ident
     }))
 }
 
+/// True when some user row already stores this email.
+pub async fn user_owns_email(pool: &PgPool, email: &str) -> DbResult<bool> {
+    let id = sqlx::query_scalar::<_, String>("SELECT id FROM users WHERE email = $1")
+        .bind(email.trim())
+        .fetch_optional(pool)
+        .await?;
+    Ok(id.is_some())
+}
+
 pub async fn identity_by_username(
     pool: &PgPool,
     account_type: &str,
@@ -187,6 +196,9 @@ pub struct Registration {
     pub name: String,
     pub username: String,
     pub email: String,
+    /// Provider asserted this address. Password accounts store their own address
+    /// but never attach it to a user who already has it.
+    pub email_verified: bool,
     pub password: Option<String>,
     pub email_verification: Option<String>,
     pub language: Option<String>,
@@ -195,8 +207,56 @@ pub struct Registration {
     pub slack_team_id: Option<String>,
 }
 
-pub async fn register_user(pool: &PgPool, registration: Registration) -> DbResult<Identity> {
+/// Why `register_user` refused or failed.
+#[derive(Debug, thiserror::Error)]
+pub enum RegisterError {
+    /// A password registration asked for an email that already belongs to a user.
+    #[error("email already registered")]
+    EmailTaken,
+    /// The database rejected the write.
+    #[error(transparent)]
+    Db(#[from] sqlx::Error),
+}
+
+/// How an address on a registration may be written onto a user row.
+#[derive(Debug, PartialEq, Eq)]
+pub(crate) enum EmailLink {
+    /// Password account. Store the address on a new user, never on someone else.
+    Own,
+    /// Provider-verified address. Attach to the user who already has it.
+    Verified,
+    /// Empty or unverified. Leave `users.email` null and do not look anyone up.
+    None,
+}
+
+/// Decide whether this registration may store or adopt an email.
+pub(crate) fn email_link(account_type: &str, email: &str, verified: bool) -> EmailLink {
+    if email.trim().is_empty() {
+        return EmailLink::None;
+    }
+    if account_type == "password" {
+        EmailLink::Own
+    } else if verified {
+        EmailLink::Verified
+    } else {
+        EmailLink::None
+    }
+}
+
+pub async fn register_user(
+    pool: &PgPool,
+    registration: Registration,
+) -> Result<Identity, RegisterError> {
     let mut tx = pool.begin().await?;
+    let link = email_link(
+        &registration.account_type,
+        &registration.email,
+        registration.email_verified,
+    );
+    let stored_email = match link {
+        EmailLink::None => None,
+        EmailLink::Own | EmailLink::Verified => Some(registration.email.trim().to_owned()),
+    };
     let existing = sqlx::query_as::<_, (String, String)>(
         r#"SELECT id, user_id FROM users_identities WHERE username = $1 AND account_type = $2 LIMIT 1"#,
     )
@@ -211,9 +271,13 @@ pub async fn register_user(pool: &PgPool, registration: Registration) -> DbResul
             .bind(&user_id)
             .fetch_one(&mut *tx)
             .await?;
-        if email.as_deref() != Some(registration.email.as_str()) {
-            let (uid, existed) =
-                get_or_create_user(&mut tx, &registration.email, &registration.name).await?;
+        if link == EmailLink::Verified && email.as_deref() != stored_email.as_deref() {
+            let (uid, existed) = get_or_create_user(
+                &mut tx,
+                stored_email.as_deref().unwrap_or(""),
+                &registration.name,
+            )
+            .await?;
             sqlx::query("UPDATE users_identities SET user_id = $1 WHERE id = $2")
                 .bind(&uid)
                 .bind(&identity_id)
@@ -224,8 +288,27 @@ pub async fn register_user(pool: &PgPool, registration: Registration) -> DbResul
             (identity_id, user_id, true)
         }
     } else {
-        let (uid, existed) =
-            get_or_create_user(&mut tx, &registration.email, &registration.name).await?;
+        let (uid, existed) = match link {
+            EmailLink::Own => {
+                let email = stored_email.as_deref().unwrap_or("");
+                if user_id_by_email(&mut tx, email).await?.is_some() {
+                    return Err(RegisterError::EmailTaken);
+                }
+                (
+                    create_user(&mut tx, &registration.name, Some(email)).await?,
+                    false,
+                )
+            }
+            EmailLink::Verified => {
+                get_or_create_user(
+                    &mut tx,
+                    stored_email.as_deref().unwrap_or(""),
+                    &registration.name,
+                )
+                .await?
+            }
+            EmailLink::None => (create_user(&mut tx, &registration.name, None).await?, false),
+        };
         let identity_id = Uuid::new_v4().to_string();
         sqlx::query(
             r#"INSERT INTO users_identities (id, user_id, account_type, username, password, email_verification, photo)
@@ -244,14 +327,14 @@ pub async fn register_user(pool: &PgPool, registration: Registration) -> DbResul
     };
 
     sqlx::query(
-        r#"UPDATE users SET name = COALESCE(NULLIF(name, ''), $2), email = $3, photo = COALESCE($4, photo),
+        r#"UPDATE users SET name = COALESCE(NULLIF(name, ''), $2), email = COALESCE($3, email), photo = COALESCE($4, photo),
                slack_user_id = COALESCE($5, slack_user_id), slack_team_id = COALESCE($6, slack_team_id),
                language = CASE WHEN $7 THEN COALESCE($8, language) ELSE language END
            WHERE id = $1"#,
     )
     .bind(&user_id)
     .bind(&registration.name)
-    .bind(&registration.email)
+    .bind(&stored_email)
     .bind(&registration.photo)
     .bind(&registration.slack_user_id)
     .bind(&registration.slack_team_id)
@@ -262,14 +345,11 @@ pub async fn register_user(pool: &PgPool, registration: Registration) -> DbResul
 
     if had_identity {
         sqlx::query(
-            r#"UPDATE users_identities SET username = $2, account_type = $3, photo = $4, password = $5, email_verification = $6 WHERE id = $1"#,
+            r#"UPDATE users_identities SET username = $2, photo = COALESCE($3, photo) WHERE id = $1"#,
         )
         .bind(&identity_id)
         .bind(&registration.username)
-        .bind(&registration.account_type)
         .bind(&registration.photo)
-        .bind(&registration.password)
-        .bind(&registration.email_verification)
         .execute(&mut *tx)
         .await?;
     }
@@ -277,20 +357,24 @@ pub async fn register_user(pool: &PgPool, registration: Registration) -> DbResul
     identity(pool, &identity_id)
         .await?
         .ok_or(sqlx::Error::RowNotFound)
+        .map_err(RegisterError::Db)
 }
 
-async fn get_or_create_user(
+async fn user_id_by_email(
     tx: &mut Transaction<'_, Postgres>,
     email: &str,
-    name: &str,
-) -> DbResult<(String, bool)> {
-    if let Some(id) = sqlx::query_scalar::<_, String>("SELECT id FROM users WHERE email = $1")
+) -> Result<Option<String>, sqlx::Error> {
+    sqlx::query_scalar::<_, String>("SELECT id FROM users WHERE email = $1")
         .bind(email)
         .fetch_optional(&mut **tx)
-        .await?
-    {
-        return Ok((id, true));
-    }
+        .await
+}
+
+async fn create_user(
+    tx: &mut Transaction<'_, Postgres>,
+    name: &str,
+    email: Option<&str>,
+) -> Result<String, sqlx::Error> {
     let id = Uuid::new_v4().to_string();
     sqlx::query("INSERT INTO users (id, name, email) VALUES ($1, $2, $3)")
         .bind(&id)
@@ -298,7 +382,18 @@ async fn get_or_create_user(
         .bind(email)
         .execute(&mut **tx)
         .await?;
-    Ok((id, false))
+    Ok(id)
+}
+
+async fn get_or_create_user(
+    tx: &mut Transaction<'_, Postgres>,
+    email: &str,
+    name: &str,
+) -> Result<(String, bool), sqlx::Error> {
+    if let Some(id) = user_id_by_email(tx, email).await? {
+        return Ok((id, true));
+    }
+    Ok((create_user(tx, name, Some(email)).await?, false))
 }
 
 pub async fn register_anonymous(
@@ -427,4 +522,26 @@ pub async fn related_users(
         }
     }
     Ok(users)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{email_link, EmailLink};
+
+    #[test]
+    fn password_addresses_are_stored_but_unverified_provider_mail_is_not() {
+        assert_eq!(
+            email_link("password", "ada@example.com", false),
+            EmailLink::Own
+        );
+        assert_eq!(
+            email_link("google", "ada@example.com", true),
+            EmailLink::Verified
+        );
+        assert_eq!(
+            email_link("google", "ada@example.com", false),
+            EmailLink::None
+        );
+        assert_eq!(email_link("slack", "  ", true), EmailLink::None);
+    }
 }

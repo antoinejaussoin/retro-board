@@ -179,6 +179,7 @@ async fn twitter_access(
         username,
         email,
         password: None,
+        email_verified: false,
         email_verification: None,
         language: None,
         photo: user

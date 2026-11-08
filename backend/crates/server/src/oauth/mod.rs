@@ -363,6 +363,7 @@ async fn profile(
                 username: email.clone(),
                 email,
                 password: None,
+                email_verified: false,
                 email_verification: None,
                 language: None,
                 photo: user
@@ -417,6 +418,7 @@ async fn profile(
                 username,
                 email,
                 password: None,
+                email_verified: false,
                 email_verification: None,
                 language: None,
                 photo: user
@@ -448,6 +450,7 @@ async fn profile(
                 username: email.clone(),
                 email,
                 password: None,
+                email_verified: false,
                 email_verification: None,
                 language: None,
                 photo: user
@@ -487,6 +490,7 @@ async fn profile(
                 username: email.clone(),
                 email,
                 password: None,
+                email_verified: false,
                 email_verification: None,
                 language: None,
                 photo: None,
@@ -511,6 +515,7 @@ async fn profile(
                 username: email.clone(),
                 email,
                 password: None,
+                email_verified: false,
                 email_verification: None,
                 language: None,
                 photo: None,

@@ -184,6 +184,7 @@ pub(super) async fn admin_create_user(
             username: body.username.clone(),
             email: body.username,
             password: Some(hash),
+            email_verified: false,
             email_verification: None,
             language: body.language,
             photo: None,
@@ -194,6 +195,9 @@ pub(super) async fn admin_create_user(
     .await
     {
         Ok(identity) => identity,
+        Err(db::RegisterError::EmailTaken) => {
+            return text(StatusCode::FORBIDDEN, "User already exists");
+        }
         Err(_) => return empty(StatusCode::INTERNAL_SERVER_ERROR),
     };
     match db::user_by_identity(&state.db, &identity.id, state.force_pro())

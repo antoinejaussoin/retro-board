@@ -57,13 +57,17 @@ fn psql(db: &str, sql: &str) -> String {
 }
 
 async fn boot() -> Server {
-    let db = format!("retro_api_{}", std::process::id());
+    boot_with(0, &[]).await
+}
+
+async fn boot_with(slot: u16, extra: &[(&str, &str)]) -> Server {
+    let db = format!("retro_api_{}_{slot}", std::process::id());
     psql("postgres", &format!("DROP DATABASE IF EXISTS \"{db}\""));
     psql(
         "postgres",
         &format!("CREATE DATABASE \"{db}\" OWNER postgres"),
     );
-    let port = 3400 + (std::process::id() % 1000);
+    let port = 3400 + (std::process::id() % 500) + u32::from(slot);
     let mut child = Command::new(server_bin())
         .env("DB_HOST", "127.0.0.1")
         .env("DB_PORT", "5432")
@@ -93,6 +97,7 @@ async fn boot() -> Server {
         .env("OKTA_KEY", "")
         .env("OKTA_SECRET", "")
         .env("OKTA_AUDIENCE", "")
+        .envs(extra.iter().copied())
         .stdout(Stdio::null())
         .stderr(Stdio::null())
         .spawn()
@@ -299,6 +304,43 @@ async fn http_contract() {
     );
     assert_eq!(stored["stale"], false);
 
+    let taken = format!("taken-{}@example.com", std::process::id());
+    let taken_user = format!("user-taken-{}", std::process::id());
+    let taken_identity = format!("identity-taken-{}", std::process::id());
+    psql(
+        &server.db,
+        &format!("INSERT INTO users (id, name, email) VALUES ('{taken_user}', 'Taken', '{taken}')"),
+    );
+    psql(
+        &server.db,
+        &format!(
+            "INSERT INTO users_identities (id, user_id, account_type, username) VALUES ('{taken_identity}', '{taken_user}', 'google', '{taken}')"
+        ),
+    );
+    let hijack = client
+        .post(format!("{}/api/register", server.base))
+        .json(&serde_json::json!({"name": "Hijack", "username": taken, "password": "stolen-password", "language": "en-GB"}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(
+        hijack.status(),
+        403,
+        "a password must not attach to an existing email"
+    );
+    assert_eq!(hijack.text().await.unwrap(), "User already exists");
+    assert_eq!(
+        client
+            .post(format!("{}/api/auth/login", server.base))
+            .json(&serde_json::json!({"username": taken, "password": "stolen-password"}))
+            .send()
+            .await
+            .unwrap()
+            .status(),
+        403,
+        "the rejected password must not log in"
+    );
+
     let email = format!("ada-{}@example.com", std::process::id());
     let registered: Value = client
         .post(format!("{}/api/register", server.base))
@@ -479,5 +521,83 @@ async fn http_contract() {
             .unwrap()
             .status(),
         401
+    );
+}
+
+#[tokio::test]
+async fn unverified_password_cannot_log_in_when_mail_is_configured() {
+    let server = boot_with(
+        1,
+        &[
+            ("SELF_HOSTED", "false"),
+            ("MAIL_SMTP_HOST", "127.0.0.1"),
+            ("MAIL_PORT", "1"),
+            ("MAIL_SECURE", "false"),
+            ("MAIL_SENDER", "test@example.com"),
+        ],
+    )
+    .await;
+    let client = reqwest::Client::new();
+    let email = format!("verify-{}@example.com", std::process::id());
+    let registered = client
+        .post(format!("{}/api/register", server.base))
+        .json(&serde_json::json!({"name": "Ada Lovelace", "username": email, "password": "correct-horse", "language": "en-GB"}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(registered.status(), 200);
+    let registered: Value = registered.json().await.unwrap();
+    assert_eq!(registered["loggedIn"], false);
+    assert_eq!(
+        client
+            .post(format!("{}/api/auth/login", server.base))
+            .json(&serde_json::json!({"username": email, "password": "correct-horse"}))
+            .send()
+            .await
+            .unwrap()
+            .status(),
+        403,
+        "login must wait until the verification code is accepted"
+    );
+    let missing_reset = client
+        .post(format!("{}/api/reset", server.base))
+        .json(&serde_json::json!({"email": "missing@example.com"}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(
+        missing_reset.status(),
+        200,
+        "hosted reset must not reveal missing emails"
+    );
+    let missing_code = client
+        .post(format!("{}/api/validate", server.base))
+        .json(&serde_json::json!({"email": "missing@example.com", "code": "nope"}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(missing_code.status(), 403);
+    assert_eq!(missing_code.text().await.unwrap(), "Code not valid");
+    let code = psql(
+        &server.db,
+        &format!("SELECT email_verification FROM users_identities WHERE username = '{email}'"),
+    );
+    assert!(!code.is_empty());
+    let validated = client
+        .post(format!("{}/api/validate", server.base))
+        .json(&serde_json::json!({"email": email, "code": code}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(validated.status(), 200);
+    assert_eq!(
+        client
+            .post(format!("{}/api/auth/login", server.base))
+            .json(&serde_json::json!({"username": email, "password": "correct-horse"}))
+            .send()
+            .await
+            .unwrap()
+            .status(),
+        200
     );
 }
