@@ -233,7 +233,7 @@
     "or": "of"
   },
   "SocialMediaLogin": {
-    "header": "Social Media authenticatie",
+    "header": "Aanmelden met",
     "info": "Dit gebruikt je social media account en slaat de sessies op onder je account. Er is geen wachtwoord nodig."
   },
   "AuthCommon": {

@@ -233,7 +233,7 @@
     "or": "oppure"
   },
   "SocialMediaLogin": {
-    "header": "Autenticazione con i Social Media",
+    "header": "Accedi con",
     "info": "Questo utilizzerà il tuo account per autenticarti e ti permetterà di recuperare tutte le tue sessioni. Nessuna password viene memorizzata."
   },
   "AuthCommon": {

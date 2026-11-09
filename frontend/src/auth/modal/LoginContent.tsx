@@ -9,8 +9,31 @@ import { trackEvent } from 'track';
 import { useLanguage } from 'translations';
 import { Alert } from 'ui/alert';
 import { Button } from 'ui/button';
+import { cn } from 'ui/cn';
 import AccountAuth from './AccountAuth';
 import SocialAuth from './SocialAuth';
+
+function OrDivider({
+  label,
+  responsive = false,
+}: {
+  label: string;
+  responsive?: boolean;
+}) {
+  return (
+    <div
+      className={cn(
+        'relative flex h-px w-4/5 shrink-0 items-center justify-center bg-line',
+        responsive &&
+          '@min-[60rem]:h-auto @min-[60rem]:w-px @min-[60rem]:self-stretch',
+      )}
+    >
+      <span className="relative -top-0.5 bg-cream px-2 text-sm text-muted">
+        {label}
+      </span>
+    </div>
+  );
+}
 
 interface LoginContentProps {
   anonymous: boolean;
@@ -55,54 +78,63 @@ export default function LoginContent({
   const showSocial = !hasNoSocialMediaAuth;
   const showPasswords = !disablePasswords;
 
+  const showAnonymous = anonymous && !hasNoWayOtherThanAnonymous;
+
   return (
-    <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5 text-ink">
-      {hasNoWayOtherThanAnonymous ? (
-        <Alert severity="error">{t('AuthCommon.noAuthWarning')}</Alert>
-      ) : (
-        <div className="@container">
-          <div
-            className={
-              showSocial && showPasswords
-                ? 'mx-auto w-full max-w-md @min-[60rem]:max-w-[60rem]'
-                : 'mx-auto w-full max-w-md'
-            }
-          >
-            <div className="flex flex-col items-center gap-6 @min-[60rem]:flex-row @min-[60rem]:items-stretch @min-[60rem]:justify-center">
-              {showSocial ? (
-                <div className="w-full min-w-0 max-w-md">
-                  <SocialAuth onClose={onClose} onUser={setUser} />
-                </div>
-              ) : null}
-              {showSocial && showPasswords ? (
-                <div className="relative flex h-px w-4/5 shrink-0 items-center justify-center bg-line @min-[60rem]:h-auto @min-[60rem]:w-px @min-[60rem]:self-stretch">
-                  <span className="bg-cream px-2 text-sm text-muted">
-                    {t('AuthCommon.or')}
-                  </span>
-                </div>
-              ) : null}
-              {showPasswords ? (
-                <div className="w-full min-w-0 max-w-md">
-                  <AccountAuth onClose={onClose} onUser={setUser} />
-                </div>
-              ) : null}
-            </div>
-            {anonymous ? (
-              <div className="mt-6 flex justify-center border-t border-line pt-6 @min-[60rem]:justify-end @min-[60rem]:border-t-0 @min-[60rem]:pt-2">
-                <Button
-                  variant="ghost"
-                  onClick={handleAnonLogin}
-                  data-cy="login-anonymous"
-                  className="text-muted"
-                >
-                  <UserRoundX className="size-4" />
-                  {t('AuthCommon.skipAndAnonLogin')}
-                </Button>
+    <div className="flex min-h-0 flex-1 flex-col text-ink">
+      <div
+        className={cn(
+          'min-h-0 flex-1 overflow-y-auto px-6 pt-5',
+          showAnonymous ? 'pb-0' : 'pb-5',
+        )}
+      >
+        {hasNoWayOtherThanAnonymous ? (
+          <Alert severity="error">{t('AuthCommon.noAuthWarning')}</Alert>
+        ) : (
+          <div className="@container">
+            <div
+              className={
+                showSocial && showPasswords
+                  ? 'mx-auto w-full max-w-md @min-[60rem]:max-w-[60rem]'
+                  : 'mx-auto w-full max-w-md'
+              }
+            >
+              <div className="flex flex-col items-center gap-6 @min-[60rem]:flex-row @min-[60rem]:items-stretch @min-[60rem]:justify-center">
+                {showSocial ? (
+                  <div className="w-full min-w-0 max-w-md">
+                    <SocialAuth onClose={onClose} onUser={setUser} />
+                  </div>
+                ) : null}
+                {showSocial && showPasswords ? (
+                  <OrDivider label={t('AuthCommon.or')} responsive />
+                ) : null}
+                {showPasswords ? (
+                  <div className="w-full min-w-0 max-w-md">
+                    <AccountAuth onClose={onClose} onUser={setUser} />
+                  </div>
+                ) : null}
               </div>
-            ) : null}
+            </div>
+          </div>
+        )}
+      </div>
+      {showAnonymous ? (
+        <div className="flex shrink-0 flex-col items-center px-6 pt-6 pb-5">
+          <div className="flex w-full max-w-md flex-col items-center gap-6">
+            <OrDivider label={t('AuthCommon.or')} />
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={handleAnonLogin}
+              data-cy="login-anonymous"
+              className="w-full"
+            >
+              <UserRoundX className="size-5" />
+              {t('AuthCommon.skipAndAnonLogin')}
+            </Button>
           </div>
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

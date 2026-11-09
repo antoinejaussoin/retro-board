@@ -2205,7 +2205,7 @@ dependencies = [
 
 [[package]]
 name = "retrospected-migrations"
-version = "6.0.1"
+version = "6.0.0"
 dependencies = [
  "chrono",
  "serde",
@@ -2218,7 +2218,7 @@ dependencies = [
 
 [[package]]
 name = "retrospected-server"
-version = "6.0.1"
+version = "6.0.0"
 dependencies = [
  "aes",
  "axum",

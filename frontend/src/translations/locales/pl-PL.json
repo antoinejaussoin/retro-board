@@ -233,7 +233,7 @@
     "or": "lub"
   },
   "SocialMediaLogin": {
-    "header": "OAuth",
+    "header": "Zaloguj się przez",
     "info": "Spowoduje to korzystanie z wybranego przez Ciebie zewnętrznego dostawcy uwierzytelniania. Hasło nie jest przechowywane."
   },
   "AuthCommon": {

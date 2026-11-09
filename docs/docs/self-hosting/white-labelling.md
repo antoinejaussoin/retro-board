@@ -35,7 +35,8 @@ The `frontend` section of your `docker-compose.yml` file would look similar to t
 frontend:
   image: retrospected/frontend:latest
   depends_on:
-    - backend
+    backend:
+      condition: service_healthy
   ports:
     - '80:80' # Change the first 80 to whatever port you want to access Retrospected from
   environment:

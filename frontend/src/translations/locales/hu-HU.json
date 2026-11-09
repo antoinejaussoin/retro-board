@@ -233,7 +233,7 @@
     "or": "vagy"
   },
   "SocialMediaLogin": {
-    "header": "OAuth",
+    "header": "Bejelentkezés ezzel",
     "info": "Ez az Ön által választott harmadik fél szolgáltatót fogja használni az Ön hitelesítésére. Nincs jelszó tárolva."
   },
   "AuthCommon": {

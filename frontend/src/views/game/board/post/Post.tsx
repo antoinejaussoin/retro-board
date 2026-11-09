@@ -3,7 +3,7 @@ import { Post } from 'common';
 import {
   GripVertical,
   Image,
-  Smile,
+  ImagePlus,
   SquareCheck,
   Trash2,
   X,
@@ -266,7 +266,7 @@ const PostItem = ({
           <img
             src={giphyImageUrl}
             alt="Giphy"
-            className="h-[200px] w-full object-cover"
+            className="block h-auto w-full"
           />
         </div>
       )}
@@ -378,7 +378,7 @@ const PostItem = ({
                       tabIndex={-1}
                       className="inline-flex size-8 items-center justify-center rounded-full text-yellow-700 hover:bg-ink/8"
                     >
-                      <Smile className="size-5" />
+                      <ImagePlus className="size-5" />
                     </button>
                   </PopoverTrigger>
                 </Tooltip>

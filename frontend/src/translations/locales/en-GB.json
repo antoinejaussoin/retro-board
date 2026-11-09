@@ -233,7 +233,7 @@
     "or": "or"
   },
   "SocialMediaLogin": {
-    "header": "OAuth",
+    "header": "Sign in with",
     "info": "This will use a third party provider of your choosing to authenticate you. No password is stored."
   },
   "AuthCommon": {
