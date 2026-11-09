@@ -122,8 +122,7 @@ export default function ComposeView({
     ),
   ].filter(Boolean);
 
-  const text = `version: '3'
-services:
+  const text = `services:
   frontend:
     image: retrospected/frontend:latest
     depends_on:

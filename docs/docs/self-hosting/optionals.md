@@ -16,7 +16,6 @@ You don't have to use all of these settings, just add the ones you actually need
 :::
 
 ```yaml
-version: '3'
 services:
   backend:
     image: retrospected/backend:latest
