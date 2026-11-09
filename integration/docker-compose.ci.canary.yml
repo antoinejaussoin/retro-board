@@ -36,12 +36,13 @@ services:
       postgres:
         condition: service_healthy
       redis:
-        condition: service_started
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3201/healthz"]
       interval: 2s
       timeout: 5s
       retries: 30
+      start_period: 30s
     environment:
       SELF_HOSTED_ADMIN: 'your@email.com'
       DB_PASSWORD: some-password
@@ -68,6 +69,11 @@ services:
     image: redis:latest
     depends_on:
       - postgres
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
     restart: unless-stopped
     logging:
       driver: 'json-file'

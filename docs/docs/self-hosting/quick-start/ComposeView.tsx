@@ -127,7 +127,8 @@ services:
   frontend:
     image: retrospected/frontend:latest
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     ports:
       - '${port}:80'
     restart: unless-stopped
@@ -147,7 +148,16 @@ services:
   backend:
     image: retrospected/backend:latest
     depends_on:
-      - redis
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:3201/healthz']
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
     environment:
       LICENCE_KEY: '${licence}'
       SELF_HOSTED_ADMIN: '${email}'
@@ -170,6 +180,11 @@ ${optionals.join('\n')}
       POSTGRES_DB: retroboard
     volumes:
       - database:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d retroboard']
+      interval: 5s
+      timeout: 5s
+      retries: 20
     restart: unless-stopped
     logging:
       driver: 'json-file'
@@ -179,7 +194,8 @@ ${optionals.join('\n')}
   pgadmin:
     image: dpage/pgadmin4:latest
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     ports:
       - '${pgPort}:80'
     environment:
@@ -197,6 +213,11 @@ ${optionals.join('\n')}
     image: redis:latest
     depends_on:
       - postgres
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 20
     restart: unless-stopped
     logging:
       driver: 'json-file'

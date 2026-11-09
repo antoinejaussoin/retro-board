@@ -21,7 +21,16 @@ services:
   backend:
     image: retrospected/backend:latest
     depends_on:
-      - redis
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:3201/healthz']
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
     environment:
       # -- Change Recommended --
       LICENCE_KEY: # This must be provided if you self-host Retrospected. Obtain a licence at https://app.retrospected.com/subscribe?product=self-hosted.
@@ -112,7 +121,8 @@ services:
   frontend:
     image: retrospected/frontend:latest
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     ports:
       - '80:80' # Change the first 80 to whatever port you want to access Retrospected from
     environment:
@@ -147,6 +157,11 @@ services:
     image: redis:latest
     depends_on:
       - postgres
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 20
     restart: unless-stopped
     logging:
       driver: 'json-file'
@@ -165,6 +180,11 @@ services:
       POSTGRES_DB: retroboard # Must be the same as DB_NAME below
     volumes:
       - database:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d retroboard']
+      interval: 5s
+      timeout: 5s
+      retries: 20
     restart: unless-stopped
     logging:
       driver: 'json-file'
@@ -174,7 +194,8 @@ services:
   pgadmin:
     image: dpage/pgadmin4:latest
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     ports:
       - '8080:80' # Change the first 8080 to whatever port you want to access pgAdmin from
     environment:
