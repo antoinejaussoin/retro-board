@@ -2,7 +2,7 @@ name: "Tests & Linting"
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, release]
   pull_request:
     branches: []
 

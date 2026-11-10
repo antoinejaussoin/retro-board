@@ -1,7 +1,7 @@
-main:
+release:
 	docker-compose rm -s -v -f
-	docker-compose -f docker-compose.local.main.yml pull
-	docker-compose -f docker-compose.local.main.yml up
+	docker-compose -f docker-compose.local.release.yml pull
+	docker-compose -f docker-compose.local.release.yml up
 
 local:
 	docker build -f ../backend/Dockerfile -t retrospected/backend:local ../backend
