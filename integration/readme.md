@@ -8,13 +8,13 @@ It uses Cypress.
 
 ## CI
 
-Integrations tests will run automatically on CI (GitHub Actions) for every pull request, and when pushing to `develop`, `main` or the alpha branch. Pull requests build the branch images and run Cypress against them. Pushes keep testing the published images.
+Integrations tests will run automatically on CI (GitHub Actions) for every pull request, and when pushing to `main`, `release` or the alpha branch. Pull requests build the branch images and run Cypress against them. Pushes keep testing the published images.
 
 ## Local
 
 You can manually run the tests by doing `make local`, which will open Cypress and show you the tests running.
 This will build local images for both the backend and the frontend and test them using Cypress.
 
-## Main
+## Release
 
-You can also run the tests on the Main branch by doing `make main`.
+You can also run the tests on the release branch by doing `make release`.

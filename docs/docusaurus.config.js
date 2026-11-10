@@ -28,7 +28,7 @@ const darkCodeTheme = require('prism-react-renderer').themes.dracula;
           docs: {
             sidebarPath: require.resolve('./sidebars.js'),
             editUrl:
-              'https://github.com/antoinejaussoin/retro-board/edit/develop/docs/',
+              'https://github.com/antoinejaussoin/retro-board/edit/main/docs/',
           },
           blog: {
             showReadingTime: true,

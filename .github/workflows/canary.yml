@@ -2,7 +2,7 @@ name: "Canary Build"
 
 on:
   push:
-    branches: [develop]
+    branches: [main]
 
 jobs:
   frontend:
