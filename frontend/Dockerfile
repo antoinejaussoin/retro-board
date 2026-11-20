@@ -23,7 +23,7 @@ COPY --chown=node:node ./.env ./.env
 
 RUN npm run build
 
-FROM nginx:1.31.8
+FROM nginx:1.31.9
 
 RUN apt update
 RUN apt -y remove libfreetype6

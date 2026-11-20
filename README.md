@@ -100,6 +100,10 @@ This will run a demo version, which you can turn into a fully licenced version b
 
 ## Versions History
 
+### Version 6.0.1
+
+- Update the frontend and docs images to nginx 1.31.9, which includes the fixes for the nginx2root vulnerabilities published on 18 November 2026 (including CVE-2026-123007).
+
 ### Version 6.0.0
 
 - 🦀 Complete rewrite of the backend in Rust. The HTTP API, Socket.IO events, Redis sessions, and database migrations are unchanged, so an existing database and a self-hosted install keep working.
