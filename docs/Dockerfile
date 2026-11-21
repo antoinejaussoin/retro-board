@@ -28,7 +28,7 @@ COPY --chown=node:node ./static ./static
 
 RUN npm run build
 
-FROM nginx:1.31.8-alpine
+FROM nginx:1.31.9-alpine
 
 COPY --from=node /home/node/app/build /usr/share/nginx/html
 COPY ./docker/nginx.conf /etc/nginx/conf.d/default.conf
